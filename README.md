@@ -43,3 +43,11 @@ Once you've submitted a pull request, your configuration will be tested in its a
 - Verify that the application reaches the 'Stopped' state.
 
 You should ensure that your configuration can do this on both Windows and Linux before submitting your configuration.
+
+# Module information
+
+## Eco
+The module Eco is not offical supported to run on a Linux environment. Also dotNet is required to run a server above the version 0.9
+
+[Server on Linux](https://wiki.play.eco/en/Server_on_Linux)
+[DotNet](https://docs.microsoft.com/en-us/dotnet/core/install/linux)
