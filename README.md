@@ -16,14 +16,15 @@ Right now the following restrictions apply to templates that may be publicly sha
  
 # To share a template
 
-Create a pull request containing two files in the top-level directory of the repository:
+Create a pull request containing the following files in the top-level directory of the repository:
 
     *APPLICATIONAME*.kvp
     *APPLICATIONAME*config.json
+    *APPLICATIONAME*metaconfig.json (Optional)
 
 With the names fully lower-cased.
 
-For example, `valheim.kvp` and `valheimconfig.json`
+For example, `valheim.kvp`, `valheimconfig.json`, `valheimmetaconfig.json`
 
 Do not use any directories and include no-other files.
 
