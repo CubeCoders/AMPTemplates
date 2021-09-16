@@ -8,8 +8,7 @@ See the wiki article for the module: https://github.com/CubeCoders/AMP/wiki/Conf
 Right now the following restrictions apply to templates that may be publicly shared via this repository (some of these will be relaxed over time):
 
  - The application must not require any login/authentication in order to download (except for SteamCMD logins).
- - Only applications that run on both Windows *and* Linux are permitted.
- - No extra files/depencendencies. The application must be in a usable state purely using the built in update methods.
+ - Both Windows and Linux must be accomodated for. If the application does not have a Linux version you should add a Proton download via SteamCMD to support it.
  - Applications that have customizable settings must use a Settings Manifest.
  - Only applications that expose some kind of Console that AMP is able to pick up.
  - Do not invoke any shell scripts/batch files. You must only launch actual executables.
