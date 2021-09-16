@@ -7,7 +7,7 @@ See the wiki article for the module: https://github.com/CubeCoders/AMP/wiki/Conf
 # Sharing Templates
 Right now the following restrictions apply to templates that may be publicly shared via this repository (some of these will be relaxed over time):
 
- - The application must not require any login/authentication in order to download (including SteamCMD logins).
+ - The application must not require any login/authentication in order to download (except for SteamCMD logins).
  - Only applications that run on both Windows *and* Linux are permitted.
  - No extra files/depencendencies. The application must be in a usable state purely using the built in update methods.
  - Applications that have customizable settings must use a Settings Manifest.
