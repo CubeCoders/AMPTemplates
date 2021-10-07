@@ -4,6 +4,8 @@ For the AMP community to share Generic Module templates.
 # Making generic module templates
 See the wiki article for the module: https://github.com/CubeCoders/AMP/wiki/Configuring-the-'Generic'-AMP-module
 
+You can also use the online configurator at https://config.getamp.sh/ to help with building templates.
+
 # Sharing Templates
 Right now the following restrictions apply to templates that may be publicly shared via this repository (some of these will be relaxed over time):
 
