@@ -11,7 +11,7 @@ https://pzwiki.net/wiki/Dedicated_Server
 Server configuration file options:
 https://steamsplay.com/project-zomboid-how-to-host-server-via-linux-tutorial/
 
-Server command line paramters:
+Server command line parameters:
 https://pzwiki.net/wiki/Startup_parameters
 
 ## To do items
