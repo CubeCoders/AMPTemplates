@@ -16,3 +16,9 @@ https://pzwiki.net/wiki/Startup_parameters
 
 ## To do items
 
+- Get console to work!
+
+- Update player join/leave regex
+
+- Generate config.json and metaconfig.json
+
