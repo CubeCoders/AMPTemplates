@@ -16,11 +16,7 @@ https://pzwiki.net/wiki/Startup_parameters
 
 ## To do items
 
-- Get console to work!
-
-- Figure out correct ExitMethod
-
-- Update player join/leave regex
+- Update chat regex
 
 - Generate config.json and metaconfig.json
 
