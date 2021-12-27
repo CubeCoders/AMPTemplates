@@ -67,7 +67,7 @@
         "FieldName": "ip",
         "InputType": "text",
         "IsFlagArgument": false,
-        "ParamFieldName": "",
+        "ParamFieldName": "ip",
         "IncludeInCommandLine": true,
         "DefaultValue": "0.0.0.0"
     },
@@ -76,7 +76,7 @@
         "Category": "Server Settings",
         "Description": "The maximum number of players that may connect to the server",
         "Keywords": "players,limit",
-        "FieldName": "$MaxUsers",
+        "FieldName": "MaxPlayers",
         "InputType": "number",
         "IsFlagArgument": false,
         "ParamFieldName": "maxPlayers",
@@ -89,14 +89,14 @@
         "Description": "If enabled, players will be able to use in-game voice chat",
         "Keywords": "voice,chat",
         "FieldName": "DisableVoN",
-        "InputType": "checkbox",
+        "InputType": "enum",
         "IsFlagArgument": false,
         "ParamFieldName": "disableVoN",
         "IncludeInCommandLine": false,
         "DefaultValue": "0",
         "EnumValues": {
-            "False": "0",
-            "True" : "1"
+            "0": "Disabled",
+            "1": "Enabled"
         }
     },
     {
@@ -136,35 +136,19 @@
         "DefaultValue": "0.33"
     },
     {
-        "DisplayName": "Start Mission Immediately",
-        "Category": "Server Settings",
-        "Description": "Begin the mission immediately instead of waiting for players to join (autoinit).\nRequires Persistent Mission to be enabled",
-        "Keywords": "autoinit",
-        "FieldName": "autoinit",
-        "InputType": "checkbox",
-        "IsFlagArgument": true,
-        "ParamFieldName": "",
-        "IncludeInCommandLine": true,
-        "DefaultValue": "",
-        "EnumValues": {
-            "False": "",
-            "True" : "autoinit"
-        }
-    },
-    {
         "DisplayName": "Persistent Mission",
         "Category": "Server Settings",
-        "Description": "Mission keeps running when all clients disconnect. Required for Start Mission Immediately",
+        "Description": "Mission keeps running when all clients disconnect.\nRequired for \"autoInit\" (start mission immediately option)",
         "Keywords": "persistent",
         "FieldName": "EnablePersistent",
-        "InputType": "checkbox",
+        "InputType": "enum",
         "IsFlagArgument": false,
         "ParamFieldName": "persistent",
         "IncludeInCommandLine": false,
         "DefaultValue": "0",
         "EnumValues": {
-            "False": "0",
-            "True" : "1"
+            "0": "Disabled",
+            "1": "Enabled"
         }
     },
     {
@@ -196,8 +180,8 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "2",
         "EnumValues": {
-            "False": "0",
-            "True" : "2"
+            "0": "Disabled",
+            "2": "Enabled"
         }
     },
     {
@@ -206,14 +190,14 @@
         "Description": "If enabled, players with an ID that is identical to another player will be kicked",
         "Keywords": "kick,duplicate",
         "FieldName": "KickDuplicate",
-        "InputType": "checkbox",
+        "InputType": "enum",
         "IsFlagArgument": false,
         "ParamFieldName": "kickDuplicate",
         "IncludeInCommandLine": false,
         "DefaultValue": "1",
         "EnumValues": {
-            "False": "0",
-            "True" : "1"
+            "0": "Disabled",
+            "1": "Enabled"
         }
     },
     {
