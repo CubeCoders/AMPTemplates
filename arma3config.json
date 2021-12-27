@@ -38,7 +38,7 @@
     {
         "DisplayName": "MOTD",
         "Category": "Server Settings",
-        "Description": "Player welcome message",
+        "Description": "Player welcome message. Format is {\"Line1\", \"Line 2\"}",
         "Keywords": "MOTD,welcome,message",
         "FieldName": "MOTD",
         "InputType": "text",
@@ -64,11 +64,11 @@
         "Category": "Server Settings",
         "Description": "Which IP address the Arma 3 server should listen on",
         "Keywords": "IP,binding",
-        "FieldName": "$ApplicationIPBinding",
+        "FieldName": "ip",
         "InputType": "text",
         "IsFlagArgument": false,
         "ParamFieldName": "",
-        "IncludeInCommandLine": false,
+        "IncludeInCommandLine": true,
         "DefaultValue": "0.0.0.0"
     },
     {
@@ -138,7 +138,7 @@
     {
         "DisplayName": "Start Mission Immediately",
         "Category": "Server Settings",
-        "Description": "Begin the mission immediately instead of waiting for players to join (autoinit). Requires Persistent Mission to be enabled",
+        "Description": "Begin the mission immediately instead of waiting for players to join (autoinit).\nRequires Persistent Mission to be enabled",
         "Keywords": "autoinit",
         "FieldName": "autoinit",
         "InputType": "checkbox",
@@ -185,9 +185,41 @@
         }
     },
     {
+        "DisplayName": "Enable Addon Signature Verification",
+        "Category": "Server Settings",
+        "Description": "If enabled, players with unknown or unsigned mods won't be allowed join",
+        "Keywords": "mods,verify",
+        "FieldName": "VerifySignatures",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "verifySignatures",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2",
+        "EnumValues": {
+            "0": "False",
+            "2": "True"
+        }
+    },
+    {
+        "DisplayName": "Disallow Duplicate Game IDs",
+        "Category": "Server Settings",
+        "Description": "If enabled, players with an ID that is identical to another player will be kicked",
+        "Keywords": "kick,duplicate",
+        "FieldName": "KickDuplicate",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "kickDuplicate",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "1",
+        "EnumValues": {
+            "0": "False",
+            "1": "True"
+        }
+    },
+    {
         "DisplayName": "Custom Configuration File",
         "Category": "Server Settings",
-        "Description": "Name of custom config file (such as \"myconfig.cfg\") for additional settings. Create the custom file alongside the default server.cfg file in the datastore",
+        "Description": "Name of custom config file (such as \"myconfig.cfg\") for additional settings.\nCreate the custom file alongside the default server.cfg file in the datastore",
         "Keywords": "custom,config",
         "FieldName": "UserConfig",
         "InputType": "text",
