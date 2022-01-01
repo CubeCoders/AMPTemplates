@@ -17,9 +17,9 @@ App.BaseDirectory=./project-zomboid/380870/
 App.ExecutableWin=380870\jre64\bin\java.exe
 App.ExecutableLinux=380870/ProjectZomboid64
 App.WorkingDir=380870
-App.LinuxCommandLineArgs=-Dzomboid.steam={{SteamInt}} -Duser.home=./ -Xmx{{MaxMemory}}m --
-App.WindowsCommandLineArgs=-Djava.awt.headless=true -Dzomboid.znetlog=1 -Dzomboid.steam={{SteamInt}} -Duser.home=./ -Xmx{{MaxMemory}}m -XX:+UseZGC -XX:-CreateCoredumpOnCrash -XX:-OmitStackTraceInFastThrow -Djava.library.path=natives/;natives/win64/;. -cp java/*;java/ zombie.network.GameServer -statistic 0 --
-App.CommandLineArgs={{$PlatformArgs}} -port {{$ApplicationPort1}} -steamport1 {{$ApplicationPort2}} -steamport2 {{$ApplicationPort3}} {{CustomArgs}} {{$FormattedArgs}}
+App.LinuxCommandLineArgs=-Dzomboid.steam={{SteamInt}} -Duser.home=./ -Xmx{{MaxMemory}}m {{CustomJavaArgs}} --
+App.WindowsCommandLineArgs=-Djava.awt.headless=true -Dzomboid.znetlog=1 -Dzomboid.steam={{SteamInt}} -Duser.home=./ -Xmx{{MaxMemory}}m -XX:+UseZGC -XX:-CreateCoredumpOnCrash -XX:-OmitStackTraceInFastThrow -Djava.library.path=natives/;natives/win64/;. {{CustomJavaArgs}} -cp java/*;java/ zombie.network.GameServer -statistic 0 --
+App.CommandLineArgs={{$PlatformArgs}} -port {{$ApplicationPort1}} -steamport1 {{$ApplicationPort2}} -steamport2 {{$ApplicationPort3}} {{CustomServerArgs}} {{$FormattedArgs}}
 App.AppSettings={}
 App.EnvironmentVariables={"PATH":"./jre64/bin:%PATH%","LD_LIBRARY_PATH":"./linux64:./natives:./:./jre64/lib/amd64:%LD_LIBRARY_PATH%","LD_PRELOAD":"./jre64/lib/libjsig.so","PZ_CLASSPATH":"java/*;java/","SteamAppId":"108600"}
 App.CommandLineParameterFormat=-{0} {1}
