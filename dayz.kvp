@@ -1,9 +1,9 @@
 App.AdminMethod=BattlEyeRCON
-App.ApplicationPort1=27030
+App.ApplicationPort1=2302
 App.ApplicationPort2=2305
 App.ApplicationReadyMode=RCONConnected
 App.BaseDirectory=./dayz/223350/
-App.CommandLineArgs={{$PlatformArgs}} -profiles=./DayZServerData -port={{$ApplicationPort1}} -config=serverDZ.cfg -dologs -adminlog -netlog -freezeCheck {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} -profiles=./DayZServerData -bepath={{$FullBaseDir}}/battleye -port={{$ApplicationPort1}} -config=serverDZ.cfg -dologs -adminlog -netlog -freezeCheck {{$FormattedArgs}}
 App.CommandLineParameterDelimiter= 
 App.CommandLineParameterFormat=-{0}={1}
 App.DisplayName=DayZ
@@ -16,10 +16,10 @@ App.ExitString=stop
 App.HasReadableConsole=true
 App.HasWritableConsole=false
 App.RapidStartup=false
-App.RemoteAdminPort=27130
+App.RemoteAdminPort=28015
 App.RootDir=./dayz/
 App.UpdateSource=Multi
-App.UpdateSources=[{"UpdateStageName": "SteamCMD Download","UpdateSourcePlatform": "All", "UpdateSource": "SteamCMD", "UpdateSourceData": "223350"},{"UpdateStageName": "BattlEye Installation","UpdateSourcePlatform": "All", "UpdateSource": "CopyFilePath", "UpdateSourceData": "./223350/battleye", "UpdateSourceTarget":"./223350/DayZServerData/BattlEye"},{"UpdateStageName": "Base Config Download","UpdateSourcePlatform": "All", "UpdateSource": "FetchURL","OverwriteExistingFiles": false, "UpdateSourceData": "https://raw.githubusercontent.com/ApertureDevelopment/AMPTemplates/dayz/configTemplates/main.dayz.cfg", "UpdateSourceTarget":"./223350/serverDZ.cfg"}]
+App.UpdateSources=[{"UpdateStageName": "SteamCMD Download","UpdateSourcePlatform": "All", "UpdateSource": "SteamCMD", "UpdateSourceData": "223350"},{"UpdateStageName": "Config Template Download","UpdateSourcePlatform": "All", "UpdateSource": "FetchURL","OverwriteExistingFiles": true, "UpdateSourceData": "https://raw.githubusercontent.com/ApertureDevelopment/AMPTemplates/dayz/configTemplates/main.dayz.cfg", "UpdateSourceTarget":"./serverDZ.cfg.template"}]
 App.WorkingDir=223350
 App.SteamUpdateAnonymousLogin=false
 App.SteamForceLoginPrompt=true
@@ -30,7 +30,7 @@ Console.UserChatRegex=^(?<username>.+?): (?<message>.+)$
 Console.UserJoinRegex=^User (?<username>.+?) \((?<userid>-?d+)\) connected from \[::ffff:(?<endpoint>.+?)\]$
 Console.UserLeaveRegex=^User (?<username>.+?) \((?<userid>-?d+)\) disconnected\. Reason: (.+?)$
 
-Meta.Author=Aperture Development
+Meta.Author=Aperture Development and Greelan
 Meta.ConfigManifest=dayzconfig.json
 Meta.MetaConfigManifest=dayzmetaconfig.json
 Meta.ConfigRoot=dayz.kvp
