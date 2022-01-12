@@ -2,9 +2,9 @@
     {
         "DisplayName": "Server Name",
         "Category": "Server Settings",
-        "Description": "Name of your server to show in server lists",
+        "Description": "Server name visible in the game browser",
         "Keywords": "server,name",
-        "FieldName": "ServerName",
+        "FieldName": "hostname",
         "InputType": "text",
         "IsFlagArgument": false,
         "ParamFieldName": "hostname",
@@ -14,9 +14,9 @@
     {
         "DisplayName": "Admin Password",
         "Category": "Server Settings",
-        "Description": "Password used to administer the game via the Arma 3 client",
+        "Description": "Password required for admin access to the server",
         "Keywords": "admin,password",
-        "FieldName": "AdminPassword",
+        "FieldName": "passwordAdmin",
         "InputType": "password",
         "IsFlagArgument": false,
         "ParamFieldName": "passwordAdmin",
@@ -26,9 +26,21 @@
     {
         "DisplayName": "Server Password",
         "Category": "Server Settings",
-        "Description": "Password used to connect to the server",
+        "Description": "Password required to connect to the server",
         "Keywords": "server,password",
-        "FieldName": "ServerPassword",
+        "FieldName": "password",
+        "InputType": "password",
+        "IsFlagArgument": false,
+        "ParamFieldName": "password",
+        "IncludeInCommandLine": false,
+        "DefaultValue": ""
+    },
+    {
+        "DisplayName": "Command Password",
+        "Category": "Server Settings",
+        "Description": "Password required by alternate syntax of serverCommand server-side scripting",
+        "Keywords": "command,password",
+        "FieldName": "password",
         "InputType": "password",
         "IsFlagArgument": false,
         "ParamFieldName": "password",
@@ -38,12 +50,12 @@
     {
         "DisplayName": "MOTD",
         "Category": "Server Settings",
-        "Description": "Player welcome message. Format is {\"Line1\", \"Line 2\"}",
+        "Description": "Player welcome message. Format is \"Line1\", \"Line 2\"",
         "Keywords": "MOTD,welcome,message",
-        "FieldName": "MOTD",
+        "FieldName": "motd",
         "InputType": "text",
         "IsFlagArgument": false,
-        "ParamFieldName": "motd[]",
+        "ParamFieldName": "motd",
         "IncludeInCommandLine": false,
         "DefaultValue": "{\"Welcome to Arma 3\", \"Hosted using AMP by CubeCoders\"}"
     }, 
@@ -52,7 +64,7 @@
         "Category": "Server Settings",
         "Description": "Number of seconds between each line of the MOTD",
         "Keywords": "MOTD,message,delay",
-        "FieldName": "MOTDInterval",
+        "FieldName": "motdInterval",
         "InputType": "number",
         "IsFlagArgument": false,
         "ParamFieldName": "motdInterval",
@@ -62,9 +74,9 @@
     {
         "DisplayName": "IP Binding",
         "Category": "Server Settings",
-        "Description": "IP address that the Arma 3 server should listen on",
+        "Description": "IP address that the server listens on",
         "Keywords": "IP,binding",
-        "FieldName": "ip",
+        "FieldName": "$ApplicationIPBinding",
         "InputType": "text",
         "IsFlagArgument": false,
         "ParamFieldName": "ip",
@@ -84,39 +96,132 @@
         "DefaultValue": "40"
     },
     {
-        "DisplayName": "Enable Voice Chat",
+        "DisplayName": "Disallow Duplicate Game IDs",
         "Category": "Server Settings",
-        "Description": "If enabled, players will be able to use in-game voice chat",
-        "Keywords": "voice,chat",
-        "FieldName": "DisableVoN",
-        "InputType": "enum",
+        "Description": "If enabled, players with an ID that is identical to another player will be kicked",
+        "Keywords": "kick,duplicate",
+        "FieldName": "kickDuplicate",
+        "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "disableVoN",
+        "ParamFieldName": "kickDuplicate",
         "IncludeInCommandLine": false,
-        "DefaultValue": "0",
+        "DefaultValue": "1",
         "EnumValues": {
-            "0": "Disabled",
-            "1": "Enabled"
+            "False": "0",
+            "True": "1"
         }
     },
     {
-        "DisplayName": "Voice Chat Quality",
+        "DisplayName": "Enable Addon Signature Verification",
         "Category": "Server Settings",
-        "Description": "Voice sound range: 1-10 is 8kHz (narrowband), 11-20 is 16kHz (wideband), 21-30 is 32kHz (ultrawideband)",
-        "Keywords": "voice,chat",
-        "FieldName": "VoiceQuality",
+        "Description": "If enabled, players with unknown or unsigned mods won't be allowed to join",
+        "Keywords": "mods,verify",
+        "FieldName": "VerifySignatures",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "verifySignatures",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2",
+        "EnumValues": {
+            "False": "0",
+            "True": "2"
+        }
+    },
+    {
+        "DisplayName": "Allow Client File Patching",
+        "Category": "Server Settings",
+        "Description": "Prevent or allow file patching for clients",
+        "Keywords": "file,patching",
+        "FieldName": "allowedFilePatching",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "allowedFilePatching",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "0": "Do not allow",
+            "1": "Allow headless clients only",
+            "2": "Allow all clients"
+        }
+    },
+    {
+        "DisplayName": "Client File Patching Exceptions",
+        "Category": "Server Settings",
+        "Description": "Whitelist of Steam IDs for clients allowed to use file patching. Format is \"SteamID\",\"SteamID\"",
+        "Keywords": "file,patching,exceptions",
+        "FieldName": "filePatchingExceptions",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "filePatchingExceptions",
+        "IncludeInCommandLine": false,
+        "DefaultValue": ""
+    },
+    {
+        "DisplayName": "Minimum Client Version",
+        "Category": "Server Settings",
+        "Description": "Client version below the minimum won't be allowed to join. Default equates to the server version",
+        "Keywords": "required build",
+        "FieldName": "requiredBuild",
         "InputType": "number",
         "IsFlagArgument": false,
-        "ParamFieldName": "vonCodecQuality",
+        "ParamFieldName": "requiredBuild",
         "IncludeInCommandLine": false,
-        "DefaultValue": "10"
+        "DefaultValue": "99999999"
+    },
+    {
+        "DisplayName": "Force LAN Mode",
+        "Category": "Server Settings",
+        "Description": "If enabled, server will be forced into LAN mode - only local clients can connect",
+        "Keywords": "LAN,loopback",
+        "FieldName": "loopback",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "loopback",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable UPNP",
+        "Category": "Server Settings",
+        "Description": "If enabled, will automatically create port mappings on UPNP/IGD enabled routers",
+        "Keywords": "UPNP",
+        "FieldName": "upnp",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "upnp",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Skip Lobby",
+        "Category": "Server Settings",
+        "Description": "If enabled, joining players will skip role selection",
+        "Keywords": "skip,lobby",
+        "FieldName": "skipLobby",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "skipLobby",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
     },
     {
         "DisplayName": "Minimum Players For Mission Selection",
         "Category": "Server Settings",
         "Description": "Minimum number of players required before displaying the mission selection screen",
         "Keywords": "voting,mimumum",
-        "FieldName": "VoteMissionPlayers",
+        "FieldName": "voteMissionPlayers",
         "InputType": "number",
         "IsFlagArgument": false,
         "ParamFieldName": "voteMissionPlayers",
@@ -128,12 +233,56 @@
         "Category": "Server Settings",
         "Description": "Percentage (0.00 to 1.00) of players needed to vote something into effect",
         "Keywords": "voting,threshold",
-        "FieldName": "VoteThreshold",
+        "FieldName": "voteThreshold",
         "InputType": "number",
         "IsFlagArgument": false,
         "ParamFieldName": "voteThreshold",
         "IncludeInCommandLine": false,
         "DefaultValue": "0.33"
+    },
+    {
+        "DisplayName": "Enable Voice Chat",
+        "Category": "Server Settings",
+        "Description": "If enabled, players will be able to use in-game voice chat",
+        "Keywords": "voice,chat",
+        "FieldName": "disableVoN",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "disableVoN",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Voice Chat Codec",
+        "Category": "Server Settings",
+        "Description": "Specify voice codec type",
+        "Keywords": "voice,codec",
+        "FieldName": "vonCodec",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "vonCodec",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "1",
+        "EnumValues": {
+            "0": "Old SPEEX codec",
+            "1": "New OPUS codec"
+        }
+    },
+    {
+        "DisplayName": "Voice Chat Quality",
+        "Category": "Server Settings",
+        "Description": "Voice sound range: 1-10 is 8kHz (narrowband), 11-20 is 16kHz (wideband), 21-30 is 32kHz (SPEEX) or 48kHz (OPUS) (ultrawideband)",
+        "Keywords": "voice,chat",
+        "FieldName": "vonCodecQuality",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "vonCodecQuality",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "3"
     },
     {
         "DisplayName": "Start Mission Immediately",
@@ -145,10 +294,10 @@
         "IsFlagArgument": true,
         "ParamFieldName": "",
         "IncludeInCommandLine": true,
-        "DefaultValue": "",
+        "DefaultValue": " ",
         "EnumValues": {
-            "": "False",
-            "-autoInit": "True"
+            "False": " ",
+            "True": "-autoInit"
         }
     },    
     {
@@ -156,15 +305,15 @@
         "Category": "Server Settings",
         "Description": "Mission keeps running when all clients disconnect. Required for \"autoInit\" (Start Mission Immediately option)",
         "Keywords": "persistent",
-        "FieldName": "EnablePersistent",
-        "InputType": "enum",
+        "FieldName": "persistent",
+        "InputType": "checkbox",
         "IsFlagArgument": false,
         "ParamFieldName": "persistent",
         "IncludeInCommandLine": false,
         "DefaultValue": "0",
         "EnumValues": {
-            "0": "Disabled",
-            "1": "Enabled"
+            "False": "0",
+            "True": "1"
         }
     },
     {
@@ -172,7 +321,7 @@
         "Category": "Server Settings",
         "Description": "Format of the time stamps used in the log file",
         "Keywords": "time,stamp,format",
-        "FieldName": "TimeStampFormat",
+        "FieldName": "timeStampFormat",
         "InputType": "enum",
         "IsFlagArgument": false,
         "ParamFieldName": "timeStampFormat",
@@ -185,39 +334,109 @@
         }
     },
     {
-        "DisplayName": "Enable Addon Signature Verification",
+        "DisplayName": "Allowed File Extensions",
         "Category": "Server Settings",
-        "Description": "If enabled, players with unknown or unsigned mods won't be allowed join",
-        "Keywords": "mods,verify",
-        "FieldName": "VerifySignatures",
-        "InputType": "enum",
+        "Description": "Only allow files with listed extensions to be loaded via loadFile command",
+        "Keywords": "file,extensions",
+        "FieldName": "allowedLoadFileExtensions",
+        "InputType": "text",
         "IsFlagArgument": false,
-        "ParamFieldName": "verifySignatures",
+        "ParamFieldName": "allowedLoadFileExtensions",
         "IncludeInCommandLine": false,
-        "DefaultValue": "2",
+        "DefaultValue": "\"hpp\",\"sqs\",\"sqf\",\"fsm\",\"cpp\",\"paa\",\"txt\",\"xml\",\"inc\",\"ext\",\"sqm\",\"ods\",\"fxy\",\"lip\",\"csv\",\"kb\",\"bik\",\"bikb\",\"html\",\"htm\",\"biedi\""
+    },
+    {
+        "DisplayName": "Allowed Preprocess File Extensions",
+        "Category": "Server Settings",
+        "Description": "Only allow files with listed extensions to be loaded via preprocessFile / preprocessFileLineNumbers commands",
+        "Keywords": "file,preprocess,extensions",
+        "FieldName": "allowedPreprocessFileExtensions",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "allowedPreprocessFileExtensions",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "\"hpp\",\"sqs\",\"sqf\",\"fsm\",\"cpp\",\"paa\",\"txt\",\"xml\",\"inc\",\"ext\",\"sqm\",\"ods\",\"fxy\",\"lip\",\"csv\",\"kb\",\"bik\",\"bikb\",\"html\",\"htm\",\"biedi\""
+    },
+    {
+        "DisplayName": "Allowed HTML Extensions",
+        "Category": "Server Settings",
+        "Description": "Only allow files and URLs with listed extensions to be loaded via htmlLoad command",
+        "Keywords": "html,extensions",
+        "FieldName": "allowedHTMLLoadExtensions",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "allowedHTMLLoadExtensions",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "\"htm\",\"html\",\"xml\",\"txt\""
+    },
+    {
+        "DisplayName": "Log Player Info",
+        "Category": "Server Settings",
+        "Description": "If enabled, logs players' bandwidth and desync info every 60 seconds, as well as \"network message is pending\" owner identity",
+        "Keywords": "player,diag,info",
+        "FieldName": "enablePlayerDiag",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "enablePlayerDiag",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "0",
         "EnumValues": {
-            "0": "Disabled",
-            "2": "Enabled"
+            "False": "0",
+            "True": "1"
+        }
+    },
+     {
+        "DisplayName": "Enable Map Lines/Markers",
+        "Category": "Server Settings",
+        "Description": "If enabled, gives the ability to place markers and draw lines in map",
+        "Keywords": "map,lines,markers",
+        "FieldName": "drawingInMap",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "drawingInMap",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
         }
     },
     {
-        "DisplayName": "Disallow Duplicate Game IDs",
+        "DisplayName": "Allow Profile Glasses",
         "Category": "Server Settings",
-        "Description": "If enabled, players with an ID that is identical to another player will be kicked",
-        "Keywords": "kick,duplicate",
-        "FieldName": "KickDuplicate",
-        "InputType": "enum",
+        "Description": "If disabled, glasses set in player profile will be ignored",
+        "Keywords": "profile,glasses",
+        "FieldName": "allowProfileGlasses",
+        "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "kickDuplicate",
+        "ParamFieldName": "allowProfileGlasses",
         "IncludeInCommandLine": false,
-        "DefaultValue": "1",
+        "DefaultValue": "true",
         "EnumValues": {
-            "0": "Disabled",
-            "1": "Enabled"
+            "False": "false",
+            "True": "true"
         }
     },
     {
-        "DisplayName": "Custom Configuration File",
+        "DisplayName": "Enforce Difficulty",
+        "Category": "Server Settings",
+        "Description": "Forces the selected difficulty on the server",
+        "Keywords": "force,difficulty",
+        "FieldName": "forcedDifficulty",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "forcedDifficulty",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "regular",
+        "EnumValues": {
+            "recruit": "Recruit",
+            "regular": "Regular",
+            "veteran": "Veteran",
+            "custom": "Custom"            
+        }
+    },
+    {
+        "DisplayName": "Additional Configuration File",
         "Category": "Server Settings",
         "Description": "Name of custom config file for additional settings. Create the custom file alongside the default server.cfg file in the datastore",
         "Keywords": "custom,config",
