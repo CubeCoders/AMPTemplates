@@ -1,11 +1,12 @@
 [
-
     {
         "DisplayName": "World Seed",
         "Category": "Terraria Generator settings",
         "Keywords": "seed new world",
         "Description": "Which world seed to use when generating a new world",
         "FieldName": "Seed",
+        "placeholder": "PoweredByAMP",
+        "suffix": "",
         "InputType": "text",
         "IncludeInCommandLine": false,
         "DefaultValue": ""
@@ -47,29 +48,49 @@
         "Keywords": "name new world",
         "Description": "How to name the new world",
         "FieldName": "WorldName",
+        "placeholder": "World",
+        "suffix": "",
         "InputType": "text",
         "IncludeInCommandLine": false,
         "DefaultValue": "world"
     },
     {
         "DisplayName": "Mod Path",
-        "Category": "Terraria Mod settings",
+        "Category": "Terraria ModLoader settings",
         "Keywords": "folder path mod mods tmodloader",
         "Description": "Where tModLoader will read mods from. [instructions](https://github.com/jasperfirecai2/amp-templates/wiki/Managing-mods-with-tmodloader)",
         "FieldName": "ModPath",
+        "placeholder": "ModLoader/Mods",
+        "suffix": "",
         "InputType": "text",
         "IncludeInCommandLine": false,
         "DefaultValue": "ModLoader/Mods"
     },
     {
         "DisplayName": "Mod Pack",
-        "Category": "Terraria Mod settings",
+        "Category": "Terraria ModLoader settings",
         "Keywords": "pack mod mods modpack tmodloader",
         "Description": "Which modpack to load (does not install mods for you!)",
         "FieldName": "ModPack",
+        "placeholder": "modpack",
+        "suffix": ".json",
         "InputType": "text",
         "IncludeInCommandLine": false,
         "DefaultValue": ""
+    },
+    {
+        "DisplayName": "Download Source",
+        "Category": "Terraria ModLoader settings",
+        "Keywords": "download source steam github tmodloader",
+        "Description": "Select where to obtain tModLoader. Steam requires you to own Terraria on your account.",
+        "FieldName": "Source",
+        "IncludeInCommandLine": false,
+        "InputType": "enum",
+        "EnumValues": {
+            "Steam": "Steam",
+            "GitHub": "GitHub"
+        },
+        "DefaultValue": "Steam"
     },
     {
         "DisplayName": "World Path",
@@ -77,6 +98,8 @@
         "Keywords": "folder path world saves savegame worlds",
         "Description": "The relative path to save worlds in",
         "FieldName": "WorldPath",
+        "placeholder": "ModLoader/Worlds",
+        "suffix": "",
         "InputType": "text",
         "IncludeInCommandLine": false,
         "DefaultValue": "ModLoader/Worlds"
@@ -87,6 +110,8 @@
         "Keywords": "name world worldname load boot",
         "Description": "Which world to load on boot",
         "FieldName": "World",
+        "placeholder": "ModLoader/Worlds/world.wld",
+        "suffix": "",
         "InputType": "text",
         "IncludeInCommandLine": false,
         "DefaultValue": "ModLoader/Worlds/world.wld"
@@ -97,6 +122,8 @@
         "Keywords": "players max maximum",
         "Description": "The maximum players in the server",
         "FieldName": "$MaxUsers",
+        "placeholder": "8",
+        "suffix": "Users",
         "InputType": "number",
         "IncludeInCommandLine": false,
         "DefaultValue": 8
@@ -107,6 +134,8 @@
         "Keywords": "password pw security",
         "Description": "The password players must enter to join",
         "FieldName": "Password",
+        "placeholder": "Password123",
+        "suffix": "",
         "InputType": "password",
         "IncludeInCommandLine": false,
         "DefaultValue": ""
@@ -117,6 +146,8 @@
         "Keywords": "motd motto message welcome",
         "Description": "The motto/message of the day",
         "FieldName": "Motd",
+        "placeholder": "Welcome!",
+        "suffix": "",
         "InputType": "text",
         "IncludeInCommandLine": false,
         "DefaultValue": "Welcome!"
@@ -167,6 +198,8 @@
         "Keywords": "npc stream skipping lag bandwidth performance",
         "Description": "Reduces enemy skipping but increases bandwidth usage. The lower the number the less skipping will happen, but more data is sent. 0 is off.",
         "FieldName": "NpcStream",
+        "placeholder": "60",
+        "suffix": "",
         "InputType": "number",
         "IncludeInCommandLine": false,
         "DefaultValue": 60
@@ -175,13 +208,13 @@
         "DisplayName": "Slower liquids",
         "Category": "Terraria Server settings",
         "Keywords": "slow liquid liquids slower lag performance",
-        "Description": "Reduces maximum liquids moving at the same time. If enabled may reduce lags but liquids may take longer to settle.",
+        "Description": "Reduces maximum liquids moving at the same time. If enabled may reduce lag but liquids may take longer to settle.",
         "FieldName": "Slowliquids",
-        "InputType": "enum",
+        "InputType": "checkbox",
         "IncludeInCommandLine": false,
         "EnumValues": {
-            "0": "False",
-            "1": "True"
+            "False": "0",
+            "True": "1"
         },
         "DefaultValue": "1"
     },
@@ -191,12 +224,249 @@
         "Keywords": "security cheat cheats auto kick spam",
         "Description": "Enable/Disable additional cheat protection",
         "FieldName": "Secure",
-        "InputType": "enum",
+        "InputType": "checkbox",
         "IncludeInCommandLine": false,
         "EnumValues": {
-            "0": "False",
-            "1": "True"
+            "False": "0",
+            "True": "1"
         },
         "DefaultValue": "0"
+    },
+    {
+        "DisplayName": "Disable Announcement Box",
+        "Category": "Terraria Server settings",
+        "Keywords": "announcement box disable griefing",
+        "Description": "Enable/Disable the text announcements Announcement Box makes when pulsed from wire.",
+        "FieldName": "DisableAnnouncementBox",
+        "InputType": "checkbox",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "",
+            "True": "-disableannouncementbox"
+        },
+        "DefaultValue": ""
+    },
+    {
+        "DisplayName": "Announcement Box Range",
+        "Category": "Terraria Server settings",
+        "Keywords": "announcement box range griefing",
+        "Description": "Sets the announcement box text messaging range in pixels, -1 for serverwide announcements.",
+        "FieldName": "AnnouncementBoxRange",
+        "placeholder": "-1",
+        "suffix": "Pixels",
+        "InputType": "number",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "-1"
+    },
+    {
+        "DisplayName": "Freeze time",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power freeze time stop clock",
+        "Description": "Journey mode (1.4+ difficulty) power permissions for every individual power. Host is only relevant when using steam integration",
+        "FieldName": "time_setfrozen",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Set to Dawn",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power dawn time clock",
+        "FieldName": "time_setdawn",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Set to Noon",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power noon time clock",
+        "FieldName": "time_setnoon",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Set to Dusk",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power dusk time clock",
+        "FieldName": "time_setdusk",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Set to Midnight",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power midnight time clock",
+        "FieldName": "time_setmidnight",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "God Mode",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power god godmode",
+        "FieldName": "godmode",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Set wind intensity",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power wind set strength",
+        "FieldName": "wind_setstrength",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Set rain intensity",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power rain set strength",
+        "FieldName": "rain_setstrength",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Change game speed",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power speed time speedup",
+        "FieldName": "time_setspeed",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Lock rain conditions",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power rain lock freeze",
+        "FieldName": "rain_setfrozen",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Lock Wind conditions",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power wind lock freeze",
+        "FieldName": "wind_setfrozen",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Placement Range",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power placement range reach tile",
+        "FieldName": "increaseplacementrange",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Difficulty changing",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power difficulty",
+        "FieldName": "setdifficulty",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Biome/Evil Spreading",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power evil spread biome crimson hallow corrupted",
+        "FieldName": "biomespread_setfrozen",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
+    },
+    {
+        "DisplayName": "Spawn Rate",
+        "Category": "Terraria Journey Permissions",
+        "Keywords": "journey mode permissions power spawn rate",
+        "FieldName": "setspawnrate",
+        "InputType": "enum",
+        "EnumValues": {
+            "0": "Locked for everyone",
+            "1": "Can only be changed by host",
+            "2": "Can be changed by everyone"
+        },
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2"
     }
 ]
