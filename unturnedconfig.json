@@ -1,15 +1,54 @@
 [
     {
-        "DisplayName": "Server Port (REQUIRED)",
+        "DisplayName": "Server Port",
         "Category": "Server Settings",
-        "Description": "Must match Application Port 1 from ADS Edit Port menu",
-        "Keywords": "server port",
-        "FieldName": "Port",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$ApplicationPort1",
         "InputType": "number",
         "IsFlagArgument": false,
+        "Hidden": true,
         "ParamFieldName": "Port",
         "IncludeInCommandLine": false,
-        "DefaultValue": "0"
+        "DefaultValue": "27015"
+    },
+    {
+        "DisplayName": "Enable RCON",
+        "Category": "Server Settings",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "RCONEnabled",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "/RocketSettings/RCON/@Enabled",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true"
+    },
+    {
+        "DisplayName": "RCON Port",
+        "Category": "Server Settings",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$RemoteAdminPort",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "/RocketSettings/RCON/@Port",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "27017"
+    },
+    {
+        "DisplayName": "Server Name",
+        "Category": "Server Settings",
+        "Description": "WARNING: You MUST do first-time server setup (update the server and start and stop it once) after changing the name for correct configuration",
+        "Keywords": "name",
+        "FieldName": "ServerName",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "UnturnedServer"
     },
     {
         "DisplayName": "Server Type",
@@ -40,6 +79,18 @@
         "DefaultValue": "Password123"
     },
     {
+        "DisplayName": "RCON Password",
+        "Category": "Server Settings",
+        "Description": "Password to connect to RCON. Change this after installing the server",
+        "Keywords": "RCON,password",
+        "FieldName": "$RemoteAdminPassword",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/RocketSettings/RCON/@Password",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "Password123"
+    },
+    {
         "DisplayName": "Owner",
         "Category": "Server Settings",
         "Description": "[Steam64 ID](https://steamidfinder.com/) of the server's owner, which gives them administrator commands and fully sets up the server",
@@ -48,6 +99,18 @@
         "InputType": "text",
         "IsFlagArgument": false,
         "ParamFieldName": "Owner",
+        "IncludeInCommandLine": false,
+        "DefaultValue": ""
+    },
+    {
+        "DisplayName": "GSLT",
+        "Category": "Server Settings",
+        "Description": "Sets the [Game Server Login Token](https://steamcommunity.com/dev/managegameservers) for the server. Required for the server to appear in the server list. Use Steam App ID 304930",
+        "Keywords": "GSLT,token",
+        "FieldName": "GSLT",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "GSLT",
         "IncludeInCommandLine": false,
         "DefaultValue": ""
     },
@@ -73,7 +136,8 @@
         "IsFlagArgument": false,
         "ParamFieldName": "Maxplayers",
         "IncludeInCommandLine": false,
-        "DefaultValue": "10"
+        "DefaultValue": "10",
+        "suffix": "players"
     },
     {
         "DisplayName": "Map",
@@ -118,8 +182,25 @@
         "EnumValues": {
             "First": "First person only",
             "Third": "Third person only",
-            "Vehicle": "Third person in vehicle only",
-            "Both": "First and third person allowed"
+            "Both": "First and third person allowed",
+            "Vehicle": "Third person in vehicle only"
+        }
+    },
+    {
+        "DisplayName": "Weather",
+        "Category": "Server Settings",
+        "Description": "Sets the weather",
+        "Keywords": "weather",
+        "FieldName": "Weather",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "Weather",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "None",
+        "EnumValues": {
+            "None": "None",
+            "Storm": "Storm",
+            "Blizzard": "Blizzard"
         }
     },
     {
@@ -132,7 +213,7 @@
         "IsFlagArgument": false,
         "ParamFieldName": "Cycle",
         "IncludeInCommandLine": false,
-        "DefaultValue": "43200",
+        "DefaultValue": "3600",
         "suffix": "seconds"
     },
     {
