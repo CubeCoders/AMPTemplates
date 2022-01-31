@@ -94,34 +94,35 @@
     {
         "DisplayName":"Server Password",
         "Category":"Server Settings",
-        "Description":"Password to connect to the server. You should change this after first installing the server",
+        "Description":"Password to connect to the server. Default is no password",
         "Keywords":"password",
         "FieldName":"Password",
         "InputType":"password",
         "IsFlagArgument":false,
         "ParamFieldName":"Password",
         "IncludeInCommandLine":false,
-        "DefaultValue":"Password123"
+        "DefaultValue":""
     },
     {
         "DisplayName":"Admin Password",
         "Category":"Server Settings",
-        "Description":"In-game \"admin\" user password (not the server password). You should change this after first installing the server",
+        "Description":"In-game \"admin\" user password (not the server password). Set before first running the server, or you will be prompted to do so in the console",
         "Keywords":"admin,password",
         "FieldName":"adminpassword",
-        "InputType":"password",
+        "InputType":"RandomPassword",
         "IsFlagArgument":false,
         "ParamFieldName":"adminpassword",
         "IncludeInCommandLine":true,
-        "DefaultValue":"Password123"
+        "DefaultValue":"",
+        "SkipIfEmpty":true
     },
     {
         "DisplayName":"RCON Password",
         "Category":"Server Settings",
-        "Description":"Password to connect to RCON. You should change this after first installing the server",
+        "Description":"Password to connect to RCON. NOTE: You should change this after first installing the server",
         "Keywords":"rcon,password",
         "FieldName":"$RemoteAdminPassword",
-        "InputType":"password",
+        "InputType":"RandomPassword",
         "IsFlagArgument":false,
         "ParamFieldName":"RCONPassword",
         "IncludeInCommandLine":false,
@@ -137,7 +138,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"ServerWelcomeMessage",
         "IncludeInCommandLine":false,
-        "DefaultValue":"Welcome to Project Zomboid Multiplayer! <LINE> <LINE> To interact with the Chat panel: press Tab, T, or Enter. <LINE> <LINE> The Tab key will change the target stream of the message. <LINE> <LINE> Global Streams: /all <LINE> Local Streams: /say, /yell <LINE> Special Steams: /whisper, /safehouse, /faction. <LINE> <LINE> Press the Up arrow to cycle through your message history. Click the Gear icon to customize chat. <LINE> <LINE> Happy surviving!"
+        "DefaultValue":"Welcome to Project Zomboid Multiplayer! <LINE> <LINE> To interact with the Chat panel: press Tab, T, or Enter. <LINE> <LINE> The Tab key will change the target stream of the message. <LINE> <LINE> Global Streams: /all <LINE> Local Streams: /say, /yell <LINE> Special Streams: /whisper, /safehouse, /faction. <LINE> <LINE> Press the Up arrow to cycle through your message history. Click the Gear icon to customize chat. <LINE> <LINE> Happy surviving!"
     },
     {
         "DisplayName":"Player Limit",
@@ -150,7 +151,7 @@
         "ParamFieldName":"MaxPlayers",
         "IncludeInCommandLine":false,
         "DefaultValue":"16",
-        "suffix":"players"
+        "Suffix":"players"
     },
     {
         "DisplayName":"Disable Whitelist",
@@ -195,7 +196,7 @@
         "ParamFieldName":"MaxMemory",
         "IncludeInCommandLine":false,
         "DefaultValue":"4096",
-        "suffix":"MB"
+        "Suffix":"MB"
     },
     {
         "DisplayName":"Java Garbage Collection Algorithm (Windows)",
@@ -268,7 +269,7 @@
         "ParamFieldName":"Mods",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
-        "placeholder":"67commando;86oshkoshP19A;92amgeneralM998"
+        "Placeholder":"67commando;86oshkoshP19A;92amgeneralM998"
     },
     {
         "DisplayName":"Workshop Items",
@@ -281,7 +282,7 @@
         "ParamFieldName":"WorkshopItems",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
-        "placeholder":"2478247379;2566953935"
+        "Placeholder":"2478247379;2566953935"
     },
     {
         "DisplayName":"Display Player Usernames",
@@ -359,7 +360,7 @@
         "ParamFieldName":"SaveWorldEveryMinutes",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-        "suffix":"minutes"
+        "Suffix":"minutes"
     },
     {
         "DisplayName":"Additional Java Startup Parameters",
@@ -372,7 +373,7 @@
         "ParamFieldName":"CustomJavaArgs",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
-        "placeholder":"-Ddebug"
+        "Placeholder":"-Ddebug"
     },
     {
         "DisplayName":"Server Local Name",
@@ -397,19 +398,19 @@
         "ParamFieldName":"CustomServerArgs",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
-        "placeholder":"-ip 192.168.1.10"
+        "Placeholder":"-ip 192.168.1.10"
     },
     {
         "DisplayName":"Set Spawn Point",
         "Category":"Gameplay Settings",
-        "Description":"Sets the spawn point. Default is 0.0.0. Use X.Y.Z coordinates",
+        "Description":"Sets the spawn point. Default is 0,0,0. Use x,y,z coordinates",
         "Keywords":"spawnpoint,map",
         "FieldName":"SpawnPoint",
         "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"SpawnPoint",
         "IncludeInCommandLine":false,
-        "DefaultValue":"0.0.0"
+        "DefaultValue":"0,0,0"
     },
     {
         "DisplayName":"Spawn Items",
@@ -422,7 +423,7 @@
         "ParamFieldName":"SpawnItems",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
-        "placeholder":"Base.BaseballBat,Base.WaterBottleFull"
+        "Placeholder":"Base.BaseballBat,Base.WaterBottleFull"
     },
     {
         "DisplayName":"Allow PvP",
@@ -467,7 +468,7 @@
         "ParamFieldName":"SafetyToggleTimer",
         "IncludeInCommandLine":false,
         "DefaultValue":"2",
-        "suffix":"seconds"
+        "Suffix":"seconds"
     },
     {
         "DisplayName":"PvP Cooldown Timer",
@@ -480,7 +481,7 @@
         "ParamFieldName":"SafetyCooldownTimer",
         "IncludeInCommandLine":false,
         "DefaultValue":"3",
-        "suffix":"seconds"
+        "Suffix":"seconds"
     },
     {
         "DisplayName":"Enable Factions",
@@ -569,7 +570,7 @@
         "ParamFieldName":"HoursForLootRespawn",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-        "suffix":"hours"
+        "Suffix":"hours"
     },    
     {
         "DisplayName":"Maximum Items for Loot Respawn",
@@ -582,7 +583,7 @@
         "ParamFieldName":"MaxItemsForLootRespawn",
         "IncludeInCommandLine":false,
         "DefaultValue":"4",
-        "suffix":"items"
+        "Suffix":"items"
     },
     {
         "DisplayName":"Allow Player Safehouses",
@@ -659,7 +660,7 @@
         "ParamFieldName":"SafehouseDaySurvivedToClaim",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-        "suffix":"days"
+        "Suffix":"days"
     },
     {
         "DisplayName":"Safehouse Removal Period",
@@ -672,7 +673,7 @@
         "ParamFieldName":"SafeHouseRemovalTime",
         "IncludeInCommandLine":false,
         "DefaultValue":"144",
-        "suffix":"hours"
+        "Suffix":"hours"
     },
     {
         "DisplayName":"Allow Sledgehammer Destruction",
