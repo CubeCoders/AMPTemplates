@@ -1,98 +1,725 @@
 [
     {
-        "DisplayName": "Admin Password",
-        "Category": "Server Settings",
-        "Description": "In-game \"admin\" user password (not the server password). You should change this after first installing the server",
-        "Keywords": "admin,password",
-        "FieldName": "adminpassword",
-        "InputType": "password",
-        "IsFlagArgument": false,
-        "ParamFieldName": "adminpassword",
-        "IncludeInCommandLine": true,
-        "DefaultValue": "Password123"
+        "DisplayName":"Game Port",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$ApplicationPort1",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "Hidden":true,
+        "ParamFieldName":"DefaultPort",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"16261"
     },
     {
-        "DisplayName": "SteamVAC",
-        "Category": "Server Settings",
-        "Description": "Enable SteamVAC",
-        "Keywords": "steamvac",
-        "FieldName": "steamvac",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "steamvac",
-        "IncludeInCommandLine": true,
-        "DefaultValue": "true",
-        "EnumValues": {
-            "false": "False",
-            "true": "True"
+        "DisplayName":"Steam Port 1",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$ApplicationPort2",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "Hidden":true,
+        "ParamFieldName":"SteamPort1",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"8766"
+    },
+    {
+        "DisplayName":"Steam Port 2",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$ApplicationPort3",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "Hidden":true,
+        "ParamFieldName":"SteamPort2",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"8767"
+    },
+    {
+        "DisplayName":"RCON Port",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$RemoteAdminPort",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "Hidden":true,
+        "ParamFieldName":"RCONPort",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"27015"
+    },
+    {
+        "DisplayName":"Server Public Name",
+        "Category":"Server Settings",
+        "Description":"Server name as shown to the public (if the server is visible)",
+        "Keywords":"public,name",
+        "FieldName":"PublicName",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PublicName",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"My PZ Server"
+    },
+    {
+        "DisplayName":"Make Server Public",
+        "Category":"Server Settings",
+        "Description":"If enabled, the server will be visible on Steam",
+        "Keywords":"public,steam",
+        "FieldName":"Public",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Public",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
         }
     },
     {
-        "DisplayName": "Steam Integration",
-        "Category": "Server Settings",
-        "Description": "Enable Steam integration",
-        "Keywords": "steam,integration",
-        "FieldName": "SteamInt",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "SteamInt",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "1",
-        "EnumValues": {
-            "0": "False",
-            "1": "True"
+        "DisplayName":"Server Public Description",
+        "Category":"Server Settings",
+        "Description":"Description that people can see while going over your server",
+        "Keywords":"public,description",
+        "FieldName":"PublicDescription",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PublicDescription",
+        "IncludeInCommandLine":false,
+        "DefaultValue":""
+    },
+    {
+        "DisplayName":"Server Password",
+        "Category":"Server Settings",
+        "Description":"Password to connect to the server. You should change this after first installing the server",
+        "Keywords":"password",
+        "FieldName":"Password",
+        "InputType":"password",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Password",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Password123"
+    },
+    {
+        "DisplayName":"Admin Password",
+        "Category":"Server Settings",
+        "Description":"In-game \"admin\" user password (not the server password). You should change this after first installing the server",
+        "Keywords":"admin,password",
+        "FieldName":"adminpassword",
+        "InputType":"password",
+        "IsFlagArgument":false,
+        "ParamFieldName":"adminpassword",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"Password123"
+    },
+    {
+        "DisplayName":"RCON Password",
+        "Category":"Server Settings",
+        "Description":"Password to connect to RCON. You should change this after first installing the server",
+        "Keywords":"rcon,password",
+        "FieldName":"$RemoteAdminPassword",
+        "InputType":"password",
+        "IsFlagArgument":false,
+        "ParamFieldName":"RCONPassword",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Password123"
+    },
+    {
+        "DisplayName":"Welcome Message",
+        "Category":"Server Settings",
+        "Description":"Welcome message when players join the server",
+        "Keywords":"welcome,message,motd",
+        "FieldName":"ServerWelcomeMessage",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerWelcomeMessage",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Welcome to Project Zomboid Multiplayer! <LINE> <LINE> To interact with the Chat panel: press Tab, T, or Enter. <LINE> <LINE> The Tab key will change the target stream of the message. <LINE> <LINE> Global Streams: /all <LINE> Local Streams: /say, /yell <LINE> Special Steams: /whisper, /safehouse, /faction. <LINE> <LINE> Press the Up arrow to cycle through your message history. Click the Gear icon to customize chat. <LINE> <LINE> Happy surviving!"
+    },
+    {
+        "DisplayName":"Player Limit",
+        "Category":"Server Settings",
+        "Description":"Maximum number of players that may connect to the server",
+        "Keywords":"maximum,players",
+        "FieldName":"$MaxUsers",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"MaxPlayers",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"16",
+        "suffix":"players"
+    },
+    {
+        "DisplayName":"Disable Whitelist",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"whitelist,open",
+        "FieldName":"Open",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Open",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
         }
     },
     {
-        "DisplayName": "Memory Limit (MB)",
-        "Category": "Server Settings",
-        "Description": "Java's maximum heap size",
-        "Keywords": "maximum,memory,limit",
-        "FieldName": "MaxMemory",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "MaxMemory",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "4096"
-    },
-    {
-        "DisplayName": "Java Garbage Collection Algorithm (Windows)",
-        "Category": "Server Settings",
-        "Description": "Default Java garbage collection algorithm is ZGC, but G1GC can be selected for older Windows versions that cannot use ZGC",
-        "Keywords": "garbage,collection,algorithm",
-        "FieldName": "JavaGCAlgo",
-        "InputType": "enum",
-        "IsFlagArgument": false,
-        "ParamFieldName": "JavaGCAlgo",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "-XX:+UseZGC",
-        "EnumValues": {
-            "-XX:+UseZGC": "ZGC Algorithm (default)",
-            "-XX:+UseG1GC": "G1GC Algorithm"
+        "DisplayName":"Automatically Whitelist Players",
+        "Category":"Server Settings",
+        "Description":"Automatically add players to the whitelist (if not disabled)",
+        "Keywords":"whitelist,add,automatic",
+        "FieldName":"AutoCreateUserInWhiteList",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"AutoCreateUserInWhiteList",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
         }
     },
     {
-        "DisplayName": "Additional Java Startup Parameters",
-        "Category": "Server Settings",
-        "Description": "Additional Java arguments (not server arguments) as startup parameters that are not otherwise set by AMP. Use with care. Example: -Ddebug",
-        "Keywords": "custom,java,arguments,parameters",
-        "FieldName": "CustomJavaArgs",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "ParamFieldName": "CustomJavaArgs",
-        "IncludeInCommandLine": false,
-        "DefaultValue": " "
+        "DisplayName":"Memory Limit",
+        "Category":"Server Settings",
+        "Description":"Java's maximum heap size",
+        "Keywords":"maximum,memory,limit",
+        "FieldName":"MaxMemory",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"MaxMemory",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"4096",
+        "suffix":"MB"
     },
     {
-        "DisplayName": "Additional Server Startup Parameters",
-        "Category": "Server Settings",
-        "Description": "Additional server arguments (not Java arguments) as startup parameters that are not otherwise set by AMP. Use with care. Example: -ip 192.168.1.10",
-        "Keywords": "custom,server,arguments,parameters",
-        "FieldName": "CustomServerArgs",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "ParamFieldName": "CustomServerArgs",
-        "IncludeInCommandLine": false,
-        "DefaultValue": " "
+        "DisplayName":"Java Garbage Collection Algorithm (Windows)",
+        "Category":"Server Settings",
+        "Description":"Default Java garbage collection algorithm is ZGC, but G1GC can be selected for older Windows versions that cannot use ZGC",
+        "Keywords":"garbage,collection,algorithm",
+        "FieldName":"JavaGCAlgo",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"JavaGCAlgo",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"-XX:+UseZGC",
+        "EnumValues":{
+            "-XX:+UseZGC":"ZGC Algorithm (default)",
+            "-XX:+UseG1GC":"G1GC Algorithm"
+        }
+    },
+    {
+        "DisplayName":"Enable Valve Anti-cheat (Steam VAC)",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"VAC,cheat",
+        "FieldName":"SteamVAC",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SteamVAC",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Steam Integration",
+        "Category":"Server Settings",
+        "Description":"Enable Steam integration",
+        "Keywords":"steam,integration",
+        "FieldName":"SteamInt",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SteamInt",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "True":"1",
+            "False":"0"
+        }
+    },
+    {
+        "DisplayName":"Map",
+        "Category":"Server Settings",
+        "Description":"Sets the map for the server",
+        "Keywords":"map",
+        "FieldName":"Map",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Map",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Muldraugh, KY"
+    },
+    {
+        "DisplayName":"Mods",
+        "Category":"Server Settings",
+        "Description":"Semi-colon separated list of names of mods to install on the server. The mod IDs also need to be added to Workshop Items",
+        "Keywords":"mods",
+        "FieldName":"Mods",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Mods",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "placeholder":"67commando;86oshkoshP19A;92amgeneralM998"
+    },
+    {
+        "DisplayName":"Workshop Items",
+        "Category":"Server Settings",
+        "Description":"Semi-colon separated list of IDs of workshop items to install on the server. Mod names also need to be added to Mods",
+        "Keywords":"workshop,items",
+        "FieldName":"WorkshopItems",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"WorkshopItems",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "placeholder":"2478247379;2566953935"
+    },
+    {
+        "DisplayName":"Display Player Usernames",
+        "Category":"Server Settings",
+        "Description":"If enabled, display players' usernames",
+        "Keywords":"display,name",
+        "FieldName":"DisplayUserName",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"DisplayUserName",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Display Player Character Names",
+        "Category":"Server Settings",
+        "Description":"If enabled, display players' character names",
+        "Keywords":"display,character,name",
+        "FieldName":"ShowFirstAndLastName",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ShowFirstAndLastName",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Steam Scoreboard",
+        "Category":"Server Settings",
+        "Description":"Sets whether steam usernames and avatars are shown in the player list",
+        "Keywords":"steam,scoreboard",
+        "FieldName":"SteamScoreboard",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SteamScoreboard",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "true":"Shown to everyone",
+            "false":"Shown to no-one",
+            "admins":"Shown to admins only"
+        }
+    },
+    {
+        "DisplayName":"Pause When Empty",
+        "Category":"Server Settings",
+        "Description":"If enabled, the server will pause when empty, and won't update",
+        "Keywords":"pause,empty",
+        "FieldName":"PauseEmpty",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PauseEmpty",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Auto World Save Interval",
+        "Category":"Server Settings",
+        "Description":"Time between each automatic world save (0 = never)",
+        "Keywords":"save,interval",
+        "FieldName":"SaveWorldEveryMinutes",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SaveWorldEveryMinutes",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "suffix":"minutes"
+    },
+    {
+        "DisplayName":"Additional Java Startup Parameters",
+        "Category":"Server Settings",
+        "Description":"Additional Java arguments (not server arguments) as startup parameters that are not otherwise set by AMP. Use with care",
+        "Keywords":"custom,java,arguments,parameters",
+        "FieldName":"CustomJavaArgs",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"CustomJavaArgs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "placeholder":"-Ddebug"
+    },
+    {
+        "DisplayName":"Server Local Name",
+        "Category":"Server Settings",
+        "Description":"Server name as stored locally. WARNING: Do not change unless you know what you are doing! Also update the server if this is changed",
+        "Keywords":"server,name",
+        "FieldName":"servername",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"servername",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"servertest"
+    },
+    {
+        "DisplayName":"Additional Server Startup Parameters",
+        "Category":"Server Settings",
+        "Description":"Additional server arguments (not Java arguments) as startup parameters that are not otherwise set by AMP. Use with care",
+        "Keywords":"custom,server,arguments,parameters",
+        "FieldName":"CustomServerArgs",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"CustomServerArgs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "placeholder":"-ip 192.168.1.10"
+    },
+    {
+        "DisplayName":"Set Spawn Point",
+        "Category":"Gameplay Settings",
+        "Description":"Sets the spawn point. Default is 0.0.0. Use X.Y.Z coordinates",
+        "Keywords":"spawnpoint,map",
+        "FieldName":"SpawnPoint",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SpawnPoint",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.0.0"
+    },
+    {
+        "DisplayName":"Spawn Items",
+        "Category":"Gameplay Settings",
+        "Description":"Comma separated list of items that all players spawn with",
+        "Keywords":"spawn,items",
+        "FieldName":"SpawnItems",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SpawnItems",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "placeholder":"Base.BaseballBat,Base.WaterBottleFull"
+    },
+    {
+        "DisplayName":"Allow PvP",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, Player vs Player is allowed",
+        "Keywords":"pvp",
+        "FieldName":"PVP",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PVP",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Enable PvP Toggle (Safety System)",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, allows PvP to be toggled on and off. Requires PvP to be allowed",
+        "Keywords":"safetysystem,pvp",
+        "FieldName":"SafetySystem",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SafetySystem",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"PvP Toggle Timer",
+        "Category":"Gameplay Settings",
+        "Description":"Time taken to switch PvP between on and off",
+        "Keywords":"safetysystem,pvp,timer",
+        "FieldName":"SafetyToggleTimer",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SafetyToggleTimer",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "suffix":"seconds"
+    },
+    {
+        "DisplayName":"PvP Cooldown Timer",
+        "Category":"Gameplay Settings",
+        "Description":"Time taken before PvP can be toggled again",
+        "Keywords":"safetysystem,pvp,timer,cooldown",
+        "FieldName":"SafetyCooldownTimer",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SafetyCooldownTimer",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"3",
+        "suffix":"seconds"
+    },
+    {
+        "DisplayName":"Enable Factions",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, factions can be created and used",
+        "Keywords":"factions",
+        "FieldName":"Faction",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Faction",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Enable Global Chat",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, players can communicate with everyone (using the /all command in chat)",
+        "Keywords":"chat,global",
+        "FieldName":"GlobalChat",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"GlobalChat",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Nighttime Length",
+        "Category":"Gameplay Settings",
+        "Description":"Sets how long nighttime lasts depending on daytime: 0.5 means twice as long, 2 means half the normal time",
+        "Keywords":"nighttime,night",
+        "FieldName":"nightlengthmodifier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"nightlengthmodifier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.0"
+    },
+    {
+        "DisplayName":"Don't Allow Fire",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, fires are not allowed. Enable if fires cause problems for your server",
+        "Keywords":"fire",
+        "FieldName":"NoFire",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"NoFire",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Announce Player Death",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, a server-wide announcement is made when a player dies",
+        "Keywords":"announce,death",
+        "FieldName":"AnnounceDeath",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"AnnounceDeath",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Minimum Period for Loot Respawn",
+        "Category":"Gameplay Settings",
+        "Description":"Sets the in-game hours that must have passed before loot can respawn (0 = never)",
+        "Keywords":"loot,respawn",
+        "FieldName":"HoursForLootRespawn",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"HoursForLootRespawn",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "suffix":"hours"
+    },    
+    {
+        "DisplayName":"Maximum Items for Loot Respawn",
+        "Category":"Gameplay Settings",
+        "Description":"Sets The maximum amount of items in containers before items can respawn. If the number of items are less than or equal to the number set, loot will respawn",
+        "Keywords":"loot,respawn,maximum",
+        "FieldName":"MaxItemsForLootRespawn",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"MaxItemsForLootRespawn",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"4",
+        "suffix":"items"
+    },
+    {
+        "DisplayName":"Allow Player Safehouses",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, players can have safehouses",
+        "Keywords":"safehouse",
+        "FieldName":"PlayerSafehouse",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PlayerSafehouse",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Allow Admin Safehouses",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, admins can have safehouses",
+        "Keywords":"safehouse",
+        "FieldName":"AdminSafehouse",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"AdminSafehouse",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Allow Safehouse Fire",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, safehouses can catch fire",
+        "Keywords":"safehouse,fire",
+        "FieldName":"SafehouseAllowFire",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SafehouseAllowFire",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Allow Safehouse Respawn",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, a player can respawn in their safehouse after death",
+        "Keywords":"safehouse,respawn",
+        "FieldName":"SafehouseAllowRespawn",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SafehouseAllowRespawn",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Game Days For Safehouse",
+        "Category":"Gameplay Settings",
+        "Description":"Number of game days required before a safehouse can be claimed",
+        "Keywords":"safehouse,days",
+        "FieldName":"SafehouseDaySurvivedToClaim",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SafehouseDaySurvivedToClaim",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "suffix":"days"
+    },
+    {
+        "DisplayName":"Safehouse Removal Period",
+        "Category":"Gameplay Settings",
+        "Description":"Players are automatically removed from a safehouse they have not visited for this many real-time hours",
+        "Keywords":"safehouse,house,removal",
+        "FieldName":"SafeHouseRemovalTime",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SafeHouseRemovalTime",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"144",
+        "suffix":"hours"
+    },
+    {
+        "DisplayName":"Allow Sledgehammer Destruction",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, objects can be destroyed by sledgehammer",
+        "Keywords":"sledgehammer,destruction",
+        "FieldName":"AllowDestructionBySledgehammer",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"AllowDestructionBySledgehammer",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Allow Sleep",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, players can sleep",
+        "Keywords":"sleep",
+        "FieldName":"SleepAllowed",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SleepAllowed",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Require Sleep",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, players require sleep",
+        "Keywords":"sleep",
+        "FieldName":"SleepNeeded",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SleepNeeded",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
     }
 ]
