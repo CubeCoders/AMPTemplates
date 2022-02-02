@@ -1,8 +1,8 @@
 [
     {
         "DisplayName": "Map",
-        "Category": "Server Config",
-        "Description": "Set the maps starting server",
+        "Category": "Startup Config",
+        "Description": "Set the servers starting map",
         "Keywords": "Map",
         "FieldName": "Map",
         "InputType": "text",
@@ -15,7 +15,7 @@
     },
     {
         "DisplayName": "Scenario",
-        "Category": "Server Config",
+        "Category": "Startup Config",
         "Description": "Set the server scenario",
         "Keywords": "Scenario",
         "FieldName": "Scenario",
@@ -29,7 +29,7 @@
     },
     {
         "DisplayName": "Hostname",
-        "Category": "Server Config",
+        "Category": "Startup Config",
         "Description": "Set the servers hostname",
         "Keywords": "Hostname",
         "FieldName": "Hostname",
@@ -42,21 +42,21 @@
     },
     {
         "DisplayName": "Token",
-        "Category": "Server Config",
-        "Description": "Set the steam GSLTToken",
+        "Category": "Startup Config",
+        "Description": "Set the steam GSLTToken APPID 581320 [Get A GSLToken ID](https://steamcommunity.com/dev/managegameservers/)",
         "Keywords": "Token",
         "FieldName": "GSLTToken",
-        "InputType": "text",
+        "InputType": "password",
         "IsFlagArgument": false,
         "ParamFieldName": "GSLTToken",
         "IncludeInCommandLine": true,
-        "DefaultValue": "1234567890",
+        "DefaultValue": "",
         "EnumValues": {},
         "SkipIfEmpty": true
     },
     {
         "DisplayName": "Max Players",
-        "Category": "Server Config",
+        "Category": "Startup Config",
         "Description": "Set server maximum amount of players",
         "Keywords": "Max Users",
         "FieldName": "$MaxUsers",
@@ -69,21 +69,21 @@
     },
     {
         "DisplayName": "Game Stats Token",
-        "Category": "Server Config",
-        "Description": "Set the game stats token for XP Gain",
+        "Category": "Startup Config",
+        "Description": "Set the game stats token for XP Gain [Get A GameStats Token ID](https://gamestats.sandstorm.game/)",
         "Keywords": "Stats",
         "FieldName": "GameStatsToken",
-        "InputType": "text",
+        "InputType": "password",
         "IsFlagArgument": false,
         "ParamFieldName": "GameStatsToken",
         "IncludeInCommandLine": true,
-        "DefaultValue": "1234567890",
+        "DefaultValue": "",
         "EnumValues": {},
         "SkipIfEmpty": true
     },
     {
         "DisplayName": "Password",
-        "Category": "Server Config",
+        "Category": "Startup Config",
         "Description": "Sets a password for the server",
         "Keywords": "Password",
         "FieldName": "Password",
@@ -97,7 +97,7 @@
     },
     {
         "DisplayName": "Password Enabled",
-        "Category": "Server Config",
+        "Category": "Startup Config",
         "Description": "Enables the server password",
         "Keywords": "Password",
         "FieldName": "password_enabled",
@@ -113,7 +113,7 @@
     },  
     {
         "DisplayName": "Mutator",
-        "Category": "Server Config",
+        "Category": "Startup Config",
         "Description": "Set a server mutator",
         "Keywords": "Mutator",
         "FieldName": "mutators",
@@ -126,22 +126,8 @@
         "SkipIfEmpty": true
     },
     {
-        "DisplayName": "Map Cycle",
-        "Category": "Server Config",
-        "Description": "Tell the server which map cycle text file to use",
-        "Keywords": "Map",
-        "FieldName": "MapCycle",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "ParamFieldName": "MapCycle",
-        "IncludeInCommandLine": true,
-        "DefaultValue": "",
-        "EnumValues": {},
-        "SkipIfEmpty": true
-    },
-    {
         "DisplayName": "Rule Set",
-        "Category": "Server Config",
+        "Category": "Startup Config",
         "Description": "Set the rules for the server",
         "Keywords": "Rules",
         "FieldName": "ruleset",
@@ -154,31 +140,72 @@
         "SkipIfEmpty": true
     },
     {
+        "DisplayName": "Mods Enabled",
+        "Category": "Startup Config",
+        "Description": "Enables the server to use a Modlist",
+        "Keywords": "Mods",
+        "FieldName": "Mods_enabled",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "Mods_enabled",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-Mods -ModList=Mods"
+        }
+    },
+    {
         "DisplayName": "MOTD",
-        "Category": "Server Config",
-        "Description": "Set the server MOTD file",
+        "Category": "Startup Config",
+        "Description": "Set the server MOTD",
         "Keywords": "MOTD",
-        "FieldName": "motd",
+        "FieldName": "Motd",
         "InputType": "text",
         "IsFlagArgument": false,
-        "ParamFieldName": "motd",
-        "IncludeInCommandLine": true,
+        "ParamFieldName": "Motd",
+        "IncludeInCommandLine": false,
         "DefaultValue": "",
         "EnumValues": {},
         "SkipIfEmpty": true
     },
     {
-        "DisplayName": "Admin List",
-        "Category": "Server Config",
-        "Description": "set Admin List File for the server",
-        "Keywords": "Admin",
-        "FieldName": "AdminList",
-        "InputType": "text",
+        "DisplayName": "Admin Players",
+        "Description": "A list of Steam64 IDs for players that are in-game admins. [Find your Steam64 ID](https://steamidfinder.com/)",
+        "FieldName": "AdminPlayers",
+        "Category": "Startup Config",
+        "InputType": "list",
+        "Special": "listfile:./insurgencysandstorm/581330/Insurgency/Config/Server/Admins.txt"
+    },
+    {
+        "DisplayName": "Map Cycle",
+        "Description": "A List of map scenarios for the server to use",
+        "FieldName": "MapCycle",
+        "Category": "Startup Config",
+        "InputType": "list",
+        "Special": "listfile:./insurgencysandstorm/581330/Insurgency/Config/Server/MapCycle.txt"
+    },
+    {
+        "DisplayName": "Mods",
+        "Description": "Define a list of Mods for the server to use.",
+        "FieldName": "Mods",
+        "Category": "Startup Config",
+        "InputType": "list",
+        "Special": "listfile:./insurgencysandstorm/581330/Insurgency/Config/Server/Mods.txt"
+    },
+    {
+        "DisplayName": "Kill Feed Enabled",
+        "Category": "Game Mode",
+        "Description": "Is the kill feed enabled?",
+        "Keywords": "Kill Feed",
+        "FieldName": "bKillFeed",
+        "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "AdminList",
-        "IncludeInCommandLine": true,
-        "DefaultValue": "",
-        "EnumValues": {},
-        "SkipIfEmpty": true
+        "ParamFieldName": "bKillFeed",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
     }
 ]
