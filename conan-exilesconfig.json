@@ -1,28 +1,154 @@
 [
-  {
-      "DisplayName": "Server Name",
-      "Category": "Server Settings",
-      "Description": "The Name of the server shown in the server browser",
-      "Keywords": "name",
-      "FieldName": "ServerName",
-      "InputType": "text",
-      "IsFlagArgument": false,
-      "ParamFieldName": "ServerName",
-      "IncludeInCommandLine": true,
-      "DefaultValue": "Conan Exiles Server - Powered by AMP",
-      "EnumValues": {}
-  },
-  {
-      "DisplayName": "Max Players",
-      "Category": "Server Settings",
-      "Description": "The maximum amount of players that can be on the server at once",
-      "Keywords": "players",
-      "FieldName": "$MaxUsers",
-      "InputType": "number",
-      "IsFlagArgument": false,
-      "ParamFieldName": "$MaxUsers",
-      "IncludeInCommandLine": true,
-      "DefaultValue": "100",
-      "EnumValues": {}
-  }
-]
+    {
+        "DisplayName":"Game Port",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$ApplicationPort1",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "Hidden":true,
+        "ParamFieldName":"Port",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"7777"
+    },
+    {
+        "DisplayName":"Query Port",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$ApplicationPort3",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "Hidden":true,
+        "ParamFieldName":"QueryPort",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"27015"
+    },
+    {
+        "DisplayName":"RCON Port",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$RemoteAdminPort",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "Hidden":true,
+        "ParamFieldName":"RconPort",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"25575"
+    },
+    {
+        "DisplayName":"Server Name",
+        "Category":"Server Settings",
+        "Description":"Name of the server shown in the server browser",
+        "Keywords":"name",
+        "FieldName":"ServerName",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerName",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Conan Exiles Server - Powered by AMP"
+    },
+    {
+        "DisplayName":"Player Limit",
+        "Category":"Server Settings",
+        "Description":"Maximum number of players that may connect to the server",
+        "Keywords":"maximum,players",
+        "FieldName":"$MaxUsers",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"MaxPlayers",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"40",
+        "Suffix":"players"
+    },
+    {
+        "DisplayName":"Server Password",
+        "Category":"Server Settings",
+        "Description":"Password to connect to the server. Default is no password",
+        "Keywords":"password",
+        "FieldName":"ServerPassword",
+        "InputType":"password",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.ServerPassword",
+        "IncludeInCommandLine":false,
+        "DefaultValue":""
+    },
+    {
+        "DisplayName":"Admin Password",
+        "Category":"Server Settings",
+        "Description":"In-game \"admin\" user password (not the server password). NOTE: You must set this to allow use of the in-game admin panel",
+        "Keywords":"admin,password",
+        "FieldName":"AdminPassword",
+        "InputType":"RandomPassword",
+        "IsFlagArgument":false,
+        "ParamFieldName":"AdminPassword",
+        "IncludeInCommandLine":false,
+        "DefaultValue":""
+    },
+    {
+        "DisplayName":"RCON Password",
+        "Category":"Server Settings",
+        "Description":"Password to connect to RCON. NOTE: You should change this after first installing the server",
+        "Keywords":"rcon,password",
+        "FieldName":"$RemoteAdminPassword",
+        "InputType":"RandomPassword",
+        "IsFlagArgument":false,
+        "ParamFieldName":"RconPassword",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Password123"
+    },
+    {
+        "DisplayName":"Server Region",
+        "Category":"Server Settings",
+        "Description":"Sets the server region, which affects how the server is filtered in the server list",
+        "Keywords":"region",
+        "FieldName":"serverRegion",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.serverRegion",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Europe",
+            "1":"North America",
+            "2":"Asia",
+            "3":"Australia",
+            "4":"South America",
+            "5":"Japan"
+        }
+    },
+    {
+        "DisplayName":"Enable BattlEye",
+        "Category":"Server Settings",
+        "Description":"If enabled, BattlEye cheat protection will apply to the server",
+        "Keywords":"battleye,cheats",
+        "FieldName":"IsBattlEyeEnabled",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.IsBattlEyeEnabled",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "True":"True",
+            "False":"False"
+        }
+    }, 
+    {
+        "DisplayName":"Enable Valve Anti-cheat (Steam VAC)",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"VAC,cheat",
+        "FieldName":"IsVACEnabled",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.IsVACEnabled",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "True":"True",
+            "False":"False"
+        }
+    }
+ ]
