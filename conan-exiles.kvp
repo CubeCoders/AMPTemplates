@@ -18,13 +18,13 @@ App.DisplayName=Conan Exiles
 App.RootDir=./conan-exiles/
 App.BaseDirectory=./conan-exiles/443030/
 App.ExecutableWin=443030\ConanSandbox\Binaries\Win64\ConanSandboxServer-Win64-Test.exe
-App.ExecutableLinux=1580130/proton
+App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=443030/ConanSandbox/Binaries/Win64
-App.LinuxCommandLineArgs=run ./ConanSandboxServer-Win64-Test.exe
+App.LinuxCommandLineArgs=-a "{{$FullRootDir}}1580130/proton" run "./ConanSandboxServer-Win64-Test.exe"
 App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} -log -ServerName="{{ServerName}}" -RconEnabled=1 -RconPassword="{{$RemoteAdminPassword}}" {{$FormattedArgs}}
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"./linux64:%LD_LIBRARY_PATH%","SteamAppId":"440900","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}1580130","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullRootDir}}1580130","ENABLE_VKBASALT":"1"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"./linux64:%LD_LIBRARY_PATH%","SteamAppId":"440900","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}1580130","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullRootDir}}1580130"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=String
@@ -47,7 +47,7 @@ App.AdminMethod=SourceRCON
 App.AdminLoginTransform=None
 App.RCONConnectDelaySeconds=5
 App.RCONConnectRetrySeconds=5
-App.UpdateSources=[{"UpdateStageName":"SteamCMD and Conan Exiles Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"443030","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Proton Compatibility Layer","UpdateSourcePlatform":"Linux","UpdateSource":"SteamCMD","UpdateSourceData":"1580130"},{"UpdateStageName":"ServerSettings File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://raw.githubusercontent.com/IceOfWraith/AMPTemplates/conan/conan-exilesconfigsettings.ini","UpdateSourceTarget":"../","OverwriteExistingFiles":true},{"UpdateStageName":"Config Directory Creation","UpdateSourcePlatform":"All","UpdateSource":"CreateDirectory","UpdateSourceArgs":"./conan-exiles/443030/ConanSandbox/Saved/Config/WindowsServer","OverwriteExistingFiles":false},{"UpdateStageName":"ServerSettings File Copy","UpdateSourcePlatform":"All","UpdateSource":"CopyFilePath","UpdateSourceData":"./conan-exiles/443030/ConanSandbox/Saved/Config/WindowsServer/ServerSettings.ini","UpdateSourceArgs":"./conan-exilesconfigsettings.ini","OverwriteExistingFiles":false}]
+App.UpdateSources=[{"UpdateStageName":"SteamCMD and Conan Exiles Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"443030","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Proton Compatibility Layer","UpdateSourcePlatform":"Linux","UpdateSource":"SteamCMD","UpdateSourceData":"1580130"},{"UpdateStageName":"ServerSettings File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://github.com/CubeCoders/AMPTemplates/raw/main/conan-exilesconfigsettings.ini","UpdateSourceTarget":"../","OverwriteExistingFiles":true},{"UpdateStageName":"Config Directory Creation","UpdateSourcePlatform":"All","UpdateSource":"CreateDirectory","UpdateSourceArgs":"./conan-exiles/443030/ConanSandbox/Saved/Config/WindowsServer","OverwriteExistingFiles":false},{"UpdateStageName":"ServerSettings File Copy","UpdateSourcePlatform":"All","UpdateSource":"CopyFilePath","UpdateSourceData":"./conan-exiles/443030/ConanSandbox/Saved/Config/WindowsServer/ServerSettings.ini","UpdateSourceArgs":"./conan-exilesconfigsettings.ini","OverwriteExistingFiles":false}]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
