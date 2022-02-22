@@ -4,11 +4,11 @@ Meta.OS=Windows, Linux
 Meta.Author=Greelan, IceOfWraith, Dhraz
 Meta.URL=https://projectzomboid.com
 Meta.DisplayImageSource=steam:108600
-Meta.EndpointURIFormat=steam://connect/{ip}/{GenericModule.App.ApplicationPort2}
+Meta.EndpointURIFormat=steam://connect/{ip}:{GenericModule.App.ApplicationPort2}
 Meta.ConfigManifest=project-zomboidconfig.json
-Meta.MetaConfigManifest=
+Meta.MetaConfigManifest=project-zomboidmetaconfig.json
 Meta.ConfigRoot=project-zomboid.kvp
-Meta.MinAMPVersion=2.3.0.8
+Meta.MinAMPVersion=2.3.2.0
 Meta.SpecificDockerImage=
 Meta.Prerequsites=[]
 App.DisplayName=Project Zomboid
@@ -18,7 +18,7 @@ App.ExecutableWin=380870\jre64\bin\java.exe
 App.ExecutableLinux=380870/ProjectZomboid64
 App.WorkingDir=380870
 App.LinuxCommandLineArgs=-Dzomboid.steam={{SteamInt}} -Duser.home=./ -Xmx{{MaxMemory}}m {{CustomJavaArgs}} --
-App.WindowsCommandLineArgs=-Djava.awt.headless=true -Dzomboid.znetlog=1 -Dzomboid.steam={{SteamInt}} -Duser.home=./ -Xmx{{MaxMemory}}m -XX:+UseZGC -XX:-CreateCoredumpOnCrash -XX:-OmitStackTraceInFastThrow -Djava.library.path=natives/;natives/win64/;. {{CustomJavaArgs}} -cp java/*;java/ zombie.network.GameServer -statistic 0 --
+App.WindowsCommandLineArgs=-Djava.awt.headless=true -Dzomboid.znetlog=1 -Dzomboid.steam={{SteamInt}} -Duser.home=./ -Xmx{{MaxMemory}}m {{JavaGCAlgo}} -XX:-CreateCoredumpOnCrash -XX:-OmitStackTraceInFastThrow -Djava.library.path=natives/;natives/win64/;. {{CustomJavaArgs}} -cp java/*;java/ zombie.network.GameServer -statistic 0 --
 App.CommandLineArgs={{$PlatformArgs}} -port {{$ApplicationPort1}} -steamport1 {{$ApplicationPort2}} -steamport2 {{$ApplicationPort3}} {{CustomServerArgs}} {{$FormattedArgs}}
 App.AppSettings={}
 App.EnvironmentVariables={"PATH":"./jre64/bin:%PATH%","LD_LIBRARY_PATH":"./linux64:./natives:./:./jre64/lib/amd64:%LD_LIBRARY_PATH%","LD_PRELOAD":"./jre64/lib/libjsig.so","PZ_CLASSPATH":"java/*;java/","SteamAppId":"108600"}
@@ -36,12 +36,12 @@ App.ApplicationIPBinding=
 App.ApplicationPort1=16261
 App.ApplicationPort2=8766
 App.ApplicationPort3=8767
-App.RemoteAdminPort=0
-App.MaxUsers=20
+App.RemoteAdminPort=27015
+App.MaxUsers=16
 App.UseRandomAdminPassword=False
-App.RemoteAdminPassword=
+App.RemoteAdminPassword=Password123
 App.AdminMethod=STDIO
-App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":31,"UpdateSource":4,"UpdateSourceData":"380870","UpdateSourceArgs":null,"UpdateSourceVersion":null,"UpdateSourceTarget":null,"UnzipUpdateSource":false,"OverwriteExistingFiles":false,"ForceDownloadPlatform":0,"UpdateSourceConditionSetting":null,"UpdateSourceConditionValue":null}]
+App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"380870"},{"UpdateStageName":"Mods Directory Creation","UpdateSourcePlatform":"All","UpdateSource":"CreateDirectory","UpdateSourceArgs":"./project-zomboid/380870/Zomboid/mods","OverwriteExistingFiles":false}]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
@@ -51,9 +51,9 @@ App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^LOG\s+: Network\s+, \d+> [\d,]+> \*+ SERVER STARTED \*+$
-Console.UserJoinRegex=^LOG\s+: Network\s+, \d+> [\d,]+> Connected new client (?<username>.+?) ID # (?<userid>.+?) and assigned DL port (?<userport>.+?)$
-Console.UserLeaveRegex=^LOG\s+: (Network|General)\s+, \d+> [\d,]+> (Disconnected player "(?<username>.+?)" |\d+ znet: Disconnecting client #(?<userid>.+?) SteamID=)\d+$
+Console.AppReadyRegex=^LOG\s+: Network\s+, \d+> [\d,.]+> \*+ SERVER STARTED \*+$
+Console.UserJoinRegex=^LOG\s+: Network\s+, \d+> [\d,.]+> Connected new client (?<username>.+?) ID # (?<userid>.+?) and assigned DL port (?<userport>.+?)$
+Console.UserLeaveRegex=^LOG\s+: (Network|General)\s+, \d+> [\d,.]+> (Disconnected player "(?<username>.+?)" |\d+ znet: Disconnecting client #(?<userid>.+?) SteamID=)\d+$
 Console.UserChatRegex=
 Console.UpdateAvailableRegex=
 Console.SuppressLogAtStart=False
