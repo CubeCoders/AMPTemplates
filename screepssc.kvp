@@ -1,66 +1,69 @@
 App.AdminMethod=STDIO
 App.ApplicationPort1=21025
 App.ApplicationReadyMode=Immediate
-App.BaseDirectory=./screepssc/
+App.BaseDirectory=./screeps/
 App.CommandLineArgs=
 App.CommandLineParameterDelimiter=
-App.CommandLineParameterFormat=-{0} "{1}"
-App.DisplayName=Screepssc
-App.ExecutableLinux=npx screeps
-App.ExecutableWin=npx screeps
-App.ExitMethod=OSApp.AdminMethod=STDIO
-App.ApplicationPort1=21025
-App.ApplicationReadyMode=Immediate
-App.BaseDirectory=./screepssc/
-App.CommandLineArgs=screeps start
-App.CommandLineParameterDelimiter=
-App.CommandLineParameterFormat={0} {1}
-App.DisplayName=Screepssc
-App.ExecutableLinux=npx
-App.ExecutableWin=npx screeps
+App.CommandLineParameterFormat=--{0} "{1}"
+App.DisplayName=Screeps
+App.ExecutableLinux=node ./bin/screeps.js
+App.ExecutableWin=node.exe ./bin/screeps.js
 App.ExitMethod=OS_CLOSE
 App.ExitString=stop
 App.HasReadableConsole=true
 App.HasWritableConsole=true
 App.RapidStartup=false
-App.RootDir=./screepssc/
+App.RootDir=./screeps/
 App.UpdateSource=Multi
-App.UpdateSources=[{"UpdateStageName": "GitHub Release Download","UpdateSourcePlatform": "All", "UpdateSource": "GithubRelease", "UpdateSourceData": "screeps/screeps"}]
-App.WorkingDir=
+App.UpdateSources=[
+  {
+    "UpdateStageName": "Download NodeJS Binaries",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "FetchUrl",
+    "UpdateSourceData": "https://nodejs.org/dist/v16.14.0/node-v16.14.0-win-x64.zip",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true
+  },
+  {
+    "UpdateStageName": "Download NodeJS Binaries",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "FetchUrl",
+    "UpdateSourceData": "https://nodejs.org/dist/v16.14.0/node-v16.14.0-linux-x64.tar.xz"
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true
+  },
+  {
+    "UpdateStageName": "Fetch Screeps from Github",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "GithubRelease",
+    "UpdateSourceArgs": "screeps/screeps",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true
+  },
+  {
+    "UpdateStageName": "Init Screeps",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "StartApplication"
+  },
+  {
+    "UpdateStageName": "Init Screeps",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "StartApplication"
+  }
+]
+App.WorkingDir=./screeps/
 Console.AppReadyRegex=^Server is ready.$
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
 Console.UserChatRegex=
 Console.UserJoinRegex=
 Console.UserLeaveRegex=
 Meta.Author=Ralph Schuler
-Meta.ConfigManifest=screepsscconfig.json
-Meta.ConfigRoot=screepssc.kvp
+Meta.ConfigManifest=screepsconfig.json
+Meta.ConfigRoot=screeps.kvp
 Meta.Description=MMO sandbox game for programmers
 Meta.DisplayImageSource=url:https://github.com/screeps/screeps/raw/master/logo.png
 Meta.SpecificDockerImage=ghcr.io/goover/ampimages:nodejs_16
-Meta.DisplayName=Screepssc
-Meta.EndpointURIFormat=
-Meta.OS=2
-Meta.URL=https://screeps.com_CLOSE
-App.ExitString=stop
-App.HasReadableConsole=true
-App.HasWritableConsole=true
-App.RapidStartup=false
-App.RootDir=./screepssc/
-App.UpdateSource=None
-App.WorkingDir=
-Console.AppReadyRegex=^Server is ready.$
-Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.UserChatRegex=
-Console.UserJoinRegex=
-Console.UserLeaveRegex=
-Meta.Author=Ralph Schuler
-Meta.ConfigManifest=screepsscconfig.json
-Meta.ConfigRoot=screepssc.kvp
-Meta.Description=MMO sandbox game for programmers
-Meta.DisplayImageSource=url:https://github.com/screeps/screeps/raw/master/logo.png
-Meta.SpecificDockerImage=ghcr.io/goover/ampimages:nodejs_16
-Meta.DisplayName=Screepssc
+Meta.DisplayName=Screeps
 Meta.EndpointURIFormat=
 Meta.OS=2
 Meta.URL=https://screeps.com
