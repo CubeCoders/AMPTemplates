@@ -38,9 +38,7 @@
         "InputType": "enum",
         "EnumValues": {
             "0": "Classic",
-            "1": "Expert",
-            "2": "Master",
-            "3": "Journey"
+            "1": "Expert"
         },
         "IncludeInCommandLine": false,
         "DefaultValue": "0"
@@ -72,17 +70,57 @@
         "DefaultValue": 2
     },
     {
+        "DisplayName": "Mod Path",
+        "Category": "Terraria ModLoader settings",
+        "Keywords": "folder path mod mods tmodloader",
+        "Description": "Where tModLoader will read mods from. [instructions](https://github.com/jasperfirecai2/amp-templates/wiki/Managing-mods-with-tmodloader)",
+        "FieldName": "ModPath",
+        "ParamFieldName": "modpath",
+        "placeholder": "ModLoader/Mods",
+        "suffix": "",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "ModLoader/Mods"
+    },
+    {
+        "DisplayName": "Mod Pack",
+        "Category": "Terraria ModLoader settings",
+        "Keywords": "pack mod mods modpack tmodloader",
+        "Description": "Which modpack to load (does not install mods for you!)",
+        "FieldName": "ModPack",
+        "ParamFieldName": "modpack",
+        "placeholder": "modpack",
+        "suffix": ".json",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": ""
+    },
+    {
+        "DisplayName": "Update Source",
+        "Category": "Terraria ModLoader settings",
+        "Keywords": "download source steam github tmodloader",
+        "Description": "Select where to obtain tModLoader. Steam requires you to own [Terraria](https://store.steampowered.com/app/105600/Terraria/) & [tModLoader](https://store.steampowered.com/app/1281930/tModLoader/) on your account and accept tModLoader's ToS by installing it as a game to a device you can login from.",
+        "FieldName": "Source",
+        "IncludeInCommandLine": false,
+        "InputType": "enum",
+        "EnumValues": {
+            "GitHub": "GitHub",
+            "Steam": "Steam"
+        },
+        "DefaultValue": "GitHub"
+    },
+    {
         "DisplayName": "World Path",
         "Category": "Terraria Server settings",
         "Keywords": "folder path world saves savegame worlds",
         "Description": "The relative path to save worlds in",
         "FieldName": "WorldPath",
         "ParamFieldName": "worldpath",
-        "placeholder": "Worlds",
+        "placeholder": "ModLoader/Worlds",
         "suffix": "",
         "InputType": "text",
         "IncludeInCommandLine": false,
-        "DefaultValue": "Worlds"
+        "DefaultValue": "ModLoader/Worlds"
     },
     {
         "DisplayName": "World Name",
@@ -91,11 +129,11 @@
         "Description": "Which world to load on boot",
         "FieldName": "World",
         "ParamFieldName": "world",
-        "placeholder": "Worlds/world.wld",
+        "placeholder": "ModLoader/Worlds/world.wld",
         "suffix": "",
         "InputType": "text",
         "IncludeInCommandLine": true,
-        "DefaultValue": "Worlds/world.wld"
+        "DefaultValue": "ModLoader/Worlds/world.wld"
     },
     {
         "DisplayName": "Max Players",
@@ -258,231 +296,5 @@
         "IncludeInCommandLine": true,
         "ParamFieldName": "announcementboxrange",
         "DefaultValue": "-1"
-    },
-    {
-        "DisplayName": "Freeze time",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power freeze time stop clock",
-        "Description": "Journey mode power permissions for every individual power. 'Host' is only relevant when using steam integration, which is not supported by AMP by default.",
-        "FieldName": "time_setfrozen",
-        "ParamFieldName": "journeypermission_time_setfrozen",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Set to Dawn",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power dawn time clock",
-        "FieldName": "time_setdawn",
-        "ParamFieldName": "journeypermission_time_setdawn",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Set to Noon",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power noon time clock",
-        "FieldName": "time_setnoon",
-        "ParamFieldName": "journeypermission_time_setnoon",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Set to Dusk",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power dusk time clock",
-        "FieldName": "time_setdusk",
-        "ParamFieldName": "journeypermission_time_setdusk",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Set to Midnight",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power midnight time clock",
-        "FieldName": "time_setmidnight",
-        "ParamFieldName": "journeypermission_time_setmidnight",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "God Mode",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power god godmode",
-        "FieldName": "godmode",
-        "ParamFieldName": "journeypermission_godmode",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Set wind intensity",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power wind set strength",
-        "FieldName": "wind_setstrength",
-        "ParamFieldName": "journeypermission_wind_setstrength",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Set rain intensity",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power rain set strength",
-        "FieldName": "rain_setstrength",
-        "ParamFieldName": "journeypermission_rain_setstrength",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Change game speed",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power speed time speedup",
-        "FieldName": "time_setspeed",
-        "ParamFieldName": "journeypermission_time_setspeed",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Lock rain conditions",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power rain lock freeze",
-        "FieldName": "rain_setfrozen",
-        "ParamFieldName": "journeypermission_rain_setfrozen",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Lock Wind conditions",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power wind lock freeze",
-        "FieldName": "wind_setfrozen",
-        "ParamFieldName": "journeypermission_wind_setfrozen",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Placement Range",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power placement range reach tile",
-        "FieldName": "increaseplacementrange",
-        "ParamFieldName": "journeypermission_increaseplacementrange",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Difficulty changing",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power difficulty",
-        "FieldName": "setdifficulty",
-        "ParamFieldName": "journeypermission_setdifficulty",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Biome/Evil Spreading",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power evil spread biome crimson hallow corrupted",
-        "FieldName": "biomespread_setfrozen",
-        "ParamFieldName": "journeypermission_biomespread_setfrozen",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
-    },
-    {
-        "DisplayName": "Spawn Rate",
-        "Category": "Terraria Journey Permissions",
-        "Keywords": "journey mode permissions power spawn rate",
-        "FieldName": "setspawnrate",
-        "ParamFieldName": "journeypermission_setspawnrate",
-        "InputType": "enum",
-        "EnumValues": {
-            "0": "Locked for everyone",
-            "1": "Can only be changed by host",
-            "2": "Can be changed by everyone"
-        },
-        "IncludeInCommandLine": false,
-        "DefaultValue": "2"
     }
 ]
