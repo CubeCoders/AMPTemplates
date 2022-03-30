@@ -68,6 +68,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "RCon Password",
+        "Category": "Server Settings",
+        "Description": "Sets the password required to login to RCon",
+        "Keywords": "server,admin,password,security,protect,protection,elevated,permissions,ban,kick",
+        "FieldName": "$RemoteAdminPassword",
+        "InputType": "RandomPassword",
+        "IsFlagArgument": false,
+        "ParamFieldName": "passwordRcon",
+        "IncludeInCommandLine": false,
+        "Required": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Admin Password",
         "Category": "Server Settings",
         "Description": "Sets the password required to become a server admin",
@@ -115,12 +129,15 @@
         "Description": "Mission to load on server startup. <MissionName>.<TerrainName>",
         "Keywords": "server,mission,terrain,template",
         "FieldName": "template",
-        "InputType": "text",
+        "InputType": "enum",
         "IsFlagArgument": false,
         "ParamFieldName": "template",
         "IncludeInCommandLine": false,
         "DefaultValue": "dayzOffline.chernarusplus",
-        "EnumValues": {}
+        "EnumValues": {
+            "dayzOffline.chernarusplus": "dayzOffline.chernarusplus",
+            "dayzOffline.enoch": "dayzOffline.enoch"
+        }
     },
     {
         "DisplayName": "Force Same Build",
@@ -304,7 +321,7 @@
         "Category": "Server Settings",
         "Description": "The maximum number of players that can join",
         "Keywords": "server,join,joining,concurrent,que,queue,performance",
-        "FieldName": "maxPlayers",
+        "FieldName": "$MaxUsers",
         "InputType": "number",
         "IsFlagArgument": false,
         "ParamFieldName": "maxPlayers",
