@@ -1,44 +1,5 @@
 [
     {
-        "DisplayName":"Game Port",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$ApplicationPort1",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "Hidden":true,
-        "ParamFieldName":"Port",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"7777"
-    },
-    {
-        "DisplayName":"Query Port",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$ApplicationPort3",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "Hidden":true,
-        "ParamFieldName":"QueryPort",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"27015"
-    },
-    {
-        "DisplayName":"RCON Port",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$RemoteAdminPort",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "Hidden":true,
-        "ParamFieldName":"RconPort",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"25575"
-    },
-    {
         "DisplayName":"Server Name",
         "Category":"Server Settings",
         "Description":"Name of the server shown in the server browser",
@@ -47,8 +8,38 @@
         "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"ServerName",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"Conan Exiles Server - Powered by AMP"
+    },
+    {
+        "DisplayName":"Map",
+        "Category":"Server Settings",
+        "Description":"Sets the map to load on startup",
+        "Keywords":"map",
+        "FieldName":"Map",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Map",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"/Game/Maps/ConanSandbox/ConanSandbox",
+        "EnumValues":{
+            "":"Custom",
+            "/Game/Maps/ConanSandbox/ConanSandbox":"Exiled Lands",
+            "/Game/DLC_EXT/DLC_Siptah/Maps/DLC_Isle_of_Siptah":"Isle of Siptah"
+        }
+    },
+    {
+        "DisplayName":"Custom Map",
+        "Category":"Server Settings",
+        "Description":"If using a custom map, enter it here. Choose Custom from the Map option.",
+        "Keywords":"custom,map",
+        "FieldName":"CustomMap",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"CustomMap",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"/Game/Mods/Savage_Wilds/Savage_Wilds"
     },
     {
         "DisplayName":"Player Limit",
@@ -59,7 +50,7 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"MaxPlayers",
-        "IncludeInCommandLine":true,
+        "IncludeInCommandLine":false,
         "DefaultValue":"40",
         "Suffix":"players"
     },
@@ -71,9 +62,10 @@
         "FieldName":"ServerPassword",
         "InputType":"password",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.ServerPassword",
-        "IncludeInCommandLine":false,
-        "DefaultValue":""
+        "ParamFieldName":"ServerPassword",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"",
+        "SkipIfEmpty": true
     },
     {
         "DisplayName":"Admin Password",
