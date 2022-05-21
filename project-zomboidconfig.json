@@ -58,7 +58,7 @@
     {
         "DisplayName":"Server Public Name",
         "Category":"Server Settings",
-        "Description":"Server name as shown to the public (if the server is visible)",
+        "Description":"Server name as shown in the in-game and/or Steam browsers",
         "Keywords":"public,name",
         "FieldName":"PublicName",
         "InputType":"text",
@@ -71,7 +71,7 @@
     {
         "DisplayName":"Make Server Public",
         "Category":"Server Settings",
-        "Description":"If enabled, the server will be visible on Steam",
+        "Description":"If enabled, the server will be visible in the in-game browser (Steam-enabled servers are always visible in the Steam server browser)",
         "Keywords":"public,steam",
         "FieldName":"Public",
         "InputType":"checkbox",
@@ -87,7 +87,7 @@
     {
         "DisplayName":"Server Public Description",
         "Category":"Server Settings",
-        "Description":"Description that people can see while going over your server",
+        "Description":"Description displayed in the in-game browser. Use \"\\n\" to create a new line in the description",
         "Keywords":"public,description",
         "FieldName":"PublicDescription",
         "InputType":"text",
@@ -153,21 +153,21 @@
     {
         "DisplayName":"Player Limit",
         "Category":"Server Settings",
-        "Description":"Maximum number of players that may connect to the server",
+        "Description":"Maximum number of players that may be on the server at one time (excluding admins). Player counts above 32 may affect performance",
         "Keywords":"maximum,players",
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"MaxPlayers",
         "IncludeInCommandLine":false,
-        "DefaultValue":"16",
+        "DefaultValue":"32",
         "Suffix":"players",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Disable Whitelist",
+        "DisplayName":"Enable Open Server",
         "Category":"Server Settings",
-        "Description":"",
+        "Description":"If enabled, players may join the server without already being included in the whitelist",
         "Keywords":"whitelist,open",
         "FieldName":"Open",
         "InputType":"checkbox",
@@ -183,7 +183,7 @@
     {
         "DisplayName":"Automatically Whitelist Players",
         "Category":"Server Settings",
-        "Description":"Automatically add players to the whitelist (if not disabled)",
+        "Description":"Automatically add players to the whitelist (for open servers)",
         "Keywords":"whitelist,add,automatic",
         "FieldName":"AutoCreateUserInWhiteList",
         "InputType":"checkbox",
@@ -303,7 +303,7 @@
     {
         "DisplayName":"Display Player Usernames",
         "Category":"Server Settings",
-        "Description":"If enabled, display players' usernames",
+        "Description":"If enabled, display players' usernames above their heads in-game",
         "Keywords":"display,name",
         "FieldName":"DisplayUserName",
         "InputType":"checkbox",
@@ -319,7 +319,7 @@
     {
         "DisplayName":"Display Player Character Names",
         "Category":"Server Settings",
-        "Description":"If enabled, display players' character names",
+        "Description":"If enabled, display players' first and last names above their heads in-game instead of usernames",
         "Keywords":"display,character,name",
         "FieldName":"ShowFirstAndLastName",
         "InputType":"checkbox",
@@ -352,7 +352,7 @@
     {
         "DisplayName":"Pause When Empty",
         "Category":"Server Settings",
-        "Description":"If enabled, the server will pause when empty, and won't update",
+        "Description":"If enabled, game time stops when there are no players online",
         "Keywords":"pause,empty",
         "FieldName":"PauseEmpty",
         "InputType":"checkbox",
@@ -368,7 +368,7 @@
     {
         "DisplayName":"Auto World Save Interval",
         "Category":"Server Settings",
-        "Description":"Time between each automatic world save (0 = never)",
+        "Description":"Time between each automatic save of loaded parts of the map (0 = never)",
         "Keywords":"save,interval",
         "FieldName":"SaveWorldEveryMinutes",
         "InputType":"number",
@@ -378,6 +378,22 @@
         "DefaultValue":"0",
         "Suffix":"minutes",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable UPnP",
+        "Category":"Server Settings",
+        "Description":"If enabled, the server will attempt to configure automatic port forwarding on a compatible router",
+        "Keywords":"upnp",
+        "FieldName":"UPnP",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"UPnP",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
     },
     {
         "DisplayName":"Additional Java Startup Parameters",
@@ -423,7 +439,7 @@
     {
         "DisplayName":"Set Spawn Point",
         "Category":"Gameplay Settings",
-        "Description":"Sets the spawn point. Default is 0,0,0. Use x,y,z coordinates",
+        "Description":"Sets the spawn point for every new player. Default is 0,0,0. [Find desired coordinates](https://map.projectzomboid.com/)",
         "Keywords":"spawnpoint,map",
         "FieldName":"SpawnPoint",
         "InputType":"text",
@@ -436,7 +452,7 @@
     {
         "DisplayName":"Spawn Items",
         "Category":"Gameplay Settings",
-        "Description":"Comma separated list of items that all players spawn with",
+        "Description":"Comma separated list of item types that new players spawn with",
         "Keywords":"spawn,items",
         "FieldName":"SpawnItems",
         "InputType":"text",
@@ -450,7 +466,7 @@
     {
         "DisplayName":"Allow PvP",
         "Category":"Gameplay Settings",
-        "Description":"If enabled, Player vs Player is allowed",
+        "Description":"If enabled, players can hurt and kill other players",
         "Keywords":"pvp",
         "FieldName":"PVP",
         "InputType":"checkbox",
@@ -466,7 +482,7 @@
     {
         "DisplayName":"Enable PvP Toggle (Safety System)",
         "Category":"Gameplay Settings",
-        "Description":"If enabled, allows PvP to be toggled on and off. Requires PvP to be allowed",
+        "Description":"If enabled, allows players to enter and leave PvP mode on an individual basis. Requires \"Allow PvP\" to be enabled",
         "Keywords":"safetysystem,pvp",
         "FieldName":"SafetySystem",
         "InputType":"checkbox",
@@ -480,9 +496,25 @@
         }
     },
     {
+        "DisplayName":"Show Player PvP Status",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, displays a skull icon above the heads of players in PvP mode",
+        "Keywords":"pvp,status,safety",
+        "FieldName":"ShowSafety",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ShowSafety",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
         "DisplayName":"PvP Toggle Timer",
         "Category":"Gameplay Settings",
-        "Description":"Time taken to switch PvP between on and off",
+        "Description":"Time taken for a player to enter and leave PvP mode",
         "Keywords":"safetysystem,pvp,timer",
         "FieldName":"SafetyToggleTimer",
         "InputType":"number",
@@ -496,7 +528,7 @@
     {
         "DisplayName":"PvP Cooldown Timer",
         "Category":"Gameplay Settings",
-        "Description":"Time taken before PvP can be toggled again",
+        "Description":"Delay before a player can enter or leave PvP mode again",
         "Keywords":"safetysystem,pvp,timer,cooldown",
         "FieldName":"SafetyCooldownTimer",
         "InputType":"number",
@@ -522,6 +554,20 @@
             "True":"true",
             "False":"false"
         }
+    },
+    {
+        "DisplayName":"Game Days For Factions",
+        "Category":"Gameplay Settings",
+        "Description":"Number of in-game days that a player must survive for before they can create a faction",
+        "Keywords":"factions",
+        "FieldName":"FactionDaySurvivedToCreate",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"FactionDaySurvivedToCreate",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "Suffix":"days",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Enable Global Chat",
@@ -555,7 +601,7 @@
     {
         "DisplayName":"Don't Allow Fire",
         "Category":"Gameplay Settings",
-        "Description":"If enabled, fires are not allowed. Enable if fires cause problems for your server",
+        "Description":"If enabled, fires are not allowed (except campfires). Enable if fires cause problems for your server",
         "Keywords":"fire",
         "FieldName":"NoFire",
         "InputType":"checkbox",
@@ -571,7 +617,7 @@
     {
         "DisplayName":"Announce Player Death",
         "Category":"Gameplay Settings",
-        "Description":"If enabled, a server-wide announcement is made when a player dies",
+        "Description":"If enabled, a global message is displayed in the chat when a player dies",
         "Keywords":"announce,death",
         "FieldName":"AnnounceDeath",
         "InputType":"checkbox",
@@ -585,9 +631,23 @@
         }
     },
     {
+        "DisplayName":"Minutes Per Book Page",
+        "Category":"Gameplay Settings",
+        "Description":"Sets the number of in-game minutes it takes to read one page of a book",
+        "Keywords":"minutes,book,page",
+        "FieldName":"MinutesPerPage",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"MinutesPerPage",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.0",
+        "Suffix":"minutes",
+        "EnumValues":{}
+    },    
+    {
         "DisplayName":"Minimum Period for Loot Respawn",
         "Category":"Gameplay Settings",
-        "Description":"Sets the in-game hours that must have passed before loot can respawn (0 = never)",
+        "Description":"Sets the in-game hours after which all containers that have been looted once will respawn loot (0 = never)",
         "Keywords":"loot,respawn",
         "FieldName":"HoursForLootRespawn",
         "InputType":"number",
@@ -601,7 +661,7 @@
     {
         "DisplayName":"Maximum Items for Loot Respawn",
         "Category":"Gameplay Settings",
-        "Description":"Sets The maximum amount of items in containers before items can respawn. If the number of items are less than or equal to the number set, loot will respawn",
+        "Description":"Sets the maximum number of items that containers can hold to be allowed to respawn. If the number of items is less than or equal to the number set, loot will respawn",
         "Keywords":"loot,respawn,maximum",
         "FieldName":"MaxItemsForLootRespawn",
         "InputType":"number",
@@ -613,9 +673,25 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Construction Prevents Respawn",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, items will not respawn in buildings that players have barricaded or built in",
+        "Keywords":"loot,respawn,construction",
+        "FieldName":"ConstructionPreventsLootRespawn",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ConstructionPreventsLootRespawn",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
         "DisplayName":"Allow Player Safehouses",
         "Category":"Gameplay Settings",
-        "Description":"If enabled, players can have safehouses",
+        "Description":"If enabled, both admins and players can claim safehouses",
         "Keywords":"safehouse",
         "FieldName":"PlayerSafehouse",
         "InputType":"checkbox",
@@ -631,7 +707,7 @@
     {
         "DisplayName":"Allow Admin Safehouses",
         "Category":"Gameplay Settings",
-        "Description":"If enabled, admins can have safehouses",
+        "Description":"If enabled, only admins can claim safehouses",
         "Keywords":"safehouse",
         "FieldName":"AdminSafehouse",
         "InputType":"checkbox",
@@ -645,9 +721,38 @@
         }
     },
     {
+        "DisplayName":"Allow Safehouse Trespass",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, non-members can enter a safehouse without being invited",
+        "Keywords":"safehouse,trespass",
+        "FieldName":"SafehouseAllowTrepass",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SafehouseAllowTrepass",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Allow Safehouse Trespass",
+        "Category":"Gameplay Settings",
+        "Description":"[Backup setting given typo in config key, to future proof for correction]",
+        "Keywords":"",
+        "FieldName":"SafehouseAllowTrepass",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "Hidden":true,
+        "ParamFieldName":"SafehouseAllowTrespass",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Allow Safehouse Fire",
         "Category":"Gameplay Settings",
-        "Description":"If enabled, safehouses can catch fire",
+        "Description":"If enabled, safehouses can be damaged by fire",
         "Keywords":"safehouse,fire",
         "FieldName":"SafehouseAllowFire",
         "InputType":"checkbox",
@@ -661,9 +766,25 @@
         }
     },
     {
+        "DisplayName":"Allow Safehouse Loot",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, non-members can loot safehouses",
+        "Keywords":"safehouse,loot",
+        "FieldName":"SafehouseAllowLoot",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SafehouseAllowLoot",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
         "DisplayName":"Allow Safehouse Respawn",
         "Category":"Gameplay Settings",
-        "Description":"If enabled, a player can respawn in their safehouse after death",
+        "Description":"If enabled, players will respawn in a safehouse they were a member of before death",
         "Keywords":"safehouse,respawn",
         "FieldName":"SafehouseAllowRespawn",
         "InputType":"checkbox",
@@ -679,7 +800,7 @@
     {
         "DisplayName":"Game Days For Safehouse",
         "Category":"Gameplay Settings",
-        "Description":"Number of game days required before a safehouse can be claimed",
+        "Description":"Number of in-game days that a player must survive for before they can claim a safehouse",
         "Keywords":"safehouse,days",
         "FieldName":"SafehouseDaySurvivedToClaim",
         "InputType":"number",
@@ -707,7 +828,7 @@
     {
         "DisplayName":"Allow Sledgehammer Destruction",
         "Category":"Gameplay Settings",
-        "Description":"If enabled, objects can be destroyed by sledgehammer",
+        "Description":"If enabled, players can destroy world objects with sledgehammers",
         "Keywords":"sledgehammer,destruction",
         "FieldName":"AllowDestructionBySledgehammer",
         "InputType":"checkbox",
@@ -721,9 +842,25 @@
         }
     },
     {
+        "DisplayName":"Allow Only Safehouse Sledgehammers",
+        "Category":"Gameplay Settings",
+        "Description":"If enabled, players can destroy world objects with sledgehammers only in their safehouse. Requires \"Allow Sledgehammer Destruction\" to be enabled",
+        "Keywords":"sledgehammer,destruction",
+        "FieldName":"SledgehammerOnlyInSafehouse",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SledgehammerOnlyInSafehouse",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
         "DisplayName":"Allow Sleep",
         "Category":"Gameplay Settings",
-        "Description":"If enabled, players can sleep",
+        "Description":"If enabled, players are allowed to sleep when tired, but do not need to",
         "Keywords":"sleep",
         "FieldName":"SleepAllowed",
         "InputType":"checkbox",
@@ -739,7 +876,7 @@
     {
         "DisplayName":"Require Sleep",
         "Category":"Gameplay Settings",
-        "Description":"If enabled, players require sleep",
+        "Description":"If enabled, players become tired and need to sleep. Requires \"Allow Sleep\" to be enabled",
         "Keywords":"sleep",
         "FieldName":"SleepNeeded",
         "InputType":"checkbox",
@@ -755,7 +892,7 @@
     {
         "DisplayName":"Enable Discord Integration",
         "Category":"Discord Settings",
-        "Description":"Requires a valid token to be set",
+        "Description":"If enabled, allows global text chat integration with a Discord channel. Requires a valid bot token to be set under \"Discord Token\"",
         "Keywords":"discord",
         "FieldName":"DiscordEnable",
         "InputType":"checkbox",
@@ -771,7 +908,7 @@
     {
         "DisplayName":"Discord Token",
         "Category":"Discord Settings",
-        "Description":"Token to access the Discord servers",
+        "Description":"Bot token to access the Discord servers",
         "Keywords":"discord,token",
         "FieldName":"DiscordToken",
         "InputType":"password",
@@ -784,7 +921,7 @@
     {
         "DisplayName":"Discord Channel",
         "Category":"Discord Settings",
-        "Description":"Name of the Discord channel to integrate with",
+        "Description":"Name of the Discord channel to integrate with. Use \"Discord ID\" if this does not work",
         "Keywords":"discord,channel",
         "FieldName":"DiscordChannel",
         "InputType":"text",
@@ -797,7 +934,7 @@
     {
         "DisplayName":"Discord Channel ID",
         "Category":"Discord Settings",
-        "Description":"ID of the Discord channel to integrate with",
+        "Description":"ID of the Discord channel to integrate with. Use this if \"Discord Channel\" does not work",
         "Keywords":"discord,channel,id",
         "FieldName":"DiscordChannelID",
         "InputType":"number",
