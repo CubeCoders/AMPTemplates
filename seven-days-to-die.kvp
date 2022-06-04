@@ -23,7 +23,7 @@ App.ExecutableLinux=294420/7DaysToDieServer.x86_64
 App.WorkingDir=294420
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs=-quit -batchmode -nographics -configfile=serverconfig.xml {{$FormattedArgs}} -dedicated
+App.CommandLineArgs=-quit -batchmode -nographics -configfile={{ConfigFile}} {{$FormattedArgs}} -dedicated
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"./linux64:%LD_LIBRARY_PATH%","SteamAppId":"251570"}
 App.CommandLineParameterFormat=-{0} "{1}"
@@ -42,14 +42,14 @@ App.ApplicationPort2=26901
 App.ApplicationPort3=26902
 App.RemoteAdminPort=27020
 App.MaxUsers=8
-App.UseRandomAdminPassword=False
-App.RemoteAdminPassword=Password123
+App.UseRandomAdminPassword=True
+App.RemoteAdminPassword=
 App.AdminMethod=STDIO
 App.AdminLoginTransform=None
 App.RCONConnectDelaySeconds=5
 App.RCONConnectRetrySeconds=5
 App.TelnetLoginFormat={0}
-App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"Windows","UpdateSource":"SteamCMD","UpdateSourceData":"294420","UpdateSourceVersion":"{{$Stream}}"},{"UpdateStageName":"UMOD Windows","UpdateSourcePlatform":"Windows","UpdateSource":"FetchURLFromJQ","UpdateSourceData":"https://api.github.com/repos/OxideMod/Oxide.SevenDaysToDie/releases/latest","UpdateSourceArgs":"$.assets[1].browser_download_url","UpdateSourceTarget":"{{$FullBaseDir}}","UnzipUpdateSource":true,"OverwriteExistingFiles":true,"UpdateSourceConditionSetting":"UMOD","UpdateSourceConditionValue":"true"},{"UpdateStageName":"UMOD Linux","UpdateSourcePlatform":"Linux","UpdateSource":"FetchURLFromJQ","UpdateSourceData":"https://api.github.com/repos/OxideMod/Oxide.SevenDaysToDie/releases/latest","UpdateSourceArgs":"$.assets[0].browser_download_url","UpdateSourceTarget":"{{$FullBaseDir}}","UnzipUpdateSource":true,"OverwriteExistingFiles":true,"UpdateSourceConditionSetting":"UMOD","UpdateSourceConditionValue":"true"}]
+App.UpdateSources=@IncludeJSON[seven-days-to-dieupdates.json]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False

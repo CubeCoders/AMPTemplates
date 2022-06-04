@@ -264,12 +264,13 @@
         "Description":"Password to gain entry to telnet interface.",
         "Keywords":"Telnet,Password",
         "FieldName":"$RemoteAdminPassword",
-        "InputType":"RandomPassword",
+        "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"/ServerSettings/property[@name='TelnetPassword']/@value",
         "IncludeInCommandLine":false,
-        "DefaultValue":"Password123",
-        "EnumValues":{}
+        "DefaultValue":"",
+        "EnumValues":{},
+        "Hidden": true
     },{
         "DisplayName":"Telnet Failed Login Limit",
         "Category":"Server Settings",
@@ -1109,13 +1110,28 @@
         "Category":"Update Settings",
         "Description":"\"public\" is default. Choose a custom release on [SteamDB](https://steamdb.info/app/294420/depots/).",
         "Keywords":"use,experimental,release,stream",
-        "FieldName":"$Stream",
+        "FieldName":"Stream",
         "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"Stream",
         "IncludeInCommandLine":false,
         "DefaultValue":"public",
         "EnumValues":{}
+    },{
+        "DisplayName":"Use Pre 20.4 Config File",
+        "Category":"Update Settings",
+        "Description":"If using a version before 20.4 use the old style config to avoid crashing the server.",
+        "Keywords":"use,20.4,config,file",
+        "FieldName":"ConfigFile",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ConfigFile",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"serverconfig.xml",
+        "EnumValues":{
+            "True": "serverconfigpre204.xml",
+            "False": "serverconfig.xml"
+        }
     },{
         "DisplayName":"Install UMOD",
         "Category":"Update Settings",

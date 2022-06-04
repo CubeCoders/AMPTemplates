@@ -1,0 +1,49 @@
+[
+    {
+      "UpdateStageName": "SteamCMD Download",
+      "UpdateSourcePlatform": "All",
+      "UpdateSource": "SteamCMD",
+      "UpdateSourceData": "294420",
+      "UpdateSourceVersion": "{{$Stream}}"
+    },
+    {
+      "UpdateStageName": "UMOD Windows",
+      "UpdateSourcePlatform": "Windows",
+      "UpdateSource": "FetchURLFromJQ",
+      "UpdateSourceData": "https://api.github.com/repos/OxideMod/Oxide.SevenDaysToDie/releases/latest",
+      "UpdateSourceArgs": "$.assets[1].browser_download_url",
+      "UpdateSourceTarget": "{{$FullBaseDir}}",
+      "UnzipUpdateSource": true,
+      "OverwriteExistingFiles": true,
+      "UpdateSourceConditionSetting": "UMOD",
+      "UpdateSourceConditionValue": "true",
+      "DeleteAfterExtract":true
+    },
+    {
+      "UpdateStageName": "UMOD Linux",
+      "UpdateSourcePlatform": "Linux",
+      "UpdateSource": "FetchURLFromJQ",
+      "UpdateSourceData": "https://api.github.com/repos/OxideMod/Oxide.SevenDaysToDie/releases/latest",
+      "UpdateSourceArgs": "$.assets[0].browser_download_url",
+      "UpdateSourceTarget": "{{$FullBaseDir}}",
+      "UnzipUpdateSource": true,
+      "OverwriteExistingFiles": true,
+      "UpdateSourceConditionSetting": "UMOD",
+      "UpdateSourceConditionValue": "true",
+      "DeleteAfterExtract":true
+    },
+    {
+      "UpdateStageName": "Pre 20.4 Config Download",
+      "UpdateSourcePlatform": "All",
+      "UpdateSource": "FetchURL",
+      "UpdateSourceData": "https://github.com/IceOfWraith/AMPTemplates/raw/7d2d/seven-days-to-dieserverconfigpre204.xml"
+    },
+    {
+      "UpdateStageName": "Game Config File Copy",
+      "UpdateSourcePlatform": "All",
+      "UpdateSource": "CopyFilePath",
+      "UpdateSourceData": "./seven-days-to-die/294420/serverconfigpre204.xml",
+      "UpdateSourceArgs": "./seven-days-to-die/seven-days-to-dieserverconfigpre204.xml",
+      "OverwriteExistingFiles": false
+    }
+  ]
