@@ -25,12 +25,12 @@
         "IncludeInCommandLine":false,
         "EnumValues":{}
     },
-        {
+    {
         "DisplayName":"HTTP Port",
         "Category":"Server Settings",
         "Description":"",
         "Keywords":"",
-        "FieldName":"$WebPort",
+        "FieldName":"$HTTPPort",
         "InputType":"number",
         "Hidden":true,
         "IsFlagArgument":false,
@@ -54,7 +54,7 @@
     {
         "DisplayName":"Make Server Public",
         "Category":"Server Settings",
-        "Description":"If enabled, the server will be visible in the in-game browser",
+        "Description":"If enabled, the server will be registered in the in-game lobby",
         "Keywords":"public",
         "FieldName":"SERVER_REGISTER_TO_LOBBY",
         "InputType":"checkbox",
@@ -204,6 +204,21 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Race Over Time",
+        "Category":"Server Settings",
+        "Description":"Time remaining to finish the race from the moment the first player passes the finish line",
+        "Keywords":"race,over,time",
+        "FieldName":"SERVER_RACE_OVER_TIME",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.RACE_OVER_TIME",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"180",
+        "Suffix":"seconds",
+        "Placeholder":"180",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Race Join Status",
         "Category":"Server Settings",
         "Description":"Sets the join status for the race",
@@ -219,5 +234,254 @@
             "1":"Free join",
             "2":"Free join until 20 secs before green light"
         }
-    }  
+    },
+    {
+        "DisplayName":"Enable Loop Mode",
+        "Category":"Server Settings",
+        "Description":"If enabled, the server restarts from the first track",
+        "Keywords":"loop,mode",
+        "FieldName":"SERVER_LOOP_MODE",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.LOOP_MODE",
+        "IncludeInCommandLine":false,
+        "SkipIfEmpty":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+         }
+    },
+    {
+        "DisplayName":"Sun Position Angle",
+        "Category":"Server Settings",
+        "Description":"Sets the angle of the position of the sun",
+        "Keywords":"sun,angle",
+        "FieldName":"SERVER_SUN_ANGLE",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.SUN_ANGLE",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"48",
+        "Suffix":"degrees",
+        "Placeholder":"48",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Kick Quorum",
+        "Category":"Server Settings",
+        "Description":"Voting percentage threshold required to kick a player",
+        "Keywords":"kick,quorum",
+        "FieldName":"SERVER_KICK_QUORUM",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.KICK_QUORUM",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"85",
+        "Suffix":"%",
+        "Placeholder":"85",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Voting Quorum",
+        "Category":"Server Settings",
+        "Description":"Voting percentage threshold required for the SESSION vote to pass",
+        "Keywords":"vote,voting,quorum",
+        "FieldName":"SERVER_VOTING_QUORUM",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.VOTING_QUORUM",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"80",
+        "Suffix":"%",
+        "Placeholder":"80",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Voting Duration",
+        "Category":"Server Settings",
+        "Description":"Time during which a SESSION vote is open",
+        "Keywords":"vote,voting,duration",
+        "FieldName":"SERVER_VOTE_DURATION",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.VOTE_DURATION",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"20",
+        "Suffix":"seconds",
+        "Placeholder":"20",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Fuel Rate",
+        "Category":"Server Settings",
+        "Description":"Sets the fuel usage rate. 0 = no fuel usage, 100 = a realistic rate",
+        "Keywords":"fuel,rate",
+        "FieldName":"SERVER_FUEL_RATE",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.FUEL_RATE",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"100",
+        "Placeholder":"100",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Damage Multiplier",
+        "Category":"Server Settings",
+        "Description":"Sets the damage multiplier",
+        "Keywords":"damage,multiplier",
+        "FieldName":"SERVER_DAMAGE_MULTIPLIER",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.DAMAGE_MULTIPLIER",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"100",
+        "Placeholder":"0-100",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Tyre Wear Rate",
+        "Category":"Server Settings",
+        "Description":"Sets the tyre wear usage rate. 0 = no tyre wear, 100 = a realistic rate",
+        "Keywords":"tyre,wear,rate",
+        "FieldName":"SERVER_TYRE_WEAR_RATE",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.TYRE_WEAR_RATE",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"100",
+        "Placeholder":"0-100",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allowed Tyres Out Number",
+        "Category":"Server Settings",
+        "Description":"Sets the number of tyres allowed to be off-track without invalidating a lap",
+        "Keywords":"tyres,out",
+        "FieldName":"SERVER_ALLOWED_TYRES_OUT",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.ALLOWED_TYRES_OUT",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "Suffix":"tyres",
+        "Placeholder":"2",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow Anti-lock Braking System",
+        "Category":"Server Settings",
+        "Description":"Sets whether anti-lock braking system is allowed",
+        "Keywords":"abs",
+        "FieldName":"SERVER_ABS_ALLOWED",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.ABS_ALLOWED",
+        "IncludeInCommandLine":false,
+        "SkipIfEmpty":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"No car can use",
+            "1":"Only cars given ABS can use",
+            "2":"Any car can use"
+        }
+    },
+    {
+        "DisplayName":"Allow Traction Control",
+        "Category":"Server Settings",
+        "Description":"Sets whether traction control is allowed",
+        "Keywords":"tc",
+        "FieldName":"SERVER_TC_ALLOWED",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.TC_ALLOWED",
+        "IncludeInCommandLine":false,
+        "SkipIfEmpty":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"No car can use",
+            "1":"Only cars given TC can use",
+            "2":"Any car can use"
+        }
+    },
+    {
+        "DisplayName":"Enable Stability Assist",
+        "Category":"Server Settings",
+        "Description":"If enabled, stability assist will apply",
+        "Keywords":"stability",
+        "FieldName":"SERVER_STABILITY_ALLOWED",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.STABILITY_ALLOWED",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+         }
+    },
+    {
+        "DisplayName":"Enable Autoclutch Assist",
+        "Category":"Server Settings",
+        "Description":"If enabled, autoclutch assist will apply",
+        "Keywords":"auto,clutch",
+        "FieldName":"SERVER_AUTOCLUTCH_ALLOWED",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.AUTOCLUTCH_ALLOWED",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+         }
+    },
+    {
+        "DisplayName":"Enable Tyre Blankets",
+        "Category":"Server Settings",
+        "Description":"If enabled, tyres will have optimal temperature at the start of a session and after a pitstop",
+        "Keywords":"tyre,blankets",
+        "FieldName":"SERVER_TYRE_BLANKETS_ALLOWED",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.TYRE_BLANKETS_ALLOWED",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+         }
+    },
+    {
+        "DisplayName":"Enable Virtual Mirror",
+        "Category":"Server Settings",
+        "Description":"If enabled, a virtual mirror will be enabled for every player",
+        "Keywords":"force,virtual,mirror",
+        "FieldName":"SERVER_FORCE_VIRTUAL_MIRROR",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SERVER.FORCE_VIRTUAL_MIRROR",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Tyre Types Allowed",
+        "Category":"Server Settings",
+        "Description":"Semi-colon separated list of tyre shortnames that are allowed on the server. Select from SV, ST, SM, SS, S, M, H, SH, HR, I, V",
+        "Keywords":"legal,tyres",
+        "FieldName":"SERVER_LEGAL_TYRES",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "Hidden":false,
+        "ParamFieldName":"SERVER.LEGAL_TYRES",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"SV",
+        "Placeholder":"V;E;HR;ST",
+        "EnumValues":{}
+    }
 ]
