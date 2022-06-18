@@ -103,7 +103,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"SERVER.MAX_CLIENTS",
         "IncludeInCommandLine":false,
-        "DefaultValue":"18",
+        "DefaultValue":"51",
         "Suffix":"players",
         "EnumValues":{}
     },
@@ -186,7 +186,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"RACE.LAPS",
         "IncludeInCommandLine":false,
-        "DefaultValue":"5",
+        "DefaultValue":"6",
         "EnumValues":{}
     },
     {
@@ -199,7 +199,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"RACE.WAIT_TIME",
         "IncludeInCommandLine":false,
-        "DefaultValue":"60",
+        "DefaultValue":"61",
         "Suffix":"seconds",
         "EnumValues":{}
     },
@@ -228,11 +228,97 @@
         "IsFlagArgument":false,
         "ParamFieldName":"RACE.IS_OPEN",
         "IncludeInCommandLine":false,
-        "DefaultValue":"1",
+        "DefaultValue":"2",
         "EnumValues":{
             "0":"No join",
             "1":"Free join",
             "2":"Free join until 20 secs before green light"
+        }
+    },
+        {
+        "DisplayName":"Practice Session Name",
+        "Category":"Server Settings",
+        "Description":"Sets the name of the practice session",
+        "Keywords":"practice,name",
+        "FieldName":"PRACTICE_NAME",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PRACTICE.NAME",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Practice",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Practice Session Time",
+        "Category":"Server Settings",
+        "Description":"Sets the period of time for the practice session",
+        "Keywords":"practice,time",
+        "FieldName":"PRACTICE_TIME",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PRACTICE_TIME",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "Suffix":"minutes",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Practice Session Join Status",
+        "Category":"Server Settings",
+        "Description":"Sets the join status for the practice session",
+        "Keywords":"practice,join,open",
+        "FieldName":"PRACTICE_IS_OPEN",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PRACTICE.IS_OPEN",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"No join",
+            "1":"Free join"
+        }
+    },
+    {
+        "DisplayName":"Qualifying Session Name",
+        "Category":"Server Settings",
+        "Description":"Sets the name of the race",
+        "Keywords":"qualify,name",
+        "FieldName":"QUALIFY_NAME",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"QUALIFY.NAME",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Qualify",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Qualifying Session Time",
+        "Category":"Server Settings",
+        "Description":"Sets the period of time for the qualifying session",
+        "Keywords":"qualify,time",
+        "FieldName":"QUALIFY_TIME",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"QUALIFY.TIME",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "Suffix":"minutes",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Qualifying Session Join Status",
+        "Category":"Server Settings",
+        "Description":"Sets the join status for the qualifying session",
+        "Keywords":"qualify,join,open",
+        "FieldName":"QUALIFY_IS_OPEN",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"QUALIFY.IS_OPEN",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"No join",
+            "1":"Free join"
         }
     },
     {
@@ -483,5 +569,65 @@
         "DefaultValue":"SV",
         "Placeholder":"V;E;HR;ST",
         "EnumValues":{}
-    }
+    },
+    {
+        "DisplayName":"Session Starting Grip",
+        "Category":"Server Settings",
+        "Description":"Sets the percentage level of grip at the start of the session",
+        "Keywords":"session,start,grip",
+        "FieldName":"DYNAMIC_TRACK_SESSION_START",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"DYNAMIC_TRACK.SESSION_START",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"89",
+        "Suffix":"%",
+        "Placeholder":"89",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Session Starting Grip Randomness",
+        "Category":"Server Settings",
+        "Description":"Sets the level of randomness added to the session starting grip",
+        "Keywords":"session,start,grip,random",
+        "FieldName":"DYNAMIC_TRACK_RANDOMNESS",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"DYNAMIC_TRACK.RANDOMNESS",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"3",
+        "Suffix":"%",
+        "Placeholder":"3",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Laps for Grip Gain",
+        "Category":"Server Settings",
+        "Description":"Sets the number of laps needed to add 1% grip",
+        "Keywords":"grip,gain,laps",
+        "FieldName":"DYNAMIC_TRACK_LAP_GAIN",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"DYNAMIC_TRACK.LAP_GAIN",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"50",
+        "Suffix":"laps",
+        "Placeholder":"50",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Grip Session Transfer",
+        "Category":"Server Settings",
+        "Description":"Sets how much of the gained grip is to be added to the next session (as a percentage). 100 = all of the gained grip",
+        "Keywords":"grip,gain,session,transfer",
+        "FieldName":"DYNAMIC_TRACK_SESSION_TRANSFER",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"DYNAMIC_TRACK.SESSION_TRANSFER",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"80",
+        "Suffix":"%",
+        "Placeholder":"80",
+        "EnumValues":{}
+    }    
 ]
