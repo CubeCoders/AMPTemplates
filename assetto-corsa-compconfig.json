@@ -71,7 +71,7 @@
         "DisplayName":"Spectator Password",
         "Category":"Server Settings",
         "Description":"Password to connect to the server as a spectator. Must be different to server password if both are set. Default is no password",
-        "Keywords":"password",
+        "Keywords":"spectator,password",
         "FieldName":"spectatorPassword",
         "InputType":"password",
         "IsFlagArgument":false,
@@ -122,8 +122,99 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Track Selection",
+        "DisplayName":"Track Medals Required",
         "Category":"Server Settings",
+        "Description":"Sets the number of track medals that a player must have",
+        "Keywords":"track,medal",
+        "FieldName":"trackMedalsRequirement",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"trackMedalsRequirement",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"3",
+        "EnumValues":{
+            "0":"None",
+            "1":"One",
+            "2":"Two",
+            "3":"Three"
+        }
+    },
+    {
+        "DisplayName":"Safety Rating Required",
+        "Category":"Server Settings",
+        "Description":"Sets the Safety Rating (SA) that a player must have to join the server. -1 = no rating",
+        "Keywords":"safety,ratimg",
+        "FieldName":"safetyRatingRequirement",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"safetyRatingRequirement",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"49",
+        "Placeholder":"-1 or 0 - 100",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Racecraft Rating Required",
+        "Category":"Server Settings",
+        "Description":"Sets the Racecraft Rating (RC) that a player must have to join the server. -1 = no rating",
+        "Keywords":"racecraft,rating",
+        "FieldName":"racecraftRatingRequirement",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"racecraftRatingRequirement",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"-1",
+        "Placeholder":"-1 or 0 - 100",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Save Leaderboard",
+        "Category":"Server Settings",
+        "Description":"If enabled, leaderboards are saved to the \"results\" folder",
+        "Keywords":"leaderboard",
+        "FieldName":"dumpLeaderboards",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"dumpLeaderboards",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Save Entry List",
+        "Category":"Server Settings",
+        "Description":"If enabled, entry lists are saved at the end of any qualifying session",
+        "Keywords":"dump,entry,list",
+        "FieldName":"dumpEntryList",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"dumpEntryList",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Central Entry List Path",
+        "Category":"Server Settings",
+        "Description":"Sets a custom path to a central entry list, for sharing across servers",
+        "Keywords":"central,entry,list,path",
+        "FieldName":"centralEntryListPath",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"centralEntryListPath",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Track Selection",
+        "Category":"Gameplay Settings",
         "Description":"Sets the track for the server",
         "Keywords":"track",
         "FieldName":"track",
@@ -156,7 +247,7 @@
     },
     {
         "DisplayName":"Car Group Selection",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"Sets the car group that is allowed on the server",
         "Keywords":"car,group",
         "FieldName":"carGroup",
@@ -174,70 +265,8 @@
         }
     },
     {
-        "DisplayName":"Track Medals Required",
-        "Category":"Server Settings",
-        "Description":"Sets the number of track medals that a player must have",
-        "Keywords":"track,medal",
-        "FieldName":"trackMedalsRequirement",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"trackMedalsRequirement",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"3",
-        "EnumValues":{
-            "0":"None",
-            "1":"One",
-            "2":"Two",
-            "3":"Three"
-        }
-    },
-    {
-        "DisplayName":"Safety Rating Required",
-        "Category":"Server Settings",
-        "Description":"Sets the Safety Rating (SA) that a player must have to join the server. -1 = no rating",
-        "Keywords":"safety,ratimg",
-        "FieldName":"safetyRatingRequirement",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"safetyRatingRequirement",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"49",
-        "Placeholder":"-1 or 0-100",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Racecraft Rating Required",
-        "Category":"Server Settings",
-        "Description":"Sets the Racecraft Rating (RC) that a player must have to join the server. -1 = no rating",
-        "Keywords":"racecraft,rating",
-        "FieldName":"racecraftRatingRequirement",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"racecraftRatingRequirement",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"-1",
-        "Placeholder":"-1 or 0-100",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Save Leaderboard",
-        "Category":"Server Settings",
-        "Description":"If enabled, leaderboards are saved to the \"results\" folder",
-        "Keywords":"leaderboard",
-        "FieldName":"dumpLeaderboards",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"dumpLeaderboards",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
         "DisplayName":"Lock Race",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"If enabled, the server will not allow players to join during a race session",
         "Keywords":"race,locked",
         "FieldName":"isRaceLocked",
@@ -253,7 +282,7 @@
     },
     {
         "DisplayName":"Enable Random Track",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"If enabled, the server will change to a random track when the last driver leaves. \"Track Selection\" will only apply for the first session",
         "Keywords":"random,track,empty",
         "FieldName":"randomizeTrackWhenEmpty",
@@ -268,23 +297,10 @@
         }
     },
     {
-        "DisplayName":"Central Entry List Path",
-        "Category":"Server Settings",
-        "Description":"Sets a custom path to a central entry list, for sharing across servers",
-        "Keywords":"central,entry,list,path",
-        "FieldName":"centralEntryListPath",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"centralEntryListPath",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Enable Auto Disqualification",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"If this is disabled, drivers receive 30 second penalties rather than automatic disqualification, allowing time for incident review",
-        "Keywords":"auto,dq",
+        "Keywords":"auto,dq,disqualification",
         "FieldName":"allowAutoDQ",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -298,7 +314,7 @@
     },
     {
         "DisplayName":"Formation Lap Length",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"Sets the formation lap length. \"Long\" is only usable on private servers",
         "Keywords":"formation,lap",
         "FieldName":"shortFormationLap",
@@ -313,24 +329,8 @@
         }
     },
     {
-        "DisplayName":"Save Entry List",
-        "Category":"Server Settings",
-        "Description":"If enabled, entry lists are saved at the end of any qualifying session",
-        "Keywords":"dump,entry,list",
-        "FieldName":"dumpEntryList",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"dumpEntryList",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
         "DisplayName":"Formation Lap Type",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"Sets the formation lap type",
         "Keywords":"formation,lap,type",
         "FieldName":"formationLapType",
@@ -347,7 +347,7 @@
     },
     {
         "DisplayName":"Race Wait Time",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"Sets the preparation time before a race (minimum 30s)",
         "Keywords":"race,waiting,time",
         "FieldName":"preRaceWaitingTimeSeconds",
@@ -362,7 +362,7 @@
     },
     {
         "DisplayName":"Race Over Time",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"Sets the time to forcibly close a session once the timer reaches 0:00 (recommended 107% of the expected laptime)",
         "Keywords":"race,over,time",
         "FieldName":"sessionOverTimeSeconds",
@@ -377,7 +377,7 @@
     },
     {
         "DisplayName":"Ambient Temperature",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"Sets the baseline ambient temperature in °C",
         "Keywords":"ambient,temp",
         "FieldName":"ambientTemp",
@@ -391,7 +391,7 @@
     },
     {
         "DisplayName":"Cloud Level",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"Sets the baseline cloud level",
         "Keywords":"cloud,level",
         "FieldName":"cloudLevel",
@@ -405,7 +405,7 @@
     },
     {
         "DisplayName":"Rain Level",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"Sets the static rain level if weather is static, or the expected rain level if weather is dynamic",
         "Keywords":"rain",
         "FieldName":"rain",
@@ -419,7 +419,7 @@
     },
     {
         "DisplayName":"Dynamic Weather",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"Sets the dynamic weather level. 0 = static, 1-4 = fairly realistic, 5-7 = more sensational",
         "Keywords":"random,weather",
         "FieldName":"weatherRandomness",
@@ -433,7 +433,7 @@
     },
     {
         "DisplayName":"Ignore Premature Disconnects",
-        "Category":"Server Settings",
+        "Category":"Gameplay Settings",
         "Description":"If enabled, less arbitrary connections lost. On Linux hosts, disable this setting",
         "Keywords":"ignore,premature,disconnects",
         "FieldName":"ignorePrematureDisconnects",
@@ -442,6 +442,9 @@
         "ParamFieldName":"ignorePrematureDisconnects",
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
-        "EnumValues":{}
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
     }
 ]
