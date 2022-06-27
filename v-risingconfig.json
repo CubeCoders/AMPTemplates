@@ -18,12 +18,13 @@
     "Description": "Short description of server purpose, rules, message of the day",
     "Keywords": "Server, description",
     "FieldName": "Description",
-    "InputType": "text",
+    "InputType": "Textarea",
     "IsFlagArgument": false,
     "ParamFieldName": "Description",
     "IncludeInCommandLine": false,
     "DefaultValue": "AMP V Rising Server",
-    "Placeholder":  "My V Rising Server"
+    "Placeholder": "AMP V Rising Server",
+    "EnumValues": {}
   },
   {
     "DisplayName": "Port",
@@ -52,6 +53,64 @@
     "DefaultValue": "",
     "EnumValues": {},
     "Hidden": true
+  },
+  {
+    "DisplayName": "RCON Port",
+    "Category": "Host Settings",
+    "Description": "TCP port for RCON",
+    "Keywords": "rcon,port",
+    "FieldName": "$RemoteAdminPort",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "Rcon.Port",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "",
+    "EnumValues": {},
+    "Hidden": true
+  },
+  {
+    "DisplayName": "RCON Enabled",
+    "Category": "Host Settings",
+    "Description": "RCON Enabled to allow Console input",
+    "Keywords": "rcon,enabled",
+    "FieldName": "RconEnabled",
+    "InputType": "text",
+    "IsFlagArgument": false,
+    "ParamFieldName": "Rcon.Enabled",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "true",
+    "EnumValues": {},
+    "Hidden": true
+  },
+  {
+    "DisplayName": "RCON Password",
+    "Category": "Host Settings",
+    "Description": "RCON Password to allow Console input",
+    "Keywords": "rcon,enabled",
+    "FieldName": "$RemoteAdminPassword",
+    "InputType": "password",
+    "IsFlagArgument": false,
+    "ParamFieldName": "Rcon.Password",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "",
+    "EnumValues": {},
+    "Hidden": true
+  },
+  {
+    "DisplayName": "LAN Mode",
+    "Category": "Host Settings",
+    "Description": "Use this setting for a server without internet connectivity. The LAN Mode check box must also be checked in-game when connecting.",
+    "Keywords": "lan,mode",
+    "FieldName": "LanMode",
+    "InputType": "checkbox",
+    "DefaultValue": "",
+    "IsFlagArgument": false,
+    "ParamFieldName": "LanMode",
+    "IncludeInCommandLine": false,
+    "EnumValues": {
+      "False": "",
+      "True": "-lan"
+    }
   },
   {
     "DisplayName": "Max Connected Users",
@@ -91,6 +150,22 @@
     "DefaultValue": "4",
     "IncludeInCommandLine": false,
     "Suffix": "players"
+  },
+  {
+    "DisplayName": "Admin List",
+    "Description": "A list of Steam64 IDs for players that are in-game admins. [Find your Steam64 ID](https://steamid.io/lookup/)",
+    "FieldName": "AdminList",
+    "Category": "Game Settings",
+    "InputType": "list",
+    "Special": "listfile:./v-rising/1829350/VRisingServer_Data/StreamingAssets/Settings/adminlist.txt"
+  },
+  {
+    "DisplayName": "Ban List",
+    "Description": "A list of Steam64 IDs for players that are banned [Find a Steam64 ID](https://steamid.io/lookup/)",
+    "FieldName": "BanList",
+    "Category": "Game Settings",
+    "InputType": "list",
+    "Special": "listfile:./v-rising/1829350/VRisingServer_Data/StreamingAssets/Settings/banlist.txt"
   },
   {
     "DisplayName": "Server FPS",
