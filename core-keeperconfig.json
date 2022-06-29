@@ -1,14 +1,43 @@
 [
     {
+        "DisplayName":"Game Port",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$GamePort",
+        "InputType":"number",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"port",
+        "IncludeInCommandLine":true,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Use Steam Relay Network",
+        "Category":"Server Settings",
+        "Description":"If enabled, connections to the server will use the Steam relay network. Otherwise, clients will connect to the server directly, requiring the Game Port to be open",
+        "Keywords":"steam,relay,network,port",
+        "FieldName":"SteamRelay",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SteamRelay",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"{{$GamePort}}"
+        }
+    },    
+    {
         "DisplayName":"World",
         "Category":"Server Settings",
-        "Description":"Set the index of the world to be loaded from the worlds folder",
+        "Description":"Sets the index of the world to be loaded from the worlds folder",
         "Keywords":"world,index",
         "FieldName":"world",
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"world",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"0",
         "EnumValues":{}
     },
@@ -17,11 +46,12 @@
         "Category":"Server Settings",
         "Description":"Sets the name to use for the server",
         "Keywords":"world",
-        "FieldName":"worldName",
+        "FieldName":"worldname",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"worldName",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"worldname",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
         "DefaultValue":"Core Keeper Server Powered by AMP",
         "EnumValues":{}
     },
@@ -30,14 +60,44 @@
         "Category":"Server Settings",
         "Description":"Sets the seed to use to generate a new world. Set to 0 to generate a random seed",
         "Keywords":"seed,world",
-        "FieldName":"worldSeed",
+        "FieldName":"worldseed",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"worldSeed",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"worldseed",
+        "IncludeInCommandLine":true,
         "DefaultValue":"0",
         "EnumValues":{}
     },
+    {
+        "DisplayName":"World Mode",
+        "Category":"Server Settings",
+        "Description":"Sets whether to use normal or hard mode for the world",
+        "Keywords":"world,mode",
+        "FieldName":"worldmode",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"worldmode",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Normal",
+            "1":"Hard"
+        }
+    },        
+    {
+        "DisplayName":"Game ID",
+        "Category":"Server Settings",
+        "Description":"Sets the Game ID for the server. Needs to be at least 23 characters and alphanumeric, excluding Y,y,x,0,O. Empty or not valid means a new ID will be generated at server start",
+        "Keywords":"game,id",
+        "FieldName":"gameid",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"gameid",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"",
+        "Placeholder":"WThaEN6779QIU2j7sczKmGfIG1bD",
+        "EnumValues":{}
+    },    
     {
         "DisplayName":"Player Limit",
         "Category":"Server Settings",
@@ -46,10 +106,25 @@
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"maxNumberPlayers",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"maxplayers",
+        "IncludeInCommandLine":true,
         "DefaultValue":"100",
-        "suffix":"players",
+        "Suffix":"players",
         "EnumValues":{}
-    }
+    },
+    {
+        "DisplayName":"Server IP Binding",
+        "Category":"Server Settings",
+        "Description":"Sets the interface IP that the server will bind to. Default is 0.0.0.0. Only used if the Steam relay network is not used",
+        "Keywords":"ip,binding",
+        "FieldName":"$ApplicationIPBinding",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ip",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"0.0.0.0",
+        "Placeholder":"0.0.0.0",
+        "EnumValues":{}
+    }    
 ]
