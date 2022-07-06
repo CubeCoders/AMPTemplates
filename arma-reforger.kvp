@@ -54,7 +54,7 @@ App.RCONHeartbeatMinutes=0
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat={0}
 App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource": "SteamCMD","UpdateSourceData":"1874900"},{"UpdateStageName":"Create Configs Directory","UpdateSourcePlatform":"All","UpdateSource":"CreateDirectory","UpdateSourceArgs":"./arma-reforger/1874900/Configs","OverwriteExistingFiles":false},{"UpdateStageName":"Server Config File  Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/arma-reforgerserver.json","UpdateSourceTarget":"../","OverwriteExistingFiles":false},{"UpdateStageName":"Server Config Copy","UpdateSourcePlatform":"All","UpdateSource":"CopyFilePath","UpdateSourceData":"./arma-reforger/1874900/Configs/server.json","UpdateSourceArgs":"./arma-reforgerserver.json","OverwriteExistingFiles":false}]
-App.Compatibility=None
+App.Compatibility=LinuxBufferedConsole
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
 App.RapidStartup=False
@@ -68,10 +68,10 @@ App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=
-Console.AppReadyRegex=
-Console.UserJoinRegex=^[\d:]+ NETWORK\s+: ### Connecting player: connectionID=(?<userid>.+), Name=(?<username>.*)$
-Console.UserLeaveRegex=^[\d:]+ NETWORK\s+: Player disconnected: connectionID=(?<userid>.+)$
-Console.UserChatRegex=^(?<username>(?!\s*NETWORK[\s(EW)]*|\s*ENGINE[\s(EW)]*|\s*ENTITY[\s(EW)]*|\s*MATERIAL[\s(EW)]*|\s*GUI[\s(EW)]*|\s*WORLD[\s(EW)]*|\s*RENDER[\s(EW)]*|\s*AUDIO[\s(EW)]*|\s*SCRIPT[\s(EW)]*|\s*PROFILING[\s(EW)]*|\s*INIT[\s(EW)]*|\s*BACKEND[\s(EW)]*|\s*RESOURCES[\s(EW)]*|\s*ANIMATION[\s(EW)]*).+?): (?<message>.+)$
+Console.AppReadyRegex=^[\d:\s]*ENGINE\s+: Game successfully created\.$
+Console.UserJoinRegex=^[\d:\s]*NETWORK\s+: ### Connecting player: connectionID=(?<userid>.+), Name=(?<username>.*)$
+Console.UserLeaveRegex=^[\d:\s]*NETWORK\s+: Player disconnected: connectionID=(?<userid>.+)$
+Console.UserChatRegex=^[\d:\s]*(?<username>(?!\s*NETWORK[\s(EW)]*|\s*ENGINE[\s(EW)]*|\s*ENTITY[\s(EW)]*|\s*MATERIAL[\s(EW)]*|\s*GUI[\s(EW)]*|\s*WORLD[\s(EW)]*|\s*RENDER[\s(EW)]*|\s*AUDIO[\s(EW)]*|\s*SCRIPT[\s(EW)]*|\s*PROFILING[\s(EW)]*|\s*INIT[\s(EW)]*|\s*BACKEND[\s(EW)]*|\s*RESOURCES[\s(EW)]*|\s*ANIMATION[\s(EW)]*|\s*TERRAIN[\s(EW)]*|\s*DEFAULT[\s(EW)]*).+?): (?<message>.+)$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
 Console.MetricsRegex=
 Console.SuppressLogAtStart=False
