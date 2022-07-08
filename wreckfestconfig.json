@@ -83,7 +83,7 @@
     {
         "DisplayName":"Player Limit",
         "Category":"Server Settings",
-        "Description":"Maximum number of players that may connect to the server",
+        "Description":"Maximum number of players that may connect to the server at one time",
         "Keywords":"players,limit",
         "FieldName":"$MaxUsers",
         "InputType":"number",
@@ -93,22 +93,6 @@
         "DefaultValue":"24",
         "Suffix":"players",
         "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Cup Mode",
-        "Category":"Server Settings",
-        "Description":"Enables cup mode for server side point counting across multiple events",
-        "Keywords":"cup,mode",
-        "FieldName":"cup_mode",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"cup_mode",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
     },
     {
         "DisplayName":"Exclude Quick Match Users",
@@ -231,9 +215,58 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Session Mode",
+        "Category":"Server Settings",
+        "Description":"Sets the session mode for server side point counting across multiple events",
+        "Keywords":"session,mode",
+        "FieldName":"session_mode",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"session_mode",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"normal",
+        "EnumValues":{
+            "normal":"Normal (single event, no cup mode)",
+            "qualify-sprint":"Qualifying sprint (finishing positions determine - needs \"Qualifying session\" grid order)",
+            "qualify-lap":"Qualifying lap (lap times determine - needs \"Qualifying session\" grid order)",
+            "30p-aggr":"Winner 30 (then 27, 25, 23, 20, followed by 1 point less per position)",
+            "25p-aggr":"Winner 25 (then 18, 15, 12, 10, 8, 6, 4, 2, 1, followed by no points)",
+            "25p-mod":"Winner 25 (then 20, 16, 11, followed by 1 point less per position up to position 15)",
+            "24p-lin":"Winner 24 (then 1 point less per position)",
+            "16p-lin":"Winner 16 (then 1 point less per position for next 15 positions)",
+            "10p-double":"Winner 20 (then 2 points less per position for next 10 positions)",
+            "10p-lin":"Winner 10 (then 1 point less per position for next 9 positions)",
+            "35p-folk":"Winner 35 (then 30, 25, 20, 18, 16, followed by one 1 point less per position up to position 21)",
+            "f1-1991":"Winner 10 (then 6, 4, 3, 2, 1, followed by no points)",
+            "f1-2003":"Winner 10 (then 8, 6, 5, 4, 3, 2, 1, followed by no points)",
+            "f1-2010":"Winner 25 (then 18, 15, 12, 10, 8, 6, 4, 2, 1, followed by no points)",
+            "player_count_1":"Winner [player count] (then 1 less point per position)"
+        }
+    },
+    {
+        "DisplayName":"Grid Order",
+        "Category":"Server Settings",
+        "Description":"Sets the method for sorting the grid order",
+        "Keywords":"grid,order",
+        "FieldName":"grid_order",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"grid_order",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"perf_normal",
+        "EnumValues":{
+            "random":"Random",
+            "perf_normal":"Performance points (fastest at front)",
+            "perf_reverse":"Performance points (fastest at back)",
+            "qualifying":"Qualifying session",
+            "cup_normal":"Cup points (highest at front)",
+            "cup_reverse":"Cup points (highest at back)"
+        }
+    },
+    {
         "DisplayName":"Enable Player Voting",
         "Category":"Server Settings",
-        "Description":"When enabled, players will vote for the next event after previous event has ended (requires event rotation)",
+        "Description":"When enabled, players will vote for the next event after previous event has ended (requires event rotation. Can be triggered by command \"startvote\" when players in unlocked lobby",
         "Keywords":"event,voting",
         "FieldName":"enable_track_vote",
         "InputType":"checkbox",
@@ -265,7 +298,7 @@
     {
         "DisplayName":"Track",
         "Category":"Server Settings",
-        "Description":"Set track. List available track names with command:tracks",
+        "Description":"Set track. List available track names with command \"tracks\"",
         "Keywords":"track",
         "FieldName":"track",
         "InputType":"text",
@@ -299,7 +332,7 @@
     {
         "DisplayName":"Bot Quantity",
         "Category":"Server Settings",
-        "Description":"Pre-populate server with AI bots",
+        "Description":"Pre-populate server with the set number of AI bots",
         "Keywords":"bots",
         "FieldName":"bots",
         "InputType":"number",
@@ -314,7 +347,7 @@
     {
         "DisplayName":"AI Difficulty",
         "Category":"Server Settings",
-        "Description":"",
+        "Description":"Sets difficulty setting of AI bots",
         "Keywords":"AI,difficulty",
         "FieldName":"ai_difficulty",
         "InputType":"enum",
@@ -434,7 +467,7 @@
     {
         "DisplayName":"Specific Car Allowed",
         "Category":"Server Settings",
-        "Description":"If set, allow only the specific car listed. Leave blank for no restriction. List available cars with command:cars",
+        "Description":"If set, allow only the specific car listed. Leave blank for no restriction. List available cars with command \"cars\"",
         "Keywords":"car,allowed",
         "FieldName":"car_restriction",
         "InputType":"text",
@@ -510,7 +543,7 @@
     {
         "DisplayName":"Weather",
         "Category":"Server Settings",
-        "Description":" Set event weather. Leave blank for random weather. List available weather names with command:weathers",
+        "Description":"Set event weather. Leave blank for random weather. List available weather names with command \"weathers\"",
         "Keywords":"weather",
         "FieldName":"weather",
         "InputType":"text",
@@ -539,7 +572,7 @@
     {
         "DisplayName":"Enabled Mods",
         "Category":"Server Settings",
-        "Description":"Comma separated list of enabled mods on the server. Mods need to be copied to server mods folder",
+        "Description":"Comma separated list of folder names of enabled mods on the server. Mod folders need to be copied to server mods folder",
         "Keywords":"mods",
         "FieldName":"mods",
         "InputType":"text",
@@ -547,7 +580,7 @@
         "ParamFieldName":"mods",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
-        "Placeholder":"343743838,459569569",
+        "Placeholder":"example,my_mod",
         "EnumValues":{}
     }
 ]
