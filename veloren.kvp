@@ -54,7 +54,7 @@ App.RCONConnectRetrySeconds=5
 App.RCONHeartbeatMinutes=0
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat={0}
-App.UpdateSources=[{"UpdateStageName":"Server Download","UpdateSourcePlatform":"Windows","UpdateSource":"FetchURL","UpdateSourceData":"https://github.com/veloren/veloren/releases/download/nightly/nightly-windows-x86_64-2022-06-29T20_28.zip","UpdateSourceTarget":"./","UnzipUpdateSource":true,"OverwriteExistingFiles":true,"DeleteAfterExtract":true},{"UpdateStageName":"Server Download","UpdateSourcePlatform":"Linux","UpdateSource":"FetchURL","UpdateSourceData":"https://github.com/veloren/veloren/releases/download/nightly/nightly-linux-x86_64-2022-06-29T20_28.zip","UpdateSourceTarget":"./","UnzipUpdateSource":true,"OverwriteExistingFiles":true,"DeleteAfterExtract":true},{"UpdateStageName":"Start Server","UpdateSourcePlatform":"All","UpdateSource":"StartApplication"},{"UpdateStageName":"Wait For Server Start","UpdateSourcePlatform":"All","UpdateSource":"WaitForStartupComplete"},{"UpdateStageName":"Stop Server","UpdateSourcePlatform":"All","UpdateSource":"ShutdownApplication"}]
+App.UpdateSources=[{"UpdateStageName":"Server Download","UpdateSourcePlatform":"Windows","UpdateSource":"FetchURL","UpdateSourceData":"https://download.veloren.net/latest/windows/x86_64/nightly","UpdateSourceTarget":"{{$FullRootDir}}","UnzipUpdateSource":false,"OverwriteExistingFiles":true,"DeleteAfterExtract":false},{"UpdateStageName":"Server Download","UpdateSourcePlatform":"Linux","UpdateSource":"FetchURL","UpdateSourceData":"https://download.veloren.net/latest/linux/x86_64/nightly","UpdateSourceTarget":"{{$FullRootDir}}","UnzipUpdateSource":false,"OverwriteExistingFiles":true,"DeleteAfterExtract":false},{"UpdateStageName":"Server Download Copy","UpdateSourcePlatform":"All","UpdateSource":"CopyFilePath","UpdateSourceData":"{{$FullRootDir}}nightly.zip","UpdateSourceArgs":"{{$FullRootDir}}nightly","OverwriteExistingFiles":true},{"UpdateStageName":"Server Extract","UpdateSourcePlatform":"All","UpdateSource":"ExtractArchive","UpdateSourceArgs":"{{$FullRootDir}}nightly.zip","OverwriteExistingFiles":false,"DeleteAfterExtract":true},{"UpdateStageName":"Start Server","UpdateSourcePlatform":"All","UpdateSource":"StartApplication"},{"UpdateStageName":"Wait For Server Start","UpdateSourcePlatform":"All","UpdateSource":"WaitForStartupComplete"},{"UpdateStageName":"Stop Server","UpdateSourcePlatform":"All","UpdateSource":"ShutdownApplication"}]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
@@ -66,10 +66,10 @@ App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RegexMatch
 App.TemplateMatchRegex={{(\$?[\w]+)}}
-Console.FilterMatchRegex=
+Console.FilterMatchRegex==\[\d+m
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^$
+Console.AppReadyRegex=^[\d-]+T[\d:]+\.\d+Z  INFO veloren_server_cli: Server is ready to accept connections\. metrics_port=\d+ gameserver_addresses=Map { iter: IntoIter\(\[Tcp { address: [\[\]\da-f\.:]+:\d+ }, Tcp { address: [\[\]\da-f\.:]+:\d+ }\]\) }$
 Console.UserJoinRegex=^$
 Console.UserLeaveRegex=^$
 Console.UserChatRegex=^$
