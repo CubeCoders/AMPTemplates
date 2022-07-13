@@ -30,16 +30,16 @@ App.AppSettings={}
 App.EnvironmentVariables={"RUST_LOG":"debug,common","net":"info"}
 App.CommandLineParameterFormat=-{0} "{1}"
 App.CommandLineParameterDelimiter= 
-App.ExitMethod=OS_CLOSE
+App.ExitMethod=String
 App.ExitTimeout=30
-App.ExitString=stop
+App.ExitString=shutdown
 App.ExitFile=lock
 App.HasWriteableConsole=True
 App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"Both","Name":"Server Port","Description":"Port for game traffic","Port":14004,"Ref":"ServerPort"},{"Protocol":"TCP","Name":"Metrics Port","Description":"Port for metrics traffic","Port":14005,"Ref":"MetricsPort"}]
+App.Ports=[{"Protocol":"TCP","Name":"Server Port","Description":"Port for game traffic","Port":14004,"Ref":"ServerPort"},{"Protocol":"TCP","Name":"Metrics Port","Description":"Port for metrics traffic","Port":14005,"Ref":"MetricsPort"}]
 App.AdminPortRef=ServerPort
 App.PrimaryApplicationPortRef=ServerPort
 App.UniversalSleepApplicationUDPPortRef=ServerPort
@@ -69,7 +69,7 @@ App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex==\[\d+m
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^[\d-]+T[\d:]+\.\d+Z  INFO veloren_server_cli: Server is ready to accept connections\. metrics_port=\d+ gameserver_addresses=Map { iter: IntoIter\(\[Tcp { address: [\[\]\da-f\.:]+:\d+ }, Tcp { address: [\[\]\da-f\.:]+:\d+ }\]\) }$
+Console.AppReadyRegex=^[\d-]+T[\d:]+\.\d+Z\s+INFO veloren_server_cli: Server is ready to accept connections\. metrics_port=\d+ gameserver_addresses=Map { iter: IntoIter\(\[Tcp { address: [\[\]\da-f\.:]+:\d+ }, Tcp { address: [\[\]\da-f\.:]+:\d+ }\]\) }$
 Console.UserJoinRegex=^$
 Console.UserLeaveRegex=^$
 Console.UserChatRegex=^$
