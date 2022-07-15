@@ -15,7 +15,7 @@
     {
         "DisplayName":"First Welcome Message",
         "Category":"Server Settings",
-        "Description":"First MOTD that will be broadcasted to Minecraft: Bedrock Edition clients. Defaults to \"Geyser\" if blank",
+        "Description":"First MOTD that will be broadcasted to Minecraft: Bedrock Edition clients. Defaults to \"Geyser\" if blank. Irrelevant if Passthrough MOTD is enabled",
         "Keywords":"welcome,message,motd",
         "FieldName":"BedrockMotd1",
         "InputType":"text",
@@ -28,14 +28,14 @@
     {
         "DisplayName":"Second Welcome Message",
         "Category":"Server Settings",
-        "Description":"Second MOTD that will be broadcasted to Minecraft: Bedrock Edition clients. Defaults to \"Geyser\" if blank",
+        "Description":"Second MOTD that will be broadcasted to Minecraft: Bedrock Edition clients. Defaults to \"Geyser\" if blank. Irrelevant if Passthrough MOTD is enabled",
         "Keywords":"welcome,message,motd",
         "FieldName":"BedrockMotd2",
         "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"bedrock.motd2",
         "IncludeInCommandLine":true,
-        "DefaultValue":"Geyser",
+        "DefaultValue":"Another Geyser server powered by AMP",
         "EnumValues":{}
     },
     {
@@ -53,48 +53,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Remote Server Address",
-        "Category":"Server Settings",
-        "Description":"The IP address of the remote (Java Edition) server. Default is \"auto\"",
-        "Keywords":"remote,address",
-        "FieldName":"RemoteAddress",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"remote.address",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"auto",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Make Server Public",
-        "Category":"Server Settings",
-        "Description":"If enabled, the server will be visible in the in-game server list.",
-        "Keywords":"public,visible",
-        "FieldName":"ServerVisible",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerVisible",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "True":"true",
-            "False":"false"
-        }
-    },
-    {
-        "DisplayName":"Server Password",
-        "Category":"Server Settings",
-        "Description":"Sets the password to join the server.",
-        "Keywords":"password",
-        "FieldName":"ServerPassword",
-        "InputType":"password",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerPassword",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Player Limit",
         "Category":"Server Settings",
         "Description":"The maximum number of players allowed on the server (visual only, not actual limit)",
@@ -109,115 +67,77 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Save Name",
+        "DisplayName":"Remote Server Address",
         "Category":"Server Settings",
-        "Description":"Sets the name of the world directory to load, or to create if it does not already exist.",
-        "Keywords":"save,name",
-        "FieldName":"SaveName",
+        "Description":"The IP address of the remote (Java Edition) server. Default is \"auto\"",
+        "Keywords":"remote,address",
+        "FieldName":"RemoteAddress",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"SaveName",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"world",
+        "ParamFieldName":"remote.address",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"auto",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Map",
+        "DisplayName":"Enable Passthrough MOTD",
         "Category":"Server Settings",
-        "Description":"Sets the type of world (map) to be created. Default is moon.",
-        "Keywords":"world,type,map",
-        "FieldName":"WorldType",
-        "InputType":"enum",
+        "Description":"If enabled, the MOTD from the remote server will be relayed to Bedrock players",
+        "Keywords":"passthrough,MOTD",
+        "FieldName":"PassthroughMotd",
+        "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"WorldType",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"moon",
+        "ParamFieldName":"passthrough-motd",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"false",
         "EnumValues":{
-            "moon":"Moon",
-            "mars":"Mars",
-            "europa":"Europa",
-            "europa2":"Europa2",
-            "mimas":"Mimas",
-            "vulcan":"Vulcan",
-            "vulcan2":"Vulcan2",
-            "space":"Space",
-            "loulan":"Loulan",
-            "venus":"Venus"
+            "True":"true",
+            "False":"false"
         }
     },
     {
-        "DisplayName":"Enable Autosave",
+        "DisplayName":"Enable Passthrough Protocol Name",
         "Category":"Server Settings",
-        "Description":"If enabled, the world will be autosaved at the interval set under \"Autosave Interval\".",
-        "Keywords":"autosave",
-        "FieldName":"AutoSave",
+        "Description":"If enabled, the protocol name (such as Paper 1.X) from the remote server will be relayed to Bedrock players. Only really useful when using a custom protocol name",
+        "Keywords":"passthrough,MOTD",
+        "FieldName":"PassthroughProtocolName",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"AutoSave",
+        "ParamFieldName":"passthrough-protocol-name",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Enable Passthrough Player Counts",
+        "Category":"Server Settings",
+        "Description":"If enabled, the player count and player limit from the remote server will be relayed to Bedrock players",
+        "Keywords":"passthrough,",
+        "FieldName":"PassthroughPlayerCounts",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"passthrough-player-counts",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Enable Command Suggestions",
+        "Category":"Server Settings",
+        "Description":"If disabled, command suggestions will not be sent, solving freezing issues for Bedrock clients",
+        "Keywords":"command,suggestions",
+        "FieldName":"CommandSuggestions",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"command-suggestions",
         "IncludeInCommandLine":true,
         "DefaultValue":"true",
-        "EnumValues":{
-            "True":"true",
-            "False":"false"
-        }
-    },
-    {
-        "DisplayName":"Auto Save Interval",
-        "Category":"Server Settings",
-        "Description":"Sets how frequently the server will save the world if autosave is enabled.",
-        "Keywords":"autosave,interval",
-        "FieldName":"SaveInterval",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"SaveInterval",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"300",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Show Framerate",
-        "Category":"Server Settings",
-        "Description":"If enabled, shows the framerate of the server.",
-        "Keywords":"framerate,fps",
-        "FieldName":"ShowFps",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ShowFps",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "True":"true",
-            "False":"false"
-        }
-    },
-    {
-        "DisplayName":"Show Latency",
-        "Category":"Server Settings",
-        "Description":"If enabled, shows the latency of the server.",
-        "Keywords":"latency",
-        "FieldName":"ShowLatency",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ShowLatency",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "True":"true",
-            "False":"false"
-        }
-    },
-    {
-        "DisplayName":"Enable UPnP",
-        "Category":"Server Settings",
-        "Description":"If enabled, the server will attempt to configure automatic port forwarding on a compatible router.",
-        "Keywords":"upnp",
-        "FieldName":"UPNPEnabled",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"UPNPEnabled",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"false",
         "EnumValues":{
             "True":"true",
             "False":"false"
