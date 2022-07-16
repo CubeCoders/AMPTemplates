@@ -69,9 +69,9 @@ App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex==\[\d+m
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^[\d-]+T[\d:]+\.\d+Z\s+INFO veloren_server_cli: Server is ready to accept connections\. metrics_port=\d+ gameserver_addresses=Map { iter: IntoIter\(\[Tcp { address: [\[\]\da-f\.:]+:\d+ }, Tcp { address: [\[\]\da-f\.:]+:\d+ }\]\) }$
-Console.UserJoinRegex=^[\d-]+T[\d:]+\.\d+Z\s+DEBUG veloren_server::sys::msg::in_game: client is not in_game, ignoring msg entity=Entity\((?<sessionid>.+?), Generation\(\d+\)\)$
-Console.UserLeaveRegex=^[\d-]+T[\d:]+\.\d+Z\s+INFO (client_disconnect{pid=.+ entity=Entity\((?<sessionid>.+?), Generation\(\d+\)\) reason=ClientRequested}:network{p=.+}:network{p=.+}:remote{p=.+}: veloren_network::api: Participant already has been shutdown gracefully|veloren_server_cli::shutdown_coordinator: Shutting down)$
+Console.AppReadyRegex=^[\d-]+T[\d:]+\.\d+Z\s+INFO veloren_server_cli: Server is ready to accept connections\.(.+?)$
+Console.UserJoinRegex=^[\d-]+T[\d:]+\.\d+Z\s+INFO network{(.+?)}: veloren_network_protocol::handshake: This Handshake is now configured! pid=(?<sessionid>.*?)$
+Console.UserLeaveRegex=^[\d-]+T[\d:]+\.\d+Z\s+INFO ((.+?)remote{p=(?<sessionid>.*?)}: veloren_network::api: Participant already has been shutdown gracefully|veloren_server_cli::shutdown_coordinator: Shutting down)$
 Console.UserChatRegex=^$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
 Console.MetricsRegex=
