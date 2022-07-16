@@ -13,7 +13,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"First Welcome Message",
+        "DisplayName":"First MOTD",
         "Category":"Server Settings",
         "Description":"First MOTD that will be broadcasted to Bedrock clients. Defaults to \"Geyser\" if blank. Irrelevant if Passthrough MOTD is enabled",
         "Keywords":"welcome,message,motd",
@@ -26,7 +26,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Second Welcome Message",
+        "DisplayName":"Second MOTD",
         "Category":"Server Settings",
         "Description":"Second MOTD that will be broadcasted to Bedrock clients. Defaults to \"Geyser\" if blank. Irrelevant if Passthrough MOTD is enabled",
         "Keywords":"welcome,message,motd",
@@ -76,6 +76,20 @@
         "ParamFieldName":"remote.address",
         "IncludeInCommandLine":true,
         "DefaultValue":"auto",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Compression Level",
+        "Category":"Server Settings",
+        "Description":"Sets the level of compression of network traffic to the Bedrock clients. The higher the number, the more CPU usage used, but the lower the bandwidth used. -1 = disabled",
+        "Keywords":"compression,level",
+        "FieldName":"BedrockCompressionLevel",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"bedrock.compression-level",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"6",
+        "Placeholder":"-1 or 1 to 9",
         "EnumValues":{}
     },
     {
@@ -141,5 +155,37 @@
             "True":"true",
             "False":"false"
         }
-    }
+    },
+    {
+        "DisplayName":"Allow Password Authentication",
+        "Category":"Server Settings",
+        "Description":"If enabled, allows for password-based authentication methods through Geyser. Only useful in online mode. Otherwise, users must authenticate to Microsoft using a code provided by Geyser on their desktop",
+        "Keywords":"password,authentication",
+        "FieldName":"RemoteAllowPasswordAuthentication",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"remote.allow-password-authentication",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Forward Player Ping",
+        "Category":"Server Settings",
+        "Description":"If enabled, Bedrock clients will have more accurate ping, but may time out more easily",
+        "Keywords":"forward,ping",
+        "FieldName":"RemoteForwardPlayerPing",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"remote.forward-player-ping",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    } 
 ]
