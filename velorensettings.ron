@@ -1,25 +1,25 @@
 // DO NOT edit settings.ron directly
 // AMP_settings.ron controls settings.ron. Edit AMP_settings.ron if you want to add or change certain settings
 // NOTE:
-// - Do not change values in {{ }}. They are set either via the AMP UI (under "Server Settings") or are controlled by AMP itself (in particular, ports)
+// - Do not change values in double curly brackets. They are set either via the AMP UI (under "Server Settings") or are controlled by AMP itself (in particular, ports)
 // - Other settings can be changed or added as needed
 (
     gameserver_protocols: [
         Tcp(
-            address: "{{ApplicationIPBinding}}:{{ServerPort}}",
+            address: "{{application_ip_binding}}:{{server_port}}",
         ),
         // Uncomment the block below if you want the server to bind on an IPv6 socket as well as IPv4
         /*
         Tcp(
-            address: "[::]:{{ServerPort}}",
+            address: "[::]:{{server_port}}",
         ),
         */
     ],
-    metrics_address: "127.0.0.1:{{MetricsPort}}",
+    metrics_address: "127.0.0.1:{{metrics_port}}",
     auth_server_address: Some("https://auth.veloren.net"),
-    max_players: {{MaxPlayers}},
-    world_seed: {{WorldSeed}},
-    server_name: "{{ServerName}}",
+    max_players: {{max_players}},
+    world_seed: {{world_seed}},
+    server_name: "{{server_name}}",
     start_time: 32400,
     map_file: None,
     max_view_distance: Some(65),
