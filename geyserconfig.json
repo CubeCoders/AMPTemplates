@@ -1,46 +1,7 @@
 [
     {
-        "DisplayName":"Server Name",
-        "Category":"Server Settings",
-        "Description":"Sets the server name that will be sent to Bedrock clients",
-        "Keywords":"server,name",
-        "FieldName":"BedrockServerName",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"bedrock.server-name",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"AMP Powered Geyser Proxy",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"First MOTD",
-        "Category":"Server Settings",
-        "Description":"First MOTD that will be broadcast to Bedrock clients. Defaults to \"Geyser\" if blank. Irrelevant if Passthrough MOTD is enabled",
-        "Keywords":"welcome,message,motd",
-        "FieldName":"BedrockMotd1",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"bedrock.motd1",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"Geyser",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Second MOTD",
-        "Category":"Server Settings",
-        "Description":"Second MOTD that will be broadcast to Bedrock clients. Defaults to \"Geyser\" if blank. Irrelevant if Passthrough MOTD is enabled",
-        "Keywords":"welcome,message,motd",
-        "FieldName":"BedrockMotd2",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"bedrock.motd2",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"Another Geyser server powered by AMP",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Minimum Memory",
-        "Category":"Server Settings",
+        "Category":"Java Settings",
         "Description":"Java's minimum heap size",
         "Keywords":"minimum,memory,heap",
         "FieldName":"MinMemory",
@@ -53,152 +14,31 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Player Limit",
-        "Category":"Server Settings",
-        "Description":"The maximum number of players allowed on the server (visual only, not actual limit)",
-        "Keywords":"max,players,limit",
-        "FieldName":"$MaxUsers",
+        "DisplayName":"Maximum Memory",
+        "Category":"Java Settings",
+        "Description":"Java's maximum heap size",
+        "Keywords":"maximum,memory,heap",
+        "FieldName":"MaxMemory",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"max-players",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"100",
+        "ParamFieldName":"MaxMemory",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1024",
+        "Suffix":"MB",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Remote Server Address",
-        "Category":"Server Settings",
-        "Description":"The IP address of the remote (Java) server. Default is \"auto\"",
-        "Keywords":"remote,address",
-        "FieldName":"RemoteAddress",
+        "DisplayName":"Additional Java Startup Parameters",
+        "Category":"Java Settings",
+        "Description":"Additional Java arguments (not server arguments) as startup parameters that are not otherwise set by AMP. Use with care",
+        "Keywords":"custom,java,arguments,parameters",
+        "FieldName":"CustomJavaArgs",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"remote.address",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"auto",
+        "ParamFieldName":"CustomJavaArgs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"-XX:+UseG1GC",
         "EnumValues":{}
-    },
-    {
-        "DisplayName":"Remote Server Port",
-        "Category":"Server Settings",
-        "Description":"The port of the remote (Java) server. Default is 25565",
-        "Keywords":"remote,port",
-        "FieldName":"RemotePort",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"remote.port",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"25565",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Compression Level",
-        "Category":"Server Settings",
-        "Description":"Sets the level of compression of network traffic to the Bedrock clients. The higher the number, the more CPU usage used, but the lower the bandwidth used. -1 = disabled",
-        "Keywords":"compression,level",
-        "FieldName":"BedrockCompressionLevel",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"bedrock.compression-level",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"6",
-        "Placeholder":"-1 or 1 to 9",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Passthrough MOTD",
-        "Category":"Server Settings",
-        "Description":"If enabled, the MOTD from the remote (Java) server will be relayed to Bedrock clients",
-        "Keywords":"passthrough,MOTD",
-        "FieldName":"PassthroughMotd",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"passthrough-motd",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "True":"true",
-            "False":"false"
-        }
-    },
-    {
-        "DisplayName":"Enable Passthrough Protocol Name",
-        "Category":"Server Settings",
-        "Description":"If enabled, the protocol name (such as Paper 1.X) from the remote (Java) server will be relayed to Bedrock clients. Only really useful when using a custom protocol name",
-        "Keywords":"passthrough,protocol,name",
-        "FieldName":"PassthroughProtocolName",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"passthrough-protocol-name",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "True":"true",
-            "False":"false"
-        }
-    },
-    {
-        "DisplayName":"Enable Passthrough Player Counts",
-        "Category":"Server Settings",
-        "Description":"If enabled, the player count and player limit from the remote (Java) server will be relayed to Bedrock clients",
-        "Keywords":"passthrough,player,counts",
-        "FieldName":"PassthroughPlayerCounts",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"passthrough-player-counts",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "True":"true",
-            "False":"false"
-        }
-    },
-    {
-        "DisplayName":"Enable Command Suggestions",
-        "Category":"Server Settings",
-        "Description":"If disabled, command suggestions will not be sent, solving freezing issues for Bedrock clients",
-        "Keywords":"command,suggestions",
-        "FieldName":"CommandSuggestions",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"command-suggestions",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "True":"true",
-            "False":"false"
-        }
-    },
-    {
-        "DisplayName":"Allow Password Authentication",
-        "Category":"Server Settings",
-        "Description":"If enabled, allows for password-based authentication methods through Geyser. Only useful in online mode. Otherwise, users must authenticate to Microsoft using a code provided by Geyser on their desktop",
-        "Keywords":"password,authentication",
-        "FieldName":"RemoteAllowPasswordAuthentication",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"remote.allow-password-authentication",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "True":"true",
-            "False":"false"
-        }
-    },
-    {
-        "DisplayName":"Forward Player Ping",
-        "Category":"Server Settings",
-        "Description":"If enabled, Bedrock clients will have more accurate ping, but may time out more easily",
-        "Keywords":"forward,ping",
-        "FieldName":"RemoteForwardPlayerPing",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"forward-player-ping",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "True":"true",
-            "False":"false"
-        }
-    } 
+    }
 ]
