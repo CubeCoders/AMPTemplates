@@ -11,18 +11,18 @@ Meta.MetaConfigManifest=night-of-the-deadmetaconfig.json
 Meta.ConfigRoot=night-of-the-dead.kvp
 Meta.MinAMPVersion=
 Meta.SpecificDockerImage=cubecoders/ampbase:wine
-Meta.ContainerPolicy=Supported
+Meta.ContainerPolicy=Recommended
 Meta.Prerequsites=[]
 Meta.ConfigReleaseState=NotSpecified
 App.DisplayName=Night of the Dead
 App.RootDir=./night-of-the-dead/
 App.BaseDirectory=./night-of-the-dead/1420710/
 App.ExecutableWin=1420710\LF\Binaries\Win64\LFServer.exe
-App.ExecutableLinux=/usr/bin/wine
+App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=1420710
-App.LinuxCommandLineArgs="./LF/Binaries/Win64/LFServer.exe"
+App.LinuxCommandLineArgs=-a wine "./LF/Binaries/Win64/LFServer.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs=?listen -log -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{$FormattedArgs}} -CRASHREPORTS
+App.CommandLineArgs={{$PlatformArgs}} ?listen -log -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{$FormattedArgs}} -CRASHREPORTS
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1377380"}
 App.CommandLineParameterFormat=-{0}="{1}"
@@ -54,7 +54,7 @@ App.SteamForceLoginPrompt=False
 App.RapidStartup=False
 App.MonitorChildProcess=True
 App.MonitorChildProcessWaitMs=2000
-App.MonitorChildProcessName=LFServer.exe
+App.MonitorChildProcessName=wine64
 App.SupportsUniversalSleep=True
 App.WakeupMode=Any
 App.ApplicationReadyMode=RegexMatch
