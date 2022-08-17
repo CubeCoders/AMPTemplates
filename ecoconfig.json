@@ -39,17 +39,16 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Server Version",
+        "DisplayName":"RCON Password",
         "Category":"Server Settings",
-        "Description":"[Server version](https://steamdb.info/app/739590/depots/) to install. Default is \"public\". Set any required password under SteamCMD and Updates. NOTE: Update the server after changing this setting!",
-        "Keywords":"server,version,beta",
-        "FieldName":"ServerVersion",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$RemoteAdminPassword",
         "InputType":"text",
+        "Hidden":true,
         "IsFlagArgument":false,
-        "ParamFieldName":"",
+        "ParamFieldName":"RconPassword",
         "IncludeInCommandLine":false,
-        "DefaultValue":"public",
-        "Placeholder":"public",
         "EnumValues":{}
     },
     {
@@ -103,19 +102,6 @@
         "InputType":"password",
         "IsFlagArgument":false,
         "ParamFieldName":"Password",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"RCON Password",
-        "Category":"Server Settings",
-        "Description":"Password required to connect to RCON. NOTE: Change this after first installing the server",
-        "Keywords":"rcon,password",
-        "FieldName":"$RemoteAdminPassword",
-        "InputType":"RandomPassword",
-        "IsFlagArgument":false,
-        "ParamFieldName":"RconPassword",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
         "EnumValues":{}
@@ -208,5 +194,35 @@
             "False":"false",
             "True":"true"
         }
-    }   
+    },
+    {
+        "DisplayName":"Enable Beta Branch",
+        "Category":"SteamCMD and Updates",
+        "Description":"If enabled, allows beta branches (branches other than \"public\") to be installed. Specify the branch under \"Selected Beta Branch\". NOTE: Update the server after switching branches!",
+        "Keywords":"enable,beta",
+        "FieldName":"EnableBeta",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Selected Beta Branch",
+        "Category":"SteamCMD and Updates",
+        "Description":"[Beta branch](https://steamdb.info/app/739590/depots/) to install. Requires \"Enable Beta Branch\" to be enabled. Set any required password under \"Beta Password\". NOTE: Update the server after switching branches!",
+        "Keywords":"beta,branch",
+        "FieldName":"BetaBranch",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"",
+        "EnumValues":{}
+    }
 ]
