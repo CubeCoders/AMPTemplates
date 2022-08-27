@@ -1,5 +1,45 @@
 [
     {
+        "DisplayName":"RCON Port",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$RCONPort",
+        "InputType":"number",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"SourceRCON.Port",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"RCON Password",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$RemoteAdminPassword",
+        "InputType":"text",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"SourceRCON.Password",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable RCON",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"SourceRCONbEnabled",
+        "InputType":"text",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"SourceRCON.bEnabled",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Auth Token",
         "Category":"Server Settings",
         "Description":"Sets the [auth token](https://alderongames.com/oauth/hosting-token) to install and run the server. The associated account must have access to the game",
@@ -26,9 +66,61 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Name",
+        "Category":"Server Settings",
+        "Description":"The name of the server as it appears publicly. Note: To have a space in the name, you must use underscores _ as spaces",
+        "Keywords":"name",
+        "FieldName":"ServerName",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/PathOfTitans.IGameSession.ServerName",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"AMP_Powered_POT_Server",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Welcome Message",
+        "Category":"Server Settings",
+        "Description":"Welcome message when players join the server. Refer to these [formatting instructions](https://github.com/Alderon-Games/pot-community-servers/wiki/Setting-up-Message-of-the-Day-(MOTD))",
+        "Keywords":"welcome,message,motd",
+        "FieldName":"MOTD",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"MOTD",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"<title><red>Welcome to Path of Titans Server - powered by AMP!</></>",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Password",
+        "Category":"Server Settings",
+        "Description":"Password to connect to the server",
+        "Keywords":"server,password",
+        "FieldName":"ServerPassword",
+        "InputType":"password",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/PathOfTitans.IGameSession.ServerPassword",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Map",
+        "Category":"Server Settings",
+        "Description":"Sets the map for the server. Default is Panjura. If using a modded map, GameUserSettings.ini also needs to be configured. Refer to these [instructions](https://github.com/Alderon-Games/pot-community-servers/wiki/Setting-up-Mods)",
+        "Keywords":"map",
+        "FieldName":"ServerMap",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/PathOfTitans.IGameSession.ServerMap",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Panjura",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server IP Binding",
         "Category":"Server Settings",
-        "Description":"If needed, sets the IPv4 address of a specific interface on the host to bind the server to. Default is all IPs (blank)",
+        "Description":"If needed, binds the server to the IPv4 address of a specific interface on the host. Default is all IPs (blank)",
         "Keywords":"multihome,ip",
         "FieldName":"MultiHome",
         "InputType":"text",
@@ -52,5 +144,51 @@
         "IncludeInCommandLine":true,
         "DefaultValue":"",
         "EnumValues":{}
-    }  
+    },
+    {
+        "DisplayName":"Player Limit",
+        "Category":"Server Settings",
+        "Description":"Maximum number of players that may connect to the server",
+        "Keywords":"players,limit",
+        "FieldName":"$MaxUsers",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/PathOfTitans.IGameSession.MaxPlayers",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"100",
+        "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Database Location",
+        "Category":"Server Settings",
+        "Description":"Sets whether to use a local or remote database. Local is recommended unless connecting shared character data between servers is required",
+        "Keywords":"database",
+        "FieldName":"Database",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Database",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"Local",
+        "EnumValues":{
+            "Local":"Local",
+            "Remote":"Remote"
+        }
+    },
+    {
+        "DisplayName":"Selected Beta Branch",
+        "Category":"Server Settings",
+        "Description":"Sets which beta branch to install. \"Production\" is recommended. Use [\"Public Test\"](https://alderongames.com/public-test-branch-desktop) at your own risk. NOTE: Update the server after switching branches!",
+        "Keywords":"beta,branch,branchkey",
+        "FieldName":"BranchKey",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"BranchKey",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"Production",
+        "EnumValues":{
+            "production":"Production",
+            "demo-public-test":"Public Test"
+        }
+    }
 ]

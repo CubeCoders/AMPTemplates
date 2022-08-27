@@ -22,7 +22,7 @@ App.ExecutableLinux=PathOfTitans/Binaries/Linux/PathOfTitansServer-Linux-Shippin
 App.WorkingDir=
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs=PathOfTitans {{$PlatformArgs}} -log -Port={{$GamePort}} -QueryPort={{$QueryPort}} -RconPort={{$RCONPort}} -BranchKey=production -Database=Local {{$FormattedArgs}}
+App.CommandLineArgs=PathOfTitans {{$PlatformArgs}} -log -Port={{$GamePort}} -QueryPort={{$QueryPort}} -RconPort={{$RCONPort}} {{$FormattedArgs}}
 App.AppSettings={}
 App.EnvironmentVariables={}
 App.CommandLineParameterFormat=-{0}={1}
@@ -36,19 +36,20 @@ App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"UDP","Port":7777,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":7778,"Ref":"QueryPort","Name":"Query Port","Description":"Port for query traffic"},{"Protocol":"TCP","Port":7779,"Ref":"RCONPort","Name":"RCON Port","Description":"Port for RCON traffic"}]
+App.Ports=[{"Protocol":"UDP","Port":7777,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"Both","Port":7778,"Ref":"ReservedPort","Name":"Reserved Port","Description":"Reserved port"},{"Protocol":"TCP","Port":7779,"Ref":"RCONPort","Name":"RCON Port","Description":"Port for RCON traffic"},{"Protocol":"Both","Port":7780,"Ref":"StatsPort","Name":"Stats Port","Description":"Port for stats traffic"},{"Protocol":"UDP","Port":7781,"Ref":"QueryPort","Name":"Query Port","Description":"Port for query traffic"}]
 App.AdminPortRef=RCONPort
 App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPort=GamePort
 App.UniversalSleepSteamQueryPort=QueryPort
-App.MaxUsers=20
-App.UseRandomAdminPassword=False
+App.MaxUsers=100
+App.UseRandomAdminPassword=True
 App.RemoteAdminPassword=Password123
-App.AdminMethod=STDIO
+App.AdminMethod=SourceRCON
 App.AdminLoginTransform=None
 App.RCONConnectDelaySeconds=5
 App.RCONConnectRetrySeconds=5
-App.UpdateSources=[{"UpdateStageName":"Alderon Games Cmd Download","UpdateSourcePlatform":"Windows","UpdateSource":"FetchURL","UpdateSourceData":"https://launcher-cdn.alderongames.com/AlderonGamesCmd-Win64.exe","UpdateSourceTarget":"{{$FullInstanceDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Alderon Games Cmd Download","UpdateSourcePlatform":"Linux","UpdateSource":"FetchURL","UpdateSourceData":"https://launcher-cdn.alderongames.com/AlderonGamesCmd-Linux-x64","UpdateSourceTarget":"{{$FullInstanceDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Make Alderon Games Cmd Executable","UpdateSourcePlatform":"Linux","UpdateSource":"SetExecutableFlag","UpdateSourceArgs":"{{$FullInstanceDir}}AlderonGamesCmd-Linux-x64"},{"UpdateStageName":"Server Download","UpdateSourcePlatform":"Windows","UpdateSource":"Executable","UpdateSourceData":"{{$FullInstanceDir}}AlderonGamesCmd-Win64.exe","UpdateSourceArgs":"--game path-of-titans --server true --beta-branch production --auth-token {{AuthToken}} --install-dir {{$FullRootDir}}"},{"UpdateStageName":"Server Download","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"{{$FullInstanceDir}}AlderonGamesCmd-Linux-x64","UpdateSourceArgs":"--game path-of-titans --server true --beta-branch production --auth-token {{AuthToken}} --install-dir {{$FullRootDir}}"},{"UpdateStageName":"Make Server Executable","UpdateSourcePlatform":"Linux","UpdateSource":"SetExecutableFlag","UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Binaries/Linux/PathOfTitansServer-Linux-Shipping"}]
+App.UpdateSources=[{"UpdateStageName":"Alderon Games Cmd Download","UpdateSourcePlatform":"Windows","UpdateSource":"FetchURL","UpdateSourceData":"https://launcher-cdn.alderongames.com/AlderonGamesCmd-Win64.exe","UpdateSourceTarget":"{{$FullInstanceDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Alderon Games Cmd Download","UpdateSourcePlatform":"Linux","UpdateSource":"FetchURL","UpdateSourceData":"https://launcher-cdn.alderongames.com/AlderonGamesCmd-Linux-x64","UpdateSourceTarget":"{{$FullInstanceDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Make Alderon Games Cmd Executable","UpdateSourcePlatform":"Linux","UpdateSource":"SetExecutableFlag","UpdateSourceArgs":"{{$FullInstanceDir}}AlderonGamesCmd-Linux-x64"},{"UpdateStageName":"Server Download","UpdateSourcePlatform":"Windows","UpdateSource":"Executable","UpdateSourceData":"{{$FullInstanceDir}}AlderonGamesCmd-Win64.exe","UpdateSourceArgs":"--game path-of-titans --server true --beta-branch {{BranchKey}} --auth-token {{AuthToken}} --install-dir {{$FullRootDir}}"},{"UpdateStageName":"Server Download","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"{{$FullInstanceDir}}AlderonGamesCmd-Linux-x64","UpdateSourceArgs":"--game path-of-titans --server true --beta-branch {{BranchKey}} --auth-token {{AuthToken}} --install-dir {{$FullRootDir}}"},{"UpdateStageName":"Make Server Executable","UpdateSourcePlatform":"Linux","UpdateSource":"SetExecutableFlag","UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Binaries/Linux/PathOfTitansServer-Linux-Shipping"},{"UpdateStageName":"Game Config File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/path-of-titansgame.ini","UpdateSourceTarget":"{{$FullInstanceDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Config Directory Creation","UpdateSourcePlatform":"Windows","UpdateSource":"CreateDirectory","UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Saved/Config/WindowsServer"},{"UpdateStageName":"Config Directory Creation","UpdateSourcePlatform":"Linux","UpdateSource":"CreateDirectory","UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Saved/Config/LinuxServer"},{"UpdateStageName":"Game Config File Copy","UpdateSourcePlatform":"Windows","UpdateSource":"CopyFilePath","UpdateSourceData":"{{$FullBaseDir}}PathOfTitans/Saved/Config/WindowsServer/Game.ini","UpdateSourceArgs":"{{$FullInstanceDir}}path-of-titansgame.ini","OverwriteExistingFiles":false},{"UpdateStageName":"Game Config File Copy","UpdateSourcePlatform":"Linux","UpdateSource":"CopyFilePath","UpdateSourceData":"{{$FullBaseDir}}PathOfTitans/Saved/Config/LinuxServer/Game.ini","UpdateSourceArgs":"{{$FullInstanceDir}}path-of-titansgame.ini","OverwriteExistingFiles":false}]
+App.Compatibility=None]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
@@ -64,9 +65,9 @@ Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
 Console.AppReadyRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogGameState: Match State Changed from WaitingToStart to InProgress$
-Console.UserJoinRegex=^$
-Console.UserLeaveRegex=^$
-Console.UserChatRegex=^$
+Console.UserJoinRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]TitansNetwork: AIGameMode::InitNewPlayer\(\?EncryptionToken=(?:.+?)==\?Name=(?<username>.+?)\?\?PID=(?<userid>.+?)\?PT=\d+\?OS=\d+\?SplitscreenCount=\d+\)$
+Console.UserLeaveRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]AlderonLog: IAlderonCommon:UnregisterPlayer\(\) Request: {"player_id":(?<userid>.+?),"platform":"(?:.+?)"}$
+Console.UserChatRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]TitansOnline: Chat: \[(?:.+?)\] (?<username>.+?) \((?:.+?)\): (?<message>.+)$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
 Console.SuppressLogAtStart=False
 Console.ActivateLogRegex=
