@@ -24,7 +24,7 @@ App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} -log -Port={{$GamePort}} -BranchKey=production -Database=Local {{$FormattedArgs}}
 App.AppSettings={}
-App.EnvironmentVariables={}
+App.EnvironmentVariables={"AG_AUTH_TOKEN":"{{AuthToken}}"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
@@ -47,7 +47,7 @@ App.AdminMethod=STDIO
 App.AdminLoginTransform=None
 App.RCONConnectDelaySeconds=5
 App.RCONConnectRetrySeconds=5
-App.UpdateSources=[{"UpdateStageName":"Alderon Games Cmd Download","UpdateSourcePlatform":"Windows","UpdateSource":"FetchURL","UpdateSourceData":"https://launcher-cdn.alderongames.com/AlderonGamesCmd-Win64.exe","UpdateSourceTarget":"{{$FullRootDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Alderon Games Cmd Download","UpdateSourcePlatform":"Linux","UpdateSource":"FetchURL","UpdateSourceData":"https://launcher-cdn.alderongames.com/AlderonGamesCmd-Linux-x64","UpdateSourceTarget":"{{$FullRootDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Set Executable Flag","UpdateSourcePlatform":"Linux","UpdateSource":"SetExecutableFlag","UpdateSourceArgs":"{{$FullRootDir}}AlderonGamesCmd-Linux"},{"UpdateStageName":"Server Download","UpdateSourcePlatform":"Windows","UpdateSource":"Executable","UpdateSourceData":"{{$FullRootDir}}AlderonGamesCmd-Win64.exe","UpdateSourceArgs":"--game path-of-titans --server true --beta-branch production --auth-token {{AuthToken}} --install-dir {{$FullRootDir}}"},{"UpdateStageName":"Server Download","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"{{$FullRootDir}}AlderonGamesCmd-Linux","UpdateSourceArgs":"--game path-of-titans --server true --beta-branch production --auth-token {{AuthToken}} --install-dir {{$FullRootDir}}"}]
+App.UpdateSources=[{"UpdateStageName":"Alderon Games Cmd Download","UpdateSourcePlatform":"Windows","UpdateSource":"FetchURL","UpdateSourceData":"https://launcher-cdn.alderongames.com/AlderonGamesCmd-Win64.exe","UpdateSourceTarget":"{{$FullInstanceDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Alderon Games Cmd Download","UpdateSourcePlatform":"Linux","UpdateSource":"FetchURL","UpdateSourceData":"https://launcher-cdn.alderongames.com/AlderonGamesCmd-Linux-x64","UpdateSourceTarget":"{{$FullInstanceDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Set Executable Flag","UpdateSourcePlatform":"Linux","UpdateSource":"SetExecutableFlag","UpdateSourceArgs":"{{$FullInstanceDir}}AlderonGamesCmd-Linux-x64"},{"UpdateStageName":"Server Download","UpdateSourcePlatform":"Windows","UpdateSource":"Executable","UpdateSourceData":"{{$FullInstanceDir}}AlderonGamesCmd-Win64.exe","UpdateSourceArgs":"--game path-of-titans --server true --beta-branch production --auth-token {{AuthToken}} --install-dir {{$FullRootDir}}"},{"UpdateStageName":"Server Download","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"{{$FullInstanceDir}}AlderonGamesCmd-Linux-x64","UpdateSourceArgs":"--game path-of-titans --server true --beta-branch production --auth-token {{AuthToken}} --install-dir {{$FullRootDir}}"}]
 App.Compatibility=
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
