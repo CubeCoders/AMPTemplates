@@ -11,7 +11,7 @@ Meta.MetaConfigManifest=path-of-titansmetaconfig.json
 Meta.ConfigRoot=path-of-titans.kvp
 Meta.MinAMPVersion=
 Meta.SpecificDockerImage=
-Meta.ContainerPolicy=Supported
+Meta.ContainerPolicy=NotSupported
 Meta.Prerequsites=[]
 Meta.ConfigReleaseState=NotSpecified
 App.DisplayName=Path of Titans
@@ -22,9 +22,9 @@ App.ExecutableLinux=PathOfTitans/Binaries/Linux/PathOfTitansServer-Linux-Shippin
 App.WorkingDir=
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs=PathOfTitans {{$PlatformArgs}} -log -Port={{$GamePort}} -QueryPort={{$QueryPort}} -BranchKey=production -Database=Local {{$FormattedArgs}}
+App.CommandLineArgs=PathOfTitans {{$PlatformArgs}} -log -Port={{$GamePort}} -QueryPort={{$QueryPort}} -RconPort={{$RCONPort}} -BranchKey=production -Database=Local {{$FormattedArgs}}
 App.AppSettings={}
-App.EnvironmentVariables={"AG_AUTH_TOKEN":"{{AuthToken}}"}
+App.EnvironmentVariables={}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
@@ -36,7 +36,8 @@ App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"UDP","Port":7777,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":7778,"Ref":"QueryPort","Name":"Query Port","Description":"Port for query traffic"}]
+App.Ports=[{"Protocol":"UDP","Port":7777,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":7778,"Ref":"QueryPort","Name":"Query Port","Description":"Port for query traffic"},{"Protocol":"TCP","Port":7779,"Ref":"RCONPort","Name":"RCON Port","Description":"Port for RCON traffic"}]
+App.AdminPortRef=RCONPort
 App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPort=GamePort
 App.UniversalSleepSteamQueryPort=QueryPort
