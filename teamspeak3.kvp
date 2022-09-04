@@ -20,7 +20,7 @@ App.ExecutableLinux=teamspeak3-server_win64/ts3server
 App.WorkingDir=teamspeak3-server_win64
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs= 
-App.CommandLineArgs={{$PlatformArgs}} inifile=ts3server.ini license_accepted=1 {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} inifile=teamspeak3server.ini license_accepted=1 {{$FormattedArgs}}
 App.AppSettings={}
 App.EnvironmentVariables={}
 App.CommandLineParameterFormat={0}={1}
@@ -44,7 +44,7 @@ App.RemoteAdminPassword=Password123
 App.AdminMethod=TelnetRCON
 App.RCONConnectDelaySeconds=5
 App.RCONConnectRetrySeconds=5
-App.UpdateSources=[{"UpdateStageName":"TeamSpeak 3 Windows","UpdateSourcePlatform":1,"UpdateSource":256,"UpdateSourceData":"https://teamspeak.com/versions/server.json","UpdateSourceArgs":"$['windows']['x86_64']['mirrors']['teamspeak.com']","UpdateSourceVersion":null,"UpdateSourceTarget":null,"UnzipUpdateSource":true,"OverwriteExistingFiles":true,"ForceDownloadPlatform":0,"UpdateSourceConditionSetting":null,"UpdateSourceConditionValue":null}]
+App.UpdateSources=[{"UpdateStageName":"TeamSpeak 3 Windows","UpdateSourcePlatform":"Windows","UpdateSource":"FetchURLFromJQ","UpdateSourceData":"https://teamspeak.com/versions/server.json","UpdateSourceArgs":"$['windows']['x86_64']['mirrors']['teamspeak.com']","UnzipUpdateSource":true,"OverwriteExistingFiles":true},{"UpdateStageName":"TeamSpeak 3 Linux","UpdateSourcePlatform":"Linux","UpdateSource":"FetchURLFromJQ","UpdateSourceData":"https://teamspeak.com/versions/server.json","UpdateSourceArgs":"$['linux']['x86_64']['mirrors']['teamspeak.com']","UnzipUpdateSource":true,"OverwriteExistingFiles":true},{"UpdateStageName":"Rename Directory","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"mv -f {{$FullBaseDir}}/teamspeak3-server_linux_amd64/* {{$FullBaseDir}}/teamspeak3-server_win64/"},{"UpdateStageName":"Config File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://github.com/IceOfWraith/AMPTemplates/raw/ts3/teamspeak3server.ini","UpdateSourceTarget":"{{$FullBaseDir}}/teamspeak3-server_win64/","OverwriteExistingFiles":false}]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=False
 App.SteamForceLoginPrompt=False
