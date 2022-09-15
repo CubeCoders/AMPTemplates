@@ -27,14 +27,21 @@
         "DeleteAfterExtract":true
     },
     {
-        "UpdateStageName":"Rename Java Directory",
+        "UpdateStageName":"Remove Old Java Directory",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C RD /S /Q .\\geyser\\java & move .\\geyser\\jdk* .\\geyser\\java"
+        "UpdateSourceArgs":"/C RD /S /Q .\\geyser\\java"
     },
     {
-        "UpdateStageName":"Rename Java Directory",
+        "UpdateStageName":"Rename New Java Directory",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C move .\\geyser\\jdk* .\\geyser\\java"
+    },
+    {
+        "UpdateStageName":"Replace Java Directory",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
