@@ -1,0 +1,54 @@
+[
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL", "UpdateSourceData":"https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/lastSuccessfulBuild/artifact/bootstrap/standalone/target/Geyser.jar",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Java Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://download.oracle.com/java/{{JavaVersion}}/latest/jdk-{{JavaVersion}}_windows-x64_bin.zip",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Java Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://download.oracle.com/java/{{JavaVersion}}/latest/jdk-{{JavaVersion}}_linux-x64_bin.tar.gz",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Rename Java Directory",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C RD /S /Q .\\geyser\\java && ren .\\geyser\\jdk* .\\geyser\\java"
+    },
+    {
+        "UpdateStageName":"Rename Java Directory",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'rm -rf ./geyser/java && mv ./geyser/jdk* ./geyser/java'"
+    },
+    {
+        "UpdateStageName":"Start Server",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"StartApplication"
+    },
+    {
+        "UpdateStageName":"Wait For Server Start",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"WaitForStartupComplete"
+    },
+    {
+        "UpdateStageName":"Stop Server",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"ShutdownApplication"
+    }
+]
