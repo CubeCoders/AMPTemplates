@@ -57,7 +57,7 @@
     {
         "DisplayName":"Server Password",
         "Category":"Server Settings",
-        "Description":"Sets the password to join the server. Default is no password",
+        "Description":"Sets the password to join the server. Must be longer than three characters. Default is no password",
         "Keywords":"password",
         "FieldName":"password",
         "InputType":"password",
@@ -67,7 +67,6 @@
         "DefaultValue":"",
         "EnumValues":{}
     },
-    [
     {
         "DisplayName":"Server IP Binding",
         "Category":"Server Settings",
@@ -82,19 +81,32 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Discord Link",
+        "Category":"Server Settings",
+        "Description":"Sets the discord link to show in the server list browser. A server name that is too long may cause the link not to display",
+        "Keywords":"discord,link",
+        "FieldName":"discordLink",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"discordLink",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Restart Time",
         "Category":"Server Settings",
-        "Description":"Sets the local hour to restart the game server",
+        "Description":"Sets the local hour to automatically restart the game server. -1 = disabled",
         "Keywords":"restart,hour",
         "FieldName":"restartHour",
         "InputType":"number",
-        "MinValue":"0",
+        "MinValue":"-1",
         "MaxValue":"23",
         "IsFlagArgument":false,
         "ParamFieldName":"restartHour",
         "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "Placeholder":"0 - 23",
+        "DefaultValue":"-1",
+        "Placeholder":"-1 to 23",
         "EnumValues":{}
     },
     {
@@ -130,6 +142,170 @@
         }
     },
     {
+        "DisplayName":"Total Team Count",
+        "Category":"Server Settings",
+        "Description":"Sets the total team count, with the number of teams dividend evenly between each faction",
+        "Keywords":"team,crew,count",
+        "FieldName":"teamCount",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"teamCount",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"6",
+        "EnumValues":{
+            "2":"Two (1 vs 1)",
+            "4":"Four (2 vs 2)",
+            "6":"Six (3 vs 3)"
+        }
+    },
+    {
+        "DisplayName":"Capture Speed Multiplier",
+        "Category":"Server Settings",
+        "Description":"Sets the capture speed multiplier (0.5 = 50%, 1 = 100%, 2 = 200% and so on)",
+        "Keywords":"capture,speed,multiplier",
+        "FieldName":"captureSpeedMultiplier",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"captureSpeedMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Resource Gain Multiplier",
+        "Category":"Server Settings",
+        "Description":"Sets the resource gain multiplier (0.5 = 50%, 1 = 100%, 2 = 200% and so on)",
+        "Keywords":"resource,gain,multiplier",
+        "FieldName":"resourceGainMultiplier",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"resourceGainMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Use Tickets",
+        "Category":"Server Settings",
+        "Description":"If enabled, tickets will be used",
+        "Keywords":"use,tickets",
+        "FieldName":"useAndWinByTickets",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"useAndWinByTickets",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "True":"1",
+            "False":"0"
+        }
+    },
+    {
+        "DisplayName":"Ticket Amount",
+        "Category":"Server Settings",
+        "Description":"Sets the number of tickets. Requires Use Tickets to be enabled",
+        "Keywords":"ticket,amount",
+        "FieldName":"ticketAmount",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ticketAmount",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"300",
+        "Suffix":"tickets",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Ticket Scaling",
+        "Category":"Server Settings",
+        "Description":"If enabled, tickets will be scaled",
+        "Keywords":"ticket,scaling",
+        "FieldName":"useTicketScaling",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"useTicketScaling",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "True":"1",
+            "False":"0"
+        }
+    },
+    {
+        "DisplayName":"Enable Friendly Fire Toggle",
+        "Category":"Server Settings",
+        "Description":"If enabled, friendly fire can be toggled",
+        "Keywords":"friendly,fire,toggle",
+        "FieldName":"friendlyFireCanToggle",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"friendlyFireCanToggle",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "True":"1",
+            "False":"0"
+        }
+    },
+    {
+        "DisplayName":"Enable Fort Modes",
+        "Category":"Server Settings",
+        "Description":"If enabled, fort modes will be enabled",
+        "Keywords":"fort,modes",
+        "FieldName":"allowFortModes",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"allowFortModes",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "True":"1",
+            "False":"0"
+        }
+    },
+    {
+        "DisplayName":"Ship Speed Multiplier",
+        "Category":"Server Settings",
+        "Description":"Sets the ship speed multiplier (0.5 = 50%, 1 = 100%, 2 = 200% and so on)",
+        "Keywords":"ship,speed,factor",
+        "FieldName":"shipSpeedFactor",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"shipSpeedFactor",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Gate Explosive Amount",
+        "Category":"Server Settings",
+        "Description":"Sets the gate explosive amount",
+        "Keywords":"gate,explosive",
+        "FieldName":"gateExplosiveAmount",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"gateExplosiveAmount",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Tower Health Hits",
+        "Category":"Server Settings",
+        "Description":"Sets the tower health hits",
+        "Keywords":"tower,health,hits",
+        "FieldName":"towerHealthHits",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"towerHealthHits",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Enable Player Collison",
         "Category":"Server Settings",
         "Description":"If enabled, collision of friendly players will be possible",
@@ -148,7 +324,7 @@
     {
         "DisplayName":"Enable Fire Spread",
         "Category":"Server Settings",
-        "Description":"If enabled, fires will spread fires when friendly players collide",
+        "Description":"If enabled, fires will spread fires when friendly players collide. Requires Player Collision to be enabled",
         "Keywords":"friendly,fire,spread",
         "FieldName":"friendlySpreadFires",
         "InputType":"checkbox",
@@ -156,7 +332,7 @@
         "ParamFieldName":"friendlySpreadFires",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-         "EnumValues":{
+        "EnumValues":{
             "True":"1",
             "False":"0"
         }
@@ -172,7 +348,7 @@
         "ParamFieldName":"friendlyFire",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-         "EnumValues":{
+        "EnumValues":{
             "True":"1",
             "False":"0"
         }
@@ -188,7 +364,7 @@
         "ParamFieldName":"friendlyShipDamage",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-         "EnumValues":{
+        "EnumValues":{
             "True":"1",
             "False":"0"
         }
@@ -210,27 +386,13 @@
         }
     },
     {
-        "DisplayName":"Ship Speed",
-        "Category":"Server Settings",
-        "Description":"Sets the speed of ships based on a percentage multiplier (0.5 = 50%, 1 = 100%, 2 = 200% and so on)",
-        "Keywords":"ship,speed,factor",
-        "FieldName":"shipSpeedFactor",
-        "InputType":"number",
-        "MinValue":"0",
-        "IsFlagArgument":false,
-        "ParamFieldName":"shipSpeedFactor",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "Suffix":"%",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Position Update Rate",
         "Category":"Server Settings",
-        "Description":"Sets the times per second a player's position is updated",
+        "Description":"Sets the times per second a player's position is updated. Higher values cause more network usage but will reduce sliding/delay during melee fighting",
         "Keywords":"update,position,rate",
         "FieldName":"playerUpdateRate",
         "InputType":"number",
+        "MinValue":"10",
         "IsFlagArgument":false,
         "ParamFieldName":"playerUpdateRate",
         "IncludeInCommandLine":false,
@@ -252,160 +414,5 @@
             "True":"1",
             "False":"0"
         }
-    },
-    {
-        "DisplayName":"Discord Link",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"discordLink",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"discordLink",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Team Count",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"teamCount",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"teamCount",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"6",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Capture Speed Multiplier",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"captureSpeedMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"captureSpeedMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Resource  Gain Multiplier",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"resourceGainMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"resourceGainMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Use Tickets",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"useAndWinByTickets",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"useAndWinByTickets",
-        "IncludeInCommandLine":false,
-        "DefaultValue":1,
-        "EnumValues":{
-            "True":"1",
-            "False":"0"
-        }
-    },
-    {
-        "DisplayName":"Ticket Amount",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"ticketAmount",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ticketAmount",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"300",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Ticket Scaling",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"useTicketScaling",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"useTicketScaling",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{
-            "True":"1",
-            "False":"0"
-        }
-    },
-    {
-        "DisplayName":"Enable Friendly Fire Toggle",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"friendlyFireCanToggle",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"friendlyFireCanToggle",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "True":"1",
-            "False":"0"
-        }
-    },
-    {
-        "DisplayName":"Enable Fort Modes",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"allowFortModes",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"allowFortModes",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{
-            "True":"1",
-            "False":"0"
-        }
-    },
-    {
-        "DisplayName":"Gate Explosive Amount",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"gateExplosiveAmount",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"gateExplosiveAmount",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"10",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Tower Health Hits",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"towerHealthHits",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"towerHealthHits",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"10",
-        "EnumValues":{}
     }
 ]
