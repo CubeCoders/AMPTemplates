@@ -1,445 +1,474 @@
 [
-    {
-        "DisplayName": "Mods",
-        "Category": "Modding",
-        "Description": "Put mod names here for startup",
-        "Keywords": "mod,mods,addons,addon,modding,modification,workshop,plugins",
-        "FieldName": "mods",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "ParamFieldName": "mod",
-        "IncludeInCommandLine": true,
-        "DefaultValue": "",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "File Patching",
-        "Category": "Miscellaneous Settings",
-        "Description": "Ensures that only PBOs are loaded and NO unpacked data.",
-        "Keywords": "patch,patching,files,misc,pbo,data",
-        "FieldName": "filePatching",
-        "InputType": "checkbox",
-        "IsFlagArgument": true,
-        "ParamFieldName": "filePatching",
-        "IncludeInCommandLine": true,
-        "DefaultValue": "-filePatching",
-        "EnumValues": {
-            "true": "True",
-            "false": "False"
-        }
-    },
-    {
-        "DisplayName": "FPS Limit",
-        "Category": "Miscellaneous Settings",
-        "Description": "Limits server FPS to specified value (current max is 200) to lower CPU usage of low population servers.",
-        "Keywords": "frames,fps,seconds,misc,frames per second,performance",
-        "FieldName": "fpsLimit",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "limitFPS",
-        "IncludeInCommandLine": true,
-        "DefaultValue": "200",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Hostname",
-        "Category": "Server Settings",
-        "Description": "Sets the name of your server",
-        "Keywords": "server,name,hostname,list",
-        "FieldName": "hostname",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "ParamFieldName": "hostname",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "Server hosted with AMP",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Password",
-        "Category": "Server Settings",
-        "Description": "Sets the password required to connect to the server",
-        "Keywords": "server,password,joining,join,security,protect,protection",
-        "FieldName": "password",
-        "InputType": "password",
-        "IsFlagArgument": false,
-        "ParamFieldName": "password",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "RCon Password",
-        "Category": "Server Settings",
-        "Description": "Sets the password required to login to RCon",
-        "Keywords": "server,admin,password,security,protect,protection,elevated,permissions,ban,kick",
-        "FieldName": "$RemoteAdminPassword",
-        "InputType": "RandomPassword",
-        "IsFlagArgument": false,
-        "ParamFieldName": "passwordRcon",
-        "IncludeInCommandLine": false,
-        "Required": true,
-        "DefaultValue": "",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Admin Password",
-        "Category": "Server Settings",
-        "Description": "Sets the password required to become a server admin",
-        "Keywords": "server,admin,password,security,protect,protection,elevated,permissions,ban,kick",
-        "FieldName": "passwordAdmin",
-        "InputType": "password",
-        "IsFlagArgument": false,
-        "ParamFieldName": "passwordAdmin",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Enable Whitelist",
-        "Category": "Server Settings",
-        "Description": "Enables or Disables the whitelist ( whitelist.txt )",
-        "Keywords": "server,protect,protection,whitelist,userlist,allowlist,list",
-        "FieldName": "enableWhitelist",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "enableWhitelist",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Instance ID",
-        "Category": "Server Settings",
-        "Description": "DayZ server instance id, to identify the number of instances per box and their storage folders with persistence files.",
-        "Keywords": "instance,id,instanceid,persistence",
-        "FieldName": "instanceId",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "instanceId",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "1",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Server Mission",
-        "Category": "Server Settings",
-        "Description": "Mission to load on server startup. <MissionName>.<TerrainName>",
-        "Keywords": "server,mission,terrain,template",
-        "FieldName": "template",
-        "InputType": "enum",
-        "IsFlagArgument": false,
-        "ParamFieldName": "template",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "dayzOffline.chernarusplus",
-        "EnumValues": {
-            "dayzOffline.chernarusplus": "dayzOffline.chernarusplus",
-            "dayzOffline.enoch": "dayzOffline.enoch"
-        }
-    },
-    {
-        "DisplayName": "Force Same Build",
-        "Category": "Miscellaneous Settings",
-        "Description": "When enabled, the server will allow the connection only to clients with same the .exe revision as the server",
-        "Keywords": "misc,join,version,revision,build,buildnumber",
-        "FieldName": "forceSameBuild",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "forceSameBuild",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Enable Voicechat",
-        "Category": "Miscellaneous Settings",
-        "Description": "Enable/disable voice over network",
-        "Keywords": "misc,voice,sound,chat,voicechat,teamchat",
-        "FieldName": "disableVoN",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "disableVoN",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "0",
-        "EnumValues": {
-            "True": "0",
-            "False": "1"
-        }
-    },
-    {
-        "DisplayName": "Voice over network quality ( 0-30 )",
-        "Category": "Miscellaneous Settings",
-        "Description": "Voice over network codec quality, the higher the better (values 0-30)",
-        "Keywords": "misc,voice,sound,chat,voicechat,teamchat",
-        "FieldName": "vonCodecQuality",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "vonCodecQuality",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "20",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Enable 3rd person",
-        "Category": "Miscellaneous Settings",
-        "Description": "Enables the 3rd person view for players",
-        "Keywords": "misc,view,3rd,person,camera",
-        "FieldName": "disable3rdPerson",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "disable3rdPerson",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "0",
-        "EnumValues": {
-            "True": "0",
-            "False": "1"
-        }
-    },
-    {
-        "DisplayName": "Enable Crosshair",
-        "Category": "Miscellaneous Settings",
-        "Description": "Enables the cross-hair for players",
-        "Keywords": "misc,view,cross,cross-hair",
-        "FieldName": "disableCrosshair",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "disableCrosshair",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "0",
-        "EnumValues": {
-            "True": "0",
-            "False": "1"
-        }
-    },
-    {
-        "DisplayName": "Enable personal light",
-        "Category": "Miscellaneous Settings",
-        "Description": "Enables personal light for all clients connected to server",
-        "Keywords": "misc,light,lighting,flashlight,torch",
-        "FieldName": "disablePersonalLight",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "disablePersonalLight",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "0",
-        "EnumValues": {
-            "True": "0",
-            "False": "1"
-        }
-    },
-    {
-        "DisplayName": "Server Time",
-        "Category": "Time Settings",
-        "Description": "Initial in-game time of the server. \"SystemTime\" means the local time of the machine. Another possibility is to set the time to some value in \"YYYY/MM/DD/HH/MM\" format, e.g \"2015/4/8/17/23\"",
-        "Keywords": "time,server,daytime,cycle,systemtime,servertime",
-        "FieldName": "serverTime",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "ParamFieldName": "serverTime",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "SystemTime",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Server Time Acceleration",
-        "Category": "Time Settings",
-        "Description": "Accelerated Time - The numerical value being a multiplier (0.1-64). Thus, in case it is set to 24, time would move 24 times faster than normal. An entire day would pass in one hour",
-        "Keywords": "time,server,daytime,cycle,systemtime,servertime",
-        "FieldName": "serverTimeAcceleration",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "serverTimeAcceleration",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "1",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Server night time acceleration",
-        "Category": "Time Settings",
-        "Description": "Accelerated Nigh Time - The numerical value being a multiplier (0.1-64) and also multiplied by serverTimeAcceleration value.\nThus, in case it is set to 4 and serverTimeAcceleration is set to 2, night time would move 8 times faster than normal.\nAn entire night would pass in 3 hours.",
-        "Keywords": "time,server,daytime,cycle,systemtime,servertime",
-        "FieldName": "serverNightTimeAcceleration",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "serverNightTimeAcceleration",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "1",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Lighting config",
-        "Category": "Miscellaneous Settings",
-        "Description": "Set this to true if you want darker nights",
-        "Keywords": "misc,light,lighting,dark,night,nights",
-        "FieldName": "lightingConfig",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "lightingConfig",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Server time persistant",
-        "Category": "Time Settings",
-        "Description": "Persistent Time. The actual server time is saved to storage, so when active, the next server start will use the saved time value.",
-        "Keywords": "time,server,daytime,cycle,systemtime,servertime",
-        "FieldName": "serverTimePersistent",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "serverTimePersistent",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Login queue concurrent players",
-        "Category": "Server Settings",
-        "Description": "The number of players concurrently processed during the login process. Should prevent massive performance drop during connection when a lot of people are connecting at the same time",
-        "Keywords": "server,join,joining,concurrent,que,queue,performance",
-        "FieldName": "loginQueueConcurrentPlayers",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "loginQueueConcurrentPlayers",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "5",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Maximum Amount of Players",
-        "Category": "Server Settings",
-        "Description": "The maximum number of players that can join",
-        "Keywords": "server,join,joining,concurrent,que,queue,performance",
-        "FieldName": "$MaxUsers",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "maxPlayers",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "10",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Login queue max players",
-        "Category": "Server Settings",
-        "Description": "The maximum number of players that can wait in login queue",
-        "Keywords": "server,join,joining,concurrent,que,queue,performance",
-        "FieldName": "loginQueueMaxPlayers",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "loginQueueMaxPlayers",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "500",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Disable houses/door persistance",
-        "Category": "Miscellaneous Settings",
-        "Description": "Disable houses/doors persistence, usable in case of problems with persistence",
-        "Keywords": "misc,house,door,persistance",
-        "FieldName": "storeHouseStateDisabled",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "storeHouseStateDisabled",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "false",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
-        "DisplayName": "Storage Auto Fix",
-        "Category": "Miscellaneous Settings",
-        "Description": "Checks if the persistence files are corrupted and replaces corrupted ones with empty ones",
-        "Keywords": "misc,storage,fix,persistance",
-        "FieldName": "storageAutoFix",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "storageAutoFix",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Restrict RCon",
-        "Category": "Server Settings",
-        "Description": "Enables/Disables RCon functions (kick/ban/connection restrictions)",
-        "Keywords": "server,rcon,remote,console,battleye,admin,kick,ban",
-        "FieldName": "RestrictRCon",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "RestrictRCon",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Respawn Time",
-        "Category": "Miscellaneous Settings",
-        "Description": "Sets the respawn delay (in seconds) before the player is able to get a new character on the server, when the previous one is dead",
-        "Keywords": "spawn,respawn,time,death",
-        "FieldName": "respawnTime",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "respawnTime",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "5",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Message of the day",
-        "Category": "Miscellaneous Settings",
-        "Description": "Message of the day displayed in the in-game chat",
-        "Keywords": "motd,chat,message,text",
-        "FieldName": "motd",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "ParamFieldName": "motd",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "\"Server hosted with AMP\"",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "MOTD Interval",
-        "Category": "Miscellaneous Settings",
-        "Description": "Time interval (in seconds) between each message",
-        "Keywords": "motd,message,chat,interval",
-        "FieldName": "motdInterval",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "motdInterval",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "600",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Max Ping",
-        "Category": "Miscellaneous Settings",
-        "Description": "Max ping value until server kick the user (value in milliseconds)",
-        "Keywords": "ping,maximal,lagging,lag,kick,maxPing",
-        "FieldName": "maxPing",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "maxPing",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "500",
-        "EnumValues": {}
+  {
+    "DisplayName": "Steam Query Port",
+    "Category": "Hidden Settings",
+    "Description": "",
+    "Keywords": "",
+    "FieldName": "$QueryPort",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "steamQueryPort",
+    "IncludeInCommandLine": false,
+    "EnumValues": {},
+    "Hidden": true
+  },
+  {
+    "DisplayName": "RCon Password",
+    "Category": "Hidden Settings",
+    "Description": "",
+    "Keywords": "",
+    "FieldName": "$RemoteAdminPassword",
+    "InputType": "password",
+    "IsFlagArgument": false,
+    "ParamFieldName": "passwordRcon",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "",
+    "EnumValues": {},
+    "Hidden": true
+  },
+  {
+    "DisplayName": "File Patching",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Ensures that only PBOs are loaded and NO unpacked data.",
+    "Keywords": "patch,patching,files,misc,pbo,data",
+    "FieldName": "filePatching",
+    "InputType": "checkbox",
+    "IsFlagArgument": true,
+    "ParamFieldName": "filePatching",
+    "IncludeInCommandLine": true,
+    "DefaultValue": "-filePatching",
+    "EnumValues": {
+      "true": "True",
+      "false": "False"
     }
+  },
+  {
+    "DisplayName": "FPS Limit",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Limits server FPS to specified value (current max is 200) to lower CPU usage of low population servers.",
+    "Keywords": "frames,fps,seconds,misc,frames per second,performance",
+    "FieldName": "fpsLimit",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "limitFPS",
+    "IncludeInCommandLine": true,
+    "DefaultValue": "200",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Hostname",
+    "Category": "DayZ - Server Settings",
+    "Description": "Sets the name of your server",
+    "Keywords": "server,name,hostname,list",
+    "FieldName": "hostname",
+    "InputType": "text",
+    "IsFlagArgument": false,
+    "ParamFieldName": "hostname",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "AMP Powered DayZ Server",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Password",
+    "Category": "DayZ - Server Settings",
+    "Description": "Sets the password required to connect to the server",
+    "Keywords": "server,password,joining,join,security,protect,protection",
+    "FieldName": "password",
+    "InputType": "password",
+    "IsFlagArgument": false,
+    "ParamFieldName": "password",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Admin Password",
+    "Category": "DayZ - Server Settings",
+    "Description": "Sets the password required to become a server admin",
+    "Keywords": "server,admin,password,security,protect,protection,elevated,permissions,ban,kick",
+    "FieldName": "passwordAdmin",
+    "InputType": "RandomPassword",
+    "IsFlagArgument": false,
+    "ParamFieldName": "passwordAdmin",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Enable Whitelist",
+    "Category": "DayZ - Server Settings",
+    "Description": "Enables or Disables the whitelist ( whitelist.txt )",
+    "Keywords": "server,protect,protection,whitelist,userlist,allowlist,list",
+    "FieldName": "enableWhitelist",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "enableWhitelist",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "0",
+    "EnumValues": {
+      "False": "0",
+      "True": "1"
+    }
+  },
+  {
+    "DisplayName": "Instance ID",
+    "Category": "DayZ - Server Settings",
+    "Description": "DayZ server instance id, to identify the number of instances per box and their storage folders with persistence files.",
+    "Keywords": "instance,id,instanceid,persistence",
+    "FieldName": "instanceId",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "instanceId",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "1",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Server Mission",
+    "Category": "DayZ - Server Settings",
+    "Description": "Mission to load on server startup. <MissionName>.<TerrainName>",
+    "Keywords": "server,mission,terrain,template",
+    "FieldName": "template",
+    "InputType": "enum",
+    "IsFlagArgument": false,
+    "ParamFieldName": "template",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "dayzOffline.chernarusplus",
+    "EnumValues": {
+      "dayzOffline.chernarusplus": "dayzOffline.chernarusplus",
+      "dayzOffline.enoch": "dayzOffline.enoch"
+    }
+  },
+  {
+    "DisplayName": "Force Same Build",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "When enabled, the server will allow the connection only to clients with same the .exe revision as the server",
+    "Keywords": "misc,join,version,revision,build,buildnumber",
+    "FieldName": "forceSameBuild",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "forceSameBuild",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "0",
+    "EnumValues": {
+      "False": "0",
+      "True": "1"
+    }
+  },
+  {
+    "DisplayName": "Enable Voicechat",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Enable/disable voice over network",
+    "Keywords": "misc,voice,sound,chat,voicechat,teamchat",
+    "FieldName": "disableVoN",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "disableVoN",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "0",
+    "EnumValues": {
+      "True": "0",
+      "False": "1"
+    }
+  },
+  {
+    "DisplayName": "Voice over network quality ( 0-30 )",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Voice over network codec quality, the higher the better (values 0-30)",
+    "Keywords": "misc,voice,sound,chat,voicechat,teamchat",
+    "FieldName": "vonCodecQuality",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "vonCodecQuality",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "20",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Enable 3rd person",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Enables the 3rd person view for players",
+    "Keywords": "misc,view,3rd,person,camera",
+    "FieldName": "disable3rdPerson",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "disable3rdPerson",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "0",
+    "EnumValues": {
+      "True": "0",
+      "False": "1"
+    }
+  },
+  {
+    "DisplayName": "Enable Crosshair",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Enables the cross-hair for players",
+    "Keywords": "misc,view,cross,cross-hair",
+    "FieldName": "disableCrosshair",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "disableCrosshair",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "0",
+    "EnumValues": {
+      "True": "0",
+      "False": "1"
+    }
+  },
+  {
+    "DisplayName": "Enable personal light",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Enables personal light for all clients connected to server",
+    "Keywords": "misc,light,lighting,flashlight,torch",
+    "FieldName": "disablePersonalLight",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "disablePersonalLight",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "0",
+    "EnumValues": {
+      "True": "0",
+      "False": "1"
+    }
+  },
+  {
+    "DisplayName": "Server Time",
+    "Category": "DayZ - Time Settings",
+    "Description": "Initial in-game time of the server. \"SystemTime\" means the local time of the machine. Another possibility is to set the time to some value in \"YYYY/MM/DD/HH/MM\" format, e.g \"2015/4/8/17/23\"",
+    "Keywords": "time,server,daytime,cycle,systemtime,servertime",
+    "FieldName": "serverTime",
+    "InputType": "text",
+    "IsFlagArgument": false,
+    "ParamFieldName": "serverTime",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "SystemTime",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Server Time Acceleration",
+    "Category": "DayZ - Time Settings",
+    "Description": "Accelerated Time - The numerical value being a multiplier (0.1-64). Thus, in case it is set to 24, time would move 24 times faster than normal. An entire day would pass in one hour",
+    "Keywords": "time,server,daytime,cycle,systemtime,servertime",
+    "FieldName": "serverTimeAcceleration",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "serverTimeAcceleration",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "1",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Server night time acceleration",
+    "Category": "DayZ - Time Settings",
+    "Description": "Accelerated Nigh Time - The numerical value being a multiplier (0.1-64) and also multiplied by serverTimeAcceleration value.\nThus, in case it is set to 4 and serverTimeAcceleration is set to 2, night time would move 8 times faster than normal.\nAn entire night would pass in 3 hours.",
+    "Keywords": "time,server,daytime,cycle,systemtime,servertime",
+    "FieldName": "serverNightTimeAcceleration",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "serverNightTimeAcceleration",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "1",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Lighting config",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Set this to true if you want darker nights",
+    "Keywords": "misc,light,lighting,dark,night,nights",
+    "FieldName": "lightingConfig",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "lightingConfig",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "0",
+    "EnumValues": {
+      "False": "0",
+      "True": "1"
+    }
+  },
+  {
+    "DisplayName": "Server time persistant",
+    "Category": "DayZ - Time Settings",
+    "Description": "Persistent Time. The actual server time is saved to storage, so when active, the next server start will use the saved time value.",
+    "Keywords": "time,server,daytime,cycle,systemtime,servertime",
+    "FieldName": "serverTimePersistent",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "serverTimePersistent",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "0",
+    "EnumValues": {
+      "False": "0",
+      "True": "1"
+    }
+  },
+  {
+    "DisplayName": "Login queue concurrent players",
+    "Category": "DayZ - Server Settings",
+    "Description": "The number of players concurrently processed during the login process. Should prevent massive performance drop during connection when a lot of people are connecting at the same time",
+    "Keywords": "server,join,joining,concurrent,que,queue,performance",
+    "FieldName": "loginQueueConcurrentPlayers",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "loginQueueConcurrentPlayers",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "5",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Maximum Amount of Players",
+    "Category": "DayZ - Server Settings",
+    "Description": "The maximum number of players that can join",
+    "Keywords": "server,join,joining,concurrent,que,queue,performance",
+    "FieldName": "$MaxUsers",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "maxPlayers",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "10",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Login queue max players",
+    "Category": "DayZ - Server Settings",
+    "Description": "The maximum number of players that can wait in login queue",
+    "Keywords": "server,join,joining,concurrent,que,queue,performance",
+    "FieldName": "loginQueueMaxPlayers",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "loginQueueMaxPlayers",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "500",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Disable houses/door persistance",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Disable houses/doors persistence, usable in case of problems with persistence",
+    "Keywords": "misc,house,door,persistance",
+    "FieldName": "storeHouseStateDisabled",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "storeHouseStateDisabled",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "false",
+    "EnumValues": {
+      "True": "true",
+      "False": "false"
+    }
+  },
+  {
+    "DisplayName": "Storage Auto Fix",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Checks if the persistence files are corrupted and replaces corrupted ones with empty ones",
+    "Keywords": "misc,storage,fix,persistance",
+    "FieldName": "storageAutoFix",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "storageAutoFix",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "1",
+    "EnumValues": {
+      "False": "0",
+      "True": "1"
+    }
+  },
+  {
+    "DisplayName": "Restrict RCon",
+    "Category": "DayZ - DayZ - Server Settings",
+    "Description": "Enables/Disables RCon functions (kick/ban/connection restrictions)",
+    "Keywords": "server,rcon,remote,console,battleye,admin,kick,ban",
+    "FieldName": "RestrictRCon",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "RestrictRCon",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "1",
+    "EnumValues": {
+      "False": "0",
+      "True": "1"
+    }
+  },
+  {
+    "DisplayName": "Respawn Time",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Sets the respawn delay (in seconds) before the player is able to get a new character on the server, when the previous one is dead",
+    "Keywords": "spawn,respawn,time,death",
+    "FieldName": "respawnTime",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "respawnTime",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "5",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Message of the day",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Message of the day displayed in the in-game chat",
+    "Keywords": "motd,chat,message,text",
+    "FieldName": "motd",
+    "InputType": "text",
+    "IsFlagArgument": false,
+    "ParamFieldName": "motd",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "\"Server hosted with AMP\"",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "MOTD Interval",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Time interval (in seconds) between each message",
+    "Keywords": "motd,message,chat,interval",
+    "FieldName": "motdInterval",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "motdInterval",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "600",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Max Ping",
+    "Category": "DayZ - Miscellaneous",
+    "Description": "Max ping value until server kick the user (value in milliseconds)",
+    "Keywords": "ping,maximal,lagging,lag,kick,maxPing",
+    "FieldName": "maxPing",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "maxPing",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "500",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Mods",
+    "Category": "DayZ - Server Settings",
+    "Description": "Put mod names here for startup",
+    "Keywords": "mods,addons,modding,modification,workshop,plugins",
+    "FieldName": "mods",
+    "InputType": "text",
+    "IsFlagArgument": false,
+    "ParamFieldName": "mod",
+    "IncludeInCommandLine": true,
+    "DefaultValue": "",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Version",
+    "Category": "SteamCMD and Updates",
+    "Description": "Which version of the server to download. Only applies to Windows, Linux is only supported in the Experimental version. Ensure users download a matching version in Steam.",
+    "Keywords": "version",
+    "FieldName": "version",
+    "InputType": "enum",
+    "IsFlagArgument": false,
+    "ParamFieldName": "version",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "221100",
+    "EnumValues": {
+      "1024020": "Experimental",
+      "221100": "Original"
+    }
+  }
 ]
