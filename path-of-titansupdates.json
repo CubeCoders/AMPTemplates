@@ -1,0 +1,50 @@
+[
+    {
+        "UpdateStageName":"AlderonGamesCmd Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://launcher-cdn.alderongames.com/AlderonGamesCmd-Win64.exe",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"AlderonGamesCmd Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://launcher-cdn.alderongames.com/AlderonGamesCmd-Linux-x64",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Make AlderonGamesCmd Executable",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"SetExecutableFlag",
+        "UpdateSourceArgs":"{{$FullInstanceDir}}AlderonGamesCmd-Linux-x64"
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"{{$FullInstanceDir}}AlderonGamesCmd-Win64.exe",
+        "UpdateSourceArgs":"--game path-of-titans --server true --beta-branch {{BranchKey}} --auth-token {{AuthToken}} --install-dir {{$FullRootDir}}"
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"{{$FullInstanceDir}}AlderonGamesCmd-Linux-x64",
+        "UpdateSourceArgs":"--game path-of-titans --server true --beta-branch {{BranchKey}} --auth-token {{AuthToken}} --install-dir {{$FullRootDir}}"
+    },
+    {
+        "UpdateStageName":"Pause Update Stages",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Pause",
+        "UpdateSourceArgs":"2"
+    },
+    {
+        "UpdateStageName":"Make Server Executable",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"SetExecutableFlag",
+        "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Binaries/Linux/PathOfTitansServer-Linux-Shipping"
+    }
+]
