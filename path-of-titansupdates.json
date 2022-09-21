@@ -39,12 +39,20 @@
         "UpdateStageName":"Pause Update Stages",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Pause",
-        "UpdateSourceArgs":"2"
+        "UpdateSourceArgs":"10"
     },
     {
         "UpdateStageName":"Make Server Executable",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"SetExecutableFlag",
         "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Binaries/Linux/PathOfTitansServer-Linux-Shipping"
+    },
+    {
+        "UpdateStageName":"Create MOTD File",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"<title>Welcome to Path of Titans Server - powered by AMP!</>\n<large>Have fun!</>",
+        "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Saved/MOTD.txt",
+        "OverwriteExistingFiles":false
     }
 ]
