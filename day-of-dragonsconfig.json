@@ -55,6 +55,22 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Friends List",
+        "Category":"Server Settings",
+        "Description":"If enabled, only players with Steam IDs listed in Game.ini using \"sServerFriends\" can join the server. Other players will be kicked automatically",
+        "Keywords":"friends,list,whitelist",
+        "FieldName":"bUseFriendsList",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Game/_Dev/Runtime/Classes/DragonsGI.DragonsGI_C.bUseFriendsList",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "True":"True",
+            "False":"False"
+        }
+    },
+    {
         "DisplayName":"Clan Size Limit",
         "Category":"Server Settings",
         "Description":"Maximum number of members of a clan",
@@ -135,6 +151,118 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Roleplay Features",
+        "Category":"Server Settings",
+        "Description":"If enabled, the server browser type will be appended with the RP tag and roleplay features will be enabled, if available",
+        "Keywords":"roleplay",
+        "FieldName":"bRoleplay",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Game/_Dev/Runtime/Classes/DragonsGI.DragonsGI_C.bRoleplay",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "True":"True",
+            "False":"False"
+        }
+    },
+    {
+        "DisplayName":"Enable Group Damage",
+        "Category":"Server Settings",
+        "Description":"If enabled, group members will be allowed to damage each other when grouped",
+        "Keywords":"group,damage",
+        "FieldName":"bEnableGroupDamage",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Game/_Dev/Runtime/Classes/DragonsGI.DragonsGI_C.bEnableGroupDamage",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "True":"True",
+            "False":"False"
+        }
+    },
+    {
+        "DisplayName":"Show Admin Tags",
+        "Category":"Server Settings",
+        "Description":"If enabled, admin tags will always show to all players on the server. Recommended for servers that want people to easily identify the admins",
+        "Keywords":"admin,tags",
+        "FieldName":"bAlwaysShowAdminTags",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Game/_Dev/Runtime/Classes/DragonsGI.DragonsGI_C.bAlwaysShowAdminTags",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "True":"True",
+            "False":"False"
+        }
+    },
+    {
+        "DisplayName":"Show Player Tags",
+        "Category":"Server Settings",
+        "Description":"If enabled, player nametags will always show regardless if grouped or clanned. By default, nametags only show up on grouped or clanned players",
+        "Keywords":"player,tags,names",
+        "FieldName":"bAlwaysShowPlayerTags",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Game/_Dev/Runtime/Classes/DragonsGI.DragonsGI_C.bAlwaysShowPlayerTags",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "True":"True",
+            "False":"False"
+        }
+    },
+    {
+        "DisplayName":"Show Clan Tags",
+        "Category":"Server Settings",
+        "Description":"If enabled, clan tags will show in the chat box",
+        "Keywords":"clan,tags",
+        "FieldName":"bChatShowClanTags",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Game/_Dev/Runtime/Classes/DragonsGI.DragonsGI_C.bChatShowClanTags",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "True":"True",
+            "False":"False"
+        }
+    },
+    {
+        "DisplayName":"Flag Hatchling Killers",
+        "Category":"Server Settings",
+        "Description":"If enabled, adult or elder dragons that kill hatchlings will be flagged with red glowing eyes for 20 minutes. Safelog will be unavailable to them while flagged",
+        "Keywords":"flag,hatchling,killers",
+        "FieldName":"bFlagHatchlingKillers",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Game/_Dev/Runtime/Classes/DragonsGI.DragonsGI_C.bFlagHatchlingKillers",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "True":"True",
+            "False":"False"
+        }
+    },
+    {
+        "DisplayName":"Disable Desync/Hack Checks",
+        "Category":"Server Settings",
+        "Description":"If enabled, the server will not check for client desyncs or hacks. May be useful for personal servers, private servers experiencing frequent disconnects, or servers that allow cheating",
+        "Keywords":"disable,dd,desyncs,hacks,checks",
+        "FieldName":"bDisableDD",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Game/_Dev/Runtime/Classes/DragonsGI.DragonsGI_C.bDisableDD",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "True":"True",
+            "False":"False"
+        }
+    },
+    {
         "DisplayName":"Autosave Interval",
         "Category":"Server Settings",
         "Description":"Sets the time interval between each automatic save",
@@ -149,6 +277,38 @@
         "DefaultValue":"300",
         "Suffix":"seconds",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Latency",
+        "Category":"Server Settings",
+        "Description":"Sets the maximum allowed latency on the server. Players who exceed this will be auto-kicked. Requires Desync/Hack Checks to be disabled",
+        "Keywords":"max,latency,ping",
+        "FieldName":"iMaxLatencyMS",
+        "InputType":"number",
+        "MinValue":"100",
+        "MaxValue":"800",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Game/_Dev/Runtime/Classes/DragonsGI.DragonsGI_C.iMaxLatencyMS",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"800",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Use Latency Hard Cap",
+        "Category":"Server Settings",
+        "Description":"If enabled, server will kick players who exceed the Maximum Latency. Otherwise, the server will use a soft cap and kick players only if the Maximum Latency is exceeded due to a lag spike. Requires Desync/Hack Checks to be disabled",
+        "Keywords":"latency,hard,cap",
+        "FieldName":"bUseLatencyHardCap",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Game/_Dev/Runtime/Classes/DragonsGI.DragonsGI_C.bUseLatencyHardCap",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "True":"True",
+            "False":"False"
+        }
     },
     {
         "DisplayName":"Discord Server",
