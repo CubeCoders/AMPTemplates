@@ -41,7 +41,7 @@
     {
         "DisplayName":"Command Password",
         "Category":"Arma - Server Settings",
-        "Description":"Password required by alternate syntax of \[\[serverCommand\]\] server-side scripting",
+        "Description":"Password required by alternate syntax of [[serverCommand]] server-side scripting",
         "Keywords":"command,password",
         "FieldName":"password",
         "InputType":"password",
@@ -52,16 +52,30 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Moderators",
+        "Category":"Arma - Server Settings",
+        "Description":"List of Steam64 IDs for server admins. [Find Steam64 IDs](https://steamidfinder.com/). Format is \"SteamID\",\"SteamID\"",
+        "Keywords":"admins",
+        "FieldName":"admins",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"admins",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"\"12345678901234567\",\"76543210987654321\"",
+        "EnumValues": {}
+    },
+    {
         "DisplayName":"MOTD",
         "Category":"Arma - Server Settings",
-        "Description":"Player welcome message. Format is \"Line1\", \"Line 2\"",
+        "Description":"Player welcome message. Format is \"Line1\",\"Line 2\"",
         "Keywords":"MOTD,welcome,message",
         "FieldName":"motd",
         "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"motd",
         "IncludeInCommandLine":false,
-        "DefaultValue":"\"Welcome to Arma 3\", \"Hosted using AMP by CubeCoders\"",
+        "DefaultValue":"\"Welcome to Arma 3\",\"Hosted using AMP by CubeCoders\"",
         "EnumValues":{}
     },
     {
@@ -100,9 +114,9 @@
         "IsFlagArgument":false,
         "ParamFieldName":"maxPlayers",
         "IncludeInCommandLine":false,
-        "DefaultValue":"40",
+        "DefaultValue":"64",
         "Suffix":"players",
-        "Placeholder":"40",
+        "Placeholder":"64",
         "EnumValues":{}
     },
     {
@@ -122,7 +136,7 @@
     {
         "DisplayName":"Load Server Mods",
         "Category":"Arma - Server Settings",
-        "Description":"Load the specified server-side only mod folders. Format on Windows is mod1;mod2;mod3 and on Linux is mod1\\;mod2\\;mod3",
+        "Description":"Load the specified server-side only mod folders (the mods are not broadcast to clients). Format on Windows is mod1;mod2;mod3 and on Linux is mod1\\;mod2\\;mod3",
         "Keywords":"mods,addons,server",
         "FieldName":"serverMod",
         "InputType":"text",
@@ -152,19 +166,15 @@
     {
         "DisplayName":"Addon Signature Verification",
         "Category":"Arma - Server Settings",
-        "Description":"Sets the level of signature verification, to determine if players with unknown or unsigned mods are allowed to join",
+        "Description":"If enabled, players with unknown or unsigned mods will not be allowed to join",
         "Keywords":"mods,verify",
         "FieldName":"verifySignatures",
-        "InputType":"enum",
+        "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"verifySignatures",
         "IncludeInCommandLine":false,
         "DefaultValue":"2",
-        "EnumValues":{
-            "0":"Disabled",
-            "1":"Prefer v2 signatures but v1 allowed too",
-            "2":"Only v2 signatures allowed"
-        }
+        "EnumValues":{}
     },
     {
         "DisplayName":"Allow Client File Patching",
@@ -186,7 +196,7 @@
     {
         "DisplayName":"Client File Patching Exceptions",
         "Category":"Arma - Server Settings",
-        "Description":"Whitelist of Steam IDs for clients allowed to use file patching. Format is \"SteamID\",\"SteamID\"",
+        "Description":"Whitelist of Steam64 IDs for clients allowed to use file patching. [Find Steam64 IDs](https://steamidfinder.com/). Format is \"SteamID\",\"SteamID\"",
         "Keywords":"file,patching,exceptions",
         "FieldName":"filePatchingExceptions",
         "InputType":"text",
@@ -360,11 +370,8 @@
         "IsFlagArgument":true,
         "ParamFieldName":"",
         "IncludeInCommandLine":true,
-        "DefaultValue":" ",
-        "EnumValues":{
-            "False":" ",
-            "True":"-autoInit"
-        }
+        "DefaultValue":"-autoInit",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Persistent Mission",
@@ -449,7 +456,7 @@
     {
         "DisplayName":"Enforce Difficulty",
         "Category":"Arma - Gameplay Settings",
-        "Description":"Forces the selected difficulty on the server. To use custom difficulty settings, you must configure them in the profile in the A3Master directory",
+        "Description":"Forces the selected difficulty on the server. To use custom difficulty settings, you must configure them in the profile within the A3Master directory",
         "Keywords":"force,difficulty",
         "FieldName":"forcedDifficulty",
         "InputType":"enum",
@@ -571,9 +578,9 @@
         }
     },
     {
-        "DisplayName":"Script on User Connected",
+        "DisplayName":"Run Script on User Connected",
         "Category":"Arma - Misc Settings",
-        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) when a user has connected",
+        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when a user has connected",
         "Keywords":"scripting,user,connected",
         "FieldName":"onUserConnected",
         "InputType":"text",
@@ -584,9 +591,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Script on User Disconnected",
+        "DisplayName":"Run Script on User Disconnected",
         "Category":"Arma - Misc Settings",
-        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) when a user has disconnected",
+        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when a user has disconnected",
         "Keywords":"scripting,user,disconnected",
         "FieldName":"onUserDisconnected",
         "InputType":"text",
@@ -597,9 +604,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Script on Double ID Detected",
+        "DisplayName":"Run Script on Double ID Detected",
         "Category":"Arma - Misc Settings",
-        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) when a second user with the same ID is detected",
+        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when a second user with the same ID is detected",
         "Keywords":"scripting,double,id,detected",
         "FieldName":"doubleIdDetected",
         "InputType":"text",
@@ -610,9 +617,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Script on User Kicked",
+        "DisplayName":"Run Script on User Kicked",
         "Category":"Arma - Misc Settings",
-        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) when a user is kicked",
+        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when a user is kicked",
         "Keywords":"scripting,user,kicked",
         "FieldName":"onUserKicked",
         "InputType":"text",
@@ -623,9 +630,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Script on Unsigned Data",
+        "DisplayName":"Run Script on Unsigned Data",
         "Category":"Arma - Misc Settings",
-        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) when unsigned data is detected",
+        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when unsigned data is detected",
         "Keywords":"scripting,unsigned,data",
         "FieldName":"onUnsignedData",
         "InputType":"text",
@@ -636,9 +643,9 @@
         "EnumValues":{}
     },    
     {
-        "DisplayName":"Script on Hacked Data",
+        "DisplayName":"Run Script on Hacked Data",
         "Category":"Arma - Misc Settings",
-        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) when a modification of a signed pbo is detected",
+        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when a modification of a signed pbo is detected",
         "Keywords":"scripting,hacked,data",
         "FieldName":"onHackedData",
         "InputType":"text",
@@ -649,9 +656,9 @@
         "EnumValues":{}
     },    
     {
-        "DisplayName":"Script on Different Data",
+        "DisplayName":"Run Script on Different Data",
         "Category":"Arma - Misc Settings",
-        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) when a signed pbo is detected with a valid signature, but is a different version than a server has. Use with caution",
+        "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when a signed pbo is detected with a valid signature, but is a different version than a server has. Use with caution",
         "Keywords":"scripting,different,data",
         "FieldName":"onDifferentData",
         "InputType":"text",
@@ -659,6 +666,111 @@
         "ParamFieldName":"onDifferentData",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Composition Script Level",
+        "Category":"Arma - Misc Settings",
+        "Description":"Sets the composition script level",
+        "Keywords":"script,level",
+        "FieldName":"zeusCompositionScriptLevel",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"zeusCompositionScriptLevel",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"All scripts forbidden",
+            "1":"Only attributes allowed",
+            "2":"All scripts allowed"
+        }
+    },
+    {
+        "DisplayName":"Steam Query Packet Size",
+        "Category":"Arma - Misc Settings",
+        "Description":"Sets the maximum Steam query packet size. Increasing this value can be dangerous",
+        "Keywords":"query,packet,size",
+        "FieldName":"steamProtocolMaxDataSize",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"steamProtocolMaxDataSize",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1024",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Call Extension Report Limit",
+        "Category":"Arma - Misc Settings",
+        "Description":"If a server-initiated callExtension takes longer than the specified limit, a warning will be logged as well as reflected in the extension return result",
+        "Keywords":"call,extension,report,limit",
+        "FieldName":"callExtReportLimit",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"callExtReportLimit",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1000",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Log Object Not Found",
+        "Category":"Arma - Misc Settings",
+        "Description":"If enabled, \"object not found\" messages will be logged",
+        "Keywords":"log,object,not,found",
+        "FieldName":"LogObjectNotFound",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"LogObjectNotFound",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Skip Description Parsing",
+        "Category":"Arma - Misc Settings",
+        "Description":"If enabled, parsing of description.ext/mission.sqm will be skipped. Will show pbo filename instead of configured missionName",
+        "Keywords":"skip,description,parsing",
+        "FieldName":"SkipDescriptionParsing",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SkipDescriptionParsing",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Ignore Mission Load Errors",
+        "Category":"Arma - Misc Settings",
+        "Description":"If enabled, a mission will load regardless of the number of loading errors",
+        "Keywords":"ignore,mission,errors",
+        "FieldName":"ignoreMissionLoadErrors",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ignoreMissionLoadErrors",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Message Queue Size Threshold",
+        "Category":"Arma - Misc Settings",
+        "Description":"If enabled, all of a player's message types and sizes are dumped to a logfile if #monitor is running and the player's Guaranteed Message Queue size goes above the set threshold",
+        "Keywords":"message,queue,size,threshold",
+        "FieldName":"queueSizeLogG",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"queueSizeLogG",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1000000",
         "EnumValues":{}
     },
     {

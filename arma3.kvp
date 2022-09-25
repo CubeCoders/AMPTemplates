@@ -26,7 +26,7 @@ App.ExecutableLinux=233780/arma3server_x64
 App.WorkingDir=233780
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -name=AMPServer -profiles={{$FullBaseDir}}A3Master -bepath={{$FullBaseDir}}battleye -port={{$GamePort}} -config=server.cfg -config=custom.cfg -world=empty -netlog {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} -name=AMPServer -profiles={{$FullBaseDir}}A3Master -bepath={{$FullBaseDir}}battleye -port={{$GamePort}} -config=server.cfg -config=custom.cfg -world=empty -netlog {{autoInit}}{{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"107410"}
@@ -46,7 +46,7 @@ App.AdminPortRef=RCONPort
 App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPortRef=GamePort
 App.UniversalSleepSteamQueryPortRef=QueryPort
-App.MaxUsers=40
+App.MaxUsers=64
 App.UseRandomAdminPassword=True
 App.RemoteAdminPassword=
 App.AdminMethod=BattlEyeRCON
@@ -56,7 +56,7 @@ App.RCONConnectRetrySeconds=5
 App.RCONHeartbeatMinutes=0
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat={0}
-App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"233780"},{"UpdateStageName":"Config Template Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/arma3/arma3server.cfg","UpdateSourceTarget":"{{$FullInstanceDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Custom Config File Creation","UpdateSourcePlatform":"All","UpdateSource":"CreateFile","UpdateSourceData":"// custom.cfg\n\n// This file is for configuring settings not controlled by AMP in server.cfg\n","UpdateSourceArgs":"{{$FullBaseDir}}custom.cfg","OverwriteExistingFiles":false}]
+App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"233780"},{"UpdateStageName":"Server Config Template Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/arma3/arma3server.cfg","UpdateSourceTarget":"{{$FullInstanceDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Custom Config File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/arma3/arma3custom.cfg",	"UpdateSourceArgs":"custom.cfg","UpdateSourceTarget":"{{$FullBaseDir}}","OverwriteExistingFiles":false}]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
