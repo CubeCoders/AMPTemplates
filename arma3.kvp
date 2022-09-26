@@ -26,13 +26,13 @@ App.ExecutableLinux=233780/arma3server_x64
 App.WorkingDir=233780
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -name=AMPServer -profiles={{$FullBaseDir}}A3Master -bepath={{$FullBaseDir}}battleye -port={{$GamePort}} -config=server.cfg -config=custom.cfg -world=empty -netlog {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} -name=AMPServer "-profiles={{$FullBaseDir}}A3Master" "-bepath={{$FullBaseDir}}battleye" -port={{$GamePort}} -config=server.cfg -config=custom.cfg -world=empty -netlog {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"107410"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter= 
-App.ExitMethod=OS_CLOSE
+App.ExitMethod=String
 App.ExitTimeout=30
 App.ExitString=#shutdown
 App.ExitFile=app_exit.lck
@@ -53,7 +53,7 @@ App.AdminMethod=BattlEyeRCON
 App.AdminLoginTransform=None
 App.RCONConnectDelaySeconds=5
 App.RCONConnectRetrySeconds=5
-App.RCONHeartbeatMinutes=0
+App.RCONHeartbeatMinutes=0.5
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat={0}
 App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"233780"},{"UpdateStageName":"Server Config Template Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/dev/arma3server.cfg","UpdateSourceTarget":"{{$FullInstanceDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Custom Config File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/dev/arma3custom.cfg",	"UpdateSourceArgs":"custom.cfg","UpdateSourceTarget":"{{$FullBaseDir}}","OverwriteExistingFiles":false}]
@@ -70,8 +70,8 @@ App.ApplicationReadyMode=RegexMatch
 App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
-Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^[\d:]+ Connected to Steam servers$
+Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|Unknown command)$
+Console.AppReadyRegex=^RCon admin #\d+ \([\d\.:]+\) logged in$
 Console.UserJoinRegex=^$
 Console.UserLeaveRegex=^$
 Console.UserChatRegex=^$
