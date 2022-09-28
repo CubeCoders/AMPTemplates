@@ -81,7 +81,7 @@
     {
         "DisplayName":"Message Delay",
         "Category":"Arma Server Settings",
-        "Description":"Number of seconds between each line of the MOTD",
+        "Description":"Number of seconds between display of each line of the MOTD",
         "Keywords":"MOTD,message,delay",
         "FieldName":"motdInterval",
         "InputType":"number",
@@ -101,6 +101,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"ip",
         "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
         "DefaultValue":"0.0.0.0",
         "EnumValues":{}
     },
@@ -108,7 +109,7 @@
         "DisplayName":"Player Limit",
         "Category":"Arma Server Settings",
         "Description":"Maximum number of clients (including headless clients) that may connect to the server",
-        "Keywords":"players,limit",
+        "Keywords":"players,clients,limit",
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "IsFlagArgument":false,
@@ -167,14 +168,17 @@
         "DisplayName":"Addon Signature Verification",
         "Category":"Arma Server Settings",
         "Description":"If enabled, players with unknown or unsigned mods will not be allowed to join",
-        "Keywords":"mods,verify",
+        "Keywords":"mods,addons,verify",
         "FieldName":"verifySignatures",
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"verifySignatures",
         "IncludeInCommandLine":false,
         "DefaultValue":"2",
-        "EnumValues":{}
+        "EnumValues":{
+            "False":"0",
+            "True":"2"
+        }
     },
     {
         "DisplayName":"Allow Client File Patching",
@@ -210,7 +214,7 @@
     {
         "DisplayName":"Minimum Client Version",
         "Category":"Arma Server Settings",
-        "Description":"Client version below the minimum won't be allowed to join. Default of 99999999 equates to the server version",
+        "Description":"Client version below the set minimum won't be allowed to join. Default of 99999999 equates to the server version",
         "Keywords":"required build",
         "FieldName":"requiredBuild",
         "InputType":"number",
@@ -223,8 +227,8 @@
     {
         "DisplayName":"Force LAN Mode",
         "Category":"Arma Server Settings",
-        "Description":"If enabled, server will be forced into LAN mode - only local clients can connect",
-        "Keywords":"LAN,loopback",
+        "Description":"If enabled, the server will be forced into LAN mode - only local clients can connect",
+        "Keywords":"lan,loopback",
         "FieldName":"loopback",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -239,8 +243,8 @@
     {
         "DisplayName":"Enable UPNP",
         "Category":"Arma Server Settings",
-        "Description":"If enabled, will automatically create port mappings on UPNP/IGD enabled routers",
-        "Keywords":"UPNP",
+        "Description":"If enabled, the server will automatically create port mappings on UPNP/IGD enabled routers",
+        "Keywords":"upnp",
         "FieldName":"upnp",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -286,9 +290,10 @@
         "DisplayName":"Minimum Players For Mission Selection",
         "Category":"Arma Gameplay Settings",
         "Description":"Minimum number of players required before displaying the mission selection screen",
-        "Keywords":"voting,mimumum",
+        "Keywords":"voting,minimum",
         "FieldName":"voteMissionPlayers",
         "InputType":"number",
+        "MinValue":"1",
         "IsFlagArgument":false,
         "ParamFieldName":"voteMissionPlayers",
         "IncludeInCommandLine":false,
@@ -302,6 +307,7 @@
         "Keywords":"voting,threshold",
         "FieldName":"voteThreshold",
         "InputType":"number",
+        "MinValue":"0",
         "IsFlagArgument":false,
         "ParamFieldName":"voteThreshold",
         "IncludeInCommandLine":false,
@@ -321,14 +327,14 @@
         "DefaultValue":"0",
         "EnumValues":{
             "0":"Player decides",
-            "1":"Forced Advanced Flight Model",
-            "2":"Forced Simple Flight Model"
+            "1":"Force Advanced Flight Model",
+            "2":"Force Simple Flight Model"
         }
     },    
     {
-        "DisplayName":"Enable Voice Chat",
+        "DisplayName":"Disable Voice Chat",
         "Category":"Arma Gameplay Settings",
-        "Description":"If enabled, players will be able to use in-game voice chat",
+        "Description":"If enabled, players will not be able to use in-game voice chat",
         "Keywords":"voice,chat",
         "FieldName":"disableVoN",
         "InputType":"checkbox",
@@ -375,20 +381,21 @@
     {
         "DisplayName":"Start Mission Immediately",
         "Category":"Arma Gameplay Settings",
-        "Description":"Begin the mission immediately instead of waiting for players to join (autoInit). Requires Persistent Mission to be enabled",
+        "Description":"If enabled, begins the mission immediately instead of waiting for players to join (autoInit). Requires Persistent Mission to be enabled",
         "Keywords":"mission,autoinit",
         "FieldName":"autoInit",
         "InputType":"checkbox",
         "IsFlagArgument":true,
+        "FlagValue":"-autoInit",
         "ParamFieldName":"",
         "IncludeInCommandLine":true,
-        "DefaultValue":"-autoInit",
+        "DefaultValue":"False",
         "EnumValues":{}
     },
     {
         "DisplayName":"Persistent Mission",
         "Category":"Arma Gameplay Settings",
-        "Description":"Mission keeps running when all players disconnect. Required for \"autoInit\" (Start Mission Immediately option)",
+        "Description":"If enabled, the mission keeps running when all players disconnect. Required for \"autoInit\" (Start Mission Immediately option)",
         "Keywords":"mission,persistent",
         "FieldName":"persistent",
         "InputType":"checkbox",
@@ -404,7 +411,7 @@
     {
         "DisplayName":"Enable Automatic Mission Selection",
         "Category":"Arma Gameplay Settings",
-        "Description":"If enabled, the server auto-starts the next mission in the mission cycle and waits for players in the role selection. Requires a mission cycle to be specified in custom.cfg",
+        "Description":"If enabled, the server auto-starts the next mission in the mission cycle and waits for players in the role selection. Requires a mission cycle to be specified",
         "Keywords":"mission,selection",
         "FieldName":"autoSelectMission",
         "InputType":"checkbox",
@@ -420,7 +427,7 @@
     {
         "DisplayName":"Enable Random Mission Order",
         "Category":"Arma Gameplay Settings",
-        "Description":"If enabled, the server randomly chooses a mission from the mission cycle for starting or auto-starting. Requires a mission cycle to be specified in custom.cfg",
+        "Description":"If enabled, the server randomly chooses a mission from the mission cycle for starting or auto-starting. Requires a mission cycle to be specified",
         "Keywords":"mission,random,order",
         "FieldName":"randomMissionOrder",
         "InputType":"checkbox",
@@ -452,7 +459,7 @@
     {
         "DisplayName":"Allow Profile Glasses",
         "Category":"Arma Gameplay Settings",
-        "Description":"If disabled, glasses set in player profile will be ignored",
+        "Description":"If disabled, glasses set in a player's profile will be ignored",
         "Keywords":"profile,glasses",
         "FieldName":"allowProfileGlasses",
         "InputType":"checkbox",
@@ -475,7 +482,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"forcedDifficulty",
         "IncludeInCommandLine":false,
-        "DefaultValue":"regular",
+        "DefaultValue":"Regular",
         "EnumValues":{
             "Recruit":"Recruit",
             "Regular":"Regular",
@@ -486,7 +493,7 @@
     {
         "DisplayName":"AI Level",
         "Category":"Arma Gameplay Settings",
-        "Description":"Sets the AI skill level on the server. To use custom AI level settings, you must configure them in the profile in the A3Master directory",
+        "Description":"Sets the AI skill level on the server. To use custom AI level settings, you must configure them in the profile within the A3Master directory",
         "Keywords":"ai,level",
         "FieldName":"aiLevelPreset",
         "InputType":"enum",
@@ -505,7 +512,7 @@
         "DisplayName":"Enable Statistics",
         "Category":"Arma Misc Settings",
         "Description":"If enabled, the server will opt into [Arma 3 game analytics](https://community.bistudio.com/wiki/Arma_3:_Analytics)",
-        "Keywords":"arma,game,analytics",
+        "Keywords":"arma,game,analytics,statistics",
         "FieldName":"statisticsEnabled",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -520,7 +527,7 @@
     {
         "DisplayName":"Allowed File Extensions",
         "Category":"Arma Misc Settings",
-        "Description":"Only allow files with listed extensions to be loaded via loadFile command",
+        "Description":"Only allow files with listed extensions to be loaded via the loadFile command",
         "Keywords":"file,extensions",
         "FieldName":"allowedLoadFileExtensions",
         "InputType":"text",
@@ -533,7 +540,7 @@
     {
         "DisplayName":"Allowed Preprocess File Extensions",
         "Category":"Arma Misc Settings",
-        "Description":"Only allow files with listed extensions to be loaded via preprocessFile / preprocessFileLineNumbers commands",
+        "Description":"Only allow files with listed extensions to be loaded via the preprocessFile / preprocessFileLineNumbers commands",
         "Keywords":"file,preprocess,extensions",
         "FieldName":"allowedPreprocessFileExtensions",
         "InputType":"text",
@@ -546,7 +553,7 @@
     {
         "DisplayName":"Allowed HTML Extensions",
         "Category":"Arma Misc Settings",
-        "Description":"Only allow files and URLs with listed extensions to be loaded via htmlLoad command",
+        "Description":"Only allow files and URLs with listed extensions to be loaded via the htmlLoad command",
         "Keywords":"html,extensions",
         "FieldName":"allowedHTMLLoadExtensions",
         "InputType":"text",
@@ -683,7 +690,7 @@
     {
         "DisplayName":"Composition Script Level",
         "Category":"Arma Misc Settings",
-        "Description":"Sets the composition script level",
+        "Description":"Sets the composition script permission level",
         "Keywords":"script,level",
         "FieldName":"zeusCompositionScriptLevel",
         "InputType":"enum",
@@ -833,8 +840,8 @@
     {
         "DisplayName":"Kick on Maximum Desync",
         "Category":"Arma Limit Settings",
-        "Description":"If enabled, players hitting the maximum desync will be kicked, otherwise that will just be logged",
-        "Keywords":"disconnect,max,desync",
+        "Description":"If enabled, players hitting the maximum desync value will be kicked, otherwise that will just be logged",
+        "Keywords":"max,desync,kick",
         "FieldName":"kickDesync",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -863,8 +870,8 @@
     {
         "DisplayName":"Kick on Maximum Ping",
         "Category":"Arma Limit Settings",
-        "Description":"If enabled, players hitting the maximum latency (ping) will be kicked, otherwise that will just be logged",
-        "Keywords":"disconnect,max,ping,latency",
+        "Description":"If enabled, players hitting the maximum latency (ping) value will be kicked, otherwise that will just be logged",
+        "Keywords":"max,ping,latency,kick",
         "FieldName":"kickPing",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -892,8 +899,8 @@
     {
         "DisplayName":"Kick on Maximum Packet Loss",
         "Category":"Arma Limit Settings",
-        "Description":"If enabled, players hitting the maximum packet loss will be kicked, otherwise that will just be logged",
-        "Keywords":"disconnect,max,packet,loss",
+        "Description":"If enabled, players hitting the maximum packet loss  value will be kicked, otherwise that will just be logged",
+        "Keywords":"max,packet,loss,kick",
         "FieldName":"kickLoss",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -977,6 +984,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"60,90",
         "Suffix":"seconds",
+        "Placeholder":"60,90",
         "EnumValues":{}
     },
     {
@@ -991,6 +999,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"90,120",
         "Suffix":"seconds",
+        "Placeholder":"90,120",
         "EnumValues":{}
     },
     {
@@ -1005,6 +1014,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"60,90",
         "Suffix":"seconds",
+        "Placeholder":"60,90",
         "EnumValues":{}
     },
     {
@@ -1019,6 +1029,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"60,60",
         "Suffix":"seconds",
+        "Placeholder":"60,60",
         "EnumValues":{}
     },
     {
