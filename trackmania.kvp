@@ -4,7 +4,7 @@ Meta.OS=Windows, Linux
 Meta.Arch=x86_64
 Meta.Author=Greelan
 Meta.URL=https://www.trackmania.com/
-Meta.DisplayImageSource=url:https://www.trackmania.com/uploads/elementor/thumbs/cropped-TM_Helvetica_blanc-p3bw58iwois879f9kkaparaqgu3fiiw2puiucny1rg.png
+Meta.DisplayImageSource=url:https://www.trackmania.com/uploads/2021/10/WEBSITE_SHADOW-1.png
 Meta.EndpointURIFormat=steam://connect/{0}
 Meta.ConfigManifest=trackmaniaconfig.json
 Meta.MetaConfigManifest=trackmaniametaconfig.json
@@ -26,7 +26,7 @@ App.ExecutableLinux=TrackmaniaServer
 App.WorkingDir=
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} /forceip={{$ExternalIP}}:{{$ServerPort}} /bindip={{$ApplicationIPBinding}}:{{$ServerPort}} /dedicated_cfg=dedicated_cfg.txt game_settings=MatchSettings/example.txt {{lan}}{{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} /forceip={{$ExternalIP}}:{{$ServerPort}} /bindip={{$ApplicationIPBinding}}:{{$ServerPort}} /dedicated_cfg=dedicated_cfg.txt /game_settings=MatchSettings/{{match_settings}} /nodaemon {{lan}}{{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={}
@@ -57,7 +57,7 @@ App.RCONHeartbeatMinutes=0
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat={0}
 App.UpdateSources=[{"UpdateStageName":"Server Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://nadeo-download.cdn.ubi.com/trackmania/TrackmaniaServer_Latest.zip","UpdateSourceTarget":"{{$FullBaseDir}}","UnzipUpdateSource":true,"OverwriteExistingFiles":true,"DeleteAfterExtract":true},{"UpdateStageName":"Pause Update Stages","UpdateSourcePlatform":"All","UpdateSource":"Pause","UpdateSourceArgs":"2"},{"UpdateStageName":"Set Executable Flag","UpdateSourcePlatform":"Linux","UpdateSource":"SetExecutableFlag","UpdateSourceArgs":"{{$FullBaseDir}}TrackmaniaServer"},{"UpdateStageName":"Config File Copy","UpdateSourcePlatform":"All","UpdateSource":"CopyFilePath","UpdateSourceData":"{{$FullBaseDir}}UserData/Config/dedicated_cfg.txt","UpdateSourceArgs":"{{$FullBaseDir}}UserData/Config/dedicated_cfg.default.txt"}]
-App.Compatibility=WindowsBufferedConsole
+App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
 App.RapidStartup=False
