@@ -1,7 +1,7 @@
 [
     {
         "DisplayName":"Server Port",
-        "Category":"Server Settings",
+        "Category":"Trackmania Settings",
         "Description":"",
         "Keywords":"",
         "FieldName":"$ServerPort",
@@ -14,7 +14,7 @@
     },
     {
         "DisplayName":"XMLRPC Port",
-        "Category":"Server Settings",
+        "Category":"Trackmania Settings",
         "Description":"",
         "Keywords":"",
         "FieldName":"$XMLRPCPort",
@@ -27,13 +27,13 @@
     },
     {
         "DisplayName":"Master Server Account Login",
-        "Category":"Server Settings",
+        "Category":"Trackmania Settings",
         "Description":"Sets [your master server account login](https://players.trackmania.com/server/dedicated). Required for an internet server",
-        "Keywords":"master,server,login",
-        "FieldName":"login",
+        "Keywords":"master,server,account,login",
+        "FieldName":"masterserver_account_login",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"",
+        "ParamFieldName":"login",
         "IncludeInCommandLine":true,
         "SkipIfEmpty":true,
         "DefaultValue":"",
@@ -41,27 +41,27 @@
     },
     {
         "DisplayName":"Master Server Account Password",
-        "Category":"Server Settings",
+        "Category":"Trackmania Settings",
         "Description":"Sets [your master server account password](https://players.trackmania.com/server/dedicated). Required for an internet server",
-        "Keywords":"master,server,password",
-        "FieldName":"password",
-        "InputType":"text",
+        "Keywords":"master,server,account,password",
+        "FieldName":"masterserver_account_password",
+        "InputType":"password",
         "IsFlagArgument":false,
-        "ParamFieldName":"",
+        "ParamFieldName":"password",
         "IncludeInCommandLine":true,
         "SkipIfEmpty":true,
         "DefaultValue":"",
         "EnumValues":{}
     },
     {
-        "DisplayName":"LAN Server Only",
-        "Category":"Server Settings",
-        "Description":"If enabled, the server will only allow LAN access (not internet server)",
+        "DisplayName":"LAN Server",
+        "Category":"Trackmania Settings",
+        "Description":"If enabled, a LAN server will be created (not an internet server)",
         "Keywords":"public,internet,lan",
-        "FieldName":"lan",
+        "FieldName":"lanserver",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"lan",
+        "ParamFieldName":"lanserver",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
         "EnumValues":{
@@ -71,26 +71,44 @@
     },
     {
         "DisplayName":"Server Name",
-        "Category":"Server Settings",
-        "Description":"Server name used for the local network browser, otherwise the club name is used",
+        "Category":"Trackmania Settings",
+        "Description":"Server name used for the local network browser, otherwise the club room name is used",
         "Keywords":"server,name",
-        "FieldName":"servername",
+        "FieldName":"server_options_name",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"servername",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
         "DefaultValue":"AMP Powered Trackmania Server",
         "EnumValues":{}
     },
     {
+        "DisplayName":"Hidden Status",
+        "Category":"Trackmania Settings",
+        "Description":"Sets the hidden status of the server",
+        "Keywords":"hide,server,hidden,shown",
+        "FieldName":"server_options_hide_server",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/dedicated/server_options/hide_server/text()",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Always shown",
+            "1":"Always hidden",
+            "2":"Hidden from nations"
+        }
+    },
+    {
         "DisplayName":"Player Password",
-        "Category":"Server Settings",
+        "Category":"Trackmania Settings",
         "Description":"Sets the password for players to join the server",
         "Keywords":"player,password",
-        "FieldName":"serverpassword",
+        "FieldName":"server_options_password",
         "InputType":"password",
         "IsFlagArgument":false,
-        "ParamFieldName":"",
+        "ParamFieldName":"serverpassword",
         "IncludeInCommandLine":true,
         "SkipIfEmpty":true,
         "DefaultValue":"",
@@ -98,7 +116,7 @@
     },
     {
         "DisplayName":"Player Limit",
-        "Category":"Server Settings",
+        "Category":"Trackmania Settings",
         "Description":"Maximum number of players that may connect to the server",
         "Keywords":"players,limit",
         "FieldName":"$MaxUsers",
@@ -112,7 +130,7 @@
     },
     {
         "DisplayName":"Spectator Limit",
-        "Category":"Server Settings",
+        "Category":"Trackmania Settings",
         "Description":"Maximum number of spectators that may connect to the server",
         "Keywords":"spectators,limit",
         "FieldName":"server_options_max_spectators",
@@ -125,8 +143,8 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Matching Settings File",
-        "Category":"Server Settings",
+        "DisplayName":"Match Settings File",
+        "Category":"Trackmania Settings",
         "Description":"Sets the name of the file in UserData/Maps/MatchSettings to load match settings. [Generate match settings](https://wiki.trackmania.io/en/dedicated-server/tools/matchsettings-editor)",
         "Keywords":"match,settings",
         "FieldName":"match_settings",
@@ -137,5 +155,148 @@
         "DefaultValue":"example.txt",
         "Placeholder":"example.txt",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Keep Player Slots",
+        "Category":"Trackmania Settings",
+        "Description":"If enabled, slots/scores are kept when a player changes to spectator",
+        "Keywords":"keep,player,slots",
+        "FieldName":"server_options_keep_player_slots",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/dedicated/server_options/keep_player_slots/text()",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Ladder Mode",
+        "Category":"Trackmania Settings",
+        "Description":"Sets the ladder mode",
+        "Keywords":"ladder,mode",
+        "FieldName":"server_options_ladder_mode",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/dedicated/server_options/ladder_mode/text()",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"forced",
+        "EnumValues":{
+            "inactive":"Inactive",
+            "forced":"Forced"
+        }
+    },
+    {
+        "DisplayName":"Enable P2P Upload",
+        "Category":"Trackmania Settings",
+        "Description":"If set, P2P upload is enabled",
+        "Keywords":"p2p,upload",
+        "FieldName":"server_options_enable_p2p_upload",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/dedicated/server_options/enable_p2p_upload/text()",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable P2P Download",
+        "Category":"Trackmania Settings",
+        "Description":"If set, P2P download is enabled",
+        "Keywords":"p2p,download",
+        "FieldName":"server_options_enable_p2p_download",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/dedicated/server_options/enable_p2p_download/text()",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Voting Timeout",
+        "Category":"Trackmania Settings",
+        "Description":"Sets the voting timeout",
+        "Keywords":"callvote,voting,timeout",
+        "FieldName":"server_options_callvote_timeout",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/dedicated/server_options/callvote_timeout/text()",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"60000",
+        "Placeholder":"60000",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Default Voting Ratio",
+        "Category":"Trackmania Settings",
+        "Description":"Sets the default voting ratio (0 - 1). -1 = forbidden",
+        "Keywords":"callvote,voting,ratio",
+        "FieldName":"server_options_callvote_ratio",
+        "InputType":"number",
+        "MinValue":"-1",
+        "MaxValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/dedicated/server_options/callvote_ratio/text()",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.5",
+        "Placeholder":"-1 or 0-1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Map Download",
+        "Category":"Trackmania Settings",
+        "Description":"If set, map download is enabled",
+        "Keywords":"map,download",
+        "FieldName":"server_options_allow_map_download",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/dedicated/server_options/allow_map_download/text()",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable Autosave Replays",
+        "Category":"Trackmania Settings",
+        "Description":"If set, autosave replays are enabled",
+        "Keywords":"autosave,replays",
+        "FieldName":"server_options_autosave_replays",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/dedicated/server_options/autosave_replays/text()",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable Autosave Validation Replays",
+        "Category":"Trackmania Settings",
+        "Description":"If set, autosave validation replays are enabled",
+        "Keywords":"autosave,validation replays",
+        "FieldName":"server_options_autosave_validation_replays",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/dedicated/server_options/autosave_validation_replays/text()",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
     }
 ]
