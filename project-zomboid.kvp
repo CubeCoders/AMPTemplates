@@ -26,7 +26,7 @@ App.ExecutableLinux=380870/ProjectZomboid64
 App.WorkingDir=380870
 App.LinuxCommandLineArgs=-Dfile.encoding=UTF-8 -Dzomboid.steam={{SteamInt}} -Duser.home=./ -Xmx{{MaxMemory}}m {{CustomJavaArgs}} --
 App.WindowsCommandLineArgs=-Dfile.encoding=UTF-8 -Djava.awt.headless=true -Dzomboid.znetlog=1 -Dzomboid.steam={{SteamInt}} -Duser.home=./ -Xmx{{MaxMemory}}m {{JavaGCAlgo}} -XX:-CreateCoredumpOnCrash -XX:-OmitStackTraceInFastThrow -Djava.library.path=natives/;natives/win64/;. {{CustomJavaArgs}} -cp java/*;java/ zombie.network.GameServer -statistic 0 --
-App.CommandLineArgs={{$PlatformArgs}} -port {{$ApplicationPort1}} -udpport {{$DirectPort}} {{CustomServerArgs}} {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} -port {{$ApplicationPort1}} -udpport {{$ApplicationPort2}} {{CustomServerArgs}} {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"PATH":"./jre64/bin:%PATH%","LD_LIBRARY_PATH":"./linux64:./natives:./:./jre64/lib/amd64:%LD_LIBRARY_PATH%","LD_PRELOAD":"./jre64/lib/libjsig.so","PZ_CLASSPATH":"java/*;java/","SteamAppId":"108600"}
@@ -41,10 +41,10 @@ App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"UDP","Port":16261,"Ref":"ApplicationPort1","Name":"Steam Port","Description":"Port for Steam network connections"},{"Protocol":"UDP","Port":16262,"Ref":"DirectPort","Name":"Direct Port","Description":"Port for direct client connections"},{"Protocol":"TCP","Port":27015,"Ref":"RemoteAdminPort","Name":"RCON Port","Description":"Port for RCON traffic"}]
+App.Ports=[{"Protocol":"UDP","Port":16261,"Ref":"ApplicationPort1","Name":"Steam Port","Description":"Port for Steam network connections"},{"Protocol":"UDP","Port":16262,"Ref":"ApplicationPort2","Name":"Direct Port","Description":"Port for direct client connections"},{"Protocol":"TCP","Port":27015,"Ref":"RemoteAdminPort","Name":"RCON Port","Description":"Port for RCON traffic"}]
 App.AdminPortRef=RemoteAdminPort
-App.PrimaryApplicationPortRef=DirectPort
-App.UniversalSleepApplicationUDPPortRef=DirectPort
+App.PrimaryApplicationPortRef=ApplicationPort1
+App.UniversalSleepApplicationUDPPortRef=ApplicationPort1
 App.UniversalSleepSteamQueryPortRef=ApplicationPort1
 App.MaxUsers=32
 App.UseRandomAdminPassword=False
@@ -72,8 +72,8 @@ Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
 Console.AppReadyRegex=^LOG\s+: Network\s+, \d+>.*> \*+ SERVER STARTED \*+$
-Console.UserJoinRegex=^LOG\s+: Network\s+, \d+>.*> Connected new client (?<username>.+?) ID # (?<userid>.+?)$
-Console.UserLeaveRegex=^LOG\s+: (Network|General)\s+, \d+>.*> (Disconnected player "(?<username>.+?)" |\d+ znet: Disconnecting client #(?<userid>.+?) SteamID=)\d+$
+Console.UserJoinRegex=^LOG\s+: Network\s+, \d+>(?:.+?)> \[(?:.+?)\] > ConnectionManager: \[fully-connected\] (?:.+?) steam-id=(?<userid>.+?) (?:.+?) username="(?<username>.+?)" (?:.+?)$
+Console.UserLeaveRegex=^LOG\s+: Network\s+, \d+>.*> Disconnected player "(?<username>.+?)" (?<userid>.+?)$
 Console.UserChatRegex=^$
 Console.UpdateAvailableRegex=^$
 Console.MetricsRegex=
