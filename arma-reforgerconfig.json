@@ -206,6 +206,8 @@
         "Keywords":"maximum,view,distance",
         "FieldName":"serverMaxViewDistance",
         "InputType":"number",
+        "MinValue":"500",
+        "MaxValue":"10000",
         "IsFlagArgument":false,
         "ParamFieldName":"$.game.gameProperties.serverMaxViewDistance",
         "IncludeInCommandLine":false,
@@ -220,6 +222,8 @@
         "Keywords":"network,stream,view,distance",
         "FieldName":"networkViewDistance",
         "InputType":"number",
+        "MinValue":"500",
+        "MaxValue":"5000",
         "IsFlagArgument":false,
         "ParamFieldName":"$.game.gameProperties.networkViewDistance",
         "IncludeInCommandLine":false,
@@ -234,11 +238,13 @@
         "Keywords":"minimum,grass,distance",
         "FieldName":"serverMinGrassDistance",
         "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"150",
         "IsFlagArgument":false,
         "ParamFieldName":"$.game.gameProperties.serverMinGrassDistance",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-        "Placeholder":"0 or 50 - 100",
+        "Placeholder":"0 or 50 - 150",
         "Suffix":"metres",
         "EnumValues":{}
     },
@@ -293,7 +299,7 @@
     {
         "DisplayName":"Enable BattlEye",
         "Category":"Server Settings",
-        "Description":"If enabled, BattlEye will be enabled on the server",
+        "Description":"If set, BattlEye will be enabled on the server. Warning: if you disable BattlEye, no console input will be possible in AMP",
         "Keywords":"battleye",
         "FieldName":"battlEye",
         "InputType":"checkbox",
@@ -305,5 +311,19 @@
             "True":"true",
             "False":"false"
         }
+    },
+    {
+        "DisplayName":"Additional Server Startup Parameters",
+        "Category":"Server Settings",
+        "Description":"Additional startup parameters that are not otherwise set by AMP. Use with care",
+        "Keywords":"custom,server,arguments,parameters",
+        "FieldName":"CustomServerArgs",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"CustomServerArgs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"-debug",
+        "EnumValues":{}
     }
 ]
