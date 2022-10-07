@@ -100,6 +100,7 @@
         "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"ip",
+        "Hidden":true,
         "IncludeInCommandLine":true,
         "SkipIfEmpty":true,
         "DefaultValue":"0.0.0.0",
@@ -123,7 +124,7 @@
     {
         "DisplayName":"Load Mods",
         "Category":"Arma Server Settings",
-        "Description":"Load the specified mod folders (not server mods). Format on Windows is mod1;mod2;mod3 and on Linux is mod1\\;mod2\\;mod3",
+        "Description":"Load the specified mod folders (not server mods). Format on Windows is mod1;mod2;mod3 and on Linux is mod1\\;mod2\\;mod3. Alternatively use the Startup Parameters File option",
         "Keywords":"mods,addons",
         "FieldName":"mod",
         "InputType":"text",
@@ -137,7 +138,7 @@
     {
         "DisplayName":"Load Server Mods",
         "Category":"Arma Server Settings",
-        "Description":"Load the specified server-side only mod folders (the mods are not broadcast to clients). Format on Windows is mod1;mod2;mod3 and on Linux is mod1\\;mod2\\;mod3",
+        "Description":"Load the specified server-side only mod folders (the mods are not broadcast to clients). Format on Windows is mod1;mod2;mod3 and on Linux is mod1\\;mod2\\;mod3. Alternatively use the Startup Parameters File option",
         "Keywords":"mods,addons,server",
         "FieldName":"serverMod",
         "InputType":"text",
@@ -259,7 +260,7 @@
     {
         "DisplayName":"Additional Server Startup Parameters",
         "Category":"Arma Server Settings",
-        "Description":"Additional startup parameters that are not otherwise set by AMP. Use with care",
+        "Description":"Additional startup parameters that are not otherwise set by AMP. Alternatively use the Startup Parameters File option. Use with care",
         "Keywords":"custom,server,arguments,parameters",
         "FieldName":"CustomServerArgs",
         "InputType":"text",
@@ -269,6 +270,22 @@
         "DefaultValue":"",
         "Placeholder":"-debug",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Use Startup Parameters File",
+        "Category":"Arma Server Settings",
+        "Description":"If enabled, allows the use of a [parameters file](https://community.bistudio.com/wiki/Startup_Parameters_Config_File) for additional startup parameters. File is \"parameters.txt\" in the server base directory. Useful for long startup parameters such as -mods or -servermods. Use with care",
+        "Keywords":"custom,server,arguments,parameters,file",
+        "FieldName":"parfile",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"parfile",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-par=./parameters.txt "
+        }
     },
     {
         "DisplayName":"Skip Lobby",
