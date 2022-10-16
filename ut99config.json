@@ -1,5 +1,19 @@
 [
     {
+        "DisplayName":"Game Port",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$GamePort",
+        "InputType":"number",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"URL.Port",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"7777",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Webserver Port",
         "Category":"Server Settings",
         "Description":"",
@@ -27,14 +41,30 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Admin Username",
+        "DisplayName":"Make Server Public",
+        "Category":"Windward Server Settings",
+        "Description":"If enabled, the server will be registered to the master servers and be publicly visible in the in-game browser",
+        "Keywords":"public,master",
+        "FieldName":"DoUplink",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"IpServer.UdpServerUplink.DoUplink",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Server Password",
         "Category":"Server Settings",
-        "Description":"Name of the in-game \"admin\" user",
-        "Keywords":"admin,username",
-        "FieldName":"AdminUsername",
+        "Description":"Password for players and spectators to connect to the server",
+        "Keywords":"password",
+        "FieldName":"GamePassword",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"UTServerAdmin.UTServerAdmin.AdminPassword",
+        "ParamFieldName":"Engine.GameInfo.GamePassword",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
         "EnumValues":{}
@@ -42,14 +72,42 @@
     {
         "DisplayName":"Admin Password",
         "Category":"Server Settings",
-        "Description":"In-game \"admin\" user password (not the server password)",
+        "Description":"Password for the in-game and webserver \"admin\" user (not the server password)",
         "Keywords":"admin,password",
         "FieldName":"AdminPassword",
         "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"UTServerAdmin.UTServerAdmin.AdminPassword",
         "IncludeInCommandLine":false,
-        "DefaultValue":"",
+        "DefaultValue":"admin",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Limit",
+        "Category":"Server Settings",
+        "Description":"Maximum number of players that may connect to the server",
+        "Keywords":"players,limit",
+        "FieldName":"$MaxUsers",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Engine.GameInfo.MaxPlayers",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Spectator Limit",
+        "Category":"Server Settings",
+        "Description":"Maximum number of spectators that may connect to the server",
+        "Keywords":"spectators,limit",
+        "FieldName":"MaxSpectators",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Engine.GameInfo.MaxSpectators",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "Suffix":"spectators",
         "EnumValues":{}
     },
     {
