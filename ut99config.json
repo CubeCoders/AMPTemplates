@@ -1,7 +1,7 @@
 [
     {
         "DisplayName":"Game Port",
-        "Category":"Server Settings",
+        "Category":"UT Server Settings",
         "Description":"",
         "Keywords":"",
         "FieldName":"$GamePort",
@@ -15,7 +15,7 @@
     },
     {
         "DisplayName":"Webserver Port",
-        "Category":"Server Settings",
+        "Category":"UT Server Settings",
         "Description":"",
         "Keywords":"",
         "FieldName":"$WebserverPort",
@@ -28,8 +28,22 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Log Name",
+        "Category":"UT Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"ServerLogName",
+        "InputType":"text",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"Engine.GameInfo.ServerLogName",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"server.log",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Name",
-        "Category":"Server Settings",
+        "Category":"UT Server Settings",
         "Description":"Sets the name of the server shown publicly",
         "Keywords":"name",
         "FieldName":"ServerName",
@@ -42,7 +56,7 @@
     },
     {
         "DisplayName":"Make Server Public",
-        "Category":"Server Settings",
+        "Category":"UT Server Settings",
         "Description":"If enabled, the server will be registered to the master servers and be publicly visible in the in-game browser",
         "Keywords":"public,master",
         "FieldName":"DoUplink",
@@ -53,12 +67,12 @@
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
-            "True":"true"
+            "True":"True"
         }
     },
     {
         "DisplayName":"Server Password",
-        "Category":"Server Settings",
+        "Category":"UT Server Settings",
         "Description":"Password for players and spectators to connect to the server",
         "Keywords":"password",
         "FieldName":"GamePassword",
@@ -71,20 +85,20 @@
     },
     {
         "DisplayName":"Admin Password",
-        "Category":"Server Settings",
-        "Description":"Password for the in-game and webserver \"admin\" user (not the server password)",
+        "Category":"UT Server Settings",
+        "Description":"Password for the in-game \"admin\" user (not the server password)",
         "Keywords":"admin,password",
         "FieldName":"AdminPassword",
-        "InputType":"text",
+        "InputType":"password",
         "IsFlagArgument":false,
-        "ParamFieldName":"UTServerAdmin.UTServerAdmin.AdminPassword",
+        "ParamFieldName":"Engine.GameInfo.AdminPassword",
         "IncludeInCommandLine":false,
-        "DefaultValue":"admin",
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
         "DisplayName":"Player Limit",
-        "Category":"Server Settings",
+        "Category":"UT Server Settings",
         "Description":"Maximum number of players that may connect to the server",
         "Keywords":"players,limit",
         "FieldName":"$MaxUsers",
@@ -98,7 +112,7 @@
     },
     {
         "DisplayName":"Spectator Limit",
-        "Category":"Server Settings",
+        "Category":"UT Server Settings",
         "Description":"Maximum number of spectators that may connect to the server",
         "Keywords":"spectators,limit",
         "FieldName":"MaxSpectators",
@@ -112,7 +126,7 @@
     },
     {
         "DisplayName":"Map Name",
-        "Category":"Server Settings",
+        "Category":"UT Server Settings",
         "Description":"Sets the name of the map to load. See the Maps directory for options. The Game Type must match",
         "Keywords":"map,name",
         "FieldName":"MapName",
@@ -125,20 +139,36 @@
     },
     {
         "DisplayName":"Game Type",
-        "Category":"Server Settings",
+        "Category":"UT Server Settings",
         "Description":"Sets the game type for the server. Use [standard types](https://wiki.unrealadmin.org/List_of_Gametypes_and_Mutators_%28UT%29#Standard_Gametypes) or custom types",
         "Keywords":"game,type",
-        "FieldName":"GameType",
+        "FieldName":"game",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"GameType",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"?game",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
         "DefaultValue":"Botpack.DeathMatchPlus",
         "EnumValues":{}
     },
     {
+        "DisplayName":"Mutators",
+        "Category":"UT Server Settings",
+        "Description":"Comma-separated list of mutators enabled on the server",
+        "Keywords":"mutators",
+        "FieldName":"mutator",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"?mutator",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"",
+        "Placeholder":"QFeedback.QFeedback,Relics.RelicDefense,Relics.RelicRedemption,Relics.RelicRegen,Relics.RelicSpeed,Relics.RelicStrength,Relics.RelicDeath",
+        "EnumValues":{}
+    },    
+    {
         "DisplayName":"OldUnreal Patch Version",
-        "Category":"Server Settings",
+        "Category":"UT Server Settings",
         "Description":"Sets the [OldUnreal patch version](https://github.com/OldUnreal/UnrealTournamentPatches/releases) to apply to the server. Update the server after changing this setting!",
         "Keywords":"oldunreal,patch,version",
         "FieldName":"PatchVersion",
@@ -152,7 +182,7 @@
     },
     {
         "DisplayName":"Redirection URL",
-        "Category":"Server Settings",
+        "Category":"UT Server Settings",
         "Description":"Sets the URL for a redirection website for clients to download required files. The URL must end in a slash",
         "Keywords":"redirection,url",
         "FieldName":"RedirectToURL",
@@ -163,5 +193,134 @@
         "DefaultValue":"http://uz.ut-files.com/",
         "Placeholder":"http://uz.ut-files.com/",
         "EnumValues":{}
-    } 
+    },
+    {
+        "DisplayName":"Enable Webserver",
+        "Category":"UT Server Settings",
+        "Description":"If enabled, the server's webserver will operate",
+        "Keywords":"webserver",
+        "FieldName":"bEnabled",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"UWeb.WebServer.bEnabled",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Webserver Admin Username",
+        "Category":"UT Server Settings",
+        "Description":"Sets the username of the admin user for the webserver",
+        "Keywords":"webserver,admin,username",
+        "FieldName":"WebAdminUsername",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"UTServerAdmin.UTServerAdmin.AdminUsername",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"admin",
+        "Placeholder":"admin",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Webserver Admin Password",
+        "Category":"UT Server Settings",
+        "Description":"Sets the password of the admin user for the webserver. Change this after installing the server",
+        "Keywords":"webserver,admin,password",
+        "FieldName":"WebAdminPassword",
+        "InputType":"password",
+        "IsFlagArgument":false,
+        "ParamFieldName":"UTServerAdmin.UTServerAdmin.AdminPassword",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"admin",
+        "Placeholder":"admin",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Low Gore",
+        "Category":"UT Gameplay Settings",
+        "Description":"If enabled, the server will have low gore levels",
+        "Keywords":"low,gore",
+        "FieldName":"bLowGore",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Engine.GameInfo.bLowGore",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Very Low Gore",
+        "Category":"UT Gameplay Settings",
+        "Description":"If enabled, the server will have very low gore levels",
+        "Keywords":"very,low,gore",
+        "FieldName":"bVeryLowGore",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Engine.GameInfo.bVeryLowGore",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Mute Spectators",
+        "Category":"UT Gameplay Settings",
+        "Description":"If enabled, spectators will be muted",
+        "Keywords":"mute,spectators",
+        "FieldName":"bMuteSpectators",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Engine.GameInfo.bMuteSpectators",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent Cheating",
+        "Category":"UT Gameplay Settings",
+        "Description":"If enabled, cheating will not be allowed",
+        "Keywords":"cheating",
+        "FieldName":"bNoCheating",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Engine.GameInfo.bNoCheating",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Bot Difficulty Level",
+        "Category":"UT Gameplay Settings",
+        "Description":"Sets the difficulty level of bots on the server",
+        "Keywords":"bot,difficulty,level",
+        "FieldName":"Difficulty",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Botpack.ChallengeBotInfo.Difficulty",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "1":"1 (Default)",
+            "2":"2",
+            "3":"3",
+            "4":"4",
+            "5":"5",
+            "6":"6",
+            "7":"7 (Godlike)"
+        }
+    }
 ]
