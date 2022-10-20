@@ -166,15 +166,35 @@
     {
         "DisplayName":"Game Type",
         "Category":"UT Server Settings",
-        "Description":"Sets the game type for the server. Use [standard types](https://wiki.unrealadmin.org/List_of_Gametypes_and_Mutators_%28UT%29#Standard_Gametypes) or custom types",
+        "Description":"Sets the game type for the server. If Custom is selected, the Custom Game Type Name must also be set",
         "Keywords":"game,type",
         "FieldName":"game",
-        "InputType":"text",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"game",
-        "IncludeInCommandLine":true,
-        "SkipIfEmpty":true,
+        "IncludeInCommandLine":false,
         "DefaultValue":"Botpack.DeathMatchPlus",
+        "EnumValues":{
+            "Botpack.DeathMatchPlus":"Deathmatch (Default)",
+            "Botpack.TeamGamePlus":"Team Deathmatch",
+            "Botpack.CTFGame":"Capture The Flag",
+            "Botpack.Domination":"Domination",
+            "Botpack.Assault":"Assault",
+            "":"Custom"
+        }
+    },
+    {
+        "DisplayName":"Custom Game Type Name",
+        "Category":"UT Server Settings",
+        "Description":"If Custom game type is selected, sets the name of the game type. Leave this blank if a standard game type is selected",
+        "Keywords":"custom,game,type",
+        "FieldName":"CustomGame",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"CustomGame",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"JailBreak.JailBreak",
         "EnumValues":{}
     },
     {
