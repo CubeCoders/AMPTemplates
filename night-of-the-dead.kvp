@@ -22,7 +22,7 @@ App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=1420710
 App.LinuxCommandLineArgs=-a wine "./LF/Binaries/Win64/LFServer.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} ?listen -log -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{$FormattedArgs}} -CRASHREPORTS
+App.CommandLineArgs={{$PlatformArgs}} ?listen -log -stdout -FullStdOutLogOutput -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{$FormattedArgs}} -CRASHREPORTS
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1377380"}
 App.CommandLineParameterFormat=-{0}="{1}"
@@ -48,7 +48,7 @@ App.AdminLoginTransform=None
 App.RCONConnectDelaySeconds=5
 App.RCONConnectRetrySeconds=5
 App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"1420710","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"First DLL Copy","UpdateSourcePlatform":"All","UpdateSource":"CopyFilePath","UpdateSourceData":"{{$FullBaseDir}}LF/Binaries/Win64/steamclient64.dll","UpdateSourceArgs":"{{$FullBaseDir}}steamclient64.dll","OverwriteExistingFiles":true},{"UpdateStageName":"Second DLL Copy","UpdateSourcePlatform":"All","UpdateSource":"CopyFilePath","UpdateSourceData":"{{$FullBaseDir}}LF/Binaries/Win64/tier0_s64.dll","UpdateSourceArgs":"{{$FullBaseDir}}tier0_s64.dll","OverwriteExistingFiles":true},{"UpdateStageName":"Third DLL Copy","UpdateSourcePlatform":"All","UpdateSource":"CopyFilePath","UpdateSourceData":"{{$FullBaseDir}}LF/Binaries/Win64/vstdlib_s64.dll","UpdateSourceArgs":"{{$FullBaseDir}}vstdlib_s64.dll","OverwriteExistingFiles":true},{"UpdateStageName":"Settings Template Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/night-of-the-deadserversettings.ini","UpdateSourceTarget":"{{$FullInstanceDir}}","OverwriteExistingFiles":true},{"UpdateStageName":"Settings Template Copy","UpdateSourcePlatform":"All","UpdateSource":"CopyFilePath","UpdateSourceData":"{{$FullBaseDir}}AMP_ServerSettings.ini","UpdateSourceArgs":"{{$FullInstanceDir}}night-of-the-deadserversettings.ini","OverwriteExistingFiles":false}]
-App.Compatibility=LinuxBufferedConsole
+App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
 App.RapidStartup=False
@@ -62,7 +62,7 @@ App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|\d+:err:ole:.*|Could not find Wine Gecko.*)$
-Console.AppReadyRegex=^LogInit: Display: Engine is initialized\. Leaving FEngineLoop::Init\(\)$
+Console.AppReadyRegex=^\[[\d\.]+-[\d\.:]+\]\[\d+\]LogBlueprintUserMessages: \[LevelStreamer_BP_2\] LOAD COMPLETE$
 Console.UserJoinRegex=^\[[\d\.]+-[\d\.:]+\]\[\d+\]LogNet: Login request: \?Name=(?<username>.+?) userId: Steam:UNKNOWN \[(?<sessionid>.+?)\] platform: Steam$
 Console.UserLeaveRegex=^\[[\d\.]+-[\d\.:]+\]\[\d+\]LogOnline: STEAM: Removing P2P Session Id: UNKNOWN \[(?<sessionid>.+?)\], Channel: \d+, IdleTime: .+$
 Console.UserChatRegex=^$
