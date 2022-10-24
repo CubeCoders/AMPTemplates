@@ -22,8 +22,8 @@ App.ExecutableWin=1639880\Longvinter\Binaries\Win64\LongvinterServer-Win64-Shipp
 App.ExecutableLinux=1639880/Longvinter/Binaries/Linux/LongvinterServer-Linux-Shipping
 App.WorkingDir=1639880
 App.LinuxCommandLineArgs=
-App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} Longvinter -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{$FormattedArgs}} -stdlog
+App.WindowsCommandLineArgs=-FullStdOutLogOutput
+App.CommandLineArgs=Longvinter -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{$FormattedArgs}} -stdout {{$PlatformArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1635450"}
@@ -68,7 +68,7 @@ App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^.*LogInit: Display: Starting Game.$
+Console.AppReadyRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogWorld: Bringing up level for play took: \d+\.\d+$
 Console.UserJoinRegex=^$
 Console.UserLeaveRegex=^$
 Console.UserChatRegex=^$
