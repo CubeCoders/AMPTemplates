@@ -46,7 +46,9 @@
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"BuildStream",
+        "UpdateSourceConditionValue":"Release"
     },
     {
         "UpdateStageName":"Impostor Server Download",
@@ -56,6 +58,32 @@
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"BuildStream",
+        "UpdateSourceConditionValue":"Release"
+    },
+    {
+        "UpdateStageName":"Impostor Server Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://nightly.link/Impostor/Impostor/workflows/ci/master/Impostor-Server_{{ServerVersion}}-{{NightlyBuild}}_win-x64.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"BuildStream",
+        "UpdateSourceConditionValue":"Nightly"
+    },
+    {
+        "UpdateStageName":"Impostor Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://nightly.link/Impostor/Impostor/workflows/ci/master/Impostor-Server_{{ServerVersion}}-{{NightlyBuild}}_linux-x64.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"BuildStream",
+        "UpdateSourceConditionValue":"Nightly"
     }
 ]
