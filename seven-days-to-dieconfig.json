@@ -319,7 +319,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"/ServerSettings/property[@name='EACEnabled']/@value",
         "IncludeInCommandLine":false,
-        "DefaultValue":"true",
+        "DefaultValue":"false",
         "EnumValues":{
             "False": "false",
             "True": "true"
@@ -719,7 +719,7 @@
         "DefaultValue":"0",
         "EnumValues":{
             "0": "Walk",
-            "1": "Job",
+            "1": "Jog",
             "2": "Run",
             "3": "Sprint",
             "4": "Nightmare"
@@ -737,7 +737,7 @@
         "DefaultValue":"3",
         "EnumValues":{
             "0": "Walk",
-            "1": "Job",
+            "1": "Jog",
             "2": "Run",
             "3": "Sprint",
             "4": "Nightmare"
@@ -755,7 +755,7 @@
         "DefaultValue":"3",
         "EnumValues":{
             "0": "Walk",
-            "1": "Job",
+            "1": "Jog",
             "2": "Run",
             "3": "Sprint",
             "4": "Nightmare"
@@ -773,7 +773,7 @@
         "DefaultValue":"3",
         "EnumValues":{
             "0": "Walk",
-            "1": "Job",
+            "1": "Jog",
             "2": "Run",
             "3": "Sprint",
             "4": "Nightmare"
@@ -1121,7 +1121,7 @@
     },{
         "DisplayName":"Config File Version",
         "Category":"SteamCMD and Updates",
-        "Description":"Select which config file to download. Must match the version of the Release Stream.",
+        "Description":"Select which config file to download. Must match the version of the Release Stream. Check required Undead Legacy Version [here](https://ul.subquake.com/download).",
         "Keywords":"config,file,version",
         "FieldName":"ConfigFile",
         "InputType":"enum",
@@ -1133,7 +1133,9 @@
             "seven-days-settings184": "18.4",
             "seven-days-settings196": "19.6",
             "seven-days-settings200-203": "20.0 to 20.3",
-            "seven-days-settings204": "20.4 or Higher"
+            "seven-days-settings204": "20.4 and Higher",
+            "seven-days-settings-undead-legacy-stable": "Undead Legacy Stable",
+            "seven-days-settings-undead-legacy-experimental": "Undead Legacy Experimental"
         }
     },{
         "DisplayName":"Install UMOD",
@@ -1150,5 +1152,125 @@
             "False": "false",
             "True": "true"
         }
+    },{
+        "DisplayName":"Please Read!",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"If you would like to install Undead Legacy you need to pick either the Stable or Experimental config under the \"SteamCMD and Updates\" section. This will then grab the appropriate Undead Legacy version when you click update.",
+        "Keywords":"Read,Please,Info",
+        "FieldName":"PleaseRead",
+        "InputType":"hidden"
+    },{
+        "DisplayName":"Recipe Filter",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"Controls how recipes are displayed.",
+        "Keywords":"Recipe,Filter",
+        "FieldName":"RecipeFilter",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='RecipeFilter']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0": "Shows all recipes",
+            "1": "Shows unknown recipes, search limited by workstation",
+            "2": "Shows only known and workstation relevant recipes"
+        }
+    },{
+        "DisplayName":"Starter Quest Enabled",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"Determines if you trigger the tutorial quest upon first spawning on the server.",
+        "Keywords":"Quest,Starter,Tutorial",
+        "FieldName":"StarterQuestEnabled",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"StarterQuestEnabled",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False": "false",
+            "True": "true"
+        }
+    },{
+        "DisplayName":"Wandering Horde Frequency",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"After how many in-game hours a wandering horde would occur. On top of this value 1 to 4 additional hours may be added depending on spawn conditions. Minimum Value: 1",
+        "Keywords":"Wandering,Horde,Frequency",
+        "FieldName":"WanderingHordeFrequency",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='WanderingHordeFrequency']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"16",
+        "EnumValues":{},
+        "Suffix": "hours"
+    },{
+        "DisplayName":"Wandering Horde Range",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"Additional random hours added to Wandering Horde Frequency to add randomness to hours between spawns. For example, Frequency: 5, Frequency RNG Range: 10, then wandering horde will spawn anywhere between 5 to 15 (5+10) in-game hours + additional hours if special conditions occur (No players alive, etc).",
+        "Keywords":"Wandering,Horde,Range",
+        "FieldName":"WanderingHordeRange",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='WanderingHordeRange']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"8",
+        "EnumValues":{},
+        "Suffix": "hours"
+    },{
+        "DisplayName":"Wandering Horde Count",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"Fixed zombie count, that will spawn in a Wandering horde. Minimum Value: 2. Zombies + Zombie RNG Range value must not exceed: 64",
+        "Keywords":"Wandering,Horde,Count",
+        "FieldName":"WanderingHordeEnemyCount",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='WanderingHordeEnemyCount']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "EnumValues":{},
+        "Suffix": "zombies"
+    },{
+        "DisplayName":"Wandering Horde Range",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"This value determines up to how many additional zombies can spawn for Wandering Horde. For example, Zombies: 5, Zombies RNG Range: 10, then wandering horde will spawn anywhere between 5 to 15 5+10 zombies. Combined value must not exceed: 64",
+        "Keywords":"Wandering,Horde,Range",
+        "FieldName":"WanderingHordeEnemyRange",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='WanderingHordeEnemyRange']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "EnumValues":{},
+        "Suffix": "zombies"
+    },{
+        "DisplayName":"Death Penalty - Experimental Only",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"Sets what will be the consequences to your progression when you die in the game: No penalty - you will not get XP debt as well as no debuff, that lowers your Attributes. Beginner - near Death Trauma debuff Vanilla like experience. Moderate - same as beginner, but also with loss of random Action skills. Standard - same as moderate, but also you will respawn with partial health, food and water.",
+        "Keywords":"Death,Penalty",
+        "FieldName":"DeathPenalty",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='DeathPenalty']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"3",
+        "EnumValues":{
+            "0": "No penalty",
+            "1": "Beginner",
+            "2": "Moderate",
+            "3": "Standard"
+        }
+    },{
+        "DisplayName":"POI Tier Loot Scale - Experimental Only",
+        "Category": "7d2d - Undead Legacy Settings",
+        "Description":"Multiplier determining how important a POI Tier is when scaling Loot Stage. 0% - Disabled Default, 100% Vanilla Scaling. Acceptable values are integers from 0 to 100",
+        "Keywords":"POI,Tier,Loot,Scale",
+        "FieldName":"POITierLootScale",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='POITierLootScale']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{},
+        "Suffix": "%"
     }
 ]
