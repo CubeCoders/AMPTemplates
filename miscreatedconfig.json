@@ -1,7 +1,7 @@
 [
     {
         "DisplayName":"Server Name",
-        "Category":"Server Settings",
+        "Category":"Miscreated Server Settings",
         "Description":"Sets the name of the server to be displayed on the server list",
         "Keywords":"server,name",
         "FieldName":"sv_servername",
@@ -14,7 +14,7 @@
     },
     {
         "DisplayName":"Message Of The Day",
-        "Category":"Server Settings",
+        "Category":"Miscreated Server Settings",
         "Description":"Sets the message of the day (MOTD) displayed when players join",
         "Keywords":"message,motd",
         "FieldName":"sv_motd",
@@ -27,7 +27,7 @@
     },
     {
         "DisplayName":"Server URL",
-        "Category":"Server Settings",
+        "Category":"Miscreated Server Settings",
         "Description":"Sets the URL displayed when players join (essentially a second MOTD line)",
         "Keywords":"url,motd",
         "FieldName":"sv_url",
@@ -40,20 +40,38 @@
     },
     {
         "DisplayName":"Map",
-        "Category":"Server Settings",
-        "Description":"Sets the map for the server",
+        "Category":"Miscreated Server Settings",
+        "Description":"Sets the map for the server. If Custom is selected, the Custom Map must also be specified",
         "Keywords":"map",
         "FieldName":"map",
-        "InputType":"text",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"+map",
         "IncludeInCommandLine":true,
         "DefaultValue":"islands",
+        "EnumValues":{
+            "islands":"Islands (Default)",
+            "canyonlands":"Canyonlands",
+            "{{custommap}}":"Custom"
+        }
+    },
+    {
+        "DisplayName":"Custom Map Name",
+        "Category":"Miscreated Server Settings",
+        "Description":"If Custom map is selected, sets the name of the map. The map directory must be included in GameSDK/Levels",
+        "Keywords":"custom,map",
+        "FieldName":"custommap",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"custommap",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"bad_lands",
         "EnumValues":{}
     },
     {
         "DisplayName":"Player Limit",
-        "Category":"Server Settings",
+        "Category":"Miscreated Server Settings",
         "Description":"Maximum number of players allowed on the server",
         "Keywords":"max,players,limit",
         "FieldName":"$MaxUsers",
@@ -67,7 +85,7 @@
     },
     {
         "DisplayName":"Enable RCON",
-        "Category":"Server Settings",
+        "Category":"Miscreated Server Settings",
         "Description":"If set, the RCON server will be enabled. Connect either with the [RCON tool](https://github.com/Csprance/misrcon) or [online](https://servers.miscreatedgame.com/)",
         "Keywords":"rcon,admin",
         "FieldName":"http_startserver",
@@ -83,7 +101,7 @@
     },
     {
         "DisplayName":"RCON Password",
-        "Category":"Server Settings",
+        "Category":"Miscreated Server Settings",
         "Description":"Sets the RCON password. RCON must be enabled to connect",
         "Keywords":"rcon,password",
         "FieldName":"http_password",
@@ -96,7 +114,7 @@
     },
     {
         "DisplayName":"Enable Whitelist",
-        "Category":"Server Settings",
+        "Category":"Miscreated Server Settings",
         "Description":"If enabled, only whitelisted SteamIDs will be able to connect to the server",
         "Keywords":"whitelist",
         "FieldName":"mis_whitelist",
@@ -109,5 +127,153 @@
             "False":"",
             "True":"-mis_whitelist "
         }
+    },
+    {
+        "DisplayName":"Ping Limit",
+        "Category":"Miscreated Server Settings",
+        "Description":"Sets the maximum ping a player can have before being kicked from the server. 0 = disabled",
+        "Keywords":"max,ping,limit",
+        "FieldName":"g_pinglimit",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"g_pinglimit",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1000",
+        "Placeholder":"1000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Ping Limit Timer",
+        "Category":"Miscreated Server Settings",
+        "Description":"Sets the time interval after which a player will be kicked if they are over the specified ping limit",
+        "Keywords":"max,ping,limit,timer",
+        "FieldName":"g_pingLimitTimer",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"g_pingLimitTimer",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"15",
+        "Placeholder":"15",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Camera Rules",
+        "Category":"Miscreated Gameplay Settings",
+        "Description":"Sets the camera rules for the server",
+        "Keywords":"camera,rules",
+        "FieldName":"hg_gameRules_Camera",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"g_gameRules_Camera",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"First and third person (default)",
+            "1":"First person only",
+            "2":"Third person only in vehicle"
+        }
+    },
+    {
+        "DisplayName":"Health Regeneration Speed",
+        "Category":"Miscreated Gameplay Settings",
+        "Description":"Sets the health regeneration speed",
+        "Keywords":"health,regeneration,speed",
+        "FieldName":"g_playerHealthRegen",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"g_playerHealthRegen",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.111",
+        "Placeholder":"0.111",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Food Decay Speed",
+        "Category":"Miscreated Gameplay Settings",
+        "Description":"Sets the food decay speed",
+        "Keywords":"food,decay,speed",
+        "FieldName":"g_playerFoodDecay",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"g_playerFoodDecay",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.2777",
+        "Placeholder":"0.2777",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Sprinting Food Decay Speed",
+        "Category":"Miscreated Gameplay Settings",
+        "Description":"Sets the food decay speed when sprinting",
+        "Keywords":"food,decay,speed,sprinting",
+        "FieldName":"g_playerFoodDecaySprinting",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"g_playerFoodDecaySprinting",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.34722",
+        "Placeholder":"0.34722",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Water Decay Speed",
+        "Category":"Miscreated Gameplay Settings",
+        "Description":"Sets the water decay speed",
+        "Keywords":"water,decay,speed",
+        "FieldName":"g_playerWaterDecay",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"g_playerWaterDecay",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.4861",
+        "Placeholder":"0.4861",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Sprinting Water Decay Speed",
+        "Category":"Miscreated Gameplay Settings",
+        "Description":"Sets the water decay speed when sprinting",
+        "Keywords":"water,decay,speed,sprinting",
+        "FieldName":"g_playerWaterDecaySprinting",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"g_playerWaterDecaySprinting",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.607638",
+        "Placeholder":"0.607638",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Infinite Stamina",
+        "Category":"Miscreated Server Settings",
+        "Description":"If set, infinite stamina will be enabled",
+        "Keywords":"infinite,stamina",
+        "FieldName":"g_playerInfiniteStamina",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"g_playerInfiniteStamina",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Crafting Speed Multiplier",
+        "Category":"Miscreated Gameplay Settings",
+        "Description":"Sets the crafting speed multiplier",
+        "Keywords":"crafting,speed,multiplier",
+        "FieldName":"g_craftingSpeedMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"g_craftingSpeedMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "Placeholder":"1",
+        "EnumValues":{}
     }
 ]
