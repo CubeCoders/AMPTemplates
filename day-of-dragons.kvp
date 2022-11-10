@@ -25,8 +25,8 @@ App.ExecutableWin=1088320\Dragons\Binaries\Win64\DragonsServer-Win64-Shipping.ex
 App.ExecutableLinux=1088320/Dragons/Binaries/Linux/DragonsServer-Linux-Shipping
 App.WorkingDir=1088320
 App.LinuxCommandLineArgs=
-App.WindowsCommandLineArgs=
-App.CommandLineArgs=Dragons {{$PlatformArgs}} -log -Port={{$GamePort}} -QueryPort={{$QueryPort}} -SteamServerName="{{SteamServerName}}" {{$FormattedArgs}}
+App.WindowsCommandLineArgs=-FullStdOutLogOutput
+App.CommandLineArgs=Dragons -Port={{$GamePort}} -QueryPort={{$QueryPort}} -SteamServerName="{{SteamServerName}}" {{$FormattedArgs}} -stdout {{$PlatformArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1088090"}
@@ -71,7 +71,7 @@ App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^(?:\[[\d\.]+-[\d\.:]+\]\[[\d ]+\])?LogGameMode: Display: Match State Changed from WaitingToStart to InProgress$
+Console.AppReadyRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]DragonsLog: \[(?:.+?)\] All streaming levels loaded!$
 Console.UserJoinRegex=^$
 Console.UserLeaveRegex=^$
 Console.UserChatRegex=^$
