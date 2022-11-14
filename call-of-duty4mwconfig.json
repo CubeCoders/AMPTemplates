@@ -70,7 +70,7 @@
     {
         "DisplayName":"Server Name",
         "Category":"Server Settings",
-        "Description":"Sets the name of the server. Colour codes can be used: ^0=Black, ^1=Red/Orange, ^2=Green, ^3=Yellow, ^4=Navy Blue, ^5=Cyan, ^6=Purple, ^7=White, ^8=Grey, ^9=Grey/Map Default",
+        "Description":"Sets the name of the server. Colour codes can be used: ^0=Black, ^1=Red, ^2=Green, ^3=Yellow, ^4=Blue, ^5=Cyan, ^6=Pink, ^7=White, ^8=Grey, ^9=Grey/Map Default",
         "Keywords":"server,name",
         "FieldName":"sv_hostname",
         "InputType":"text",
@@ -160,10 +160,10 @@
         "Category":"Server Settings",
         "Description":"Sets the map to start the server with. This setting will be overridden if map rotation is configured",
         "Keywords":"map",
-        "FieldName":"map",
+        "FieldName":"sv_mapname",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"map",
+        "ParamFieldName":"sv_mapname",
         "IncludeInCommandLine":false,
         "DefaultValue":"mp_backlot",
         "EnumValues":{}
@@ -240,21 +240,35 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Server Voice Chat",
+        "DisplayName":"Enable Server Voice Chat",
         "Category":"Server Settings",
-        "Description":"Sets the server voice chat configuration",
+        "Description":"If set, server voice chat will be enabled",
         "Keywords":"voice,chat",
         "FieldName":"sv_voice",
-        "InputType":"enum",
+        "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"sv_voice",
         "IncludeInCommandLine":false,
-        "DefaultValue":"2",
+        "DefaultValue":"1",
         "EnumValues":{
-            "0":"No Chat",
-            "1":"Free Chat",
-            "2":"Team Chat (default)"
+            "False":"0",
+            "True":"1"
         }
+    },
+    {
+        "DisplayName":"Server Voice Chat Quality",
+        "Category":"Server Settings",
+        "Description":"Sets the server voice quality level",
+        "Keywords":"voice,chat",
+        "FieldName":"sv_voiceQuality",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"9",
+        "IsFlagArgument":false,
+        "ParamFieldName":"sv_voiceQuality",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"3",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Enable Dead Chat",
@@ -268,8 +282,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
         "EnumValues":{
-            "True":"1",
-            "False":"0"
+            "False":"0",
+            "True":"1"
         }
     },
     {
@@ -280,10 +294,12 @@
         "FieldName":"sv_minPing",
         "InputType":"number",
         "MinValue":"0",
+        "MaxValue":"1000",
         "IsFlagArgument":false,
         "ParamFieldName":"sv_minPing",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
+        "Suffix":"milliseconds",
         "EnumValues":{}
     },
     {
@@ -294,10 +310,12 @@
         "FieldName":"sv_maxping",
         "InputType":"number",
         "MinValue":"0",
+        "MaxValue":"1000",
         "IsFlagArgument":false,
         "ParamFieldName":"sv_maxping",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
+        "Suffix":"milliseconds",
         "EnumValues":{}
     },
     {
@@ -308,6 +326,7 @@
         "FieldName":"sv_maxRate",
         "InputType":"number",
         "MinValue":"0",
+        "MaxValue":"100000",
         "IsFlagArgument":false,
         "ParamFieldName":"sv_maxRate",
         "IncludeInCommandLine":false,
@@ -319,39 +338,54 @@
     {
         "DisplayName":"Client Timeout Period",
         "Category":"Server Settings",
-        "Description":"Time before the server will kick a client if no response is sent to the server",
+        "Description":"Sets the time before the server will kick a client if no response is sent to the server",
         "Keywords":"timeout",
         "FieldName":"sv_timeout",
         "InputType":"number",
         "IsFlagArgument":false,
         "MinValue":"0",
+        "MaxValue":"1800",
         "ParamFieldName":"sv_timeout",
         "IncludeInCommandLine":false,
-        "DefaultValue":"300",
+        "DefaultValue":"40",
         "Suffix":"seconds",
+        "Placeholder":"0 - 1800",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Inactivity Kick Period",
+        "DisplayName":"Player Inactivity Kick Period",
         "Category":"Server Settings",
-        "Description":"Time before the server will kick a player for inactivity",
+        "Description":"Sets the time before the server will kick a player for inactivity",
         "Keywords":"inactivity,afk,period",
         "FieldName":"g_inactivity",
         "InputType":"number",
         "IsFlagArgument":false,
         "MinValue":"0",
-        "MaxValue":"10000",
         "ParamFieldName":"g_inactivity",
         "IncludeInCommandLine":false,
         "DefaultValue":"120",
         "Suffix":"seconds",
-        "Placeholder":"0 - 10000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Spectator Kick Period",
+        "Category":"Server Settings",
+        "Description":"Sets the time before the server will kick a spectator",
+        "Keywords":"inactivity,period,spectator",
+        "FieldName":"g_inactivityspectator",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "MinValue":"0",
+        "ParamFieldName":"g_inactivityspectator",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"180",
+        "Suffix":"seconds",
         "EnumValues":{}
     },
     {
         "DisplayName":"Temporary Ban Period",
         "Category":"Server Settings",
-        "Description":"Time for a player temporary ban (on kick/tempban)",
+        "Description":"Sets the time for a player temporary ban (on kick/tempban)",
         "Keywords":"ban,period,temporary",
         "FieldName":"sv_kickBanTime",
         "InputType":"number",
@@ -359,10 +393,27 @@
         "MinValue":"0",
         "MaxValue":"3600",
         "ParamFieldName":"sv_kickBanTime",
-        "IncludeInCommandLine":true,
+        "IncludeInCommandLine":false,
         "DefaultValue":"300",
         "Suffix":"seconds",
         "Placeholder":"0 - 3600",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Zombie Retention Period",
+        "Category":"Server Settings",
+        "Description":"Sets the time for keeping a disconnected client on the server to transmit the last messag",
+        "Keywords":"zombie,time",
+        "FieldName":"sv_zombietime",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "MinValue":"0",
+        "MaxValue":"1800",
+        "ParamFieldName":"sv_zombietime",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "Suffix":"seconds",
+        "Placeholder":"0 - 1800",
         "EnumValues":{}
     },
     {
@@ -377,8 +428,23 @@
         "IncludeInCommandLine":true,
         "DefaultValue":"1",
         "EnumValues":{
-            "True":"1",
-            "False":"0"
+            "False":"0",
+            "True":"1"
         }
+    },
+    {
+        "DisplayName":"Reconnect Limit",
+        "Category":"Server Settings",
+        "Description":"Sets the number of times a player can reconnect after disconnection",
+        "Keywords":"reconnect,limit",
+        "FieldName":"sv_reconnectlimit",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"1800",
+        "IsFlagArgument":false,
+        "ParamFieldName":"sv_reconnectlimit",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"5",
+        "EnumValues":{}
     }
 ]
