@@ -136,39 +136,19 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Initial Game Type",
+        "DisplayName":"Map Mode",
         "Category":"Server Settings",
-        "Description":"Sets the game type to start the server with. This setting will be overridden if map rotation is configured. Settings for each game type can be set in server.cfg",
-        "Keywords":"game,type",
-        "FieldName":"g_gametype",
+        "Description":"Sets whether to enable map rotation (the Map Rotation List must then also be set) or to load a specific initial map (the Initial Game Type and Initial Map must then also be set)",
+        "Keywords":"map,mode",
+        "FieldName":"map_mode",
         "InputType":"enum",
         "IsFlagArgument":false,
-        "ParamFieldName":"g_gametype",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"dm",
-        "EnumValues":{
-            "dm":"Deathmatch / Free For All (default)",
-            "dom":"Domination",
-            "koth":"King Of The Hill / Headquarters",
-            "sab":"Sabotage",
-            "sd":"Search And Destroy Classic",
-            "war":"Team Deathmatch"
-        }
-    },
-    {
-        "DisplayName":"Enable Map Rotation",
-        "Category":"Server Settings",
-        "Description":"If set, maps will be rotated. Requires the Map Rotation List to be set",
-        "Keywords":"map,rotation",
-        "FieldName":"map_rotate",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"map_rotate",
+        "ParamFieldName":"map_mode",
         "IncludeInCommandLine":false,
         "DefaultValue":"+map_rotate ",
         "EnumValues":{
-            "False":"",
-            "True":"+map_rotate "
+            "+map_rotate ":"Map Rotation (Default)",
+            "+map {{map_name}} ":"Specific Inital Map"
         }
     },
     {
@@ -183,6 +163,39 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"gametype dm map mp_backlot gametype dom map mp_bloc gametype koth map mp_bog gametype sab map mp_cargoship gametype sd map mp_citystreets gametype war map mp_convoy gametype dm map mp_countdown gametype dom map mp_crash gametype koth map mp_crossfire gametype sab map mp_farm gametype sd map mp_overgrown gametype war map mp_pipeline gametype dm map mp_shipment gametype dom map mp_showdown gametype koth map mp_strike gametype sab map mp_vacant",
         "Placeholder":"gametype dm map mp_backlot gametype dom map mp_bloc gametype koth map mp_bog gametype sab map mp_cargoship gametype sd map mp_citystreets gametype war map mp_convoy gametype dm map mp_countdown gametype dom map mp_crash gametype koth map mp_crossfire gametype sab map mp_farm gametype sd map mp_overgrown gametype war map mp_pipeline gametype dm map mp_shipment gametype dom map mp_showdown gametype koth map mp_strike gametype sab map mp_vacant",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Initial Game Type",
+        "Category":"Server Settings",
+        "Description":"Sets the game type to start the server with. This setting will be overridden if map rotation is configured. Settings for each game type can be set in server.cfg",
+        "Keywords":"game,type",
+        "FieldName":"g_gametype",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"g_gametype",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"dm",
+        "EnumValues":{
+            "dm":"Deathmatch / Free For All (Default)",
+            "dom":"Domination",
+            "koth":"King Of The Hill / Headquarters",
+            "sab":"Sabotage",
+            "sd":"Search And Destroy Classic",
+            "war":"Team Deathmatch"
+        }
+    },
+    {
+        "DisplayName":"Initial Map",
+        "Category":"Server Settings",
+        "Description":"Sets the map to start the server with. This setting will be overridden if map rotation is configured",
+        "Keywords":"map",
+        "FieldName":"map_name",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"map_name",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"mp_backlot",
         "EnumValues":{}
     },
     {
