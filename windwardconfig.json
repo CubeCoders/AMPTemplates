@@ -23,7 +23,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"public",
         "IncludeInCommandLine":false,
-        "DefaultValue":"",
+        "DefaultValue":"-public",
         "EnumValues":{
             "False":"",
             "True":"-public"
@@ -32,7 +32,7 @@
     {
         "DisplayName":"World Name",
         "Category":"Windward Server Settings",
-        "Description":"Sets the name of the world to create or to load (if it already exists)",
+        "Description":"Sets the name of the world to load (if it already exists) or to create. If the world does not already exist in the Worlds directory, an admin must create it in-game after connecting to the server",
         "Keywords":"world,name",
         "FieldName":"world",
         "InputType":"text",
@@ -42,5 +42,19 @@
         "SkipIfEmpty":true,
         "DefaultValue":"World",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Admins",
+        "Category":"Windward Server Settings",
+        "Description":"List of Steam64 IDs for server admins. [Find Steam64 IDs](https://steamidfinder.com/)",
+        "Keywords":"admins",
+        "FieldName":"admins",
+        "InputType":"list",
+        "IsFlagArgument":false,
+        "ParamFieldName":"admins",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Special":"listfile:./windward/server/ServerConfig/admin.txt",
+        "EnumValues": {}
     }
 ]
