@@ -2,6 +2,20 @@
     {
         "DisplayName":"Session Name",
         "Category":"Icarus Server Settings",
+        "Description":"Sets the session name for the server to be displayed in the server browser. Limit of 64 characters",
+        "Keywords":"session,name",
+        "FieldName":"SessionName",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SteamServerName",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"AMP Powered Icarus Server",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Session Name",
+        "Category":"Icarus Server Settings",
         "Description":"",
         "Keywords":"",
         "FieldName":"SessionName",
@@ -10,6 +24,19 @@
         "IsFlagArgument":false,
         "ParamFieldName":"/Script/Icarus.DedicatedServerSettings.SessionName",
         "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Password",
+        "Category":"Icarus Server Settings",
+        "Description":"Sets the password to join the server. Default is no password",
+        "Keywords":"server,password",
+        "FieldName":"JoinPassword",
+        "InputType":"password",
+        "IsFlagArgument":false,
+        "ParamFieldName":"JoinPassword",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
@@ -28,46 +55,6 @@
     {
         "DisplayName":"RCON Password",
         "Category":"Icarus Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"AdminPassword",
-        "InputType":"text",
-        "Hidden":true,
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/Icarus.DedicatedServerSettings.AdminPassword",
-        "IncludeInCommandLine":false,
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Session Name",
-        "Category":"Icarus Server Settings",
-        "Description":"Sets the session name for the server to be displayed in the server browser. Limit of 64 characters",
-        "Keywords":"session,name",
-        "FieldName":"SessionName",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"SteamServerName",
-        "IncludeInCommandLine":true,
-        "SkipIfEmpty":true,
-        "DefaultValue":"AMP Powered Icarus Server",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Server Password",
-        "Category":"Icarus Server Settings",
-        "Description":"Sets the password to join the server. Default is no password",
-        "Keywords":"server,password",
-        "FieldName":"JoinPassword",
-        "InputType":"password",
-        "IsFlagArgument":false,
-        "ParamFieldName":"JoinPassword",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"RCON Password",
-        "Category":"Icarus Server Settings",
         "Description":"Sets the admin RCON password. Change this after installing the server!",
         "Keywords":"rcon,admin,password",
         "FieldName":"AdminPassword",
@@ -76,6 +63,19 @@
         "ParamFieldName":"AdminPassword",
         "IncludeInCommandLine":true,
         "DefaultValue":"Password123",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"RCON Password",
+        "Category":"Icarus Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"AdminPassword",
+        "InputType":"text",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/Icarus.DedicatedServerSettings.AdminPassword",
+        "IncludeInCommandLine":false,
         "EnumValues":{}
     },
     {
@@ -95,7 +95,7 @@
     {
         "DisplayName":"Startup Mode",
         "Category":"Icarus Server Settings",
-        "Description":"Sets the server startup mode. For Load Existing Prospect, the Prospect Save Name must be set and the file must exist. For Create New Prospect, the Prospect Type must be set; if no Prospect Save Name is set, a random save name will be created for regular prospects",
+        "Description":"Sets the server startup mode. For \"Load existing prospect\", the Prospect Save Name must be set and the file must exist. For \"Create new prospect\", the Prospect Type must be set; if no Prospect Save Name is set, a random save name will be created for regular prospects",
         "Keywords":"startup,mode,load,create,resume",
         "FieldName":"StartupMode",
         "InputType":"enum",
@@ -104,9 +104,9 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"-LoadProspect=\"\" -ResumeProspect=False -CreateProspect=\"{{ProspectType}} {{Difficulty}} {{Hardcore}} {{ProspectSaveName}}\" ",
         "EnumValues":{
-            "-LoadProspect=\"\" -ResumeProspect=False -CreateProspect=\"{{ProspectType}} {{Difficulty}} {{Hardcore}} {{ProspectSaveName}}\" ":"Create New Prospect (Default)",
-            "-LoadProspect={{ProspectSaveName}} ":"Load Existing Prospect",
-            "-LoadProspect=\"\" -ResumeProspect=True ":"Resume Last Prospect"
+            "-LoadProspect=\"\" -ResumeProspect=False -CreateProspect=\"{{ProspectType}} {{Difficulty}} {{Hardcore}} {{ProspectSaveName}}\" ":"Create new prospect (default)",
+            "-LoadProspect={{ProspectSaveName}} ":"Load existing prospect",
+            "-LoadProspect=\"\" -ResumeProspect=True ":"Resume last prospect"
         }
     },
     {
