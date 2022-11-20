@@ -95,43 +95,44 @@
     {
         "DisplayName":"Startup Mode",
         "Category":"Icarus Server Settings",
-        "Description":"Sets whether to load an existing prospect save or create a new prospect if it doesn't exist, OR instead to resume the last prospect",
+        "Description":"Sets the server startup mode. For Load Existing Prospect, the Prospect Save Name must be set and the file must exist. For Create New Prospect, the Prospect Type must be set; if no Prospect Save Name is set, a random save name will be created for regular prospects",
         "Keywords":"startup,mode,load,create,resume",
         "FieldName":"StartupMode",
         "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"StartupMode",
         "IncludeInCommandLine":false,
-        "DefaultValue":"-LoadProspect={{ProspectSaveName}} -ResumeProspect=False -CreateProspect=\"{{ProspectName}} {{Difficulty}} {{Hardcore}} {{ProspectSaveName}}\" ",
+        "DefaultValue":"-LoadProspect=\"\" -ResumeProspect=False -CreateProspect=\"{{ProspectType}} {{Difficulty}} {{Hardcore}} {{ProspectSaveName}}\" ",
         "EnumValues":{
-            "-LoadProspect={{ProspectSaveName}} -ResumeProspect=False -CreateProspect=\"{{ProspectName}} {{Difficulty}} {{Hardcore}} {{ProspectSaveName}}\" ":"Load/Create Prospect (Default)",
-            "-LoadProspect=\"\" -ResumeProspect=True -CreateProspect=\"\" ":"Resume Last Prospect"
+            "-LoadProspect=\"\" -ResumeProspect=False -CreateProspect=\"{{ProspectType}} {{Difficulty}} {{Hardcore}} {{ProspectSaveName}}\" ":"Create New Prospect (Default)",
+            "-LoadProspect={{ProspectSaveName}} ":"Load Existing Prospect",
+            "-LoadProspect=\"\" -ResumeProspect=True ":"Resume Last Prospect"
         }
-    },
-    {
-        "DisplayName":"Prospect Name",
-        "Category":"Icarus Server Settings",
-        "Description":"Sets the name to create a prospect with",
-        "Keywords":"prospect,name",
-        "FieldName":"ProspectName",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ProspectName",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"Default_Prospect",
-        "EnumValues":{}
     },
     {
         "DisplayName":"Prospect Save Name",
         "Category":"Icarus Server Settings",
-        "Description":"Sets the save name of the prospect to be loaded or created",
-        "Keywords":"prospect,name",
+        "Description":"Sets the save name of the specific prospect to be loaded or created",
+        "Keywords":"prospect,save,name",
         "FieldName":"ProspectSaveName",
         "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"ProspectSaveName",
         "IncludeInCommandLine":false,
         "DefaultValue":"DefaultProspect01",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Prospect Type",
+        "Category":"Icarus Server Settings",
+        "Description":"Sets the prospect type to create a prospect with. A list of valid prospect types is in prospectlist.json (client installation)",
+        "Keywords":"prospect,type",
+        "FieldName":"ProspectType",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ProspectType",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Tier1_Forest_Recon_0",
         "EnumValues":{}
     },
     {
@@ -162,10 +163,10 @@
         "IsFlagArgument":false,
         "ParamFieldName":"Hardcore",
         "IncludeInCommandLine":false,
-        "DefaultValue":"false",
+        "DefaultValue":"False",
         "EnumValues":{
-            "False":"false",
-            "True":"true"
+            "False":"False",
+            "True":"True"
         }
     },
     {
