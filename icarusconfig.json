@@ -97,14 +97,14 @@
     {
         "DisplayName":"RCON Password",
         "Category":"Icarus Server Settings",
-        "Description":"Sets the admin RCON password. Change this after installing the server!",
+        "Description":"Sets the admin RCON password. Default is a random, strong password",
         "Keywords":"rcon,admin,password",
         "FieldName":"AdminPassword",
         "InputType":"password",
         "IsFlagArgument":false,
         "ParamFieldName":"AdminPassword",
         "IncludeInCommandLine":true,
-        "DefaultValue":"Password123",
+        "DefaultValue":"{{newguid()}}",
         "EnumValues":{}
     },
     {
@@ -137,7 +137,7 @@
     {
         "DisplayName":"Startup Mode",
         "Category":"Icarus Server Settings",
-        "Description":"Sets the server startup mode. For \"Load existing prospect\", the Prospect Save Name must be set and the file must exist. For \"Create new prospect\", the Prospect Type must be set; if no Prospect Save Name is set, a random save name will be created for regular prospects",
+        "Description":"Sets the server startup mode. For \"Load existing prospect\", the Prospect Save Name must be set and the file must exist. For \"Create and launch new prospect\", the Prospect Type must be set; if no Prospect Save Name is set, a random save name will be created for regular prospects",
         "Keywords":"startup,mode,load,create,resume",
         "FieldName":"StartupMode",
         "InputType":"enum",
@@ -146,7 +146,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"-CreateProspect=\"{{ProspectType}} {{Difficulty}} {{Hardcore}} {{ProspectSaveName}}\" ",
         "EnumValues":{
-            "-CreateProspect=\"{{ProspectType}} {{Difficulty}} {{Hardcore}} {{ProspectSaveName}}\" ":"Create new prospect (default)",
+            "":"Wait in lobby",
+            "-CreateProspect=\"{{ProspectType}} {{Difficulty}} {{Hardcore}} {{ProspectSaveName}}\" ":"Create and launch new prospect (default)",
             "-LoadProspect={{ProspectSaveName}} ":"Load existing prospect",
             "-ResumeProspect ":"Resume last prospect"
         }
@@ -307,7 +308,7 @@
     {
         "DisplayName":"No Join Shutdown Interval",
         "Category":"Icarus Server Settings",
-        "Description":"Sets the period after which the server will shut down and return to the lobby, if no player has joined. -1 = run indefinitely, 0 = return to lobby immediately, >0 = interval for shutdown",
+        "Description":"Sets the period after which the server will exit a prospect and return to the lobby, if no player has joined. -1 = run indefinitely, 0 = return to lobby immediately, >0 = interval for shutdown. Note that data loss/corruption may occur if the server is shut down in AMP before returning to the lobby",
         "Keywords":"shutdown,not,joined,interval",
         "FieldName":"ShutdownIfNotJoinedFor",
         "InputType":"number",
@@ -315,14 +316,15 @@
         "IsFlagArgument":false,
         "ParamFieldName":"/Script/Icarus.DedicatedServerSettings.ShutdownIfNotJoinedFor",
         "IncludeInCommandLine":false,
-        "DefaultValue":"-1",
+        "DefaultValue":"300",
+        "Placeholder":"300",
         "Suffix":"seconds",
         "EnumValues":{}
     },
     {
         "DisplayName":"Empty Shutdown Interval",
         "Category":"Icarus Server Settings",
-        "Description":"Sets the period after which the server will shut down and return to the lobby, if the server becomes empty. -1 = run indefinitely, 0 = return to lobby immediately, >0 = interval for shutdown",
+        "Description":"Sets the period after which the server will exit a prospect and return to the lobby, if the server becomes empty. -1 = run indefinitely, 0 = return to lobby immediately, >0 = interval for shutdown. Note that data loss/corruption may occur if the server is shut down in AMP before returning to the lobby",
         "Keywords":"shutdown,not,joined,interval",
         "FieldName":"ShutdownIfEmptyFor",
         "InputType":"number",
@@ -330,7 +332,8 @@
         "IsFlagArgument":false,
         "ParamFieldName":"/Script/Icarus.DedicatedServerSettings.ShutdownIfEmptyFor",
         "IncludeInCommandLine":false,
-        "DefaultValue":"-1",
+        "DefaultValue":"300",
+        "Placeholder":"300",
         "Suffix":"seconds",
         "EnumValues":{}
     }
