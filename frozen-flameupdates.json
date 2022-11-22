@@ -1,0 +1,38 @@
+[
+    {
+        "UpdateStageName":"SteamCMD Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"1348640"
+    },
+    {
+        "UpdateStageName":"Config Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}FrozenFlame/Saved/Config/WindowsServer"
+    },
+    {
+        "UpdateStageName":"Config Directory Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}FrozenFlame/Saved/Config/LinuxServer"
+    },
+    {
+        "UpdateStageName":"Game Config File Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/frozen-flamegame.ini",
+        "UpdateSourceArgs":"Game.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}FrozenFlame/Saved/Config/WindowsServer/",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Game Config File Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/frozen-flamegame.ini",
+        "UpdateSourceArgs":"Game.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}FrozenFlame/Saved/Config/LinuxServer/",
+        "OverwriteExistingFiles":false
+    }
+]
