@@ -26,11 +26,11 @@ App.ExecutableLinux=376030/ShooterGame/Binaries/Linux/ShooterGameServer
 App.WorkingDir=376030
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs=listen {{$Map}}?listen?MaxPlayers={{$MaxUsers}}?RCONEnabled=True?RCONServerGameLogBuffer=600?MultiHome={{$ApplicationIPBinding}}?QueryPort={{$QueryPort}}?RconPort={{$RCONPort}}?ServerAdminPassword={{$RemoteAdminPassword}} {{BattlEye}} {{$FormattedArgs}} {{$CustomFlags}} {{$ActiveEvent}} -nosteamclient -server -servergamelog
+App.CommandLineArgs="{{Map}}?listen?MultiHome={{$ApplicationIPBinding}}?Port={{$GamePort}}?QueryPort={{$QueryPort}}?RCONEnabled=True?RCONServerGameLogBuffer=600?RCONPort={{$RCONPort}}?ServerPassword={{ServerPassword}}?ServerAdminPassword={{$RemoteAdminPassword}}?MaxPlayers={{$MaxUsers}}{{CustomSettings}}" {{BattlEye}}{{crossplay}}{{epiconly}}{{UseVivox}}{{insecure}}{{$FormattedArgs}} {{CustomFlags}} -nosteamclient -server -servergamelog
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"346110"}
-App.CommandLineParameterFormat=-{0}
+App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
 App.ExitTimeout=30
@@ -46,7 +46,7 @@ App.AdminPortRef=RCONPort
 App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPortRef=GamePort
 App.UniversalSleepSteamQueryPortRef=QueryPort
-App.MaxUsers=20
+App.MaxUsers=70
 App.UseRandomAdminPassword=False
 App.RemoteAdminPassword=Password123
 App.AdminMethod=SourceRCON
