@@ -1,0 +1,1544 @@
+[
+    {
+        "DisplayName":"Server Name",
+        "Category":"ARK Server Settings",
+        "Description":"Set the servers name",
+        "Keywords":"server,name",
+        "FieldName":"SessionName",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SessionSettings.SessionName",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"AMP Powered ARK: Survival Evolved Server",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Map",
+        "Category":"ARK Server Settings",
+        "Description":"Sets the map for the server. If Custom is selected, Custom Map must also be specified",
+        "Keywords":"map",
+        "FieldName":"Map",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Map",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"TheIsland",
+        "EnumValues":{
+            "TheIsland":"The Island (default)",
+            "TheCenter":"The Center",
+            "ScorchedEarth_P":"Scorched Earth",
+            "Ragnarok":"Ragnarok",
+            "Aberration_P":"Aberration",
+            "Extinction":"Extinction",
+            "Valguero_P":"Valguero",
+            "Genesis":"Genesis: Part 1",
+            "CrystalIsles":"Crystal Isles",
+            "Gen2":"Genesis: Part 2",
+            "LostIsland":"Lost Island",
+            "Fjordur":"Fjordur",
+            "{{CustomMap}}":"Custom"
+        }
+    },
+    {
+        "DisplayName":"Custom Map",
+        "Category":"ARK Server Settings",
+        "Description":"Sets a custom map for the server. The custom map must be included in the Mods directory",
+        "Keywords":"custom,map",
+        "FieldName":"CustomMap",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"CustomMap",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"Caballus",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Password",
+        "Category":"ARK Server Settings",
+        "Description":"Set the password for players to join",
+        "Keywords":"server,password",
+        "FieldName":"ServerPassword",
+        "InputType":"password",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.ServerPassword",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{},
+    },
+    {
+        "DisplayName":"Server Admin Password",
+        "Category":"ARK Server Settings",
+        "Description":"Set the servers admin password",
+        "Keywords":"server,password,admin",
+        "FieldName":"$RemoteAdminPassword",
+        "InputType":"RandomPassword",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerAdminPassword",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Password123",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable BattlEye",
+        "Category":"ARK Server Settings",
+        "Description":"If set, BattlEye will be enabled on the server",
+        "Keywords":"battle,eye,enable",
+        "FieldName":"BattlEye",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"BattlEye",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"-UseBattlEye",
+        "EnumValues":{
+            "False":"-NoBattlEye",
+            "True":"-UseBattlEye",
+        }
+    },
+    {
+        "DisplayName":"Enable Cross Play",
+        "Category":"ARK Server Settings",
+        "Description":"enables Crossplay (between EPIC and Steam)",
+        "Keywords":"crossplay,enable",
+        "FieldName":"crossplay",
+        "InputType":"checkbox",
+        "IsFlagArgument":true,
+        "ParamFieldName":"crossplay",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"-crossplay",
+        "EnumValues":{
+            "False":"",
+            "True":"-crossplay"
+        },
+    },
+    {
+        "DisplayName":"Enable Vivox",
+        "Category":"ARK Server Settings",
+        "Description":"enables Vivox on Steam only servers default for EPIC servers can be enabled for Steam server",
+        "Keywords":"vivox,enable",
+        "FieldName":"UseVivox",
+        "InputType":"checkbox",
+        "IsFlagArgument":true,
+        "ParamFieldName":"UseVivox",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"-UseVivox",
+        "EnumValues":{
+            "-UseVivox":"True",
+            "":"False"
+        },
+        "SkipIfEmpty":true
+    },
+    {
+        "DisplayName":"Disable Valve Anti Cheat",
+        "Category":"ARK Server Settings",
+        "Description":"Disables Valve Anti Cheat (only works on Windows Server)",
+        "Keywords":"valve,anti",
+        "FieldName":"DisableValveAntiCheat",
+        "InputType":"checkbox",
+        "IsFlagArgument":true,
+        "ParamFieldName":"DisableValveAntiCheat",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"",
+        "EnumValues":{
+            "-insecure":"True",
+            "":"False"
+        },
+        "SkipIfEmpty":true
+    },
+    {
+        "DisplayName":"Custom Command Flags",
+        "Category":"ARK Server Settings",
+        "Description":"Set custom command line flags for the server",
+        "Keywords":"server,custom,flags",
+        "FieldName":"$CustomFlags",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$CustomFlags",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Max Players",
+        "Category":"ARK Server Settings",
+        "Description":"Set the servers maximum players",
+        "Keywords":"server,players,max",
+        "FieldName":"$MaxUsers",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/script/engine.gamesession.MaxPlayers",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"25",
+        "Suffix":"players",
+        "EnumValues":{}
+        
+    },
+    {
+        "DisplayName":"Events",
+        "Category":"ARK Server Settings",
+        "Description":"Set the server's active event",
+        "Keywords":"Event,Active",
+        "FieldName":"$ActiveEvent",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$ActiveEvent",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{
+            "":"None",
+            "-ActiveEvent=Easter":"Eggcellent Adventure",
+            "-ActiveEvent=Arkaeology":"Arkaeology",
+            "-ActiveEvent=ExtinctionChronicles":"Extinction Chronicles",
+            "-ActiveEvent=WinterWonderland":"Winter Wonderland",
+            "-ActiveEvent=vday":"Love Evolved",
+            "-ActiveEvent=Summer":"Summer Bash",
+            "-ActiveEvent=FearEvolved":"Fear Evolved",
+            "-ActiveEvent=TurkeyTrial":"Turkey Trial",
+            "-ActiveEvent=birthday":"Anniversary Event"
+        }
+    },
+    {
+        "DisplayName":"Admin Whitelist",
+        "Description":"A list of Steam64 IDs for players that are in-game admins. [Find your Steam64 ID](https://steamidfinder.com/) Note: When this method is used, it is not necessary to specify a server administrator password. A password can still be specified, and can be used by players not on the whitelist to gain administrator privileges, but the server will function without it and will still automatically grant privileges to whitelisted administrators.",
+        "FieldName":"AdminPlayers",
+        "Category":"ARK Server Settings",
+        "InputType":"list",
+        "Special":"listfile:./ark/376030/ShooterGame/Saved/AllowedCheaterSteamIDs.txt"
+    },
+    {
+        "DisplayName":"Allow Third Person",
+        "Category":"Game User Settings",
+        "Description":"Enables 3rd Person view",
+        "Keywords":"Third,Person,3rd,view",
+        "FieldName":"allowThirdPersonPlayer",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.allowThirdPersonPlayer",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Cave Building PVE",
+        "Category":"Game User Settings",
+        "Description":"If set to True, allows building in caves when PvE mode is also enabled.",
+        "Keywords":"PvE,Cave,Building",
+        "FieldName":"AllowCaveBuildingPvE",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.AllowCaveBuildingPvE",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Notify on Player Join",
+        "Category":"Game User Settings",
+        "Description":"All players will always get notified if someone joins the server.",
+        "Keywords":"Notify,Notification,Player,Join",
+        "FieldName":"alwaysNotifyPlayerJoined",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.alwaysNotifyPlayerJoined",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Notify on Player Leave",
+        "Category":"Game User Settings",
+        "Description":"All players will always get notified if someone leaves the server.",
+        "Keywords":"Notify,Notification,Player,Leave",
+        "FieldName":"alwaysNotifyPlayerLeft",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.alwaysNotifyPlayerLeft",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Flyer Carry",
+        "Category":"Game User Settings",
+        "Description":"Allows flyers to pick up players and dinos.",
+        "Keywords":"PvE,flyer,carry,pick,up",
+        "FieldName":"bAllowFlyerCarryPvE",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.bAllowFlyerCarryPvE",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Disable Structure Decay PvE",
+        "Category":"Game User Settings",
+        "Description":"Disable the gradual (7 days) decay of player structures.",
+        "Keywords":"Structure,Decay",
+        "FieldName":"bDisableStructureDecayPvE",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.bDisableStructureDecayPvE",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Day Cycle Speed Scale",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the passage of time in the ARK, controlling how often day changes to night and night changes to day. The default value 1 provides the same cycle speed as the singleplayer experience (and the official public servers). Values lower than 1 slow down the cycle; higher values accelerate it. Base time when value is 1 appears to be 1 minute real time equals approx. 28 minutes game time. Thus, for an approximate 24 hour day/night cycle in game, use .035 for the value.",
+        "Keywords":"Day,Speed,Scale",
+        "FieldName":"DayCycleSpeedScale",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.DayCycleSpeedScale",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Day Time Speed Scale",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the passage of time in the ARK during the day. This value determines the length of each day, relative to the length of each night (as specified by NightTimeSpeedScale. Lowering this value increases the length of each day.",
+        "Keywords":"Day,Time,Speed,Scale",
+        "FieldName":"DayTimeSpeedScale",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.DayTimeSpeedScale",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Night Time Speed Scale",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the passage of time in the ARK during night time. This value determines the length of each night, relative to the length of each day (as specified by DayTimeSpeedScale. Lowering this value increases the length of each night",
+        "Keywords":"Night,Time,Speed,Scale",
+        "FieldName":"NightTimeSpeedScale",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.NightTimeSpeedScale",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Dino Food Drain Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for dinosaurs' food consumption. Higher values increase food consumption (dinosaurs get hungry faster).",
+        "Keywords":"Dino,Food,Hunger",
+        "FieldName":"DinoCharacterFoodDrainMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.DinoCharacterFoodDrainMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Dino Health Recovery Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for dinosaurs health recovery. Higher values increase the recovery rate (dinosaurs heal faster).",
+        "Keywords":"Dino,Health,Recovery",
+        "FieldName":"DinoCharacterHealthRecoveryMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.DinoCharacterHealthRecoveryMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Dino Stamina Drain Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for dinosaurs stamina consumption. Higher values increase stamina consumption (dinosaurs get tired faster).",
+        "Keywords":"Dino,Stamina",
+        "FieldName":"DinoCharacterStaminaDrainMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.DinoCharacterStaminaDrainMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Dino Spawn Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for dinosaur spawns. Higher values increase the number of dinosaurs spawned throughout the ARK.",
+        "Keywords":"Dino,Spawn",
+        "FieldName":"DinoCountMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.DinoCountMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Dino Damage Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the damage dinosaurs deal with their attacks. The default value 1 provides normal damage. Higher values increase damage. Lower values decrease it.",
+        "Keywords":"Dino,Damage",
+        "FieldName":"DinoDamageMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.DinoDamageMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Dino Resistance Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the resistance to damage dinosaurs receive when attacked. The default value 1 provides normal damage. Higher values decrease resistance, increasing damage per attack. Lower values increase it, reducing damage per attack. A value of 0.5 results in a dino taking half damage while a value of 2.0 would result in a dino taking double normal damage.",
+        "Keywords":"Dino,Resistance",
+        "FieldName":"DinoResistanceMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.DinoResistanceMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Global Voice Chat",
+        "Category":"Game User Settings",
+        "Description":"Enables Global Voice Chat.",
+        "Keywords":"Voice,Chat",
+        "FieldName":"globalVoiceChat",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.globalVoiceChat",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "0":"False",
+            "1":"True"
+        }
+    },
+    {
+        "DisplayName":"Harvest Amount Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for yields from all harvesting activities (chopping down trees, picking berries, carving carcasses, mining rocks, etc.). Higher values increase the amount of materials harvested with each strike.",
+        "Keywords":"Player,Harvest",
+        "FieldName":"HarvestAmountMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.HarvestAmountMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{
+            
+        }
+    },
+    {
+        "DisplayName":"Harvest Health Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the \"health\" of items that can be harvested (trees, rocks, carcasses, etc.). Higher values increase the amount of damage (i.e. \"number of strikes\") such objects can withstand before being destroyed, which results in higher overall harvest yields.",
+        "Keywords":"Player,Harvest",
+        "FieldName":"HarvestHealthMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.HarvestHealthMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{
+            
+        }
+    },
+    {
+        "DisplayName":"Max Structures In Range OUTDATED",
+        "Category":"Game User Settings",
+        "Description":"(OUTDATED) Specifies the maximum number of structures that can be constructed within a certain (currently hard-coded) range.",
+        "Keywords":"Player,Harvest",
+        "FieldName":"MaxStructuresInRange",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.MaxStructuresInRange",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"6700",
+        "EnumValues":{
+            
+        }
+    },
+    {
+        "DisplayName":"Disable Tribute Downloads",
+        "Category":"Game User Settings",
+        "Description":"Disables downloading characters from other servers.",
+        "Keywords":"Player,Download,Survivor,Transfer,Tribute",
+        "FieldName":"noTributeDownloads",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.noTributeDownloads",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent Download Survivors",
+        "Category":"Game User Settings",
+        "Description":"Prevents the download of survivors",
+        "Keywords":"Player,Download,Survivor,Transfer,Tribute",
+        "FieldName":"PreventDownloadSurvivors",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PreventDownloadSurvivors",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent Download Items",
+        "Category":"Game User Settings",
+        "Description":"Prevents the download of Items",
+        "Keywords":"Player,Download,Survivor,Transfer,Tribute,Item",
+        "FieldName":"PreventDownloadItems",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PreventDownloadItems",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent Download Dinos",
+        "Category":"Game User Settings",
+        "Description":"Prevents the download of Dinos",
+        "Keywords":"Player,Download,Survivor,Transfer,Tribute,Dino",
+        "FieldName":"PreventDownloadDinos",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PreventDownloadDinos",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Player Food Drain Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for player characters food consumption. Higher values increase food consumption (player characters get hungry faster).",
+        "Keywords":"Player,Food",
+        "FieldName":"PlayerCharacterFoodDrainMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PlayerCharacterFoodDrainMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{
+            
+        }
+    },
+    {
+        "DisplayName":"Player Health Recovery Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for player characters health recovery. Higher values increase the recovery rate (player characters heal faster).",
+        "Keywords":"Player,Health",
+        "FieldName":"PlayerCharacterHealthRecoveryMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PlayerCharacterHealthRecoveryMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{
+            
+        }
+    },
+    {
+        "DisplayName":"Player Stamina Drain Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for player characters stamina consumption. Higher values increase stamina consumption (player characters get tired faster).",
+        "Keywords":"Player,Stamina",
+        "FieldName":"PlayerCharacterStaminaDrainMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PlayerCharacterStaminaDrainMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{
+            
+        }
+    },
+    {
+        "DisplayName":"Player Water Drain Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for player characters water consumption. Higher values increase water consumption (player characters get thirsty faster).",
+        "Keywords":"Player,Water",
+        "FieldName":"PlayerCharacterWaterDrainMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PlayerCharacterWaterDrainMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{
+            
+        }
+    },
+    {
+        "DisplayName":"Player Damage Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the damage players deal with their attacks. The default value 1 provides normal damage. Higher values increase damage. Lower values decrease it.",
+        "Keywords":"Player,Damage",
+        "FieldName":"PlayerDamageMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PlayerDamageMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Resistance Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the resistance to damage players receive when attacked. The default value 1 provides normal damage. Higher values decrease resistance, increasing damage per attack. Lower values increase it, reducing damage per attack. A value of 0.5 results in a player taking half damage while a value of 2.0 would result in taking double normal damage.",
+        "Keywords":"Player,Resistance",
+        "FieldName":"PlayerResistanceMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PlayerResistanceMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Proximity Chat",
+        "Category":"Game User Settings",
+        "Description":"Only players near each other can see their chat messages.",
+        "Keywords":"Player,Proximity,Chat",
+        "FieldName":"proximityChat",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.proximityChat",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Resource No Replenish Radius to Players",
+        "Category":"Game User Settings",
+        "Description":"Defines the distance where there are no resources respawning when being close to a player.",
+        "Keywords":"Player,Resource,Radius",
+        "FieldName":"ResourceNoReplenishRadiusPlayers",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.ResourceNoReplenishRadiusPlayers",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Resource No Replenish Radius to Players",
+        "Category":"Game User Settings",
+        "Description":"Defines the distance where there are no resources respawning when being close to a player.",
+        "Keywords":"Player,Resource,Radius",
+        "FieldName":"ResourceNoReplenishRadiusPlayers",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.ResourceNoReplenishRadiusPlayers",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Resource No Replenish Radius to Structures",
+        "Category":"Game User Settings",
+        "Description":"Defines the distance where there are no resources respawning when being close to Structures.",
+        "Keywords":"Structure,Resource,Radius",
+        "FieldName":"ResourceNoReplenishRadiusStructures",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.ResourceNoReplenishRadiusStructures",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Resources Respawn Period Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the respawn rate for resource nodes (trees, rocks, bushes, etc.). Lower values cause nodes to respawn more frequently.",
+        "Keywords":"Resource,Respawn",
+        "FieldName":"ResourcesRespawnPeriodMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.ResourcesRespawnPeriodMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"ServerCrosshair",
+        "Category":"Game User Settings",
+        "Description":"Shows Crosshair",
+        "Keywords":"Player,Crosshair",
+        "FieldName":"ServerCrosshair",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.ServerCrosshair",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Force No Hud",
+        "Category":"Game User Settings",
+        "Description":"Force Players No Hud",
+        "Keywords":"Player,Hud",
+        "FieldName":"serverForceNoHud",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.serverForceNoHud",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "Truue":"True"
+        }
+    },
+    {
+        "DisplayName":"Hardcore Mode",
+        "Category":"Game User Settings",
+        "Description":"Enables hardcore mode (player characters revert to level 1 upon death)",
+        "Keywords":"Hardcore",
+        "FieldName":"serverHardcore",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.serverHardcore",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable PvE",
+        "Category":"Game User Settings",
+        "Description":"Enables PvE mode, disables PvP",
+        "Keywords":"PvE",
+        "FieldName":"serverPVE",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.serverPVE",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Show Player On Map",
+        "Category":"Game User Settings",
+        "Description":"Show each player their own precise position when they view their map",
+        "Keywords":"Player,Map",
+        "FieldName":"ShowMapPlayerLocation",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.ShowMapPlayerLocation",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Structure Damage Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the damage structures deal with their attacks (i.e. spiked walls). The default value 1 provides normal damage. Higher values increase damage. Lower values decrease it.",
+        "Keywords":"Structure,Damage",
+        "FieldName":"StructureDamageMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.StructureDamageMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Structure Resistance Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the resistance to damage structures receive when attacked. The default value 1 provides normal damage. Higher values decrease resistance, increasing damage per attack. Lower values increase it, reducing damage per attack. A value of 0.5 results in a structure taking half damage while a value of 2.0 would result in a structure taking double normal damage.",
+        "Keywords":"Structure,Resistance",
+        "FieldName":"StructureResistanceMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.StructureResistanceMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Tamed Dino Damage Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for tamed dinosaurs damage. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
+        "Keywords":"Dino,Damage",
+        "FieldName":"TamedDinoDamageMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.TamedDinoDamageMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Tamed Dino Resistance Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for dinosaurs fortitude. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
+        "Keywords":"Dino,Resistance",
+        "FieldName":"TamedDinoResistanceMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.TamedDinoResistanceMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Taming Speed Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for dinosaur taming speed. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
+        "Keywords":"Taming,Speed",
+        "FieldName":"TamingSpeedMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.TamingSpeedMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"XP Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the experience received by players, tribes and dinosaurs for various actions. The default value 1 provides the same amounts of experience as in the singleplayer experience (and official public servers). Higher values increase XP amounts awarded for various actions; lower values decrease it.",
+        "Keywords":"XP",
+        "FieldName":"XPMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.XPMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable PVP Gamma",
+        "Category":"Game User Settings",
+        "Description":"Allows or disallows usage of gamma on PVP servers.",
+        "Keywords":"PvP,Gamma",
+        "FieldName":"EnablePVPGamma",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.EnablePVPGamma",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable PVE Gamma",
+        "Category":"Game User Settings",
+        "Description":"Allows or disallows usage of gamma on PVE servers.",
+        "Keywords":"PvE,Gamma",
+        "FieldName":"EnablePVPGamma",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.EnablePVEGamma",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"SpectatorPassword",
+        "Category":"ARK Server Settings",
+        "Description":"If specified, players must provide this password to spectate the server.",
+        "Keywords":"Password",
+        "FieldName":"SpectatorPassword",
+        "InputType":"password",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.SpectatorPassword",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Difficulty Offset",
+        "Category":"Game User Settings",
+        "Description":"Specifies the difficulty level.",
+        "Keywords":"Difficulty",
+        "FieldName":"DifficultyOffset",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.DifficultyOffset",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.50000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"PvE Structure Decay Period Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Specifies the scaling factor for the decay rate of player structures in PvE mode.",
+        "Keywords":"PvE,Structure,Decay",
+        "FieldName":"PvEStructureDecayPeriodMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PvEStructureDecayPeriodMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"PvE Structure Decay Destruction Period",
+        "Category":"Game User Settings",
+        "Description":"Specifies the time required for player structures to decay in PvE mode.",
+        "Keywords":"PvE,Structure,Decay",
+        "FieldName":"PvEStructureDecayDestructionPeriod",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PvEStructureDecayDestructionPeriod",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Banlist URL",
+        "Category":"ARK Server Settings",
+        "Description":"Uses the global banlist of ARK to disallow players access who have been identified as cheaters",
+        "Keywords":"ban,banlist,blacklist",
+        "FieldName":"Banlist",
+        "InputType":"URL",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.Banlist",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"http://arkdedicated.com/banlist.txt",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"PvP Structure Decay",
+        "Category":"Game User Settings",
+        "Description":"Activates or deactivates structure decay on PVP servers",
+        "Keywords":"PvE,Structure,Decay",
+        "FieldName":"PvPStructureDecay",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PvPStructureDecay",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Disable Dino Decay PvE",
+        "Category":"Game User Settings",
+        "Description":"Deactivates the unclaiming functions for dinosaurs on PVE servers",
+        "Keywords":"PvE,Dino,Decay,Unclaim",
+        "FieldName":"DisableDinoDecayPvE",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.DisableDinoDecayPvE",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"PvE Dino Decay Period Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Multiplier value for the unclaiming speed of dinosaurs",
+        "Keywords":"PvE,Structure,Decay",
+        "FieldName":"PvEDinoDecayPeriodMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PvEDinoDecayPeriodMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Admin Logging",
+        "Category":"ARK Server Settings",
+        "Description":"Enables the output of cheat commands that admins used (will be shown in chat)",
+        "Keywords":"Admin,Log,Chat,Cheat",
+        "FieldName":"AdminLogging",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.AdminLogging",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Max Tamed Dinos",
+        "Category":"Game User Settings",
+        "Description":"Defines the maximum amount of tamed dinos on the map.",
+        "Keywords":"Max,Tamed,Dino,Limit",
+        "FieldName":"MaxTamedDinos",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.MaxTamedDinos",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"4000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Max Number of Players In a Tribe(SOTF)",
+        "Category":"Game User Settings",
+        "Description":"SOTF setting: Defines the maximum player limit per tribe",
+        "Keywords":"SOTF,Tribe,Player",
+        "FieldName":"MaxNumbersofPlayersInTribe",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.MaxNumbersofPlayersInTribe",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Min Num Of Tribes to Start Battle(SOTF)",
+        "Category":"Game User Settings",
+        "Description":"SOTF setting: Defines how many tribes must have been created before the countdown for game start begins",
+        "Keywords":"SOTF,Tribe,Player",
+        "FieldName":"BattleNumOfTribestoStartGame",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.BattleNumOfTribestoStartGame",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Time To Collapse Ring Of Death(SOTF)",
+        "Category":"Game User Settings",
+        "Description":"SOTF setting: Defines the time period for the force field to collapse",
+        "Keywords":"SOTF,ROD,Ring,Death,Collapse,Force,Field",
+        "FieldName":"TimeToCollapseROD",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.TimeToCollapseROD",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"100",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Battle Auto Start Game Interval(SOTF)",
+        "Category":"Game User Settings",
+        "Description":"SOTF setting: Defines the length of the countdown before match begins",
+        "Keywords":"SOTF,Countdown,battle,match,Start",
+        "FieldName":"BattleAutoStartGameInterval",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.BattleAutoStartGameInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"100",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Battle Sudden Death Interval(SOTF)",
+        "Category":"Game User Settings",
+        "Description":"SOTF setting: Defines the time before sudden death starts",
+        "Keywords":"SOTF,sudden,death",
+        "FieldName":"BattleSuddenDeathInterval",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.BattleSuddenDeathInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"300",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Kick Idle Players Period",
+        "Category":"ARK Server Settings",
+        "Description":"Time period until an idling player will be kicked from server",
+        "Keywords":"Kick,Idle,Player",
+        "FieldName":"KickIdlePlayersPeriod",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.KickIdlePlayersPeriod",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1800",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Per Platform Max Structures Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Defines the multiplicator for structures on saddle plattforms (Caution - High values may lead to LAG)",
+        "Keywords":"saddle,platform,structure,LAG",
+        "FieldName":"PerPlatformMaxStructuresMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PerPlatformMaxStructuresMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Structure Damage Repair Cooldown",
+        "Category":"Game User Settings",
+        "Description":"Defines the cooldown time when a previously damaged structure can be repaired again. (0 allows the structure to be always repaired)",
+        "Keywords":"structure,repair,cooldown",
+        "FieldName":"StructureDamageRepairCooldown",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.StructureDamageRepairCooldown",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"180",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow Locking All Item Containers",
+        "Category":"Game User Settings",
+        "Description":"Server Option to allow Locking All Item Containers",
+        "Keywords":"Lock,Item,Container",
+        "FieldName":"bForceAllStructureLocking",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.bForceAllStructureLocking",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Auto Destroy Old Structures Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Server Option to allow Auto-Destroying Structures after no near tribe player time has passed (defined as a multiplier of the Allow Claim period)",
+        "Keywords":"Time,Tribe,Structure,Destroy",
+        "FieldName":"AutoDestroyOldStructuresMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.AutoDestroyOldStructuresMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Max Platform Saddle Structure Limit",
+        "Category":"Game User Settings",
+        "Description":"Defines the maximum number of structures on top of the saddle platform",
+        "Keywords":"Platform,Saddle,Structure,Limit",
+        "FieldName":"MaxPlatformSaddleStructureLimit",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.MaxPlatformSaddleStructureLimit",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"100",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Passive Defenses Damage Riderless Dinos",
+        "Category":"Game User Settings",
+        "Description":"Wild dinos or dinos without a rider can take damage from defense structures like spikewalls if this setting is activated",
+        "Keywords":"Passive,Defense,Damage",
+        "FieldName":"bPassiveDefensesDamageRiderlessDinos",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.bPassiveDefensesDamageRiderlessDinos",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Auto Save Period",
+        "Category":"ARK Server Settings",
+        "Description":"Auto Save Period in Minutes",
+        "Keywords":"Auto,Save,Time,Minutes",
+        "FieldName":"AutoSavePeriodMinutes",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.AutoSavePeriodMinutes",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"15",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Override Structure Platform Prevention",
+        "Category":"Game User Settings",
+        "Description":"Determines if turrets are allowed on moving platforms or not. On will prevent it. Off will allow it",
+        "Keywords":"override,structure,platform,",
+        "FieldName":"OverrideStructurePlatformPrevention",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.OverrideStructurePlatformPrevention",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent Offline PvP Interval",
+        "Category":"Game User Settings",
+        "Description":"Defines the time period of being offline so that a player will be really considered as being offline.",
+        "Keywords":"Offline,PvP",
+        "FieldName":"PreventOfflinePvPInterval",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PreventOfflinePvPInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"60.0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"PvP Dino Decay",
+        "Category":"Game User Settings",
+        "Description":"Set to true to prevent dinosaurs from decaying while the Offline Raiding Prevention is active.",
+        "Keywords":"PvP,Decay,Dino",
+        "FieldName":"bPvPDinoDecay",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.bPvPDinoDecay",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Disable Imprint Dino Buff",
+        "Category":"Game User Settings",
+        "Description":"Deactivates (no) the bonus stats for a dino if you raise the baby by yourself",
+        "Keywords":"buff,dino,imprint",
+        "FieldName":"bPvPDinoDecay",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.bPvPDinoDecay",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Block building in Rich Resource Areas",
+        "Category":"Game User Settings",
+        "Description":"Prevents the building of structures on places which are rich of resources",
+        "Keywords":"rich,resource",
+        "FieldName":"EnableExtraStructurePreventionVolumes",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.EnableExtraStructurePreventionVolumes",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Show Floating Damage Text",
+        "Category":"Game User Settings",
+        "Description":"Shows dealt damages in a RPG style",
+        "Keywords":"rich,resource",
+        "FieldName":"ShowFloatingDamageText",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.ShowFloatingDamageText",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Destroy Unconnected Water Pipes",
+        "Category":"Game User Settings",
+        "Description":"If active, it will destroy the pipes automatically after two real-time days, if unconnected to any non-pipe (directly or indirectly) and no allied player is nearby.",
+        "Keywords":"unconnected,pipes,destroy",
+        "FieldName":"DestroyUnconnectedWaterPipes",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.DestroyUnconnectedWaterPipes",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Max Structures on server",
+        "Category":"Game User Settings",
+        "Description":"New value for the maximum allowed structures on the server.",
+        "Keywords":"max,structures",
+        "FieldName":"TheMaxStructuresInRange",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.TheMaxStructuresInRange",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10500",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Minimimum Dino Reupload Interval",
+        "Category":"Game User Settings",
+        "Description":"Number of seconds cooldown between allowed Dino re-uploads (defaults to 0, set to 43200 on Official Servers which is 12 hours).",
+        "Keywords":"Dino,Upload",
+        "FieldName":"MinimumDinoReuploadInterval",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.MinimumDinoReuploadInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"PvE Allow Structures At Supply Drops",
+        "Category":"Game User Settings",
+        "Description":"Set to true to allow building near supply drop points in PvE mode..",
+        "Keywords":"Supply,Drops,Structures",
+        "FieldName":"PvEAllowStructuresAtSupplyDrops",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PvEAllowStructuresAtSupplyDrops",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Max Personal Tamed Dinos",
+        "Category":"Game User Settings",
+        "Description":"Quantity of dinos that a tribe is allowed to have (Default on official PVE servers is 500).",
+        "Keywords":"dino,max,personal",
+        "FieldName":"MaxPersonalTamedDinos",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.MaxPersonalTamedDinos",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"500",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Auto Destroy Decayed Dinos",
+        "Category":"Game User Settings",
+        "Description":"Option to auto-destroy claimable decayed dinos on load, rather than have them remain around as claimable. Official PvE servers now have this enabled.",
+        "Keywords":"destroy,auto,decay,dino",
+        "FieldName":"AutoDestroyDecayedDinos",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.AutoDestroyDecayedDinos",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Auto Destroy Decayed Dinos",
+        "Category":"Game User Settings",
+        "Description":"Server custom HarvestAmountMultiplier now works as it used to, to bias towards yielding rarer items. This is more costly for server performance, so if you want a more optimized server with high HarvestAmountMultiplier (but less rare items).",
+        "Keywords":"optimized,harvest,multiplier",
+        "FieldName":"UseOptimizedHarvestingHealth",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.UseOptimizedHarvestingHealth",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow crate spawns on top of structures",
+        "Category":"Game User Settings",
+        "Description":"Servers can now allow from-the-air Supply Crates to appear on top of Structures, rather than being prevented by Structures. Enabled on Official Servers.",
+        "Keywords":"crates,structures",
+        "FieldName":"AllowCrateSpawnsOnTopOfStructures",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.AllowCrateSpawnsOnTopOfStructures",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"ForceFlyerExplosives",
+        "Category":"Game User Settings",
+        "Description":"Flyer (except Quetzal and Wyvern can't fly with C4 attached to it. Set this parameter to true to let them still fly.",
+        "Keywords":"flyer,explosives",
+        "FieldName":"ForceFlyerExplosives",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.ForceFlyerExplosives",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent offline PvP",
+        "Category":"Game User Settings",
+        "Description":"Use this to enable the offline raiding prevention option.",
+        "Keywords":"offline,pvp",
+        "FieldName":"PreventOfflinePvP",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PreventOfflinePvP",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Flying Stamina Recovery",
+        "Category":"Game User Settings",
+        "Description":"Set to true if flyers should recover stamina when player is standing on instead riding.",
+        "Keywords":"flying,stamina,recovery",
+        "FieldName":"AllowFlyingStaminaRecovery",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.AllowFlyingStaminaRecovery",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Multiple Attached C4",
+        "Category":"Game User Settings",
+        "Description":"Set to true to allow to attach more than one C4 per dino.",
+        "Keywords":"C4,Multiple,Attached",
+        "FieldName":"AllowMultipleAttachedC4",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.AllowMultipleAttachedC4",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Oxygen Swim Speed Multiplier",
+        "Category":"Game User Settings",
+        "Description":"Use this to set how swim speed is multiplied by level spent in oxygen.",
+        "Keywords":"swim,speed,oxygen",
+        "FieldName":"OxygenSwimSpeedStatMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.OxygenSwimSpeedStatMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"PvE Disable Friendly Fire",
+        "Category":"Game User Settings",
+        "Description":"Prevent-Friendly-Fire (among tribesmates/tribesdinos/tribesstructures) option for PvE server.",
+        "Keywords":"PvE,Friendly,Fire",
+        "FieldName":"bPvEDisableFriendlyFire",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.bPvEDisableFriendlyFire",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Disable Weather Fog",
+        "Category":"Game User Settings",
+        "Description":"If true, disables fog.",
+        "Keywords":"weather,fog",
+        "FieldName":"DisableWeatherFog",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.DisableWeatherFog",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Random Supply Crate Points",
+        "Category":"Game User Settings",
+        "Description":"If true, supply drops are in random locations. NOTE: This setting is known to cause artifacts becoming inaccesable on [Ragnarok] if active.",
+        "Keywords":"supply,crate",
+        "FieldName":"RandomSupplyCratePoints",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.RandomSupplyCratePoints",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Cross ARK Allow Foreign Dino Downloads",
+        "Category":"Game User Settings",
+        "Description":"if set to true, you will be able to tribute download non-native creatures on the Aberration map",
+        "Keywords":"foreign,dino,download",
+        "FieldName":"CrossARKAllowForeignDinoDownloads",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.CrossARKAllowForeignDinoDownloads",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Personal Tamed Dinos Saddle Structure Cost",
+        "Category":"Game User Settings",
+        "Description":"determines the amount of dinoslots a platform saddle will use towards the tribe dino limit.",
+        "Keywords":"tamed,dino,cost,structure",
+        "FieldName":"PersonalTamedDinosSaddleStructureCost",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PersonalTamedDinosSaddleStructureCost",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"19",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Disable Structure Placement Collision",
+        "Category":"Game",
+        "Description":"If 'true' allows for structures to clip into the terrain.",
+        "Keywords":"structure,placement",
+        "FieldName":"bDisableStructurePlacementCollision",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/script/shootergame.shootergamemode.bDisableStructurePlacementCollision",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    }
+]
