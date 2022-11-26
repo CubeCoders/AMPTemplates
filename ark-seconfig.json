@@ -39,8 +39,8 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"MOTD Durations",
-        "Category":"Arma Server Settings",
+        "DisplayName":"MOTD Duration",
+        "Category":"ARK Server Settings",
         "Description":"Sets the duration of the welcome message",
         "Keywords":"MOTD,message,duration",
         "FieldName":"Duration",
@@ -63,18 +63,18 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"TheIsland",
         "EnumValues":{
-            "TheIsland":"The Island (default)",
-            "TheCenter":"The Center",
-            "ScorchedEarth_P":"Scorched Earth",
-            "Ragnarok":"Ragnarok",
             "Aberration_P":"Aberration",
-            "Extinction":"Extinction",
-            "Valguero_P":"Valguero",
-            "Genesis":"Genesis: Part 1",
             "CrystalIsles":"Crystal Isles",
+            "Extinction":"Extinction",
+            "Fjordur":"Fjordur",
+            "Genesis":"Genesis: Part 1",
             "Gen2":"Genesis: Part 2",
             "LostIsland":"Lost Island",
-            "Fjordur":"Fjordur",
+            "Ragnarok":"Ragnarok",
+            "ScorchedEarth_P":"Scorched Earth",
+            "TheCenter":"The Center",
+            "TheIsland":"The Island (default)",
+            "Valguero_P":"Valguero",
             "{{CustomMap}}":"Custom"
         }
     },
@@ -95,7 +95,7 @@
     {
         "DisplayName":"Enable Automanaged Mods",
         "Category":"ARK Server Settings",
-        "Description":"If set, enables automatic mod download, installation and updating (on server start). Mods must be specified under Automanaged Modlist",
+        "Description":"If set, enables automatic mod download, installation and updating (on server start). Mods must be specified in Game.ini under the heading [ModInstaller] and with one mod per line in the format: ModIDS=<value>",
         "Keywords":"auto,managed,mods,automanagedmods",
         "FieldName":"automanagedmods",
         "InputType":"checkbox",
@@ -107,20 +107,6 @@
             "False":"",
             "True":"-automanagedmods ",
         }
-    },
-    {
-        "DisplayName":"Automanaged Modlist",
-        "Category":"ARK Server Settings",
-        "Description":"If Automanaged Mods is enabled, specifies the list of mods to be managed. List one mod per line, in format: ModIDS=<value>",
-        "Keywords":"auto,managed,mods,list,automanagedmods",
-        "FieldName":"ModInstaller",
-        "InputType":"Textarea",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ini:Game:[ModInstaller]\n:",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"",
-        "Placeholder":"ModIDS=731604991\nModIDS=680481868",
-        "EnumValues":{}
     },
     {
         "DisplayName":"Active Event",
@@ -193,7 +179,7 @@
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ini:GameUserSettings:[/script/engine.gamesession]:MaxPlayers",
+        "ParamFieldName":"ini:GameUserSettings:[/Script/Engine.GameSession]:MaxPlayers",
         "IncludeInCommandLine":true,
         "DefaultValue":"70",
         "Placeholder":"70",
@@ -202,7 +188,7 @@
     },
     {
         "DisplayName":"MultiHome IP Binding",
-        "Category":"Miscreated Server Settings",
+        "Category":"ARK Server Settings",
         "Description":"Sets the binding of the server. Default is blank. Change to internal interface IP if required",
         "Keywords":"ip,binding,address,multihome",
         "FieldName":"MultiHome",
@@ -265,7 +251,7 @@
     {
         "DisplayName":"Public IP For Epic",
         "Category":"ARK Server Settings",
-        "Description":"Sets the public IP for Epic Game Store players to connect to. If not set, and MultiHome is specified but is not a public IP, then Epic Game Store players will not be able to connect",
+        "Description":"Sets the public IP for Epic Game Store players to connect to. If not set, and MultiHome IP Binding is specified but is not a public IP, then Epic Game Store players will not be able to connect",
         "Keywords":"epic,public,ip,publicipforepic",
         "FieldName":"PublicIPForEpic",
         "InputType":"text",
@@ -286,7 +272,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"UseVivox",
         "IncludeInCommandLine":false,
-        "DefaultValue":"-UseVivox ",
+        "DefaultValue":"",
         "EnumValues":{
             "False":"",
             "True":"-UseVivox "
@@ -378,10 +364,10 @@
         "Category":"ARK Gameplay Settings",
         "Description":"If set, third person view is enabled",
         "Keywords":"third,person,3rd,view,allowthirdpersonplayer",
-        "FieldName":"allowThirdPersonPlayer",
+        "FieldName":"AllowThirdPersonPlayer",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ini:GameUserSettings:[ServerSettings]:allowThirdPersonPlayer",
+        "ParamFieldName":"ini:GameUserSettings:[ServerSettings]:AllowThirdPersonPlayer",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -1684,7 +1670,7 @@
     },
     {
         "DisplayName":"Disable Structure Placement Collision",
-        "Category":"Game",
+        "Category":"Game User Settings",
         "Description":"If 'true' allows for structures to clip into the terrain.",
         "Keywords":"structure,placement",
         "FieldName":"bDisableStructurePlacementCollision",
