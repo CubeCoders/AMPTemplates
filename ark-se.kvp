@@ -26,12 +26,12 @@ App.ExecutableLinux=376030/ShooterGame/Binaries/Linux/ShooterGameServer
 App.WorkingDir=376030
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs="{{Map}}?listen?Port={{$GamePort}}?QueryPort={{$QueryPort}}?RCONEnabled=True?RCONServerGameLogBuffer=600?RCONPort={{$RCONPort}}?{{CustomOptions}}" {{automanagedmods}}{{BattlEye}}{{crossplay}}{{epiconly}}{{UseVivox}}{{insecure}}{{$FormattedArgs}} {{CustomFlags}} -servergamelog -SaveConfigOverrides
+App.CommandLineArgs={{Map}}?listen?Port={{$GamePort}}?QueryPort={{$QueryPort}}?RCONEnabled=True?RCONServerGameLogBuffer=600?RCONPort={{$RCONPort}}?{{$FormattedArgs}}{{CustomOptions}} {{automanagedmods}}{{BattlEye}}{{crossplay}}{{epiconly}}{{UseVivox}}{{insecure}} -ActiveEvent={{ActiveEvent}} -PublicIPForEpic={{PublicIPForEpic}} -culture={{culture}} {{CustomFlags}} -servergamelog
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"346110"}
-App.CommandLineParameterFormat=-{0}="{1}"
-App.CommandLineParameterDelimiter= 
+App.CommandLineParameterFormat={0}="{1}"
+App.CommandLineParameterDelimiter=?
 App.ExitMethod=OS_CLOSE
 App.ExitTimeout=30
 App.ExitString=stop
@@ -41,7 +41,7 @@ App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"UDP","Port":7777,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":27015,"Ref":"QueryPort","Name":"Query Port","Description":"Port for Steam query traffic"},{"Protocol":"TCP","Port":27020,"Ref":"RCONPort","Name":"RCON Port","Description":"Port for RCON traffic"}]
+App.Ports=[{"Protocol":"UDP","Port":7777,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":7778,"Ref":"ReservedPort","Name":"Reserved Port","Description":"Reserved port"},{"Protocol":"UDP","Port":27015,"Ref":"QueryPort","Name":"Query Port","Description":"Port for Steam query traffic"},{"Protocol":"TCP","Port":27020,"Ref":"RCONPort","Name":"RCON Port","Description":"Port for RCON traffic"}]
 App.AdminPortRef=RCONPort
 App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPortRef=GamePort
@@ -56,7 +56,7 @@ App.RCONConnectRetrySeconds=5
 App.RCONHeartbeatMinutes=0
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat={0}
-App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"376030"}]
+App.UpdateSources=@IncludeJson[ark-seupdates.json]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False

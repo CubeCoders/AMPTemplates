@@ -8,7 +8,7 @@
         "InputType":"text",
         "Hidden":true,
         "IsFlagArgument":false,
-        "ParamFieldName":"ini:GameUserSettings:[ServerSettings]:ServerAdminPassword",
+        "ParamFieldName":"ServerAdminPassword",
         "IncludeInCommandLine":true,
         "EnumValues":{}
     },
@@ -20,8 +20,9 @@
         "FieldName":"SessionName",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"ini:GameUserSettings:[SessionSettings]:SessionName",
+        "ParamFieldName":"SessionName",
         "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
         "DefaultValue":"AMP Powered ARK: Survival Evolved Server",
         "EnumValues":{}
     },
@@ -33,8 +34,8 @@
         "FieldName":"Message",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"ini:GameUserSettings:[MessageOfTheDay]:Message",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"MessageOfTheDay.Message",
+        "IncludeInCommandLine":false,
         "DefaultValue":"Welcome to ARK! Hosted by AMP by CubeCoders",
         "EnumValues":{}
     },
@@ -46,7 +47,7 @@
         "FieldName":"Duration",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ini:GameUserSettings:[MessageOfTheDay]:Duration",
+        "ParamFieldName":"MessageOfTheDay.Duration",
         "IncludeInCommandLine":false,
         "DefaultValue":"30",
         "EnumValues":{}
@@ -109,6 +110,21 @@
         }
     },
     {
+        "DisplayName":"Load Mods",
+        "Category":"ARK Server Settings",
+        "Description":"Comma-separated list of mods to load on the server. The mod files must be included in the ShooterGame/Content/Mods directory",
+        "Keywords":"load,mods",
+        "FieldName":"GameModIds",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"GameModIds",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"",
+        "Placeholder":"xxxx",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Active Event",
         "Category":"ARK Server Settings",
         "Description":"Sets the server's active event, if any. Some events may only work partially or not at all",
@@ -117,7 +133,7 @@
         "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"ActiveEvent",
-        "IncludeInCommandLine":true,
+        "IncludeInCommandLine":false,
         "DefaultValue":"None",
         "EnumValues":{
             "None":"None",
@@ -153,7 +169,7 @@
         "FieldName":"ServerPassword",
         "InputType":"password",
         "IsFlagArgument":false,
-        "ParamFieldName":"ini:GameUserSettings:[ServerSettings]:ServerPassword",
+        "ParamFieldName":"ServerPassword",
         "IncludeInCommandLine":true,
         "DefaultValue":"",
         "EnumValues":{},
@@ -166,7 +182,7 @@
         "FieldName":"SpectatorPassword",
         "InputType":"password",
         "IsFlagArgument":false,
-        "ParamFieldName":"ini:GameUserSettings:[ServerSettings]:SpectatorPassword",
+        "ParamFieldName":"SpectatorPassword",
         "IncludeInCommandLine":true,
         "DefaultValue":"",
         "EnumValues":{}
@@ -179,7 +195,7 @@
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ini:GameUserSettings:[/Script/Engine.GameSession]:MaxPlayers",
+        "ParamFieldName":"MaxPlayers",
         "IncludeInCommandLine":true,
         "DefaultValue":"70",
         "Placeholder":"70",
@@ -257,8 +273,7 @@
         "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"PublicIPForEpic",
-        "IncludeInCommandLine":true,
-        "SkipIfEmpty":true,
+        "IncludeInCommandLine":false,
         "DefaultValue":"",
         "EnumValues":{}
     },
@@ -360,6 +375,22 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable PvE",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, PvE will be enabled, and PvP disabled",
+        "Keywords":"pve,pvp,serverPVE",
+        "FieldName":"serverPVE",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"serverPVE",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
         "DisplayName":"Allow Third Person View",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, third person view is enabled",
@@ -367,7 +398,7 @@
         "FieldName":"AllowThirdPersonPlayer",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ini:GameUserSettings:[ServerSettings]:AllowThirdPersonPlayer",
+        "ParamFieldName":"allowThirdPersonPlayer",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -377,13 +408,13 @@
     },
     {
         "DisplayName":"Allow PVE Cave Building",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"If set, allows building in caves when PvE mode is enabled",
         "Keywords":"pve,cave,building,allowcavebuildingpve",
         "FieldName":"AllowCaveBuildingPvE",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ini:GameUserSettings:[ServerSettings]:AllowCaveBuildingPvE",
+        "ParamFieldName":"AllowCaveBuildingPvE",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -392,14 +423,15 @@
         }
     },
     {
-        "DisplayName":"Notify on Player Join",
-        "Category":"Game User Settings",
-        "Description":"All players will always get notified if someone joins the server.",
-        "Keywords":"Notify,Notification,Player,Join",
+        "DisplayName":"Notify On Player Join",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, players will always be notified if someone joins the server",
+        "Keywords":"notify,player,join,alwaysnotifyplayerjoined",
         "FieldName":"alwaysNotifyPlayerJoined",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.alwaysNotifyPlayerJoined",
+        "ParamFieldName":"alwaysNotifyPlayerJoined",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -407,14 +439,15 @@
         }
     },
     {
-        "DisplayName":"Notify on Player Leave",
-        "Category":"Game User Settings",
-        "Description":"All players will always get notified if someone leaves the server.",
-        "Keywords":"Notify,Notification,Player,Leave",
+        "DisplayName":"Notify On Player Leave",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, players will always be notified if someone leaves the server",
+        "Keywords":"notify,player,leave,alwaysnotifyplayerleft",
         "FieldName":"alwaysNotifyPlayerLeft",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.alwaysNotifyPlayerLeft",
+        "ParamFieldName":"alwaysNotifyPlayerLeft",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -422,14 +455,15 @@
         }
     },
     {
-        "DisplayName":"Allow Flyer Carry",
-        "Category":"Game User Settings",
-        "Description":"Allows flyers to pick up players and dinos.",
-        "Keywords":"PvE,flyer,carry,pick,up",
-        "FieldName":"bAllowFlyerCarryPvE",
+        "DisplayName":"Allow PvE Flyer Carry",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, flying dinosaurs will be permitted to pick up other dinosaurs and players when mounted by a player in PvE mode",
+        "Keywords":"pve,flyer,carry,allowflyercarrypve",
+        "FieldName":"AllowFlyerCarryPvE",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.bAllowFlyerCarryPvE",
+        "ParamFieldName":"AllowFlyerCarryPvE",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -437,14 +471,30 @@
         }
     },
     {
-        "DisplayName":"Disable Structure Decay PvE",
-        "Category":"Game User Settings",
-        "Description":"Disable the gradual (7 days) decay of player structures.",
-        "Keywords":"Structure,Decay",
-        "FieldName":"bDisableStructureDecayPvE",
+        "DisplayName":"Disable PvE Structure Decay",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, the gradual (7 days) decay of player structures will be disabled in PvE mode",
+        "Keywords":"pve,structure,decay,disablestructuredecaypve",
+        "FieldName":"DisableStructureDecayPvE",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.bDisableStructureDecayPvE",
+        "ParamFieldName":"DisableStructureDecayPvE",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable Global Voice Chat",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, voice chat will be enabled globally",
+        "Keywords":"voice,chat,globalvoicechat",
+        "FieldName":"globalVoiceChat",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"globalVoiceChat",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -453,20 +503,21 @@
     },
     {
         "DisplayName":"Day Cycle Speed Scale",
-        "Category":"Game User Settings",
-        "Description":"Specifies the scaling factor for the passage of time in the ARK, controlling how often day changes to night and night changes to day. The default value 1 provides the same cycle speed as the singleplayer experience (and the official public servers). Values lower than 1 slow down the cycle; higher values accelerate it. Base time when value is 1 appears to be 1 minute real time equals approx. 28 minutes game time. Thus, for an approximate 24 hour day/night cycle in game, use .035 for the value.",
-        "Keywords":"Day,Speed,Scale",
+        "Category":"ARK Speed & Multiplier Settings",
+        "Description":"Sets the scaling factor for server time. Default (1) sets the same speed as a singleplayer game, ie 1 minute real time = approx 28 minutes server time. A scale of 0.035 would set a day/night cycle of approx 24 hours real time",
+        "Keywords":"day,speed,scale,daycyclespeedscale",
         "FieldName":"DayCycleSpeedScale",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.DayCycleSpeedScale",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"DayCycleSpeedScale",
+        "IncludeInCommandLine":true,
         "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
         "EnumValues":{}
     },
     {
         "DisplayName":"Day Time Speed Scale",
-        "Category":"Game User Settings",
+        "Category":"ARK Speed & Multiplier Settings",
         "Description":"Specifies the scaling factor for the passage of time in the ARK during the day. This value determines the length of each day, relative to the length of each night (as specified by NightTimeSpeedScale. Lowering this value increases the length of each day.",
         "Keywords":"Day,Time,Speed,Scale",
         "FieldName":"DayTimeSpeedScale",
@@ -479,7 +530,7 @@
     },
     {
         "DisplayName":"Night Time Speed Scale",
-        "Category":"Game User Settings",
+        "Category":"ARK Speed & Multiplier Settings",
         "Description":"Specifies the scaling factor for the passage of time in the ARK during night time. This value determines the length of each night, relative to the length of each day (as specified by DayTimeSpeedScale. Lowering this value increases the length of each night",
         "Keywords":"Night,Time,Speed,Scale",
         "FieldName":"NightTimeSpeedScale",
@@ -492,7 +543,7 @@
     },
     {
         "DisplayName":"Dino Food Drain Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Speed & Multiplier Settings",
         "Description":"Specifies the scaling factor for dinosaurs' food consumption. Higher values increase food consumption (dinosaurs get hungry faster).",
         "Keywords":"Dino,Food,Hunger",
         "FieldName":"DinoCharacterFoodDrainMultiplier",
@@ -505,7 +556,7 @@
     },
     {
         "DisplayName":"Dino Health Recovery Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Speed & Multiplier Settings",
         "Description":"Specifies the scaling factor for dinosaurs health recovery. Higher values increase the recovery rate (dinosaurs heal faster).",
         "Keywords":"Dino,Health,Recovery",
         "FieldName":"DinoCharacterHealthRecoveryMultiplier",
@@ -518,7 +569,7 @@
     },
     {
         "DisplayName":"Dino Stamina Drain Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Speed & Multiplier Settings",
         "Description":"Specifies the scaling factor for dinosaurs stamina consumption. Higher values increase stamina consumption (dinosaurs get tired faster).",
         "Keywords":"Dino,Stamina",
         "FieldName":"DinoCharacterStaminaDrainMultiplier",
@@ -531,7 +582,7 @@
     },
     {
         "DisplayName":"Dino Spawn Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Speed & Multiplier Settings",
         "Description":"Specifies the scaling factor for dinosaur spawns. Higher values increase the number of dinosaurs spawned throughout the ARK.",
         "Keywords":"Dino,Spawn",
         "FieldName":"DinoCountMultiplier",
@@ -544,7 +595,7 @@
     },
     {
         "DisplayName":"Dino Damage Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Speed & Multiplier Settings",
         "Description":"Specifies the scaling factor for the damage dinosaurs deal with their attacks. The default value 1 provides normal damage. Higher values increase damage. Lower values decrease it.",
         "Keywords":"Dino,Damage",
         "FieldName":"DinoDamageMultiplier",
@@ -557,7 +608,7 @@
     },
     {
         "DisplayName":"Dino Resistance Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Speed & Multiplier Settings",
         "Description":"Specifies the scaling factor for the resistance to damage dinosaurs receive when attacked. The default value 1 provides normal damage. Higher values decrease resistance, increasing damage per attack. Lower values increase it, reducing damage per attack. A value of 0.5 results in a dino taking half damage while a value of 2.0 would result in a dino taking double normal damage.",
         "Keywords":"Dino,Resistance",
         "FieldName":"DinoResistanceMultiplier",
@@ -569,23 +620,8 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Global Voice Chat",
-        "Category":"Game User Settings",
-        "Description":"Enables Global Voice Chat.",
-        "Keywords":"Voice,Chat",
-        "FieldName":"globalVoiceChat",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.globalVoiceChat",
-        "DefaultValue":"False",
-        "EnumValues":{
-            "0":"False",
-            "1":"True"
-        }
-    },
-    {
         "DisplayName":"Harvest Amount Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Speed & Multiplier Settings",
         "Description":"Specifies the scaling factor for yields from all harvesting activities (chopping down trees, picking berries, carving carcasses, mining rocks, etc.). Higher values increase the amount of materials harvested with each strike.",
         "Keywords":"Player,Harvest",
         "FieldName":"HarvestAmountMultiplier",
@@ -594,13 +630,11 @@
         "ParamFieldName":"ServerSettings.HarvestAmountMultiplier",
         "IncludeInCommandLine":false,
         "DefaultValue":"1.00000",
-        "EnumValues":{
-            
-        }
+        "EnumValues":{}
     },
     {
         "DisplayName":"Harvest Health Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Speed & Multiplier Settings",
         "Description":"Specifies the scaling factor for the \"health\" of items that can be harvested (trees, rocks, carcasses, etc.). Higher values increase the amount of damage (i.e. \"number of strikes\") such objects can withstand before being destroyed, which results in higher overall harvest yields.",
         "Keywords":"Player,Harvest",
         "FieldName":"HarvestHealthMultiplier",
@@ -609,13 +643,11 @@
         "ParamFieldName":"ServerSettings.HarvestHealthMultiplier",
         "IncludeInCommandLine":false,
         "DefaultValue":"1.00000",
-        "EnumValues":{
-            
-        }
+        "EnumValues":{}
     },
     {
         "DisplayName":"Max Structures In Range OUTDATED",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"(OUTDATED) Specifies the maximum number of structures that can be constructed within a certain (currently hard-coded) range.",
         "Keywords":"Player,Harvest",
         "FieldName":"MaxStructuresInRange",
@@ -624,13 +656,11 @@
         "ParamFieldName":"ServerSettings.MaxStructuresInRange",
         "IncludeInCommandLine":false,
         "DefaultValue":"6700",
-        "EnumValues":{
-            
-        }
+        "EnumValues":{}
     },
     {
         "DisplayName":"Disable Tribute Downloads",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Disables downloading characters from other servers.",
         "Keywords":"Player,Download,Survivor,Transfer,Tribute",
         "FieldName":"noTributeDownloads",
@@ -645,7 +675,7 @@
     },
     {
         "DisplayName":"Prevent Download Survivors",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Prevents the download of survivors",
         "Keywords":"Player,Download,Survivor,Transfer,Tribute",
         "FieldName":"PreventDownloadSurvivors",
@@ -660,7 +690,7 @@
     },
     {
         "DisplayName":"Prevent Download Items",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Prevents the download of Items",
         "Keywords":"Player,Download,Survivor,Transfer,Tribute,Item",
         "FieldName":"PreventDownloadItems",
@@ -675,7 +705,7 @@
     },
     {
         "DisplayName":"Prevent Download Dinos",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Prevents the download of Dinos",
         "Keywords":"Player,Download,Survivor,Transfer,Tribute,Dino",
         "FieldName":"PreventDownloadDinos",
@@ -690,7 +720,7 @@
     },
     {
         "DisplayName":"Player Food Drain Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for player characters food consumption. Higher values increase food consumption (player characters get hungry faster).",
         "Keywords":"Player,Food",
         "FieldName":"PlayerCharacterFoodDrainMultiplier",
@@ -699,13 +729,11 @@
         "ParamFieldName":"ServerSettings.PlayerCharacterFoodDrainMultiplier",
         "IncludeInCommandLine":false,
         "DefaultValue":"1.00000",
-        "EnumValues":{
-            
-        }
+        "EnumValues":{}
     },
     {
         "DisplayName":"Player Health Recovery Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for player characters health recovery. Higher values increase the recovery rate (player characters heal faster).",
         "Keywords":"Player,Health",
         "FieldName":"PlayerCharacterHealthRecoveryMultiplier",
@@ -714,13 +742,11 @@
         "ParamFieldName":"ServerSettings.PlayerCharacterHealthRecoveryMultiplier",
         "IncludeInCommandLine":false,
         "DefaultValue":"1.00000",
-        "EnumValues":{
-            
-        }
+        "EnumValues":{}
     },
     {
         "DisplayName":"Player Stamina Drain Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for player characters stamina consumption. Higher values increase stamina consumption (player characters get tired faster).",
         "Keywords":"Player,Stamina",
         "FieldName":"PlayerCharacterStaminaDrainMultiplier",
@@ -729,13 +755,11 @@
         "ParamFieldName":"ServerSettings.PlayerCharacterStaminaDrainMultiplier",
         "IncludeInCommandLine":false,
         "DefaultValue":"1.00000",
-        "EnumValues":{
-            
-        }
+        "EnumValues":{}
     },
     {
         "DisplayName":"Player Water Drain Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for player characters water consumption. Higher values increase water consumption (player characters get thirsty faster).",
         "Keywords":"Player,Water",
         "FieldName":"PlayerCharacterWaterDrainMultiplier",
@@ -744,13 +768,11 @@
         "ParamFieldName":"ServerSettings.PlayerCharacterWaterDrainMultiplier",
         "IncludeInCommandLine":false,
         "DefaultValue":"1.00000",
-        "EnumValues":{
-            
-        }
+        "EnumValues":{}
     },
     {
         "DisplayName":"Player Damage Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for the damage players deal with their attacks. The default value 1 provides normal damage. Higher values increase damage. Lower values decrease it.",
         "Keywords":"Player,Damage",
         "FieldName":"PlayerDamageMultiplier",
@@ -763,7 +785,7 @@
     },
     {
         "DisplayName":"Player Resistance Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for the resistance to damage players receive when attacked. The default value 1 provides normal damage. Higher values decrease resistance, increasing damage per attack. Lower values increase it, reducing damage per attack. A value of 0.5 results in a player taking half damage while a value of 2.0 would result in taking double normal damage.",
         "Keywords":"Player,Resistance",
         "FieldName":"PlayerResistanceMultiplier",
@@ -776,7 +798,7 @@
     },
     {
         "DisplayName":"Enable Proximity Chat",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Only players near each other can see their chat messages.",
         "Keywords":"Player,Proximity,Chat",
         "FieldName":"proximityChat",
@@ -791,7 +813,7 @@
     },
     {
         "DisplayName":"Resource No Replenish Radius to Players",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Defines the distance where there are no resources respawning when being close to a player.",
         "Keywords":"Player,Resource,Radius",
         "FieldName":"ResourceNoReplenishRadiusPlayers",
@@ -804,7 +826,7 @@
     },
     {
         "DisplayName":"Resource No Replenish Radius to Players",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Defines the distance where there are no resources respawning when being close to a player.",
         "Keywords":"Player,Resource,Radius",
         "FieldName":"ResourceNoReplenishRadiusPlayers",
@@ -817,7 +839,7 @@
     },
     {
         "DisplayName":"Resource No Replenish Radius to Structures",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Defines the distance where there are no resources respawning when being close to Structures.",
         "Keywords":"Structure,Resource,Radius",
         "FieldName":"ResourceNoReplenishRadiusStructures",
@@ -830,7 +852,7 @@
     },
     {
         "DisplayName":"Resources Respawn Period Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for the respawn rate for resource nodes (trees, rocks, bushes, etc.). Lower values cause nodes to respawn more frequently.",
         "Keywords":"Resource,Respawn",
         "FieldName":"ResourcesRespawnPeriodMultiplier",
@@ -843,7 +865,7 @@
     },
     {
         "DisplayName":"ServerCrosshair",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Shows Crosshair",
         "Keywords":"Player,Crosshair",
         "FieldName":"ServerCrosshair",
@@ -858,7 +880,7 @@
     },
     {
         "DisplayName":"Force No Hud",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Force Players No Hud",
         "Keywords":"Player,Hud",
         "FieldName":"serverForceNoHud",
@@ -873,7 +895,7 @@
     },
     {
         "DisplayName":"Hardcore Mode",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Enables hardcore mode (player characters revert to level 1 upon death)",
         "Keywords":"Hardcore",
         "FieldName":"serverHardcore",
@@ -887,23 +909,8 @@
         }
     },
     {
-        "DisplayName":"Enable PvE",
-        "Category":"Game User Settings",
-        "Description":"Enables PvE mode, disables PvP",
-        "Keywords":"PvE",
-        "FieldName":"serverPVE",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.serverPVE",
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
         "DisplayName":"Show Player On Map",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Show each player their own precise position when they view their map",
         "Keywords":"Player,Map",
         "FieldName":"ShowMapPlayerLocation",
@@ -918,7 +925,7 @@
     },
     {
         "DisplayName":"Structure Damage Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for the damage structures deal with their attacks (i.e. spiked walls). The default value 1 provides normal damage. Higher values increase damage. Lower values decrease it.",
         "Keywords":"Structure,Damage",
         "FieldName":"StructureDamageMultiplier",
@@ -931,7 +938,7 @@
     },
     {
         "DisplayName":"Structure Resistance Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for the resistance to damage structures receive when attacked. The default value 1 provides normal damage. Higher values decrease resistance, increasing damage per attack. Lower values increase it, reducing damage per attack. A value of 0.5 results in a structure taking half damage while a value of 2.0 would result in a structure taking double normal damage.",
         "Keywords":"Structure,Resistance",
         "FieldName":"StructureResistanceMultiplier",
@@ -944,7 +951,7 @@
     },
     {
         "DisplayName":"Tamed Dino Damage Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for tamed dinosaurs damage. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
         "Keywords":"Dino,Damage",
         "FieldName":"TamedDinoDamageMultiplier",
@@ -957,7 +964,7 @@
     },
     {
         "DisplayName":"Tamed Dino Resistance Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for dinosaurs fortitude. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
         "Keywords":"Dino,Resistance",
         "FieldName":"TamedDinoResistanceMultiplier",
@@ -970,7 +977,7 @@
     },
     {
         "DisplayName":"Taming Speed Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for dinosaur taming speed. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
         "Keywords":"Taming,Speed",
         "FieldName":"TamingSpeedMultiplier",
@@ -983,7 +990,7 @@
     },
     {
         "DisplayName":"XP Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for the experience received by players, tribes and dinosaurs for various actions. The default value 1 provides the same amounts of experience as in the singleplayer experience (and official public servers). Higher values increase XP amounts awarded for various actions; lower values decrease it.",
         "Keywords":"XP",
         "FieldName":"XPMultiplier",
@@ -996,7 +1003,7 @@
     },
     {
         "DisplayName":"Enable PVP Gamma",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Allows or disallows usage of gamma on PVP servers.",
         "Keywords":"PvP,Gamma",
         "FieldName":"EnablePVPGamma",
@@ -1011,7 +1018,7 @@
     },
     {
         "DisplayName":"Enable PVE Gamma",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Allows or disallows usage of gamma on PVE servers.",
         "Keywords":"PvE,Gamma",
         "FieldName":"EnablePVPGamma",
@@ -1026,7 +1033,7 @@
     },
     {
         "DisplayName":"Difficulty Offset",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the difficulty level.",
         "Keywords":"Difficulty",
         "FieldName":"DifficultyOffset",
@@ -1039,7 +1046,7 @@
     },
     {
         "DisplayName":"PvE Structure Decay Period Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the scaling factor for the decay rate of player structures in PvE mode.",
         "Keywords":"PvE,Structure,Decay",
         "FieldName":"PvEStructureDecayPeriodMultiplier",
@@ -1052,7 +1059,7 @@
     },
     {
         "DisplayName":"PvE Structure Decay Destruction Period",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Specifies the time required for player structures to decay in PvE mode.",
         "Keywords":"PvE,Structure,Decay",
         "FieldName":"PvEStructureDecayDestructionPeriod",
@@ -1078,7 +1085,7 @@
     },
     {
         "DisplayName":"PvP Structure Decay",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Activates or deactivates structure decay on PVP servers",
         "Keywords":"PvE,Structure,Decay",
         "FieldName":"PvPStructureDecay",
@@ -1093,7 +1100,7 @@
     },
     {
         "DisplayName":"Disable Dino Decay PvE",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Deactivates the unclaiming functions for dinosaurs on PVE servers",
         "Keywords":"PvE,Dino,Decay,Unclaim",
         "FieldName":"DisableDinoDecayPvE",
@@ -1108,7 +1115,7 @@
     },
     {
         "DisplayName":"PvE Dino Decay Period Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Multiplier value for the unclaiming speed of dinosaurs",
         "Keywords":"PvE,Structure,Decay",
         "FieldName":"PvEDinoDecayPeriodMultiplier",
@@ -1136,7 +1143,7 @@
     },
     {
         "DisplayName":"Max Tamed Dinos",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Defines the maximum amount of tamed dinos on the map.",
         "Keywords":"Max,Tamed,Dino,Limit",
         "FieldName":"MaxTamedDinos",
@@ -1149,7 +1156,7 @@
     },
     {
         "DisplayName":"Max Number of Players In a Tribe(SOTF)",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"SOTF setting: Defines the maximum player limit per tribe",
         "Keywords":"SOTF,Tribe,Player",
         "FieldName":"MaxNumbersofPlayersInTribe",
@@ -1162,7 +1169,7 @@
     },
     {
         "DisplayName":"Min Num Of Tribes to Start Battle(SOTF)",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"SOTF setting: Defines how many tribes must have been created before the countdown for game start begins",
         "Keywords":"SOTF,Tribe,Player",
         "FieldName":"BattleNumOfTribestoStartGame",
@@ -1175,7 +1182,7 @@
     },
     {
         "DisplayName":"Time To Collapse Ring Of Death(SOTF)",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"SOTF setting: Defines the time period for the force field to collapse",
         "Keywords":"SOTF,ROD,Ring,Death,Collapse,Force,Field",
         "FieldName":"TimeToCollapseROD",
@@ -1188,7 +1195,7 @@
     },
     {
         "DisplayName":"Battle Auto Start Game Interval(SOTF)",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"SOTF setting: Defines the length of the countdown before match begins",
         "Keywords":"SOTF,Countdown,battle,match,Start",
         "FieldName":"BattleAutoStartGameInterval",
@@ -1201,7 +1208,7 @@
     },
     {
         "DisplayName":"Battle Sudden Death Interval(SOTF)",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"SOTF setting: Defines the time before sudden death starts",
         "Keywords":"SOTF,sudden,death",
         "FieldName":"BattleSuddenDeathInterval",
@@ -1227,7 +1234,7 @@
     },
     {
         "DisplayName":"Per Platform Max Structures Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Defines the multiplicator for structures on saddle plattforms (Caution - High values may lead to LAG)",
         "Keywords":"saddle,platform,structure,LAG",
         "FieldName":"PerPlatformMaxStructuresMultiplier",
@@ -1240,7 +1247,7 @@
     },
     {
         "DisplayName":"Structure Damage Repair Cooldown",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Defines the cooldown time when a previously damaged structure can be repaired again. (0 allows the structure to be always repaired)",
         "Keywords":"structure,repair,cooldown",
         "FieldName":"StructureDamageRepairCooldown",
@@ -1253,7 +1260,7 @@
     },
     {
         "DisplayName":"Allow Locking All Item Containers",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Server Option to allow Locking All Item Containers",
         "Keywords":"Lock,Item,Container",
         "FieldName":"bForceAllStructureLocking",
@@ -1268,7 +1275,7 @@
     },
     {
         "DisplayName":"Auto Destroy Old Structures Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Server Option to allow Auto-Destroying Structures after no near tribe player time has passed (defined as a multiplier of the Allow Claim period)",
         "Keywords":"Time,Tribe,Structure,Destroy",
         "FieldName":"AutoDestroyOldStructuresMultiplier",
@@ -1281,7 +1288,7 @@
     },
     {
         "DisplayName":"Max Platform Saddle Structure Limit",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Defines the maximum number of structures on top of the saddle platform",
         "Keywords":"Platform,Saddle,Structure,Limit",
         "FieldName":"MaxPlatformSaddleStructureLimit",
@@ -1294,7 +1301,7 @@
     },
     {
         "DisplayName":"Passive Defenses Damage Riderless Dinos",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Wild dinos or dinos without a rider can take damage from defense structures like spikewalls if this setting is activated",
         "Keywords":"Passive,Defense,Damage",
         "FieldName":"bPassiveDefensesDamageRiderlessDinos",
@@ -1322,7 +1329,7 @@
     },
     {
         "DisplayName":"Override Structure Platform Prevention",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Determines if turrets are allowed on moving platforms or not. On will prevent it. Off will allow it",
         "Keywords":"override,structure,platform,",
         "FieldName":"OverrideStructurePlatformPrevention",
@@ -1337,7 +1344,7 @@
     },
     {
         "DisplayName":"Prevent Offline PvP Interval",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Defines the time period of being offline so that a player will be really considered as being offline.",
         "Keywords":"Offline,PvP",
         "FieldName":"PreventOfflinePvPInterval",
@@ -1350,7 +1357,7 @@
     },
     {
         "DisplayName":"PvP Dino Decay",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Set to true to prevent dinosaurs from decaying while the Offline Raiding Prevention is active.",
         "Keywords":"PvP,Decay,Dino",
         "FieldName":"bPvPDinoDecay",
@@ -1365,7 +1372,7 @@
     },
     {
         "DisplayName":"Disable Imprint Dino Buff",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Deactivates (no) the bonus stats for a dino if you raise the baby by yourself",
         "Keywords":"buff,dino,imprint",
         "FieldName":"bPvPDinoDecay",
@@ -1380,7 +1387,7 @@
     },
     {
         "DisplayName":"Block building in Rich Resource Areas",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Prevents the building of structures on places which are rich of resources",
         "Keywords":"rich,resource",
         "FieldName":"EnableExtraStructurePreventionVolumes",
@@ -1395,7 +1402,7 @@
     },
     {
         "DisplayName":"Show Floating Damage Text",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Shows dealt damages in a RPG style",
         "Keywords":"rich,resource",
         "FieldName":"ShowFloatingDamageText",
@@ -1410,7 +1417,7 @@
     },
     {
         "DisplayName":"Destroy Unconnected Water Pipes",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"If active, it will destroy the pipes automatically after two real-time days, if unconnected to any non-pipe (directly or indirectly) and no allied player is nearby.",
         "Keywords":"unconnected,pipes,destroy",
         "FieldName":"DestroyUnconnectedWaterPipes",
@@ -1425,7 +1432,7 @@
     },
     {
         "DisplayName":"Max Structures on server",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"New value for the maximum allowed structures on the server.",
         "Keywords":"max,structures",
         "FieldName":"TheMaxStructuresInRange",
@@ -1438,7 +1445,7 @@
     },
     {
         "DisplayName":"Minimimum Dino Reupload Interval",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Number of seconds cooldown between allowed Dino re-uploads (defaults to 0, set to 43200 on Official Servers which is 12 hours).",
         "Keywords":"Dino,Upload",
         "FieldName":"MinimumDinoReuploadInterval",
@@ -1451,7 +1458,7 @@
     },
     {
         "DisplayName":"PvE Allow Structures At Supply Drops",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Set to true to allow building near supply drop points in PvE mode..",
         "Keywords":"Supply,Drops,Structures",
         "FieldName":"PvEAllowStructuresAtSupplyDrops",
@@ -1466,7 +1473,7 @@
     },
     {
         "DisplayName":"Max Personal Tamed Dinos",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Quantity of dinos that a tribe is allowed to have (Default on official PVE servers is 500).",
         "Keywords":"dino,max,personal",
         "FieldName":"MaxPersonalTamedDinos",
@@ -1479,7 +1486,7 @@
     },
     {
         "DisplayName":"Auto Destroy Decayed Dinos",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Option to auto-destroy claimable decayed dinos on load, rather than have them remain around as claimable. Official PvE servers now have this enabled.",
         "Keywords":"destroy,auto,decay,dino",
         "FieldName":"AutoDestroyDecayedDinos",
@@ -1494,7 +1501,7 @@
     },
     {
         "DisplayName":"Auto Destroy Decayed Dinos",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Server custom HarvestAmountMultiplier now works as it used to, to bias towards yielding rarer items. This is more costly for server performance, so if you want a more optimized server with high HarvestAmountMultiplier (but less rare items).",
         "Keywords":"optimized,harvest,multiplier",
         "FieldName":"UseOptimizedHarvestingHealth",
@@ -1509,7 +1516,7 @@
     },
     {
         "DisplayName":"Allow crate spawns on top of structures",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Servers can now allow from-the-air Supply Crates to appear on top of Structures, rather than being prevented by Structures. Enabled on Official Servers.",
         "Keywords":"crates,structures",
         "FieldName":"AllowCrateSpawnsOnTopOfStructures",
@@ -1524,7 +1531,7 @@
     },
     {
         "DisplayName":"ForceFlyerExplosives",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Flyer (except Quetzal and Wyvern can't fly with C4 attached to it. Set this parameter to true to let them still fly.",
         "Keywords":"flyer,explosives",
         "FieldName":"ForceFlyerExplosives",
@@ -1539,7 +1546,7 @@
     },
     {
         "DisplayName":"Prevent offline PvP",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Use this to enable the offline raiding prevention option.",
         "Keywords":"offline,pvp",
         "FieldName":"PreventOfflinePvP",
@@ -1554,7 +1561,7 @@
     },
     {
         "DisplayName":"Allow Flying Stamina Recovery",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Set to true if flyers should recover stamina when player is standing on instead riding.",
         "Keywords":"flying,stamina,recovery",
         "FieldName":"AllowFlyingStaminaRecovery",
@@ -1569,7 +1576,7 @@
     },
     {
         "DisplayName":"Allow Multiple Attached C4",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Set to true to allow to attach more than one C4 per dino.",
         "Keywords":"C4,Multiple,Attached",
         "FieldName":"AllowMultipleAttachedC4",
@@ -1584,7 +1591,7 @@
     },
     {
         "DisplayName":"Oxygen Swim Speed Multiplier",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Use this to set how swim speed is multiplied by level spent in oxygen.",
         "Keywords":"swim,speed,oxygen",
         "FieldName":"OxygenSwimSpeedStatMultiplier",
@@ -1597,7 +1604,7 @@
     },
     {
         "DisplayName":"PvE Disable Friendly Fire",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"Prevent-Friendly-Fire (among tribesmates/tribesdinos/tribesstructures) option for PvE server.",
         "Keywords":"PvE,Friendly,Fire",
         "FieldName":"bPvEDisableFriendlyFire",
@@ -1612,7 +1619,7 @@
     },
     {
         "DisplayName":"Disable Weather Fog",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"If true, disables fog.",
         "Keywords":"weather,fog",
         "FieldName":"DisableWeatherFog",
@@ -1627,7 +1634,7 @@
     },
     {
         "DisplayName":"Random Supply Crate Points",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"If true, supply drops are in random locations. NOTE: This setting is known to cause artifacts becoming inaccesable on [Ragnarok] if active.",
         "Keywords":"supply,crate",
         "FieldName":"RandomSupplyCratePoints",
@@ -1642,7 +1649,7 @@
     },
     {
         "DisplayName":"Cross ARK Allow Foreign Dino Downloads",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"if set to true, you will be able to tribute download non-native creatures on the Aberration map",
         "Keywords":"foreign,dino,download",
         "FieldName":"CrossARKAllowForeignDinoDownloads",
@@ -1657,7 +1664,7 @@
     },
     {
         "DisplayName":"Personal Tamed Dinos Saddle Structure Cost",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"determines the amount of dinoslots a platform saddle will use towards the tribe dino limit.",
         "Keywords":"tamed,dino,cost,structure",
         "FieldName":"PersonalTamedDinosSaddleStructureCost",
@@ -1670,7 +1677,7 @@
     },
     {
         "DisplayName":"Disable Structure Placement Collision",
-        "Category":"Game User Settings",
+        "Category":"ARK Gameplay Settings",
         "Description":"If 'true' allows for structures to clip into the terrain.",
         "Keywords":"structure,placement",
         "FieldName":"bDisableStructurePlacementCollision",
