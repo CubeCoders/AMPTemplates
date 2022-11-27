@@ -9,7 +9,6 @@
         "IsFlagArgument":false,
         "ParamFieldName":"SessionName",
         "IncludeInCommandLine":true,
-        "SkipIfEmpty":true,
         "DefaultValue":"AMP Powered ARK: Survival Evolved Server",
         "EnumValues":{}
     },
@@ -309,6 +308,70 @@
         "SkipIfEmpty":true,
         "DefaultValue":"http://arkdedicated.com/banlist.txt",
         "Placeholder":"http://arkdedicated.com/banlist.txt",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Admin Logging",
+        "Category":"ARK Server Settings",
+        "Description":"If set, all admin commands used will be logged to in-game chat",
+        "Keywords":"admin,log,chat,adminlogging",
+        "FieldName":"AdminLogging",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"AdminLogging",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Kick Idle Players",
+        "Category":"ARK Server Settings",
+        "Description":"If set, characters that have not moved or interacted within the Kick Idle Players Period will be kicked from the server",
+        "Keywords":"kick,idle,players,enableidleplayerkick",
+        "FieldName":"EnableIdlePlayerKick",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"EnableIdlePlayerKick",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-EnableIdlePlayerKick "
+        }
+    },
+    {
+        "DisplayName":"Kick Idle Players Period",
+        "Category":"ARK Server Settings",
+        "Description":"Sets the time period after which characters that have not moved or interacted will be kicked (if Kick Idle Players is enabled)",
+        "Keywords":"kick,idle,players,period,kickidleplayersperiod",
+        "FieldName":"KickIdlePlayersPeriod",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"KickIdlePlayersPeriod",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1800",
+        "Placeholder":"1800",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Auto Save Period",
+        "Category":"ARK Server Settings",
+        "Description":"Sets the interval for automatic saves. 0 = constant saving, 9000000 = effectively disabled",
+        "Keywords":"auto,save,period,minutes,autosaveperiodminutes",
+        "FieldName":"AutoSavePeriodMinutes",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"9000000",
+        "IsFlagArgument":false,
+        "ParamFieldName":"AutoSavePeriodMinutes",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"15",
+        "Placeholder":"15",
+        "Suffix":"minutes",
         "EnumValues":{}
     },
     {
@@ -1120,21 +1183,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Admin Logging",
-        "Category":"ARK Server Settings",
-        "Description":"Enables the output of cheat commands that admins used (will be shown in chat)",
-        "Keywords":"Admin,Log,Chat,Cheat",
-        "FieldName":"AdminLogging",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.AdminLogging",
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
         "DisplayName":"Max Tamed Dinos",
         "Category":"ARK Gameplay Settings",
         "Description":"Defines the maximum amount of tamed dinos on the map.",
@@ -1210,19 +1258,6 @@
         "ParamFieldName":"ServerSettings.BattleSuddenDeathInterval",
         "IncludeInCommandLine":false,
         "DefaultValue":"300",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Kick Idle Players Period",
-        "Category":"ARK Server Settings",
-        "Description":"Time period until an idling player will be kicked from server",
-        "Keywords":"Kick,Idle,Player",
-        "FieldName":"KickIdlePlayersPeriod",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.KickIdlePlayersPeriod",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1800",
         "EnumValues":{}
     },
     {
@@ -1306,19 +1341,6 @@
             "False":"False",
             "True":"True"
         }
-    },
-    {
-        "DisplayName":"Auto Save Period",
-        "Category":"ARK Server Settings",
-        "Description":"Auto Save Period in Minutes",
-        "Keywords":"Auto,Save,Time,Minutes",
-        "FieldName":"AutoSavePeriodMinutes",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.AutoSavePeriodMinutes",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"15",
-        "EnumValues":{}
     },
     {
         "DisplayName":"Override Structure Platform Prevention",

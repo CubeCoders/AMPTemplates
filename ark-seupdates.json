@@ -16,7 +16,14 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'ln -sf {{$FullRootDir}}steamcmd.sh {{$FullRootDir}}linux32 ~/Steam/steamapps {{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux/'"    
+        "UpdateSourceArgs":"-c 'HOMEDIR=$( [[ -d /AMP/.virtualhome ]] && echo \"/AMP/.virtualhome/\" || echo \"~/\" ); ln -sf {{$FullRootDir}}steamcmd.sh {{$FullRootDir}}linux32 \"${HOMEDIR}Steam/steamapps\" {{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux/'"    
+    },
+    {
+        "UpdateStageName":"Config Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}ShooterGame/Saved/Config/WindowsServer",
+        "OverwriteExistingFiles":false
     },
     {
         "UpdateStageName":"Config Directory Creation",
@@ -26,11 +33,21 @@
         "OverwriteExistingFiles":false
     },
     {
-        "UpdateStageName":"Create Game.ini",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateFile",
-        "UpdateSourceData":"",
-        "UpdateSourceArgs":"{{$FullBaseDir}}ShooterGame/Saved/Config/LinuxServer/Game.ini",
-        "OverwriteExistingFiles":false
+        "UpdateStageName":"Game.ini Config Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/ark-segame.ini",
+        "UpdateSourceArgs":"Game.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}ShooterGame/Saved/Config/WindowsServer/",
+        "OverwriteExistingFiles":false"
+    },
+    {
+        "UpdateStageName":"Game.ini Config Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/ark-segame.ini",
+        "UpdateSourceArgs":"Game.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}ShooterGame/Saved/Config/LinuxServer/",
+        "OverwriteExistingFiles":false"
     }
 ]
