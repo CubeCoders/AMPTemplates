@@ -81,7 +81,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Enable Automanaged Mods",
+        "DisplayName":"Automatically Manage Mods",
         "Category":"ARK Server Settings",
         "Description":"If set, enables automatic mod download, installation and updating (on server start). Mods must be specified in Game.ini under the heading [ModInstaller] and with one mod per line in the format: ModIDS=<value>",
         "Keywords":"auto,managed,mods,automanagedmods",
@@ -93,7 +93,7 @@
         "DefaultValue":"",
         "EnumValues":{
             "False":"",
-            "True":"-automanagedmods ",
+            "True":"-automanagedmods "
         }
     },
     {
@@ -295,6 +295,21 @@
             "False":"",
             "True":"-insecure "
         }
+    },
+    {
+        "DisplayName":"Banlist URL",
+        "Category":"ARK Server Settings",
+        "Description":"Uses the global banlist of ARK to disallow access to players who have been identified as cheaters",
+        "Keywords":"ban,banlist,blacklist",
+        "FieldName":"Banlist",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Banlist",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"http://arkdedicated.com/banlist.txt",
+        "Placeholder":"http://arkdedicated.com/banlist.txt",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Language",
@@ -727,6 +742,98 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Resources Respawn Period Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"Sets the scaling factor for the resource node respawn rate (trees, rocks, bushes, etc). Lower values cause nodes to respawn more frequently",
+        "Keywords":"resource,respawn,period,multiplier,resourcesrespawnperiodmultiplier",
+        "FieldName":"ResourcesRespawnPeriodMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ResourcesRespawnPeriodMultiplier",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Structure Damage Multiplier",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Specifies the scaling factor for the damage structures deal with their attacks (i.e. spiked walls). The default value 1 provides normal damage. Higher values increase damage. Lower values decrease it.",
+        "Keywords":"Structure,Damage",
+        "FieldName":"StructureDamageMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.StructureDamageMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Structure Resistance Multiplier",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Specifies the scaling factor for the resistance to damage structures receive when attacked. The default value 1 provides normal damage. Higher values decrease resistance, increasing damage per attack. Lower values increase it, reducing damage per attack. A value of 0.5 results in a structure taking half damage while a value of 2.0 would result in a structure taking double normal damage.",
+        "Keywords":"Structure,Resistance",
+        "FieldName":"StructureResistanceMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.StructureResistanceMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Tamed Dino Damage Multiplier",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Specifies the scaling factor for tamed dinosaurs damage. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
+        "Keywords":"Dino,Damage",
+        "FieldName":"TamedDinoDamageMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.TamedDinoDamageMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Tamed Dino Resistance Multiplier",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Specifies the scaling factor for dinosaurs fortitude. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
+        "Keywords":"Dino,Resistance",
+        "FieldName":"TamedDinoResistanceMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.TamedDinoResistanceMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Taming Speed Multiplier",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Specifies the scaling factor for dinosaur taming speed. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
+        "Keywords":"Taming,Speed",
+        "FieldName":"TamingSpeedMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.TamingSpeedMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"XP Multiplier",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Specifies the scaling factor for the experience received by players, tribes and dinosaurs for various actions. The default value 1 provides the same amounts of experience as in the singleplayer experience (and official public servers). Higher values increase XP amounts awarded for various actions; lower values decrease it.",
+        "Keywords":"XP",
+        "FieldName":"XPMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.XPMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.00000",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Disable Tribute Downloads",
         "Category":"ARK Gameplay Settings",
         "Description":"Disables downloading characters from other servers.",
@@ -841,19 +948,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Resources Respawn Period Multiplier",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Specifies the scaling factor for the respawn rate for resource nodes (trees, rocks, bushes, etc.). Lower values cause nodes to respawn more frequently.",
-        "Keywords":"Resource,Respawn",
-        "FieldName":"ResourcesRespawnPeriodMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.ResourcesRespawnPeriodMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"ServerCrosshair",
         "Category":"ARK Gameplay Settings",
         "Description":"Shows Crosshair",
@@ -912,84 +1006,6 @@
             "False":"False",
             "True":"True"
         }
-    },
-    {
-        "DisplayName":"Structure Damage Multiplier",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Specifies the scaling factor for the damage structures deal with their attacks (i.e. spiked walls). The default value 1 provides normal damage. Higher values increase damage. Lower values decrease it.",
-        "Keywords":"Structure,Damage",
-        "FieldName":"StructureDamageMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.StructureDamageMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Structure Resistance Multiplier",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Specifies the scaling factor for the resistance to damage structures receive when attacked. The default value 1 provides normal damage. Higher values decrease resistance, increasing damage per attack. Lower values increase it, reducing damage per attack. A value of 0.5 results in a structure taking half damage while a value of 2.0 would result in a structure taking double normal damage.",
-        "Keywords":"Structure,Resistance",
-        "FieldName":"StructureResistanceMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.StructureResistanceMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Tamed Dino Damage Multiplier",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Specifies the scaling factor for tamed dinosaurs damage. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
-        "Keywords":"Dino,Damage",
-        "FieldName":"TamedDinoDamageMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.TamedDinoDamageMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Tamed Dino Resistance Multiplier",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Specifies the scaling factor for dinosaurs fortitude. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
-        "Keywords":"Dino,Resistance",
-        "FieldName":"TamedDinoResistanceMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.TamedDinoResistanceMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Taming Speed Multiplier",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Specifies the scaling factor for dinosaur taming speed. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
-        "Keywords":"Taming,Speed",
-        "FieldName":"TamingSpeedMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.TamingSpeedMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"XP Multiplier",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Specifies the scaling factor for the experience received by players, tribes and dinosaurs for various actions. The default value 1 provides the same amounts of experience as in the singleplayer experience (and official public servers). Higher values increase XP amounts awarded for various actions; lower values decrease it.",
-        "Keywords":"XP",
-        "FieldName":"XPMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.XPMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
     },
     {
         "DisplayName":"Enable PVP Gamma",
@@ -1058,19 +1074,6 @@
         "ParamFieldName":"ServerSettings.PvEStructureDecayDestructionPeriod",
         "IncludeInCommandLine":false,
         "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Banlist URL",
-        "Category":"ARK Server Settings",
-        "Description":"Uses the global banlist of ARK to disallow players access who have been identified as cheaters",
-        "Keywords":"ban,banlist,blacklist",
-        "FieldName":"Banlist",
-        "InputType":"URL",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.Banlist",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"http://arkdedicated.com/banlist.txt",
         "EnumValues":{}
     },
     {
