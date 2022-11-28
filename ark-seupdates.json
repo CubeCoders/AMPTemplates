@@ -16,7 +16,14 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'HOMEDIR=$( [[ -d /AMP/.virtualhome ]] && echo \"/home/amp/\" || echo \"~/\" ); ln -sf {{$FullRootDir}}steamcmd.sh {{$FullRootDir}}linux32 \"${HOMEDIR}Steam/steamapps\" {{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux/'"    
+        "UpdateSourceArgs":"-c 'ln -sf {{$FullRootDir}}steamcmd.sh {{$FullRootDir}}linux32 ~/Steam/steamapps {{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux/'"    
+    },
+    {
+        "UpdateStageName":"Create Working Directory Symlink",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'ln -sf {{$FullBaseDir}}ShooterGame/Binaries/Linux {{$FullBaseDir}}ShooterGame/Binaries/Win64'"    
     },
     {
         "UpdateStageName":"Config Directory Creation",
