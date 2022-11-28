@@ -161,6 +161,49 @@
         "EnumValues":{},
     },
     {
+        "DisplayName":"Enable Player Whitelist",
+        "Category":"ARK Server Settings",
+        "Description":"If set, only players with Steam64 IDs listed on the Player Whitelist can join the server",
+        "Keywords":"player,whitelist",
+        "FieldName":"exclusivejoin",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"exclusivejoin",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-exclusivejoin "
+        }
+    },
+    {
+        "DisplayName":"Player Whitelist",
+        "Category":"ARK Server Settings",
+        "Description":"List of Steam64 IDs for whitelisted players. [Find Steam64 IDs](https://steamidfinder.com/)",
+        "Keywords":"player,whitelist",
+        "FieldName":"PlayerWhitelist",
+        "InputType":"list",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PlayerWhitelist",
+        "DefaultValue":"",
+        "Special":"listfile:./ark-se/376030/ShooterGame/Binaries/Linux/PlayersExclusiveJoinList.txt",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Whitelist",
+        "Category":"ARK Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"PlayerWhitelist",
+        "InputType":"list",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"PlayerWhitelist",
+        "DefaultValue":"",
+        "Special":"listfile:./ark-se/376030/ShooterGame/Binaries/Win64/PlayersExclusiveJoinList.txt",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Spectator Password",
         "Category":"ARK Server Settings",
         "Description":"Sets the password for non-admin spectators on the server",
@@ -777,6 +820,62 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Structure Damage Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"Sets the scaling factor for the damage structures cause with their attacks (eg spiked walls). The default value 1 causes normal damage. Higher values increase damage. Lower values decrease it",
+        "Keywords":"structure,damage,multiplier,structuredamagemultiplier",
+        "FieldName":"StructureDamageMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"StructureDamageMultiplier",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Structure Resistance Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"Sets the scaling factor for structures' damage resistance when attacked. The default value 1 causes normal damage. Higher values decrease resistance, increasing damage per attack. Lower values increase it, reducing damage per attack",
+        "Keywords":"structure,resistance,multiplier,structureresistancemultiplier",
+        "FieldName":"StructureResistanceMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"StructureResistanceMultiplier",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Tamed Dinosaur Damage Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"Sets the scaling factor for the damage tamed dinosaurs cause with their attacks. The default value 1 causes normal damage. Higher values increase damage. Lower values decrease it",
+        "Keywords":"tamed,dinosaur,damage,multiplier,tameddinodamagemultiplier",
+        "FieldName":"TamedDinoDamageMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"TamedDinoDamageMultiplier",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Tamed Dinosaur Resistance Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"Sets the scaling factor for tamed dinosaurs' damage resistance when attacked. The default value 1 causes normal damage. Higher values decrease resistance, increasing damage per attack. Lower values increase it, reducing damage per attack",
+        "Keywords":"tamed,dinosaur,resistance,multiplier,tameddinoresistancemultiplier",
+        "FieldName":"TamedDinoResistanceMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"TamedDinoResistanceMultiplier",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Harvest Amount Multiplier",
         "Category":"ARK Multiplier Settings",
         "Description":"Sets the scaling factor for yields from all harvesting activities (chopping down trees, picking berries, carving carcasses, mining rocks, etc). Higher values increase the amount harvested with each strike",
@@ -819,81 +918,31 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Structure Damage Multiplier",
+        "DisplayName":"Dinosaur Taming Speed Multiplier",
         "Category":"ARK Multiplier Settings",
-        "Description":"Specifies the scaling factor for the damage structures deal with their attacks (i.e. spiked walls). The default value 1 provides normal damage. Higher values increase damage. Lower values decrease it.",
-        "Keywords":"Structure,Damage",
-        "FieldName":"StructureDamageMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.StructureDamageMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Structure Resistance Multiplier",
-        "Category":"ARK Multiplier Settings",
-        "Description":"Specifies the scaling factor for the resistance to damage structures receive when attacked. The default value 1 provides normal damage. Higher values decrease resistance, increasing damage per attack. Lower values increase it, reducing damage per attack. A value of 0.5 results in a structure taking half damage while a value of 2.0 would result in a structure taking double normal damage.",
-        "Keywords":"Structure,Resistance",
-        "FieldName":"StructureResistanceMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.StructureResistanceMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Tamed Dino Damage Multiplier",
-        "Category":"ARK Multiplier Settings",
-        "Description":"Specifies the scaling factor for tamed dinosaurs damage. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
-        "Keywords":"Dino,Damage",
-        "FieldName":"TamedDinoDamageMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.TamedDinoDamageMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Tamed Dino Resistance Multiplier",
-        "Category":"ARK Multiplier Settings",
-        "Description":"Specifies the scaling factor for dinosaurs fortitude. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
-        "Keywords":"Dino,Resistance",
-        "FieldName":"TamedDinoResistanceMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.TamedDinoResistanceMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Taming Speed Multiplier",
-        "Category":"ARK Multiplier Settings",
-        "Description":"Specifies the scaling factor for dinosaur taming speed. A value of 2.0 doubles the inital amount, a value of 0.5 halfes it.",
-        "Keywords":"Taming,Speed",
+        "Description":"Sets the scaling factor for dinosaur taming speed. Higher values make taming faster",
+        "Keywords":"taming,speed,multiplier,tamingspeedmultiplier",
         "FieldName":"TamingSpeedMultiplier",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.TamingSpeedMultiplier",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"TamingSpeedMultiplier",
+        "IncludeInCommandLine":true,
         "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
         "EnumValues":{}
     },
     {
         "DisplayName":"XP Multiplier",
         "Category":"ARK Multiplier Settings",
-        "Description":"Specifies the scaling factor for the experience received by players, tribes and dinosaurs for various actions. The default value 1 provides the same amounts of experience as in the singleplayer experience (and official public servers). Higher values increase XP amounts awarded for various actions; lower values decrease it.",
-        "Keywords":"XP",
+        "Description":"Sets the scaling factor for experience (XP) received by players, tribes and dinosaurs for various actions. The default value 1 provides the same experience as a singleplayer game. Higher values increase XP amounts awarded, lower values decrease it",
+        "Keywords":"xp,experience,multiplier,xpmultiplier",
         "FieldName":"XPMultiplier",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.XPMultiplier",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"XPMultiplier",
+        "IncludeInCommandLine":true,
         "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
         "EnumValues":{}
     },
     {
@@ -1142,8 +1191,8 @@
     {
         "DisplayName":"PvP Structure Decay",
         "Category":"ARK Gameplay Settings",
-        "Description":"Activates or deactivates structure decay on PVP servers",
-        "Keywords":"PvE,Structure,Decay",
+        "Description":"If enabled, activates structure decay on PVP servers",
+        "Keywords":"pvp,structure,decay,pvpstructuredecay",
         "FieldName":"PvPStructureDecay",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -1183,16 +1232,17 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Max Tamed Dinos",
+        "DisplayName":"Maximum Tamed Dinosaurs",
         "Category":"ARK Gameplay Settings",
-        "Description":"Defines the maximum amount of tamed dinos on the map.",
-        "Keywords":"Max,Tamed,Dino,Limit",
+        "Description":"Sets the maximum amount of tamed dinosaurs on the server. This is a global cap",
+        "Keywords":"maximum,tamed,dinosaurs,limit,maxtameddinos",
         "FieldName":"MaxTamedDinos",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.MaxTamedDinos",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"MaxTamedDinos",
+        "IncludeInCommandLine":true,
         "DefaultValue":"4000",
+        "Placeholder":"4000",
         "EnumValues":{}
     },
     {
@@ -1545,7 +1595,7 @@
         }
     },
     {
-        "DisplayName":"ForceFlyerExplosives",
+        "DisplayName":"Force Flyer Explosives",
         "Category":"ARK Gameplay Settings",
         "Description":"Flyer (except Quetzal and Wyvern can't fly with C4 attached to it. Set this parameter to true to let them still fly.",
         "Keywords":"flyer,explosives",
@@ -1560,7 +1610,7 @@
         }
     },
     {
-        "DisplayName":"Prevent offline PvP",
+        "DisplayName":"Prevent Offline PvP",
         "Category":"ARK Gameplay Settings",
         "Description":"Use this to enable the offline raiding prevention option.",
         "Keywords":"offline,pvp",
@@ -1693,12 +1743,42 @@
     {
         "DisplayName":"Disable Structure Placement Collision",
         "Category":"ARK Gameplay Settings",
-        "Description":"If 'true' allows for structures to clip into the terrain.",
-        "Keywords":"structure,placement",
+        "Description":"If set, allows for structures to clip into the terrain",
+        "Keywords":"structure,placement,collision,bdisablestructureplacementcollision",
         "FieldName":"bDisableStructurePlacementCollision",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"/script/shootergame.shootergamemode.bDisableStructurePlacementCollision",
+        "ParamFieldName":"/Script/ShooterGame.ShooterGameMode.bDisableStructurePlacementCollision",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Disable PvP Friendly Fire",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, prevents friendly fire among tribesmates, tribesdinosaurs and tribesstructures on PvP servers",
+        "Keywords":"pvp,friendly,fire,bdisablefriendlyfire",
+        "FieldName":"bDisableFriendlyFire",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/ShooterGame.ShooterGameMode.bDisableFriendlyFire",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Disable PvE Friendly Fire",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, prevents friendly fire among tribesmates, tribesdinosaurs and tribesstructures on PvE servers",
+        "Keywords":"pve,friendly,fire,bpvedisablefriendlyfire",
+        "FieldName":"bPvEDisableFriendlyFire",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/ShooterGame.ShooterGameMode.bPvEDisableFriendlyFire",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
