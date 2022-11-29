@@ -717,6 +717,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"globalVoiceChat",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -852,12 +853,13 @@
     {
         "DisplayName":"Disable PvE Dino Decay",
         "Category":"ARK Gameplay Settings",
-        "Description":"Deactivates the unclaiming functions for dinosaurs on PVE servers",
-        "Keywords":"PvE,Dino,Decay,Unclaim",
+        "Description":"If set, the gradual (7 days) decay (or unclaiming) of dinosaur ownership will be disabled in PvE mode. Otherwise, every dinosaur can be claimed by any player",
+        "Keywords":"pve,dino,decay,unclaim,disabledinodecaypve",
         "FieldName":"DisableDinoDecayPvE",
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"DisableDinoDecayPvE",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -865,17 +867,20 @@
         }
     },
     {
-        "DisplayName":"PvE Dino Decay Period Multiplier",
+        "DisplayName":"Disable PvP Dino Decay",
         "Category":"ARK Gameplay Settings",
-        "Description":"Multiplier value for the unclaiming speed of dinosaurs",
-        "Keywords":"PvE,Structure,Decay",
-        "FieldName":"PvEDinoDecayPeriodMultiplier",
-        "InputType":"number",
+        "Description":"If set, the gradual (7 days) decay (or unclaiming) of dinosaur ownership will be disabled in PvP mode while the Offline Raiding Prevention is active",
+        "Keywords":"pvp,dino,decay,unclaim,pvpdinodecay",
+        "FieldName":"PvPDinoDecay",
+        "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"PvEDinoDecayPeriodMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
+        "ParamFieldName":"PvPDinoDecay",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
     },
     {
         "DisplayName":"Maximum Tamed Dinosaurs",
@@ -900,8 +905,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"MaxNumbersofPlayersInTribe",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"2",
+        "Placeholder":"2",
         "EnumValues":{}
     },
     {
@@ -913,8 +919,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"BattleNumOfTribestoStartGame",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"2",
+        "Placeholder":"2",
         "EnumValues":{}
     },
     {
@@ -926,8 +933,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"TimeToCollapseROD",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"100",
+        "Placeholder":"100",
         "EnumValues":{}
     },
     {
@@ -939,8 +947,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"BattleAutoStartGameInterval",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"100",
+        "Placeholder":"100",
         "EnumValues":{}
     },
     {
@@ -952,8 +961,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"BattleSuddenDeathInterval",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"300",
+        "Placeholder":"300",
         "EnumValues":{}
     },
     {
@@ -1167,6 +1177,20 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"PvE Dinosaur Decay Period Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"Set the scaling factor for the unclaiming speed of dinosaurs",
+        "Keywords":"pve,dinosaur,decay,period,multiplier,pvedinodecayperiodmultiplier",
+        "FieldName":"PvEDinoDecayPeriodMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PvEDinoDecayPeriodMultiplier",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Structure Damage Multiplier",
         "Category":"ARK Multiplier Settings",
         "Description":"Sets the scaling factor for the damage structures  (spiked walls) cause with their attacks. The default value 1 causes normal damage. Higher values increase damage. Lower values decrease it",
@@ -1353,9 +1377,9 @@
         }
     },
     {
-        "DisplayName":"Enable PvP Structure Decay",
+        "DisplayName":"Disable PvP Structure Decay",
         "Category":"ARK Structure Settings",
-        "Description":"If enabled, activates structure decay in PvP mode",
+        "Description":"If enabled, the gradual (7 days) decay of structures will be disabled in PvP mode while the Offline Raiding Prevention is active",
         "Keywords":"pvp,structure,decay,pvpstructuredecay",
         "FieldName":"PvPStructureDecay",
         "InputType":"checkbox",
@@ -1377,8 +1401,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"PerPlatformMaxStructuresMultiplier",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
         "EnumValues":{}
     },
     {
@@ -1390,8 +1415,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"StructureDamageRepairCooldown",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"180",
+        "Placeholder":"180",
         "EnumValues":{}
     },
     {
@@ -1403,6 +1429,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"bForceAllStructureLocking",
+        "IncludeInCommandLine":true,
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1418,8 +1445,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"AutoDestroyOldStructuresMultiplier",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"0.00000",
+        "Placeholder":"0.00000",
         "EnumValues":{}
     },
     {
@@ -1431,8 +1459,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"MaxPlatformSaddleStructureLimit",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"100",
+        "Placeholder":"100",
         "EnumValues":{}
     },
     {
@@ -1444,6 +1473,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"bPassiveDefensesDamageRiderlessDinos",
+        "IncludeInCommandLine":true,
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1459,6 +1489,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"OverrideStructurePlatformPrevention",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1474,24 +1505,10 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"PreventOfflinePvPInterval",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"60.0",
+        "Placeholder":"60.0",
         "EnumValues":{}
-    },
-    {
-        "DisplayName":"PvP Dino Decay",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Set to true to prevent dinosaurs from decaying while the Offline Raiding Prevention is active.",
-        "Keywords":"PvP,Decay,Dino",
-        "FieldName":"bPvPDinoDecay",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"bPvPDinoDecay",
-        "DefaultValue":"True",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
     },
     {
         "DisplayName":"Disable Imprint Dino Buff",
@@ -1502,6 +1519,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"bPvPDinoDecay",
+        "IncludeInCommandLine":true,
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1517,6 +1535,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"EnableExtraStructurePreventionVolumes",
+        "IncludeInCommandLine":true,
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1532,6 +1551,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"ShowFloatingDamageText",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1547,6 +1567,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"DestroyUnconnectedWaterPipes",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1554,7 +1575,7 @@
         }
     },
     {
-        "DisplayName":"Max Structures on server",
+        "DisplayName":"Max Structures On Server",
         "Category":"ARK Gameplay Settings",
         "Description":"New value for the maximum allowed structures on the server.",
         "Keywords":"max,structures",
@@ -1562,8 +1583,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"TheMaxStructuresInRange",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"10500",
+        "Placeholder":"10500",
         "EnumValues":{}
     },
     {
@@ -1575,8 +1597,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"MinimumDinoReuploadInterval",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"0",
+        "Placeholder":"0",
         "EnumValues":{}
     },
     {
@@ -1588,6 +1611,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"PvEAllowStructuresAtSupplyDrops",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1603,8 +1627,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"MaxPersonalTamedDinos",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"500",
+        "Placeholder":"500",
         "EnumValues":{}
     },
     {
@@ -1616,6 +1641,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"AutoDestroyDecayedDinos",
+        "IncludeInCommandLine":true,
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1631,6 +1657,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"UseOptimizedHarvestingHealth",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1646,6 +1673,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"AllowCrateSpawnsOnTopOfStructures",
+        "IncludeInCommandLine":true,
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1661,6 +1689,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"ForceFlyerExplosives",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1670,12 +1699,13 @@
     {
         "DisplayName":"Prevent Offline PvP",
         "Category":"ARK Gameplay Settings",
-        "Description":"Use this to enable the offline raiding prevention option.",
-        "Keywords":"offline,pvp",
+        "Description":"If set, the Offline Raiding Prevention option will be enabled",
+        "Keywords":"offline,pvp,offline,raiding,prevention,preventofflinepvp",
         "FieldName":"PreventOfflinePvP",
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"PreventOfflinePvP",
+        "IncludeInCommandLine":true,
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1691,6 +1721,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"AllowFlyingStaminaRecovery",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1706,6 +1737,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"AllowMultipleAttachedC4",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1721,24 +1753,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"OxygenSwimSpeedStatMultiplier",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"1.0",
         "EnumValues":{}
-    },
-    {
-        "DisplayName":"PvE Disable Friendly Fire",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Prevent-Friendly-Fire (among tribesmates/tribesdinos/tribesstructures) option for PvE server.",
-        "Keywords":"PvE,Friendly,Fire",
-        "FieldName":"bPvEDisableFriendlyFire",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"bPvEDisableFriendlyFire",
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
     },
     {
         "DisplayName":"Disable Weather Fog",
@@ -1749,6 +1766,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"DisableWeatherFog",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1764,6 +1782,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"RandomSupplyCratePoints",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1779,6 +1798,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"CrossARKAllowForeignDinoDownloads",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1794,8 +1814,9 @@
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"PersonalTamedDinosSaddleStructureCost",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"19",
+        "Placeholder":"19",
         "EnumValues":{}
     },
     {
@@ -1807,6 +1828,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"/Script/ShooterGame.ShooterGameMode.bDisableStructurePlacementCollision",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1822,6 +1844,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"/Script/ShooterGame.ShooterGameMode.bDisableFriendlyFire",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1837,6 +1860,7 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"/Script/ShooterGame.ShooterGameMode.bPvEDisableFriendlyFire",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
