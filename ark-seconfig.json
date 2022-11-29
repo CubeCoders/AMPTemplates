@@ -89,7 +89,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"automanagedmods",
         "IncludeInCommandLine":false,
-        "DefaultValue":"",
+        "DefaultValue":"-automanagedmods ",
         "EnumValues":{
             "False":"",
             "True":"-automanagedmods "
@@ -98,8 +98,8 @@
     {
         "DisplayName":"Load Mods",
         "Category":"ARK Server Settings",
-        "Description":"Comma-separated list of mod IDs for mods to load on the server, in the order listed (note that map mods should be specified by name under Map). The mod files must be included in the ShooterGame/Content/Mods directory",
-        "Keywords":"load,mods",
+        "Description":"Comma-separated list of mod IDs for mods to load on the server, in the order listed (map mods should be specified instead by name under Map). The mod files must be included in the ShooterGame/Content/Mods directory",
+        "Keywords":"load,mods,gamemodids,activemods",
         "FieldName":"GameModIds",
         "InputType":"text",
         "IsFlagArgument":false,
@@ -114,7 +114,7 @@
         "DisplayName":"Active Event",
         "Category":"ARK Server Settings",
         "Description":"Sets the server's active event, if any. Some events may only work partially or not at all",
-        "Keywords":"active,event",
+        "Keywords":"active,event,activeevent",
         "FieldName":"ActiveEvent",
         "InputType":"enum",
         "IsFlagArgument":false,
@@ -137,7 +137,7 @@
     {
         "DisplayName":"Whitelisted Server Admins",
         "Category":"ARK Server Settings",
-        "Description":"List of Steam64 IDs for whitelisted server admins. [Find Steam64 IDs](https://steamidfinder.com/). These admins do not need to use the server admin password",
+        "Description":"List of Steam64 IDs for whitelisted server admins. [Find Steam64 IDs](https://steamidfinder.com/). These admins do not need to use the server admin password,allowedcheatersteamids",
         "Keywords":"admin,whitelist",
         "FieldName":"AdminWhitelist",
         "InputType":"list",
@@ -164,7 +164,7 @@
         "DisplayName":"Enable Player Whitelist",
         "Category":"ARK Server Settings",
         "Description":"If set, only players with Steam64 IDs listed on the Player Whitelist can join the server",
-        "Keywords":"player,whitelist",
+        "Keywords":"player,whitelist,exclusivejoin",
         "FieldName":"exclusivejoin",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -180,7 +180,7 @@
         "DisplayName":"Whitelisted Players",
         "Category":"ARK Server Settings",
         "Description":"List of Steam64 IDs for whitelisted players. [Find Steam64 IDs](https://steamidfinder.com/)",
-        "Keywords":"player,whitelist",
+        "Keywords":"player,whitelist,playersexclusivejoinlist",
         "FieldName":"PlayerWhitelist",
         "InputType":"list",
         "IsFlagArgument":false,
@@ -220,7 +220,7 @@
         "DisplayName":"Player Limit",
         "Category":"ARK Server Settings",
         "Description":"Sets the maximum number of players allowed on the server",
-        "Keywords":"max,players,limit",
+        "Keywords":"max,players,limit,maxplayers",
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "IsFlagArgument":false,
@@ -310,7 +310,7 @@
         "DisplayName":"Enable Vivox",
         "Category":"ARK Server Settings",
         "Description":"If set, enables Vivox on Steam only servers (Vivox is the default for Epic Game Store enabled servers)",
-        "Keywords":"vivox",
+        "Keywords":"vivox,usevivox",
         "FieldName":"UseVivox",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -412,8 +412,8 @@
         "IsFlagArgument":false,
         "ParamFieldName":"KickIdlePlayersPeriod",
         "IncludeInCommandLine":true,
-        "DefaultValue":"1800",
-        "Placeholder":"1800",
+        "DefaultValue":"3600",
+        "Placeholder":"3600",
         "Suffix":"seconds",
         "EnumValues":{}
     },
@@ -490,24 +490,137 @@
         "DisplayName":"Custom Command Line Options",
         "Category":"ARK Server Settings",
         "Description":"Sets custom [command line options](https://ark.fandom.com/wiki/Server_configuration#Command_line_arguments) for the server (those that start with a ? (question mark). Include the question mark but do not separate with a space",
-        "Keywords":"custom,command,line,settings",
+        "Keywords":"custom,command,line,options",
         "FieldName":"CustomOptions",
         "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"CustomOptions",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
+        "Placeholder":"?ClampItemStats=True",
         "EnumValues":{}
     },
     {
         "DisplayName":"Enable PvE",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, PvE will be enabled, and PvP disabled",
-        "Keywords":"pve,pvp,serverPVE",
+        "Keywords":"pve,pvp,serverpve",
         "FieldName":"serverPVE",
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"serverPVE",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable Hardcore Mode",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, enables hardcore mode, meaning player characters revert to level 1 upon death",
+        "Keywords":"hardcore,serverhardcore",
+        "FieldName":"serverHardcore",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"serverHardcore",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Difficulty Offset",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Sets the difficulty offset, which is used to calculate the [difficulty level](https://ark.fandom.com/wiki/Difficulty)",
+        "Keywords":"difficulty,offset,level,difficultyoffset",
+        "FieldName":"DifficultyOffset",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"DifficultyOffset",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0.20000",
+        "Placeholder":"0.20000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Crosshair",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, each player will be shown a crosshair",
+        "Keywords":"crosshair",
+        "FieldName":"ServerCrosshair",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerCrosshair",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Disable HUD",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, the HUD (head-up display) will always be disabled",
+        "Keywords":"hud,head-up,heads-up,display,serverforcenohud",
+        "FieldName":"serverForceNoHud",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"serverForceNoHud",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "Truue":"True"
+        }
+    },
+    {
+        "DisplayName":"Show Player On Map",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, shows each player their own precise position when they view their map",
+        "Keywords":"player,position,location,map,showmapplayerlocation",
+        "FieldName":"ShowMapPlayerLocation",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ShowMapPlayerLocation",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable PvP Gamma",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, allows gamma changes in PvP mode",
+        "Keywords":"pvp,gamma,enablepvpgamma",
+        "FieldName":"EnablePVPGamma",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"EnablePVPGamma",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Disable PvE Gamma",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, prevents gamma changes in PvE mode",
+        "Keywords":"pve,gamma,disablepvegamma",
+        "FieldName":"DisablePVEGamma",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"DisablePVEGamma",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -524,22 +637,6 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"allowThirdPersonPlayer",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Allow PVE Cave Building",
-        "Category":"ARK Gameplay Settings",
-        "Description":"If set, allows building in caves when PvE mode is enabled",
-        "Keywords":"pve,cave,building,allowcavebuildingpve",
-        "FieldName":"AllowCaveBuildingPvE",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"AllowCaveBuildingPvE",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -580,6 +677,22 @@
         }
     },
     {
+        "DisplayName":"Allow PVE Cave Building",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, allows building in caves when PvE mode is enabled",
+        "Keywords":"pve,cave,building,allowcavebuildingpve",
+        "FieldName":"AllowCaveBuildingPvE",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"AllowCaveBuildingPvE",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
         "DisplayName":"Allow PvE Flyer Carry",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, flying dinosaurs will be permitted to pick up other dinosaurs and players when mounted by a player in PvE mode",
@@ -596,22 +709,6 @@
         }
     },
     {
-        "DisplayName":"Disable PvE Structure Decay",
-        "Category":"ARK Gameplay Settings",
-        "Description":"If set, the gradual (7 days) decay of player structures will be disabled in PvE mode",
-        "Keywords":"pve,structure,decay,disablestructuredecaypve",
-        "FieldName":"DisableStructureDecayPvE",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"DisableStructureDecayPvE",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
         "DisplayName":"Enable Global Voice Chat",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, voice chat will be enabled globally",
@@ -620,6 +717,22 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"globalVoiceChat",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable Proximity Chat",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, only players near each other can see each other's chat messages",
+        "Keywords":"proximity,chat,proximitychat",
+        "FieldName":"proximityChat",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"proximityChat",
+        "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -707,161 +820,140 @@
         }
     },
     {
-        "DisplayName":"Enable Proximity Chat",
+        "DisplayName":"Player Radius For No Resource Replenish",
         "Category":"ARK Gameplay Settings",
-        "Description":"Only players near each other can see their chat messages.",
-        "Keywords":"Player,Proximity,Chat",
-        "FieldName":"proximityChat",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.proximityChat",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Resource No Replenish Radius to Players",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Defines the distance where there are no resources respawning when being close to a player.",
-        "Keywords":"Player,Resource,Radius",
-        "FieldName":"ResourceNoReplenishRadiusPlayers",
+        "Description":"Sets the distance around players where resources are not allowed to grow back. Values higher than 1 increase it, values between 0 and 1 reduce it",
+        "Keywords":"player,resource,radius,resourcenoreplenishradiusplayers",
+        "FieldName":"resourcenoreplenishradiusplayers",
         "InputType":"number",
+        "MinValue":"0",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.ResourceNoReplenishRadiusPlayers",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"ResourceNoReplenishRadiusPlayers",
+        "IncludeInCommandLine":true,
         "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Resource No Replenish Radius to Players",
+        "DisplayName":"Structure Radius For No Resource Replenish",
         "Category":"ARK Gameplay Settings",
-        "Description":"Defines the distance where there are no resources respawning when being close to a player.",
-        "Keywords":"Player,Resource,Radius",
-        "FieldName":"ResourceNoReplenishRadiusPlayers",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.ResourceNoReplenishRadiusPlayers",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Resource No Replenish Radius to Structures",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Defines the distance where there are no resources respawning when being close to Structures.",
-        "Keywords":"Structure,Resource,Radius",
+        "Description":"Sets the distance around structures where resources are not allowed to grow back. Values higher than 1 increase it, values between 0 and 1 reduce it",
+        "Keywords":"structure,resource,radius,resourcenoreplenishradiusstructures",
         "FieldName":"ResourceNoReplenishRadiusStructures",
         "InputType":"number",
+        "MinValue":"0",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.ResourceNoReplenishRadiusStructures",
+        "ParamFieldName":"ResourceNoReplenishRadiusStructures",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Disable PvE Dino Decay",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Deactivates the unclaiming functions for dinosaurs on PVE servers",
+        "Keywords":"PvE,Dino,Decay,Unclaim",
+        "FieldName":"DisableDinoDecayPvE",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"DisableDinoDecayPvE",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"PvE Dino Decay Period Multiplier",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Multiplier value for the unclaiming speed of dinosaurs",
+        "Keywords":"PvE,Structure,Decay",
+        "FieldName":"PvEDinoDecayPeriodMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PvEDinoDecayPeriodMultiplier",
         "IncludeInCommandLine":false,
         "DefaultValue":"1.00000",
         "EnumValues":{}
     },
     {
-        "DisplayName":"ServerCrosshair",
+        "DisplayName":"Maximum Tamed Dinosaurs",
         "Category":"ARK Gameplay Settings",
-        "Description":"Shows Crosshair",
-        "Keywords":"Player,Crosshair",
-        "FieldName":"ServerCrosshair",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.ServerCrosshair",
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Force No Hud",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Force Players No Hud",
-        "Keywords":"Player,Hud",
-        "FieldName":"serverForceNoHud",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.serverForceNoHud",
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "Truue":"True"
-        }
-    },
-    {
-        "DisplayName":"Hardcore Mode",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Enables hardcore mode (player characters revert to level 1 upon death)",
-        "Keywords":"Hardcore",
-        "FieldName":"serverHardcore",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.serverHardcore",
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Show Player On Map",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Show each player their own precise position when they view their map",
-        "Keywords":"Player,Map",
-        "FieldName":"ShowMapPlayerLocation",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.ShowMapPlayerLocation",
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Enable PVP Gamma",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Allows or disallows usage of gamma on PVP servers.",
-        "Keywords":"PvP,Gamma",
-        "FieldName":"EnablePVPGamma",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.EnablePVPGamma",
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Enable PVE Gamma",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Allows or disallows usage of gamma on PVE servers.",
-        "Keywords":"PvE,Gamma",
-        "FieldName":"EnablePVPGamma",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.EnablePVEGamma",
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Difficulty Offset",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Specifies the difficulty level.",
-        "Keywords":"Difficulty",
-        "FieldName":"DifficultyOffset",
+        "Description":"Sets the maximum amount of tamed dinosaurs on the server. This is a global cap",
+        "Keywords":"maximum,tamed,dinosaurs,limit,maxtameddinos",
+        "FieldName":"MaxTamedDinos",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.DifficultyOffset",
+        "ParamFieldName":"MaxTamedDinos",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"4000",
+        "Placeholder":"4000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Max Number of Players In a Tribe(SOTF)",
+        "Category":"ARK Gameplay Settings",
+        "Description":"SOTF setting: Defines the maximum player limit per tribe",
+        "Keywords":"SOTF,Tribe,Player",
+        "FieldName":"MaxNumbersofPlayersInTribe",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"MaxNumbersofPlayersInTribe",
         "IncludeInCommandLine":false,
-        "DefaultValue":"0.50000",
+        "DefaultValue":"2",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Min Num Of Tribes to Start Battle(SOTF)",
+        "Category":"ARK Gameplay Settings",
+        "Description":"SOTF setting: Defines how many tribes must have been created before the countdown for game start begins",
+        "Keywords":"SOTF,Tribe,Player",
+        "FieldName":"BattleNumOfTribestoStartGame",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"BattleNumOfTribestoStartGame",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Time To Collapse Ring Of Death(SOTF)",
+        "Category":"ARK Gameplay Settings",
+        "Description":"SOTF setting: Defines the time period for the force field to collapse",
+        "Keywords":"SOTF,ROD,Ring,Death,Collapse,Force,Field",
+        "FieldName":"TimeToCollapseROD",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"TimeToCollapseROD",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"100",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Battle Auto Start Game Interval(SOTF)",
+        "Category":"ARK Gameplay Settings",
+        "Description":"SOTF setting: Defines the length of the countdown before match begins",
+        "Keywords":"SOTF,Countdown,battle,match,Start",
+        "FieldName":"BattleAutoStartGameInterval",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"BattleAutoStartGameInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"100",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Battle Sudden Death Interval(SOTF)",
+        "Category":"ARK Gameplay Settings",
+        "Description":"SOTF setting: Defines the time before sudden death starts",
+        "Keywords":"SOTF,sudden,death",
+        "FieldName":"BattleSuddenDeathInterval",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"BattleSuddenDeathInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"300",
         "EnumValues":{}
     },
     {
@@ -1103,6 +1195,34 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"PvE Structure Decay Period Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"Sets the scaling factor for the decay rate of player structures in PvE mode",
+        "Keywords":"pve,structure,decay,pvestructuredecayperiodmultiplier",
+        "FieldName":"PvEStructureDecayPeriodMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PvEStructureDecayPeriodMultiplier",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"PvE Structure Decay Destruction Period",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Sets the time required for player structures to decay in PvE mode",
+        "Keywords":"pve,structure,decay,period,pvestructuredecaydestructionperiod",
+        "FieldName":"PvEStructureDecayDestructionPeriod",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PvEStructureDecayDestructionPeriod",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1.00000",
+        "Placeholder":"1.00000",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Tamed Dinosaur Damage Multiplier",
         "Category":"ARK Multiplier Settings",
         "Description":"Sets the scaling factor for the damage tamed dinosaurs cause with their attacks. The default value 1 causes normal damage. Higher values increase damage. Lower values decrease it",
@@ -1217,152 +1337,36 @@
         }
     },
     {
-        "DisplayName":"PvE Structure Decay Period Multiplier",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Specifies the scaling factor for the decay rate of player structures in PvE mode.",
-        "Keywords":"PvE,Structure,Decay",
-        "FieldName":"PvEStructureDecayPeriodMultiplier",
-        "InputType":"number",
+        "DisplayName":"Disable PvE Structure Decay",
+        "Category":"ARK Structure Settings",
+        "Description":"If set, the gradual (7 days) decay of player structures will be disabled in PvE mode",
+        "Keywords":"pve,structure,decay,disablestructuredecaypve",
+        "FieldName":"DisableStructureDecayPvE",
+        "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.PvEStructureDecayPeriodMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
+        "ParamFieldName":"DisableStructureDecayPvE",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
     },
     {
-        "DisplayName":"PvE Structure Decay Destruction Period",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Specifies the time required for player structures to decay in PvE mode.",
-        "Keywords":"PvE,Structure,Decay",
-        "FieldName":"PvEStructureDecayDestructionPeriod",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.PvEStructureDecayDestructionPeriod",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"PvP Structure Decay",
-        "Category":"ARK Gameplay Settings",
-        "Description":"If enabled, activates structure decay on PVP servers",
+        "DisplayName":"Enable PvP Structure Decay",
+        "Category":"ARK Structure Settings",
+        "Description":"If enabled, activates structure decay in PvP mode",
         "Keywords":"pvp,structure,decay,pvpstructuredecay",
         "FieldName":"PvPStructureDecay",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.PvPStructureDecay",
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Disable Dino Decay PvE",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Deactivates the unclaiming functions for dinosaurs on PVE servers",
-        "Keywords":"PvE,Dino,Decay,Unclaim",
-        "FieldName":"DisableDinoDecayPvE",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.DisableDinoDecayPvE",
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"PvE Dino Decay Period Multiplier",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Multiplier value for the unclaiming speed of dinosaurs",
-        "Keywords":"PvE,Structure,Decay",
-        "FieldName":"PvEDinoDecayPeriodMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.PvEDinoDecayPeriodMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1.00000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Maximum Tamed Dinosaurs",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Sets the maximum amount of tamed dinosaurs on the server. This is a global cap",
-        "Keywords":"maximum,tamed,dinosaurs,limit,maxtameddinos",
-        "FieldName":"MaxTamedDinos",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"MaxTamedDinos",
+        "ParamFieldName":"PvPStructureDecay",
         "IncludeInCommandLine":true,
-        "DefaultValue":"4000",
-        "Placeholder":"4000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Max Number of Players In a Tribe(SOTF)",
-        "Category":"ARK Gameplay Settings",
-        "Description":"SOTF setting: Defines the maximum player limit per tribe",
-        "Keywords":"SOTF,Tribe,Player",
-        "FieldName":"MaxNumbersofPlayersInTribe",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.MaxNumbersofPlayersInTribe",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Min Num Of Tribes to Start Battle(SOTF)",
-        "Category":"ARK Gameplay Settings",
-        "Description":"SOTF setting: Defines how many tribes must have been created before the countdown for game start begins",
-        "Keywords":"SOTF,Tribe,Player",
-        "FieldName":"BattleNumOfTribestoStartGame",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.BattleNumOfTribestoStartGame",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Time To Collapse Ring Of Death(SOTF)",
-        "Category":"ARK Gameplay Settings",
-        "Description":"SOTF setting: Defines the time period for the force field to collapse",
-        "Keywords":"SOTF,ROD,Ring,Death,Collapse,Force,Field",
-        "FieldName":"TimeToCollapseROD",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.TimeToCollapseROD",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"100",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Battle Auto Start Game Interval(SOTF)",
-        "Category":"ARK Gameplay Settings",
-        "Description":"SOTF setting: Defines the length of the countdown before match begins",
-        "Keywords":"SOTF,Countdown,battle,match,Start",
-        "FieldName":"BattleAutoStartGameInterval",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.BattleAutoStartGameInterval",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"100",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Battle Sudden Death Interval(SOTF)",
-        "Category":"ARK Gameplay Settings",
-        "Description":"SOTF setting: Defines the time before sudden death starts",
-        "Keywords":"SOTF,sudden,death",
-        "FieldName":"BattleSuddenDeathInterval",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.BattleSuddenDeathInterval",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"300",
-        "EnumValues":{}
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
     },
     {
         "DisplayName":"Per Platform Max Structures Multiplier",
@@ -1372,7 +1376,7 @@
         "FieldName":"PerPlatformMaxStructuresMultiplier",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.PerPlatformMaxStructuresMultiplier",
+        "ParamFieldName":"PerPlatformMaxStructuresMultiplier",
         "IncludeInCommandLine":false,
         "DefaultValue":"1.00000",
         "EnumValues":{}
@@ -1385,7 +1389,7 @@
         "FieldName":"StructureDamageRepairCooldown",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.StructureDamageRepairCooldown",
+        "ParamFieldName":"StructureDamageRepairCooldown",
         "IncludeInCommandLine":false,
         "DefaultValue":"180",
         "EnumValues":{}
@@ -1398,7 +1402,7 @@
         "FieldName":"bForceAllStructureLocking",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.bForceAllStructureLocking",
+        "ParamFieldName":"bForceAllStructureLocking",
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1413,7 +1417,7 @@
         "FieldName":"AutoDestroyOldStructuresMultiplier",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.AutoDestroyOldStructuresMultiplier",
+        "ParamFieldName":"AutoDestroyOldStructuresMultiplier",
         "IncludeInCommandLine":false,
         "DefaultValue":"0.00000",
         "EnumValues":{}
@@ -1426,7 +1430,7 @@
         "FieldName":"MaxPlatformSaddleStructureLimit",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.MaxPlatformSaddleStructureLimit",
+        "ParamFieldName":"MaxPlatformSaddleStructureLimit",
         "IncludeInCommandLine":false,
         "DefaultValue":"100",
         "EnumValues":{}
@@ -1439,7 +1443,7 @@
         "FieldName":"bPassiveDefensesDamageRiderlessDinos",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.bPassiveDefensesDamageRiderlessDinos",
+        "ParamFieldName":"bPassiveDefensesDamageRiderlessDinos",
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1454,7 +1458,7 @@
         "FieldName":"OverrideStructurePlatformPrevention",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.OverrideStructurePlatformPrevention",
+        "ParamFieldName":"OverrideStructurePlatformPrevention",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1469,7 +1473,7 @@
         "FieldName":"PreventOfflinePvPInterval",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.PreventOfflinePvPInterval",
+        "ParamFieldName":"PreventOfflinePvPInterval",
         "IncludeInCommandLine":false,
         "DefaultValue":"60.0",
         "EnumValues":{}
@@ -1482,7 +1486,7 @@
         "FieldName":"bPvPDinoDecay",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.bPvPDinoDecay",
+        "ParamFieldName":"bPvPDinoDecay",
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1497,7 +1501,7 @@
         "FieldName":"bPvPDinoDecay",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.bPvPDinoDecay",
+        "ParamFieldName":"bPvPDinoDecay",
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1512,7 +1516,7 @@
         "FieldName":"EnableExtraStructurePreventionVolumes",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.EnableExtraStructurePreventionVolumes",
+        "ParamFieldName":"EnableExtraStructurePreventionVolumes",
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1527,7 +1531,7 @@
         "FieldName":"ShowFloatingDamageText",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.ShowFloatingDamageText",
+        "ParamFieldName":"ShowFloatingDamageText",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1542,7 +1546,7 @@
         "FieldName":"DestroyUnconnectedWaterPipes",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.DestroyUnconnectedWaterPipes",
+        "ParamFieldName":"DestroyUnconnectedWaterPipes",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1557,7 +1561,7 @@
         "FieldName":"TheMaxStructuresInRange",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.TheMaxStructuresInRange",
+        "ParamFieldName":"TheMaxStructuresInRange",
         "IncludeInCommandLine":false,
         "DefaultValue":"10500",
         "EnumValues":{}
@@ -1570,7 +1574,7 @@
         "FieldName":"MinimumDinoReuploadInterval",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.MinimumDinoReuploadInterval",
+        "ParamFieldName":"MinimumDinoReuploadInterval",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
         "EnumValues":{}
@@ -1583,7 +1587,7 @@
         "FieldName":"PvEAllowStructuresAtSupplyDrops",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.PvEAllowStructuresAtSupplyDrops",
+        "ParamFieldName":"PvEAllowStructuresAtSupplyDrops",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1598,7 +1602,7 @@
         "FieldName":"MaxPersonalTamedDinos",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.MaxPersonalTamedDinos",
+        "ParamFieldName":"MaxPersonalTamedDinos",
         "IncludeInCommandLine":false,
         "DefaultValue":"500",
         "EnumValues":{}
@@ -1611,7 +1615,7 @@
         "FieldName":"AutoDestroyDecayedDinos",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.AutoDestroyDecayedDinos",
+        "ParamFieldName":"AutoDestroyDecayedDinos",
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1626,7 +1630,7 @@
         "FieldName":"UseOptimizedHarvestingHealth",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.UseOptimizedHarvestingHealth",
+        "ParamFieldName":"UseOptimizedHarvestingHealth",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1641,7 +1645,7 @@
         "FieldName":"AllowCrateSpawnsOnTopOfStructures",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.AllowCrateSpawnsOnTopOfStructures",
+        "ParamFieldName":"AllowCrateSpawnsOnTopOfStructures",
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1656,7 +1660,7 @@
         "FieldName":"ForceFlyerExplosives",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.ForceFlyerExplosives",
+        "ParamFieldName":"ForceFlyerExplosives",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1671,7 +1675,7 @@
         "FieldName":"PreventOfflinePvP",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.PreventOfflinePvP",
+        "ParamFieldName":"PreventOfflinePvP",
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -1686,7 +1690,7 @@
         "FieldName":"AllowFlyingStaminaRecovery",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.AllowFlyingStaminaRecovery",
+        "ParamFieldName":"AllowFlyingStaminaRecovery",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1701,7 +1705,7 @@
         "FieldName":"AllowMultipleAttachedC4",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.AllowMultipleAttachedC4",
+        "ParamFieldName":"AllowMultipleAttachedC4",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1716,7 +1720,7 @@
         "FieldName":"OxygenSwimSpeedStatMultiplier",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.OxygenSwimSpeedStatMultiplier",
+        "ParamFieldName":"OxygenSwimSpeedStatMultiplier",
         "IncludeInCommandLine":false,
         "DefaultValue":"1.0",
         "EnumValues":{}
@@ -1729,7 +1733,7 @@
         "FieldName":"bPvEDisableFriendlyFire",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.bPvEDisableFriendlyFire",
+        "ParamFieldName":"bPvEDisableFriendlyFire",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1744,7 +1748,7 @@
         "FieldName":"DisableWeatherFog",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.DisableWeatherFog",
+        "ParamFieldName":"DisableWeatherFog",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1759,7 +1763,7 @@
         "FieldName":"RandomSupplyCratePoints",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.RandomSupplyCratePoints",
+        "ParamFieldName":"RandomSupplyCratePoints",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1774,7 +1778,7 @@
         "FieldName":"CrossARKAllowForeignDinoDownloads",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.CrossARKAllowForeignDinoDownloads",
+        "ParamFieldName":"CrossARKAllowForeignDinoDownloads",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1789,14 +1793,14 @@
         "FieldName":"PersonalTamedDinosSaddleStructureCost",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.PersonalTamedDinosSaddleStructureCost",
+        "ParamFieldName":"PersonalTamedDinosSaddleStructureCost",
         "IncludeInCommandLine":false,
         "DefaultValue":"19",
         "EnumValues":{}
     },
     {
         "DisplayName":"Disable Structure Placement Collision",
-        "Category":"ARK Gameplay Settings",
+        "Category":"ARK Structure Settings",
         "Description":"If set, allows for structures to clip into the terrain",
         "Keywords":"structure,placement,collision,bdisablestructureplacementcollision",
         "FieldName":"bDisableStructurePlacementCollision",
