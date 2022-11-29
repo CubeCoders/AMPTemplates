@@ -1,6 +1,6 @@
 [
     {
-        "UpdateStageName":"SteamCMD Download",
+        "UpdateStageName":"SteamCMD Server Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"376030"
@@ -12,18 +12,21 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux"
     },
     {
-        "UpdateStageName":"Create SteamCMD Symlinks",
+        "UpdateStageName":"Download SteamCMD Client",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'ln -sf {{$FullRootDir}}steamcmd.sh {{$FullRootDir}}linux32 ~/Steam/steamapps {{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux/'"    
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux",
+        "UnzipUpdateSource":true,
+        "DeleteAfterExtract":true,
+        "OverwriteExistingFiles":true
     },
     {
         "UpdateStageName":"Replace Win64 Directory",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -rf {{$FullBaseDir}}ShooterGame/Binaries/Win64; ln -sf {{$FullBaseDir}}ShooterGame/Binaries/Linux {{$FullBaseDir}}ShooterGame/Binaries/Win64'"    
+        "UpdateSourceArgs":"-c 'rm -rf {{$FullBaseDir}}ShooterGame/Binaries/Win64; ln -sf {{$FullBaseDir}}ShooterGame/Binaries/Linux {{$FullBaseDir}}ShooterGame/Binaries/Win64'"
     },
     {
         "UpdateStageName":"Config Directory Creation",
