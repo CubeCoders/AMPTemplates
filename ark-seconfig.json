@@ -13,32 +13,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Message Of The Day",
-        "Category":"ARK Server Settings",
-        "Description":"Sets the player welcome message (MOTD)",
-        "Keywords":"MOTD,welcome,message",
-        "FieldName":"Message",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"MessageOfTheDay.Message",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"Welcome to ARK! Hosted by AMP by CubeCoders",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"MOTD Duration",
-        "Category":"ARK Server Settings",
-        "Description":"Sets the duration of the welcome message",
-        "Keywords":"MOTD,message,duration",
-        "FieldName":"Duration",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"MessageOfTheDay.Duration",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"30",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Map",
         "Category":"ARK Server Settings",
         "Description":"Sets the map for the server. If Custom is selected, Custom Map Name must also be set",
@@ -485,7 +459,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Enable PvE",
+        "DisplayName":"Enable PvE / Disable PvP",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, PvE will be enabled, and PvP disabled",
         "Keywords":"pve,pvp,serverpve",
@@ -796,6 +770,38 @@
         }
     },
     {
+        "DisplayName":"Enable Global Voice Chat",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, voice chat will be enabled globally",
+        "Keywords":"voice,chat,globalvoicechat",
+        "FieldName":"globalVoiceChat",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"globalVoiceChat",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable Proximity Chat",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, only players near each other can see each other's chat messages",
+        "Keywords":"proximity,chat,proximitychat",
+        "FieldName":"proximityChat",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"proximityChat",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
         "DisplayName":"Allow PVE Cave Building",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, allows building in caves when PvE mode is enabled",
@@ -828,35 +834,19 @@
         }
     },
     {
-        "DisplayName":"Enable Global Voice Chat",
+        "DisplayName":"Allow Cave Flyers",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, voice chat will be enabled globally",
-        "Keywords":"voice,chat,globalvoicechat",
-        "FieldName":"globalVoiceChat",
+        "Description":"If set, flyer dinosaurs will be allowed into caves",
+        "Keywords":"allow,cave,flyers,forceallowcaveflyers",
+        "FieldName":"ForceAllowCaveFlyers",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"globalVoiceChat",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"False",
+        "ParamFieldName":"ForceAllowCaveFlyers",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
         "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Enable Proximity Chat",
-        "Category":"ARK Gameplay Settings",
-        "Description":"If set, only players near each other can see each other's chat messages",
-        "Keywords":"proximity,chat,proximitychat",
-        "FieldName":"proximityChat",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"proximityChat",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
+            "False":"",
+            "True":"-ForceAllowCaveFlyers "
         }
     },
     {
@@ -905,22 +895,6 @@
         "EnumValues":{
             "False":"",
             "True":"-ForceRespawnDinos "
-        }
-    },
-    {
-        "DisplayName":"Allow Cave Flyers",
-        "Category":"ARK Gameplay Settings",
-        "Description":"If set, flyer dinosaurs will be allowed into caves",
-        "Keywords":"allow,cave,flyers,forceallowcaveflyers",
-        "FieldName":"ForceAllowCaveFlyers",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ForceAllowCaveFlyers",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"",
-        "EnumValues":{
-            "False":"",
-            "True":"-ForceAllowCaveFlyers "
         }
     },
     {
@@ -1225,7 +1199,7 @@
         }
     },
     {
-        "DisplayName":"Random Supply Crate Points",
+        "DisplayName":"Enable Random Supply Crate Points",
         "Category":"ARK Gameplay Settings",
         "Description":"If enabled, supply drops will be in random locations. NOTE: This setting is known to cause artifacts to become inaccessible on the Ragnarok map",
         "Keywords":"random,supply,crate,points,randomsupplycratepoints",
@@ -1241,7 +1215,7 @@
         }
     },
     {
-        "DisplayName":"Allow Aberration Foreign Dino Downloads",
+        "DisplayName":"Allow Foreign Dinosaur Downloads on Aberration",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, enables tribute download of non-native creatures on the Aberration map",
         "Keywords":"foreign,dino,download,crossarkallowforeigndinodownloads",
@@ -1623,7 +1597,7 @@
     {
         "DisplayName":"Harvest Health Multiplier",
         "Category":"ARK Multiplier Settings",
-        "Description":"Sets the scaling factor for the \"health\" of harvestable items (trees, rocks, carcasses, etc). Higher values increase the number of strikes they can withstand before being destroyed, increasing harvest yields",
+        "Description":"Sets the scaling factor for the \"health\" of harvestable items (trees, rocks, carcasses, etc). Higher values increase the number of strikes needed to destroy them, increasing harvest yields",
         "Keywords":"harvest,health,multiplier,harvesthealthmultiplier",
         "FieldName":"HarvestHealthMultiplier",
         "InputType":"number",
