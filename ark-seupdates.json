@@ -1,6 +1,6 @@
 [
     {
-        "UpdateStageName":"SteamCMD Server Download",
+        "UpdateStageName":"SteamCMD Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"376030"
@@ -12,14 +12,11 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux"
     },
     {
-        "UpdateStageName":"Download SteamCMD Client",
+        "UpdateStageName":"Create SteamCMD Symlinks",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux",
-        "UnzipUpdateSource":true,
-        "DeleteAfterExtract":true,
-        "OverwriteExistingFiles":true
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'ln -sf {{$FullRootDir}}steamcmd.sh {{$FullRootDir}}linux32 {{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux/'"
     },
     {
         "UpdateStageName":"Replace Win64 Directory",
