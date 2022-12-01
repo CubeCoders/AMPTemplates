@@ -42,7 +42,7 @@
     {
         "DisplayName":"Custom Map Name",
         "Category":"ARK Server Settings",
-        "Description":"Sets a custom map for the server. The custom map files must be included in the ShooterGame/Content/Mods directory. Automanaged Mods can be used for this purpose",
+        "Description":"Sets a custom map for the server. The custom map files must be included in the ShooterGame/Content/Mods directory. Auto Manage Mods can be used for this purpose",
         "Keywords":"custom,map",
         "FieldName":"CustomMap",
         "InputType":"text",
@@ -54,7 +54,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Automatically Manage Mods",
+        "DisplayName":"Auto Manage Mods",
         "Category":"ARK Server Settings",
         "Description":"If set, enables automatic mod download and updating (on server start). Non-map mods listed under Load Mods will be managed accordingly. Otherwise the mods must be specified in Game.ini under the heading [ModInstaller] and with one mod per line in the format: ModIDS=<value>",
         "Keywords":"auto,managed,mods,automanagedmods",
@@ -111,7 +111,7 @@
     {
         "DisplayName":"Whitelisted Server Admins",
         "Category":"ARK Server Settings",
-        "Description":"List of Steam64 IDs for whitelisted server admins. [Find Steam64 IDs](https://steamidfinder.com/). These admins do not need to use the server admin password",
+        "Description":"List of [Steam64 IDs](https://steamidfinder.com/) for whitelisted server admins. These admins do not need to use the server admin password",
         "Keywords":"admin,whitelist,allowedcheatersteamids",
         "FieldName":"AdminWhitelist",
         "InputType":"list",
@@ -137,7 +137,7 @@
     {
         "DisplayName":"Enable Player Whitelist",
         "Category":"ARK Server Settings",
-        "Description":"If set, only players with Steam64 IDs listed on the Player Whitelist can join the server",
+        "Description":"If set, only players with Steam64 IDs listed under Whitelisted Players can join the server",
         "Keywords":"player,whitelist,exclusivejoin",
         "FieldName":"exclusivejoin",
         "InputType":"checkbox",
@@ -153,7 +153,7 @@
     {
         "DisplayName":"Whitelisted Players",
         "Category":"ARK Server Settings",
-        "Description":"List of Steam64 IDs for whitelisted players. [Find Steam64 IDs](https://steamidfinder.com/)",
+        "Description":"List of [Steam64 IDs](https://steamidfinder.com/) for whitelisted players",
         "Keywords":"player,whitelist,playersexclusivejoinlist",
         "FieldName":"PlayerWhitelist",
         "InputType":"list",
@@ -300,7 +300,7 @@
         "DisplayName":"Disable Valve Anti-Cheat",
         "Category":"ARK Server Settings",
         "Description":"If set, disables Valve Anti-Cheat (VAC). Only works on Windows",
-        "Keywords":"valve,anti,cheat,insecure",
+        "Keywords":"valve,anti,cheat,anticheat,insecure",
         "FieldName":"insecure",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -395,7 +395,7 @@
     {
         "DisplayName":"Language",
         "Category":"ARK Server Settings",
-        "Description":"Set the language of the server",
+        "Description":"Sets the language of the server",
         "Keywords":"language,culture",
         "FieldName":"culture",
         "InputType":"enum",
@@ -433,7 +433,7 @@
     {
         "DisplayName":"Custom Command Line Flags",
         "Category":"ARK Server Settings",
-        "Description":"Sets custom [command line flags](https://ark.fandom.com/wiki/Server_configuration#Command_line_arguments) for the server (those that start with a - (dash). Include the dash and separate with a space",
+        "Description":"Sets custom [command line flags](https://ark.fandom.com/wiki/Server_configuration#Command_line_arguments) for the server (those that start with a - (dash)). Include the dash and separate with a space",
         "Keywords":"custom,command,line,flags",
         "FieldName":"CustomFlags",
         "InputType":"text",
@@ -447,7 +447,7 @@
     {
         "DisplayName":"Custom Command Line Options",
         "Category":"ARK Server Settings",
-        "Description":"Sets custom [command line options](https://ark.fandom.com/wiki/Server_configuration#Command_line_arguments) for the server (those that start with a ? (question mark). Include the question mark but do not separate with a space",
+        "Description":"Sets custom [command line options](https://ark.fandom.com/wiki/Server_configuration#Command_line_arguments) for the server (those that start with a ? (question mark)). Include the question mark but do not separate with a space",
         "Keywords":"custom,command,line,options",
         "FieldName":"CustomOptions",
         "InputType":"text",
@@ -477,7 +477,7 @@
     {
         "DisplayName":"Enable Offline Raiding Prevention",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, the Offline Raiding Prevention option will be enabled in PvP mode, preventing damage to a player's structures and dinosaurs while the player is offline",
+        "Description":"If set, the Offline Raiding Prevention option will be enabled in PvP mode, preventing damage to a player's structures and dinosaurs while the player is offline. For tribe dinosaurs and structures, all tribe members must be offline",
         "Keywords":"offline,pvp,raiding,prevention,preventofflinepvp",
         "FieldName":"PreventOfflinePvP",
         "InputType":"checkbox",
@@ -493,8 +493,8 @@
     {
         "DisplayName":"Offline Raiding Prevention Interval",
         "Category":"ARK Gameplay Settings",
-        "Description":"Sets the time period after which an offline player will be considered offline for the Offline Raiding Prevention option",
-        "Keywords":"offline,pvpraiding,prevention,preventofflinepvpinterval",
+        "Description":"Sets the time period after which an logged off player will be considered offline for the Offline Raiding Prevention option",
+        "Keywords":"offline,pvp,raiding,prevention,preventofflinepvpinterval",
         "FieldName":"PreventOfflinePvPInterval",
         "InputType":"number",
         "IsFlagArgument":false,
@@ -502,6 +502,7 @@
         "IncludeInCommandLine":true,
         "DefaultValue":"60.0",
         "Placeholder":"60.0",
+        "Suffix":"seconds",
         "EnumValues":{}
     },
     {
@@ -532,8 +533,8 @@
         "IsFlagArgument":false,
         "ParamFieldName":"DifficultyOffset",
         "IncludeInCommandLine":true,
-        "DefaultValue":"0.20000",
-        "Placeholder":"0.20000",
+        "DefaultValue":"0.200000",
+        "Placeholder":"0.200000",
         "EnumValues":{}
     },
     {
@@ -631,7 +632,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Maximum Personal Tamed Dinos",
+        "DisplayName":"Maximum Personal Tamed Dinosaurs",
         "Category":"ARK Gameplay Settings",
         "Description":"Sets the maximum number of tamed dinosaurs that a tribe is allowed to have",
         "Keywords":"maximum,tamed,personal,dinosaurs,limit,maxpersonaltameddinos",
@@ -645,10 +646,24 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Maximum Tribute Dinosaurs",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Sets the maximum number of slots for uploaded creatures",
+        "Keywords":"maximum,tribute,dinosaurs,limit,maxtributedinos",
+        "FieldName":"MaxTributeDinos",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"MaxTributeDinos",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"20",
+        "Placeholder":"20",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Maximum Structures",
         "Category":"ARK Gameplay Settings",
         "Description":"Sets the maximum number of structures that can be constructed within a certain range",
-        "Keywords":"maximum,structures,themaxstructuresinrange",
+        "Keywords":"maximum,structures,limit,themaxstructuresinrange",
         "FieldName":"TheMaxStructuresInRange",
         "InputType":"number",
         "IsFlagArgument":false,
@@ -659,10 +674,24 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Maximum Tribute Items",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Sets the maximum number of slots for uploaded items and resources",
+        "Keywords":"maximum,tribute,items,limit,maxtributeitems",
+        "FieldName":"MaxTributeItems",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"MaxTributeItems",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"50",
+        "Placeholder":"50",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Maximum Players In Tribe",
         "Category":"ARK Gameplay Settings",
         "Description":"Sets the maximum number of players in each tribe. 0 = no limit, 1 = tribes effectively disabled",
-        "Keywords":"maximum,tribe,players,maxnumberofplayersintribe",
+        "Keywords":"maximum,tribe,players,limit,maxnumberofplayersintribe",
         "FieldName":"MaxNumberOfPlayersInTribe",
         "InputType":"number",
         "MinValue":"0",
@@ -738,7 +767,7 @@
         }
     },
     {
-        "DisplayName":"Notify On Player Join",
+        "DisplayName":"Notify Player Join",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, players will always be notified if someone joins the server",
         "Keywords":"notify,player,join,alwaysnotifyplayerjoined",
@@ -754,7 +783,7 @@
         }
     },
     {
-        "DisplayName":"Notify On Player Leave",
+        "DisplayName":"Notify Player Leave",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, players will always be notified if someone leaves the server",
         "Keywords":"notify,player,leave,alwaysnotifyplayerleft",
@@ -802,9 +831,9 @@
         }
     },
     {
-        "DisplayName":"Allow PVE Cave Building",
+        "DisplayName":"Allow PvE Cave Building",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, allows building in caves when PvE mode is enabled",
+        "Description":"If set, allows building in caves in PvE mode",
         "Keywords":"pve,cave,building,allowcavebuildingpve",
         "FieldName":"AllowCaveBuildingPvE",
         "InputType":"checkbox",
@@ -836,7 +865,7 @@
     {
         "DisplayName":"Allow Cave Flyers",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, flyer dinosaurs will be allowed into caves",
+        "Description":"If set, flyer dinosaurs will always be allowed into caves",
         "Keywords":"allow,cave,flyers,forceallowcaveflyers",
         "FieldName":"ForceAllowCaveFlyers",
         "InputType":"checkbox",
@@ -853,7 +882,7 @@
         "DisplayName":"Disable Dinosaur Spawn",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, wild dinosaurs will not be spawned in the server. For an existing server, existing dinosaurs need to be wiped with the admin command \"destroywilddinos\"",
-        "Keywords":"no,dinosaurs,nodinos",
+        "Keywords":"no,dinosaurs,spawn,nodinos",
         "FieldName":"nodinos",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -916,7 +945,7 @@
     {
         "DisplayName":"Disable Loot Crates",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, loot crates will not spawn (artifact crates will still spawn)",
+        "Description":"If set, loot crates will not spawn. Artifact crates will still spawn",
         "Keywords":"disable,loot,crates,disablelootcrates",
         "FieldName":"bDisableLootCrates",
         "InputType":"checkbox",
@@ -934,7 +963,7 @@
         "Category":"ARK Gameplay Settings",
         "Description":"Sets the distance around players where resources are not allowed to grow back. Values higher than 1 increase it, values between 0 and 1 reduce it",
         "Keywords":"player,resource,radius,resourcenoreplenishradiusplayers",
-        "FieldName":"resourcenoreplenishradiusplayers",
+        "FieldName":"ResourceNoReplenishRadiusPlayers",
         "InputType":"number",
         "MinValue":"0",
         "IsFlagArgument":false,
@@ -960,7 +989,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Disable PvE Dino Decay",
+        "DisplayName":"Disable PvE Dinosaur Decay",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, the gradual (7 days) decay (or unclaiming) of dinosaur ownership will be disabled in PvE mode. Otherwise, every dinosaur can be claimed by any player",
         "Keywords":"pve,dino,decay,unclaim,disabledinodecaypve",
@@ -976,7 +1005,7 @@
         }
     },
     {
-        "DisplayName":"Enable PvP Dino Decay",
+        "DisplayName":"Enable PvP Dinosaur Decay",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, the gradual decay (or unclaiming) of dinosaur ownership will be enabled in PvP mode",
         "Keywords":"pvp,dino,decay,unclaim,pvpdinodecay",
@@ -1090,10 +1119,11 @@
     {
         "DisplayName":"Minimum Dinosaur Re-upload Interval",
         "Category":"ARK Gameplay Settings",
-        "Description":"Sets the number of seconds cooldown between allowed dinosaur re-uploads",
+        "Description":"Sets the cooldown period between allowed dinosaur re-uploads",
         "Keywords":"dinosaur,upload,interval,minimumdinoreuploadinterval",
         "FieldName":"MinimumDinoReuploadInterval",
         "InputType":"number",
+        "MinValue":"0",
         "IsFlagArgument":false,
         "ParamFieldName":"MinimumDinoReuploadInterval",
         "IncludeInCommandLine":true,
@@ -1105,8 +1135,8 @@
     {
         "DisplayName":"Auto Destroy Decayed Dinosaurs",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, claimable decayed dinos will be auto-destroyed on load, rather than remaining around as claimable",
-        "Keywords":"destroy,auto,decay,dino,autodestroydecayeddinos",
+        "Description":"If set, claimable decayed dinosaurs will be auto-destroyed on load, rather than remaining around as claimable",
+        "Keywords":"destroy,auto,decay,dinosaur,autodestroydecayeddinos",
         "FieldName":"AutoDestroyDecayedDinos",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -1218,7 +1248,7 @@
         "DisplayName":"Allow Foreign Dinosaur Downloads on Aberration",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, enables tribute download of non-native creatures on the Aberration map",
-        "Keywords":"foreign,dino,download,crossarkallowforeigndinodownloads",
+        "Keywords":"foreign,dinosaur,download,crossarkallowforeigndinodownloads",
         "FieldName":"CrossARKAllowForeignDinoDownloads",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -1864,7 +1894,7 @@
         }
     },
     {
-        "DisplayName":"Prevent Download Of Characters",
+        "DisplayName":"Prevent Character Download",
         "Category":"ARK Cluster Settings",
         "Description":"If set, prevents the download of characters from a cluster to the server",
         "Keywords":"prevent,download,tribute,characters,data,transfer,cluster,notributedownloads",
@@ -1880,7 +1910,7 @@
         }
     },
     {
-        "DisplayName":"Prevent Download Of Survivors",
+        "DisplayName":"Prevent Survivor Download",
         "Category":"ARK Cluster Settings",
         "Description":"If set, prevents the download of survivors from a cluster to the server",
         "Keywords":"prevent,download,survivor,data,transfer,cluster,preventdownloadsurvivors",
@@ -1896,7 +1926,7 @@
         }
     },
     {
-        "DisplayName":"Prevent Download Of Items",
+        "DisplayName":"Prevent Item Download",
         "Category":"ARK Cluster Settings",
         "Description":"If set, prevents the download of items from a cluster to the server",
         "Keywords":"prevent,download,items,data,transfer,cluster,preventdownloaditems",
@@ -1912,7 +1942,7 @@
         }
     },
     {
-        "DisplayName":"Prevent Download of Dinosaurs",
+        "DisplayName":"Prevent Dinosaur Download",
         "Category":"ARK Cluster Settings",
         "Description":"If set, prevents the download of tamed dinosaurs from a cluster to the server",
         "Keywords":"prevent,download,dinosaurs,data,transfer,cluster,preventdownloaddinos",
@@ -1928,7 +1958,7 @@
         }
     },
     {
-        "DisplayName":"Prevent Upload Of Survivors",
+        "DisplayName":"Prevent Survivor Upload",
         "Category":"ARK Cluster Settings",
         "Description":"If set, prevents the upload of survivors from the server to a cluster",
         "Keywords":"prevent,upload,survivor,data,transfer,cluster,preventuploadsurvivors",
@@ -1944,7 +1974,7 @@
         }
     },
     {
-        "DisplayName":"Prevent Upload Of Items",
+        "DisplayName":"Prevent Item Upload",
         "Category":"ARK Cluster Settings",
         "Description":"If set, prevents the upload of items from the server to a cluster",
         "Keywords":"prevent,upload,items,data,transfer,cluster,preventuploaditems",
@@ -1960,7 +1990,7 @@
         }
     },
     {
-        "DisplayName":"Prevent Upload of Dinosaurs",
+        "DisplayName":"Prevent Dinosaur Upload",
         "Category":"ARK Cluster Settings",
         "Description":"If set, prevents the upload of tamed dinosaurs from the server to a cluster",
         "Keywords":"prevent,upload,dinosaurs,data,transfer,cluster,preventuploaddinos",
