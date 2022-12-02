@@ -393,6 +393,22 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Structure Stasis Grid",
+        "Category":"ARK Server Settings",
+        "Description":"If set, enables the structure stasis grid to improve server performance on large bases with lots of players. Structures are loaded based on grids with players. Not recommended for modded servers",
+        "Keywords":"structure,stasis,grid,usestructurestasisgrid",
+        "FieldName":"UseStructureStasisGrid",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"UseStructureStasisGrid",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-UseStructureStasisGrid "
+        }
+    },
+    {
         "DisplayName":"Language",
         "Category":"ARK Server Settings",
         "Description":"Sets the language of the server",
@@ -557,7 +573,7 @@
         "DisplayName":"Enable Crosshair",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, each player will be shown a crosshair",
-        "Keywords":"crosshair",
+        "Keywords":"crosshair,servercrosshair",
         "FieldName":"ServerCrosshair",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -612,6 +628,70 @@
         "ParamFieldName":"allowThirdPersonPlayer",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Show Floating Damage Text",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, damage caused is shown in a RPG style pop-up text",
+        "Keywords":"show,floating,damage,text,showfloatingdamagetext",
+        "FieldName":"ShowFloatingDamageText",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ShowFloatingDamageText",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent Spawn Animation",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, player characters spawn and respawn without the wake-up animation",
+        "Keywords":"prevent,spawn,animations,preventspawnanimations",
+        "FieldName":"PreventSpawnAnimations",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PreventSpawnAnimations",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Disable Dino Mate Boost",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, disables Dino Mate Boost",
+        "Keywords":"prevent,mate,boost,preventmateboost",
+        "FieldName":"PreventMateBoost",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PreventMateBoost",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable Hitmarkers",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, enables optional hitmarkers for ranged attacks",
+        "Keywords":"allow,hitmarkers,allowhitmarkers",
+        "FieldName":"AllowHitMarkers",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"AllowHitMarkers",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
             "True":"True"
@@ -701,6 +781,22 @@
         "DefaultValue":"0",
         "Placeholder":"0",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Prevent Tribe Alliances",
+        "Category":"ARK Gameplay Settings",
+        "Description":"If set, tribes will be prevented from creating alliances",
+        "Keywords":"prevent,tribe,alliances,preventtribealliances",
+        "FieldName":"PreventTribeAlliances",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PreventTribeAlliances",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
     },
     {
         "DisplayName":"Disable PvP Friendly Fire",
@@ -911,7 +1007,7 @@
         }
     },
     {
-        "DisplayName":"Force Dinosaur Respawn",
+        "DisplayName":"Force Dinosaur Respawn On Start",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, all wild creatures that are not currently being tamed will be destroyed on server start",
         "Keywords":"force,dinosaur,respawn,forcerespawndinos",
@@ -925,6 +1021,22 @@
             "False":"",
             "True":"-ForceRespawnDinos "
         }
+    },
+    {
+        "DisplayName":"Force Dinosaur Respawn At Interval",
+        "Category":"ARK Gameplay Settings",
+        "Description":"Sets the period to force respawns of dinosaurs to prevent certain types (like the Basilo and Spino) from becoming depopulated on long running servers. 0 = disabled",
+        "Keywords":"auto,force,respawn,wild,dinosaurs,interval,serverautoforcerespawnwilddinosinterval",
+        "FieldName":"ServerAutoForceRespawnWildDinosInterval",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerAutoForceRespawnWildDinosInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"604800",
+        "Placeholder":"604800",
+        "Suffix":"seconds",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Disable Fish Loot",
@@ -1093,22 +1205,6 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"DisableImprintDinoBuff",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"True",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Show Floating Damage Text",
-        "Category":"ARK Gameplay Settings",
-        "Description":"If set, damage caused is shown in a RPG style pop-up text",
-        "Keywords":"show,floating,damage,text,ShowFloatingDamageText",
-        "FieldName":"ShowFloatingDamageText",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ShowFloatingDamageText",
         "IncludeInCommandLine":true,
         "DefaultValue":"True",
         "EnumValues":{
@@ -1573,7 +1669,7 @@
         {
         "DisplayName":"Maximum Platform Structures Multiplier",
         "Category":"ARK Multiplier Settings",
-        "Description":"Sets the scaling factor for the maximum number of structures placeable on saddle platforms and rafts. NOTE: high values may lead to lag",
+        "Description":"Sets the scaling factor for the maximum number of structures placeable on platform saddles and rafts. NOTE: high values may lead to lag",
         "Keywords":"saddle,platform,raft,structure,multiplier,perplatformmaxstructuresmultiplier",
         "FieldName":"PerPlatformMaxStructuresMultiplier",
         "InputType":"number",
@@ -1808,7 +1904,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Maximum Saddle Platform Limit",
+        "DisplayName":"Maximum Platform Saddle Limit",
         "Category":"ARK Structure Settings",
         "Description":"Sets the maximum number of platformed-creatures/rafts allowed on the server",
         "Keywords":"maximum,platform,saddle,structure,limit,maxplatformsaddlestructurelimit",
@@ -1822,9 +1918,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Saddle Platform Cost",
+        "DisplayName":"Platform Saddle Cost",
         "Category":"ARK Structure Settings",
-        "Description":"Sets the number of tame slots a saddle platform will use",
+        "Description":"Sets the number of tame slots a platform saddle will use",
         "Keywords":"tamed,dinosaur,cost,saddle,platform,personaltameddinossaddlestructurecost",
         "FieldName":"PersonalTamedDinosSaddleStructureCost",
         "InputType":"number",
@@ -1838,7 +1934,7 @@
     {
         "DisplayName":"Override Structure Platform Prevention",
         "Category":"ARK Structure Settings",
-        "Description":"If set, turret and spike structures will be buildable and functional on saddle platforms",
+        "Description":"If set, turret and spike structures will be buildable and functional on platform saddles",
         "Keywords":"override,structure,platform,overridestructureplatformprevention",
         "FieldName":"OverrideStructurePlatformPrevention",
         "InputType":"checkbox",
