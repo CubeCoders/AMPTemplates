@@ -1,7 +1,7 @@
 [
     {
-        "DisplayName":"Game Port",
-        "Category":"Server Settings",
+        "DisplayName":"Steam Port",
+        "Category":"PZ Server Settings",
         "Description":"",
         "Keywords":"",
         "FieldName":"$ApplicationPort1",
@@ -14,36 +14,22 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Steam Port 1",
-        "Category":"Server Settings",
+        "DisplayName":"Direct Port",
+        "Category":"PZ Server Settings",
         "Description":"",
         "Keywords":"",
         "FieldName":"$ApplicationPort2",
         "InputType":"number",
         "IsFlagArgument":false,
         "Hidden":true,
-        "ParamFieldName":"SteamPort1",
+        "ParamFieldName":"UDPPort",
         "IncludeInCommandLine":false,
-        "DefaultValue":"8766",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Steam Port 2",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$ApplicationPort3",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "Hidden":true,
-        "ParamFieldName":"SteamPort2",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"8767",
+        "DefaultValue":"16262",
         "EnumValues":{}
     },
     {
         "DisplayName":"RCON Port",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"",
         "Keywords":"",
         "FieldName":"$RemoteAdminPort",
@@ -57,8 +43,8 @@
     },
     {
         "DisplayName":"Server Public Name",
-        "Category":"Server Settings",
-        "Description":"Server name as shown to the public (if the server is visible)",
+        "Category":"PZ Server Settings",
+        "Description":"Server name as shown in the in-game and/or Steam browsers",
         "Keywords":"public,name",
         "FieldName":"PublicName",
         "InputType":"text",
@@ -70,8 +56,8 @@
     },
     {
         "DisplayName":"Make Server Public",
-        "Category":"Server Settings",
-        "Description":"If enabled, the server will be visible on Steam",
+        "Category":"PZ Server Settings",
+        "Description":"If enabled, the server will be visible in the in-game browser (Steam-enabled servers are always visible in the Steam server browser)",
         "Keywords":"public,steam",
         "FieldName":"Public",
         "InputType":"checkbox",
@@ -86,8 +72,8 @@
     },
     {
         "DisplayName":"Server Public Description",
-        "Category":"Server Settings",
-        "Description":"Description that people can see while going over your server",
+        "Category":"PZ Server Settings",
+        "Description":"Description displayed in the in-game browser. Use \"\\n\" to create a new line in the description",
         "Keywords":"public,description",
         "FieldName":"PublicDescription",
         "InputType":"text",
@@ -99,7 +85,7 @@
     },
     {
         "DisplayName":"Server Password",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"Password to connect to the server. Default is no password",
         "Keywords":"password",
         "FieldName":"Password",
@@ -112,7 +98,7 @@
     },
     {
         "DisplayName":"Admin Password",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"In-game \"admin\" user password (not the server password). Set before first running the server, or you will be prompted to do so in the console",
         "Keywords":"admin,password",
         "FieldName":"adminpassword",
@@ -126,10 +112,10 @@
     },
     {
         "DisplayName":"RCON Password",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"Password to connect to RCON. NOTE: You should change this after first installing the server",
         "Keywords":"rcon,password",
-        "FieldName":"$RemoteAdminPassword",
+        "FieldName":"RCONPassword",
         "InputType":"RandomPassword",
         "IsFlagArgument":false,
         "ParamFieldName":"RCONPassword",
@@ -139,7 +125,7 @@
     },
     {
         "DisplayName":"Welcome Message",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"Welcome message when players join the server",
         "Keywords":"welcome,message,motd",
         "FieldName":"ServerWelcomeMessage",
@@ -152,22 +138,22 @@
     },
     {
         "DisplayName":"Player Limit",
-        "Category":"Server Settings",
-        "Description":"Maximum number of players that may connect to the server",
+        "Category":"PZ Server Settings",
+        "Description":"Maximum number of players that may be on the server at one time (excluding admins). Player counts above 32 may affect performance",
         "Keywords":"maximum,players",
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"MaxPlayers",
         "IncludeInCommandLine":false,
-        "DefaultValue":"16",
+        "DefaultValue":"32",
         "Suffix":"players",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Disable Whitelist",
-        "Category":"Server Settings",
-        "Description":"",
+        "DisplayName":"Enable Open Server",
+        "Category":"PZ Server Settings",
+        "Description":"If enabled, players may join the server without already being included in the whitelist",
         "Keywords":"whitelist,open",
         "FieldName":"Open",
         "InputType":"checkbox",
@@ -182,8 +168,8 @@
     },
     {
         "DisplayName":"Automatically Whitelist Players",
-        "Category":"Server Settings",
-        "Description":"Automatically add players to the whitelist (if not disabled)",
+        "Category":"PZ Server Settings",
+        "Description":"Automatically add players to the whitelist (for open servers)",
         "Keywords":"whitelist,add,automatic",
         "FieldName":"AutoCreateUserInWhiteList",
         "InputType":"checkbox",
@@ -198,7 +184,7 @@
     },
     {
         "DisplayName":"Memory Limit",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"Java's maximum heap size",
         "Keywords":"maximum,memory,limit",
         "FieldName":"MaxMemory",
@@ -212,7 +198,7 @@
     },
     {
         "DisplayName":"Java Garbage Collection Algorithm (Windows)",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"Default Java garbage collection algorithm is ZGC, but G1GC can be selected for older Windows versions that cannot use ZGC",
         "Keywords":"garbage,collection,algorithm",
         "FieldName":"JavaGCAlgo",
@@ -228,7 +214,7 @@
     },
     {
         "DisplayName":"Enable Valve Anti-cheat (Steam VAC)",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"",
         "Keywords":"VAC,cheat",
         "FieldName":"SteamVAC",
@@ -244,7 +230,7 @@
     },
     {
         "DisplayName":"Steam Integration",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"Enable Steam integration",
         "Keywords":"steam,integration",
         "FieldName":"SteamInt",
@@ -259,9 +245,9 @@
         }
     },
     {
-        "DisplayName":"Map",
-        "Category":"Server Settings",
-        "Description":"Sets the map for the server",
+        "DisplayName":"Maps",
+        "Category":"PZ Server Settings",
+        "Description":"Semi-colon separated list of maps to load on the server. \"Muldraugh, KY\" should be last in the list",
         "Keywords":"map",
         "FieldName":"Map",
         "InputType":"text",
@@ -269,12 +255,13 @@
         "ParamFieldName":"Map",
         "IncludeInCommandLine":false,
         "DefaultValue":"Muldraugh, KY",
+        "Placeholder":"RavenCreek;BedfordFalls;Muldraugh, KY",
         "EnumValues":{}
     },
     {
         "DisplayName":"Mods",
-        "Category":"Server Settings",
-        "Description":"Semi-colon separated list of names of mods to install on the server. The mod IDs also need to be added to Workshop Items",
+        "Category":"PZ Server Settings",
+        "Description":"Semi-colon separated list of mod IDs to install on the server. The workshop IDs for the mods also need to be added to Workshop Items",
         "Keywords":"mods",
         "FieldName":"Mods",
         "InputType":"text",
@@ -287,8 +274,8 @@
     },
     {
         "DisplayName":"Workshop Items",
-        "Category":"Server Settings",
-        "Description":"Semi-colon separated list of IDs of workshop items to install on the server. Mod names also need to be added to Mods",
+        "Category":"PZ Server Settings",
+        "Description":"Semi-colon separated list of IDs of workshop items to install on the server. Mod IDs also need to be added to Mods. NOTE: Don't use \"Steam workshop items\" under SteamCMD and Updates",
         "Keywords":"workshop,items",
         "FieldName":"WorkshopItems",
         "InputType":"text",
@@ -301,8 +288,8 @@
     },
     {
         "DisplayName":"Display Player Usernames",
-        "Category":"Server Settings",
-        "Description":"If enabled, display players' usernames",
+        "Category":"PZ Server Settings",
+        "Description":"If enabled, display players' usernames above their heads in-game",
         "Keywords":"display,name",
         "FieldName":"DisplayUserName",
         "InputType":"checkbox",
@@ -317,8 +304,8 @@
     },
     {
         "DisplayName":"Display Player Character Names",
-        "Category":"Server Settings",
-        "Description":"If enabled, display players' character names",
+        "Category":"PZ Server Settings",
+        "Description":"If enabled, display players' first and last names above their heads in-game instead of usernames",
         "Keywords":"display,character,name",
         "FieldName":"ShowFirstAndLastName",
         "InputType":"checkbox",
@@ -333,7 +320,7 @@
     },
     {
         "DisplayName":"Steam Scoreboard",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"Sets whether steam usernames and avatars are shown in the player list",
         "Keywords":"steam,scoreboard",
         "FieldName":"SteamScoreboard",
@@ -350,8 +337,8 @@
     },
     {
         "DisplayName":"Pause When Empty",
-        "Category":"Server Settings",
-        "Description":"If enabled, the server will pause when empty, and won't update",
+        "Category":"PZ Server Settings",
+        "Description":"If enabled, game time stops when there are no players online",
         "Keywords":"pause,empty",
         "FieldName":"PauseEmpty",
         "InputType":"checkbox",
@@ -366,8 +353,8 @@
     },
     {
         "DisplayName":"Auto World Save Interval",
-        "Category":"Server Settings",
-        "Description":"Time between each automatic world save (0 = never)",
+        "Category":"PZ Server Settings",
+        "Description":"Time between each automatic save of loaded parts of the map (0 = never)",
         "Keywords":"save,interval",
         "FieldName":"SaveWorldEveryMinutes",
         "InputType":"number",
@@ -379,8 +366,24 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable UPnP",
+        "Category":"PZ Server Settings",
+        "Description":"If enabled, the server will attempt to configure automatic port forwarding on a compatible router",
+        "Keywords":"upnp",
+        "FieldName":"UPnP",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"UPnP",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
         "DisplayName":"Additional Java Startup Parameters",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"Additional Java arguments (not server arguments) as startup parameters that are not otherwise set by AMP. Use with care",
         "Keywords":"custom,java,arguments,parameters",
         "FieldName":"CustomJavaArgs",
@@ -394,7 +397,7 @@
     },
     {
         "DisplayName":"Server Local Name",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"Server name as stored locally. WARNING: Do not change unless you know what you are doing! Also update the server if this is changed",
         "Keywords":"server,name",
         "FieldName":"servername",
@@ -407,7 +410,7 @@
     },
     {
         "DisplayName":"Additional Server Startup Parameters",
-        "Category":"Server Settings",
+        "Category":"PZ Server Settings",
         "Description":"Additional server arguments (not Java arguments) as startup parameters that are not otherwise set by AMP. Use with care",
         "Keywords":"custom,server,arguments,parameters",
         "FieldName":"CustomServerArgs",
@@ -421,8 +424,8 @@
     },
     {
         "DisplayName":"Set Spawn Point",
-        "Category":"Gameplay Settings",
-        "Description":"Sets the spawn point. Default is 0,0,0. Use x,y,z coordinates",
+        "Category":"PZ Gameplay Settings",
+        "Description":"Sets the spawn point for every new player. Default is 0,0,0. [Find desired coordinates](https://map.projectzomboid.com/)",
         "Keywords":"spawnpoint,map",
         "FieldName":"SpawnPoint",
         "InputType":"text",
@@ -434,8 +437,8 @@
     },
     {
         "DisplayName":"Spawn Items",
-        "Category":"Gameplay Settings",
-        "Description":"Comma separated list of items that all players spawn with",
+        "Category":"PZ Gameplay Settings",
+        "Description":"Comma separated list of item types that new players spawn with",
         "Keywords":"spawn,items",
         "FieldName":"SpawnItems",
         "InputType":"text",
@@ -448,8 +451,8 @@
     },
     {
         "DisplayName":"Allow PvP",
-        "Category":"Gameplay Settings",
-        "Description":"If enabled, Player vs Player is allowed",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, players can hurt and kill other players",
         "Keywords":"pvp",
         "FieldName":"PVP",
         "InputType":"checkbox",
@@ -464,8 +467,8 @@
     },
     {
         "DisplayName":"Enable PvP Toggle (Safety System)",
-        "Category":"Gameplay Settings",
-        "Description":"If enabled, allows PvP to be toggled on and off. Requires PvP to be allowed",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, allows players to enter and leave PvP mode on an individual basis. Requires \"Allow PvP\" to be enabled",
         "Keywords":"safetysystem,pvp",
         "FieldName":"SafetySystem",
         "InputType":"checkbox",
@@ -479,9 +482,25 @@
         }
     },
     {
+        "DisplayName":"Show Player PvP Status",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, displays a skull icon above the heads of players in PvP mode",
+        "Keywords":"pvp,status,safety",
+        "FieldName":"ShowSafety",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ShowSafety",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
         "DisplayName":"PvP Toggle Timer",
-        "Category":"Gameplay Settings",
-        "Description":"Time taken to switch PvP between on and off",
+        "Category":"PZ Gameplay Settings",
+        "Description":"Time taken for a player to enter and leave PvP mode",
         "Keywords":"safetysystem,pvp,timer",
         "FieldName":"SafetyToggleTimer",
         "InputType":"number",
@@ -494,8 +513,8 @@
     },
     {
         "DisplayName":"PvP Cooldown Timer",
-        "Category":"Gameplay Settings",
-        "Description":"Time taken before PvP can be toggled again",
+        "Category":"PZ Gameplay Settings",
+        "Description":"Delay before a player can enter or leave PvP mode again",
         "Keywords":"safetysystem,pvp,timer,cooldown",
         "FieldName":"SafetyCooldownTimer",
         "InputType":"number",
@@ -508,7 +527,7 @@
     },
     {
         "DisplayName":"Enable Factions",
-        "Category":"Gameplay Settings",
+        "Category":"PZ Gameplay Settings",
         "Description":"If enabled, factions can be created and used",
         "Keywords":"factions",
         "FieldName":"Faction",
@@ -523,8 +542,22 @@
         }
     },
     {
+        "DisplayName":"Game Days For Factions",
+        "Category":"PZ Gameplay Settings",
+        "Description":"Number of in-game days that a player must survive for before they can create a faction",
+        "Keywords":"factions",
+        "FieldName":"FactionDaySurvivedToCreate",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"FactionDaySurvivedToCreate",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "Suffix":"days",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Enable Global Chat",
-        "Category":"Gameplay Settings",
+        "Category":"PZ Gameplay Settings",
         "Description":"If enabled, players can communicate with everyone (using the /all command in chat)",
         "Keywords":"chat,global",
         "FieldName":"GlobalChat",
@@ -540,7 +573,7 @@
     },
     {
         "DisplayName":"Nighttime Length",
-        "Category":"Gameplay Settings",
+        "Category":"PZ Gameplay Settings",
         "Description":"Sets how long nighttime lasts depending on daytime: 0.5 means twice as long, 2 means half the normal time",
         "Keywords":"nighttime,night",
         "FieldName":"nightlengthmodifier",
@@ -553,8 +586,8 @@
     },
     {
         "DisplayName":"Don't Allow Fire",
-        "Category":"Gameplay Settings",
-        "Description":"If enabled, fires are not allowed. Enable if fires cause problems for your server",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, fires are not allowed (except campfires). Enable if fires cause problems for your server",
         "Keywords":"fire",
         "FieldName":"NoFire",
         "InputType":"checkbox",
@@ -569,8 +602,8 @@
     },
     {
         "DisplayName":"Announce Player Death",
-        "Category":"Gameplay Settings",
-        "Description":"If enabled, a server-wide announcement is made when a player dies",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, a global message is displayed in the chat when a player dies",
         "Keywords":"announce,death",
         "FieldName":"AnnounceDeath",
         "InputType":"checkbox",
@@ -584,9 +617,23 @@
         }
     },
     {
+        "DisplayName":"Minutes Per Book Page",
+        "Category":"PZ Gameplay Settings",
+        "Description":"Sets the number of in-game minutes it takes to read one page of a book",
+        "Keywords":"minutes,book,page",
+        "FieldName":"MinutesPerPage",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"MinutesPerPage",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1.0",
+        "Suffix":"minutes",
+        "EnumValues":{}
+    },    
+    {
         "DisplayName":"Minimum Period for Loot Respawn",
-        "Category":"Gameplay Settings",
-        "Description":"Sets the in-game hours that must have passed before loot can respawn (0 = never)",
+        "Category":"PZ Gameplay Settings",
+        "Description":"Sets the in-game hours after which all containers that have been looted once will respawn loot (0 = never)",
         "Keywords":"loot,respawn",
         "FieldName":"HoursForLootRespawn",
         "InputType":"number",
@@ -599,8 +646,8 @@
     },    
     {
         "DisplayName":"Maximum Items for Loot Respawn",
-        "Category":"Gameplay Settings",
-        "Description":"Sets The maximum amount of items in containers before items can respawn. If the number of items are less than or equal to the number set, loot will respawn",
+        "Category":"PZ Gameplay Settings",
+        "Description":"Sets the maximum number of items that containers can hold to be allowed to respawn. If the number of items is less than or equal to the number set, loot will respawn",
         "Keywords":"loot,respawn,maximum",
         "FieldName":"MaxItemsForLootRespawn",
         "InputType":"number",
@@ -612,9 +659,25 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Construction Prevents Respawn",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, items will not respawn in buildings that players have barricaded or built in",
+        "Keywords":"loot,respawn,construction",
+        "FieldName":"ConstructionPreventsLootRespawn",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ConstructionPreventsLootRespawn",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
         "DisplayName":"Allow Player Safehouses",
-        "Category":"Gameplay Settings",
-        "Description":"If enabled, players can have safehouses",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, both admins and players can claim safehouses",
         "Keywords":"safehouse",
         "FieldName":"PlayerSafehouse",
         "InputType":"checkbox",
@@ -629,8 +692,8 @@
     },
     {
         "DisplayName":"Allow Admin Safehouses",
-        "Category":"Gameplay Settings",
-        "Description":"If enabled, admins can have safehouses",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, only admins can claim safehouses",
         "Keywords":"safehouse",
         "FieldName":"AdminSafehouse",
         "InputType":"checkbox",
@@ -644,9 +707,38 @@
         }
     },
     {
+        "DisplayName":"Allow Safehouse Trespass",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, non-members can enter a safehouse without being invited",
+        "Keywords":"safehouse,trespass",
+        "FieldName":"SafehouseAllowTrepass",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SafehouseAllowTrepass",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
+        "DisplayName":"Allow Safehouse Trespass",
+        "Category":"PZ Gameplay Settings",
+        "Description":"[Backup setting given typo in config key, to future proof for correction]",
+        "Keywords":"",
+        "FieldName":"SafehouseAllowTrepass",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "Hidden":true,
+        "ParamFieldName":"SafehouseAllowTrespass",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Allow Safehouse Fire",
-        "Category":"Gameplay Settings",
-        "Description":"If enabled, safehouses can catch fire",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, safehouses can be damaged by fire",
         "Keywords":"safehouse,fire",
         "FieldName":"SafehouseAllowFire",
         "InputType":"checkbox",
@@ -660,9 +752,25 @@
         }
     },
     {
+        "DisplayName":"Allow Safehouse Loot",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, non-members can loot safehouses",
+        "Keywords":"safehouse,loot",
+        "FieldName":"SafehouseAllowLoot",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SafehouseAllowLoot",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
         "DisplayName":"Allow Safehouse Respawn",
-        "Category":"Gameplay Settings",
-        "Description":"If enabled, a player can respawn in their safehouse after death",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, players will respawn in a safehouse they were a member of before death",
         "Keywords":"safehouse,respawn",
         "FieldName":"SafehouseAllowRespawn",
         "InputType":"checkbox",
@@ -677,8 +785,8 @@
     },
     {
         "DisplayName":"Game Days For Safehouse",
-        "Category":"Gameplay Settings",
-        "Description":"Number of game days required before a safehouse can be claimed",
+        "Category":"PZ Gameplay Settings",
+        "Description":"Number of in-game days that a player must survive for before they can claim a safehouse",
         "Keywords":"safehouse,days",
         "FieldName":"SafehouseDaySurvivedToClaim",
         "InputType":"number",
@@ -691,7 +799,7 @@
     },
     {
         "DisplayName":"Safehouse Removal Period",
-        "Category":"Gameplay Settings",
+        "Category":"PZ Gameplay Settings",
         "Description":"Players are automatically removed from a safehouse they have not visited for this many real-time hours",
         "Keywords":"safehouse,house,removal",
         "FieldName":"SafeHouseRemovalTime",
@@ -705,8 +813,8 @@
     },
     {
         "DisplayName":"Allow Sledgehammer Destruction",
-        "Category":"Gameplay Settings",
-        "Description":"If enabled, objects can be destroyed by sledgehammer",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, players can destroy world objects with sledgehammers",
         "Keywords":"sledgehammer,destruction",
         "FieldName":"AllowDestructionBySledgehammer",
         "InputType":"checkbox",
@@ -720,9 +828,25 @@
         }
     },
     {
+        "DisplayName":"Allow Only Safehouse Sledgehammers",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, players can destroy world objects with sledgehammers only in their safehouse. Requires \"Allow Sledgehammer Destruction\" to be enabled",
+        "Keywords":"sledgehammer,destruction",
+        "FieldName":"SledgehammerOnlyInSafehouse",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SledgehammerOnlyInSafehouse",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "True":"true",
+            "False":"false"
+        }
+    },
+    {
         "DisplayName":"Allow Sleep",
-        "Category":"Gameplay Settings",
-        "Description":"If enabled, players can sleep",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, players are allowed to sleep when tired, but do not need to",
         "Keywords":"sleep",
         "FieldName":"SleepAllowed",
         "InputType":"checkbox",
@@ -737,8 +861,8 @@
     },
     {
         "DisplayName":"Require Sleep",
-        "Category":"Gameplay Settings",
-        "Description":"If enabled, players require sleep",
+        "Category":"PZ Gameplay Settings",
+        "Description":"If enabled, players become tired and need to sleep. Requires \"Allow Sleep\" to be enabled",
         "Keywords":"sleep",
         "FieldName":"SleepNeeded",
         "InputType":"checkbox",
@@ -753,8 +877,8 @@
     },
     {
         "DisplayName":"Enable Discord Integration",
-        "Category":"Discord Settings",
-        "Description":"Requires a valid token to be set",
+        "Category":"PZ Discord Settings",
+        "Description":"If enabled, allows global text chat integration with a Discord channel. Requires a valid bot token to be set under \"Discord Token\"",
         "Keywords":"discord",
         "FieldName":"DiscordEnable",
         "InputType":"checkbox",
@@ -769,8 +893,8 @@
     },
     {
         "DisplayName":"Discord Token",
-        "Category":"Discord Settings",
-        "Description":"Token to access the Discord servers",
+        "Category":"PZ Discord Settings",
+        "Description":"Bot token to access the Discord servers",
         "Keywords":"discord,token",
         "FieldName":"DiscordToken",
         "InputType":"password",
@@ -782,8 +906,8 @@
     },
     {
         "DisplayName":"Discord Channel",
-        "Category":"Discord Settings",
-        "Description":"Name of the Discord channel to integrate with",
+        "Category":"PZ Discord Settings",
+        "Description":"Name of the Discord channel to integrate with. Use \"Discord ID\" if this does not work",
         "Keywords":"discord,channel",
         "FieldName":"DiscordChannel",
         "InputType":"text",
@@ -795,8 +919,8 @@
     },
     {
         "DisplayName":"Discord Channel ID",
-        "Category":"Discord Settings",
-        "Description":"ID of the Discord channel to integrate with",
+        "Category":"PZ Discord Settings",
+        "Description":"ID of the Discord channel to integrate with. Use this if \"Discord Channel\" does not work",
         "Keywords":"discord,channel,id",
         "FieldName":"DiscordChannelID",
         "InputType":"number",
@@ -805,6 +929,36 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"",
         "Placeholder":"475182341782896651",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Beta Branch",
+        "Category":"SteamCMD and Updates",
+        "Description":"If enabled, allows beta branches (branches other than \"public\") to be installed. Specify the branch under \"Selected Beta Branch\". NOTE: Update the server after switching branches!",
+        "Keywords":"enable,beta",
+        "FieldName":"EnableBeta",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Selected Beta Branch",
+        "Category":"SteamCMD and Updates",
+        "Description":"[Beta branch](https://steamdb.info/app/380870/depots/) to install. Requires \"Enable Beta Branch\" to be enabled. Set any required password under \"Beta Password\". NOTE: Update the server after switching branches!",
+        "Keywords":"beta,branch",
+        "FieldName":"BetaBranch",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"",
         "EnumValues":{}
     }
 ]

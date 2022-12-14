@@ -1,0 +1,163 @@
+[
+  {
+    "UpdateStageName": "SteamCMD Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "SteamCMD",
+    "UpdateSourceData": "294420",
+    "UpdateSourceVersion": "{{Stream}}"
+  },
+  {
+    "UpdateStageName":"Create Mod Directory",
+    "UpdateSourcePlatform":"All",
+    "UpdateSource":"CreateDirectory",
+    "UpdateSourceArgs":"{{$FullBaseDir}}Mods"
+  },
+  {
+    "UpdateStageName": "Settings File Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/seven-days-settings184.xml",
+    "UpdateSourceTarget": "./294420",
+    "OverwriteExistingFiles": false,
+    "UpdateSourceConditionSetting": "ConfigFile",
+    "UpdateSourceConditionValue": "seven-days-settings184"
+  },
+  {
+    "UpdateStageName": "Settings File Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/seven-days-settings196.xml",
+    "UpdateSourceTarget": "./294420",
+    "OverwriteExistingFiles": false,
+    "UpdateSourceConditionSetting": "ConfigFile",
+    "UpdateSourceConditionValue": "seven-days-settings196"
+  },
+  {
+    "UpdateStageName": "Settings File Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/seven-days-settings200-203.xml",
+    "UpdateSourceTarget": "./294420",
+    "OverwriteExistingFiles": false,
+    "UpdateSourceConditionSetting": "ConfigFile",
+    "UpdateSourceConditionValue": "seven-days-settings200-203"
+  },
+  {
+    "UpdateStageName": "Settings File Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/seven-days-settings204.xml",
+    "UpdateSourceTarget": "./294420",
+    "OverwriteExistingFiles": false,
+    "UpdateSourceConditionSetting": "ConfigFile",
+    "UpdateSourceConditionValue": "seven-days-settings204"
+  },
+  {
+    "UpdateStageName": "UMOD Windows",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "FetchURLFromJQ",
+    "UpdateSourceData": "https://api.github.com/repos/OxideMod/Oxide.SevenDaysToDie/releases/latest",
+    "UpdateSourceArgs": "$.assets[1].browser_download_url",
+    "UpdateSourceTarget": "{{$FullBaseDir}}",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true,
+    "UpdateSourceConditionSetting": "UMOD",
+    "UpdateSourceConditionValue": "true",
+    "DeleteAfterExtract": true
+  },
+  {
+    "UpdateStageName": "UMOD Linux",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "FetchURLFromJQ",
+    "UpdateSourceData": "https://api.github.com/repos/OxideMod/Oxide.SevenDaysToDie/releases/latest",
+    "UpdateSourceArgs": "$.assets[0].browser_download_url",
+    "UpdateSourceTarget": "{{$FullBaseDir}}",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true,
+    "UpdateSourceConditionSetting": "UMOD",
+    "UpdateSourceConditionValue": "true",
+    "DeleteAfterExtract": true
+  },
+  {
+    "UpdateStageName": "Settings File Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/seven-days-settings-undead-legacy-stable.xml",
+    "UpdateSourceTarget": "./294420",
+    "OverwriteExistingFiles": false,
+    "UpdateSourceConditionSetting": "ConfigFile",
+    "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-stable"
+  },
+  {
+    "UpdateStageName": "Settings File Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/seven-days-settings-undead-legacy-experimental.xml",
+    "UpdateSourceTarget": "./294420",
+    "OverwriteExistingFiles": false,
+    "UpdateSourceConditionSetting": "ConfigFile",
+    "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-experimental"
+  },
+  {
+    "UpdateStageName": "Download Undead Legacy Stable",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://ul.subquake.com/dl?v=stable",
+    "UpdateSourceArgs":"UndeadLegacyStable.zip",
+    "UpdateSourceTarget": "{{$FullBaseDir}}",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true,
+    "UpdateSourceConditionSetting": "ConfigFile",
+    "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-stable",
+    "DeleteAfterExtract": true
+  },
+  {
+    "UpdateStageName": "Download Undead Legacy Experimental",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://ul.subquake.com/dl?v=exp",
+    "UpdateSourceArgs":"UndeadLegacyExperimental.zip",
+    "UpdateSourceTarget": "{{$FullBaseDir}}",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true,
+    "UpdateSourceConditionSetting": "ConfigFile",
+    "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-experimental",
+    "DeleteAfterExtract": true
+  },
+  {
+    "UpdateStageName": "Undead Legacy Stable Copy",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "cmd.exe",
+    "UpdateSourceArgs": "/C move seven-days-to-die\\294420\\UndeadLegacyStable* seven-days-to-die\\294420\\UndeadLegacyStable && xcopy /E /Y /I seven-days-to-die\\294420\\UndeadLegacyStable\\* seven-days-to-die\\294420\\ && rmdir /Q /S seven-days-to-die\\294420\\UndeadLegacyStable",
+    "UpdateSourceConditionSetting": "ConfigFile",
+    "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-stable"
+  },
+  {
+    "UpdateStageName": "Undead Legacy Stable Copy",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"cp -rf ./seven-days-to-die/294420/UndeadLegacyStable*/* ./seven-days-to-die/294420/ && rm -rf ./seven-days-to-die/294420/UndeadLegacyStable*/\"",
+    "UpdateSourceConditionSetting": "ConfigFile",
+    "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-stable"
+  },
+  {
+    "UpdateStageName": "Undead Legacy Experimental Copy",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "cmd.exe",
+    "UpdateSourceArgs": "/C move seven-days-to-die\\294420\\UndeadLegacyExperimental* seven-days-to-die\\294420\\UndeadLegacyExperimental && xcopy /E /Y /I seven-days-to-die\\294420\\UndeadLegacyExperimental\\* seven-days-to-die\\294420\\ && rmdir /Q /S seven-days-to-die\\294420\\UndeadLegacyExperimental",
+    "UpdateSourceConditionSetting": "ConfigFile",
+    "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-experimental"
+  },
+  {
+    "UpdateStageName": "Undead Legacy Experimental Copy",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"cp -rf ./seven-days-to-die/294420/UndeadLegacyExperimental*/* ./seven-days-to-die/294420/ && rm -rf ./seven-days-to-die/294420/UndeadLegacyExperimental*/\"",
+    "UpdateSourceConditionSetting": "ConfigFile",
+    "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-experimental"
+  }
+]
