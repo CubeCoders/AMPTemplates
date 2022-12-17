@@ -285,9 +285,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Town Frequency",
+        "DisplayName":"Town Quantity",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the frequency of towns created on a new map. If \"Custom\" is selected, Custom Town Frequency must also be set",
+        "Description":"Sets the quantity of towns created on a new map. If \"Custom\" is selected, Custom Town Quantity must also be set",
         "Keywords":"number,towns,number_towns",
         "FieldName":"number_towns",
         "InputType":"enum",
@@ -296,7 +296,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"2",
         "EnumValues":{
-            "0":"Very Low",
+            "0":"Very low",
             "1":"Low",
             "2":"Normal (default)",
             "3":"High",
@@ -304,9 +304,9 @@
         }
     },
     {
-        "DisplayName":"Custom Town Number",
+        "DisplayName":"Custom Town Quantity",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"If \"Custom\" is selected for Town Frequency, sets the exact number of towns to be created a new map",
+        "Description":"If \"Custom\" is selected for Town Quantity, sets the exact number of towns to be created on a new map",
         "Keywords":"custom,town,number,custom_town_number",
         "FieldName":"custom_town_number",
         "InputType":"number",
@@ -321,67 +321,98 @@
     {
         "DisplayName":"Industry Density",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the frequency of industries for a new map",
-        "Keywords":"industry,density",
+        "Description":"Sets the frequency (or density) of industries created on a new map",
+        "Keywords":"industry,density,industry_density",
         "FieldName":"industry_density",
-        "InputType":"number",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"difficulty.industry_density",
         "IncludeInCommandLine":false,
         "DefaultValue":"5",
-        "EnumValues":{}
+        "EnumValues":{
+            "0":"None",
+            "1":"Minimal",
+            "2":"Very low",
+            "3":"Low",
+            "4":"Normal",
+            "5":"High (default)"
+        }
     },
     {
-        "DisplayName":"Max loan",
+        "DisplayName":"Maximum Initial Loan",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the maximum initial loan for a new game. Always in British Pounds. Changing the Currency under the [locale] section or in the Game options window will modify the maximum loan amount by the exchange rate of the chosen currency. The maximum loan amount will increase over time if Inflation is on in the [economy] section",
-        "Keywords":"max,loan",
+        "Description":"Sets the maximum initial loan (in GBP) for a new game. If the Server Currency is different, the amount will be converted at the relevant exchange rate. The maximum loan amount will increase over time if Inflation is enabled",
+        "Keywords":"maximum,initial,loan,max_loan",
         "FieldName":"max_loan",
-        "InputType":"number",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"difficulty.max_loan",
         "IncludeInCommandLine":false,
         "DefaultValue":"300000",
-        "EnumValues":{}
+        "EnumValues":{
+            "100000":"£100,000",
+            "150000":"£150,000",
+            "200000":"£200,000",
+            "250000":"£250,000",
+            "300000":"£300,000",
+            "350000":"£350,000",
+            "400000":"£400,000",
+            "450000":"£450,000",
+            "500000":"£500,000"
+        }
     },
     {
-        "DisplayName":"Initial interest",
+        "DisplayName":"Initial Interest Rate",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the initial interest charged on loans for a new map",
-        "Keywords":"Initial,interest",
+        "Description":"Sets the initial interest rate charged on loans for a new map",
+        "Keywords":"initial,interest,initial_interest",
         "FieldName":"initial_interest",
-        "InputType":"number",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"difficulty.initial_interest",
         "IncludeInCommandLine":false,
         "DefaultValue":"2",
-        "EnumValues":{}
+        "EnumValues":{
+            "2":"2% (default)",
+            "3":"3%",
+            "4":"4%"
+        }
     },
     {
-        "DisplayName":"Vehicle costs",
+        "DisplayName":"Vehicle Running Costs",
         "Category":"OpenTTD Difficulty Settings",
         "Description":"Sets the running (maintenance) costs level for all vehicles",
-        "Keywords":"Vehicle,costs",
+        "Keywords":"vehicle,costs,vehicle_costs",
         "FieldName":"vehicle_costs",
-        "InputType":"number",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"difficulty.vehicle_costs",
         "IncludeInCommandLine":false,
         "DefaultValue":"2",
-        "EnumValues":{}
+        "EnumValues":{
+            "0":"Low (default)",
+            "1":"Medium",
+            "2":"High"
+        }
     },
     {
-        "DisplayName":"Competitor speed",
+        "DisplayName":"Competitor Speed",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"If competitors are set to greater than zero then, competitor speed sets the speed at which the AI competitors will build",
-        "Keywords":"Competitor,speed",
+        "Description":"Sets the speed at which the AI competitors will build (assuming AI competitors are not disabled)",
+        "Keywords":"competitor,speed,ai,competitor_speed",
         "FieldName":"competitor_speed",
-        "InputType":"number",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"difficulty.competitor_speed",
         "IncludeInCommandLine":false,
         "DefaultValue":"2",
-        "EnumValues":{}
+        "EnumValues":{
+            "0":"Very slow",
+            "1":"Slow",
+            "2":"Medium (default)",
+            "3":"Fast",
+            "4":"Very fast"
+        }
     },
     {
         "DisplayName":"Vehicle Breakdown Frequency",
@@ -401,49 +432,62 @@
         }
     },
     {
-        "DisplayName":"Subsidy multiplier",
+        "DisplayName":"Subsidy Duration",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the bonus multiplier for subsidies offered in the game",
-        "Keywords":"Subsidy,multiplier",
-        "FieldName":"subsidy_multiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"difficulty.subsidy_multiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Subsidy duration",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the time multiplier for subsidies offered in the game",
-        "Keywords":"Subsidy,duration",
+        "Description":"Sets the time period in years for subsidies offered in-game. 0 = subsidies disabled",
+        "Keywords":"subsidy,duration,subsidy_duration",
         "FieldName":"subsidy_duration",
         "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"5000",
         "IsFlagArgument":false,
         "ParamFieldName":"difficulty.subsidy_duration",
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
+        "Placeholder":"1",
+        "Suffix":"years",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Construction cost",
+        "DisplayName":"Subsidy Multiplier",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the cost of construction in the game",
-        "Keywords":"Construction,cost",
+        "Description":"Sets the bonus multiplier for subsidies offered in-game (assuming they are not disabled)",
+        "Keywords":"subsidy,multiplier,subsidy_multiplier",
+        "FieldName":"subsidy_multiplier",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"difficulty.subsidy_multiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "EnumValues":{
+            "0":"1.5x normal rate",
+            "1":"2.0x normal rate",
+            "2":"3.0x normal rate (default)",
+            "3":"4.0x normal rate",
+        }
+    },
+    {
+        "DisplayName":"Construction Cost",
+        "Category":"OpenTTD Difficulty Settings",
+        "Description":"Sets the cost of construction in-game",
+        "Keywords":"construction,cost,construction_cost",
         "FieldName":"construction_cost",
-        "InputType":"number",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"difficulty.construction_cost",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-        "EnumValues":{}
+        "EnumValues":{
+            "0":"Low (default)",
+            "1":"Medium",
+            "2":"High"
+        }
     },
     {
-        "DisplayName":"Terrain type",
+        "DisplayName":"Terrain Type",
         "Category":"OpenTTD Difficulty Settings",
         "Description":"Sets the terrain type for generating a new map",
-        "Keywords":"Terrain,type",
+        "Keywords":"terrain,type,terrain_type",
         "FieldName":"terrain_type",
         "InputType":"enum",
         "IsFlagArgument":false,
@@ -451,7 +495,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
         "EnumValues":{
-            "0":"Very Flat",
+            "0":"Very flat",
             "1":"Flat (default)",
             "2":"Hilly",
             "3":"Mountainous",
@@ -459,10 +503,10 @@
         }
     },
     {
-        "DisplayName":"Quantity sea lakes",
+        "DisplayName":"Sea Level",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the sea level, thus, the size of the area covered by seas and lakes on a new map",
-        "Keywords":"Quantity,sea,lakes",
+        "Description":"Sets the sea level, and as a result the size of the area covered by seas and lakes on a new map. If \"Custom\" is selected, Custom Sea Level must also be set",
+        "Keywords":"quantity,sea,lakes,level,quantity_sea_lakes",
         "FieldName":"quantity_sea_lakes",
         "InputType":"enum",
         "IsFlagArgument":false,
@@ -470,12 +514,27 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
         "EnumValues":{
-            "0":"Very Low (default)",
+            "0":"Very low (default)",
             "1":"Low",
             "2":"Medium",
             "3":"High",
             "4":"Custom"
         }
+    },
+    {
+        "DisplayName":"Custom Sea Level",
+        "Category":"OpenTTD Difficulty Settings",
+        "Description":"If \"Custom\" is selected for Sea Level, sets roughly the percentage area covered by seas and lakes on a new map",
+        "Keywords":"custom,sea,level,custom_sea_level",
+        "FieldName":"custom_sea_level",
+        "InputType":"number",
+        "MinValue":"1",
+        "MaxValue":"90",
+        "IsFlagArgument":false,
+        "ParamFieldName":"game_creation.custom_sea_level",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Economy",
@@ -1611,19 +1670,6 @@
         "ParamFieldName":"game_creation.water_borders",
         "IncludeInCommandLine":false,
         "DefaultValue":"15",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Custom sea level",
-        "Category":"OpenTTD Game Settings",
-        "Description":"Specifies roughly the percentage of the area covered by seas and lakes on a new map,",
-        "Keywords":"Custom,sea,level",
-        "FieldName":"custom_sea_level",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"game_creation.custom_sea_level",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
         "EnumValues":{}
     },
     {
