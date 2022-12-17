@@ -537,10 +537,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Economy",
+        "DisplayName":"Allow Economic Recessions",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets whether economic recessions can occur on new maps",
-        "Keywords":"Economy",
+        "Description":"If enabled, economic recessions can occur on new maps",
+        "Keywords":"economy,recession",
         "FieldName":"economy",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -553,10 +553,10 @@
         }
     },
     {
-        "DisplayName":"Line reverse mode",
+        "DisplayName":"Disallow Train Reversing",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets whether trains are disallowed to reverse at stations",
-        "Keywords":"Line,reverse,mode",
+        "Description":"If enabled, trains can reverse at the end of line only, and not at stations",
+        "Keywords":"line,reverse,mode,train,line_reverse_mode",
         "FieldName":"line_reverse_mode",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -569,10 +569,10 @@
         }
     },
     {
-        "DisplayName":"Disasters",
+        "DisplayName":"Allow Disasters",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets whether disasters can occur on a new map",
-        "Keywords":"Disasters",
+        "Description":"If enabled, disasters can occur on a new map",
+        "Keywords":"disasters",
         "FieldName":"disasters",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -585,10 +585,10 @@
         }
     },
     {
-        "DisplayName":"Town council tolerance",
+        "DisplayName":"Town Council Tolerance",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the city council's attitude toward area restructuring in the game. A player rated poor or worse by the council will not be allowed to place stations or demolish town roads, bridges or buildings. The less tolerant the council is set to be, the faster their rating will fall due to the demolition of town assets (including trees on otherwise open land). The council's rating will improve over time by effectively moving freight, mail and people to and from stations in the town's area of control",
-        "Keywords":"Town,council,tolerance",
+        "Description":"Sets the council's attitude toward area restructuring in the game. The less tolerant the council, the faster player ratings will fall due to town asset demolition. The ratings will improve over time by effectively moving freight, mail and people to and from stations in the town's area of control. Players rated poor or worse by the council cannot place stations or demolish town roads, bridges or buildings",
+        "Keywords":"town,council,tolerance,town_council_tolerance",
         "FieldName":"town_council_tolerance",
         "InputType":"enum",
         "IsFlagArgument":false,
@@ -604,8 +604,8 @@
     {
         "DisplayName":"Town Layout",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Select how towns should build their roads",
-        "Keywords":"town,layout",
+        "Description":"Sets how towns should build their roads",
+        "Keywords":"town,layout,town_layout",
         "FieldName":"town_layout",
         "InputType":"enum",
         "IsFlagArgument":false,
@@ -613,18 +613,18 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
         "EnumValues":{
-            "0":"Default Algorithm",
-            "1":"Improved Algorithm",
-            "2":"2x2 Grid",
-            "3":"3x3 Grid",
+            "0":"Default algorithm",
+            "1":"Improved algorithm",
+            "2":"2x2 grid",
+            "3":"3x3 grid",
             "4":"Random"
         }
     },
     {
         "DisplayName":"Allow Town Roads",
         "Category":"OpenTTD Economy Settings",
-        "Description":" Towns are allowed to build roads",
-        "Keywords":"allow,town,roads",
+        "Description":"If enabled, towns are allowed to build roads. Otherwise, players must build roads for a town to grow",
+        "Keywords":"town,roads,allow_town_roads",
         "FieldName":"allow_town_roads",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -637,23 +637,27 @@
         }
     },
     {
-        "DisplayName":"Found town",
+        "DisplayName":"Allow Founding Of Towns",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Allows you to found a town during the game. You can configure whether to use the road layout used by other towns in the game, or to choose the road layout yourself",
-        "Keywords":"found,town",
+        "Description":"Sets whether towns can be founded during the game and, if so, whether they will use the road layout used by other towns in the game, or can have a custom road layout",
+        "Keywords":"found,town,found_town",
         "FieldName":"found_town",
-        "InputType":"number",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"economy.found_town",
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
-        "EnumValues":{}
+        "EnumValues":{
+            "0":"Forbidden (default)",
+            "1":"Allowed",
+            "2":"Allowed with custom road layout",
+        }
     },
     {
         "DisplayName":"Allow Town Level Crossings",
         "Category":"OpenTTD Economy Settings",
-        "Description":"",
-        "Keywords":"allow,town,level,crossings",
+        "Description":"If enabled, towns are allowed to build level crossings",
+        "Keywords":"town,level,crossings,allow_town_level_crossings",
         "FieldName":"allow_town_level_crossings",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -666,23 +670,26 @@
         }
     },
     {
-        "DisplayName":"Town Cargogen Mode",
+        "DisplayName":"Town Cargo Generation Mode",
         "Category":"OpenTTD Economy Settings",
-        "Description":"",
-        "Keywords":"Town,cargogen,mode",
+        "Description":"Sets the algorithm for generating cargo from houses",
+        "Keywords":"town,cargo,generation,mode,town_cargogen_mode",
         "FieldName":"town_cargogen_mode",
-        "InputType":"number",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"economy.town_cargogen_mode",
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
-        "EnumValues":{}
+        "EnumValues":{
+            "0":"Original algorithm",
+            "1":"Bit-counted algorithm (default)",
+        }
     },
     {
-        "DisplayName":"Station Noise Level",
+        "DisplayName":"Enable Station Noise Level",
         "Category":"OpenTTD Economy Settings",
-        "Description":"With this activated, the number of airports which can be placed in the vicinity of a town is not fixed anymore. Instead it depends upon the noise level of the Airports, their distance to the town centre and the town's attitude",
-        "Keywords":"Station,noise,level",
+        "Description":"If enabled, the number of airports that can be placed in the vicinity of a town is not fixed, but depends upon their noise level, their distance to the town centre and the town's attitude",
+        "Keywords":"station,noise,level,station_noise_level",
         "FieldName":"station_noise_level",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -697,8 +704,8 @@
     {
         "DisplayName":"Allow Inflation",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Inflation, as in the real world, causes prices to go up as time passes. There is a patch for turning this feature off",
-        "Keywords":"Inflation",
+        "Description":"If enabled, inflation, as in the real world, will cause prices to go up as time passes",
+        "Keywords":"inflation",
         "FieldName":"inflation",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -711,10 +718,10 @@
         }
     },
     {
-        "DisplayName":"Multiple Industries Per Town",
+        "DisplayName":"Allow Multiple Industries Per Town",
         "Category":"OpenTTD Economy Settings",
-        "Description":"This setting allows you to build two or more industries of the same type on land that comes under the jurisdiction of one town",
-        "Keywords":"Multiple,industry,town",
+        "Description":"If enabled, two or more industries of the same type can be built on land that comes under the jurisdiction of one town. Normally only one of each type is allowed",
+        "Keywords":"multiple,industry,town,multiple_industry_per_town",
         "FieldName":"multiple_industry_per_town",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -729,7 +736,7 @@
     {
         "DisplayName":"Allow Bribes",
         "Category":"OpenTTD Economy Settings",
-        "Description":"A setting that allows you to bribe local authorities",
+        "Description":"If enabled, bribing of local authorities to increase a company's rating in that locality is allowed",
         "Keywords":"bribe",
         "FieldName":"bribe",
         "InputType":"checkbox",
@@ -743,10 +750,10 @@
         }
     },
     {
-        "DisplayName":"Exclusive Rights",
+        "DisplayName":"Allow Exclusive Rights",
         "Category":"OpenTTD Economy Settings",
-        "Description":"",
-        "Keywords":"exclusive,rights",
+        "Description":"If enabled, allows buying of exclusive transport rights in the area of a local authority",
+        "Keywords":"exclusive,rights,exclusive_rights",
         "FieldName":"exclusive_rights",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -759,10 +766,10 @@
         }
     },
     {
-        "DisplayName":"Fund Buildings",
+        "DisplayName":"Allow Funding Of Buildings",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Allows you to fund buildings during the game",
-        "Keywords":"fund,buildings",
+        "Description":"If enabled, allows funding of new commercial buildings, expanding a town's business district for around three months",
+        "Keywords":"fund,buildings,fund_buildings",
         "FieldName":"fund_buildings",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -775,10 +782,10 @@
         }
     },
     {
-        "DisplayName":"Fund Roads",
+        "DisplayName":"Allow Funding Of Roads",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Allows you to fund roads during the game",
-        "Keywords":"fund,roads",
+        "Description":"If enabled, allows funding of urban road network reconstruction, causing considerable disruption to road traffic for up to six months",
+        "Keywords":"fund,roads,fund_roads",
         "FieldName":"fund_roads",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -791,10 +798,10 @@
         }
     },
     {
-        "DisplayName":"Give money",
+        "DisplayName":"Allow Giving Of Money",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Allows you to give money to other players",
-        "Keywords":"Give,money",
+        "Description":"If enabled, allows a player to donate money to other companies",
+        "Keywords":"give,money,give_money",
         "FieldName":"give_money",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -807,10 +814,10 @@
         }
     },
     {
-        "DisplayName":"Allow Shares",
+        "DisplayName":"Allow Buying Of Shares",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Allows you to buy shares of other companies (or the whole other company, if it is AI controlled)",
-        "Keywords":"Allow,shares",
+        "Description":"If enabled, allows a player to buy shares of other companies (or the whole other company, if it is AI controlled). The player must wait for the company to get old enough (around six years old) before buying 25% or effecting a full takeover",
+        "Keywords":"allow,shares,allow_shares",
         "FieldName":"allow_shares",
         "InputType":"checkbox",
         "IsFlagArgument":false,
