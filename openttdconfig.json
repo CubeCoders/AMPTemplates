@@ -90,8 +90,8 @@
         "DefaultValue":"monthly",
         "EnumValues":{
             "never":"Never (autosave disabled)",
-            "monthly":"Monthly (1st day of each month) (default)",
-            "quarterly":"Quarterly (1st day of each calendar quarter)",
+            "monthly":"Monthly (1st day of month) (default)",
+            "quarterly":"Quarterly (1st day of quarter)",
             "2x yearly":"Twice yearly (1 January and 1 July)",
             "yearly":"Yearly (1 January)"
         }
@@ -163,8 +163,8 @@
         "IsFlagArgument":false,
         "ParamFieldName":"network.max_clients",
         "IncludeInCommandLine":false,
-        "DefaultValue":"10",
-        "Placeholder":"10",
+        "DefaultValue":"25",
+        "Placeholder":"25",
         "Suffix":"players",
         "EnumValues":{}
     },
@@ -197,7 +197,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"network.max_companies",
         "IncludeInCommandLine":false,
-        "DefaultValue":"8",
+        "DefaultValue":"15",
         "EnumValues":{}
     },
     {
@@ -305,7 +305,7 @@
     },
     {
         "DisplayName":"Custom Town Number",
-        "Category":"OpenTTD Game Settings",
+        "Category":"OpenTTD Difficulty Settings",
         "Description":"If \"Custom\" is selected for Town Frequency, sets the exact number of towns to be created a new map",
         "Keywords":"custom,town,number,custom_town_number",
         "FieldName":"custom_town_number",
@@ -319,7 +319,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Industry density",
+        "DisplayName":"Industry Density",
         "Category":"OpenTTD Difficulty Settings",
         "Description":"Sets the frequency of industries for a new map",
         "Keywords":"industry,density",
@@ -384,17 +384,21 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Vehicle breakdowns",
+        "DisplayName":"Vehicle Breakdown Frequency",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the frequency which vehicles break down in the game",
-        "Keywords":"Vehicle,breakdowns",
+        "Description":"Sets the frequency at which vehicles break down in the game",
+        "Keywords":"vehicle,breakdowns,frequency,vehicle_breakdowns",
         "FieldName":"vehicle_breakdowns",
-        "InputType":"number",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"difficulty.vehicle_breakdowns",
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
-        "EnumValues":{}
+        "EnumValues":{
+            "0":"No breakdowns",
+            "1":"Reduced breakdowns (default)",
+            "2":"Normal breakdowns"
+        }
     },
     {
         "DisplayName":"Subsidy multiplier",
@@ -896,10 +900,10 @@
         }
     },
     {
-        "DisplayName":"No servicing if no breakdowns",
-        "Category":"OpenTTD Order Settings",
-        "Description":"If vehicle breakdowns are switched off, vehicles will not go to depots or hangars for servicing",
-        "Keywords":"servicing,breakdowns",
+        "DisplayName":"No Servicing If No Breakdowns",
+        "Category":"OpenTTD Station Settings",
+        "Description":"If set, and vehicle breakdowns are disabled, vehicles will not go to depots or hangars for servicing",
+        "Keywords":"servicing,breakdowns,no_servicing_if_no_breakdowns",
         "FieldName":"no_servicing_if_no_breakdowns",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -912,10 +916,10 @@
         }
     },
     {
-        "DisplayName":"Improved load",
-        "Category":"OpenTTD Order Settings",
-        "Description":"In case you have several vehicles (trains, trucks etc.) waiting for one type of cargo on a station it is much more effective to force loading an arrived vehicle and only after it is full and ready to go start loading next. Note that this is all the patch does; it has no FIFO attributes, and does not depend on which vehicle came first",
-        "Keywords":"Improved,load",
+        "DisplayName":"Enable Improved Loading",
+        "Category":"OpenTTD Station Settings",
+        "Description":"If set, only one vehicle is loaded at a time until full, before loading the next vehicle. When disabled, all vehicles in a station are loaded simultaineously, possibly needlessly blocking multiple platforms",
+        "Keywords":"improved,load,improved_load",
         "FieldName":"improved_load",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -928,10 +932,10 @@
         }
     },
     {
-        "DisplayName":"Selectgoods",
-        "Category":"OpenTTD Order Settings",
-        "Description":"",
-        "Keywords":"Selectgoods",
+        "DisplayName":"Enable Demand-Only Cargo Generation",
+        "Category":"OpenTTD Station Settings",
+        "Description":"If set, cargo will only be generated at a station when a vehicle with the capacity to pick that cargo up has visited. Affects station ratings",
+        "Keywords":"cargo,demand,generation,selectgoods",
         "FieldName":"selectgoods",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -944,10 +948,10 @@
         }
     },
     {
-        "DisplayName":"Serviceathelipad",
-        "Category":"OpenTTD Order Settings",
-        "Description":"",
-        "Keywords":"Serviceathelipad",
+        "DisplayName":"Enable Helicopter Servicing",
+        "Category":"OpenTTD Station Settings",
+        "Description":"If enabled, a helicopter landing on a heliport or helipad will automatically be serviced by technicians stationed there",
+        "Keywords":"service,helicopter,heliport,helipad,serviceathelipad",
         "FieldName":"serviceathelipad",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -960,10 +964,10 @@
         }
     },
     {
-        "DisplayName":"Gradual loading",
-        "Category":"OpenTTD Order Settings",
-        "Description":"",
-        "Keywords":"Gradual loading",
+        "DisplayName":"Enable Gradual Loading",
+        "Category":"OpenTTD Station Settings",
+        "Description":"If set, vehicles will load cargo over a period of time, not full load instantly",
+        "Keywords":"gradual,loading,gradual_loading",
         "FieldName":"gradual_loading",
         "InputType":"checkbox",
         "IsFlagArgument":false,
