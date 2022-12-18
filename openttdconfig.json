@@ -80,7 +80,7 @@
     {
         "DisplayName":"Autosave Interval",
         "Category":"OpenTTD Server Settings",
-        "Description":"Sets the time interval for autosaves on the server",
+        "Description":"Sets the time interval between automatic game saves",
         "Keywords":"autosave",
         "FieldName":"autosave",
         "InputType":"enum",
@@ -115,7 +115,7 @@
     {
         "DisplayName":"Save Name",
         "Category":"OpenTTD Server Settings",
-        "Description":"Sets the savename of a game to load on server start. Both saved games and scenarios can be loaded. If no game savename is specified, a new game is started",
+        "Description":"Sets the savename of a game to load on server start. Both saved games and scenarios can be loaded. If no game savename is specified or the specified savename cannot be found, a new game is started",
         "Keywords":"load,savegame",
         "FieldName":"g",
         "InputType":"text",
@@ -123,6 +123,7 @@
         "ParamFieldName":"g",
         "IncludeInCommandLine":true,
         "DefaultValue":"config/save/autosave/exit.sav",
+        "Placeholder":"config/save/autosave/exit.sav",
         "EnumValues":{}
     },
     {
@@ -336,7 +337,7 @@
     {
         "DisplayName":"Industry Density",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the frequency (or density) of industries created on a new map",
+        "Description":"Sets how many industries should be generated and what level should be maintained during the game",
         "Keywords":"industry,density,industry_density",
         "FieldName":"industry_density",
         "InputType":"enum",
@@ -345,7 +346,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"5",
         "EnumValues":{
-            "0":"None",
+            "0":"None (funding only)",
             "1":"Minimal",
             "2":"Very low",
             "3":"Low",
@@ -356,25 +357,17 @@
     {
         "DisplayName":"Maximum Initial Loan",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the maximum initial loan (in GBP) for a new game. If the Server Currency is different, the amount will be converted at the relevant exchange rate. The maximum loan amount will increase over time if Inflation is enabled",
+        "Description":"Sets the maximum initial amount a company can loan (in GBP), in multiples of £50,000. If the Server Currency is different, the amount will be converted at the relevant exchange rate. The maximum loan amount will increase over time if Inflation is enabled",
         "Keywords":"maximum,initial,loan,max_loan",
         "FieldName":"max_loan",
-        "InputType":"enum",
+        "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"max_loan",
         "IncludeInCommandLine":false,
         "DefaultValue":"300000",
-        "EnumValues":{
-            "100000":"£100,000",
-            "150000":"£150,000",
-            "200000":"£200,000",
-            "250000":"£250,000",
-            "300000":"£300,000",
-            "350000":"£350,000",
-            "400000":"£400,000",
-            "450000":"£450,000",
-            "500000":"£500,000"
-        }
+        "Placeholder":"300000",
+        "Suffix":"GBP",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Initial Interest Rate",
@@ -394,10 +387,10 @@
         }
     },
     {
-        "DisplayName":"Vehicle Running Costs",
+        "DisplayName":"Running Costs",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the running (maintenance) costs level for all vehicles",
-        "Keywords":"vehicle,costs,vehicle_costs",
+        "Description":"Sets the level of maintenance and running costs of vehicles and infrastructure",
+        "Keywords":"vehicle,infrastructure,costs,vehicle_costs",
         "FieldName":"vehicle_costs",
         "InputType":"enum",
         "IsFlagArgument":false,
@@ -432,7 +425,7 @@
     {
         "DisplayName":"Vehicle Breakdown Frequency",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the frequency at which vehicles break down in the game",
+        "Description":"Sets the frequency at which inadequately serviced vehicles break down",
         "Keywords":"vehicle,breakdowns,frequency,vehicle_breakdowns",
         "FieldName":"vehicle_breakdowns",
         "InputType":"enum",
@@ -449,7 +442,7 @@
     {
         "DisplayName":"Subsidy Duration",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the time period in years for subsidies offered in-game. 0 = subsidies disabled",
+        "Description":"Sets the number of years for which subsidies are awarded. 0 = subsidies disabled",
         "Keywords":"subsidy,duration,subsidy_duration",
         "FieldName":"subsidy_duration",
         "InputType":"number",
@@ -482,10 +475,10 @@
         }
     },
     {
-        "DisplayName":"Construction Cost",
+        "DisplayName":"Construction Costs",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the cost of construction in-game",
-        "Keywords":"construction,cost,construction_cost",
+        "Description":"Sets the level of construction and purchase costs",
+        "Keywords":"construction,purchase,cost,construction_cost",
         "FieldName":"construction_cost",
         "InputType":"enum",
         "IsFlagArgument":false,
@@ -501,7 +494,7 @@
     {
         "DisplayName":"Terrain Type",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the terrain type for generating a new map",
+        "Description":"Sets the terrain type (hilliness of the landscape) for generating a new map",
         "Keywords":"terrain,type,terrain_type",
         "FieldName":"terrain_type",
         "InputType":"enum",
@@ -514,7 +507,7 @@
             "1":"Flat (default)",
             "2":"Hilly",
             "3":"Mountainous",
-            "4":"Alpinist"
+            "4":"Alpinist",
         }
     },
     {
@@ -554,7 +547,7 @@
     {
         "DisplayName":"Allow Economic Recessions",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"If enabled, economic recessions can occur on new maps",
+        "Description":"If enabled, economic recessions can occur on new maps every few years. During recessions, all production is significantly lower",
         "Keywords":"economy,recession",
         "FieldName":"economy",
         "InputType":"checkbox",
@@ -570,7 +563,7 @@
     {
         "DisplayName":"Disallow Train Reversing",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"If enabled, trains can reverse at the end of line only, and not at stations",
+        "Description":"If enabled, trains can reverse at the end of line only, and not at non-terminus stations, even if there is a shorter path to their next destination when reversing",
         "Keywords":"line,reverse,mode,train,line_reverse_mode",
         "FieldName":"line_reverse_mode",
         "InputType":"checkbox",
@@ -586,7 +579,7 @@
     {
         "DisplayName":"Allow Disasters",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"If enabled, disasters can occur on a new map",
+        "Description":"If enabled, disasters can occur on a new map, which may occasionally block or destroy vehicles or infrastructure",
         "Keywords":"disasters",
         "FieldName":"disasters",
         "InputType":"checkbox",
@@ -619,7 +612,7 @@
     {
         "DisplayName":"Town Layout",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Sets how towns should build their roads",
+        "Description":"Sets the layout for the road network of towns",
         "Keywords":"town,layout,town_layout",
         "FieldName":"town_layout",
         "InputType":"enum",
@@ -628,8 +621,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
         "EnumValues":{
-            "0":"Default algorithm",
-            "1":"Improved algorithm",
+            "0":"Original",
+            "1":"Better roads",
             "2":"2x2 grid",
             "3":"3x3 grid",
             "4":"Random"
@@ -654,7 +647,7 @@
     {
         "DisplayName":"Allow Founding Of Towns",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Sets whether towns can be founded during the game and, if so, whether they will use the road layout used by other towns in the game, or can have a custom road layout",
+        "Description":"Sets whether towns can be founded by players during the game and, if so, whether they will use the road layout used by other towns in the game, or can have a custom layout",
         "Keywords":"found,town,found_town",
         "FieldName":"found_town",
         "InputType":"enum",
@@ -665,7 +658,7 @@
         "EnumValues":{
             "0":"Forbidden (default)",
             "1":"Allowed",
-            "2":"Allowed with custom road layout"
+            "2":"Allowed with custom town layout"
         }
     },
     {
@@ -687,7 +680,7 @@
     {
         "DisplayName":"Town Cargo Generation Mode",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Sets the algorithm for generating cargo from houses",
+        "Description":"Sets how much cargo is produced by houses in towns, relative to the overall town population",
         "Keywords":"town,cargo,generation,mode,town_cargogen_mode",
         "FieldName":"town_cargogen_mode",
         "InputType":"enum",
@@ -696,14 +689,14 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
         "EnumValues":{
-            "0":"Original algorithm",
-            "1":"Bit-counted algorithm (default)"
+            "0":"Quadratic growth (original)",
+            "1":"Linear growth (default)"
         }
     },
     {
-        "DisplayName":"Enable Station Noise Level",
+        "DisplayName":"Enable Airport Noise Level",
         "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, the number of airports that can be placed in the vicinity of a town is not fixed, but depends upon their noise level, their distance to the town centre and the town's attitude",
+        "Description":"If disabled, there can be two airports in each town. If enabled, the number of airports is limited by the noise acceptance of the town, which depends on population, airport size and distance",
         "Keywords":"station,noise,level,station_noise_level",
         "FieldName":"station_noise_level",
         "InputType":"checkbox",
@@ -719,7 +712,7 @@
     {
         "DisplayName":"Allow Inflation",
         "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, inflation, as in the real world, will cause prices to go up as time passes",
+        "Description":"If set, inflation will be enabled in the economy, where costs rise slightly faster than payments",
         "Keywords":"inflation",
         "FieldName":"inflation",
         "InputType":"checkbox",
@@ -751,7 +744,7 @@
     {
         "DisplayName":"Allow Bribes",
         "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, bribing of local authorities to increase a company's rating in that locality is allowed",
+        "Description":"If enabled, companies can try to bribe local authorities to increase their rating. If noticed by an inspector, the company will not be able to act in the town for six months",
         "Keywords":"bribe",
         "FieldName":"bribe",
         "InputType":"checkbox",
@@ -767,7 +760,7 @@
     {
         "DisplayName":"Allow Exclusive Rights",
         "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, allows buying of exclusive transport rights in the area of a local authority",
+        "Description":"If enabled, allows buying of exclusive transport rights in the area of a local authority. Opponents' stations (passenger and cargo) will not receive any cargo for a whole year",
         "Keywords":"exclusive,rights,exclusive_rights",
         "FieldName":"exclusive_rights",
         "InputType":"checkbox",
@@ -783,7 +776,7 @@
     {
         "DisplayName":"Allow Funding Of Buildings",
         "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, allows funding of new commercial buildings, expanding a town's business district for around three months",
+        "Description":"If enabled, allows companies to give money to towns to fund new houses",
         "Keywords":"fund,buildings,fund_buildings",
         "FieldName":"fund_buildings",
         "InputType":"checkbox",
@@ -799,7 +792,7 @@
     {
         "DisplayName":"Allow Funding Of Roads",
         "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, allows funding of urban road network reconstruction, causing considerable disruption to road traffic for up to six months",
+        "Description":"If enabled, allows companies to give money to towns to fund road reconstruction, in order to sabotage road-based services in the town",
         "Keywords":"fund,roads,fund_roads",
         "FieldName":"fund_roads",
         "InputType":"checkbox",
@@ -815,7 +808,7 @@
     {
         "DisplayName":"Allow Giving Of Money",
         "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, allows a player to donate money to other companies",
+        "Description":"If enabled, allows transfer of money between companies",
         "Keywords":"give,money,give_money",
         "FieldName":"give_money",
         "InputType":"checkbox",
@@ -831,7 +824,7 @@
     {
         "DisplayName":"Allow Buying Of Shares",
         "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, allows a player to buy shares of other companies. The player must wait for the company to get old enough (around six years old) before buying 25% or effecting a full takeover",
+        "Description":"If enabled, allows buying and selling of company shares. Shares will only be available for companies reaching a certain age",
         "Keywords":"allow,shares,allow_shares",
         "FieldName":"allow_shares",
         "InputType":"checkbox",
@@ -845,51 +838,62 @@
         }
     },
     {
-        "DisplayName":"Minimum Period For Buying Shares",
+        "DisplayName":"Minimum Age For Buying Shares",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Minimal year to have passed in game befor you can buy shares of other companies",
-        "Keywords":"Min,years,shares",
+        "Description":"Sets the minimum age of a company for others to be able to buy and sell shares from them",
+        "Keywords":"minimum,years,age,shares,min_years_for_shares",
         "FieldName":"min_years_for_shares",
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"min_years_for_shares",
         "IncludeInCommandLine":false,
         "DefaultValue":"6",
+        "Placeholder":"6",
+        "Suffix":"years",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Town growth rate",
+        "DisplayName":"Town Growth Rate",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Select how fast towns should grow. You can also disable town growth",
-        "Keywords":"Town,growth,rate",
+        "Description":"Sets the speed of town growth",
+        "Keywords":"town,growth,rate,speed,town_growth_rate",
         "FieldName":"town_growth_rate",
-        "InputType":"number",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"town_growth_rate",
         "IncludeInCommandLine":false,
         "DefaultValue":"2",
-        "EnumValues":{}
+        "EnumValues":{
+            "0":"None",
+            "1":"Slow",
+            "2":"Normal (default)",
+            "3":"Fast",
+            "4":"Very fast"
+        }
     },
     {
-        "DisplayName":"Larger towns",
+        "DisplayName":"Larger Towns Proportion",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Amount of towns that will grow to city size. 0 = disabled",
-        "Keywords":"Larger,towns",
+        "Description":"Sets the proportion of towns that will grow to become cities. For example, if 4 is specified, 1 in 4 (25%) will become cities. 0 = disabled",
+        "Keywords":"larger,towns,larger_towns",
         "FieldName":"larger_towns",
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"larger_towns",
         "IncludeInCommandLine":false,
         "DefaultValue":"4",
+        "Placeholder":"4",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Initial city size",
+        "DisplayName":"Initial City Size Multiplier",
         "Category":"OpenTTD Economy Settings",
-        "Description":"",
-        "Keywords":"Initial,city,size",
+        "Description":"Sets the average initial size of cities relative to towns",
+        "Keywords":"initial,city,size,multiplier,initial_city_size",
         "FieldName":"initial_city_size",
         "InputType":"number",
+        "MinValue":"1",
+        "MaxValue":"10",
         "IsFlagArgument":false,
         "ParamFieldName":"initial_city_size",
         "IncludeInCommandLine":false,
@@ -897,10 +901,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Mod road rebuild",
+        "DisplayName":"Remove Useless Road Elements",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Remove absurd road-elements during the road construction",
-        "Keywords":"Mod,road,rebuild",
+        "Description":"If enabled, towns will remove useless road elements during construction to clean up dead-ends",
+        "Keywords":"mod,road,rebuild,mod_road_rebuild",
         "FieldName":"mod_road_rebuild",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -913,27 +917,28 @@
         }
     },
     {
-        "DisplayName":"Dist local authority",
+        "DisplayName":"Local Authority Distance",
         "Category":"OpenTTD Economy Settings",
-        "Description":"",
-        "Keywords":"Dist,local,authority",
+        "Description":"Sets how far in tiles an object has to be from a town centre before it comes under the local authority jurisdiction",
+        "Keywords":"distance,local,authority,dist_local_authority",
         "FieldName":"dist_local_authority",
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"dist_local_authority",
         "IncludeInCommandLine":false,
         "DefaultValue":"20",
+        "Placeholder":"20",
         "EnumValues":{}
     },
     {
         "DisplayName":"Town noise population0",
         "Category":"OpenTTD Economy Settings",
         "Description":"",
-        "Keywords":"Town,noise,population",
+        "Keywords":"town,noise,population,town_noise_population[0]",
         "FieldName":"town_noise_population0",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"town_noise_population\\[0\\]",
+        "ParamFieldName":"town_noise_population[0]",
         "IncludeInCommandLine":false,
         "DefaultValue":"800",
         "EnumValues":{}
@@ -942,11 +947,11 @@
         "DisplayName":"Town noise population1",
         "Category":"OpenTTD Economy Settings",
         "Description":"",
-        "Keywords":"Town,noise,population",
+        "Keywords":"town,noise,population,town_noise_population[1]",
         "FieldName":"town_noise_population1",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"town_noise_population\\[1\\]",
+        "ParamFieldName":"town_noise_population[1]",
         "IncludeInCommandLine":false,
         "DefaultValue":"2000",
         "EnumValues":{}
@@ -955,20 +960,20 @@
         "DisplayName":"Town noise population2",
         "Category":"OpenTTD Economy Settings",
         "Description":"",
-        "Keywords":"town,noise,population",
+        "Keywords":"town,noise,population,town_noise_population[2]",
         "FieldName":"town_noise_population2",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"town_noise_population\\[2\\]",
+        "ParamFieldName":"town_noise_population[2]",
         "IncludeInCommandLine":false,
         "DefaultValue":"4000",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Infrastructure maintenance",
+        "DisplayName":"Infrastructure Maintenance",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Controls whether infrastructure costs money to maintain. If maintenance of infrastructure is on, an amount, calculated from the number of tiles with rails, canals or locks, will be paid at regular intervals",
-        "Keywords":"Infrastructure,maintenance",
+        "Description":"If enabled, infrastructure causes maintenance costs. The cost grows in proportion to the network size, thus affecting larger companie more than smaller ones",
+        "Keywords":"infrastructure,maintenance,infrastructure_maintenance",
         "FieldName":"infrastructure_maintenance",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -981,7 +986,7 @@
         }
     },
     {
-        "DisplayName":"No Servicing If No Breakdowns",
+        "DisplayName":"Disable Servicing If No Breakdowns",
         "Category":"OpenTTD Station Settings",
         "Description":"If set, and vehicle breakdowns are disabled, vehicles will not go to depots or hangars for servicing",
         "Keywords":"servicing,breakdowns,no_servicing_if_no_breakdowns",
@@ -1031,7 +1036,7 @@
     {
         "DisplayName":"Enable Helicopter Servicing",
         "Category":"OpenTTD Station Settings",
-        "Description":"If enabled, a helicopter landing on a heliport or helipad will automatically be serviced by technicians stationed there",
+        "Description":"If enabled, a helicopter landing on a heliport or helipad will automatically be serviced",
         "Keywords":"service,helicopter,heliport,helipad,serviceathelipad",
         "FieldName":"serviceathelipad",
         "InputType":"checkbox",
@@ -1061,10 +1066,10 @@
         }
     },
     {
-        "DisplayName":"Never expire airports",
+        "DisplayName":"Disable Airport Expiry",
         "Category":"OpenTTD Station Settings",
-        "Description":"Airports never expire",
-        "Keywords":"Never,expire,airports",
+        "Description":"If set, each airport type will stay available forever after its introduction",
+        "Keywords":"never,expire,airports,never_expire_airports",
         "FieldName":"never_expire_airports",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -1077,23 +1082,25 @@
         }
     },
     {
-        "DisplayName":"Station spread",
+        "DisplayName":"Station Spread",
         "Category":"OpenTTD Station Settings",
-        "Description":"",
-        "Keywords":"Station,spread",
+        "Description":"Sets the maximum area that parts of a station may be spread out over. High values will slow the game",
+        "Keywords":"station,spread,station_spread",
         "FieldName":"station_spread",
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"station_spread",
         "IncludeInCommandLine":false,
         "DefaultValue":"12",
+        "Placeholder":"12",
+        "Suffix":"tiles",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Modified catchment",
+        "DisplayName":"Modified Catchment Areas",
         "Category":"OpenTTD Station Settings",
-        "Description":"With this setting enabled, the catchment area around a 'station' varies depending on what type of station it is. For example, train stations have a larger catchment area than bus stations and airports' catchment areas are bigger still. It even varies with the type of airport; Intercontinental Airports have the biggest",
-        "Keywords":"Modified,catchment",
+        "Description":"If enabled, catchment areas will be differently sized for different types of stations and airports, and as a result be more realistic. For example, train stations have a larger catchment area than bus stations and airport catchment areas are bigger still",
+        "Keywords":"modified,catchment,modified_catchment",
         "FieldName":"modified_catchment",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -1235,10 +1242,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Never expire vehicles",
+        "DisplayName":"Disable Vehicle Expiry",
         "Category":"OpenTTD Vehicle Settings",
-        "Description":"This setting will stop vehicles from going out of date and so they will remain available until the very end of the game",
-        "Keywords":"Never,expire,vehicles",
+        "Description":"If set, each vehicle model will stay available forever after its introduction",
+        "Keywords":"never,expire,vehicles,never_expire_vehicles",
         "FieldName":"never_expire_vehicles",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -1637,10 +1644,10 @@
         }
     },
     {
-        "DisplayName":"Tree placer",
+        "DisplayName":"Tree Placing",
         "Category":"OpenTTD Game Settings",
-        "Description":"",
-        "Keywords":"tree,placer",
+        "Description":"Sets how trees are distributed on the map. Original = uniformly scattered. Improved = planted in groups",
+        "Keywords":"tree,placer,tree_placer",
         "FieldName":"tree_placer",
         "InputType":"enum",
         "IsFlagArgument":false,
