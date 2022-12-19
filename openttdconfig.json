@@ -127,38 +127,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Map Seed",
-        "Category":"OpenTTD Server Settings",
-        "Description":"Sets the random seed for creating a new game",
-        "Keywords":"map,seed,generation_seed",
-        "FieldName":"G",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"G",
-        "IncludeInCommandLine":true,
-        "SkipIfEmpty":true,
-        "DefaultValue":"970327061",
-        "Placeholder":"970327061",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Map Seed",
-        "Category":"OpenTTD Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"G",
-        "InputType":"number",
-        "Hidden":true,
-        "IsFlagArgument":false,
-        "ParamFieldName":"generation_seed",
-        "IncludeInCommandLine":false,
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Player Limit",
         "Category":"OpenTTD Server Settings",
         "Description":"Maximum number of players that may connect to the server at one time",
-        "Keywords":"maximum,players,limit",
+        "Keywords":"maximum,players,limit,max_clients",
         "FieldName":"max_clients",
         "InputType":"number",
         "IsFlagArgument":false,
@@ -301,62 +273,24 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Town Quantity",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the quantity of towns created on a new map. If \"Custom\" is selected, Custom Town Quantity must also be set",
-        "Keywords":"number,towns,number_towns",
-        "FieldName":"number_towns",
-        "InputType":"enum",
+        "DisplayName":"Allow Inflation",
+        "Category":"OpenTTD Accounting Settings",
+        "Description":"If set, inflation will be enabled in the economy, where costs rise slightly faster than payments",
+        "Keywords":"inflation",
+        "FieldName":"inflation",
+        "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"number_towns",
+        "ParamFieldName":"inflation",
         "IncludeInCommandLine":false,
-        "DefaultValue":"2",
+        "DefaultValue":"false",
         "EnumValues":{
-            "0":"Very low",
-            "1":"Low",
-            "2":"Normal (default)",
-            "3":"High",
-            "4":"Custom"
-        }
-    },
-    {
-        "DisplayName":"Custom Town Quantity",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"If \"Custom\" is selected for Town Quantity, sets the exact number of towns to be created on a new map",
-        "Keywords":"custom,town,number,custom_town_number",
-        "FieldName":"custom_town_number",
-        "InputType":"number",
-        "MinValue":"1",
-        "MaxValue":"5000",
-        "IsFlagArgument":false,
-        "ParamFieldName":"custom_town_number",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Industry Density",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets how many industries should be generated and what level should be maintained during the game",
-        "Keywords":"industry,density,industry_density",
-        "FieldName":"industry_density",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"industry_density",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"5",
-        "EnumValues":{
-            "0":"None (funding only)",
-            "1":"Minimal",
-            "2":"Very low",
-            "3":"Low",
-            "4":"Normal",
-            "5":"High (default)"
+            "False":"false",
+            "True":"true"
         }
     },
     {
         "DisplayName":"Maximum Initial Loan",
-        "Category":"OpenTTD Difficulty Settings",
+        "Category":"OpenTTD Accounting Settings",
         "Description":"Sets the maximum initial amount a company can loan (in GBP), in multiples of £50,000. If the Server Currency is different, the amount will be converted at the relevant exchange rate. The maximum loan amount will increase over time if Inflation is enabled",
         "Keywords":"maximum,initial,loan,max_loan",
         "FieldName":"max_loan",
@@ -371,7 +305,7 @@
     },
     {
         "DisplayName":"Initial Interest Rate",
-        "Category":"OpenTTD Difficulty Settings",
+        "Category":"OpenTTD Accounting Settings",
         "Description":"Sets the initial interest rate charged on loans for a new map",
         "Keywords":"initial,interest,initial_interest",
         "FieldName":"initial_interest",
@@ -387,61 +321,26 @@
         }
     },
     {
-        "DisplayName":"Running Costs",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the level of maintenance and running costs of vehicles and infrastructure",
-        "Keywords":"vehicle,infrastructure,costs,vehicle_costs",
-        "FieldName":"vehicle_costs",
+        "DisplayName":"Subsidy Multiplier",
+        "Category":"OpenTTD Accounting Settings",
+        "Description":"Sets the bonus multiplier for subsidies offered in-game (assuming they are not disabled)",
+        "Keywords":"subsidy,multiplier,subsidy_multiplier",
+        "FieldName":"subsidy_multiplier",
         "InputType":"enum",
         "IsFlagArgument":false,
-        "ParamFieldName":"vehicle_costs",
+        "ParamFieldName":"subsidy_multiplier",
         "IncludeInCommandLine":false,
         "DefaultValue":"2",
         "EnumValues":{
-            "0":"Low (default)",
-            "1":"Medium",
-            "2":"High"
-        }
-    },
-    {
-        "DisplayName":"Competitor Speed",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the speed at which the AI competitors will build (assuming AI competitors are not disabled)",
-        "Keywords":"competitor,speed,ai,competitor_speed",
-        "FieldName":"competitor_speed",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"competitor_speed",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2",
-        "EnumValues":{
-            "0":"Very slow",
-            "1":"Slow",
-            "2":"Medium (default)",
-            "3":"Fast",
-            "4":"Very fast"
-        }
-    },
-    {
-        "DisplayName":"Vehicle Breakdown Frequency",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the frequency at which inadequately serviced vehicles break down",
-        "Keywords":"vehicle,breakdowns,frequency,vehicle_breakdowns",
-        "FieldName":"vehicle_breakdowns",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"vehicle_breakdowns",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{
-            "0":"No breakdowns",
-            "1":"Reduced breakdowns (default)",
-            "2":"Normal breakdowns"
+            "0":"1.5x normal rate",
+            "1":"2.0x normal rate",
+            "2":"3.0x normal rate (default)",
+            "3":"4.0x normal rate"
         }
     },
     {
         "DisplayName":"Subsidy Duration",
-        "Category":"OpenTTD Difficulty Settings",
+        "Category":"OpenTTD Accounting Settings",
         "Description":"Sets the number of years for which subsidies are awarded. 0 = subsidies disabled",
         "Keywords":"subsidy,duration,subsidy_duration",
         "FieldName":"subsidy_duration",
@@ -457,21 +356,36 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Subsidy Multiplier",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the bonus multiplier for subsidies offered in-game (assuming they are not disabled)",
-        "Keywords":"subsidy,multiplier,subsidy_multiplier",
-        "FieldName":"subsidy_multiplier",
+        "DisplayName":"Infrastructure Maintenance",
+        "Category":"OpenTTD Accounting Settings",
+        "Description":"If enabled, infrastructure causes maintenance costs. The cost grows in proportion to the network size, thus affecting larger companie more than smaller ones",
+        "Keywords":"infrastructure,maintenance,infrastructure_maintenance",
+        "FieldName":"infrastructure_maintenance",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"infrastructure_maintenance",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Running Costs",
+        "Category":"OpenTTD Accounting Settings",
+        "Description":"Sets the level of maintenance and running costs of vehicles and infrastructure",
+        "Keywords":"vehicle,infrastructure,costs,vehicle_costs",
+        "FieldName":"vehicle_costs",
         "InputType":"enum",
         "IsFlagArgument":false,
-        "ParamFieldName":"subsidy_multiplier",
+        "ParamFieldName":"vehicle_costs",
         "IncludeInCommandLine":false,
         "DefaultValue":"2",
         "EnumValues":{
-            "0":"1.5x normal rate",
-            "1":"2.0x normal rate",
-            "2":"3.0x normal rate (default)",
-            "3":"4.0x normal rate"
+            "0":"Low (default)",
+            "1":"Medium",
+            "2":"High"
         }
     },
     {
@@ -492,88 +406,22 @@
         }
     },
     {
-        "DisplayName":"Terrain Type",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the terrain type (hilliness of the landscape) for generating a new map",
-        "Keywords":"terrain,type,terrain_type",
-        "FieldName":"terrain_type",
+        "DisplayName":"Competitor Speed",
+        "Category":"OpenTTD Accounting Settings",
+        "Description":"Sets the speed at which the AI competitors will build (assuming AI competitors are not disabled)",
+        "Keywords":"competitor,speed,ai,competitor_speed",
+        "FieldName":"competitor_speed",
         "InputType":"enum",
         "IsFlagArgument":false,
-        "ParamFieldName":"terrain_type",
+        "ParamFieldName":"competitor_speed",
         "IncludeInCommandLine":false,
-        "DefaultValue":"1",
+        "DefaultValue":"2",
         "EnumValues":{
-            "0":"Very flat",
-            "1":"Flat (default)",
-            "2":"Hilly",
-            "3":"Mountainous",
-            "4":"Alpinist",
-        }
-    },
-    {
-        "DisplayName":"Sea Level",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the sea level, and as a result the size of the area covered by seas and lakes on a new map. If \"Custom\" is selected, Custom Sea Level must also be set",
-        "Keywords":"quantity,sea,lakes,level,quantity_sea_lakes",
-        "FieldName":"quantity_sea_lakes",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"quantity_sea_lakes",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "0":"Very low (default)",
-            "1":"Low",
-            "2":"Medium",
-            "3":"High",
-            "4":"Custom"
-        }
-    },
-    {
-        "DisplayName":"Custom Sea Level",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"If \"Custom\" is selected for Sea Level, sets roughly the percentage area covered by seas and lakes on a new map",
-        "Keywords":"custom,sea,level,custom_sea_level",
-        "FieldName":"custom_sea_level",
-        "InputType":"number",
-        "MinValue":"1",
-        "MaxValue":"90",
-        "IsFlagArgument":false,
-        "ParamFieldName":"custom_sea_level",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Allow Economic Recessions",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"If enabled, economic recessions can occur on new maps every few years. During recessions, all production is significantly lower",
-        "Keywords":"economy,recession",
-        "FieldName":"economy",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"economy",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Disallow Train Reversing",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"If enabled, trains can reverse at the end of line only, and not at non-terminus stations, even if there is a shorter path to their next destination when reversing",
-        "Keywords":"line,reverse,mode,train,line_reverse_mode",
-        "FieldName":"line_reverse_mode",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"line_reverse_mode",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
+            "0":"Very slow",
+            "1":"Slow",
+            "2":"Medium (default)",
+            "3":"Fast",
+            "4":"Very fast"
         }
     },
     {
@@ -593,9 +441,25 @@
         }
     },
     {
-        "DisplayName":"Town Council Tolerance",
+        "DisplayName":"Allow Economic Recessions",
         "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the council's attitude toward area restructuring in the game. The less tolerant the council, the faster player ratings will fall due to town asset demolition. The ratings will improve over time by effectively moving freight, mail and people to and from stations in the town's area of control. Players rated poor or worse by the council cannot place stations or demolish town roads, bridges or buildings",
+        "Description":"If enabled, economic recessions can occur on new maps every few years. During recessions, all production is significantly lower",
+        "Keywords":"economy,recession",
+        "FieldName":"economy",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"economy",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Town Council Tolerance",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"Sets how much noise and environmental damage by companies affect their town rating and therefore further construction activity in the area",
         "Keywords":"town,council,tolerance,town_council_tolerance",
         "FieldName":"town_council_tolerance",
         "InputType":"enum",
@@ -610,140 +474,50 @@
         }
     },
     {
-        "DisplayName":"Town Layout",
+        "DisplayName":"Town Population Noise Level Increase - Permissive",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Sets the layout for the road network of towns",
-        "Keywords":"town,layout,town_layout",
-        "FieldName":"town_layout",
-        "InputType":"enum",
+        "Description":"If Town Council Tolerance is permissive, then the town noise limit will increase from the default for every specified number of inhabitants",
+        "Keywords":"town,noise,population,permissive,town_noise_population[0]",
+        "FieldName":"town_noise_population0",
+        "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"town_layout",
+        "ParamFieldName":"town_noise_population[0]",
         "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "0":"Original",
-            "1":"Better roads",
-            "2":"2x2 grid",
-            "3":"3x3 grid",
-            "4":"Random"
-        }
+        "DefaultValue":"800",
+        "Placeholder":"800",
+        "EnumValues":{}
     },
     {
-        "DisplayName":"Allow Town Roads",
+        "DisplayName":"Town Population Noise Level Increase - Tolerant",
         "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, towns are allowed to build roads. Otherwise, players must build roads for a town to grow",
-        "Keywords":"town,roads,allow_town_roads",
-        "FieldName":"allow_town_roads",
-        "InputType":"checkbox",
+        "Description":"If Town Council Tolerance is tolerant, then the town noise limit will increase from the default for every specified number of inhabitants",
+        "Keywords":"town,noise,population,tolerant,town_noise_population[1]",
+        "FieldName":"town_noise_population1",
+        "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"allow_town_roads",
+        "ParamFieldName":"town_noise_population[1]",
         "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
+        "DefaultValue":"2000",
+        "Placeholder":"2000",
+        "EnumValues":{}
     },
     {
-        "DisplayName":"Allow Founding Of Towns",
+        "DisplayName":"Town Population Noise Level Increase - Hostile",
         "Category":"OpenTTD Economy Settings",
-        "Description":"Sets whether towns can be founded by players during the game and, if so, whether they will use the road layout used by other towns in the game, or can have a custom layout",
-        "Keywords":"found,town,found_town",
-        "FieldName":"found_town",
-        "InputType":"enum",
+        "Description":"If Town Council Tolerance is hostile, then the town noise limit will increase from the default for every specified number of inhabitants",
+        "Keywords":"town,noise,population,hostile,town_noise_population[2]",
+        "FieldName":"town_noise_population2",
+        "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"found_town",
+        "ParamFieldName":"town_noise_population[2]",
         "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "0":"Forbidden (default)",
-            "1":"Allowed",
-            "2":"Allowed with custom town layout"
-        }
-    },
-    {
-        "DisplayName":"Allow Town Level Crossings",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, towns are allowed to build level crossings",
-        "Keywords":"town,level,crossings,allow_town_level_crossings",
-        "FieldName":"allow_town_level_crossings",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"allow_town_level_crossings",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Town Cargo Generation Mode",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"Sets how much cargo is produced by houses in towns, relative to the overall town population",
-        "Keywords":"town,cargo,generation,mode,town_cargogen_mode",
-        "FieldName":"town_cargogen_mode",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"town_cargogen_mode",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{
-            "0":"Quadratic growth (original)",
-            "1":"Linear growth (default)"
-        }
-    },
-    {
-        "DisplayName":"Enable Airport Noise Level",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"If disabled, there can be two airports in each town. If enabled, the number of airports is limited by the noise acceptance of the town, which depends on population, airport size and distance",
-        "Keywords":"station,noise,level,station_noise_level",
-        "FieldName":"station_noise_level",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"station_noise_level",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Allow Inflation",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"If set, inflation will be enabled in the economy, where costs rise slightly faster than payments",
-        "Keywords":"inflation",
-        "FieldName":"inflation",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"inflation",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Allow Multiple Industries Per Town",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, two or more industries of the same type can be built on land that comes under the jurisdiction of one town. Normally only one of each type is allowed",
-        "Keywords":"multiple,industry,town,multiple_industry_per_town",
-        "FieldName":"multiple_industry_per_town",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"multiple_industry_per_town",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
+        "DefaultValue":"4000",
+        "Placeholder":"4000",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Allow Bribes",
-        "Category":"OpenTTD Economy Settings",
+        "Category":"OpenTTD Enviro Settings",
         "Description":"If enabled, companies can try to bribe local authorities to increase their rating. If noticed by an inspector, the company will not be able to act in the town for six months",
         "Keywords":"bribe",
         "FieldName":"bribe",
@@ -759,7 +533,7 @@
     },
     {
         "DisplayName":"Allow Exclusive Rights",
-        "Category":"OpenTTD Economy Settings",
+        "Category":"OpenTTD Enviro Settings",
         "Description":"If enabled, allows buying of exclusive transport rights in the area of a local authority. Opponents' stations (passenger and cargo) will not receive any cargo for a whole year",
         "Keywords":"exclusive,rights,exclusive_rights",
         "FieldName":"exclusive_rights",
@@ -774,8 +548,24 @@
         }
     },
     {
+        "DisplayName":"Allow Funding Of Roads",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"If enabled, allows companies to give money to towns to fund road reconstruction, in order to sabotage road-based services in the town",
+        "Keywords":"fund,roads,fund_roads",
+        "FieldName":"fund_roads",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"fund_roads",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Allow Funding Of Buildings",
-        "Category":"OpenTTD Economy Settings",
+        "Category":"OpenTTD Enviro Settings",
         "Description":"If enabled, allows companies to give money to towns to fund new houses",
         "Keywords":"fund,buildings,fund_buildings",
         "FieldName":"fund_buildings",
@@ -790,14 +580,162 @@
         }
     },
     {
-        "DisplayName":"Allow Funding Of Roads",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, allows companies to give money to towns to fund road reconstruction, in order to sabotage road-based services in the town",
-        "Keywords":"fund,roads,fund_roads",
-        "FieldName":"fund_roads",
+        "DisplayName":"Enable Airport Noise Level",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"If disabled, there can be two airports in each town. If enabled, the number of airports is limited by the noise acceptance of the town, which depends on population, airport size and distance",
+        "Keywords":"station,noise,level,station_noise_level",
+        "FieldName":"station_noise_level",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"fund_roads",
+        "ParamFieldName":"station_noise_level",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Town Growth Rate",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"Sets the speed of town growth",
+        "Keywords":"town,growth,rate,speed,town_growth_rate",
+        "FieldName":"town_growth_rate",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"town_growth_rate",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "EnumValues":{
+            "0":"None",
+            "1":"Slow",
+            "2":"Normal (default)",
+            "3":"Fast",
+            "4":"Very fast"
+        }
+    },
+    {
+        "DisplayName":"Allow Town Roads",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"If enabled, towns are allowed to build roads. Otherwise, players must build roads for a town to grow",
+        "Keywords":"town,roads,allow_town_roads",
+        "FieldName":"allow_town_roads",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"allow_town_roads",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Town Level Crossings",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"If enabled, towns are allowed to build level crossings",
+        "Keywords":"town,level,crossings,allow_town_level_crossings",
+        "FieldName":"allow_town_level_crossings",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"allow_town_level_crossings",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Founding Of Towns",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"Sets whether towns can be founded by players during the game and, if so, whether they will use the road layout used by other towns in the game, or can have a custom layout",
+        "Keywords":"found,town,found_town",
+        "FieldName":"found_town",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"found_town",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Forbidden (default)",
+            "1":"Allowed",
+            "2":"Allowed with custom town layout"
+        }
+    },
+    {
+        "DisplayName":"Town Cargo Generation Mode",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"Sets how much cargo is produced by houses in towns, relative to the overall town population",
+        "Keywords":"town,cargo,generation,mode,town_cargogen_mode",
+        "FieldName":"town_cargogen_mode",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"town_cargogen_mode",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"Quadratic growth (original)",
+            "1":"Linear growth (default)"
+        }
+    },
+    {
+        "DisplayName":"Allow Multiple Industries Per Town",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"If enabled, two or more industries of the same type can be built on land that comes under the jurisdiction of one town. Normally only one of each type is allowed",
+        "Keywords":"multiple,industry,town,multiple_industry_per_town",
+        "FieldName":"multiple_industry_per_town",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"multiple_industry_per_town",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Oil Refinery Limit",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"Oil refineries are only constructed near the map border (the coast for island maps). This sets the maximum allowed distance (in an even number of tiles) from the edge of the map for refineries",
+        "Keywords":"oil,refinery,limit,oil_refinery_limit",
+        "FieldName":"oil_refinery_limit",
+        "InputType":"number",
+        "MinValue":"12",
+        "IsFlagArgument":false,
+        "ParamFieldName":"oil_refinery_limit",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"32",
+        "Placeholder":"32",
+        "Suffix":"tiles",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow Serving Neutral Industries",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"If enabled, industries with attached stations may also be served by company-owned stations built nearby. Otherwise, they can only be served by their own attached stations",
+        "Keywords":"serve,neutral,industries,serve_neutral_industries",
+        "FieldName":"serve_neutral_industries",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"serve_neutral_industries",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Modified Catchment Areas",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"If enabled, catchment areas will be differently sized for different types of stations and airports, and as a result be more realistic. For example, train stations have a larger catchment area than bus stations and airport catchment areas are bigger still",
+        "Keywords":"modified,catchment,modified_catchment",
+        "FieldName":"modified_catchment",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"modified_catchment",
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
@@ -853,54 +791,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Town Growth Rate",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"Sets the speed of town growth",
-        "Keywords":"town,growth,rate,speed,town_growth_rate",
-        "FieldName":"town_growth_rate",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"town_growth_rate",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2",
-        "EnumValues":{
-            "0":"None",
-            "1":"Slow",
-            "2":"Normal (default)",
-            "3":"Fast",
-            "4":"Very fast"
-        }
-    },
-    {
-        "DisplayName":"Larger Towns Proportion",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"Sets the proportion of towns that will grow to become cities. For example, if 4 is specified, 1 in 4 (25%) will become cities. 0 = disabled",
-        "Keywords":"larger,towns,larger_towns",
-        "FieldName":"larger_towns",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"larger_towns",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"4",
-        "Placeholder":"4",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Initial City Size Multiplier",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"Sets the average initial size of cities relative to towns",
-        "Keywords":"initial,city,size,multiplier,initial_city_size",
-        "FieldName":"initial_city_size",
-        "InputType":"number",
-        "MinValue":"1",
-        "MaxValue":"10",
-        "IsFlagArgument":false,
-        "ParamFieldName":"initial_city_size",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Remove Useless Road Elements",
         "Category":"OpenTTD Economy Settings",
         "Description":"If enabled, towns will remove useless road elements during construction to clean up dead-ends",
@@ -931,80 +821,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Town Population Noise Level Increase - Permissive",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"If Town Council Tolerance is permissive, then the town noise limit will increase from the default for every specified number of inhabitants",
-        "Keywords":"town,noise,population,permissive,town_noise_population[0]",
-        "FieldName":"town_noise_population0",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"town_noise_population[0]",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"800",
-        "Placeholder":"800",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Town Population Noise Level Increase - Tolerant",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"If Town Council Tolerance is tolerant, then the town noise limit will increase from the default for every specified number of inhabitants",
-        "Keywords":"town,noise,population,tolerant,town_noise_population[1]",
-        "FieldName":"town_noise_population1",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"town_noise_population[1]",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2000",
-        "Placeholder":"2000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Town Population Noise Level Increase - Hostile",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"If Town Council Tolerance is hostile, then the town noise limit will increase from the default for every specified number of inhabitants",
-        "Keywords":"town,noise,population,hostile,town_noise_population[2]",
-        "FieldName":"town_noise_population2",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"town_noise_population[2]",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"4000",
-        "Placeholder":"4000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Infrastructure Maintenance",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, infrastructure causes maintenance costs. The cost grows in proportion to the network size, thus affecting larger companie more than smaller ones",
-        "Keywords":"infrastructure,maintenance,infrastructure_maintenance",
-        "FieldName":"infrastructure_maintenance",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"infrastructure_maintenance",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Disable Servicing If No Breakdowns",
-        "Category":"OpenTTD Station Settings",
-        "Description":"If set, and vehicle breakdowns are disabled, vehicles will not go to depots or hangars for servicing",
-        "Keywords":"servicing,breakdowns,no_servicing_if_no_breakdowns",
-        "FieldName":"no_servicing_if_no_breakdowns",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"no_servicing_if_no_breakdowns",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Enable Improved Loading",
         "Category":"OpenTTD Station Settings",
         "Description":"If set, only one vehicle is loaded at a time until full, before loading the next vehicle. When disabled, all vehicles in a station are loaded simultaineously, possibly needlessly blocking multiple platforms",
@@ -1029,22 +845,6 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"selectgoods",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Enable Helicopter Servicing",
-        "Category":"OpenTTD Station Settings",
-        "Description":"If enabled, a helicopter landing on a heliport or helipad will automatically be serviced",
-        "Keywords":"service,helicopter,heliport,helipad,serviceathelipad",
-        "FieldName":"serviceathelipad",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"serviceathelipad",
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
@@ -1100,38 +900,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Modified Catchment Areas",
-        "Category":"OpenTTD Station Settings",
-        "Description":"If enabled, catchment areas will be differently sized for different types of stations and airports, and as a result be more realistic. For example, train stations have a larger catchment area than bus stations and airport catchment areas are bigger still",
-        "Keywords":"modified,catchment,modified_catchment",
-        "FieldName":"modified_catchment",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"modified_catchment",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Serve Neutral Industries",
-        "Category":"OpenTTD Station Settings",
-        "Description":"If enabled, industries with attached stations may also be served by company-owned stations built nearby. Otherwise, they can only be served by their own attached stations",
-        "Keywords":"serve,neutral,industries,serve_neutral_industries",
-        "FieldName":"serve_neutral_industries",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"serve_neutral_industries",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Allow Building Adjacent Stations",
         "Category":"OpenTTD Station Settings",
         "Description":"If enabled, allows building a station directly adjacent to another one to create a new station instead of merging the new tile(s) with the existing station",
@@ -1164,22 +932,6 @@
         }
     },
     {
-        "DisplayName":"Vehicle Driving Side",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"Sets which side of the road vehicles drive on",
-        "Keywords":"road,side,road_side",
-        "FieldName":"road_side",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"road_side",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"right",
-        "EnumValues":{
-            "right":"Drive on right (default)",
-            "left":"Drive on left"
-        }
-    },
-    {
         "DisplayName":"Train Acceleration Model",
         "Category":"OpenTTD Vehicle Settings",
         "Description":"Sets the physics model for train acceleration. \"Original\" penalises slopes equally for all vehicles. \"Realistic\" penalises slopes depending on various properties, like length and tractive effort",
@@ -1188,22 +940,6 @@
         "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"train_acceleration_model",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{
-            "0":"Original",
-            "1":"Realistic (default)"
-        }
-    },
-    {
-        "DisplayName":"Road Vehicle Acceleration Model",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"Sets the physics model for road vehicle acceleration. \"Original\" penalises slopes equally for all vehicles. \"Realistic\" penalises slopes depending on various properties of the engine, like tractive effort",
-        "Keywords":"road,vehicle,acceleration,model,roadveh_acceleration_model",
-        "FieldName":"roadveh_acceleration_model",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"roadveh_acceleration_model",
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
         "EnumValues":{
@@ -1229,6 +965,53 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Wagon Speed Limits",
+        "Category":"OpenTTD Vehicle Settings",
+        "Description":"If enabled, the speed limits of wagons (if any) are also used to determine the maximum speed of a train",
+        "Keywords":"wagon,speed,limits,wagon_speed_limits",
+        "FieldName":"wagon_speed_limits",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"wagon_speed_limits",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Freight Trains Multiplier",
+        "Category":"OpenTTD Vehicle Settings",
+        "Description":"Sets the impact of carrying freight in trains. The weight of freight trains is multiplied by this multiplier to simulate very heavy trains for more realism",
+        "Keywords":"freight,trains,multiplier,freight_trains",
+        "FieldName":"freight_trains",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"freight_trains",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "Placeholder":"1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Road Vehicle Acceleration Model",
+        "Category":"OpenTTD Vehicle Settings",
+        "Description":"Sets the physics model for road vehicle acceleration. \"Original\" penalises slopes equally for all vehicles. \"Realistic\" penalises slopes depending on various properties of the engine, like tractive effort",
+        "Keywords":"road,vehicle,acceleration,model,roadveh_acceleration_model",
+        "FieldName":"roadveh_acceleration_model",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"roadveh_acceleration_model",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"Original",
+            "1":"Realistic (default)"
+        }
+    },
+    {
         "DisplayName":"Road Vehicle Slope Steepness",
         "Category":"OpenTTD Vehicle Settings",
         "Description":"Sets the steepness of slopes for road vehicles. Higher values make it more difficult to climb a hill. It only applies if the Realistic acceleration model is selected",
@@ -1244,6 +1027,89 @@
         "Placeholder":"7",
         "Suffix":"%",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Aircraft Speed Factor",
+        "Category":"OpenTTD Vehicle Settings",
+        "Description":"Sets the relative speed of aircraft compared to other vehicle types, to reduce the amount of income of transport by aircraft",
+        "Keywords":"plane,aircraft,speed,plane_speed",
+        "FieldName":"plane_speed",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"plane_speed",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"4",
+        "EnumValues":{
+            "1":"1:1",
+            "2":"1:2",
+            "3":"1:3",
+            "4":"1:4 (default)"
+        }
+    },
+    {
+        "DisplayName":"Disallow Train Reversing",
+        "Category":"OpenTTD Vehicle Settings",
+        "Description":"If enabled, trains can reverse at the end of line only, and not at non-terminus stations, even if there is a shorter path to their next destination when reversing",
+        "Keywords":"line,reverse,mode,train,line_reverse_mode",
+        "FieldName":"line_reverse_mode",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"line_reverse_mode",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Vehicle Breakdown Frequency",
+        "Category":"OpenTTD Vehicle Settings",
+        "Description":"Sets the frequency at which inadequately serviced vehicles break down",
+        "Keywords":"vehicle,breakdowns,frequency,vehicle_breakdowns",
+        "FieldName":"vehicle_breakdowns",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"vehicle_breakdowns",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"No breakdowns",
+            "1":"Reduced breakdowns (default)",
+            "2":"Normal breakdowns"
+        }
+    },
+    {
+        "DisplayName":"Disable Servicing If No Breakdowns",
+        "Category":"OpenTTD Vehicle Settings",
+        "Description":"If set, and vehicle breakdowns are disabled, vehicles will not go to depots or hangars for servicing",
+        "Keywords":"servicing,breakdowns,no_servicing_if_no_breakdowns",
+        "FieldName":"no_servicing_if_no_breakdowns",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"no_servicing_if_no_breakdowns",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Helicopter Servicing",
+        "Category":"OpenTTD Vehicle Settings",
+        "Description":"If enabled, a helicopter landing on a heliport or helipad will automatically be serviced",
+        "Keywords":"service,helicopter,heliport,helipad,serviceathelipad",
+        "FieldName":"serviceathelipad",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"serviceathelipad",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
         "DisplayName":"Maximum Train Length",
@@ -1337,22 +1203,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Enable Wagon Speed Limits",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"If enabled, the speed limits of wagons (if any) are also used to determine the maximum speed of a train",
-        "Keywords":"wagon,speed,limits,wagon_speed_limits",
-        "FieldName":"wagon_speed_limits",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"wagon_speed_limits",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Disable Electric Tracks Requirement",
         "Category":"OpenTTD Vehicle Settings",
         "Description":"If set, tracks will not be required to be electrified to enable electric engines to run on them",
@@ -1366,39 +1216,6 @@
         "EnumValues":{
             "False":"false",
             "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Freight Trains Multiplier",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"Sets the impact of carrying freight in trains. The weight of freight trains is multiplied by this multiplier to simulate very heavy trains for more realism",
-        "Keywords":"freight,trains,multiplier,freight_trains",
-        "FieldName":"freight_trains",
-        "InputType":"number",
-        "MinValue":"1",
-        "IsFlagArgument":false,
-        "ParamFieldName":"freight_trains",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "Placeholder":"1",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Aircraft Speed Factor",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"Sets the relative speed of aircraft compared to other vehicle types, to reduce the amount of income of transport by aircraft",
-        "Keywords":"plane,aircraft,speed,plane_speed",
-        "FieldName":"plane_speed",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"plane_speed",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"4",
-        "EnumValues":{
-            "1":"1:1",
-            "2":"1:2",
-            "3":"1:3",
-            "4":"1:4 (default)"
         }
     },
     {
@@ -1526,6 +1343,474 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Map Seed",
+        "Category":"OpenTTD Server Settings",
+        "Description":"Sets the random seed for creating a new map",
+        "Keywords":"map,seed,generation_seed",
+        "FieldName":"G",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"G",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"970327061",
+        "Placeholder":"970327061",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Map Seed",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"G",
+        "InputType":"number",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"generation_seed",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Map Size - X Axis",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the size of the map's X axis (in tiles)",
+        "Keywords":"map,x,axis",
+        "FieldName":"map_x",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"map_x",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"8",
+        "EnumValues":{
+            "6":"64",
+            "7":"128",
+            "8":"256",
+            "9":"512",
+            "10":"1024",
+            "11":"2048",
+            "12":"4096"
+        }
+    },
+    {
+        "DisplayName":"Map Size - Y Axis",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the size of the map's Y axis (in tiles)",
+        "Keywords":"map,y,axis",
+        "FieldName":"map_y",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"map_y",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"8",
+        "EnumValues":{
+            "6":"64",
+            "7":"128",
+            "8":"256",
+            "9":"512",
+            "10":"1024",
+            "11":"2048",
+            "12":"4096"
+        }
+    },
+    {
+        "DisplayName":"Landscape",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the landscape for the server, which determines basic gameplay scenarios with different cargos and town growth requirements",
+        "Keywords":"landscape",
+        "FieldName":"landscape",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"landscape",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"temperate",
+        "EnumValues":{
+            "arctic":"Arctic",
+            "temperate":"Temperate (default)",
+            "toyland":"Toyland",
+            "tropic":"Tropic"
+        }
+    },
+    {
+        "DisplayName":"Land Generation System",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the land generation system for the server. The Original generator depends on the base graphics set, and composes fixed landscape shapes. TerraGeneris is a Perlin noise-based generator with finer control settings",
+        "Keywords":"land,generator,generation,system,land_generator",
+        "FieldName":"land_generator",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"land_generator",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"Original",
+            "1":"TerraGenesis Perlin (TGP) (default)"
+        }
+    },
+    {
+        "DisplayName":"Terrain Type (TGP Only)",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the terrain type (hilliness of the landscape) for generating a new map",
+        "Keywords":"terrain,type,terrain_type",
+        "FieldName":"terrain_type",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"terrain_type",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"Very flat",
+            "1":"Flat (default)",
+            "2":"Hilly",
+            "3":"Mountainous",
+            "4":"Alpinist",
+        }
+    },
+    {
+        "DisplayName":"Terrain Smoothness (TGP Only)",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the smoothness of the map, ie the frequency of hills",
+        "Keywords":"tgen,tgp,terrain,smoothness,tgen_smoothness",
+        "FieldName":"tgen_smoothness",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"tgen_smoothness",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"Very smooth",
+            "1":"Smooth (default)",
+            "2":"Rough",
+            "3":"Very rough"
+        }
+    },
+    {
+        "DisplayName":"Variety Distribution (TGP Only)",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the extent to which the map should contain mountainous areas in addition to flat areas",
+        "Keywords":"variety",
+        "FieldName":"variety",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"variety",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"None (default)",
+            "1":"Very low",
+            "2":"Low",
+            "3":"Medium",
+            "4":"High",
+            "5":"Very high"
+        }
+    },
+    {
+        "DisplayName":"Snow Coverage",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the approximate amount of snow on the sub-arctic landscape. Snow affects industry generation and town growth requirements. Land just above sea level is always without snow",
+        "Keywords":"snow,coverage,snow_coverage",
+        "FieldName":"snow_coverage",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"snow_coverage",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"40",
+        "EnumValues":{
+            "0":"None",
+            "10":"10%",
+            "20":"20%",
+            "30":"30%",
+            "40":"40% (default)",
+            "50":"50%",
+            "60":"60%",
+            "70":"70%",
+            "80":"80%",
+            "90":"90%",
+            "100":"100%"
+        }
+    },
+    {
+        "DisplayName":"Snow Line Height",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the altitude (in tiles) at which snow starts in sub-arctic landscapes. Snow affects industry generation and town growth requirements",
+        "Keywords":"snow,line,height,altitude,snow_line_height",
+        "FieldName":"snow_line_height",
+        "InputType":"number",
+        "MinValue":"2",
+        "MaxValue":"253",
+        "IsFlagArgument":false,
+        "ParamFieldName":"snow_line_height",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Desert Coverage",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the approximate amount of desert on the tropical landscape. Desert affects industry generation",
+        "Keywords":"desert,coverage,desert_coverage",
+        "FieldName":"desert_coverage",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"desert_coverage",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"50",
+        "EnumValues":{
+            "0":"None",
+            "10":"10%",
+            "20":"20%",
+            "30":"30%",
+            "40":"40%",
+            "50":"50% (default)",
+            "60":"60%",
+            "70":"70%",
+            "80":"80%",
+            "90":"90%",
+            "100":"100%"
+        }
+    },
+    {
+        "DisplayName":"Sea Level (TGP Only)",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the sea level, and as a result the size of the area covered by seas and lakes on a new map. If \"Custom\" is selected, Custom Sea Level must also be set",
+        "Keywords":"quantity,sea,lakes,level,quantity_sea_lakes",
+        "FieldName":"quantity_sea_lakes",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"quantity_sea_lakes",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Very low (default)",
+            "1":"Low",
+            "2":"Medium",
+            "3":"High",
+            "4":"Custom"
+        }
+    },
+    {
+        "DisplayName":"Custom Sea Level",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"If \"Custom\" is selected for Sea Level, sets roughly the percentage area covered by seas and lakes on a new map",
+        "Keywords":"custom,sea,level,custom_sea_level",
+        "FieldName":"custom_sea_level",
+        "InputType":"number",
+        "MinValue":"1",
+        "MaxValue":"90",
+        "IsFlagArgument":false,
+        "ParamFieldName":"custom_sea_level",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Quantity Of Rivers",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets how many rivers are generated",
+        "Keywords":"amount,rivers,amount_of_rivers",
+        "FieldName":"amount_of_rivers",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"amount_of_rivers",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "EnumValues":{
+            "0":"None",
+            "1":"Few",
+            "2":"Medium (default)",
+            "3":"Many"
+        }
+    },
+    {
+        "DisplayName":"Minimum River Length",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the minimum length (in tiles) of rivers",
+        "Keywords":"minimum,river,length,min_river_length",
+        "FieldName":"min_river_length",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"min_river_length",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"16",
+        "Placeholder":"16",
+        "Suffix":"tiles",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Tree Placing",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets how trees are distributed on the map. Original = uniformly scattered. Improved = planted in groups",
+        "Keywords":"tree,placer,tree_placer",
+        "FieldName":"tree_placer",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"tree_placer",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "EnumValues":{
+            "0":"No tree placing",
+            "1":"Original tree placing",
+            "2":"Improved tree placing (default)"
+        }
+    },
+    {
+        "DisplayName":"Town Quantity",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the quantity of towns created on a new map. If \"Custom\" is selected, Custom Town Quantity must also be set",
+        "Keywords":"number,towns,number_towns",
+        "FieldName":"number_towns",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"number_towns",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "EnumValues":{
+            "0":"Very low",
+            "1":"Low",
+            "2":"Normal (default)",
+            "3":"High",
+            "4":"Custom"
+        }
+    },
+    {
+        "DisplayName":"Custom Town Quantity",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"If \"Custom\" is selected for Town Quantity, sets the exact number of towns to be created on a new map",
+        "Keywords":"custom,town,number,custom_town_number",
+        "FieldName":"custom_town_number",
+        "InputType":"number",
+        "MinValue":"1",
+        "MaxValue":"5000",
+        "IsFlagArgument":false,
+        "ParamFieldName":"custom_town_number",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Larger Towns Proportion",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the proportion of towns that will grow to become cities. For example, if 4 is specified, 1 in 4 (25%) will become cities. 0 = disabled",
+        "Keywords":"larger,towns,larger_towns",
+        "FieldName":"larger_towns",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"larger_towns",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"4",
+        "Placeholder":"4",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Initial City Size Multiplier",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the average initial size of cities relative to towns",
+        "Keywords":"initial,city,size,multiplier,initial_city_size",
+        "FieldName":"initial_city_size",
+        "InputType":"number",
+        "MinValue":"1",
+        "MaxValue":"10",
+        "IsFlagArgument":false,
+        "ParamFieldName":"initial_city_size",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Industry Density",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets how many industries should be generated and what level should be maintained during the game",
+        "Keywords":"industry,density,industry_density",
+        "FieldName":"industry_density",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"industry_density",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"5",
+        "EnumValues":{
+            "0":"None (funding only)",
+            "1":"Minimal",
+            "2":"Very low",
+            "3":"Low",
+            "4":"Normal",
+            "5":"High (default)"
+        }
+    },
+    {
+        "DisplayName":"Town Layout",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the layout for the road network of towns",
+        "Keywords":"town,layout,town_layout",
+        "FieldName":"town_layout",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"town_layout",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Original",
+            "1":"Better roads",
+            "2":"2x2 grid",
+            "3":"3x3 grid",
+            "4":"Random"
+        }
+    },
+    {
+        "DisplayName":"Vehicle Driving Side",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets which side of the road vehicles drive on",
+        "Keywords":"road,side,road_side",
+        "FieldName":"road_side",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"road_side",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"right",
+        "EnumValues":{
+            "right":"Drive on right (default)",
+            "left":"Drive on left"
+        }
+    },
+    {
+        "DisplayName":"Starting Year",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the starting year for the game. 1925 appears to be the earliest year",
+        "Keywords":"starting,year,starting_year",
+        "FieldName":"t",
+        "InputType":"number",
+        "MinValue":"1925",
+        "IsFlagArgument":false,
+        "ParamFieldName":"t",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1950",
+        "Placeholder":"1950",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Starting Year",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"t",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"starting_year",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Restart Year",
+        "Category":"OpenTTD Creation Settings",
+        "Description":"Sets the year when the server will restart automatically (on 1 January). 0 = no automatic restart",
+        "Keywords":"restart,year,restart_game_year",
+        "FieldName":"restart_game_year",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"restart_game_year",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Town Name Nationality",
         "Category":"OpenTTD Creation Settings",
         "Description":"Sets the nationality that town names are sourced from in randomly generated games. If Other is selected, Custom Town Name Nationality must also be set",
@@ -1563,7 +1848,7 @@
     },
     {
         "DisplayName":"Custom Town Name Nationality",
-        "Category":"OpenTTD Server Settings",
+        "Category":"OpenTTD Creation Settings",
         "Description":"Sets a custom NewGRF source for random town names, if \"Other\" is selected under Town Name Nationality. The NewGRF file must be installed in the newgrf directory",
         "Keywords":"town,name,nationality,country,language",
         "FieldName":"CustomTownName",
@@ -1572,238 +1857,6 @@
         "ParamFieldName":"CustomTownName",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Landscape",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"Sets the landscape for the server, which determines basic gameplay scenarios with different cargos and town growth requirements",
-        "Keywords":"landscape",
-        "FieldName":"landscape",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"landscape",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"temperate",
-        "EnumValues":{
-            "arctic":"Arctic",
-            "temperate":"Temperate (default)",
-            "toyland":"Toyland",
-            "tropic":"Tropic"
-        }
-    },
-    {
-        "DisplayName":"Heightmap Height",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"Sets max map height",
-        "Keywords":"Heightmap,height",
-        "FieldName":"heightmap_height",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"heightmap_height",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"30",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Snow line height",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"This setting allows you to determine at what altitude snow will appear",
-        "Keywords":"Snow,line,height",
-        "FieldName":"snow_line_height",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"snow_line_height",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"10",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Starting Year",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"Sets the starting year for the game",
-        "Keywords":"starting,year,starting_year",
-        "FieldName":"t",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"t",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"1950",
-        "Placeholder":"1950",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Restart Year",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"The value set to this parameter represents the year the server will restart",
-        "Keywords":"restart,game,year",
-        "FieldName":"restart_game_year",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"restart_game_year",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Ending Year",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"Year the game will end",
-        "Keywords":"Ending,year",
-        "FieldName":"ending_year",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ending_year",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2050",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Land generator",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"This specifies the land generation system that you use, either the Original or Terra Genesis Perlin (TGP)",
-        "Keywords":"Land,generator",
-        "FieldName":"land_generator",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"land_generator",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Oil refinery limit",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"This option determines the maximum allowed distance (in tiles) from the edge of the map for an Oil Refinery",
-        "Keywords":"Oil,refinery,limit",
-        "FieldName":"oil_refinery_limit",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"oil_refinery_limit",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"32",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Tgen smoothness",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"Sets the smoothness",
-        "Keywords":"tgen,smoothness",
-        "FieldName":"tgen_smoothness",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"tgen_smoothness",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{
-            "0":"Very smooth",
-            "1":"Smooth (default)",
-            "2":"Rough",
-            "3":"Very rough"
-        }
-    },
-    {
-        "DisplayName":"Variety",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"This sets the variety of distribution",
-        "Keywords":"Variety",
-        "FieldName":"variety",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"variety",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "0":"None (default)",
-            "1":"Very low",
-            "2":"Low",
-            "3":"Medium",
-            "4":"High",
-            "5":"Very high"
-        }
-    },
-    {
-        "DisplayName":"Tree Placing",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"Sets how trees are distributed on the map. Original = uniformly scattered. Improved = planted in groups",
-        "Keywords":"tree,placer,tree_placer",
-        "FieldName":"tree_placer",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"tree_placer",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2",
-        "EnumValues":{
-            "0":"No tree placing",
-            "1":"Original tree placing",
-            "2":"Improved tree placing (default)"
-        }
-    },
-    {
-        "DisplayName":"Map x",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"The Map size determines the size and shape of your map",
-        "Keywords":"Map,x",
-        "FieldName":"map_x",
-        "InputType":"number",
-        "MaxValue":"12",
-        "IsFlagArgument":false,
-        "ParamFieldName":"map_x",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"8",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Map y",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"The Map size determines the size and shape of your map",
-        "Keywords":"Map,y",
-        "FieldName":"map_y",
-        "InputType":"number",
-        "MaxValue":"12",
-        "IsFlagArgument":false,
-        "ParamFieldName":"map_y",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"8",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Water borders",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"Bitset of the borders that are water by creating an new game",
-        "Keywords":"Water,borders",
-        "FieldName":"water_borders",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"water_borders",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"15",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Min river length",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"sets minimum river length",
-        "Keywords":"Min,river,length",
-        "FieldName":"min_river_length",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"min_river_length",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"16",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Amount of rivers",
-        "Category":"OpenTTD Creation Settings",
-        "Description":"Sets total amount of rivers",
-        "Keywords":"Amount of rivers",
-        "FieldName":"amount_of_rivers",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"amount_of_rivers",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2",
         "EnumValues":{}
     },
     {
