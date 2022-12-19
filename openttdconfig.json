@@ -258,21 +258,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"AI Competitors",
-        "Category":"OpenTTD Difficulty Settings",
-        "Description":"Sets the number of AI competitors to be created on the server",
-        "Keywords":"competitors,ai,max_no_competitors",
-        "FieldName":"max_no_competitors",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"14",
-        "IsFlagArgument":false,
-        "ParamFieldName":"max_no_competitors",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Allow Inflation",
         "Category":"OpenTTD Accounting Settings",
         "Description":"If set, inflation will be enabled in the economy, where costs rise slightly faster than payments",
@@ -390,7 +375,7 @@
     },
     {
         "DisplayName":"Construction Costs",
-        "Category":"OpenTTD Difficulty Settings",
+        "Category":"OpenTTD Accounting Settings",
         "Description":"Sets the level of construction and purchase costs",
         "Keywords":"construction,purchase,cost,construction_cost",
         "FieldName":"construction_cost",
@@ -406,27 +391,8 @@
         }
     },
     {
-        "DisplayName":"Competitor Speed",
-        "Category":"OpenTTD Accounting Settings",
-        "Description":"Sets the speed at which the AI competitors will build (assuming AI competitors are not disabled)",
-        "Keywords":"competitor,speed,ai,competitor_speed",
-        "FieldName":"competitor_speed",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"competitor_speed",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2",
-        "EnumValues":{
-            "0":"Very slow",
-            "1":"Slow",
-            "2":"Medium (default)",
-            "3":"Fast",
-            "4":"Very fast"
-        }
-    },
-    {
         "DisplayName":"Allow Disasters",
-        "Category":"OpenTTD Difficulty Settings",
+        "Category":"OpenTTD Incident Settings",
         "Description":"If enabled, disasters can occur on a new map, which may occasionally block or destroy vehicles or infrastructure",
         "Keywords":"disasters",
         "FieldName":"disasters",
@@ -442,7 +408,7 @@
     },
     {
         "DisplayName":"Allow Economic Recessions",
-        "Category":"OpenTTD Difficulty Settings",
+        "Category":"OpenTTD Incident Settings",
         "Description":"If enabled, economic recessions can occur on new maps every few years. During recessions, all production is significantly lower",
         "Keywords":"economy,recession",
         "FieldName":"economy",
@@ -455,6 +421,54 @@
             "False":"false",
             "True":"true"
         }
+    },
+    {
+        "DisplayName":"Vehicle Breakdown Frequency",
+        "Category":"OpenTTD Incident Settings",
+        "Description":"Sets the frequency at which inadequately serviced vehicles break down",
+        "Keywords":"vehicle,breakdowns,frequency,vehicle_breakdowns",
+        "FieldName":"vehicle_breakdowns",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"vehicle_breakdowns",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"No breakdowns",
+            "1":"Reduced breakdowns (default)",
+            "2":"Normal breakdowns"
+        }
+    },
+    {
+        "DisplayName":"Aircraft Crash Probability",
+        "Category":"OpenTTD Incident Settings",
+        "Description":"Sets the probability of aircraft crashes",
+        "Keywords":"plane,aircraft,crashes,plane_crashes",
+        "FieldName":"plane_crashes",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"plane_crashes",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "EnumValues":{
+            "0":"None",
+            "1":"Reduced",
+            "2":"Normal (default)"
+        }
+    },
+    {
+        "DisplayName":"Local Authority Distance",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"Sets how far in tiles an object has to be from a town centre before it comes under the local authority jurisdiction",
+        "Keywords":"distance,local,authority,dist_local_authority",
+        "FieldName":"dist_local_authority",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"dist_local_authority",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"20",
+        "Placeholder":"20",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Town Council Tolerance",
@@ -475,7 +489,7 @@
     },
     {
         "DisplayName":"Town Population Noise Level Increase - Permissive",
-        "Category":"OpenTTD Economy Settings",
+        "Category":"OpenTTD Enviro Settings",
         "Description":"If Town Council Tolerance is permissive, then the town noise limit will increase from the default for every specified number of inhabitants",
         "Keywords":"town,noise,population,permissive,town_noise_population[0]",
         "FieldName":"town_noise_population0",
@@ -489,7 +503,7 @@
     },
     {
         "DisplayName":"Town Population Noise Level Increase - Tolerant",
-        "Category":"OpenTTD Economy Settings",
+        "Category":"OpenTTD Enviro Settings",
         "Description":"If Town Council Tolerance is tolerant, then the town noise limit will increase from the default for every specified number of inhabitants",
         "Keywords":"town,noise,population,tolerant,town_noise_population[1]",
         "FieldName":"town_noise_population1",
@@ -503,7 +517,7 @@
     },
     {
         "DisplayName":"Town Population Noise Level Increase - Hostile",
-        "Category":"OpenTTD Economy Settings",
+        "Category":"OpenTTD Enviro Settings",
         "Description":"If Town Council Tolerance is hostile, then the town noise limit will increase from the default for every specified number of inhabitants",
         "Keywords":"town,noise,population,hostile,town_noise_population[2]",
         "FieldName":"town_noise_population2",
@@ -647,6 +661,22 @@
         }
     },
     {
+        "DisplayName":"Remove Useless Road Elements",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"If enabled, towns will remove useless road elements during construction to clean up dead-ends",
+        "Keywords":"mod,road,rebuild,mod_road_rebuild",
+        "FieldName":"mod_road_rebuild",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"mod_road_rebuild",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Allow Founding Of Towns",
         "Category":"OpenTTD Enviro Settings",
         "Description":"Sets whether towns can be founded by players during the game and, if so, whether they will use the road layout used by other towns in the game, or can have a custom layout",
@@ -677,6 +707,22 @@
         "EnumValues":{
             "0":"Quadratic growth (original)",
             "1":"Linear growth (default)"
+        }
+    },
+    {
+        "DisplayName":"Enable Demand-Only Cargo Generation",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"If set, cargo will only be generated at a station when a vehicle with the capacity to pick that cargo up has visited. Affects station ratings",
+        "Keywords":"cargo,demand,generation,selectgoods",
+        "FieldName":"selectgoods",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"selectgoods",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
         }
     },
     {
@@ -744,8 +790,74 @@
         }
     },
     {
+        "DisplayName":"Enable Improved Loading",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"If set, only one vehicle is loaded at a time until full, before loading the next vehicle. When disabled, all vehicles in a station are loaded simultaineously, possibly needlessly blocking multiple platforms",
+        "Keywords":"improved,load,improved_load",
+        "FieldName":"improved_load",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"improved_load",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Gradual Loading",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"If set, vehicles will load cargo over a period of time, not full load instantly",
+        "Keywords":"gradual,loading,gradual_loading",
+        "FieldName":"gradual_loading",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"gradual_loading",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"AI Competitors",
+        "Category":"OpenTTD Competitor Settings",
+        "Description":"Sets the number of AI competitors to be created on the server",
+        "Keywords":"competitors,ai,max_no_competitors",
+        "FieldName":"max_no_competitors",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"14",
+        "IsFlagArgument":false,
+        "ParamFieldName":"max_no_competitors",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Competitor Speed",
+        "Category":"OpenTTD Competitor Settings",
+        "Description":"Sets the speed at which the AI competitors will build (assuming AI competitors are not disabled)",
+        "Keywords":"competitor,speed,ai,competitor_speed",
+        "FieldName":"competitor_speed",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"competitor_speed",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "EnumValues":{
+            "0":"Very slow",
+            "1":"Slow",
+            "2":"Medium (default)",
+            "3":"Fast",
+            "4":"Very fast"
+        }
+    },
+    {
         "DisplayName":"Allow Giving Of Money",
-        "Category":"OpenTTD Economy Settings",
+        "Category":"OpenTTD Competitor Settings",
         "Description":"If enabled, allows transfer of money between companies",
         "Keywords":"give,money,give_money",
         "FieldName":"give_money",
@@ -761,7 +873,7 @@
     },
     {
         "DisplayName":"Allow Buying Of Shares",
-        "Category":"OpenTTD Economy Settings",
+        "Category":"OpenTTD Competitor Settings",
         "Description":"If enabled, allows buying and selling of company shares. Shares will only be available for companies reaching a certain age",
         "Keywords":"allow,shares,allow_shares",
         "FieldName":"allow_shares",
@@ -777,7 +889,7 @@
     },
     {
         "DisplayName":"Minimum Age For Buying Shares",
-        "Category":"OpenTTD Economy Settings",
+        "Category":"OpenTTD Competitor Settings",
         "Description":"Sets the minimum age of a company for others to be able to buy and sell shares from them",
         "Keywords":"minimum,years,age,shares,min_years_for_shares",
         "FieldName":"min_years_for_shares",
@@ -789,147 +901,6 @@
         "Placeholder":"6",
         "Suffix":"years",
         "EnumValues":{}
-    },
-    {
-        "DisplayName":"Remove Useless Road Elements",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"If enabled, towns will remove useless road elements during construction to clean up dead-ends",
-        "Keywords":"mod,road,rebuild,mod_road_rebuild",
-        "FieldName":"mod_road_rebuild",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"mod_road_rebuild",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Local Authority Distance",
-        "Category":"OpenTTD Economy Settings",
-        "Description":"Sets how far in tiles an object has to be from a town centre before it comes under the local authority jurisdiction",
-        "Keywords":"distance,local,authority,dist_local_authority",
-        "FieldName":"dist_local_authority",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"dist_local_authority",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"20",
-        "Placeholder":"20",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Improved Loading",
-        "Category":"OpenTTD Station Settings",
-        "Description":"If set, only one vehicle is loaded at a time until full, before loading the next vehicle. When disabled, all vehicles in a station are loaded simultaineously, possibly needlessly blocking multiple platforms",
-        "Keywords":"improved,load,improved_load",
-        "FieldName":"improved_load",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"improved_load",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Enable Demand-Only Cargo Generation",
-        "Category":"OpenTTD Station Settings",
-        "Description":"If set, cargo will only be generated at a station when a vehicle with the capacity to pick that cargo up has visited. Affects station ratings",
-        "Keywords":"cargo,demand,generation,selectgoods",
-        "FieldName":"selectgoods",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"selectgoods",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Enable Gradual Loading",
-        "Category":"OpenTTD Station Settings",
-        "Description":"If set, vehicles will load cargo over a period of time, not full load instantly",
-        "Keywords":"gradual,loading,gradual_loading",
-        "FieldName":"gradual_loading",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"gradual_loading",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Disable Airport Expiry",
-        "Category":"OpenTTD Station Settings",
-        "Description":"If set, each airport type will stay available forever after its introduction",
-        "Keywords":"never,expire,airports,never_expire_airports",
-        "FieldName":"never_expire_airports",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"never_expire_airports",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Station Spread",
-        "Category":"OpenTTD Station Settings",
-        "Description":"Sets the maximum area that parts of a station may be spread out over. High values will slow the game",
-        "Keywords":"station,spread,station_spread",
-        "FieldName":"station_spread",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"station_spread",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"12",
-        "Placeholder":"12",
-        "Suffix":"tiles",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Allow Building Adjacent Stations",
-        "Category":"OpenTTD Station Settings",
-        "Description":"If enabled, allows building a station directly adjacent to another one to create a new station instead of merging the new tile(s) with the existing station",
-        "Keywords":"adjacent,stations,adjacent_stations",
-        "FieldName":"adjacent_stations",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"adjacent_stations",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Allow Joining Distant Stations",
-        "Category":"OpenTTD Station Settings",
-        "Description":"If enabled, players building a new station have the option of merging it with an existing station within the catchment area or creating a new station",
-        "Keywords":"distant,join,stations,distant_join_stations",
-        "FieldName":"distant_join_stations",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"distant_join_stations",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
     },
     {
         "DisplayName":"Train Acceleration Model",
@@ -1063,23 +1034,6 @@
         }
     },
     {
-        "DisplayName":"Vehicle Breakdown Frequency",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"Sets the frequency at which inadequately serviced vehicles break down",
-        "Keywords":"vehicle,breakdowns,frequency,vehicle_breakdowns",
-        "FieldName":"vehicle_breakdowns",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"vehicle_breakdowns",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{
-            "0":"No breakdowns",
-            "1":"Reduced breakdowns (default)",
-            "2":"Normal breakdowns"
-        }
-    },
-    {
         "DisplayName":"Disable Servicing If No Breakdowns",
         "Category":"OpenTTD Vehicle Settings",
         "Description":"If set, and vehicle breakdowns are disabled, vehicles will not go to depots or hangars for servicing",
@@ -1112,113 +1066,6 @@
         }
     },
     {
-        "DisplayName":"Maximum Train Length",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"Sets the maximum length of a train",
-        "Keywords":"maximum,train,length,max_train_length",
-        "FieldName":"max_train_length",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"max_train_length",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"7",
-        "Placeholder":"7",
-        "Suffix":"tiles",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Disable Vehicle Expiry",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"If set, each vehicle model will stay available forever after its introduction",
-        "Keywords":"never,expire,vehicles,never_expire_vehicles",
-        "FieldName":"never_expire_vehicles",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"never_expire_vehicles",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Maximum Trains",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"Sets the maximum number of trains that a company can have",
-        "Keywords":"maximum,trains,limit,max_trains",
-        "FieldName":"max_trains",
-        "InputType":"number",
-        "MinValue":"0",
-        "IsFlagArgument":false,
-        "ParamFieldName":"max_trains",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"500",
-        "Placeholder":"500",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Maximum Road Vehicles",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"Sets the maximum number of road vehicles that a company can have",
-        "Keywords":"maximum,road,vehicles,limit,max_roadveh",
-        "FieldName":"max_roadveh",
-        "InputType":"number",
-        "MinValue":"0",
-        "IsFlagArgument":false,
-        "ParamFieldName":"max_roadveh",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"500",
-        "Placeholder":"500",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Maximum Aircraft",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"Sets the maximum number of aircraft that a company can have",
-        "Keywords":"maximum,aircraft,limit,max_aircraft",
-        "FieldName":"max_aircraft",
-        "InputType":"number",
-        "MinValue":"0",
-        "IsFlagArgument":false,
-        "ParamFieldName":"max_aircraft",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"200",
-        "Placeholder":"200",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Maximum Ships",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"Sets the maximum number of ships that a company can have",
-        "Keywords":"maximum,ships,limit,max_ships",
-        "FieldName":"max_ships",
-        "InputType":"number",
-        "MinValue":"0",
-        "IsFlagArgument":false,
-        "ParamFieldName":"max_ships",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"300",
-        "Placeholder":"300",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Disable Electric Tracks Requirement",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"If set, tracks will not be required to be electrified to enable electric engines to run on them",
-        "Keywords":"disable,electric,rails,disable_elrails",
-        "FieldName":"disable_elrails",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"disable_elrails",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Enable Dynamic Engines",
         "Category":"OpenTTD Vehicle Settings",
         "Description":"If enabled, multiple NewGRF vehicle sets will be able to exist side-by-side",
@@ -1232,23 +1079,6 @@
         "EnumValues":{
             "False":"false",
             "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Aircraft Crash Probability",
-        "Category":"OpenTTD Vehicle Settings",
-        "Description":"Sets the probability of aircraft crashes",
-        "Keywords":"plane,aircraft,crashes,plane_crashes",
-        "FieldName":"plane_crashes",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"plane_crashes",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2",
-        "EnumValues":{
-            "0":"None",
-            "1":"Reduced",
-            "2":"Normal (default)"
         }
     },
     {
@@ -1343,8 +1173,178 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Disable Airport Expiry",
+        "Category":"OpenTTD Limit Settings",
+        "Description":"If set, each airport type will stay available forever after its introduction",
+        "Keywords":"never,expire,airports,never_expire_airports",
+        "FieldName":"never_expire_airports",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"never_expire_airports",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Disable Vehicle Expiry",
+        "Category":"OpenTTD Limit Settings",
+        "Description":"If set, each vehicle model will stay available forever after its introduction",
+        "Keywords":"never,expire,vehicles,never_expire_vehicles",
+        "FieldName":"never_expire_vehicles",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"never_expire_vehicles",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Maximum Trains",
+        "Category":"OpenTTD Limit Settings",
+        "Description":"Sets the maximum number of trains that a company can have",
+        "Keywords":"maximum,trains,limit,max_trains",
+        "FieldName":"max_trains",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"max_trains",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"500",
+        "Placeholder":"500",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Road Vehicles",
+        "Category":"OpenTTD Limit Settings",
+        "Description":"Sets the maximum number of road vehicles that a company can have",
+        "Keywords":"maximum,road,vehicles,limit,max_roadveh",
+        "FieldName":"max_roadveh",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"max_roadveh",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"500",
+        "Placeholder":"500",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Aircraft",
+        "Category":"OpenTTD Limit Settings",
+        "Description":"Sets the maximum number of aircraft that a company can have",
+        "Keywords":"maximum,aircraft,limit,max_aircraft",
+        "FieldName":"max_aircraft",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"max_aircraft",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"200",
+        "Placeholder":"200",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Ships",
+        "Category":"OpenTTD Limit Settings",
+        "Description":"Sets the maximum number of ships that a company can have",
+        "Keywords":"maximum,ships,limit,max_ships",
+        "FieldName":"max_ships",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"max_ships",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"300",
+        "Placeholder":"300",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Train Length",
+        "Category":"OpenTTD Limit Settings",
+        "Description":"Sets the maximum length of a train",
+        "Keywords":"maximum,train,length,max_train_length",
+        "FieldName":"max_train_length",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"max_train_length",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"7",
+        "Placeholder":"7",
+        "Suffix":"tiles",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Station Spread",
+        "Category":"OpenTTD Limit Settings",
+        "Description":"Sets the maximum area that parts of a station may be spread out over. High values will slow the game",
+        "Keywords":"station,spread,station_spread",
+        "FieldName":"station_spread",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"station_spread",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"12",
+        "Placeholder":"12",
+        "Suffix":"tiles",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow Building Adjacent Stations",
+        "Category":"OpenTTD Limit Settings",
+        "Description":"If enabled, allows building a station directly adjacent to another one to create a new station instead of merging the new tile(s) with the existing station",
+        "Keywords":"adjacent,stations,adjacent_stations",
+        "FieldName":"adjacent_stations",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"adjacent_stations",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Joining Distant Stations",
+        "Category":"OpenTTD Limit Settings",
+        "Description":"If enabled, players building a new station have the option of merging it with an existing station within the catchment area or creating a new station",
+        "Keywords":"distant,join,stations,distant_join_stations",
+        "FieldName":"distant_join_stations",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"distant_join_stations",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Disable Electric Tracks Requirement",
+        "Category":"OpenTTD Limit Settings",
+        "Description":"If set, tracks will not be required to be electrified to enable electric engines to run on them",
+        "Keywords":"disable,electric,rails,disable_elrails",
+        "FieldName":"disable_elrails",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"disable_elrails",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Map Seed",
-        "Category":"OpenTTD Server Settings",
+        "Category":"OpenTTD Creation Settings",
         "Description":"Sets the random seed for creating a new map",
         "Keywords":"map,seed,generation_seed",
         "FieldName":"G",
