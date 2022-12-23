@@ -1,0 +1,77 @@
+[
+  {
+    "UpdateStageName": "SteamCMD Download",
+    "UpdateSourcePlatform": "All", 
+    "UpdateSource": "SteamCMD", 
+    "UpdateSourceData": "896660", 
+    "UpdateSourceVersion": "{{Stream}}"
+  },
+  {
+    "UpdateStageName": "Update Saves Directory - Windows",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "cmd.exe",
+    "UpdateSourceArgs": "/C move {{$FullBaseDir}}\\Data {{$FullBaseDir}}\\Saves"
+  },
+  {
+    "UpdateStageName": "Update Saves Directory - Linux",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"mv {{$FullBaseDir}}/Data/ {{$FullBaseDir}}/Saves/\""
+  },
+  {
+    "UpdateStageName": "Fetch BepInEx from Github - Windows",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "GithubRelease",
+    "UpdateSourceArgs": "BepInEx/BepInEx",
+    "UpdateSourceData": "BepInEx_x64_5.4.21.0.zip",
+    "UpdateSourceConditionSetting": "bepinex_install",
+    "UpdateSourceConditionValue": "true",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true
+  },
+  {
+    "UpdateStageName": "Fetch BepInEx from Github - Linux",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "GithubRelease",
+    "UpdateSourceArgs": "BepInEx/BepInEx",
+    "UpdateSourceData": "BepInEx_unix_5.4.21.0.zip",
+    "UpdateSourceConditionSetting": "bepinex_install",
+    "UpdateSourceConditionValue": "true",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true
+  },
+  {
+    "UpdateStageName": "Fetch ValheimPlus from Github - Windows",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "GithubRelease",
+    "UpdateSourceArgs": "valheimPlus/ValheimPlus",
+    "UpdateSourceData": "WindowsServer.zip",
+    "UpdateSourceConditionSetting": "valheim_plus_install",
+    "UpdateSourceConditionValue": "true",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true
+  },
+  {
+    "UpdateStageName": "Fetch ValheimPlus from Github - Linux",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "GithubRelease",
+    "UpdateSourceArgs": "valheimPlus/ValheimPlus",
+    "UpdateSourceData": "UnixServer.zip",
+    "UpdateSourceConditionSetting": "valheim_plus_install",
+    "UpdateSourceConditionValue": "true",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true
+  },
+  {
+    "UpdateStageName": "Settings File Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://raw.githubusercontent.com/valheimPlus/ValheimPlus/development/valheim_plus.cfg",
+    "UpdateSourceTarget": "{{$FullBaseDir}}/BepInEx/config",
+    "OverwriteExistingFiles": false,
+    "UpdateSourceConditionSetting": "valheim_plus_install",
+    "UpdateSourceConditionValue": "true"
+  }
+]
