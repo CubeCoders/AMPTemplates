@@ -30,7 +30,7 @@
     {
         "DisplayName":"Server Password",
         "Category":"Arma Server Settings",
-        "Description":"Password required to connect to the server",
+        "Description":"Password required to connect to the server. Default is no password",
         "Keywords":"server,password",
         "FieldName":"password",
         "InputType":"password",
@@ -43,7 +43,7 @@
     {
         "DisplayName":"Admin Password",
         "Category":"Arma Server Settings",
-        "Description":"Password required for admin access to the server",
+        "Description":"Password required for admin access to the server. Default is no password",
         "Keywords":"admin,password",
         "FieldName":"passwordAdmin",
         "InputType":"password",
@@ -56,7 +56,7 @@
     {
         "DisplayName":"Command Password",
         "Category":"Arma Server Settings",
-        "Description":"Password required by alternate syntax of \"serverCommand\" server-side scripting",
+        "Description":"Password required by alternate syntax of \"serverCommand\" server-side scripting. Default is no password",
         "Keywords":"command,password",
         "FieldName":"serverCommandPassword",
         "InputType":"password",
@@ -69,13 +69,14 @@
     {
         "DisplayName":"RCON Password",
         "Category":"Arma Server Settings",
-        "Description":"See the Security and Privacy menu for configurable options for the server's RCON",
+        "Description":"See the Security and Privacy menu for configurable options for the server's RCON. If you disable random password generation, set the RCON password here",
         "Keywords":"rcon,password",
-        "FieldName":"RCONPassword",
-        "InputType":"hidden",
+        "FieldName":"$RemoteAdminPassword",
+        "InputType":"password",
         "IsFlagArgument":false,
         "ParamFieldName":"RCONPassword",
         "IncludeInCommandLine":false,
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
@@ -116,6 +117,7 @@
         "ParamFieldName":"motdInterval",
         "IncludeInCommandLine":false,
         "DefaultValue":"5",
+        "Placeholder":"5",
         "EnumValues":{}
     },
     {
@@ -129,8 +131,8 @@
         "ParamFieldName":"maxPlayers",
         "IncludeInCommandLine":false,
         "DefaultValue":"64",
-        "Suffix":"players",
         "Placeholder":"64",
+        "Suffix":"players",
         "EnumValues":{}
     },
     {
@@ -205,7 +207,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
         "EnumValues":{
-            "0":"Do not allow",
+            "0":"Do not allow (default)",
             "1":"Allow headless clients only",
             "2":"Allow all clients"
         }
@@ -235,6 +237,7 @@
         "ParamFieldName":"requiredBuild",
         "IncludeInCommandLine":false,
         "DefaultValue":"99999999",
+        "Placeholder":"99999999",
         "EnumValues":{}
     },
     {
@@ -355,6 +358,7 @@
         "ParamFieldName":"voteMissionPlayers",
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
+        "Placeholder":"1",
         "EnumValues":{}
     },
     {
@@ -369,6 +373,7 @@
         "ParamFieldName":"voteThreshold",
         "IncludeInCommandLine":false,
         "DefaultValue":"0.33",
+        "Placeholder":"0.33",
         "EnumValues":{}
     },
     {
@@ -383,7 +388,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
         "EnumValues":{
-            "0":"Player decides",
+            "0":"Player decides (default)",
             "1":"Force Advanced Flight Model",
             "2":"Force Simple Flight Model"
         }
@@ -408,7 +413,7 @@
         "DisplayName":"Voice Chat Codec",
         "Category":"Arma Gameplay Settings",
         "Description":"Specify voice codec type",
-        "Keywords":"voice,codec",
+        "Keywords":"voice,chat,codec",
         "FieldName":"vonCodec",
         "InputType":"enum",
         "IsFlagArgument":false,
@@ -417,14 +422,14 @@
         "DefaultValue":"1",
         "EnumValues":{
             "0":"Old SPEEX codec",
-            "1":"New OPUS codec"
+            "1":"New OPUS codec (default)"
         }
     },
     {
         "DisplayName":"Voice Chat Quality",
         "Category":"Arma Gameplay Settings",
         "Description":"Voice sound range: 1-10 is 8kHz (narrowband), 11-20 is 16kHz (wideband), 21-30 is 32kHz (SPEEX) or 48kHz (OPUS) (ultrawideband)",
-        "Keywords":"voice,chat",
+        "Keywords":"voice,chat,codec,quality",
         "FieldName":"vonCodecQuality",
         "InputType":"number",
         "MinValue":"1",
@@ -433,13 +438,14 @@
         "ParamFieldName":"vonCodecQuality",
         "IncludeInCommandLine":false,
         "DefaultValue":"3",
+        "Placeholder":"3",
         "EnumValues":{}
     },
     {
         "DisplayName":"Start Mission Immediately",
         "Category":"Arma Gameplay Settings",
         "Description":"If enabled, begins the mission immediately instead of waiting for players to join (autoInit). Requires Persistent Mission to be enabled",
-        "Keywords":"mission,autoinit",
+        "Keywords":"mission,autoinit,immediate",
         "FieldName":"autoInit",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -471,7 +477,7 @@
         "DisplayName":"Enable Automatic Mission Selection",
         "Category":"Arma Gameplay Settings",
         "Description":"If enabled, the server auto-starts the next mission in the mission cycle and waits for players in the role selection. Requires a mission cycle to be specified",
-        "Keywords":"mission,selection",
+        "Keywords":"mission,selection,automatic",
         "FieldName":"autoSelectMission",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -544,7 +550,7 @@
         "DefaultValue":"Regular",
         "EnumValues":{
             "Recruit":"Recruit",
-            "Regular":"Regular",
+            "Regular":"Regular (default)",
             "Veteran":"Veteran",
             "Custom":"Custom"
         }
@@ -553,7 +559,7 @@
         "DisplayName":"AI Level",
         "Category":"Arma Gameplay Settings",
         "Description":"Sets the AI skill level on the server. To use custom AI level settings, you must configure them in the profile within the A3Master directory",
-        "Keywords":"ai,level",
+        "Keywords":"ai,level,preset",
         "FieldName":"aiLevelPreset",
         "InputType":"enum",
         "IsFlagArgument":false,
@@ -562,7 +568,7 @@
         "DefaultValue":"1",
         "EnumValues":{
             "0":"Low",
-            "1":"Normal",
+            "1":"Normal (default)",
             "2":"High",
             "3":"Custom"
         }
@@ -594,6 +600,7 @@
         "ParamFieldName":"allowedLoadFileExtensions",
         "IncludeInCommandLine":false,
         "DefaultValue":"\"hpp\",\"sqs\",\"sqf\",\"fsm\",\"cpp\",\"paa\",\"txt\",\"xml\",\"inc\",\"ext\",\"sqm\",\"ods\",\"fxy\",\"lip\",\"csv\",\"kb\",\"bik\",\"bikb\",\"html\",\"htm\",\"biedi\"",
+        "Placeholder":"\"hpp\",\"sqs\",\"sqf\",\"fsm\",\"cpp\",\"paa\",\"txt\",\"xml\",\"inc\",\"ext\",\"sqm\",\"ods\",\"fxy\",\"lip\",\"csv\",\"kb\",\"bik\",\"bikb\",\"html\",\"htm\",\"biedi\"",
         "EnumValues":{}
     },
     {
@@ -607,6 +614,7 @@
         "ParamFieldName":"allowedPreprocessFileExtensions",
         "IncludeInCommandLine":false,
         "DefaultValue":"\"hpp\",\"sqs\",\"sqf\",\"fsm\",\"cpp\",\"paa\",\"txt\",\"xml\",\"inc\",\"ext\",\"sqm\",\"ods\",\"fxy\",\"lip\",\"csv\",\"kb\",\"bik\",\"bikb\",\"html\",\"htm\",\"biedi\"",
+        "Placeholder":"\"hpp\",\"sqs\",\"sqf\",\"fsm\",\"cpp\",\"paa\",\"txt\",\"xml\",\"inc\",\"ext\",\"sqm\",\"ods\",\"fxy\",\"lip\",\"csv\",\"kb\",\"bik\",\"bikb\",\"html\",\"htm\",\"biedi\"",
         "EnumValues":{}
     },
     {
@@ -620,6 +628,7 @@
         "ParamFieldName":"allowedHTMLLoadExtensions",
         "IncludeInCommandLine":false,
         "DefaultValue":"\"htm\",\"html\",\"xml\",\"txt\"",
+        "Placeholder":"\"htm\",\"html\",\"xml\",\"txt\"",
         "EnumValues":{}
     },
     {
@@ -634,7 +643,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"none",
         "EnumValues":{
-            "none":"None",
+            "none":"None (default)",
             "short":"Short",
             "full":"Full"
         }
@@ -718,6 +727,7 @@
         "ParamFieldName":"onUnsignedData",
         "IncludeInCommandLine":false,
         "DefaultValue":"kick (_this select 0)",
+        "Placeholder":"kick (_this select 0)",
         "EnumValues":{}
     },    
     {
@@ -731,6 +741,7 @@
         "ParamFieldName":"onHackedData",
         "IncludeInCommandLine":false,
         "DefaultValue":"ban (_this select 0)",
+        "Placeholder":"ban (_this select 0)",
         "EnumValues":{}
     },    
     {
@@ -759,7 +770,7 @@
         "DefaultValue":"1",
         "EnumValues":{
             "0":"All scripts forbidden",
-            "1":"Only attributes allowed",
+            "1":"Only attributes allowed (default)",
             "2":"All scripts allowed"
         }
     },
@@ -774,6 +785,7 @@
         "ParamFieldName":"steamProtocolMaxDataSize",
         "IncludeInCommandLine":false,
         "DefaultValue":"1024",
+        "Placeholder":"1024",
         "EnumValues":{}
     },
     {
@@ -787,6 +799,7 @@
         "ParamFieldName":"callExtReportLimit",
         "IncludeInCommandLine":false,
         "DefaultValue":"1000",
+        "Placeholder":"1000",
         "Suffix":"milliseconds",
         "EnumValues":{}
     },
@@ -849,6 +862,7 @@
         "ParamFieldName":"queueSizeLogG",
         "IncludeInCommandLine":false,
         "DefaultValue":"1000000",
+        "Placeholder":"1000000",
         "EnumValues":{}
     },
     {
@@ -864,6 +878,7 @@
         "ParamFieldName":"disconnectTimeout",
         "IncludeInCommandLine":false,
         "DefaultValue":"90",
+        "Placeholder":"90",
         "Suffix":"seconds",
         "EnumValues":{}
     },
@@ -894,6 +909,7 @@
         "ParamFieldName":"maxDesync",
         "IncludeInCommandLine":false,
         "DefaultValue":"150",
+        "Placeholder":"150",
         "EnumValues":{}
     },
     {
@@ -923,6 +939,7 @@
         "ParamFieldName":"maxPing",
         "IncludeInCommandLine":false,
         "DefaultValue":"200",
+        "Placeholder":"200",
         "Suffix":"milliseconds",
         "EnumValues":{}
     },
@@ -953,6 +970,7 @@
         "ParamFieldName":"maxPacketLoss",
         "IncludeInCommandLine":false,
         "DefaultValue":"50",
+        "Placeholder":"50",
         "EnumValues":{}
     },
     {
@@ -983,6 +1001,7 @@
         "ParamFieldName":"kickManual",
         "IncludeInCommandLine":false,
         "DefaultValue":"-1",
+        "Placeholder":"-1",
         "Suffix":"seconds",
         "EnumValues":{}
     },
@@ -998,6 +1017,7 @@
         "ParamFieldName":"kickConnectivity",
         "IncludeInCommandLine":false,
         "DefaultValue":"180",
+        "Placeholder":"180",
         "Suffix":"seconds",
         "EnumValues":{}
     },
@@ -1013,6 +1033,7 @@
         "ParamFieldName":"kickBattlEye",
         "IncludeInCommandLine":false,
         "DefaultValue":"180",
+        "Placeholder":"180",
         "Suffix":"seconds",
         "EnumValues":{}
     },
@@ -1028,6 +1049,7 @@
         "ParamFieldName":"kickHarmless",
         "IncludeInCommandLine":false,
         "DefaultValue":"180",
+        "Placeholder":"180",
         "Suffix":"seconds",
         "EnumValues":{}
     },
@@ -1042,8 +1064,8 @@
         "ParamFieldName":"votingTimeOut",
         "IncludeInCommandLine":false,
         "DefaultValue":"60,90",
-        "Suffix":"seconds",
         "Placeholder":"60,90",
+        "Suffix":"seconds",
         "EnumValues":{}
     },
     {
@@ -1057,8 +1079,8 @@
         "ParamFieldName":"roleTimeOut",
         "IncludeInCommandLine":false,
         "DefaultValue":"90,120",
-        "Suffix":"seconds",
         "Placeholder":"90,120",
+        "Suffix":"seconds",
         "EnumValues":{}
     },
     {
@@ -1072,8 +1094,8 @@
         "ParamFieldName":"briefingTimeOut",
         "IncludeInCommandLine":false,
         "DefaultValue":"60,90",
-        "Suffix":"seconds",
         "Placeholder":"60,90",
+        "Suffix":"seconds",
         "EnumValues":{}
     },
     {
@@ -1087,8 +1109,8 @@
         "ParamFieldName":"debriefingTimeOut",
         "IncludeInCommandLine":false,
         "DefaultValue":"60,60",
-        "Suffix":"seconds",
         "Placeholder":"60,60",
+        "Suffix":"seconds",
         "EnumValues":{}
     },
     {
@@ -1102,6 +1124,7 @@
         "ParamFieldName":"lobbyIdleTimeout",
         "IncludeInCommandLine":false,
         "DefaultValue":"300",
+        "Placeholder":"300",
         "Suffix":"seconds",
         "EnumValues":{}
     },
@@ -1116,6 +1139,7 @@
         "ParamFieldName":"armaUnitsTimeout",
         "IncludeInCommandLine":false,
         "DefaultValue":"30",
+        "Placeholder":"30",
         "Suffix":"seconds",
         "EnumValues":{}
     }
