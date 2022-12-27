@@ -109,7 +109,7 @@
     {
         "DisplayName":"Message Delay",
         "Category":"Arma Server Settings",
-        "Description":"Sets the number of seconds between display of each line of the MOTD",
+        "Description":"Sets the time interval between display of each line of the MOTD",
         "Keywords":"motd,message,delay,motdinterval",
         "FieldName":"motdInterval",
         "InputType":"number",
@@ -118,13 +118,14 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"5",
         "Placeholder":"5",
+        "Suffix":"seconds",
         "EnumValues":{}
     },
     {
         "DisplayName":"Player Limit",
         "Category":"Arma Server Settings",
         "Description":"Sets the maximum number of clients (including headless clients) that may connect to the server at one time",
-        "Keywords":"players,clients,limit,maxplayers",
+        "Keywords":"maximum,players,clients,limit,maxplayers",
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "IsFlagArgument":false,
@@ -199,8 +200,8 @@
         "DisplayName":"Allow Client File Patching",
         "Category":"Arma Server Settings",
         "Description":"Specifies whether to prevent or allow file patching for clients",
-        "Keywords":"file,patching",
-        "FieldName":"allowedFilePatching,allowedfilepatching",
+        "Keywords":"file,patching,allowedfilepatching",
+        "FieldName":"allowedFilePatching",
         "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"allowedFilePatching",
@@ -380,8 +381,8 @@
         "DisplayName":"Advanced Flight Model",
         "Category":"Arma Gameplay Settings",
         "Description":"Sets the Advanced Flight Model mode",
-        "Keywords":"force,advanced,flight,model",
-        "FieldName":"forceRotorLibSimulation,forcerotorlibsimulation",
+        "Keywords":"force,advanced,flight,model,forcerotorlibsimulation",
+        "FieldName":"forceRotorLibSimulation",
         "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"forceRotorLibSimulation",
@@ -476,7 +477,7 @@
     {
         "DisplayName":"Enable Automatic Mission Selection",
         "Category":"Arma Gameplay Settings",
-        "Description":"If enabled, the server auto-starts the next mission in the mission cycle and waits for players in the role selection. Requires a mission cycle to be specified",
+        "Description":"If enabled, the server auto-starts the next mission in the mission cycle and waits for players in the role selection. Requires a mission cycle to be specified in AMP_server.cfg",
         "Keywords":"mission,selection,automatic,autoselectmission",
         "FieldName":"autoSelectMission",
         "InputType":"checkbox",
@@ -492,7 +493,7 @@
     {
         "DisplayName":"Enable Random Mission Order",
         "Category":"Arma Gameplay Settings",
-        "Description":"If enabled, the server randomly chooses a mission from the mission cycle for starting or auto-starting. Requires a mission cycle to be specified",
+        "Description":"If enabled, the server randomly chooses a mission from the mission cycle for starting or auto-starting. Requires a mission cycle to be specified in AMP_server.cfg",
         "Keywords":"mission,random,order,randommissionorder",
         "FieldName":"randomMissionOrder",
         "InputType":"checkbox",
@@ -559,7 +560,7 @@
         "DisplayName":"AI Level",
         "Category":"Arma Gameplay Settings",
         "Description":"Sets the AI skill level on the server. To use custom AI level settings, you must configure them in the profile within the A3Master directory",
-        "Keywords":"ai,level,preset",
+        "Keywords":"ai,level,preset,ailevelpreset",
         "FieldName":"aiLevelPreset",
         "InputType":"enum",
         "IsFlagArgument":false,
@@ -592,7 +593,7 @@
     {
         "DisplayName":"Allowed File Extensions",
         "Category":"Arma Misc Settings",
-        "Description":"Only allow files with listed extensions to be loaded via the loadFile command",
+        "Description":"Only allows files with the listed extensions to be loaded via the loadFile command",
         "Keywords":"file,extensions,allowedloadfileextensions",
         "FieldName":"allowedLoadFileExtensions",
         "InputType":"text",
@@ -606,7 +607,7 @@
     {
         "DisplayName":"Allowed Preprocess File Extensions",
         "Category":"Arma Misc Settings",
-        "Description":"Only allow files with listed extensions to be loaded via the preprocessFile / preprocessFileLineNumbers commands",
+        "Description":"Only allows files with the listed extensions to be loaded via the preprocessFile / preprocessFileLineNumbers commands",
         "Keywords":"file,preprocess,extensions,allowedpreprocessfileextensions",
         "FieldName":"allowedPreprocessFileExtensions",
         "InputType":"text",
@@ -620,7 +621,7 @@
     {
         "DisplayName":"Allowed HTML Extensions",
         "Category":"Arma Misc Settings",
-        "Description":"Only allow files and URLs with listed extensions to be loaded via the htmlLoad command",
+        "Description":"Only allows files and URLs with the listed extensions to be loaded via the htmlLoad command",
         "Keywords":"html,extensions,allowedhtmlloadextensions",
         "FieldName":"allowedHTMLLoadExtensions",
         "InputType":"text",
@@ -651,7 +652,7 @@
     {
         "DisplayName":"Log Player Info",
         "Category":"Arma Misc Settings",
-        "Description":"If enabled, logs players' bandwidth and desync info every 60 seconds, as well as \"network message is pending\" owner identity",
+        "Description":"If enabled, the server logs players' bandwidth and desync info every 60 seconds, as well as \"network message is pending\" owner identity",
         "Keywords":"player,diag,info,enableplayerdiag",
         "FieldName":"enablePlayerDiag",
         "InputType":"checkbox",
@@ -665,7 +666,7 @@
         }
     },
     {
-        "DisplayName":"Run Script on User Connected",
+        "DisplayName":"Run Script On User Connected",
         "Category":"Arma Misc Settings",
         "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when a user has connected",
         "Keywords":"scripting,user,connected,onuserconnected",
@@ -678,7 +679,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Run Script on User Disconnected",
+        "DisplayName":"Run Script On User Disconnected",
         "Category":"Arma Misc Settings",
         "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when a user has disconnected",
         "Keywords":"scripting,user,disconnected,onuserdisconnected",
@@ -691,7 +692,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Run Script on Double ID Detected",
+        "DisplayName":"Run Script On Double ID Detected",
         "Category":"Arma Misc Settings",
         "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when a second user with the same ID is detected",
         "Keywords":"scripting,double,id,detected,doubleiddetected",
@@ -704,7 +705,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Run Script on User Kicked",
+        "DisplayName":"Run Script On User Kicked",
         "Category":"Arma Misc Settings",
         "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when a user is kicked",
         "Keywords":"scripting,user,kicked,onuserkicked",
@@ -717,7 +718,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Run Script on Unsigned Data",
+        "DisplayName":"Run Script On Unsigned Data",
         "Category":"Arma Misc Settings",
         "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when unsigned data is detected",
         "Keywords":"scripting,unsigned,data,onunsigneddata",
@@ -731,7 +732,7 @@
         "EnumValues":{}
     },    
     {
-        "DisplayName":"Run Script on Hacked Data",
+        "DisplayName":"Run Script On Hacked Data",
         "Category":"Arma Misc Settings",
         "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when a modification of a signed pbo is detected",
         "Keywords":"scripting,hacked,data,onhackeddata",
@@ -745,7 +746,7 @@
         "EnumValues":{}
     },    
     {
-        "DisplayName":"Run Script on Different Data",
+        "DisplayName":"Run Script On Different Data",
         "Category":"Arma Misc Settings",
         "Description":"Sets [server side scripting](https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_Server_Side_Scripting) to run when a signed pbo is detected with a valid signature, but is a different version than a server has. Use with caution",
         "Keywords":"scripting,different,data,ondifferentdata",
@@ -761,8 +762,8 @@
         "DisplayName":"Composition Script Level",
         "Category":"Arma Misc Settings",
         "Description":"Sets the composition script permission level",
-        "Keywords":"script,level",
-        "FieldName":"zeusCompositionScriptLevel,zeuscompositionscriptlevel",
+        "Keywords":"script,level,zeuscompositionscriptlevel",
+        "FieldName":"zeusCompositionScriptLevel",
         "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"zeusCompositionScriptLevel",
@@ -868,7 +869,7 @@
     {
         "DisplayName":"Disconnect Timeout",
         "Category":"Arma Limit Settings",
-        "Description":"Server wait time before disconnecting a player after loss of active traffic connection (if Kick on Disconnect Timeout is enabled)",
+        "Description":"Sets the server wait time before disconnecting a player after loss of an active traffic connection (if Kick On Disconnect Timeout is enabled)",
         "Keywords":"disconnect,timeout,disconnecttimeout",
         "FieldName":"disconnectTimeout",
         "InputType":"number",
@@ -883,7 +884,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Kick on Disconnect Timeout",
+        "DisplayName":"Kick On Disconnect Timeout",
         "Category":"Arma Limit Settings",
         "Description":"If enabled, players hitting the disconnect timeout will be kicked, otherwise that will just be logged",
         "Keywords":"disconnect,timeout,kick,kickclientsonslownetwork",
@@ -901,7 +902,7 @@
     {
         "DisplayName":"Maximum Desync",
         "Category":"Arma Limit Settings",
-        "Description":"Maximum desync value before the server kicks a player (if Kick on Maximum Desync is enabled)",
+        "Description":"Sets the maximum desync value before the server kicks a player (if Kick On Maximum Desync is enabled)",
         "Keywords":"maximum,desync,maxdesync",
         "FieldName":"maxDesync",
         "InputType":"number",
@@ -931,7 +932,7 @@
     {
         "DisplayName":"Maximum Ping",
         "Category":"Arma Limit Settings",
-        "Description":"Maximum latency (ping) before the server kicks a player (if Kick on Maximum Ping is enabled)",
+        "Description":"Sets the maximum latency (ping) before the server kicks a player (if Kick On Maximum Ping is enabled)",
         "Keywords":"maximum,ping,latency,maxping",
         "FieldName":"maxPing",
         "InputType":"number",
@@ -962,7 +963,7 @@
     {
         "DisplayName":"Maximum Packet Loss",
         "Category":"Arma Limit Settings",
-        "Description":"Maximum packet loss before the server kicks a player (if Kick on Maximum Packet Loss is enabled)",
+        "Description":"Sets the maximum packet loss before the server kicks a player (if Kick On Maximum Packet Loss is enabled)",
         "Keywords":"maximum,packet,loss,maxpacketloss",
         "FieldName":"maxPacketLoss",
         "InputType":"number",
@@ -992,7 +993,7 @@
     {
         "DisplayName":"Manual Kick Waittime",
         "Category":"Arma Limit Settings",
-        "Description":"Time interval before a player can return after a manual kick (such as vote kick, admin kick, bruteforce detection). -1 = until mission end, -2 = until server restart",
+        "Description":"Sets the time interval before a player can return after a manual kick (such as vote kick, admin kick, bruteforce detection). -1 = until mission end, -2 = until server restart",
         "Keywords":"wait,time,manual,kick,kicktimeout",
         "FieldName":"kickManual",
         "InputType":"number",
@@ -1040,7 +1041,7 @@
     {
         "DisplayName":"Harmless Kick Waittime",
         "Category":"Arma Limit Settings",
-        "Description":"Sets the time interval before a player can return after a harmless kick (such as wrong addons, Steam timeout or checks, signatures, or content. -1 = until mission end, -2 = until server restart",
+        "Description":"Sets the time interval before a player can return after a harmless kick (such as wrong addons, Steam timeout or checks, signatures, content, etc). -1 = until mission end, -2 = until server restart",
         "Keywords":"wait,time,harmless,kick,kicktimeout",
         "FieldName":"kickHarmless",
         "InputType":"number",
