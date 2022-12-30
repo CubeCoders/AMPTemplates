@@ -48,11 +48,33 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Binaries/Linux/PathOfTitansServer-Linux-Shipping"
     },
     {
-        "UpdateStageName":"Create MOTD File",
-        "UpdateSourcePlatform":"All",
+        "UpdateStageName":"Create Saved Directory",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Saved/Config/WindowsServer",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Create Saved Directory",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Saved/Config/LinuxServer",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Create Game.ini",
+        "UpdateSourcePlatform":"Windows",
         "UpdateSource":"CreateFile",
-        "UpdateSourceData":"<title>Welcome to Path of Titans Server - powered by AMP!</>\n<large>Have fun!</>",
-        "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Saved/MOTD.txt",
+        "UpdateSourceData":"",
+        "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Saved/Config/WindowsServer/Game.ini",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Create Game.ini",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"",
+        "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Saved/Config/LinuxServer/Game.ini",
         "OverwriteExistingFiles":false
     }
 ]
