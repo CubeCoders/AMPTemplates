@@ -21,7 +21,7 @@ App.BaseDirectory=./night-of-the-dead/1420710/
 App.ExecutableWin=1420710\LF\Binaries\Win64\LFServer.exe
 App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=1420710
-App.LinuxCommandLineArgs=./LF/Binaries/Win64/LFServer.exe
+App.LinuxCommandLineArgs="./LF/Binaries/Win64/LFServer.exe"
 App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} ?listen -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{$FormattedArgs}} -stdout -FullStdOutLogOutput -CRASHREPORTS
 App.AppSettings={}
@@ -62,7 +62,7 @@ App.ApplicationReadyMode=RegexMatch
 App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
-Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|\d+:err:ole:.*|Could not find Wine Gecko.*)$
+Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|\d+:err:(ole:|winediag:nodrv_CreateWindow|systray:initialize_systray).*|Could not find Wine Gecko.*)$
 Console.AppReadyRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogBlueprintUserMessages: \[BP_LFGameMode_C_\d+\] Session Update success$
 Console.UserJoinRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogOnline: STEAM: Adding user (?<userid>.+?):\d+ from RegisterConnection$
 Console.UserLeaveRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogOnline: STEAM: (?<userid>.+?) has been removed\.$
