@@ -21,12 +21,12 @@ App.BaseDirectory=./icarus/2089300/
 App.ExecutableWin=2089300/Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe
 App.ExecutableLinux=/usr/bin/wine64
 App.WorkingDir=2089300
-App.LinuxCommandLineArgs=Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe
+App.LinuxCommandLineArgs="./Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe"
 App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} Icarus -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{StartupMode}}{{$FormattedArgs}} -stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1149460","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"fixme-all"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1149460","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
 App.CommandLineParameterFormat=-{0}="{1}"
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
@@ -67,7 +67,7 @@ App.ApplicationReadyMode=RegexMatch
 App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
-Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|\d+:err:ole:.*|Could not find Wine Gecko.*)$
+Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|\d+:err:(ole:|winediag:nodrv_CreateWindow|systray:initialize_systray).*|Could not find Wine Gecko.*)$
 Console.AppReadyRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogInit: Display: Game Engine Initialized\.$
 Console.UserJoinRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogConnectedPlayers: Display: AddConnectedPlayer - UserId: (?<userid>.+?) \| PlayerName: (?<username>.+)$
 Console.UserLeaveRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogOnline: STEAM: (?<userid>.+?) has been removed\.$
