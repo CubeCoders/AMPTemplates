@@ -20,9 +20,9 @@ App.BaseDirectory=./theisle/412680/
 App.ExecutableWin=412680/TheIsle/Binaries/Win64/TheIsleServer-Win64-Shipping.exe
 App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=412680
-App.LinuxCommandLineArgs=-a wine "./TheIsle/Binaries/Win64/TheIsleServer-Win64-Shipping.exe"
-App.WindowsCommandLineArgs=-FullStdOutLogOutput
-App.CommandLineArgs=TheIsle {{Map}}?game={{GameMode}} -Port={{$ApplicationPort1}} -QueryPort={{$ApplicationPort2}} {{$FormattedArgs}} -stdout {{$PlatformArgs}}
+App.LinuxCommandLineArgs=-a wine64 "./TheIsle/Binaries/Win64/TheIsleServer-Win64-Shipping.exe" TheIsle
+App.WindowsCommandLineArgs=TheIsle -FullStdOutLogOutput
+App.CommandLineArgs={{$PlatformArgs}} {{Map}}?game={{GameMode}} -Port={{$ApplicationPort1}} -QueryPort={{$ApplicationPort2}} {{$FormattedArgs}} -stdout
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"376210","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"fixme-all"}
 App.CommandLineParameterFormat=-{0}={1}
@@ -59,7 +59,7 @@ App.ApplicationReadyMode=RegexMatch
 App.TemplateMatchRegex={{(\$?[\w]+)}}
 App.MonitorChildProcess=True
 App.MonitorChildProcessWaitMs=2000
-App.MonitorChildProcessName=wine
+App.MonitorChildProcessName=wine64
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|\d+:err:(ole:|winediag:nodrv_CreateWindow|systray:initialize_systray).*|Could not find Wine Gecko.*)$
