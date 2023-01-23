@@ -32,20 +32,8 @@
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
-        "UpdateSourceData":"{{$FullInstanceDir}}AlderonGamesCmd-Linux-x64",
-        "UpdateSourceArgs":"--game path-of-titans --server true --beta-branch {{BranchKey}} --auth-token {{AuthToken}} --install-dir {{$FullRootDir}}"
-    },
-    {
-        "UpdateStageName":"Pause Update Stages",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Pause",
-        "UpdateSourceArgs":"10"
-    },
-    {
-        "UpdateStageName":"Make Server Executable",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"SetExecutableFlag",
-        "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Binaries/Linux/PathOfTitansServer-Linux-Shipping"
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '{{$FullInstanceDir}}AlderonGamesCmd-Linux-x64 --game path-of-titans --server true --beta-branch {{BranchKey}} --auth-token {{AuthToken}} --install-dir {{$FullRootDir}} && chmod u+x {{$FullBaseDir}}PathOfTitans/Binaries/Linux/PathOfTitansServer-Linux-Shipping'"
     },
     {
         "UpdateStageName":"Create Saved Directory",
@@ -75,6 +63,22 @@
         "UpdateSource":"CreateFile",
         "UpdateSourceData":"",
         "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Saved/Config/LinuxServer/Game.ini",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Create Commands.ini",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"",
+        "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Saved/Config/WindowsServer/Commands.ini",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Create Commands.ini",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"",
+        "UpdateSourceArgs":"{{$FullBaseDir}}PathOfTitans/Saved/Config/LinuxServer/Commands.ini",
         "OverwriteExistingFiles":false
     }
 ]
