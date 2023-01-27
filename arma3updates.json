@@ -30,5 +30,34 @@
         "UpdateSource":"CreateFile",
         "UpdateSourceArgs":"{{$FullBaseDir}}parameters.txt",
         "OverwriteExistingFiles":false
+    },
+    [
+    {
+        "UpdateStageName":"Delete Active File",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'rm -f {{$FullBaseDir}}battleye/beserver_x64_active_*.cfg'"
+    },
+    {
+        "UpdateStageName":"Delete Active File",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}battleye\\beserver_x64_active_*.cfg"
+    },
+    {
+        "UpdateStageName":"Convert and Symlink Mods",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c \"find {{$FullBaseDir}}steamapps/workshop/content/107410/ -type f -print0 | xargs -0 -I file mv file `echo file | sed 's,\\(.*\\)\\/\\(.*\\),\\1\\/\\L\\2,'`\" && find {{$FullBaseDir}}steamapps/workshop/content/107410 -maxdepth 1 -mindepth 1 -type d -print0 | xargs -0 -I dir ln -sf dir ./arma3/233780/\""
+    },
+    {
+        "UpdateStageName":"Symlink Mods",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C for /D %%G in (\"{{$FullBaseDir}}steamapps\\workshop\\content\\107410\\*\") do mklink /D \"{{$FullBaseDir}}%%~nxG\" \"%%~G\""
     }
 ]
