@@ -51,7 +51,19 @@
         "DefaultValue":"",
         "EnumValues":{}
     },
-        {
+    {
+        "DisplayName":"RCON Password",
+        "Category":"DayZ Server Settings",
+        "Description":"See the Security and Privacy menu for configurable options for the server's RCON",
+        "Keywords":"rcon,password",
+        "FieldName":"RCONPassword",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"RCONPassword",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Message Of The Day",
         "Category":"DayZ Server Settings",
         "Description":"Sets the player welcome message (MOTD). Format is \"Line1\",\"Line2\"",
@@ -241,13 +253,29 @@
         "DisplayName":"Allow Client File Patching",
         "Category":"DayZ Server Settings",
         "Description":"If enabled, clients with the \"-filePatching\" launch parameter enabled will be able to connect",
-        "Keywords":"file,patching,client,allowedfilepatching",
-        "FieldName":"allowedFilePatching",
+        "Keywords":"file,patching,client,allowfilepatching",
+        "FieldName":"allowFilePatching",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"allowedFilePatching",
+        "ParamFieldName":"allowFilePatching",
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Force Same Build",
+        "Category":"DayZ Server Settings",
+        "Description":"If enabled, the server will allow connections only by clients with same the .exe version as the server",
+        "Keywords":"version,build,forcesamebuild",
+        "FieldName":"forceSameBuild",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"forceSameBuild",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -286,22 +314,6 @@
         "Placeholder":"15",
         "Suffix":"fps",
         "EnumValues":{}
-    },
-    {
-        "DisplayName":"Force Same Build",
-        "Category":"DayZ Server Settings",
-        "Description":"If enabled, the server will allow connections only by clients with same the .exe version as the server",
-        "Keywords":"version,build,forcesamebuild",
-        "FieldName":"forceSameBuild",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"forceSameBuild",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
     },
     {
         "DisplayName":"Maximum Ping",
@@ -346,6 +358,20 @@
         "DefaultValue":"250",
         "Placeholder":"250",
         "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Additional Server Startup Parameters",
+        "Category":"DayZ Server Settings",
+        "Description":"Specifies additional startup parameters that are not otherwise set by AMP. Use with care",
+        "Keywords":"custom,server,arguments,parameters",
+        "FieldName":"CustomServerArgs",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"CustomServerArgs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"-cpuCount=2",
         "EnumValues":{}
     },
     {
@@ -444,6 +470,38 @@
             "True":"1"
         }
     },
+     {
+        "DisplayName":"Disable Base Damage",
+        "Category":"DayZ Gameplay Settings",
+        "Description":"If set, disables the damage or destruction of fences and watchtowers",
+        "Keywords":"disable,base,damage,fence,watchtower,disablebasedamage",
+        "FieldName":"disableBaseDamage",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"disableBaseDamage",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Disable Container Damage",
+        "Category":"DayZ Gameplay Settings",
+        "Description":"If set, disables the damage or destruction of tents, barrels, wooden crates and seachests",
+        "Keywords":"disable,container,damage,tent,barrel,crate,seachest,disablecontainerdamage",
+        "FieldName":"disableContainerDamage",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"disableContainerDamage",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
     {
         "DisplayName":"Enable Debug Monitor",
         "Category":"DayZ Gameplay Settings",
@@ -461,16 +519,16 @@
         }
     },
     {
-        "DisplayName":"Storage Auto Fix",
+        "DisplayName":"Disable Respawn Dialog",
         "Category":"DayZ Gameplay Settings",
-        "Description":"If enabled, checks if the persistence files are corrupted and replaces corrupted ones with empty ones",
-        "Keywords":"storage,fix,persistence,storageautofix",
-        "FieldName":"storageAutoFix",
+        "Description":"If set, disables the respawn dialog (new characters will randomly spawn)",
+        "Keywords":"disable,respawn,dialog,disablerespawndialog",
+        "FieldName":"disableRespawnDialog",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"storageAutoFix",
+        "ParamFieldName":"disableRespawnDialog",
         "IncludeInCommandLine":false,
-        "DefaultValue":"1",
+        "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -584,48 +642,16 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Disable Base Damage",
-        "Category":"DayZ Gameplay Settings",
-        "Description":"If set, disables the damage or destruction of fences and watchtowers",
-        "Keywords":"disable,base,damage,fence,watchtower,disablebasedamage",
-        "FieldName":"disableBaseDamage",
+        "DisplayName":"Storage Auto Fix",
+        "Category":"DayZ Misc Settings",
+        "Description":"If enabled, checks if the persistence files are corrupted and replaces corrupted ones with empty ones",
+        "Keywords":"storage,fix,persistence,storageautofix",
+        "FieldName":"storageAutoFix",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"disableBaseDamage",
+        "ParamFieldName":"storageAutoFix",
         "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Disable Container Damage",
-        "Category":"DayZ Gameplay Settings",
-        "Description":"If set, disables the damage or destruction of tents, barrels, wooden crates and seachests",
-        "Keywords":"disable,container,damage,tent,barrel,crate,seachest,disablecontainerdamage",
-        "FieldName":"disableContainerDamage",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"disableContainerDamage",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Disable Respawn Dialog",
-        "Category":"DayZ Gameplay Settings",
-        "Description":"If set, disables the respawn dialog (new characters will randomly spawn)",
-        "Keywords":"disable,respawn,dialog,disablerespawndialog",
-        "FieldName":"disableRespawnDialog",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"disableRespawnDialog",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
+        "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -768,7 +794,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"logAverageFps",
         "IncludeInCommandLine":false,
-        "DefaultValue":"1",
+        "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -784,7 +810,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"logMemory",
         "IncludeInCommandLine":false,
-        "DefaultValue":"1",
+        "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -800,7 +826,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"logPlayers",
         "IncludeInCommandLine":false,
-        "DefaultValue":"1",
+        "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
             "True":"1"
