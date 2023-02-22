@@ -114,7 +114,7 @@
         "FieldName":"AdminPlayers",
         
         "InputType":"list",
-        "Special":"listfile:./dayz/server/whitelist.txt"
+        "Special":"listfile:./dayz/1042420/whitelist.txt"
     },
     {
         "DisplayName":"Instance ID",
@@ -134,7 +134,7 @@
         "DisplayName":"Server Mission",
         "Category":"DayZ Server Settings",
         "Description":"Sets the mission to load on server startup. If Custom is selected, the \"Custom Mission Name\" must also be specified",
-        "Keywords":"server,mission,terrain,template",
+        "Keywords":"mission,terrain,template",
         "FieldName":"template",
         "InputType":"enum",
         "IsFlagArgument":false,
@@ -151,7 +151,7 @@
         "DisplayName":"Custom Mission Name",
         "Category":"DayZ Server Settings",
         "Description":"Sets a custom mission to load on startup. Format is <MissionName>.<TerrainName>. The Custom mission type must be selected under \"Server Mission\"",
-        "Keywords":"server,mission,terrain,template,customtemplate",
+        "Keywords":"mission,terrain,template,customtemplate",
         "FieldName":"customTemplate",
         "InputType":"text",
         "IsFlagArgument":false,
@@ -240,8 +240,8 @@
     {
         "DisplayName":"Enable Server File Patching",
         "Category":"DayZ Server Settings",
-        "Description":"If enabled, ensures that only PBOs are loaded and NO unpacked data",
-        "Keywords":"file,patching,server,filepatching",
+        "Description":"If enabled, allows loading of unpacked data",
+        "Keywords":"file,patching,filepatching",
         "FieldName":"filePatching",
         "InputType":"checkbox",
         "IsFlagArgument":true,
@@ -253,7 +253,7 @@
         "DisplayName":"Allow Client File Patching",
         "Category":"DayZ Server Settings",
         "Description":"If enabled, clients with the \"-filePatching\" launch parameter enabled will be able to connect",
-        "Keywords":"file,patching,client,allowfilepatching",
+        "Keywords":"file,patching,allowfilepatching",
         "FieldName":"allowFilePatching",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -268,7 +268,7 @@
     {
         "DisplayName":"Force Same Build",
         "Category":"DayZ Server Settings",
-        "Description":"If enabled, the server will allow connections only by clients with same the .exe version as the server",
+        "Description":"If enabled, the server will allow connections only by clients with same the build version as the server",
         "Keywords":"version,build,forcesamebuild",
         "FieldName":"forceSameBuild",
         "InputType":"checkbox",
@@ -319,7 +319,7 @@
         "DisplayName":"Maximum Ping",
         "Category":"DayZ Server Settings",
         "Description":"Sets the maximum ping value for clients, above which the clients will be kicked",
-        "Keywords":"ping,maximal,lagging,lag,kick,maxping",
+        "Keywords":"ping,maximum,lagging,lag,kick,maxping",
         "FieldName":"maxPing",
         "InputType":"number",
         "IsFlagArgument":false,
@@ -675,7 +675,7 @@
     {
         "DisplayName":"Enable Multi-Threaded Replication",
         "Category":"DayZ Misc Settings",
-        "Description":"If set, enables multi-threaded processing of the server's replication system. The number of worker threads is derived by the \"maxcores\" and \"reservedcores\" parameters for jobsystem in dayzSettings.xml",
+        "Description":"If set, enables multi-threaded processing of the server's replication system. The number of worker threads is derived by the \"maxcores\" and \"reservedcores\" parameters for jobsystem in dayzsettings.xml",
         "Keywords":"multi,threaded,replication,multithreadedreplication",
         "FieldName":"multithreadedReplication",
         "InputType":"checkbox",
@@ -756,7 +756,7 @@
         "DisplayName":"Effects Spawn Distance",
         "Category":"DayZ Misc Settings",
         "Description":"Sets the network bubble distance for spawn of effects (curently only sound effects)",
-        "Keywords":"network,bubble,distance,spawn,effects,networkRangedistanteffect",
+        "Keywords":"network,bubble,distance,spawn,effects,networkrangedistanteffect",
         "FieldName":"networkRangeDistantEffect",
         "InputType":"number",
         "MinValue":"0",
@@ -771,7 +771,7 @@
     {
         "DisplayName":"Log Time Stamp Format",
         "Category":"DayZ Misc Settings",
-        "Description":"Sets the format of the time stamps used in the .rpt log file",
+        "Description":"Sets the format of the time stamps used in the .RPT log file",
         "Keywords":"log,time,stamp,format,timestampformat",
         "FieldName":"timeStampFormat",
         "InputType":"enum",
@@ -835,7 +835,7 @@
     {
         "DisplayName":"Log Player Hits Only",
         "Category":"DayZ Misc Settings",
-        "Description":"If enabled, the server logs player hits only, instead of all hits in the admin log",
+        "Description":"If enabled, the server logs player hits only, instead of all hits, in the admin log",
         "Keywords":"log,player,hits,only,adminlogplayerhitsonly",
         "FieldName":"adminLogPlayerHitsOnly",
         "InputType":"checkbox",
@@ -851,7 +851,7 @@
     {
         "DisplayName":"Log Placement Actions",
         "Category":"DayZ Misc Settings",
-        "Description":"If enabled, the server logs placement actions such as traps and tents in the admin log",
+        "Description":"If enabled, the server logs placement actions such as traps and tents, in the admin log",
         "Keywords":"log,placement,action,adminlogplacement",
         "FieldName":"adminLogPlacement",
         "InputType":"checkbox",
@@ -867,7 +867,7 @@
     {
         "DisplayName":"Log Basebuilding Actions",
         "Category":"DayZ Misc Settings",
-        "Description":"If enabled, the server logs basebuilding actions (build, dismantle, destroy) in the admin log",
+        "Description":"If enabled, the server logs basebuilding actions (build, dismantle, destroy), in the admin log",
         "Keywords":"log,basebuilding,building,action,adminlogbuildactions",
         "FieldName":"adminLogBuildActions",
         "InputType":"checkbox",
@@ -883,7 +883,7 @@
     {
         "DisplayName":"Log Player Position List",
         "Category":"DayZ Misc Settings",
-        "Description":"If enabled, the server logs the position of players every 5 minutes in the admin log",
+        "Description":"If enabled, the server logs the position of players every 5 minutes, in the admin log",
         "Keywords":"log,adminlogplayerlist",
         "FieldName":"adminLogPlayerList",
         "InputType":"checkbox",
@@ -894,22 +894,6 @@
         "EnumValues":{
             "False":"0",
             "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Release Version (Windows Only)",
-        "Category":"SteamCMD and Updates",
-        "Description":"Sets the version of the server to download. Only applies to Windows, as Linux is only supported for the Experimental version. Ensure users download a matching client version in Steam",
-        "Keywords":"version",
-        "FieldName":"version",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"version",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"221100",
-        "EnumValues":{
-            "221100":"Original (default)",
-            "1024020":"Experimental"
         }
     }
 ]
