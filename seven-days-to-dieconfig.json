@@ -1,7 +1,7 @@
 [
     {
         "DisplayName":"Server Name",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Whatever you want the name of the server to be.",
         "Keywords":"server,name",
         "FieldName":"ServerName",
@@ -13,7 +13,7 @@
         "EnumValues":{}
     },{
         "DisplayName":"Server Description",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Whatever you want the server description to be, will be shown in the server browser.",
         "Keywords":"Server,Description",
         "FieldName":"ServerDescription",
@@ -25,7 +25,7 @@
         "EnumValues":{}
     },{
         "DisplayName":"Server Website URL",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Website URL for the server, will be shown in the serverbrowser as a clickable link.",
         "Keywords":"Server,Website,URL",
         "FieldName":"ServerWebsiteURL",
@@ -37,7 +37,7 @@
         "EnumValues":{}
     },{
         "DisplayName":"Server Password",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Password to gain entry to the server.",
         "Keywords":"Server,Password",
         "FieldName":"ServerPassword",
@@ -49,7 +49,7 @@
         "EnumValues":{}
     },{
         "DisplayName":"Server Login Confirmation Text",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"If set the user will see the message during joining the server and has to confirm it before continuing.",
         "Keywords":"Server,Login,Confirmation,Text",
         "FieldName":"ServerLoginConfirmationText",
@@ -61,7 +61,7 @@
         "EnumValues":{}
     },{
         "DisplayName":"Region",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"The region this server is in.",
         "Keywords":"Region",
         "FieldName":"Region",
@@ -84,7 +84,7 @@
         }
     },{
         "DisplayName":"Language",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Primary language for players on this server. Should be the English name of the language, e.g. not \"Deutsch\" but \"German\"",
         "Keywords":"Language",
         "FieldName":"Language",
@@ -96,10 +96,10 @@
         "EnumValues":{}
     },{
         "DisplayName":"Server Port",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Whatever you want the name of the server to be.",
         "Keywords":"Server,Port",
-        "FieldName":"$ApplicationPort1",
+        "FieldName":"$ServerPort",
         "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"/ServerSettings/property[@name='ServerPort']/@value",
@@ -109,7 +109,7 @@
         "Hidden": true
     },{
         "DisplayName":"Server Visibility",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"As you are never a friend of a dedicated server, setting this to \"Only shown to friends\" will only work when the first player connects manually by IP.",
         "Keywords":"Server,Visibility",
         "FieldName":"ServerVisibility",
@@ -125,7 +125,7 @@
         }
     },{
         "DisplayName":"Server Disabled Network Protocols",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Dedicated servers should disable SteamNetworking if there is no NAT router in between your users and the server or when port-forwarding is set up correctly.",
         "Keywords":"Server,Disabled,Network,Protocols",
         "FieldName":"ServerDisabledNetworkProtocols",
@@ -133,7 +133,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"/ServerSettings/property[@name='ServerDisabledNetworkProtocols']/@value",
         "IncludeInCommandLine":false,
-        "DefaultValue":"SteamNetworking",
+        "DefaultValue":"",
         "EnumValues":{
             "": "None",
             "SteamNetworking": "SteamNetworking",
@@ -142,7 +142,7 @@
         }
     },{
         "DisplayName":"Server Max World Transfer Speed",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Maximum speed in kiB/s the world is transferred at to a client on first connect if it does not have the world yet. Maximum is about 1300 kiB/s, even if you set a higher value.",
         "Keywords":"Server,Max,World,Transfer,Speed,KiBs",
         "FieldName":"ServerMaxWorldTransferSpeedKiBs",
@@ -155,20 +155,21 @@
         "Suffix": "KiBs"
     },{
         "DisplayName":"Server Max Player Count",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Maximum Concurrent Players.",
         "Keywords":"Server,Max,Player,Count",
-        "FieldName":"ServerMaxPlayerCount",
+        "FieldName":"$MaxUsers",
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"/ServerSettings/property[@name='ServerMaxPlayerCount']/@value",
         "IncludeInCommandLine":false,
         "DefaultValue":"8",
         "EnumValues":{},
-        "Suffix": "players"
+        "Suffix":"players",
+        "MinValue":"1"
     },{
         "DisplayName":"Server Reserved Slots",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Out of the Max Player Count this many slots can only be used by players with a specific permission level.",
         "Keywords":"Server,Reserved,Slots",
         "FieldName":"ServerReservedSlots",
@@ -181,7 +182,7 @@
         "Suffix": "slots"
     },{
         "DisplayName":"Server Reserved Slots Permission",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Required permission level to use the admin slots above.",
         "Keywords":"Server,Reserved,Slots,Permission",
         "FieldName":"ServerReservedSlotsPermission",
@@ -193,8 +194,23 @@
         "EnumValues":{},
         "Suffix": "level"
     },{
+        "DisplayName":"Persistent Player Profiles",
+        "Category":"7d2d - Server Settings",
+        "Description":"Enable/Disable players joining with the same profile they last logged in with.",
+        "Keywords":"Profile,Persistent,Enabled",
+        "FieldName":"PersistentPlayerProfiles",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='PersistentPlayerProfiles']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False": "false",
+            "True": "true"
+        }
+    },{
         "DisplayName":"Control Panel Enabled",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Enable/Disable the web control panel.",
         "Keywords":"Control,Panel,Enabled",
         "FieldName":"ControlPanelEnabled",
@@ -209,10 +225,10 @@
         }
     },{
         "DisplayName":"Control Panel Port",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Port of the control panel webpage.",
         "Keywords":"Control,Panel,Port",
-        "FieldName":"$ApplicationPort2",
+        "FieldName":"$ControlPanelPort",
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"/ServerSettings/property[@name='ControlPanelPort']/@value",
@@ -222,7 +238,7 @@
         "Hidden": true
     },{
         "DisplayName":"Control Panel Password",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Password to gain entry to the control panel.",
         "Keywords":"Control,Panel,Password",
         "FieldName":"ControlPanelPassword",
@@ -234,7 +250,7 @@
         "EnumValues":{}
     },{
         "DisplayName":"Telnet Enabled",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Enable/Disable the telnet.",
         "Keywords":"Telnet,Enabled",
         "FieldName":"TelnetEnabled",
@@ -247,7 +263,7 @@
         "Hidden": true
     },{
         "DisplayName":"Telnet Port",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Port of the telnet server.",
         "Keywords":"Telnet,Port",
         "FieldName":"$RemoteAdminPort",
@@ -260,7 +276,7 @@
         "Hidden": true
     },{
         "DisplayName":"Telnet Password",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Password to gain entry to telnet interface.",
         "Keywords":"Telnet,Password",
         "FieldName":"$RemoteAdminPassword",
@@ -273,7 +289,7 @@
         "Hidden": true
     },{
         "DisplayName":"Telnet Failed Login Limit",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"After this many wrong passwords from a single remote client the client will be blocked from connecting to the Telnet interface.",
         "Keywords":"Telnet,Failed,Login,Limit",
         "FieldName":"TelnetFailedLoginLimit",
@@ -286,7 +302,7 @@
         "Suffix": "attempts"
     },{
         "DisplayName":"Telnet Failed Logins Block Time",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"How long will the block persist.",
         "Keywords":"Telnet,Failed,Logins,Block,time",
         "FieldName":"TelnetFailedLoginsBlocktime",
@@ -299,7 +315,7 @@
         "Suffix": "seconds"
     },{
         "DisplayName":"Admin File Name",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Server admin file name. Path relative to the Save Game Folder.",
         "Keywords":"Admin,File,Name",
         "FieldName":"AdminFileName",
@@ -311,7 +327,7 @@
         "EnumValues":{}
     },{
         "DisplayName":"EAC Enabled",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Enables/Disables EasyAntiCheat.",
         "Keywords":"EAC,Enabled",
         "FieldName":"EACEnabled",
@@ -319,14 +335,14 @@
         "IsFlagArgument":false,
         "ParamFieldName":"/ServerSettings/property[@name='EACEnabled']/@value",
         "IncludeInCommandLine":false,
-        "DefaultValue":"true",
+        "DefaultValue":"false",
         "EnumValues":{
             "False": "false",
             "True": "true"
         }
     },{
         "DisplayName":"Hide Command Execution Log",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Hide logging of command execution..",
         "Keywords":"Hide,Command,Execution,Log",
         "FieldName":"HideCommandExecutionLog",
@@ -343,7 +359,7 @@
         }
     },{
         "DisplayName":"Max Uncovered Map Chunks Per Player",
-        "Category":"Server Settings",
+        "Category":"7d2d - Server Settings",
         "Description":"Override how many chunks can be uncovered on the ingame map by each player. Resulting max map file size limit per player is (x * 512 Bytes), uncovered area is (x * 256 m²). Default 131072 means max 32 km² can be uncovered at any time.",
         "Keywords":"Max,Uncovered,Map,Chunks,Per,Player",
         "FieldName":"MaxUncoveredMapChunksPerPlayer",
@@ -356,7 +372,7 @@
         "Suffix": "chunks"
     },{
         "DisplayName":"Game World",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"\"RWG\" (see WorldGenSeed and WorldGenSize options below) or any already existing world name in the Worlds folder (currently shipping with: \"Navezgane\", \"PREGEN6k\", \"PREGEN8k\", \"PREGEN10k\").",
         "Keywords":"Game,World",
         "FieldName":"GameWorld",
@@ -368,7 +384,7 @@
         "EnumValues":{}
     },{
         "DisplayName":"World Gen Seed",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"If RWG this is the seed for the generation of the new world. If a world with the resulting name already exists it will simply load it.",
         "Keywords":"World,Gen,Seed",
         "FieldName":"WorldGenSeed",
@@ -380,7 +396,7 @@
         "EnumValues":{}
     },{
         "DisplayName":"World Gen Size",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"If RWG this controls the width and height of the created world. It is also used in combination with WorldGenSeed to create the internal RWG seed thus also creating a unique map name even if using the same WorldGenSeed. Has to be a multiple of 2048 between 2048 and 16384, though large map sizes will take long to generate / download / load.",
         "Keywords":"World,Gen,Size",
         "FieldName":"WorldGenSize",
@@ -392,7 +408,7 @@
         "EnumValues":{}
     },{
         "DisplayName":"Game Name",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Whatever you want the game name to be. This affects the save game name as well as the seed used when placing decoration (trees etc) in the world. It does not control the generic layout of the world if creating an RWG world.`",
         "Keywords":"Game,Name",
         "FieldName":"GameName",
@@ -404,7 +420,7 @@
         "EnumValues":{}
     },{
         "DisplayName":"Game Mode",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Only one game mode available at this time. Placeholder for future options.",
         "Keywords":"Game,Mode",
         "FieldName":"GameMode",
@@ -416,7 +432,7 @@
         "EnumValues":{}
     },{
         "DisplayName":"Game Difficulty",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Whatever you want the name of the server to be.",
         "Keywords":"Game,Difficulty",
         "FieldName":"GameDifficulty",
@@ -435,7 +451,7 @@
         }
     },{
         "DisplayName":"Player Block Damage",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"How much damage do players to blocks (percentage in whole numbers).",
         "Keywords":"Block,Damage,Player",
         "FieldName":"BlockDamagePlayer",
@@ -448,7 +464,7 @@
         "Suffix": "%"
     },{
         "DisplayName":"AI Block Damage",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"How much damage do AIs do to blocks (percentage in whole numbers).",
         "Keywords":"Block,Damage,AI",
         "FieldName":"BlockDamageAI",
@@ -461,7 +477,7 @@
         "Suffix": "%"
     },{
         "DisplayName":"AI Block Damage Blood Moon",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"How much damage do AIs do during blood moons to blocks (percentage in whole numbers).",
         "Keywords":"Block,Damage,AI,Blood,Moon",
         "FieldName":"BlockDamageAIBM",
@@ -474,7 +490,7 @@
         "Suffix": "%"
     },{
         "DisplayName":"XP Multiplier",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"XP gain multiplier (percentage in whole numbers)",
         "Keywords":"XP,Multiplier",
         "FieldName":"XPMultiplier",
@@ -487,7 +503,7 @@
         "Suffix": "%"
     },{
         "DisplayName":"Player Safe Zone Level",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"If a player is less or equal this level he will create a safe zone (no enemies).",
         "Keywords":"Player,Safe,Zone,Level",
         "FieldName":"PlayerSafeZoneLevel",
@@ -500,7 +516,7 @@
         "Suffix": "level"
     },{
         "DisplayName":"Player Safe Zone Hours",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Hours in world time this safe zone exists.",
         "Keywords":"Player,Safe,Zone,Hours",
         "FieldName":"PlayerSafeZoneHours",
@@ -513,7 +529,7 @@
         "Suffix": "hours"
     },{
         "DisplayName":"Build Create",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"cheat mode on/off.",
         "Keywords":"Build,Create,cheat,mode",
         "FieldName":"BuildCreate",
@@ -528,7 +544,7 @@
         }
     },{
         "DisplayName":"Day Night Length",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Real time minutes per in game day: 60 minutes.",
         "Keywords":"Day,Night,Length",
         "FieldName":"DayNightLength",
@@ -541,7 +557,7 @@
         "Suffix": "minutes"
     },{
         "DisplayName":"Day Light Length",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"In game hours the sun shines per day: 18 hours day light per in game day.",
         "Keywords":"Day,Light,Length",
         "FieldName":"DayLightLength",
@@ -554,7 +570,7 @@
         "Suffix": "hours"
     },{
         "DisplayName":"Drop On Death",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"What a player drops upon death",
         "Keywords":"Drop,On,Death",
         "FieldName":"DropOnDeath",
@@ -572,7 +588,7 @@
         }
     },{
         "DisplayName":"Drop On Quit",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"What a player drops upon death",
         "Keywords":"Drop,On,Quit",
         "FieldName":"DropOnQuit",
@@ -589,7 +605,7 @@
         }
     },{
         "DisplayName":"Bedroll Dead Zone Size",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Size (box \"radius\", so a box with 2 times the given value for each side's length) of bedroll deadzone, no zombies will spawn inside this area, and any cleared sleeper volumes that touch a bedroll deadzone will not spawn after they've been cleared.",
         "Keywords":"Bedroll,Dead,Zone,Size",
         "FieldName":"BedrollDeadZoneSize",
@@ -602,7 +618,7 @@
         "Suffix": "blocks"
     },{
         "DisplayName":"Bedroll Expiry Time",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Number of real world days a bedroll stays active after owner was last online.",
         "Keywords":"Bedroll Expiry Time",
         "FieldName":"BedrollExpiryTime",
@@ -615,7 +631,7 @@
         "Suffix": "minutes"
     },{
         "DisplayName":"Max Spawned Zombies",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"This setting covers the entire map. There can only be this many zombies on the entire map at one time. Changing this setting has a huge impact on performance.",
         "Keywords":"Max,Spawned,Zombies",
         "FieldName":"MaxSpawnedZombies",
@@ -628,7 +644,7 @@
         "Suffix": "zombies"
     },{
         "DisplayName":"Max Spawned Animals",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"If your server has a large number of players you can increase this limit to add more wildlife. Animals don't consume as much CPU as zombies. NOTE: That this doesn't cause more animals to spawn arbitrarily: The biome spawning system only spawns a certain number of animals in a given area, but if you have lots of players that are all spread out then you may be hitting the limit and can increase it.",
         "Keywords":"Max,Spawned,Animals",
         "FieldName":"MaxSpawnedAnimals",
@@ -641,7 +657,7 @@
         "Suffix": "animals"
     },{
         "DisplayName":"Server Max Allowed View Distance",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Max viewdistance a client may request (6 - 12). High impact on memory usage and performance.",
         "Keywords":"Server,Max,Allowed,View,Distance",
         "FieldName":"ServerMaxAllowedViewDistance",
@@ -661,7 +677,7 @@
         }
     },{
         "DisplayName":"Enemy Spawn Mode",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Enable/Disable enemy spawning.",
         "Keywords":"Enemy,Spawn,Mode",
         "FieldName":"EnemySpawnMode",
@@ -676,7 +692,7 @@
         }
     },{
         "DisplayName":"Enemy Difficulty",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Difficulty of the enemies.",
         "Keywords":"Enemy,Difficulty",
         "FieldName":"EnemyDifficulty",
@@ -691,7 +707,7 @@
         }
     },{
         "DisplayName":"Zombie Feral Sense",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"When zombies should have feral sense.",
         "Keywords":"Zombie,Feral,Sense",
         "FieldName":"ZombieFeralSense",
@@ -708,7 +724,7 @@
         }
     },{
         "DisplayName":"Zombie Move Day",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Zombie movement speed during the day.",
         "Keywords":"Zombie,Move",
         "FieldName":"ZombieMove",
@@ -719,14 +735,14 @@
         "DefaultValue":"0",
         "EnumValues":{
             "0": "Walk",
-            "1": "Job",
+            "1": "Jog",
             "2": "Run",
             "3": "Sprint",
             "4": "Nightmare"
         }
     },{
         "DisplayName":"Zombie Move Night",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Zombie movement speed during the night.",
         "Keywords":"Zombie,Move,Night",
         "FieldName":"ZombieMoveNight",
@@ -737,14 +753,14 @@
         "DefaultValue":"3",
         "EnumValues":{
             "0": "Walk",
-            "1": "Job",
+            "1": "Jog",
             "2": "Run",
             "3": "Sprint",
             "4": "Nightmare"
         }
     },{
         "DisplayName":"Zombie Feral Move",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Zombie movement speed of feral zombies.",
         "Keywords":"Zombie,Feral,Move",
         "FieldName":"ZombieFeralMove",
@@ -755,14 +771,14 @@
         "DefaultValue":"3",
         "EnumValues":{
             "0": "Walk",
-            "1": "Job",
+            "1": "Jog",
             "2": "Run",
             "3": "Sprint",
             "4": "Nightmare"
         }
     },{
         "DisplayName":"Zombie Move Blood Moon",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Zombie movement speed during a blood moon.",
         "Keywords":"Zombie,Move,blood,moon",
         "FieldName":"ZombieBMMove",
@@ -773,14 +789,14 @@
         "DefaultValue":"3",
         "EnumValues":{
             "0": "Walk",
-            "1": "Job",
+            "1": "Jog",
             "2": "Run",
             "3": "Sprint",
             "4": "Nightmare"
         }
     },{
         "DisplayName":"Blood Moon Frequency",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"What frequency (in days) should a blood moon take place. Set to \"0\" for no blood moons.",
         "Keywords":"Blood,Moon,Frequency",
         "FieldName":"BloodMoonFrequency",
@@ -793,7 +809,7 @@
         "Suffix": "days"
     },{
         "DisplayName":"Blood Moon Range",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"How many days can the actual blood moon day randomly deviate from the above setting. Setting this to 0 makes blood moons happen exactly each Nth day as specified in Blood Moon Frequency.",
         "Keywords":"Blood,Moon,Range",
         "FieldName":"BloodMoonRange",
@@ -806,7 +822,7 @@
         "Suffix": "days"
     },{
         "DisplayName":"Blood Moon Warning",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"The Hour number that the red day number begins on a blood moon day. Setting this to -1 makes the red never show.",
         "Keywords":"Blood,Moon,Warning",
         "FieldName":"BloodMoonWarning",
@@ -819,7 +835,7 @@
         "Suffix": "hour"
     },{
         "DisplayName":"Blood Moon Enemy Count",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"This is the number of zombies that can be alive (spawned at the same time) at any time PER PLAYER during a blood moon horde, however, MaxSpawnedZombies overrides this number in multiplayer games. Also note that your game stage sets the max number of zombies PER PARTY. Low game stage values can result in lower number of zombies than the BloodMoonEnemyCount setting. Changing this setting has a huge impact on performance.",
         "Keywords":"Blood,Moon,Enemy,Count",
         "FieldName":"BloodMoonEnemyCount",
@@ -832,7 +848,7 @@
         "Suffix": "zombies"
     },{
         "DisplayName":"Loot Abundance",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Percentage of loot in whole numbers.",
         "Keywords":"Loot,Abundance",
         "FieldName":"LootAbundance",
@@ -845,7 +861,7 @@
         "Suffix": "%"
     },{
         "DisplayName":"Loot Respawn Days",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Days in whole numbers for loot to respawn.",
         "Keywords":"Loot,Respawn,Days",
         "FieldName":"LootRespawnDays",
@@ -858,7 +874,7 @@
         "Suffix": "days"
     },{
         "DisplayName":"Air Drop Frequency",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"How often airdrop occur in game-hours, 0 = never.",
         "Keywords":"Air,Drop,Frequency",
         "FieldName":"AirDropFrequency",
@@ -871,7 +887,7 @@
         "Suffix": "hours"
     },{
         "DisplayName":"Air Drop Marker",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Sets if a marker is added to map/compass for air drops.",
         "Keywords":"Air,Drop,Marker",
         "FieldName":"AirDropMarker",
@@ -886,7 +902,7 @@
         }
     },{
         "DisplayName":"Party Shared Kill Range",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"The distance you must be within to receive party shared kill xp and quest party kill objective credit.",
         "Keywords":"Party,Shared,Kill,Range",
         "FieldName":"PartySharedKillRange",
@@ -899,7 +915,7 @@
         "Suffix": "blocks"
     },{
         "DisplayName":"Player Killing Mode",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Player Killing Settings.",
         "Keywords":"Player,Killing,Mode",
         "FieldName":"PlayerKillingMode",
@@ -916,7 +932,7 @@
         }
     },{
         "DisplayName":"Land Claim Count",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Maximum allowed land claims per player.",
         "Keywords":"Land,Claim,Count",
         "FieldName":"LandClaimCount",
@@ -929,7 +945,7 @@
         "Suffix": "claims"
     },{
         "DisplayName":"Land Claim Size",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Size in blocks that is protected by a keystone.",
         "Keywords":"Land,Claim,Size",
         "FieldName":"LandClaimSize",
@@ -942,7 +958,7 @@
         "Suffix": "blocks"
     },{
         "DisplayName":"Land Claim Dead Zone",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Keystones must be this many blocks apart (unless you are friends with the other player).",
         "Keywords":"Land,Claim,Dead,Zone",
         "FieldName":"LandClaimDeadZone",
@@ -955,7 +971,7 @@
         "Suffix": "blocks"
     },{
         "DisplayName":"Land Claim Expiry Time",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"The number of real world days a player can be offline before their claims expire and are no longer protected.",
         "Keywords":"Land,Claim,Expiry,Time",
         "FieldName":"LandClaimExpiryTime",
@@ -968,7 +984,7 @@
         "Suffix": "days"
     },{
         "DisplayName":"Land Claim Decay Mode",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Controls how offline players land claims decay.",
         "Keywords":"Land,Claim,Decay,Mode",
         "FieldName":"LandClaimDecayMode",
@@ -984,7 +1000,7 @@
         }
     },{
         "DisplayName":"Land Claim Online Durability Modifier",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"How much protected claim area block hardness is increased when a player is online. 0 means infinite (no damage will ever be taken). Default is 4x.",
         "Keywords":"Land,Claim,Online,Durability,Modifier",
         "FieldName":"LandClaimOnlineDurabilityModifier",
@@ -997,7 +1013,7 @@
         "Suffix": "X"
     },{
         "DisplayName":"Land Claim Offline Durability Modifier",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"How much protected claim area block hardness is increased when a player is offline. 0 means infinite (no damage will ever be taken). Default is 4x.",
         "Keywords":"Land,Claim,Offline,Durability,Modifier",
         "FieldName":"LandClaimOfflineDurabilityModifier",
@@ -1010,7 +1026,7 @@
         "Suffix": "X"
     },{
         "DisplayName":"Land Claim Offline Delay",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"The number of minutes after a player logs out that the land claim area hardness transitions from online to offline. Default is 0.",
         "Keywords":"Land,Claim,Offline,Delay",
         "FieldName":"LandClaimOfflineDelay",
@@ -1023,7 +1039,7 @@
         "Suffix": "minutes"
     },{
         "DisplayName":"Dynamic Mesh Enabled",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Is Dynamic Mesh system enabled?",
         "Keywords":"Dynamic,Mesh,Enabled",
         "FieldName":"DynamicMeshEnabled",
@@ -1038,7 +1054,7 @@
         }
     },{
         "DisplayName":"Dynamic Mesh Land Claim Only",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Is Dynamic Mesh system only active in player LCB areas?",
         "Keywords":"Dynamic,Mesh,Land,Claim,Only",
         "FieldName":"DynamicMeshLandClaimOnly",
@@ -1053,7 +1069,7 @@
         }
     },{
         "DisplayName":"Dynamic Mesh Land Claim Buffer",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Dynamic Mesh LCB chunk radius.",
         "Keywords":"Dynamic Mesh Land Claim Buffer",
         "FieldName":"DynamicMeshLandClaimBuffer",
@@ -1066,7 +1082,7 @@
         "Suffix": "blocks"
     },{
         "DisplayName":"Dynamic Mesh Max Item Cache",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"How many items can be processed concurrently, higher values use more RAM.",
         "Keywords":"Dynamic,Mesh,Max,Item,Cache",
         "FieldName":"DynamicMeshMaxItemCache",
@@ -1079,7 +1095,7 @@
         "Suffix": "items"
     },{
         "DisplayName":"TwitchServerPermission",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"Required permission level to use twitch integration on the server.",
         "Keywords":"Twitch,Server,Permission",
         "FieldName":"TwitchServerPermission",
@@ -1092,7 +1108,7 @@
         "Suffix": "level"
     },{
         "DisplayName":"Twitch Blood Moon Allowed",
-        "Category":"Gameplay Settings",
+        "Category":"7d2d - Gameplay Settings",
         "Description":"If the server allows twitch actions during a blood moon. This could cause server lag with extra zombies being spawned during blood moon.",
         "Keywords":"Twitch,Blood,Moon,Allowed",
         "FieldName":"TwitchBloodMoonAllowed",
@@ -1119,6 +1135,25 @@
         "Placeholder":"public",
         "EnumValues":{}
     },{
+        "DisplayName":"Config File Version",
+        "Category":"SteamCMD and Updates",
+        "Description":"Select which config file to download. Must match the version of the Release Stream. Check required Undead Legacy Version [here](https://ul.subquake.com/download).",
+        "Keywords":"config,file,version",
+        "FieldName":"ConfigFile",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ConfigFile",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"seven-days-settings204",
+        "EnumValues":{
+            "seven-days-settings184": "18.4",
+            "seven-days-settings196": "19.6",
+            "seven-days-settings200-203": "20.0 to 20.3",
+            "seven-days-settings204": "20.4 and Higher",
+            "seven-days-settings-undead-legacy-stable": "Undead Legacy Stable",
+            "seven-days-settings-undead-legacy-experimental": "Undead Legacy Experimental"
+        }
+    },{
         "DisplayName":"Install UMOD",
         "Category":"SteamCMD and Updates",
         "Description":"Auto-installs UMod when the server is updated.",
@@ -1133,5 +1168,155 @@
             "False": "false",
             "True": "true"
         }
+    },{
+        "DisplayName":"Install Darkness Falls",
+        "Category":"SteamCMD and Updates",
+        "Description":"Auto-installs Darkness Falls when the server is updated. This is the Stable branch.",
+        "Keywords":"install,DarknessFalls",
+        "FieldName":"DarknessFalls",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"DarknessFalls",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False": "false",
+            "True": "true"
+        }
+    },{
+        "DisplayName":"Download Backup Exclude File",
+        "Category":"SteamCMD and Updates",
+        "Description":"This downloads a default backup exclude file to save space on backups by only saving specific directories. If this is disabled, you will need to manually delete the .backupExclude file it downloads.",
+        "Keywords":"download,backup,exclude,file",
+        "FieldName":"backupExclude",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"backupExclude",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False": "false",
+            "True": "true"
+        }
+    },{
+        "DisplayName":"Please Read!",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"If you would like to install Undead Legacy you need to pick either the Stable or Experimental config under the \"SteamCMD and Updates\" section. This will then grab the appropriate Undead Legacy version when you click update.",
+        "Keywords":"Read,Please,Info",
+        "FieldName":"PleaseRead",
+        "InputType":"hidden"
+    },{
+        "DisplayName":"Recipe Filter",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"Controls how recipes are displayed.",
+        "Keywords":"Recipe,Filter",
+        "FieldName":"RecipeFilter",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='RecipeFilter']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0": "Shows all recipes",
+            "1": "Shows unknown recipes, search limited by workstation",
+            "2": "Shows only known and workstation relevant recipes"
+        }
+    },{
+        "DisplayName":"Starter Quest Enabled",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"Determines if you trigger the tutorial quest upon first spawning on the server.",
+        "Keywords":"Quest,Starter,Tutorial",
+        "FieldName":"StarterQuestEnabled",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"StarterQuestEnabled",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False": "false",
+            "True": "true"
+        }
+    },{
+        "DisplayName":"Wandering Horde Frequency",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"After how many in-game hours a wandering horde would occur. On top of this value 1 to 4 additional hours may be added depending on spawn conditions. Minimum Value: 1",
+        "Keywords":"Wandering,Horde,Frequency",
+        "FieldName":"WanderingHordeFrequency",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='WanderingHordeFrequency']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"16",
+        "EnumValues":{},
+        "Suffix": "hours"
+    },{
+        "DisplayName":"Wandering Horde Range",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"Additional random hours added to Wandering Horde Frequency to add randomness to hours between spawns. For example, Frequency: 5, Frequency RNG Range: 10, then wandering horde will spawn anywhere between 5 to 15 (5+10) in-game hours + additional hours if special conditions occur (No players alive, etc).",
+        "Keywords":"Wandering,Horde,Range",
+        "FieldName":"WanderingHordeRange",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='WanderingHordeRange']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"8",
+        "EnumValues":{},
+        "Suffix": "hours"
+    },{
+        "DisplayName":"Wandering Horde Count",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"Fixed zombie count, that will spawn in a Wandering horde. Minimum Value: 2. Zombies + Zombie RNG Range value must not exceed: 64",
+        "Keywords":"Wandering,Horde,Count",
+        "FieldName":"WanderingHordeEnemyCount",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='WanderingHordeEnemyCount']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "EnumValues":{},
+        "Suffix": "zombies"
+    },{
+        "DisplayName":"Wandering Horde Range",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"This value determines up to how many additional zombies can spawn for Wandering Horde. For example, Zombies: 5, Zombies RNG Range: 10, then wandering horde will spawn anywhere between 5 to 15 5+10 zombies. Combined value must not exceed: 64",
+        "Keywords":"Wandering,Horde,Range",
+        "FieldName":"WanderingHordeEnemyRange",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='WanderingHordeEnemyRange']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "EnumValues":{},
+        "Suffix": "zombies"
+    },{
+        "DisplayName":"Death Penalty",
+        "Category":"7d2d - Undead Legacy Settings",
+        "Description":"Sets what will be the consequences to your progression when you die in the game: No penalty - you will not get XP debt as well as no debuff, that lowers your Attributes. Beginner - near Death Trauma debuff Vanilla like experience. Moderate - same as beginner, but also with loss of random Action skills. Standard - same as moderate, but also you will respawn with partial health, food and water.",
+        "Keywords":"Death,Penalty",
+        "FieldName":"DeathPenalty",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='DeathPenalty']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"3",
+        "EnumValues":{
+            "0": "No penalty",
+            "1": "Beginner",
+            "2": "Moderate",
+            "3": "Standard"
+        }
+    },{
+        "DisplayName":"POI Tier Loot Scale",
+        "Category": "7d2d - Undead Legacy Settings",
+        "Description":"Multiplier determining how important a POI Tier is when scaling Loot Stage. 0% - Disabled Default, 100% Vanilla Scaling. Acceptable values are integers from 0 to 100",
+        "Keywords":"POI,Tier,Loot,Scale",
+        "FieldName":"POITierLootScale",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='POITierLootScale']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{},
+        "Suffix": "%"
     }
 ]
