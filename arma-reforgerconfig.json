@@ -95,7 +95,7 @@
     {
         "DisplayName":"Server Region",
         "Category":"Server Settings",
-        "Description":"Set the server's region. Requires a valid [ISO 3166-1 alpha-2 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) such as EU, US, AU, JP",
+        "Description":"Sets the server's region. Requires a valid [ISO 3166-1 alpha-2 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) such as EU, US, AU, JP",
         "Keywords":"region,location",
         "FieldName":"region",
         "InputType":"text",
@@ -120,16 +120,15 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Server IP Binding",
+        "DisplayName":"Server/RCON IP Binding",
         "Category":"Server Settings",
-        "Description":"Sets the IPv4 address that the server is bound to. Blank = 0.0.0.0 (default)",
-        "Keywords":"ip,binding,gamehostbindaddress",
-        "FieldName":"gameHostBindAddress",
-        "InputType":"text",
+        "Description":"If required, you can change the binding of the server and BattlEye RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Stop the instance (not just the server) first",
+        "Keywords":"ip,binding,gamehostbindaddress,rconip",
+        "FieldName":"$ApplicationIPBinding",
+        "InputType":"hidden",
         "IsFlagArgument":false,
         "ParamFieldName":"$.gameHostBindAddress",
         "IncludeInCommandLine":false,
-        "DefaultValue":"",
         "EnumValues":{}
     },
     {
@@ -144,14 +143,14 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
-            "True":"true",
-            "False":"false"
+            "False":"false",
+            "True":"true"
         }
     },
     {
         "DisplayName":"Server Password",
         "Category":"Server Settings",
-        "Description":"Password required to connect to the server. Default is no password",
+        "Description":"Sets the password required to connect to the server. Default is no password",
         "Keywords":"server,password",
         "FieldName":"password",
         "InputType":"password",
@@ -164,7 +163,7 @@
     {
         "DisplayName":"Admin Password",
         "Category":"Server Settings",
-        "Description":"Password required for admin access to the server. NOTE: Change this after installing the server",
+        "Description":"Sets the password required for admin access to the server. NOTE: Change this after installing the server",
         "Keywords":"admin,password,adminpassword",
         "FieldName":"adminPassword",
         "InputType":"password",
@@ -175,9 +174,21 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"RCON Password",
+        "Category":"Server Settings",
+        "Description":"See the Security and Privacy menu for configurable options for the server's RCON",
+        "Keywords":"rcon,password",
+        "FieldName":"RCONPassword",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"RCONPassword",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Player Limit",
         "Category":"Server Settings",
-        "Description":"Maximum number of players that may connect to the server at one time",
+        "Description":"Sets the maximum number of players that may connect to the server at one time",
         "Keywords":"players,limit,maximum,playercountlimit",
         "FieldName":"$MaxUsers",
         "InputType":"number",
@@ -193,7 +204,7 @@
     {
         "DisplayName":"Mission Player Limit",
         "Category":"Server Settings",
-        "Description":"Maximum number of players that a mission will allow",
+        "Description":"Sets the maximum number of players that a mission will allow",
         "Keywords":"players,limit,maximum,mission,m_iplayercount",
         "FieldName":"m_iPlayerCount",
         "InputType":"number",
@@ -282,8 +293,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
-            "True":"true",
-            "False":"false"
+            "False":"false",
+            "True":"true"
         }
     },
     {
@@ -298,8 +309,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
-            "True":"true",
-            "False":"false"
+            "False":"false",
+            "True":"true"
         }
     },
     {
@@ -314,8 +325,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
-            "True":"true",
-            "False":"false"
+            "False":"false",
+            "True":"true"
         }
     },
     {
@@ -351,7 +362,7 @@
     {
         "DisplayName":"Additional Server Startup Parameters",
         "Category":"Server Settings",
-        "Description":"Additional startup parameters that are not otherwise set by AMP. Use with care",
+        "Description":"Specifies additional startup parameters that are not otherwise set by AMP. Use with care",
         "Keywords":"custom,server,arguments,parameters",
         "FieldName":"CustomServerArgs",
         "InputType":"text",
