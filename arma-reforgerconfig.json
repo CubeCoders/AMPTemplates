@@ -66,6 +66,20 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable BattlEye",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"battlEye",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "Hidden":true,
+        "ParamFieldName":"$.game.gameProperties.battlEye",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Name",
         "Category":"Server Settings",
         "Description":"Sets the server name visible in the game browser (up to 100 characters)",
@@ -81,7 +95,7 @@
     {
         "DisplayName":"Server Region",
         "Category":"Server Settings",
-        "Description":"Set the server's region. Requires a valid [ISO 3166-1 alpha-2 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) such as EU, US, AU, JP",
+        "Description":"Sets the server's region. Requires a valid [ISO 3166-1 alpha-2 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) such as EU, US, AU, JP",
         "Keywords":"region,location",
         "FieldName":"region",
         "InputType":"text",
@@ -95,7 +109,7 @@
         "DisplayName":"Server Map",
         "Category":"Server Settings",
         "Description":"Sets the server map. Specify the scenario conf file path as listed in the logs/console",
-        "Keywords":"map,scenario",
+        "Keywords":"map,scenario,scenarioid",
         "FieldName":"scenarioId",
         "InputType":"text",
         "IsFlagArgument":false,
@@ -106,23 +120,22 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Server IP Binding",
+        "DisplayName":"Server/RCON IP Binding",
         "Category":"Server Settings",
-        "Description":"Sets the IPv4 address that the server is bound to. Blank = 0.0.0.0 (default)",
-        "Keywords":"ip,binding",
-        "FieldName":"gameHostBindAddress",
-        "InputType":"text",
+        "Description":"If required, you can change the binding of the server and BattlEye RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Stop the instance (not just the server) first",
+        "Keywords":"ip,binding,gamehostbindaddress,rconip",
+        "FieldName":"$ApplicationIPBinding",
+        "InputType":"hidden",
         "IsFlagArgument":false,
         "ParamFieldName":"$.gameHostBindAddress",
         "IncludeInCommandLine":false,
-        "DefaultValue":"",
         "EnumValues":{}
     },
     {
         "DisplayName":"Make Server Public",
         "Category":"Server Settings",
         "Description":"If enabled, the server will be visible in the in-game browser",
-        "Keywords":"serverlist,public",
+        "Keywords":"serverlist,public,visible",
         "FieldName":"visible",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -130,14 +143,14 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
-            "True":"true",
-            "False":"false"
+            "False":"false",
+            "True":"true"
         }
     },
     {
         "DisplayName":"Server Password",
         "Category":"Server Settings",
-        "Description":"Password required to connect to the server. Default is no password",
+        "Description":"Sets the password required to connect to the server. Default is no password",
         "Keywords":"server,password",
         "FieldName":"password",
         "InputType":"password",
@@ -150,8 +163,8 @@
     {
         "DisplayName":"Admin Password",
         "Category":"Server Settings",
-        "Description":"Password required for admin access to the server. NOTE: Change this after installing the server",
-        "Keywords":"admin,password",
+        "Description":"Sets the password required for admin access to the server. NOTE: Change this after installing the server",
+        "Keywords":"admin,password,adminpassword",
         "FieldName":"adminPassword",
         "InputType":"password",
         "IsFlagArgument":false,
@@ -161,49 +174,69 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"RCON Password",
+        "Category":"Server Settings",
+        "Description":"See the Security and Privacy menu for configurable options for the server's RCON",
+        "Keywords":"rcon,password",
+        "FieldName":"RCONPassword",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"RCONPassword",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Player Limit",
         "Category":"Server Settings",
-        "Description":"Maximum number of players that may connect to the server at one time",
-        "Keywords":"players,limit,maximum",
+        "Description":"Sets the maximum number of players that may connect to the server at one time",
+        "Keywords":"players,limit,maximum,playercountlimit",
         "FieldName":"$MaxUsers",
         "InputType":"number",
+        "MinValue":"1",
         "IsFlagArgument":false,
         "ParamFieldName":"$.game.playerCountLimit",
         "IncludeInCommandLine":false,
         "DefaultValue":"127",
+        "Placeholder":"127",
+        "Suffix":"players",
         "EnumValues":{}
     },
     {
         "DisplayName":"Mission Player Limit",
         "Category":"Server Settings",
-        "Description":"Maximum number of players that a mission will allow",
-        "Keywords":"players,limit,maximum,mission",
+        "Description":"Sets the maximum number of players that a mission will allow",
+        "Keywords":"players,limit,maximum,mission,m_iplayercount",
         "FieldName":"m_iPlayerCount",
         "InputType":"number",
+        "MinValue":"1",
         "IsFlagArgument":false,
         "ParamFieldName":"$.game.gameProperties.missionHeader.m_iPlayerCount",
         "IncludeInCommandLine":false,
         "DefaultValue":"127",
+        "Placeholder":"127",
+        "Suffix":"players",
         "EnumValues":{}
     },
     {
         "DisplayName":"Server FPS Limit",
         "Category":"Server Settings",
         "Description":"Sets the server FPS. Recommended to be in the range of 60 to 120 so that the server does not use all available resources",
-        "Keywords":"fps,limit",
+        "Keywords":"fps,limit,maxfps",
         "FieldName":"maxFPS",
         "InputType":"number",
+        "MinValue":"1",
         "IsFlagArgument":false,
         "ParamFieldName":"maxFPS",
         "IncludeInCommandLine":true,
         "DefaultValue":"60",
+        "Suffix":"fps",
         "EnumValues":{}
     },
     {
         "DisplayName":"Maximum View Distance",
         "Category":"Server Settings",
         "Description":"Sets the server's maximum view distance (between 500 to 10000). Default is 1600",
-        "Keywords":"maximum,view,distance",
+        "Keywords":"maximum,view,distance,servermaxviewdistance",
         "FieldName":"serverMaxViewDistance",
         "InputType":"number",
         "MinValue":"500",
@@ -219,7 +252,7 @@
         "DisplayName":"Network View Distance",
         "Category":"Server Settings",
         "Description":"Sets the server's maximum network streaming range of replicated entities (between 500 to 5000). Default is 500",
-        "Keywords":"network,stream,view,distance",
+        "Keywords":"network,stream,view,distance,networkviewdistance",
         "FieldName":"networkViewDistance",
         "InputType":"number",
         "MinValue":"500",
@@ -235,7 +268,7 @@
         "DisplayName":"Minimum Grass Distance",
         "Category":"Server Settings",
         "Description":"Sets the server's minimum grass distance (between 50 to 150). 0 = no minimum distance is forced on clients (default)",
-        "Keywords":"minimum,grass,distance",
+        "Keywords":"minimum,grass,distance,servermingrassdistance",
         "FieldName":"serverMinGrassDistance",
         "InputType":"number",
         "MinValue":"0",
@@ -252,7 +285,7 @@
         "DisplayName":"Quick Start Joinable",
         "Category":"Server Settings",
         "Description":"If enabled, the session can be selected through the auto join feature",
-        "Keywords":"join,auto",
+        "Keywords":"join,auto,autojoinable",
         "FieldName":"autoJoinable",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -260,15 +293,15 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
-            "True":"true",
-            "False":"false"
+            "False":"false",
+            "True":"true"
         }
     },
     {
         "DisplayName":"Disable Third Person",
         "Category":"Server Settings",
         "Description":"If enabled, clients will be forced to use the first-person view. NOTE: This must be disabled for auto join",
-        "Keywords":"third,person",
+        "Keywords":"third,person,disablethirdperson",
         "FieldName":"disableThirdPerson",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -276,15 +309,15 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
-            "True":"true",
-            "False":"false"
+            "False":"false",
+            "True":"true"
         }
     },
     {
         "DisplayName":"Enable Fast Validation",
         "Category":"Server Settings",
         "Description":"If enabled, matching validation of map entities and components loaded on a client when it joins will be done with minimum information. Always enable for a public server!",
-        "Keywords":"validation,checksum",
+        "Keywords":"validation,checksum,fastvalidation",
         "FieldName":"fastValidation",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -292,30 +325,44 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
-            "True":"true",
-            "False":"false"
+            "False":"false",
+            "True":"true"
         }
     },
     {
-        "DisplayName":"Enable BattlEye",
+        "DisplayName":"Log Statistics",
         "Category":"Server Settings",
-        "Description":"If set, BattlEye will be enabled on the server. Warning: if you disable BattlEye, no console input will be possible in AMP",
-        "Keywords":"battleye",
-        "FieldName":"battlEye",
+        "Description":"If enabled, the server logs performance statistics every second or such other period set under \"Statistics Logging Interval\"",
+        "Keywords":"log,statistics,logstats",
+        "FieldName":"logStats",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.game.gameProperties.battlEye",
+        "ParamFieldName":"logStats",
         "IncludeInCommandLine":false,
-        "DefaultValue":"true",
+        "DefaultValue":"",
         "EnumValues":{
-            "True":"true",
-            "False":"false"
+            "False":"",
+            "True":"-logStats {{logStatsInterval}}"
         }
+    },
+    {
+        "DisplayName":"Statistics Logging Inverval",
+        "Category":"Server Settings",
+        "Description":"Sets the interval for logging of performance statistics, if \"Log Statistics\" is enabled. Default is blank (which results in logging every second)",
+        "Keywords":"log,statistics,logstats",
+        "FieldName":"logStatsInterval",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"logStatsInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Additional Server Startup Parameters",
         "Category":"Server Settings",
-        "Description":"Additional startup parameters that are not otherwise set by AMP. Use with care",
+        "Description":"Specifies additional startup parameters that are not otherwise set by AMP. Use with care",
         "Keywords":"custom,server,arguments,parameters",
         "FieldName":"CustomServerArgs",
         "InputType":"text",
