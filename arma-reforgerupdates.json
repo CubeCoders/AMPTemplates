@@ -1,0 +1,25 @@
+[
+    {
+        "UpdateStageName":"SteamCMD Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"1874900",
+        "UpdateSourceArgs":"1874880"
+    },
+    {
+        "UpdateStageName":"Create Configs Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Configs",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Server Config File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/arma-reforgerserver.json",
+        "UpdateSourceArgs":"server.json",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Configs/",
+        "OverwriteExistingFiles":false
+    }
+]
