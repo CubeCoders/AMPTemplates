@@ -202,20 +202,6 @@
         "IsFlagArgument":false,
         "ParamFieldName":"PlayerWhitelist",
         "DefaultValue":"",
-        "Special":"listfile:./ark-se/376030/ShooterGame/Binaries/Linux/PlayersExclusiveJoinList.txt",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Whitelisted Players",
-        "Category":"ARK Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"PlayerWhitelist",
-        "InputType":"list",
-        "Hidden":true,
-        "IsFlagArgument":false,
-        "ParamFieldName":"PlayerWhitelist",
-        "DefaultValue":"",
         "Special":"listfile:./ark-se/376030/ShooterGame/Binaries/Win64/PlayersExclusiveJoinList.txt",
         "EnumValues":{}
     },
@@ -251,31 +237,29 @@
     {
         "DisplayName":"MultiHome IP Binding",
         "Category":"ARK Server Settings",
-        "Description":"Sets the binding of the server. Default is blank. Change to internal interface IP if required. NOTE: Also change App.ApplicationIPBinding in GenericModule.kvp for the instance, or the AMP console will not work",
+        "Description":"If required, you can change the binding of the server and RCON to an internal interface IP by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Stop the instance (not just the server) first. Ensure AMP itself can reach that IP or the console will not work",
         "Keywords":"ip,binding,address,multihome",
         "FieldName":"MultiHome",
-        "InputType":"text",
+        "InputType":"hidden",
         "IsFlagArgument":false,
         "ParamFieldName":"MultiHome",
-        "IncludeInCommandLine":true,
-        "SkipIfEmpty":true,
-        "DefaultValue":"",
+        "IncludeInCommandLine":false,
         "EnumValues":{}
     },
     {
-        "DisplayName":"Enable BattlEye",
+        "DisplayName":"Disable BattlEye",
         "Category":"ARK Server Settings",
-        "Description":"If set, BattlEye will be enabled on the server",
-        "Keywords":"battleye,enable,usebattleye,nobattleye",
+        "Description":"If set, BattlEye will be disabled on the server",
+        "Keywords":"battleye,disable,nobattleye",
         "FieldName":"BattlEye",
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"BattlEye",
         "IncludeInCommandLine":false,
-        "DefaultValue":"-UseBattlEye ",
+        "DefaultValue":"",
         "EnumValues":{
-            "False":"-NoBattlEye ",
-            "True":"-UseBattlEye "
+            "False":"",
+            "True":"-NoBattlEye "
         }
     },
     {
