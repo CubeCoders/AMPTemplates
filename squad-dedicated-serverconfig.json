@@ -1,20 +1,20 @@
 [
     {
-        "DisplayName": "RCON Password",
-        "Category": "Server Config",
-        "Description": "Password to connect to RCON. Change this after installing the server",
-        "Keywords": "RCON,password",
-        "FieldName": "$RemoteAdminPassword",
-        "InputType": "RandomPassword",
-        "IsFlagArgument": false,
-        "ParamFieldName": "$RemoteAdminPassword",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "Password123"
+        "DisplayName":"RCON Password",
+        "Category":"Server Config",
+        "Description":"See the Security and Privacy menu for configurable options for the server's RCON",
+        "Keywords":"rcon,password",
+        "FieldName":"RCONPassword",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"RCONPassword",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
     },
     {
         "DisplayName": "Server Name",
         "Category": "Server Config",
-        "Description": "Set the Name for the server to advertise",
+        "Description": "Set the Name for the server in the Server Browser",
         "Keywords": "server name, name",
         "FieldName": "ServerName",
         "InputType": "text",
@@ -26,7 +26,7 @@
     {
         "DisplayName": "Max Players",
         "Category": "Server Config",
-        "Description": "Set the max players allowed on the server",
+        "Description": "Set the max players allowed on the server (minus reserved slots)",
         "Keywords": "max players, players",
         "FieldName": "$MaxUsers",
         "InputType": "number",
@@ -38,9 +38,23 @@
         "MinValue":"1"
     },
     {
+        "DisplayName": "Max TPS",
+        "Category": "Server Config",
+        "Description": "Set the maximum tickrate for the server (Set below 45 for best stability)",
+        "Keywords": "tps, tickrate",
+        "FieldName": "$MaxTPS",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "MaxTPS",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "40",
+        "Suffix":"tps",
+        "MinValue":"10"
+    },
+    {
         "DisplayName": "LAN Mode",
         "Category": "Server Config",
-        "Description": "set the server to LAN mode?",
+        "Description": "Set the server to LAN mode",
         "Keywords": "Lan,Server",
         "FieldName": "IsLANMatch",
         "InputType": "checkbox",
@@ -55,7 +69,7 @@
     {
         "DisplayName": "Should Advertise",
         "Category": "Server Config",
-        "Description": "Control visibility in the server browser",
+        "Description": "Control visibility in the server browser - disabling removes the server from the Server Browser",
         "Keywords": "Visibility,Server",
         "FieldName": "ShouldAdvertise",
         "InputType": "checkbox",
@@ -70,7 +84,7 @@
     {
         "DisplayName": "Number of Reserved Slots",
         "Category": "Server Config",
-        "Description": "Number of reserved slots for admins / members",
+        "Description": "Number of reserved slots for admins within the Admins.cfg file with the 'reserved' group permission",
         "Keywords": "reserved players, players",
         "FieldName": "NumReservedSlots",
         "InputType": "number",
@@ -82,7 +96,7 @@
     {
         "DisplayName": "Public Queue Limit",
         "Category": "Server Config",
-        "Description": "Size of the server queuing, for regular user",
+        "Description": "Size of the server queuing, for regular user (Setting this to 0 disables the ability for players to join the server)",
         "Keywords": "queue,players",
         "FieldName": "PublicQueueLimit",
         "InputType": "number",
@@ -128,7 +142,7 @@
     {
         "DisplayName": "Use Vote Factions",
         "Category": "Server Config",
-        "Description": "Should Faction be voted for on generic layers? Randomized if false.",
+        "Description": "Should Faction be voted for on generic layers?",
         "Keywords": "Factions,Vote",
         "FieldName": "UseVoteFactions",
         "InputType": "checkbox",
@@ -173,7 +187,7 @@
     {
         "DisplayName": "Allow Team Change",
         "Category": "Server Config",
-        "Description": "Completly Allow or Disallow Team change to all players. Only user with Level_Balance access level can bypass this flag",
+        "Description": "Completly Allow or Disallow Team change to all players. Only users with 'balance' permission within Admins.cfg can bypass this flag",
         "Keywords": "Layer,Vote",
         "FieldName": "AllowTeamChanges",
         "InputType": "checkbox",
@@ -215,7 +229,7 @@
     {
         "DisplayName": "Rejoin Squad Delay After Kick",
         "Category": "Server Config",
-        "Description": "Delay a player is allowed to rejoin a squad after being kicked.",
+        "Description": "Sets the delay after which a player is allowed to rejoin a squad after being kicked.",
         "Keywords": "delay,players,kick",
         "FieldName": "RejoinSquadDelayAfterKick",
         "InputType": "number",
@@ -228,7 +242,7 @@
     {
         "DisplayName": "Record Demos",
         "Category": "Server Config",
-        "Description": "Enable Demo Recording",
+        "Description": "Enable Demo Recording Server-side",
         "Keywords": "Record,Demo",
         "FieldName": "RecordDemos",
         "InputType": "checkbox",
@@ -243,7 +257,7 @@
     {
         "DisplayName": "Allow Public Clients Record Demos",
         "Category": "Server Config",
-        "Description": "Enable Demo Recording",
+        "Description": "Enable Demo Recording Client-side",
         "Keywords": "Record,Demo",
         "FieldName": "AllowPublicClientsToRecord",
         "InputType": "checkbox",
@@ -258,7 +272,7 @@
     {
         "DisplayName": "Server Message Interval",
         "Category": "Server Config",
-        "Description": "Frequency in which the server displays the information inside the ServerMessages.cfg file.",
+        "Description": "Frequency in which the server displays the information inside the ServerMessages.cfg file as a broadcast to all players",
         "Keywords": "Interval, Message",
         "FieldName": "ServerMessageInterval",
         "InputType": "number",
@@ -299,7 +313,7 @@
     {
         "DisplayName": "Auto Team Kill Ban Number",
         "Category": "Server Config",
-        "Description": "Maximum allowed team kills before ban",
+        "Description": "Maximum allowed teamkills before an automatic ban",
         "Keywords": "Interval, Message",
         "FieldName": "AutoTKBanNumberTKs",
         "InputType": "number",
@@ -311,7 +325,7 @@
     {
         "DisplayName": "Auto Team Kill Ban Timer",
         "Category": "Server Config",
-        "Description": "Time a Team Kiling player is banned for before being allowed to rejoin match.",
+        "Description": "Time a teamkiling player is banned for before being allowed to rejoin match.",
         "Keywords": "Interval,Message,Time",
         "FieldName": "AutoTKBanTime",
         "InputType": "number",
@@ -339,7 +353,7 @@
     {
         "DisplayName": "Allow Community Admin Access",
         "Category": "Server Config",
-        "Description": "Enable Community Admin Access",
+        "Description": "Enable QA Admin Access (Required for Licensed Servers)",
         "Keywords": "Admin",
         "FieldName": "AllowCommunityAdminAccess",
         "InputType": "checkbox",
@@ -354,7 +368,7 @@
     {
         "DisplayName": "Offworld Developers only Admin",
         "Category": "Server Config",
-        "Description": "Only Offworld Industries developers are admins",
+        "Description": "Allow Offworld Industries QA Dev Profiling (Required for Licensed Servers)",
         "Keywords": "Admin",
         "FieldName": "AllowDevProfiling",
         "InputType": "checkbox",
@@ -369,7 +383,7 @@
     {
         "DisplayName": "Allow QA",
         "Category": "Server Config",
-        "Description": "Allow QA",
+        "Description": "Allow Offworld Industries QA (Required for Licensed Servers)",
         "Keywords": "QA",
         "FieldName": "AllowQA",
         "InputType": "checkbox",
