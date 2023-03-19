@@ -1,20 +1,8 @@
 [
     {
-        "DisplayName": "RCON Password",
-        "Category": "Server Config",
-        "Description": "Password to connect to RCON. Change this after installing the server",
-        "Keywords": "RCON,password",
-        "FieldName": "$RemoteAdminPassword",
-        "InputType": "RandomPassword",
-        "IsFlagArgument": false,
-        "ParamFieldName": "$RemoteAdminPassword",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "Password123"
-    },
-    {
         "DisplayName": "Server Name",
         "Category": "Server Config",
-        "Description": "Set the Name for the server to advertise",
+        "Description": "Set the name for the server in the Server Browser",
         "Keywords": "server name, name",
         "FieldName": "ServerName",
         "InputType": "text",
@@ -26,7 +14,7 @@
     {
         "DisplayName": "Max Players",
         "Category": "Server Config",
-        "Description": "Set the max players allowed on the server",
+        "Description": "Set the maximum players allowed on the server",
         "Keywords": "max players, players",
         "FieldName": "$MaxUsers",
         "InputType": "number",
@@ -38,9 +26,23 @@
         "MinValue":"1"
     },
     {
+        "DisplayName": "Max TPS",
+        "Category": "Server Config",
+        "Description": "Set the maximum tickrate for the server (Set below 45 for best stability)",
+        "Keywords": "tps, tickrate",
+        "FieldName": "$MaxTPS",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "MaxTPS",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "40",
+        "Suffix":"tps",
+        "MinValue":"10"
+    },
+    {
         "DisplayName": "LAN Mode",
         "Category": "Server Config",
-        "Description": "set the server to LAN mode?",
+        "Description": "Set the server to LAN mode",
         "Keywords": "Lan,Server",
         "FieldName": "IsLANMatch",
         "InputType": "checkbox",
@@ -55,7 +57,7 @@
     {
         "DisplayName": "Should Advertise",
         "Category": "Server Config",
-        "Description": "Control visibility in the server browser",
+        "Description": "If disabled, your server will not be visible in the server browser",
         "Keywords": "Visibility,Server",
         "FieldName": "ShouldAdvertise",
         "InputType": "checkbox",
@@ -70,7 +72,7 @@
     {
         "DisplayName": "Number of Reserved Slots",
         "Category": "Server Config",
-        "Description": "Number of reserved slots for admins / members",
+        "Description": "Number of reserved slots for players with the 'reserved' permission within the Admins.cfg file",
         "Keywords": "reserved players, players",
         "FieldName": "NumReservedSlots",
         "InputType": "number",
@@ -82,7 +84,7 @@
     {
         "DisplayName": "Public Queue Limit",
         "Category": "Server Config",
-        "Description": "Size of the server queuing, for regular user",
+        "Description": "Size of the server queuing, for regular user (Note: Setting this to 0 will not allow players to join the server)",
         "Keywords": "queue,players",
         "FieldName": "PublicQueueLimit",
         "InputType": "number",
@@ -215,7 +217,7 @@
     {
         "DisplayName": "Rejoin Squad Delay After Kick",
         "Category": "Server Config",
-        "Description": "Delay a player is allowed to rejoin a squad after being kicked.",
+        "Description": "Set the delay after which a player is allowed to rejoin a squad after being kicked.",
         "Keywords": "delay,players,kick",
         "FieldName": "RejoinSquadDelayAfterKick",
         "InputType": "number",
@@ -228,7 +230,7 @@
     {
         "DisplayName": "Record Demos",
         "Category": "Server Config",
-        "Description": "Enable Demo Recording",
+        "Description": "Enable Demo Recording Server-Side",
         "Keywords": "Record,Demo",
         "FieldName": "RecordDemos",
         "InputType": "checkbox",
@@ -243,7 +245,7 @@
     {
         "DisplayName": "Allow Public Clients Record Demos",
         "Category": "Server Config",
-        "Description": "Enable Demo Recording",
+        "Description": "Enable Demo Recording Client-Side",
         "Keywords": "Record,Demo",
         "FieldName": "AllowPublicClientsToRecord",
         "InputType": "checkbox",
@@ -258,7 +260,7 @@
     {
         "DisplayName": "Server Message Interval",
         "Category": "Server Config",
-        "Description": "Frequency in which the server displays the information inside the ServerMessages.cfg file.",
+        "Description": "Frequency in which the server displays the information inside the ServerMessages.cfg file as a Broadcast to all players",
         "Keywords": "Interval, Message",
         "FieldName": "ServerMessageInterval",
         "InputType": "number",
@@ -352,9 +354,9 @@
         }
     },
     {
-        "DisplayName": "Offworld Developers only Admin",
+        "DisplayName": "Offworld Developers Admin Access",
         "Category": "Server Config",
-        "Description": "Only Offworld Industries developers are admins",
+        "Description": "Allows Offworld Industries developers admin access to the server for profiling",
         "Keywords": "Admin",
         "FieldName": "AllowDevProfiling",
         "InputType": "checkbox",
@@ -369,7 +371,7 @@
     {
         "DisplayName": "Allow QA",
         "Category": "Server Config",
-        "Description": "Allow QA",
+        "Description": "Allow Offworld Industries QA staff admin access to the server",
         "Keywords": "QA",
         "FieldName": "AllowQA",
         "InputType": "checkbox",
