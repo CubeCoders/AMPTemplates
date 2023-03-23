@@ -26,17 +26,16 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "RCON Password",
-        "Category": "Server Config",
-        "Description": "The password to access RCON clients. AMP has RCON built in the console.",
-        "Keywords": "RconPassword",
-        "FieldName": "$RemoteAdminPassword",
-        "InputType": "RandomPassword",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/Script/Mordhau.MordhauGameSession.RconPassword",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "Password123",
-        "EnumValues": {}
+        "DisplayName":"RCON Password",
+        "Category":"Server Config",
+        "Description":"See the Security and Privacy menu for configurable options for the server's RCON",
+        "Keywords":"console,password,rcon",
+        "FieldName":"$RemoteAdminPassword",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/Mordhau.MordhauGameSession.RconPassword",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
     },
     {
         "DisplayName": "Admin Password",
@@ -44,11 +43,11 @@
         "Description": "The password to become admin in the server.",
         "Keywords": "Admin,Password",
         "FieldName": "AdminPassword",
-        "InputType": "RandomPassword",
+        "InputType": "Password",
         "IsFlagArgument": false,
         "ParamFieldName": "/Script/Mordhau.MordhauGameSession.AdminPassword",
         "IncludeInCommandLine": false,
-        "DefaultValue": "Password123",
+        "DefaultValue": "{{newguid()}}",
         "EnumValues": {}
     },
     {
@@ -186,9 +185,24 @@
             "/Game/Mordhau/Maps/Arena_Map/TF_Arena":"TF_Arena",
             "/Game/Mordhau/Maps/Cortile/TF_Cortile":"TF_Cortile",
             "/Game/Mordhau/Maps/Highlands/TF_Highlands":"TF_Highlands",
-            "/Game/Mordhau/Maps/Truce/TF_Truce":"TF_Truce"
+            "/Game/Mordhau/Maps/Truce/TF_Truce":"TF_Truce",
+            "{{CustomMapText}}": "Custom Map"
         }
-    },
+      },
+      {
+        "DisplayName": "Custom Map",
+        "Category": "Server Config",
+        "Description": "Enter a custom map. Must select \"Custom Map\" in the Starting Map & Mode drop-down. This is the same as the folder name the map is stored under.",
+        "Keywords": "Custom,Map",
+        "FieldName": "CustomMapText",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "CustomMapText",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "SkrimJaw",
+        "EnumValues": {}
+      },
     {
         "DisplayName": "RconPort",
         "Category": "Server Config",
