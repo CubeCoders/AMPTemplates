@@ -28,20 +28,6 @@
     "Hidden": true
   },
   {
-    "DisplayName": "Telnet Password",
-    "Category": "Emp - Server Settings",
-    "Description": "Must be set using AMP.",
-    "Keywords": "",
-    "FieldName": "$RemoteAdminPassword",
-    "InputType": "text",
-    "IsFlagArgument": false,
-    "ParamFieldName": "ServerConfig.Tel_Pwd",
-    "IncludeInCommandLine": false,
-    "DefaultValue": "",
-    "EnumValues": {},
-    "Hidden": true
-  },
-  {
     "DisplayName": "Server Name",
     "Category": "Emp - Server Settings",
     "Description": "Name that will be shown in the Server Browser.",
@@ -68,6 +54,18 @@
     "EnumValues": {}
   },
   {
+    "DisplayName": "Telnet Password",
+    "Category": "Emp - Server Settings",
+    "Description": "See the Security and Privacy menu for configurable options for the server's RCON.",
+    "Keywords": "telnet,RCON,password",
+    "FieldName": "$RemoteAdminPassword",
+    "InputType": "hidden",
+    "IsFlagArgument": false,
+    "ParamFieldName": "ServerConfig.Tel_Pwd",
+    "IncludeInCommandLine": false,
+    "EnumValues": {}
+  },
+  {
     "DisplayName": "Max Players ",
     "Category": "Emp - Server Settings",
     "Description": "Maximum number of player allowed to join simultaneously in the server.",
@@ -78,7 +76,8 @@
     "ParamFieldName": "ServerConfig.Srv_MaxPlayers",
     "IncludeInCommandLine": false,
     "DefaultValue": "8",
-    "EnumValues": {}
+    "EnumValues": {},
+    "MinValue":"1"
   },
   {
     "DisplayName": "Server Description",
@@ -353,9 +352,9 @@
     "EnumValues": {}
   },
   {
-    "DisplayName": "Custom Scenario",
+    "DisplayName": "Scenario",
     "Category": "Emp - Game Settings",
-    "Description": "Choose from premade scenarios.",
+    "Description": "Choose from premade scenarios. If \"Custom Scenario\" is chosen, you must enter the name of the scenario in the Custom Scenario setting.",
     "Keywords": "Custom,Scenario",
     "FieldName": "CustomScenario",
     "InputType": "enum",
@@ -376,8 +375,23 @@
       "Invader vs Defender - Conflict of Cygnus": "Invader vs Defender - Conflict of Cygnus",
       "Shadows of Starlight": "Shadows of Starlight",
       "Stranded at Nemesis (Survival Challenge)": "Stranded at Nemesis (Survival Challenge)",
-      "Tutorial": "Tutorial"
+      "Tutorial": "Tutorial",
+      "{{CustomScenarioText}}": "Custom Scenario"
     }
+  },
+  {
+    "DisplayName": "Custom Scenario",
+    "Category": "Emp - Game Settings",
+    "Description": "Enter a custom scenario. Must select \"Custom Scenario\" in the Scenario drop-down. This is the same as the folder name the scenario is stored under.",
+    "Keywords": "Custom,Scenario",
+    "FieldName": "CustomScenarioText",
+    "InputType": "text",
+    "IsFlagArgument": false,
+    "ParamFieldName": "CustomScenarioText",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "",
+    "Placeholder": "ReforgedEden",
+    "EnumValues": {}
   },
   {
     "DisplayName": "Release Stream",
@@ -392,5 +406,21 @@
     "DefaultValue": "public",
     "Placeholder": "public",
     "EnumValues": {}
+  },
+  {
+    "DisplayName":"Download Backup Exclude File",
+    "Category":"SteamCMD and Updates",
+    "Description":"This downloads a default backup exclude file to save space on backups by only saving specific directories. If this is disabled, you will need to manually delete the .backupExclude file it downloads.",
+    "Keywords":"download,backup,exclude,file",
+    "FieldName":"backupExclude",
+    "InputType":"checkbox",
+    "IsFlagArgument":false,
+    "ParamFieldName":"backupExclude",
+    "IncludeInCommandLine":false,
+    "DefaultValue":"true",
+    "EnumValues":{
+        "False": "false",
+        "True": "true"
+    }
   }
 ]

@@ -98,7 +98,7 @@
         "DisplayName":"Server Port",
         "Category":"7d2d - Server Settings",
         "Description":"Whatever you want the name of the server to be.",
-        "Keywords":"Server,Port",
+        "Keywords":"",
         "FieldName":"$ServerPort",
         "InputType":"text",
         "IsFlagArgument":false,
@@ -158,14 +158,15 @@
         "Category":"7d2d - Server Settings",
         "Description":"Maximum Concurrent Players.",
         "Keywords":"Server,Max,Player,Count",
-        "FieldName":"ServerMaxPlayerCount",
+        "FieldName":"$MaxUsers",
         "InputType":"number",
         "IsFlagArgument":false,
         "ParamFieldName":"/ServerSettings/property[@name='ServerMaxPlayerCount']/@value",
         "IncludeInCommandLine":false,
         "DefaultValue":"8",
         "EnumValues":{},
-        "Suffix": "players"
+        "Suffix":"players",
+        "MinValue":"1"
     },{
         "DisplayName":"Server Reserved Slots",
         "Category":"7d2d - Server Settings",
@@ -226,7 +227,7 @@
         "DisplayName":"Control Panel Port",
         "Category":"7d2d - Server Settings",
         "Description":"Port of the control panel webpage.",
-        "Keywords":"Control,Panel,Port",
+        "Keywords":"",
         "FieldName":"$ControlPanelPort",
         "InputType":"number",
         "IsFlagArgument":false,
@@ -251,7 +252,7 @@
         "DisplayName":"Telnet Enabled",
         "Category":"7d2d - Server Settings",
         "Description":"Enable/Disable the telnet.",
-        "Keywords":"Telnet,Enabled",
+        "Keywords":"",
         "FieldName":"TelnetEnabled",
         "InputType":"text",
         "IsFlagArgument":false,
@@ -264,7 +265,7 @@
         "DisplayName":"Telnet Port",
         "Category":"7d2d - Server Settings",
         "Description":"Port of the telnet server.",
-        "Keywords":"Telnet,Port",
+        "Keywords":"",
         "FieldName":"$RemoteAdminPort",
         "InputType":"number",
         "IsFlagArgument":false,
@@ -276,16 +277,14 @@
     },{
         "DisplayName":"Telnet Password",
         "Category":"7d2d - Server Settings",
-        "Description":"Password to gain entry to telnet interface.",
+        "Description":"See the Security and Privacy menu for configurable options for the password to the server's telnet interface (RCON).",
         "Keywords":"Telnet,Password",
         "FieldName":"$RemoteAdminPassword",
-        "InputType":"text",
+        "InputType":"hidden",
         "IsFlagArgument":false,
         "ParamFieldName":"/ServerSettings/property[@name='TelnetPassword']/@value",
         "IncludeInCommandLine":false,
-        "DefaultValue":"",
-        "EnumValues":{},
-        "Hidden": true
+        "EnumValues":{}
     },{
         "DisplayName":"Telnet Failed Login Limit",
         "Category":"7d2d - Server Settings",
@@ -588,7 +587,7 @@
     },{
         "DisplayName":"Drop On Quit",
         "Category":"7d2d - Gameplay Settings",
-        "Description":"What a player drops upon death",
+        "Description":"What a player drops when quitting",
         "Keywords":"Drop,On,Quit",
         "FieldName":"DropOnQuit",
         "InputType":"enum",
@@ -1163,6 +1162,36 @@
         "ParamFieldName":"UMOD",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
+        "EnumValues":{
+            "False": "false",
+            "True": "true"
+        }
+    },{
+        "DisplayName":"Install Darkness Falls",
+        "Category":"SteamCMD and Updates",
+        "Description":"Auto-installs Darkness Falls when the server is updated. This is the Stable branch.",
+        "Keywords":"install,DarknessFalls",
+        "FieldName":"DarknessFalls",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"DarknessFalls",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False": "false",
+            "True": "true"
+        }
+    },{
+        "DisplayName":"Download Backup Exclude File",
+        "Category":"SteamCMD and Updates",
+        "Description":"This downloads a default backup exclude file to save space on backups by only saving specific directories. If this is disabled, you will need to manually delete the .backupExclude file it downloads.",
+        "Keywords":"download,backup,exclude,file",
+        "FieldName":"backupExclude",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"backupExclude",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
         "EnumValues":{
             "False": "false",
             "True": "true"
