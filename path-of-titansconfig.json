@@ -18,14 +18,26 @@
         "Category":"POT Server Settings",
         "Description":"",
         "Keywords":"",
-        "FieldName":"SourceRCONIP",
+        "FieldName":"$ApplicationIPBinding",
         "InputType":"text",
         "Hidden":true,
         "IsFlagArgument":false,
         "ParamFieldName":"ini:Game:[SourceRCON]:IP",
         "IncludeInCommandLine":true,
-        "DefaultValue":"0.0.0.0",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Automatic Restarts",
+        "Category":"POT Server Settings",
+        "Description":"Disables automatic server restarts to avoid conflicts with AMP",
+        "Keywords":"",
+        "FieldName":"bServerAutoRestart",
+        "InputType":"text",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"ini:Game:[/Script/PathOfTitans.IGameSession]:bServerAutoRestart",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"false"
     },
     {
         "DisplayName":"Auth Token",
@@ -123,14 +135,32 @@
     {
         "DisplayName":"Server Map",
         "Category":"POT Server Settings",
-        "Description":"Sets the map for the server. Default is Panjura. If using a modded map, GameUserSettings.ini also needs to be configured. Refer to these [instructions](https://github.com/Alderon-Games/pot-community-servers/wiki/Setting-up-Mods)",
+        "Description":"Sets the map for the server. If using a modded map, select Custom and set the \"Custom Map Name\"",
         "Keywords":"map",
         "FieldName":"ServerMap",
-        "InputType":"text",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"ServerMap",
         "IncludeInCommandLine":false,
         "DefaultValue":"Panjura",
+        "EnumValues":{
+            "Panjura":"Panjura (default)",
+            "Gondwa":"Gondwa",
+            "{{CustomMap}}":"Custom"
+        }
+    },
+    {
+        "DisplayName":"Custom Map Name",
+        "Category":"POT Server Settings",
+        "Description":"Sets a custom map for the server. Custom type must be selected under \"Server Map\". GameUserSettings.ini also needs to be configured. Refer to these [instructions](https://github.com/Alderon-Games/pot-community-servers/wiki/Setting-up-Mods)",
+        "Keywords":"custom,map",
+        "FieldName":"CustomMap",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"CustomMap",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"Jangwa",
         "EnumValues":{}
     },
     {
@@ -166,17 +196,15 @@
         }
     },
     {
-        "DisplayName":"Server IP Binding",
+        "DisplayName":"Server/RCON IP Binding",
         "Category":"POT Server Settings",
-        "Description":"If needed, binds the server to the IPv4 address of a specific interface on the host. Default is all IPs (blank)",
-        "Keywords":"multihome,ip",
+        "Description":"If required, you can change the binding of the server and Source RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Stop the instance (not just the server) first. AMP itself must be able to reach the set IP, otherwise it will not be able to connect to RCON",
+        "Keywords":"ip,binding,multihome,rcon,sourcercon",
         "FieldName":"MultiHome",
-        "InputType":"text",
+        "InputType":"hidden",
         "IsFlagArgument":false,
-        "SkipIfEmpty":true,
         "ParamFieldName":"MultiHome",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"",
+        "IncludeInCommandLine":false,
         "EnumValues":{}
     },
     {
@@ -407,37 +435,6 @@
         "IncludeInCommandLine":true,
         "DefaultValue":"",
         "Placeholder":"aY5CzgZk",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Automatic Restarts",
-        "Category":"POT Server Settings",
-        "Description":"If set, enables automatic server restarts",
-        "Keywords":"auto,restart,bserverautorestart",
-        "FieldName":"bServerAutoRestart",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ini:Game:[/Script/PathOfTitans.IGameSession]:bServerAutoRestart",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Automatic Restart Interval",
-        "Category":"POT Server Settings",
-        "Description":"Sets the time between automatic server restarts. Players will be warned every 2,1 hours - 30,10,5,1 minutes - 10,5,4,3,2,1 seconds before restart",
-        "Keywords":"auto,restart,time,interval,restartlengthinseconds",
-        "FieldName":"RestartLengthInSeconds",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"ini:Game:[/Script/PathOfTitans.IGameSession]:RestartLengthInSeconds",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"10800",
-        "Placeholder":"10800",
-        "Suffix":"seconds",
         "EnumValues":{}
     },
     {
