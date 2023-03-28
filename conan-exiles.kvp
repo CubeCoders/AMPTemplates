@@ -29,7 +29,7 @@ App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=443030/ConanSandbox/Binaries/Win64
 App.LinuxCommandLineArgs=-a wine64 "./ConanSandboxServer-Win64-Test.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} {{Map}} -stdout -FullStdOutLogOutput -Port={{$ApplicationPort1}} -QueryPort={{$ApplicationPort3}} -RconPort={{$RemoteAdminPort}} -RconEnabled=1 -RconPassword="{{$RemoteAdminPassword}}" -MaxPlayers={{$MaxUsers}} -ini:ServerSettings:[ServerSettings]:AdminPassword="{{AdminPassword}}" {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} {{Map}} -stdout -FullStdOutLogOutput -Port={{$ApplicationPort1}} -QueryPort={{$ApplicationPort3}} -RconPort={{$RemoteAdminPort}} -RconEnabled=1 -RconPassword="{{$RemoteAdminPassword}}" -MaxPlayers={{$MaxUsers}} {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"440900","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
@@ -61,7 +61,7 @@ App.RCONConnectRetrySeconds=5
 App.RCONHeartbeatMinutes=3
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat={0}
-App.UpdateSources=[{"UpdateStageName":"SteamCMD and Conan Exiles Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"443030","UpdateSourceArgs":"440900","ForceDownloadPlatform":"Windows"}]
+App.UpdateSources=[{"UpdateStageName":"SteamCMD and Conan Exiles Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"443030","UpdateSourceArgs":"440900","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Config Directory Creation","UpdateSourcePlatform":"All","UpdateSource":"CreateDirectory","UpdateSourceArgs":"./conan-exiles/443030/ConanSandbox/Saved/Config/WindowsServer","OverwriteExistingFiles":false},{"UpdateStageName":"ServerSettings File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://github.com/CubeCoders/AMPTemplates/raw/main/conan-exilesconfigsettings.ini","UpdateSourceTarget":"./443030/ConanSandbox/Saved/Config/WindowsServer/","UpdateSourceArgs":"ServerSettings.ini","OverwriteExistingFiles":false}]
 App.PreStartStages=[]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
