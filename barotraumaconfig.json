@@ -1,7 +1,7 @@
 [
     {
         "DisplayName":"Game Port",
-        "Category":"Server Settings",
+        "Category":"Barotrauma Server Settings",
         "Description":"",
         "Keywords":"",
         "FieldName":"$GamePort",
@@ -14,7 +14,7 @@
     },
     {
         "DisplayName":"Query Port",
-        "Category":"Server Settings",
+        "Category":"Barotrauma Server Settings",
         "Description":"",
         "Keywords":"",
         "FieldName":"$QueryPort",
@@ -27,7 +27,7 @@
     },
     {
         "DisplayName":"Auto Restart",
-        "Category":"Server Settings",
+        "Category":"Barotrauma Server Settings",
         "Description":"",
         "Keywords":"",
         "FieldName":"autorestart",
@@ -41,7 +41,7 @@
     },
     {
         "DisplayName":"Server Name",
-        "Category":"Server Settings",
+        "Category":"Barotrauma Server Settings",
         "Description":"Sets the name of the server as it appears in the server browser",
         "Keywords":"server,name,servername",
         "FieldName":"name",
@@ -55,7 +55,7 @@
     },
     {
         "DisplayName":"Server Message",
-        "Category":"Server Settings",
+        "Category":"Barotrauma Server Settings",
         "Description":"Sets the text displayed in the server's info box",
         "Keywords":"server,message,servermessage",
         "FieldName":"ServerMessage",
@@ -68,7 +68,7 @@
     },
     {
         "DisplayName":"Make Server Public",
-        "Category":"Server Settings",
+        "Category":"Barotrauma Server Settings",
         "Description":"If enabled, the server will show on the server browser",
         "Keywords":"public",
         "FieldName":"public",
@@ -84,7 +84,7 @@
     },
     {
         "DisplayName":"Server Password",
-        "Category":"Server Settings",
+        "Category":"Barotrauma Server Settings",
         "Description":"Sets the password to join the server",
         "Keywords":"password",
         "FieldName":"password",
@@ -97,7 +97,7 @@
     },
     {
         "DisplayName":"Player Limit",
-        "Category":"Server Settings",
+        "Category":"Barotrauma Server Settings",
         "Description":"Sets the number of players allowed to join the server at one time",
         "Keywords":"player,limit,maxplayers",
         "FieldName":"$MaxUsers",
@@ -113,7 +113,7 @@
     },
     {
         "DisplayName":"Randomize Seed",
-        "Category":"Server Settings",
+        "Category":"Barotrauma Server Settings",
         "Description":"If enabled, the server will generate a new seed each round",
         "Keywords":"randomize,seed,randomizeseed",
         "FieldName":"RandomizeSeed",
@@ -128,24 +128,8 @@
         }
     },
     {
-        "DisplayName":"Enable UPnP",
-        "Category":"Server Settings",
-        "Description":"If set, UPnP will be enabled on the server. Requires a UPnP-enabled router to function",
-        "Keywords":"upnp,enableupnp",
-        "FieldName":"enableupnp",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/serversettings/@enableupnp",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Level Difficulty",
-        "Category":"Server Settings",
+        "Category":"Barotrauma Server Settings",
         "Description":"Sets the level difficulty",
         "Keywords":"level,difficulty",
         "FieldName":"LevelDifficulty",
@@ -160,8 +144,8 @@
     },
     {
         "DisplayName":"Allowed Random Mission Types",
-        "Category":"Server Settings",
-        "Description":"A comma separated list of allowed mission types. Select from Salvage,Monster,Cargo,Combat,All",
+        "Category":"Barotrauma Server Settings",
+        "Description":"Sets a comma separated list of allowed mission types. Select from Salvage,Monster,Cargo,Combat,All",
         "Keywords":"keyword",
         "FieldName":"AllowedRandomMissionTypes",
         "InputType":"text",
@@ -174,7 +158,7 @@
     },
     {
         "DisplayName":"Allowed Client Name Characters",
-        "Category":"Server Settings",
+        "Category":"Barotrauma Server Settings",
         "Description":"Sets the characters approved for use in a client name. Enter as UTF-16 character code ranges. More information can be found [here](https://barotraumagame.com/wiki/Serversettings.xml)",
         "Keywords":"allowed,client,name,chars,allowedclientnamechars",
         "FieldName":"AllowedClientNameChars",
@@ -185,6 +169,104 @@
         "DefaultValue":"32-33,38-46,48-57,65-90,91-91,93-93,95-122,192-255,384-591,1024-1279,19968-21327,21329-40959,13312-19903,131072-173791,173824-178207,178208-183983,63744-64255,194560-195103",
         "Placeholder":"32-33,38-46,48-57,65-90,91-91,93-93,95-122,192-255,384-591,1024-1279,19968-21327,21329-40959,13312-19903,131072-173791,173824-178207,178208-183983,63744-64255,194560-195103",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable UPnP",
+        "Category":"Barotrauma Server Settings",
+        "Description":"If set, UPnP will be enabled on the server. Requires a UPnP-enabled router to function",
+        "Keywords":"upnp,enableupnp",
+        "FieldName":"enableupnp",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@enableupnp",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Respawn",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, respawning of dead players will be allowed. Otherwise, dead players will have to spectate until the round ends",
+        "Keywords":"respawn,allowrespawn",
+        "FieldName":"AllowRespawn",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@AllowRespawn",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Respawn Interval",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the time between each respawn wave",
+        "Keywords":"respawn,interval,respawninterval",
+        "FieldName":"RespawnInterval",
+        "InputType":"number",
+        "MinValue":"1",
+        "MaxValue":"10000",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@RespawnInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"300",
+        "Placeholder":"300",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Use Respawn Shuttle",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, respawning players spawn in a shuttle away from the main submarine and must dock or otherwise merge with the crew. Otherwise, players are spawned in the submarine on certain job spawnpoints, depending on their job",
+        "Keywords":"respawn,shuttle,userespawnshuttle",
+        "FieldName":"UseRespawnShuttle",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@UseRespawnShuttle",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Maximum Transport Time",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the maximum time the respawn shuttle has to dock to the submarine. If time runs out before the shuttle docks it will automatically return to the first outpost",
+        "Keywords":"respawn,transport,time,maxtransporttime",
+        "FieldName":"MaxTransportTime",
+        "InputType":"number",
+        "MinValue":"1",
+        "MaxValue":"10000",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@MaxTransportTime",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"180",
+        "Placeholder":"180",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow Friendly Fire",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, friendly fire between players will be allowed (they can deal damage to each other)",
+        "Keywords":"friendly,fire,allowfriendlyfire",
+        "FieldName":"AllowFriendlyFire",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@AllowFriendlyFire",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
     }
 ]
     
