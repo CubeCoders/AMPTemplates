@@ -96,6 +96,37 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Failed Password Ban",
+        "Category":"Barotrauma Server Settings",
+        "Description":"If enabled, players will be auto-banned after exceeding the maximum password retries set under \"Maximum Password Retries\"",
+        "Keywords":"password,ban,retry,banafterwrongpassword",
+        "FieldName":"BanAfterWrongPassword",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@BanAfterWrongPassword",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Maximum Password Retries",
+        "Category":"Barotrauma Server Settings",
+        "Description":"Sets the maximum number of failed password attempts before a player is auto-banned. Requires \"Enable Failed Password Ban\" to be set",
+        "Keywords":"password,ban,retry,maxpasswordretriesbeforeban",
+        "FieldName":"MaxPasswordRetriesBeforeBan",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@MaxPasswordRetriesBeforeBan",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"3",
+        "Suffix":"retries",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Player Limit",
         "Category":"Barotrauma Server Settings",
         "Description":"Sets the number of players allowed to join the server at one time",
@@ -187,6 +218,25 @@
         }
     },
     {
+        "DisplayName":"Play Style",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the server play style displayed in the server browser and lobby",
+        "Keywords":"play,style,playstyle",
+        "FieldName":"PlayStyle",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PlayStyle",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Casual",
+        "EnumValues":{
+            "Serious":"Serious",
+            "Casual":"Casual (default)",
+            "Roleplay":"Roleplay",
+            "Rampage":"Rampage",
+            "SomethingDifferent":"SomethingDifferent"
+        }
+    },
+    {
         "DisplayName":"Allow Respawn",
         "Category":"Barotrauma Gameplay Settings",
         "Description":"If enabled, respawning of dead players will be allowed. Otherwise, dead players will have to spectate until the round ends",
@@ -263,6 +313,101 @@
         "ParamFieldName":"/serversettings/@AllowFriendlyFire",
         "IncludeInCommandLine":false,
         "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Disguises",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, players can disguise themselves by using another player's ID card. Otherwise, players will always have their names above them even when covering their face",
+        "Keywords":"allow,disguises,allowdisguises",
+        "FieldName":"AllowDisguises",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@AllowDisguises",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Rewiring",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, players can rewire anything except if it has been set otherwise in the submarine",
+        "Keywords":"allow,rewiring,allowrewiring",
+        "FieldName":"AllowRewiring",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@AllowRewiring",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Bot Count",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the number of bots that should be spawned in a round. This is limited by the \"Maximum Bot Count\"",
+        "Keywords":"bot,count,botcount",
+        "FieldName":"BotCount",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@BotCount",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "Suffix":"bots",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Bot Count",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the maximum number of allowed bots in a round",
+        "Keywords":"maximum,bot,count,maxbotcount",
+        "FieldName":"MaxBotCount",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"16",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@MaxBotCount",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "Suffix":"bots",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Bot Spawn Mode",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets how bots should be spawned. Normal = bots fill the amount of slots set in \"Bot Count\". Fill = bots skip that value and fully fill empty player slots",
+        "Keywords":"bot,spawn,mode,botspawnmode",
+        "FieldName":"BotSpawnMode",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"BotSpawnMode",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Normal",
+        "EnumValues":{
+            "Normal":"Normal (default)",
+            "Fill":"Fill"
+        }
+    },
+    {
+        "DisplayName":"Disable Bot Conversations",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If set, bot conversations will not be allowed",
+        "Keywords":"disable,bot,conversations,disablebotconversations",
+        "FieldName":"DisableBotConversations",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@DisableBotConversations",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
             "True":"True"
