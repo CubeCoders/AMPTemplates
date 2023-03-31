@@ -12,7 +12,7 @@ Meta.ConfigRoot=call-of-dutymw3.kvp
 Meta.MinAMPVersion=2.4.0.8
 Meta.SpecificDockerImage=cubecoders/ampbase:wine
 Meta.DockerRequired=False
-Meta.ContainerPolicy=RecommendedOnLinux
+Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
 Meta.ContainerPolicyReason=The server requires Wine and Xvfb to run on Linux. Using a container avoids the need to install these dependencies on the host.
 Meta.Prerequsites=[]
 Meta.ExtraContainerPackages=[]
@@ -55,7 +55,7 @@ App.RCONConnectRetrySeconds=5
 App.RCONHeartbeatMinutes=0
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat=login {0}
-App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"42750","UpdateSourceArgs":"42690","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Initialise Wine","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win32 /usr/bin/wineboot --init'","OneShot":true}]
+App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"42750","UpdateSourceArgs":"42690","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Initialise Wine","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win32 /usr/bin/wineboot --init'"}]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=False
 App.SteamForceLoginPrompt=False

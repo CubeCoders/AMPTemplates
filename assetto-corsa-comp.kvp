@@ -12,7 +12,8 @@ Meta.ConfigRoot=assetto-corsa-comp.kvp
 Meta.MinAMPVersion=2.4.0.2
 Meta.SpecificDockerImage=cubecoders/ampbase:wine
 Meta.DockerRequired=False
-Meta.ContainerPolicy=Recommended
+Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
+Meta.ContainerPolicyReason=The server requires Wine and Xvfb to run on Linux. Using a container avoids the need to install these dependencies on the host.
 Meta.Prerequsites=[]
 Meta.ConfigReleaseState=NotSpecified
 App.DisplayName=Assetto Corsa Competizione
@@ -49,7 +50,7 @@ App.AdminLoginTransform=None
 App.RCONConnectDelaySeconds=5
 App.RCONConnectRetrySeconds=5
 App.TelnetLoginFormat={0}
-App.UpdateSources=[{"UpdateStageName":"SteamCMD Server Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"1430110","UpdateSourceArgs":"805550","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Initialise Wine","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init'","OneShot":true}]
+App.UpdateSources=[{"UpdateStageName":"SteamCMD Server Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"1430110","UpdateSourceArgs":"805550","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Initialise Wine","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init'"}]
 App.Compatibility=LinuxBufferedConsole, WindowsBufferedConsole
 App.SteamUpdateAnonymousLogin=False
 App.SteamForceLoginPrompt=False
