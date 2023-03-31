@@ -202,6 +202,38 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Save Server Logs",
+        "Category":"Barotrauma Server Settings",
+        "Description":"If enabled, server logs will be saved in the ServerLogs folder upon server shutdown",
+        "Keywords":"save,server,logs,saveserverlogs",
+        "FieldName":"SaveServerLogs",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@SaveServerLogs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow File Transfers",
+        "Category":"Barotrauma Server Settings",
+        "Description":"If enabled, the server will send missing files to clients (currently only .sub files). Otherwise, if a client is missing required files they cannot spawn and will be sent back into the lobby",
+        "Keywords":"allow,file,transfers,allowfiletransfers",
+        "FieldName":"AllowFileTransfers",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@AllowFileTransfers",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
         "DisplayName":"Enable UPnP",
         "Category":"Barotrauma Server Settings",
         "Description":"If set, UPnP will be enabled on the server. Requires a UPnP-enabled router to function",
@@ -237,6 +269,38 @@
         }
     },
     {
+        "DisplayName":"Start When Ready",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, the server will automatically start a round if enough players are ready, based on the \"Minimum Player Ready Ratio\". Otherwise, the round must be manually started",
+        "Keywords":"start,ready,startwhenclientsready",
+        "FieldName":"StartWhenClientsReady",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@StartWhenClientsReady",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Minimum Player Ready Ratio",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the minimum ratio of players required to be ready for a round to be automatically started, if \"Start When Ready\" is set",
+        "Keywords":"start,ready,ratio,startwhenclientsreadyratio",
+        "FieldName":"StartWhenClientsReadyRatio",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@StartWhenClientsReadyRatio",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.8",
+        "Placeholder":"0.8",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Allow Respawn",
         "Category":"Barotrauma Gameplay Settings",
         "Description":"If enabled, respawning of dead players will be allowed. Otherwise, dead players will have to spectate until the round ends",
@@ -267,6 +331,22 @@
         "DefaultValue":"300",
         "Placeholder":"300",
         "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Minimum Respawn Ratio",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the minimum percentage of dead players required for the respawn timer to start",
+        "Keywords":"respawn,ratio,minrespawnratio",
+        "FieldName":"MinRespawnRatio",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@MinRespawnRatio",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.2",
+        "Placeholder":"0.2",
         "EnumValues":{}
     },
     {
@@ -301,6 +381,54 @@
         "Placeholder":"180",
         "Suffix":"seconds",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow Kick Voting",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, players can vote to kick others players",
+        "Keywords":"vote,voting,kick,allowvotekick",
+        "FieldName":"AllowVoteKick",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@AllowVoteKick",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Round End Voting",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, players can vote to end the round",
+        "Keywords":"vote,voting,round,end,allowendvoting",
+        "FieldName":"AllowEndVoting",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@AllowEndVoting",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Spectating",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, dead players can spectate. Otherwise, they are sent into the lobby",
+        "Keywords":"spectate,allowspectating",
+        "FieldName":"AllowSpectating",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@AllowSpectating",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
     },
     {
         "DisplayName":"Allow Friendly Fire",
@@ -343,6 +471,38 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"/serversettings/@AllowRewiring",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Ragdoll Button",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, players can ragdoll on their own if they hold the button down. Otherwise, players must be stunned (or be dead) to ragdoll",
+        "Keywords":"allow,ragdoll,allowragdollbutton",
+        "FieldName":"AllowRagdollButton",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@AllowRagdollButton",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable Voice Chat",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, players will be able to use voice chat",
+        "Keywords":"voice,chat,voicechatenabled",
+        "FieldName":"VoiceChatEnabled",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@VoiceChatEnabled",
         "IncludeInCommandLine":false,
         "DefaultValue":"True",
         "EnumValues":{
