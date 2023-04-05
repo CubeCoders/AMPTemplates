@@ -174,17 +174,17 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Allowed Random Mission Types",
+        "DisplayName":"Allowed Mission Types",
         "Category":"Barotrauma Server Settings",
-        "Description":"Sets a comma separated list of allowed mission types. Select from Salvage,Monster,Cargo,Combat,All",
-        "Keywords":"keyword",
-        "FieldName":"AllowedRandomMissionTypes",
+        "Description":"Sets a comma separated list of mission types that the server should run. If multiple are selected the server randomly chooses one. Select from Salvage,Monster,Cargo,Combat,All",
+        "Keywords":"mission,types,missiontype",
+        "FieldName":"MissionType",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"/serversettings/@AllowedRandomMissionTypes",
+        "ParamFieldName":"/serversettings/@MissionType",
         "IncludeInCommandLine":false,
-        "DefaultValue":"Salvage,Monster,Cargo,Combat",
-        "Placeholder":"Salvage,Monster,Cargo,Combat",
+        "DefaultValue":"All",
+        "Placeholder":"All",
         "EnumValues":{}
     },
     {
@@ -250,6 +250,23 @@
         }
     },
     {
+        "DisplayName":"Game Mode",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the game mode",
+        "Keywords":"game,mode,gamemodeidentifier",
+        "FieldName":"GameModeIdentifier",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@GameModeIdentifier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"sandbox",
+        "EnumValues":{
+            "sandbox":"Sandbox",
+            "mission":"Mission",
+            "campaign":"Campaign"
+        }
+    },
+    {
         "DisplayName":"Play Style",
         "Category":"Barotrauma Gameplay Settings",
         "Description":"Sets the server play style displayed in the server browser and lobby",
@@ -257,7 +274,7 @@
         "FieldName":"PlayStyle",
         "InputType":"enum",
         "IsFlagArgument":false,
-        "ParamFieldName":"PlayStyle",
+        "ParamFieldName":"/serversettings/@PlayStyle",
         "IncludeInCommandLine":false,
         "DefaultValue":"Casual",
         "EnumValues":{
@@ -265,8 +282,36 @@
             "Casual":"Casual (default)",
             "Roleplay":"Roleplay",
             "Rampage":"Rampage",
-            "SomethingDifferent":"SomethingDifferent"
+            "SomethingDifferent":"Something Different"
         }
+    },
+    {
+        "DisplayName":"Selected Submarine",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the submarine that will be used in a round. If blank, the server alphabetically picks the first submarine",
+        "Keywords":"selected,submarine,selectedsubmarine",
+        "FieldName":"SelectedSubmarine",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@SelectedSubmarine",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"Azimuth",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Selected Shuttle",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the respawn shuttle that will be used in a round. If blank, the server alphabetically picks the first shuttle",
+        "Keywords":"selected,shuttle,selectedshuttle",
+        "FieldName":"SelectedShuttle",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@SelectedShuttle",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"Hemulen",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Start When Ready",
@@ -511,6 +556,98 @@
         }
     },
     {
+        "DisplayName":"Enable Traitors",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the chance of traitors appearing in a round. Yes = will definitely appear. No = will not appear. Maybe = have a 50/50 chance of appearing",
+        "Keywords":"enable,traitors,traitorsenabled",
+        "FieldName":"TraitorsEnabled",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@TraitorsEnabled",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"No",
+        "EnumValues":{
+            "No":"No",
+            "Yes":"Yes",
+            "Maybe":"Maybe"
+        }
+    },
+    {
+        "DisplayName":"Traitor Minimum Player Count",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the minimum number of players required for a traitor to be picked",
+        "Keywords":"traitor,minimum,player,count,traitorsminplayercount",
+        "FieldName":"TraitorsMinPlayerCount",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@TraitorsMinPlayerCount",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Traitor Minimum Start Delay",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the minimum amount of time that must pass before a traitor is selected",
+        "Keywords":"traitor,minimum,time,delay,traitorsminstartdelay",
+        "FieldName":"TraitorsMinStartDelay",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@TraitorsMinStartDelay",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"90",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Traitor Maximum Start Delay",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the maximum amount of time that must pass before a traitor is selected",
+        "Keywords":"traitor,maximum,time,delay,traitorsmaxstartdelay",
+        "FieldName":"TraitorsMaxStartDelay",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@TraitorsMaxStartDelay",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"180",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Traitor Minimum Restart Delay",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the minimum amount of time that must pass before another traitor is selected",
+        "Keywords":"traitor,minimum,time,delay,restart,traitorsminrestartdelay",
+        "FieldName":"TraitorsMinRestartDelay",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@TraitorsMinRestartDelay",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"30",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Traitor Maximum Restart Delay",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the maximum amount of time that must pass before another traitor is selected",
+        "Keywords":"traitor,maximum,time,delay,traitorsmaxrestartdelay",
+        "FieldName":"TraitorsMaxRestartDelay",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@TraitorsMaxRestartDelay",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"90",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Bot Count",
         "Category":"Barotrauma Gameplay Settings",
         "Description":"Sets the number of bots that should be spawned in a round. This is limited by the \"Maximum Bot Count\"",
@@ -549,7 +686,7 @@
         "FieldName":"BotSpawnMode",
         "InputType":"enum",
         "IsFlagArgument":false,
-        "ParamFieldName":"BotSpawnMode",
+        "ParamFieldName":"/serversettings/@BotSpawnMode",
         "IncludeInCommandLine":false,
         "DefaultValue":"Normal",
         "EnumValues":{
