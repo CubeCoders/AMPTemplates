@@ -174,6 +174,20 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Tickrate",
+        "Category":"Barotrauma Server Settings",
+        "Description":"Sets the tickrate of the server",
+        "Keywords":"tickrate",
+        "FieldName":"TickRate",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@TickRate",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"20",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Allowed Mission Types",
         "Category":"Barotrauma Server Settings",
         "Description":"Sets a comma separated list of mission types that the server should run. If multiple are selected the server randomly chooses one. Select from Salvage,Monster,Cargo,Combat,All",
@@ -267,6 +281,23 @@
         }
     },
     {
+        "DisplayName":"Game Mode Selection Mode",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets how the game mode should be chosen. Manual = only a client with the SelectMode permission can select the game mode. Random = game mode is randomised on round start. Vote = all players can vote for the game mode",
+        "Keywords":"game,mode,selection,modeselectionmode",
+        "FieldName":"ModeSelectionMode",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@ModeSelectionMode",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Manual",
+        "EnumValues":{
+            "Manual":"Manual (default)",
+            "Random":"Random",
+            "Vote":"Vote"
+        }
+    },
+    {
         "DisplayName":"Play Style",
         "Category":"Barotrauma Gameplay Settings",
         "Description":"Sets the server play style displayed in the server browser and lobby",
@@ -298,6 +329,23 @@
         "DefaultValue":"",
         "Placeholder":"Azimuth",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Submarine Selection Mode",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets how the next submarine should be chosen. Manual = only a client with the SelectSub permission can select a submarine. Random = submarine is randomly picked on round start. Vote = all players can vote for a submarine",
+        "Keywords":"submarine,selection,mode,subselectionmode",
+        "FieldName":"SubSelectionMode",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@SubSelectionMode",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Manual",
+        "EnumValues":{
+            "Manual":"Manual (default)",
+            "Random":"Random",
+            "Vote":"Vote"
+        }
     },
     {
         "DisplayName":"Selected Shuttle",
@@ -381,7 +429,7 @@
     {
         "DisplayName":"Minimum Respawn Ratio",
         "Category":"Barotrauma Gameplay Settings",
-        "Description":"Sets the minimum percentage of dead players required for the respawn timer to start",
+        "Description":"Sets the minimum proportion of dead players required for the respawn timer to start",
         "Keywords":"respawn,ratio,minrespawnratio",
         "FieldName":"MinRespawnRatio",
         "InputType":"number",
@@ -444,6 +492,22 @@
         }
     },
     {
+        "DisplayName":"Minimum Kick Vote Ratio",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the minimum proportion of kick votes required to kick a player (if Kick Voting is enabled)",
+        "Keywords":"kick,vote,voting,ratio,kickvoterequiredratio",
+        "FieldName":"KickVoteRequiredRatio",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@KickVoteRequiredRatio",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.6",
+        "Placeholder":"0.6",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Ban Time",
         "Category":"Barotrauma Gameplay Settings",
         "Description":"Sets the ban time for players who are vote-kicked",
@@ -490,6 +554,22 @@
             "False":"False",
             "True":"True"
         }
+    },
+    {
+        "DisplayName":"Minimum Round End Vote Ratio",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the minimum proportion of round end votes required to end a round (if Round End Voting is enabled)",
+        "Keywords":"round,end,vote,voting,ratio,endvoterequiredratio",
+        "FieldName":"EndVoteRequiredRatio",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@EndVoteRequiredRatio",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0.6",
+        "Placeholder":"0.6",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Allow Spectating",
@@ -586,6 +666,38 @@
             "False":"False",
             "True":"True"
         }
+    },
+    {
+        "DisplayName":"AFK Kick Time",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the amount of time a player must be AFK to be auto-kicked",
+        "Keywords":"kick,afk,away,time,period,kickafktime",
+        "FieldName":"KickAFKTime",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@KickAFKTime",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"600",
+        "Placeholder":"600",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Kill Disconnection Time",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the amount of time a player must be disconnected from their body for the character to be killed",
+        "Keywords":"disconnection,body,time,period,killdisconnectedtime",
+        "FieldName":"KillDisconnectedTime",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@KillDisconnectedTime",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"300",
+        "Placeholder":"300",
+        "Suffix":"seconds",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Enable Traitors",
