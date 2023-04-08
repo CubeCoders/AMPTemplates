@@ -123,6 +123,7 @@
         "ParamFieldName":"/serversettings/@MaxPasswordRetriesBeforeBan",
         "IncludeInCommandLine":false,
         "DefaultValue":"3",
+        "Placeholder":"3",
         "Suffix":"retries",
         "EnumValues":{}
     },
@@ -139,6 +140,7 @@
         "ParamFieldName":"/serversettings/@MaxPlayers",
         "IncludeInCommandLine":false,
         "DefaultValue":"10",
+        "Placeholder":"10",
         "Suffix":"players",
         "EnumValues":{}
     },
@@ -188,18 +190,20 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Allowed Mission Types",
+        "DisplayName":"Allow Mod Downloads",
         "Category":"Barotrauma Server Settings",
-        "Description":"Sets a comma separated list of mission types that the server should run. If multiple are selected the server randomly chooses one. Select from Salvage,Monster,Cargo,Combat,All",
-        "Keywords":"mission,types,missiontype",
-        "FieldName":"MissionType",
-        "InputType":"text",
+        "Description":"If enabled, clients will be able to download required mods from the server. Otherwise they will need to obtain the mods themselves",
+        "Keywords":"allow,client,mod,download,allowmoddownloads",
+        "FieldName":"AllowModDownloads",
+        "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"/serversettings/@MissionType",
+        "ParamFieldName":"/serversettings/@AllowModDownloads",
         "IncludeInCommandLine":false,
-        "DefaultValue":"All",
-        "Placeholder":"All",
-        "EnumValues":{}
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
     },
     {
         "DisplayName":"Allowed Client Name Characters",
@@ -216,6 +220,40 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Language",
+        "Category":"Barotrauma Server Settings",
+        "Description":"Sets the server language",
+        "Keywords":"server,language",
+        "FieldName":"Language",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@Language",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"English",
+        "EnumValues":{
+            "Brazilian Portuguese":"Brazilian Portuguese",
+            "Chinese":"Chinese",
+            "Czech":"Czech",
+            "Danish":"Danish",
+            "Dutch":"Dutch",
+            "English":"English",
+            "Finnish":"Finnish",
+            "French":"French",
+            "German":"German",
+            "Italian":"Italian",
+            "Japanese":"Japanese",
+            "Korean":"Korean",
+            "Norwegian":"Norwegian",
+            "Polish":"Polish",
+            "European Portuguese":"European Portuguese",
+            "Russian":"Russian",
+            "Spanish":"Spanish",
+            "Swedish":"Swedish",
+            "Turkish":"Turkish",
+            "Ukrainian":"Ukrainian"
+        }
+    },
+    {
         "DisplayName":"Save Server Logs",
         "Category":"Barotrauma Server Settings",
         "Description":"If enabled, server logs will be saved in the ServerLogs folder upon server shutdown",
@@ -230,6 +268,21 @@
             "False":"False",
             "True":"True"
         }
+    },
+    {
+        "DisplayName":"Log File Length",
+        "Category":"Barotrauma Server Settings",
+        "Description":"Sets the number of lines generated in a log file before it is rotated",
+        "Keywords":"log,file,lines,rotate,linesperlogfile",
+        "FieldName":"LinesPerLogFile",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@LinesPerLogFile",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"800",
+        "Placeholder":"800",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Allow File Transfers",
@@ -264,9 +317,23 @@
         }
     },
     {
-        "DisplayName":"Game Mode",
+        "DisplayName":"Allowed Mission Types",
         "Category":"Barotrauma Gameplay Settings",
-        "Description":"Sets the game mode",
+        "Description":"Sets a comma separated list of mission types that the server should run. If multiple are selected the server randomly chooses one (PvP Game Mode can only run Combat). Select from Salvage,Monster,Cargo,Beacon,Nest,Mineral,Combat,AbandonedOutpost,Escort,Pirate,ScanAlienRuins,ClearAlienRuins,All",
+        "Keywords":"mission,types,missiontype",
+        "FieldName":"MissionType",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@MissionType",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"All",
+        "Placeholder":"All",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Default Game Mode",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the default game mode, which will apply unless changed via the method set under \"Game Mode Selection Method\"",
         "Keywords":"game,mode,gamemodeidentifier",
         "FieldName":"GameModeIdentifier",
         "InputType":"enum",
@@ -277,14 +344,15 @@
         "EnumValues":{
             "sandbox":"Sandbox (default)",
             "mission":"Mission",
-            "campaign":"Campaign"
+            "pvp":"PvP",
+            "multiplayercampaign":"Campaign"
         }
     },
     {
-        "DisplayName":"Game Mode Selection Mode",
+        "DisplayName":"Game Mode Selection Method",
         "Category":"Barotrauma Gameplay Settings",
-        "Description":"Sets how the game mode should be chosen. Manual = only a client with the SelectMode permission can select the game mode. Random = game mode is randomised on round start. Vote = all players can vote for the game mode",
-        "Keywords":"game,mode,selection,modeselectionmode",
+        "Description":"Sets how the game mode can be changed. Manual = only a client with the SelectMode permission can select the game mode. Random = game mode is randomised on round start. Vote = all players can vote for the game mode",
+        "Keywords":"game,mode,selection,method,modeselectionmode",
         "FieldName":"ModeSelectionMode",
         "InputType":"enum",
         "IsFlagArgument":false,
@@ -346,6 +414,20 @@
             "Random":"Random",
             "Vote":"Vote"
         }
+    },
+    {
+        "DisplayName":"Hidden Submarines",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets a comma-separated list of submarines to be hidden from selection/purchase",
+        "Keywords":"hidden,submarine,hiddensubs",
+        "FieldName":"HiddenSubs",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@HiddenSubs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"Orca,Typhon",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Selected Shuttle",
@@ -472,6 +554,22 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"180",
         "Placeholder":"180",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Voting Timeout",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the timeout that applies to voting",
+        "Keywords":"vote,voting,timeout,votetimeout",
+        "FieldName":"VoteTimeout",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@VoteTimeout",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"30",
+        "Placeholder":"30",
         "Suffix":"seconds",
         "EnumValues":{}
     },
@@ -636,6 +734,22 @@
         }
     },
     {
+        "DisplayName":"Lock Default Wiring",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If set, the ability to disconnect or change any default wires in a submarine will be disabled",
+        "Keywords":"lock,wires,lockalldefaultwires",
+        "FieldName":"LockAllDefaultWires",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@LockAllDefaultWires",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
         "DisplayName":"Allow Ragdoll Button",
         "Category":"Barotrauma Gameplay Settings",
         "Description":"If enabled, players can ragdoll on their own if they hold the button down. Otherwise, players must be stunned (or be dead) to ragdoll",
@@ -652,6 +766,103 @@
         }
     },
     {
+        "DisplayName":"Allow Outpost Damage",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, outposts will be destructible (able to take damage)",
+        "Keywords":"destructible,outposts,damage,destructibleoutposts",
+        "FieldName":"DestructibleOutposts",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@DestructibleOutposts",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable Killable NPCs",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, NPCs will be able to be killed",
+        "Keywords":"kill,npc,killable,killablenpcs",
+        "FieldName":"KillableNPCs",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@KillableNPCs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Show Enemy Health Bars",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets whether enemies' health status is shown, via health bars above their heads",
+        "Keywords":"enemy,health,status,showenemyhealthbars",
+        "FieldName":"ShowEnemyHealthBars",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@ShowEnemyHealthBars",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Showall",
+        "EnumValues":{
+            "Showall":"Show all (default)",
+            "BossHealthBarsOnly":"Show only boss health",
+            "HideAll":"Hide all"
+        }
+    },
+    {
+        "DisplayName":"Looted Money Destination",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets where looted money should be sent",
+        "Keywords":"loot,money,bank,wallet,destination,lootedmoneydestination",
+        "FieldName":"LootedMoneyDestination",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@LootedMoneyDestination",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Bank",
+        "EnumValues":{
+            "Bank":"Bank (default)",
+            "Wallet":"Looter's personal wallet"
+        }
+    },
+    {
+        "DisplayName":"Maximum Money Transfer Request",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets how much money players are allowed to request from the bank. 0 = money requests disabled",
+        "Keywords":"maximum,money,transfer,request,bank,maximummoneytransferrequest",
+        "FieldName":"MaximumMoneyTransferRequest",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@MaximumMoneyTransferRequest",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"999999",
+        "Placeholder":"999999",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Line Of Sight Effect Mode",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"Sets the line of sight (LOS) effect mode",
+        "Keywords":"los,line,sight,losmode",
+        "FieldName":"LosMode",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@LosMode",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Transparent",
+        "EnumValues":{
+            "None":"None",
+            "Transparent":"Transparent (default)",
+            "Opaque":"Opaque"
+        }
+    },
+    {
         "DisplayName":"Enable Voice Chat",
         "Category":"Barotrauma Gameplay Settings",
         "Description":"If enabled, players will be able to use voice chat",
@@ -662,6 +873,22 @@
         "ParamFieldName":"/serversettings/@VoiceChatEnabled",
         "IncludeInCommandLine":false,
         "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Enable Chat WiFi Linking",
+        "Category":"Barotrauma Gameplay Settings",
+        "Description":"If enabled, WiFi components can be linked to chat",
+        "Keywords":"chat,wifi,link,allowlinkingwifitochat",
+        "FieldName":"AllowLinkingWifiToChat",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@AllowLinkingWifiToChat",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
             "True":"True"
