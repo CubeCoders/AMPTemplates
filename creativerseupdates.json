@@ -1,0 +1,32 @@
+[
+    {
+        "UpdateStageName":"SteamCMD Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"1098260",
+        "UpdateSourceArgs":"280790"
+    },
+    {
+        "UpdateStageName":"Create World Directory",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}PlayfulCorp/CreativerseServer/worlddata/worlds/{{worldId}}",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Create World Directory",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C mkdir %LocalAppData%\\PlayfulCorp\\CreativerseServer\\worlddata\\worlds\\{{worldId}} && mklink /J {{$FullBaseDir}}PlayfulCorp %LocalAppData%\\PlayfulCorp"
+    },
+    {
+        "UpdateStageName":"World Config Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/creativerseconfig_world.json",
+        "UpdateSourceArgs":"config_world.json",
+        "UpdateSourceTarget":"{{$FullBaseDir}}PlayfulCorp/CreativerseServer/worlddata/worlds/{{worldId}}/",
+        "OverwriteExistingFiles":false
+    }
+]
