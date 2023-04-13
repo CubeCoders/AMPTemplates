@@ -1,0 +1,31 @@
+[
+    {
+        "UpdateStageName":"SteamCMD Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"1690800",
+        "UpdateSourceArgs":"526870",
+        "UpdateSourceVersion":"{{releasestream}}"
+    },
+    {
+        "UpdateStageName":"SteamCMD Component Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"1007",
+        "UpdateSourceTarget":"1690800/FactoryGame/Binaries/Win64"
+    },
+    {
+        "UpdateStageName":"Saves Directory Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'mkdir -p ~/.config/Epic/FactoryGame/Saved/SaveGames && mkdir -p \"{{$FullBaseDir}}FactoryGame/Saved\" && ln -sf ~/.config/Epic/FactoryGame/Saved/SaveGames \"{{$FullBaseDir}}FactoryGame/Saved/\"'"
+    },
+    {
+        "UpdateStageName":"Saves Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C mkdir \"%LocalAppData%\\FactoryGame\\Saved\\SaveGames\" && mkdir \"{{$FullBaseDir}}FactoryGame\\Saved\" && mklink /J \"{{$FullBaseDir}}FactoryGame\\Saved\\SaveGames\" \"%LocalAppData%\\FactoryGame\\Saved\\SaveGames\""
+    }
+]
