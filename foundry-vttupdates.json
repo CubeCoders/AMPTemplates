@@ -47,9 +47,16 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-win-x64.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}node",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Node.js Extract",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd {{$FullBaseDir}} & rmdir /S /Q node & rename node-{{NodeVersion}}-linux-x64 node"
     }
 ]
