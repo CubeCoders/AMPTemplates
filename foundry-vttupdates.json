@@ -12,12 +12,6 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}data"
     },
     {
-        "UpdateStageName":"Node Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}node"
-    },
-    {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
@@ -33,14 +27,15 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-linux-x64.tar.xz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}node"
+        "UpdateSourceData":"node.tar.xz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}"
     },
     {
         "UpdateStageName":"Node.js Extract",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}}node && tar -xf --overwrite node-{{NodeVersion}}-linux-x64.tar.xz && rm node-{{NodeVersion}}-linux-x64.tar.xz'"
+        "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}} && /usr/bin/tar -xf node.tar.xz && rm node.tar.xz'"
     },
     {
         "UpdateStageName":"Node.js Download",
