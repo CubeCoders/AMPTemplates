@@ -12,12 +12,42 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}data"
     },
     {
+        "UpdateStageName":"Node Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}node"
+    },
+    {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"{{DownloadURL}}",
         "UpdateSourceTarget":"{{$FullBaseDir}}server",
         "UpdateSourceArgs":"FoundryVTT.zip",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Node.js Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-linux-x64.tar.xz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}node"
+    },
+    {
+        "UpdateStageName":"Node.js Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}}node && tar -xf --overwrite node-{{NodeVersion}}-linux-x64.tar.xz && rm node-{{NodeVersion}}-linux-x64.tar.xz'"
+    },
+    {
+        "UpdateStageName":"Node.js Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-win-x64.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}node",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
