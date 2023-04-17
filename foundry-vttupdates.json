@@ -26,8 +26,7 @@
         "UpdateStageName":"Node.js Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-linux-x64.tar.gz",
-        "UpdateSourceArgs":"node.tar.gz",
+        "UpdateSourceData":"https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-linux-x64.tar.xz",
         "UpdateSourceTarget":"{{$FullBaseDir}}"
     },
     {
@@ -35,7 +34,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}} && /usr/bin/tar -zxf node.tar.gz && rm node.tar.gz'"
+        "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}}; /usr/bin/tar -xf node-{{NodeVersion}}-linux-x64.tar.xz; mv node-{{NodeVersion}}-linux-x64 node; rm node-{{NodeVersion}}-linux-x64.tar.xz'"
     },
     {
         "UpdateStageName":"Node.js Download",
