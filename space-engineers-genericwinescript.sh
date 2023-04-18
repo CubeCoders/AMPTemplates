@@ -10,6 +10,6 @@ env DISPLAY=:5.0 WINEPREFIX=$SCRIPTDIR/.wine WINEARCH=win64 WINEDEBUG=-all ./win
 env DISPLAY=:5.0 WINEPREFIX=$SCRIPTDIR/.wine WINEARCH=win64 WINEDEBUG=-all ./winetricks -q --force dotnet48 
 env WINEPREFIX=$SCRIPTDIR/.wine WINEARCH=win64 WINEDEBUG=-all ./winetricks sound=disabled 
 env DISPLAY=:5.0 WINEPREFIX=$SCRIPTDIR/.wine WINEARCH=win64 WINEDEBUG=-all ./winetricks -q vcrun2013 
-rm -rf ~/.cache
+rm -rf ~/.cache/winetricks ~/.cache/fontconfig
 
 exit 0
