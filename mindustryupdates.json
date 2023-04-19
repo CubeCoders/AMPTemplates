@@ -1,0 +1,58 @@
+[
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"Anuken/Mindustry",
+        "UpdateSourceData":"server-release.jar",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Java Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://download.oracle.com/java/17/latest/jdk-17_windows-x64_bin.zip",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Remove Old Java Directory",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C RD /S /Q .\\mindustry\\java"
+    },
+    {
+        "UpdateStageName":"Java Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Pause Update Stages",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Pause",
+        "UpdateSourceArgs":"1"
+    },
+    {
+        "UpdateStageName":"Rename New Java Directory",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C move .\\mindustry\\jdk* .\\mindustry\\java"
+    },
+    {
+        "UpdateStageName":"Replace Java Directory",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'rm -rf ./mindustry/java ; mv ./mindustry/jdk* ./mindustry/java ; chmod +x ./mindustry/java/bin/java'"
+    }
+]
