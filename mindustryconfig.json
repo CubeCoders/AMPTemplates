@@ -1,5 +1,19 @@
 [
     {
+        "DisplayName":"Enable Logging",
+        "Category":"Mindustry Server Settings",
+        "Description":"Enables logging to files by default",
+        "Keywords":"",
+        "FieldName":"logging",
+        "InputType":"text",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"config logging",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"true",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Name",
         "Category":"Mindustry Server Settings",
         "Description":"Sets the server name as displayed on clients",
@@ -41,7 +55,7 @@
     {
         "DisplayName":"Initial Map",
         "Category":"Mindustry Server Settings",
-        "Description":"Sets the map to initially load, if any. None = the server will not be \"opened\", and no game will start. Random = a random map will be started in Survival mode. If Custom is selected, you must also set the Custom Map Name",
+        "Description":"Sets the map to initially load, if any. None = server won't be \"opened\", and no game started, unless Load Saved Slot is set. Random = random map started in Survival mode. If Custom is selected, you must also set the Custom Map Name",
         "Keywords":"host,map",
         "FieldName":"host",
         "InputType":"enum",
@@ -117,7 +131,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"survival",
         "EnumValues":{
-            "survival":"Survival",
+            "survival":"Survival (default)",
             "sandbox":"Sandbox",
             "attack":"Attack",
             "pvp":"PvP"
@@ -126,7 +140,7 @@
     {
         "DisplayName":"Load Saved Slot",
         "Category":"Mindustry Server Settings",
-        "Description":"Sets the saved slot (as included in config/saves, without the .msav extension) to initially load",
+        "Description":"Sets the saved slot (as included in config/saves, without the .msav extension) to initially load. The Initial Map must be set to None for the saved slot to load, and a game cannot be running",
         "Keywords":"load,save",
         "FieldName":"load",
         "InputType":"text",
@@ -182,22 +196,6 @@
         }
     },
     {
-        "DisplayName":"Allow Custom Clients",
-        "Category":"Mindustry Server Settings",
-        "Description":"If enabled, custom clients will be allowed to connect to the server",
-        "Keywords":"custom,clients,allowcustomclients",
-        "FieldName":"allowCustomClients",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"config allowCustomClients",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Auto Pause When Empty",
         "Category":"Mindustry Server Settings",
         "Description":"If set, any running game will be paused when no player is online",
@@ -223,7 +221,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"config autosave",
         "IncludeInCommandLine":true,
-        "DefaultValue":"true",
+        "DefaultValue":"false",
         "EnumValues":{
             "False":"false",
             "True":"true"
@@ -256,14 +254,46 @@
         "IsFlagArgument":false,
         "ParamFieldName":"config autosaveAmount",
         "IncludeInCommandLine":true,
-        "DefaultValue":"50",
-        "Placeholder":"50",
+        "DefaultValue":"10",
+        "Placeholder":"10",
         "Suffix":"autosaves",
         "EnumValues":{}
     },
     {
+        "DisplayName":"Allow Custom Clients",
+        "Category":"Mindustry Gameplay Settings",
+        "Description":"If enabled, custom clients will be allowed to connect to the server",
+        "Keywords":"custom,clients,allowcustomclients",
+        "FieldName":"allowCustomClients",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"config allowCustomClients",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Show Connect/Disconnect Messages",
+        "Category":"Mindustry Gameplay Settings",
+        "Description":"If set, player connect and disconnect messages will be displayed",
+        "Keywords":"connect,disconnect,message,showconnectmessages",
+        "FieldName":"showConnectMessages",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"config showConnectMessages",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Enable Vote Kick",
-        "Category":"Mindustry Server Settings",
+        "Category":"Mindustry Gameplay Settings",
         "Description":"If set, votekick will be enabled",
         "Keywords":"vote,kick,enablevotekick",
         "FieldName":"enableVotekick",
@@ -271,7 +301,23 @@
         "IsFlagArgument":false,
         "ParamFieldName":"config enableVotekick",
         "IncludeInCommandLine":true,
-        "DefaultValue":"false",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Anti-spam",
+        "Category":"Mindustry Gameplay Settings",
+        "Description":"If enabled, spammers will be automatically kicked and rate-limited",
+        "Keywords":"spam,spammers,antispam",
+        "FieldName":"antiSpam",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"config antiSpam",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"true",
         "EnumValues":{
             "False":"false",
             "True":"true"
