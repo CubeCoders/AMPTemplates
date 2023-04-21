@@ -39,35 +39,132 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Description",
+        "Category":"Rust Server Settings",
+        "Description":"Sets the server description as shown in server connection window",
+        "Keywords":"server,description,server.description",
+        "FieldName":"server.description",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"server.description",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"",
+        "SkipIfEmpty":true,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Header Image URL",
+        "Category":"Rust Server Settings",
+        "Description":"Sets the image for the server banner. Must be a direct URL to a JPG or PNG image. Image must be 500 x 256 px",
+        "Keywords":"server,header,image,banner,server.headerimage",
+        "FieldName":"server.headerimage",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"server.headerimage",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"",
+        "Placeholder":"https://mysite.com/serverimage.jpg",
+        "SkipIfEmpty":true,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Logo URL",
+        "Category":"Rust Server Settings",
+        "Description":"Sets the server's logo image or icon, as shown in the server browser and rust+ app. Must be a direct URL to a JPG or PNG image. Image recommended to be 256 x 256 px",
+        "Keywords":"server,logo,icon,server.logoimage",
+        "FieldName":"server.logoimage",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"server.logoimage",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"",
+        "Placeholder":"https://mysite.com/serverlogo.jpg",
+        "SkipIfEmpty":true,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server URL",
+        "Category":"Rust Server Settings",
+        "Description":"Sets the URL for a website associated with the server",
+        "Keywords":"server,url,website,,server.url",
+        "FieldName":"server.url",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"server.url",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"",
+        "Placeholder":"https://mysite.com",
+        "SkipIfEmpty":true,
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Seed",
         "Category":"Rust Server Settings",
-        "Description":"Sets the map generation seed",
+        "Description":"Sets the map generation seed. Use any number up to 8 digits long",
         "Keywords":"seed,map,generation,server.seed",
         "FieldName":"server.seed",
         "InputType":"number",
+        "MaxValue":"99999999",
         "IsFlagArgument":false,
         "ParamFieldName":"server.seed",
         "IncludeInCommandLine":true,
-        "DefaultValue":"50000",
+        "SkipIfEmpty":true,
+        "DefaultValue":"{{randomdigits(6)}}",
         "EnumValues":{}
     },
     {
         "DisplayName":"Server Level",
         "Category":"Rust Server Settings",
-        "Description":"Sets the server level",
+        "Description":"Sets the server level (map)",
         "Keywords":"level,map,server.level",
         "FieldName":"server.level",
         "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"server.level",
         "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
         "DefaultValue":"Procedural Map",
         "EnumValues":{
             "Procedural Map":"Procedural Map (default)",
             "Barren":"Barren",
             "Craggy Island":"Craggy Island",
             "Hapis":"Hapis",
-            "Savas Island":"Savas Island"
+            "Savas Island":"Savas Island",
+            "":"Custom"
+        }
+    },
+    {
+        "DisplayName":"Server Level URL",
+        "Category":"Rust Server Settings",
+        "Description":"Sets a URL to download a custom map to start the server with. Select Custom under Server Level, and remove the Server Seed and World Size settings",
+        "Keywords":"level,map,server.levelurl",
+        "FieldName":"server.levelurl",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"server.levelurl",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"",
+        "Placeholder":"https://mysite.com/custommap",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Game Mode",
+        "Category":"Rust Server Settings",
+        "Description":"Sets the server game mode",
+        "Keywords":"game,mode,server.gamemode",
+        "FieldName":"server.gamemode",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"server.gamemode",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"vanilla",
+        "EnumValues":{
+            "vanilla":"Vanilla (default)",
+            "":"Survival",
+            "softcore":"Softcore",
+            "hardcore":"Hardcore",
+            "weapontest":"Weapon Test
         }
     },
     {
@@ -82,8 +179,10 @@
         "IsFlagArgument":false,
         "ParamFieldName":"server.worldsize",
         "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
         "DefaultValue":"3000",
         "Placeholder":"3000",
+        "Suffix":"units",
         "EnumValues":{}
     },
     {
@@ -145,8 +244,8 @@
         "IsFlagArgument":false,
         "ParamFieldName":"server.tickrate",
         "IncludeInCommandLine":true,
-        "DefaultValue":"10",
-        "Placeholder":"10",
+        "DefaultValue":"30",
+        "Placeholder":"30",
         "EnumValues":{}
     },
     {
@@ -162,5 +261,40 @@
         "DefaultValue":"",
         "Placeholder":"",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable PvE / Disable PvP",
+        "Category":"Rust Server Settings",
+        "Description":"If set, PvE will be enabled. Otherwise, PvP will apply",
+        "Keywords":"pve,pvp,server.pve",
+        "FieldName":"server.pve",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"server.pve",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Server Branch",
+        "Category":"SteamCMD and Updates",
+        "Description":"Sets the server branch to install. NOTE: Update the server after switching branches!",
+        "Keywords":"server,branch,depot",
+        "FieldName":"ServerBranch",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerBranch",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"public",
+        "EnumValues":{
+            "public":"Public (default)",
+            "staging":"Staging",
+            "aux01":"Pre-Staging",
+            "aux02":"Up and Coming",
+            "experimental":"Experimental"
+        }
     }
 ]
