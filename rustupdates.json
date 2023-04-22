@@ -1,5 +1,23 @@
 [
     {
+        "UpdateStageName":"Wipe Server Files",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}server/AMPRustServer\" && rm -f *.map *.sav* {{ModDBWipelist}} ; cd \"{{$FullBaseDir}}carbon/data\" && rm -f {{CarbonOxideDataWipelist}} ; cd \"{{$FullBaseDir}}oxide/data\" && rm -f {{CarbonOxideDataWipelist}}'",
+        "UpdateSourceConditionSetting":"EnableWipe",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Wipe Server Files",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}server/AMPRustServer\" && del /Q /F *.map *.sav* {{ModDBWipelist}} & cd \"{{$FullBaseDir}}carbon/data\" && del /Q /F {{CarbonOxideDataWipelist}} & cd \"{{$FullBaseDir}}oxide/data\" && del /Q /F {{CarbonOxideDataWipelist}}",
+        "UpdateSourceConditionSetting":"EnableWipe",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
         "UpdateStageName":"Rust Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",

@@ -80,6 +80,20 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Tags",
+        "Category":"Rust Server Settings",
+        "Description":"Sets a comma-separated list of [server tags](https://wiki.facepunch.com/rust/server-browser-tags) that give additional information about the server in the server browser, such as wipe schedule, game mode and region",
+        "Keywords":"tags",
+        "FieldName":"server.tags",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"server.tags",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Header Image URL",
         "Category":"Rust Server Settings",
         "Description":"Sets the image for the server banner. Must be a direct URL to a JPG or PNG image. Image must be 500 x 256 px",
@@ -222,6 +236,18 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Admins",
+        "Category":"Rust Server Settings",
+        "Description":"Specify the [Steam64 IDs](https://www.steamidfinder.com/) of server admins in server/AMPRustServer/cfg/users.cfg. Admin access allows a player to execute all Rust commands in-game",
+        "Keywords":"admin,ownerid,moderatorid",
+        "FieldName":"Admins",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Admins",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Install Carbon",
         "Category":"Rust Server Settings",
         "Description":"If enabled, the Carbon mod loader will be installed when the server is updated. NOTE: Don't enable Install uMod at the same time!",
@@ -315,11 +341,11 @@
     {
         "DisplayName":"FPS Limit",
         "Category":"Rust Server Settings",
-        "Description":"Sets the maximum number of frames to render per second",
+        "Description":"Sets the maximum number of frames to render per second. -1 = unlimited",
         "Keywords":"fps,limit,fps.limit",
         "FieldName":"fps.limit",
         "InputType":"number",
-        "MinValue":"1",
+        "MinValue":"-1",
         "IsFlagArgument":false,
         "ParamFieldName":"fps.limit",
         "IncludeInCommandLine":true,
@@ -329,12 +355,12 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Additional Server Startup Parameters",
+        "DisplayName":"Additional Server Startup Variables",
         "Category":"Rust Server Settings",
-        "Description":"Specifies additional startup parameters that are not otherwise set by AMP. Use with care",
-        "Keywords":"custom,server,arguments,parameters",
+        "Description":"Specifies additional startup parameters that are not otherwise set by AMP. Use with care. Alternatively, specify them in server/AMPRustServer/cfg/server.cfg",
+        "Keywords":"custom,server,arguments,variables,cvars,convars,parameters",
         "FieldName":"CustomServerArgs",
-        "InputType":"text",
+        "InputType":"Textarea",
         "IsFlagArgument":false,
         "ParamFieldName":"CustomServerArgs",
         "IncludeInCommandLine":false,
@@ -343,9 +369,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Game Mode",
+        "DisplayName":"Initial Game Mode",
         "Category":"Rust Gameplay Settings",
-        "Description":"Sets the server game mode",
+        "Description":"Sets the initial server game mode",
         "Keywords":"game,mode,server.gamemode",
         "FieldName":"server.gamemode",
         "InputType":"enum",
@@ -392,6 +418,48 @@
             "False":"False",
             "True":"True"
         }
+    },
+    {
+        "DisplayName":"Enable Server Wipe On Update",
+        "Category":"Rust Wipe Settings",
+        "Description":"If set, the server will be wiped when it is updated. All .map and .sav files in server/AMPRustServer, as well as any other files specified in Mod Database File Wipelist and Carbon/Oxide Data File Wipelist, will be deleted",
+        "Keywords":"wipe,delete",
+        "FieldName":"EnableWipe",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"EnableWipe",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Mod Database File Wipelist",
+        "Category":"Rust Wipe Settings",
+        "Description":"If required, specify a space-separated list of .db files in server/AMPRustServer to wipe on update. Wildcards (*) can be used",
+        "Keywords":"wipe,delete,mod,db,database,files,wipelist",
+        "FieldName":"ModDBWipelist",
+        "InputType":"Textarea",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ModDBWipelist",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Carbon/Oxide Data File Wipelist",
+        "Category":"Rust Wipe Settings",
+        "Description":"If required, specify a space-separated list of .json  files in carbon/data or oxide/data (as applicable) to wipe on update. Wildcards (*) can be used",
+        "Keywords":"wipe,delete,carbon,oxide,files,wipelist",
+        "FieldName":"CarbonOxideDataWipelist",
+        "InputType":"Textarea",
+        "IsFlagArgument":false,
+        "ParamFieldName":"CarbonOxideDataWipelist",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Server Branch",
