@@ -265,10 +265,12 @@
         "Keywords":"file,patching,filepatching",
         "FieldName":"filePatching",
         "InputType":"checkbox",
-        "IsFlagArgument":true,
+        "IsFlagArgument":false,
         "ParamFieldName":"filePatching",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"-filePatching"
+        "IncludeInCommandLine":false,
+        "DefaultValue":"-filePatching ",
+            "False":"",
+            "True":"-filePatching "
     },
     {
         "DisplayName":"Allow Client File Patching",
@@ -303,17 +305,33 @@
         }
     },
     {
-        "DisplayName":"FPS Limit",
+        "DisplayName":"Enable FPS Limit",
         "Category":"DayZ Server Settings",
-        "Description":"Sets the limit for the server FPS, to lower CPU usage of low population servers",
-        "Keywords":"frames,fps,limitfps",
+        "Description":"If enabled, the server FPS will be limited to the value set under \"FPS Limit Value\". Disabling this setting can have a severe effect on server performance",
+        "Keywords":"enable,frames,fps,limitfps",
+        "FieldName":"EnableLimitFPS",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"EnableLimitFPS",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"-limitFPS={{limitFPS}} ",
+        "EnumValues":{
+            "False":"",
+            "True":"-limitFPS={{limitFPS}} "
+        }
+    },
+    {
+        "DisplayName":"FPS Limit Value",
+        "Category":"DayZ Server Settings",
+        "Description":"Sets the limit for the server FPS, to lower CPU usage of low population servers. Requires \"Enable FPS Limit\" to be set",
+        "Keywords":"frames,fps,value,limitfps",
         "FieldName":"limitFPS",
         "InputType":"number",
         "MinValue":"1",
         "MaxValue":"200",
         "IsFlagArgument":false,
         "ParamFieldName":"limitFPS",
-        "IncludeInCommandLine":true,
+        "IncludeInCommandLine":false,
         "DefaultValue":"200",
         "Placeholder":"200",
         "Suffix":"fps",

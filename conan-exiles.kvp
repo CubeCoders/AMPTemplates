@@ -12,7 +12,8 @@ Meta.ConfigRoot=conan-exiles.kvp
 Meta.MinAMPVersion=2.4.3.0
 Meta.SpecificDockerImage=cubecoders/ampbase:wine
 Meta.DockerRequired=False
-Meta.ContainerPolicy=RecommendedOnLinux
+Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
+Meta.ContainerPolicyReason=The server requires Wine and Xvfb to run on Linux. Using a container avoids the need to install these dependencies on the host.
 Meta.Prerequsites=[]
 Meta.ConfigReleaseState=NotSpecified
 App.DisplayName=Conan Exiles
@@ -26,7 +27,7 @@ App.LinuxCommandLineArgs=-a wine "./ConanSandboxServer-Win64-Test.exe"
 App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} {{Map}}{{CustomMap}} -stdout -FullStdOutLogOutput -Port={{$ApplicationPort1}} -QueryPort={{$ApplicationPort3}} -RconPort={{$RemoteAdminPort}} -RconEnabled=1 -RconPassword="{{$RemoteAdminPassword}}" -MaxPlayers={{$MaxUsers}} {{$FormattedArgs}}
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"./linux64:%LD_LIBRARY_PATH%","SteamAppId":"440900"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"440900","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
 App.CommandLineParameterFormat=-{0}="{1}"
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=String
@@ -52,7 +53,7 @@ App.RCONConnectRetrySeconds=5
 App.RCONHeartbeatMinutes=3
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat={0}
-App.UpdateSources=[{"UpdateStageName":"SteamCMD and Conan Exiles Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"443030","UpdateSourceArgs":"440900","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Config Directory Creation","UpdateSourcePlatform":"All","UpdateSource":"CreateDirectory","UpdateSourceArgs":"./conan-exiles/443030/ConanSandbox/Saved/Config/WindowsServer","OverwriteExistingFiles":false},{"UpdateStageName":"ServerSettings File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://github.com/CubeCoders/AMPTemplates/raw/main/conan-exilesconfigsettings.ini","UpdateSourceTarget":"./443030/ConanSandbox/Saved/Config/WindowsServer/","UpdateSourceArgs":"ServerSettings.ini","OverwriteExistingFiles":false}]
+App.UpdateSources=[{"UpdateStageName":"SteamCMD and Conan Exiles Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"443030","UpdateSourceArgs":"440900","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Config Directory Creation","UpdateSourcePlatform":"All","UpdateSource":"CreateDirectory","UpdateSourceArgs":"./conan-exiles/443030/ConanSandbox/Saved/Config/WindowsServer","OverwriteExistingFiles":false},{"UpdateStageName":"ServerSettings File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://github.com/CubeCoders/AMPTemplates/raw/main/conan-exilesconfigsettings.ini","UpdateSourceTarget":"./443030/ConanSandbox/Saved/Config/WindowsServer/","UpdateSourceArgs":"ServerSettings.ini","OverwriteExistingFiles":false},{"UpdateStageName":"Initialise Wine","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"}]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
