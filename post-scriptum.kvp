@@ -1,10 +1,12 @@
 App.AdminMethod=SourceRCON
-App.ApplicationPort1=7887
-App.ApplicationPort2=27265
-App.ApplicationPort3=0
 App.ApplicationReadyMode=RegexMatch
 App.BaseDirectory=./post-scriptum-server/746200/
-App.CommandLineArgs=MULTIHOME={{$ApplicationIPBinding}} Port={{$ApplicationPort1}} QueryPort={{$ApplicationPort2}} RCONPORT={{$RemoteAdminPort}} RCONPASSWORD={{$RemoteAdminPassword}} FIXEDMAXTICKRATE={{MaxTPS}} RANDOM={{MapRandom}} -log -fullcrashdump
+App.Ports=[{"Protocol":"UDP","Port":7777,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":27035,"Ref":"QueryPort","Name":"Query Port","Description":"Port for query traffic"},{"Protocol":"TCP","Port":25575,"Ref":"RCONPort","Name":"RCON Port","Description":"Port for RCON traffic"}]
+App.AdminPortRef=RCONPort
+App.PrimaryApplicationPortRef=GamePort
+App.UniversalSleepApplicationUDPPort=GamePort
+App.UniversalSleepSteamQueryPort=QueryPort
+App.CommandLineArgs=MULTIHOME={{$ApplicationIPBinding}} Port={{$GamePort}} QueryPort={{$QueryPort}} RCONPORT={{$RCONPort}} RCONPASSWORD={{$RemoteAdminPassword}} FIXEDMAXTICKRATE={{MaxTPS}} RANDOM={{MapRandom}} -log -fullcrashdump
 App.CommandLineParameterDelimiter= 
 App.CommandLineParameterFormat={0}="{1}"
 App.DisplayName=Post Scriptum
