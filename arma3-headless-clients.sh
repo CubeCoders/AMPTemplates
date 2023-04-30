@@ -29,10 +29,10 @@ for i in $(seq 1 $1); do
   clients+=($!)
 done
 
-# Check if server starts successfully within 2 minutes
+# Check if server starts successfully within 3 minutes
 # If not, terminate headless clients
 server_started=false
-for i in $(seq 1 120); do
+for i in $(seq 1 180); do
   if netstat -ln | grep -q ":$3 "; then
     server_started=true
     break
