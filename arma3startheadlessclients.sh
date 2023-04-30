@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# Arma 3 headless clients script
-# Run with ./arma3_headless_clients.sh <number_clients> <server_binding> <server_port> <server_password> <mod_list> &
-# In AMP pre-start stage: ./arma3_headless_clients.sh {{HeadlessClients}} {{$ApplicationIPBinding}} {{$GamePort}} {{password}} {{mod}}
+# Arguments: <number_clients> <server_binding> <server_port> <server_password> <mod_list>
 
 # Function to check if a port is available
 function port_available() {
@@ -10,6 +8,10 @@ function port_available() {
   lines=$(netstat -tuln | grep -c ":$1 ")
   return "$lines"
 }
+
+# Check if no headless clients are to be run, and
+# if so immediately exit
+[[ $1 -eq 0 ]] && exit 0
 
 # Start the headless clients
 for i in $(seq 1 $1); do
