@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Arguments: <number_clients> <server_binding> <server_port> <server_password> <mod_list>
+# Arguments: <number_clients> <server_binding> <server_port> -4 <server_password> <mod_list>
 
 # Function to check if a port is available
 function port_available() {
@@ -13,6 +13,21 @@ function port_available() {
 # if so immediately exit
 [[ $1 -eq 0 ]] && exit 0
 
+# Extract password and modlist, including if empty
+password=""
+modlist=""
+
+while getopts ":4:5:" opt; do
+  case $opt in
+    4)
+      password="$OPTARG"
+      ;;
+    5)
+      modlist="$OPTARG"
+      ;;
+  esac
+done
+
 # Start the headless clients
 for i in $(seq 1 $1); do
   port=3300
@@ -24,7 +39,7 @@ for i in $(seq 1 $1); do
   else
     connect="$2"
   fi
-  ./arma3server -client -nosound -connect="$connect:$3" -port="$port" -password="$4" "-mod=$5" 2>&1 >/dev/null &
+  ./arma3server -client -nosound -connect="$connect:$3" -port="$port" -password="$password" "-mod=$modlist" 2>&1 >/dev/null &
   clients+=($!)
 done
 
