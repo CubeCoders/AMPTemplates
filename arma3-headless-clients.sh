@@ -6,18 +6,15 @@
 
 # Function to check if a port is available
 function port_available() {
-  local port=$1
-  if [[ $(netstat -tln | grep ":$port " | wc -l) -eq 0 ]]; then
-    echo "yes"
-  else
-    echo "no"
-  fi
+  local lines
+  lines=$(netstat -tuln | grep -c ":$1 ")
+  return "$lines"
 }
 
 # Start the headless clients
 for i in $(seq 1 $1); do
-  port=$((3300+i))
-  while [ $(port_available $port) == "no" ]; do
+  port=3300
+  while ! $(port_available $port); do
     port=$((port+1))
   done
   if [[ "$2" == "0.0.0.0" ]]; then
@@ -33,7 +30,7 @@ done
 # If not, terminate headless clients
 server_started=false
 for i in $(seq 1 180); do
-  if netstat -ln | grep -q ":$3 "; then
+  if netstat -tuln | grep -q ":$3 "; then
     server_started=true
     break
   fi
@@ -51,7 +48,7 @@ fi
 # when server terminates
 trap 'kill "${clients[@]}" >/dev/null 2>&1' SIGTERM
 while true; do
-  if ! netstat -ln | grep -q ":$3 "; then
+  if ! netstat -tuln | grep -q ":$3 "; then
     for client in "${clients[@]}"; do
       kill $client >/dev/null 2>&1
     done
