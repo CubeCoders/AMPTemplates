@@ -10,7 +10,6 @@
         "Hidden":true,
         "ParamFieldName":"URL.Port",
         "IncludeInCommandLine":false,
-        "DefaultValue":"7777"
     },
     {
         "DisplayName":"Download Port Offset",
@@ -36,7 +35,6 @@
         "Hidden":true,
         "ParamFieldName":"OnlineSubsystemNull.GameServerQueryPort",
         "IncludeInCommandLine":false,
-        "DefaultValue":"27015"
     },
     {
         "DisplayName":"RCON Port",
@@ -49,8 +47,8 @@
         "Hidden":true,
         "ParamFieldName":"RconPlugin.RconPort",
         "IncludeInCommandLine":false,
-        "DefaultValue":"25575"
-    },{
+    },
+    {
         "DisplayName":"Server Name",
         "Category":"Server Settings",
         "Description":"Name of the server shown in the server browser.",
@@ -75,8 +73,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"/Game/Maps/ConanSandbox/ConanSandbox",
         "EnumValues":{
-            "":"Custom",
-            "/Game/Maps/ConanSandbox/ConanSandbox":"Exiled Lands",
+            "{{CustomMap}}":"Custom",
+            "/Game/Maps/ConanSandbox/ConanSandbox":"Exiled Lands (default)",
             "/Game/DLC_EXT/DLC_Siptah/Maps/DLC_Isle_of_Siptah":"Isle of Siptah"
         }
     },
@@ -126,15 +124,14 @@
     {
         "DisplayName":"Admin Password",
         "Category":"Server Settings",
-        "Description":"In-game \"admin\" user password (not the server password). NOTE: You must set this to allow use of the in-game admin panel. Change this after installing the server!",
+        "Description":"In-game \"admin\" user password (not the server password). NOTE: You must set this to allow use of the in-game admin panel.",
         "Keywords":"admin,password",
         "FieldName":"AdminPassword",
-        "InputType":"RandomPassword",
+        "InputType":"password",
         "IsFlagArgument":false,
-        "ParamFieldName":"ServerSettings.AdminPassword",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"Password123",
-        "Required": true,
+        "ParamFieldName":"ini:ServerSettings:[ServerSettings]:AdminPassword",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"{{newguid()}}",
         "EnumValues":{}
     },
     {
