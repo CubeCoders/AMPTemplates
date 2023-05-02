@@ -26,7 +26,7 @@ rem If not, terminate headless clients
 set "server_started=false"
 for /l %%i in (1,1,180) do (
   netstat -aon -p udp | findstr /c:":%3 " >nul 2>&1 && set "server_started=true" && goto :continue
-  timeout /t 1 >nul 2>&1
+  ping -n 1 127.0.0.1 >nul 2>&1
 )
 if not "%server_started%" equ "true" (
   for %%c in (%clients%) do taskkill /pid %%c /f >nul 2>&1
@@ -41,5 +41,5 @@ netstat -aon -p udp | findstr /c:":%3 " >nul 2>&1 || (
   for %%c in (%clients%) do taskkill /pid %%c /f >nul 2>&1
   exit /b 0
 )
-timeout /t 1 >nul 2>&1
+ping -n 1 127.0.0.1 >nul 2>&1
 goto :loop
