@@ -10,9 +10,9 @@ netcommand="$(command -v "ss" >/dev/null 2>&1 && echo "ss" || echo "netstat")"
 
 # Start the headless clients
 baseport=$(($3 + 498))
-export LD_LIBRARY_PATH=`dirname $0`/linux64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$(dirname "$0")/linux64:$LD_LIBRARY_PATH
 cd ./arma3/233780
-for i in $(seq 1 $1); do
+for i in $(seq 1 "$1"); do
   if [[ "$2" == "0.0.0.0" ]]; then
     connect="127.0.0.1"
   else
@@ -35,7 +35,7 @@ done
 
 if ! $server_started; then
   for client in "${clients[@]}"; do
-    kill $client >/dev/null 2>&1
+    kill "$client" >/dev/null 2>&1
   done
   exit 1
 fi
@@ -46,7 +46,7 @@ trap 'kill "${clients[@]}" >/dev/null 2>&1' SIGTERM
 while true; do
   if ! $netcommand -uln | grep -q ":$3 "; then
     for client in "${clients[@]}"; do
-      kill $client >/dev/null 2>&1
+      kill "$client" >/dev/null 2>&1
     done
     exit 0
   fi
