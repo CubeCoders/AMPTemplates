@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Arguments: <number_clients> <server_binding> <server_port> "<server_password>" "<mod_list>"
+# Arguments: [number_clients] [server_binding] [server_port] "<server_password>" "<mod_list>"
 
 netcommand="$(command -v "ss" >/dev/null 2>&1 && echo "ss" || echo "netstat")"
 
