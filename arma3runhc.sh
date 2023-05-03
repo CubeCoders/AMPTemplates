@@ -4,7 +4,7 @@
 
 netcommand="$(command -v "ss" >/dev/null 2>&1 && echo "ss" || echo "netstat")"
 
-# Check if no headless clients are to be run
+# Check if any headless clients are to be run
 # If none, immediately exit
 [[ $1 -eq 0 ]] && exit 0
 

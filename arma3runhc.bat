@@ -4,7 +4,7 @@ rem Arguments: [number_clients] [server_binding] [server_port] "<server_password
 
 set "clients="
 
-rem Check if no headless clients are to be run
+rem Check if any headless clients are to be run
 rem If none, immediately exit
 if "%1" equ "0" exit /b 0
 
@@ -17,7 +17,7 @@ for /l %%i in (1,1,%1) do (
   ) else (
     set "connect=%2"
   )
-  start /b "hc%%i" "ArmA3Server_x64.exe" -client -nosound -connect="%connect%:%3" -port="%baseport%" -password="%4" "-mod=%5" >nul 2>&1
+  start "hc%%i" /b "ArmA3Server_x64.exe" -client -nosound -connect="%connect%:%3" -port="%baseport%" -password="%4" "-mod=%5" >nul 2>&1
   for /f "tokens=2" %%a in ('tasklist /v /fi "WindowTitle eq hc%%i" /fo list') do set "clients=%clients% %%a"
 )
 
