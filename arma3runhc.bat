@@ -17,8 +17,8 @@ for /l %%i in (1,1,%1) do (
   ) else (
     set "connect=%2"
   )
-  start /b "" "ArmA3Server_x64.exe" -client -nosound -connect="%connect%:%3" -port="%baseport%" -password="%4" "-mod=%5" >nul 2>&1
-  set "clients=%clients% %ERRORLEVEL%"
+  start /b "hc%%i" "ArmA3Server_x64.exe" -client -nosound -connect="%connect%:%3" -port="%baseport%" -password="%4" "-mod=%5" >nul 2>&1
+  for /f "tokens=2" %%a in ('tasklist /v /fi "WindowTitle eq hc%%i" /fo list /nh') do set "clients=%clients% %%a"
 )
 
 rem Check if server starts successfully within 3 minutes
