@@ -14,10 +14,10 @@ for ($i = 1; $i -le [int]$args[0]; $i++) {
     $connect = "127.0.0.1"
   } else {
     $connect = $args[1]
-}
-$hcProcess = Start-Process -FilePath "ArmA3Server_x64.exe" -ArgumentList "-client", "-nosound", "-connect="$connect:$($args[2])"", "-port="$basePort"", "-password="$($args[3])"", ""-mod=$($args[4])`"" -WindowStyle Hidden -PassThru
-$hcProcess.Id
-$clients += " $hcProcess.Id"
+  }
+  $hcProcess = Start-Process -FilePath "ArmA3Server_x64.exe" -ArgumentList "-client", "-nosound", "-connect="$connect:$($args[2])"", "-port="$basePort"", "-password="$($args[3])"", ""-mod=$($args[4])`"" -WindowStyle Hidden -PassThru
+  $hcProcess.Id
+  $clients += " $hcProcess.Id"
 }
 
 Check if server starts successfully within 3 minutes
