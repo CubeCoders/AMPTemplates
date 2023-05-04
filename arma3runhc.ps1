@@ -4,6 +4,18 @@
 # If none, immediately exit
 if ($args[0] -eq "0") { exit }
 
+# Check if server starts successfully within 3 minutes
+# If not, exit
+$serverStarted = $false
+for ($i = 1; $i -le 180; $i++) {
+  if (Get-NetUDPEndpoint -LocalPort $args[2] -ErrorAction SilentlyContinue) {
+    $serverStarted = $true
+    break
+  }
+  Start-Sleep -Seconds 1
+}
+if (-not $serverStarted) { exit 1 }
+
 # Start the headless clients
 $clients = ""
 $basePort = [int]$args[2] + 498
@@ -16,23 +28,6 @@ for ($i = 1; $i -le [int]$args[0]; $i++) {
   }
   $hcProcess = Start-Process -FilePath "ArmA3Server_x64.exe" -ArgumentList "-client", "-nosound", "-connect=${connect}:$($args[2])", "-port=$basePort", "-password=`"$($args[3])`"", "`"-mod=$($args[4])`"" -WindowStyle Hidden -PassThru
   $clients += " $($hcProcess.Id)"
-}
-
-# Check if server starts successfully within 3 minutes
-# If not, terminate headless clients
-$serverStarted = $false
-for ($i = 1; $i -le 180; $i++) {
-  if (Get-NetUDPEndpoint -LocalPort $args[2] -ErrorAction SilentlyContinue) {
-    $serverStarted = $true
-    break
-  }
-  Start-Sleep -Seconds 1
-}
-if (-not $serverStarted) {
-  foreach ($processId in $clients.Trim().Split(" ")) {
-    Stop-Process -Id ([int]$processId) -Force
-  }
-  exit 1
 }
 
 # Monitor server process and terminate headless clients

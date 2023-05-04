@@ -8,6 +8,20 @@ netcommand="$(command -v "ss" >/dev/null 2>&1 && echo "ss" || echo "netstat")"
 # If none, immediately exit
 [[ $1 -eq 0 ]] && exit 0
 
+# Check if server starts successfully within 3 minutes
+# If not, exit
+server_started=false
+for i in $(seq 1 180); do
+  if $netcommand -uln | grep -q ":$3 "; then
+    server_started=true
+    break
+  fi
+  sleep 1
+done
+if ! $server_started; then
+  exit 1
+fi
+
 # Start the headless clients
 baseport=$(($3 + 498))
 export LD_LIBRARY_PATH=$(dirname "$0")/linux64:$LD_LIBRARY_PATH
@@ -21,24 +35,6 @@ for i in $(seq 1 "$1"); do
   ./arma3server_x64 -client -nosound -connect="$connect:$3" -port="$baseport" -password="$4" "-mod=$5" >/dev/null 2>&1 &
   clients+=($!)
 done
-
-# Check if server starts successfully within 3 minutes
-# If not, terminate headless clients
-server_started=false
-for i in $(seq 1 180); do
-  if $netcommand -uln | grep -q ":$3 "; then
-    server_started=true
-    break
-  fi
-  sleep 1
-done
-
-if ! $server_started; then
-  for client in "${clients[@]}"; do
-    kill "$client" >/dev/null 2>&1
-  done
-  exit 1
-fi
 
 # Monitor server process and terminate headless clients
 # when server terminates
