@@ -32,7 +32,7 @@ for i in $(seq 1 "$1"); do
   else
     connect="$2"
   fi
-  ./arma3server_x64 -client -nosound -connect="$connect:$3" -port="$baseport" -password="$4" "-mod=$5" >/dev/null 2>&1 &
+  ./arma3server_x64 -client -nosound -connect=$connect:$3 -port=$baseport -password="$4" "-mod=$5" >/dev/null 2>&1 &
   clients+=($!)
 done
 
