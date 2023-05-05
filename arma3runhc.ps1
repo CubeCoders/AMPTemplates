@@ -17,7 +17,7 @@ for ($i = 1; $i -le 180; $i++) {
 if (-not $serverStarted) { exit 1 }
 
 # Start the headless clients
-$clients = ""
+$clients = @()
 $basePort = [int]$args[2] + 498
 cd "$PSScriptRoot\arma3\233780"
 for ($i = 1; $i -le [int]$args[0]; $i++) {
@@ -27,15 +27,15 @@ for ($i = 1; $i -le [int]$args[0]; $i++) {
     $connect = $args[1]
   }
   $hcProcess = Start-Process -FilePath "ArmA3Server_x64.exe" -ArgumentList "-client", "-nosound", "-connect=${connect}:$($args[2])", "-port=$basePort", "-password=`"$($args[3])`"", "`"-mod=$($args[4])`"" -WindowStyle Hidden -PassThru
-  $clients += " $($hcProcess.Id)"
+  $clients += $hcProcess.Id
 }
 
 # Monitor server process and terminate headless clients
 # when server terminates
 while ($true) {
   if (-not (Get-NetUDPEndpoint -LocalPort $args[2] -ErrorAction SilentlyContinue)) {
-    foreach ($processId in $clients.Trim().Split(" ")) {
-      Stop-Process -Id ([int]$processId) -Force
+    foreach ($processId in $clients) {
+      Stop-Process -Id $processId -Force
     }
     exit 0
   }
