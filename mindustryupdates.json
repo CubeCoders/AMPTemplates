@@ -2,9 +2,10 @@
     {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/lastStableBuild/artifact/bootstrap/standalone/build/libs/Geyser-Standalone.jar",
-        "UpdateSourceArgs":"Geyser.jar",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"Anuken/Mindustry",
+        "UpdateSourceData":"server-release.jar",
+        "UpdateSourceVersion":"{{ServerVersion}}",
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "OverwriteExistingFiles":true
     },
@@ -12,7 +13,7 @@
         "UpdateStageName":"Java Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://download.oracle.com/java/{{JavaVersion}}/latest/jdk-{{JavaVersion}}_windows-x64_bin.zip",
+        "UpdateSourceData":"https://download.oracle.com/java/17/latest/jdk-17_windows-x64_bin.zip",
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
@@ -23,13 +24,13 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C RD /S /Q .\\geyser\\java"
+        "UpdateSourceArgs":"/C rd /S /Q .\\mindustry\\java"
     },
     {
         "UpdateStageName":"Java Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://download.oracle.com/java/{{JavaVersion}}/latest/jdk-{{JavaVersion}}_linux-x64_bin.tar.gz",
+        "UpdateSourceData":"https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz",
         "UpdateSourceArch":"x86_64",
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
@@ -40,7 +41,7 @@
         "UpdateStageName":"Java Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://download.oracle.com/java/{{JavaVersion}}/latest/jdk-{{JavaVersion}}_linux-aarch64_bin.tar.gz",
+        "UpdateSourceData":"https://download.oracle.com/java/17/latest/jdk-17_linux-aarch64_bin.tar.gz",
         "UpdateSourceArch":"aarch64",
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
@@ -58,34 +59,31 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C move .\\geyser\\jdk* .\\geyser\\java"
+        "UpdateSourceArgs":"/C move .\\mindustry\\jdk* .\\mindustry\\java"
     },
     {
         "UpdateStageName":"Replace Java Directory",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -rf ./geyser/java ; mv ./geyser/jdk* ./geyser/java ; chmod +x ./geyser/java/bin/java'"
+        "UpdateSourceArgs":"-c 'rm -rf ./mindustry/java ; mv ./mindustry/jdk* ./mindustry/java ; chmod +x ./mindustry/java/bin/java'"
     },
     {
-        "UpdateStageName":"Pause Update Stages",
+        "UpdateStageName":"Create Maps Directory",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"Pause",
-        "UpdateSourceArgs":"2"
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}config/maps"
     },
     {
-        "UpdateStageName":"Start Server",
+        "UpdateStageName":"Create Mods Directory",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"StartApplication"
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}config/mods"
     },
     {
-        "UpdateStageName":"Wait For Server Start",
+        "UpdateStageName":"Create Saves Directory",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"WaitForStartupComplete"
-    },
-    {
-        "UpdateStageName":"Stop Server",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"ShutdownApplication"
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}config/saves"
     }
 ]
