@@ -10,7 +10,7 @@ Meta.MetaConfigManifest=pavlov-vrmetaconfig.json
 Meta.ConfigRoot=pavlov-vr.kvp
 Meta.MinAMPVersion=2.3.2.0
 Meta.SpecificDockerImage=
-Meta.ContainerPolicy=Supported
+Meta.ContainerPolicy=NotSupported
 Meta.Prerequsites=[]
 App.DisplayName=Pavlov VR
 App.RootDir=./pavlovserver/
@@ -20,7 +20,7 @@ App.ExecutableLinux=622970/Pavlov/Binaries/Linux/PavlovServer
 App.WorkingDir=622970
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -PORT={{$ApplicationPort1}} {{$FormattedArgs}} -stdout -forcelogflush
+App.CommandLineArgs={{$PlatformArgs}} -PORT={{$ApplicationPort1}} {{$FormattedArgs}}
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"555160"}
 App.CommandLineParameterFormat=-{0}={1}
@@ -46,8 +46,8 @@ App.AdminLoginTransform=MD5_Lower
 App.RCONConnectDelaySeconds=0
 App.RCONConnectRetrySeconds=5
 App.TelnetLoginFormat={0}
-App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"Linux","UpdateSource":"SteamCMD","UpdateSourceData":"622970","UpdateSourceArgs":"555160","UpdateSourceVersion":"{{ServerVersion}}"},{"UpdateStageName":"Create Logs Directory","UpdateSourcePlatform":"Linux","UpdateSource":"CreateDirectory","UpdateSourceArgs":"{{$FullBaseDir}}Pavlov/Saved/Logs","OverwriteExistingFiles":false},{"UpdateStageName":"Create Config Directory","UpdateSourcePlatform":"Linux","UpdateSource":"CreateDirectory","UpdateSourceArgs":"{{$FullBaseDir}}Pavlov/Saved/Config/LinuxServer","OverwriteExistingFiles":false},{"UpdateStageName":"Create Maps Directory","UpdateSourcePlatform":"Linux","UpdateSource":"CreateDirectory","UpdateSourceArgs":"{{$FullBaseDir}}Pavlov/Saved/maps","OverwriteExistingFiles":false},{"UpdateStageName":"Config File Download","UpdateSourcePlatform":"Linux","UpdateSource":"FetchURL","UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/pavlov-vrconfigfile.ini","UpdateSourceArgs":"Game.ini","UpdateSourceTarget":"{{$FullBaseDir}}Pavlov/Saved/Config/LinuxServer","OverwriteExistingFiles":false}]
-App.Compatibility=None
+App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"Linux","UpdateSource":"SteamCMD","UpdateSourceData":"622970","UpdateSourceArgs":"555160","UpdateSourceVersion":"{{ServerVersion}}"},{"UpdateStageName":"Config File Download","UpdateSourcePlatform":"Linux","UpdateSource":"FetchURL","UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/pavlov-vrconfigfile.ini","UpdateSourceTarget":"../","OverwriteExistingFiles":true},{"UpdateStageName":"Create Logs Directory","UpdateSourcePlatform":"Linux","UpdateSource":"CreateDirectory","UpdateSourceArgs":"./pavlovserver/622970/Pavlov/Saved/Logs","OverwriteExistingFiles":false},{"UpdateStageName":"Create Config Directory","UpdateSourcePlatform":"Linux","UpdateSource":"CreateDirectory","UpdateSourceArgs":"./pavlovserver/622970/Pavlov/Saved/Config/LinuxServer","OverwriteExistingFiles":false},{"UpdateStageName":"Create Maps Directory","UpdateSourcePlatform":"Linux","UpdateSource":"CreateDirectory","UpdateSourceArgs":"./pavlovserver/622970/Pavlov/Saved/maps","OverwriteExistingFiles":false},{"UpdateStageName":"Copy Config File","UpdateSourcePlatform":"Linux","UpdateSource":"CopyFilePath","UpdateSourceData":"./pavlovserver/622970/Pavlov/Saved/Config/LinuxServer/Game.ini","UpdateSourceArgs":"./pavlov-vrconfigfile.ini","OverwriteExistingFiles":false}]
+App.Compatibility=LinuxBufferedConsole
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
 App.RapidStartup=False
