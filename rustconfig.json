@@ -250,46 +250,15 @@
     {
         "DisplayName":"Server Admins",
         "Category":"Rust Server Settings",
-        "Description":"Specify the [Steam64 IDs](https://www.steamidfinder.com/) of server admins in server/AMPRustServer/cfg/users.cfg. Admin access allows a player to execute all Rust commands in-game",
+        "Description":"Specifies the [Steam64 IDs](https://www.steamidfinder.com/) of server admins (either ownerid or moderatorid) to include in \"users.cfg\". Admins can execute all Rust commands in-game. Format: ownerid|moderatorid \"Steam64 ID\" \"optional name\" \"optional reason\"",
         "Keywords":"admin,ownerid,moderatorid",
         "FieldName":"Admins",
-        "InputType":"hidden",
+        "InputType":"Textarea",
         "IsFlagArgument":false,
         "ParamFieldName":"Admins",
         "IncludeInCommandLine":false,
+        "DefaultValue":"",
         "EnumValues":{}
-    },
-    {
-        "DisplayName":"Install Carbon",
-        "Category":"Rust Server Settings",
-        "Description":"If enabled, the Carbon mod loader will be installed when the server is updated. NOTE: Don't enable Install uMod at the same time!",
-        "Keywords":"install,carbon,mod",
-        "FieldName":"Carbon",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"Carbon",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Install uMod",
-        "Category":"Rust Server Settings",
-        "Description":"If enabled, the uMod mod loader will be installed when the server is updated. NOTE: Don't enable Install Carbon at the same time!",
-        "Keywords":"install,umod,mod",
-        "FieldName":"uMod",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"uMod",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
     },
     {
         "DisplayName":"Save Interval",
@@ -367,9 +336,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Additional Server Startup Variables",
+        "DisplayName":"Additional Command Line Parameters",
         "Category":"Rust Server Settings",
-        "Description":"Specifies additional startup parameters that are not otherwise set by AMP. ONE LINE ONLY! Use with care. Alternatively, specify them in server/AMPRustServer/cfg/server.cfg",
+        "Description":"Specifies additional command line parameters that are not otherwise set by AMP. ONE LINE ONLY! Use with care. Alternatively, specify the equivalent under \"Additional Server Settings\"",
         "Keywords":"custom,server,arguments,variables,cvars,convars,parameters",
         "FieldName":"CustomServerArgs",
         "InputType":"Textarea",
@@ -378,6 +347,19 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"",
         "Placeholder":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Additional Server Settings",
+        "Category":"Rust Server Settings",
+        "Description":"Specifies additional settings to include in \"server.cfg\" that are not otherwise set by AMP. Example: time.maxdelta \"0.33\". To list all settings in the console, type: find .",
+        "Keywords":"additional,settings,custom",
+        "FieldName":"UserSettings",
+        "InputType":"Textarea",
+        "IsFlagArgument":false,
+        "ParamFieldName":"UserSettings",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
@@ -574,6 +556,38 @@
             "aux01":"Pre-Staging (aux01)",
             "aux02":"Up and Coming (aux02)",
             "experimental":"Experimental"
+        }
+    },
+    {
+        "DisplayName":"Install Carbon",
+        "Category":"SteamCMD and Updates",
+        "Description":"If enabled, the Carbon mod loader will be installed when the server is updated. NOTE: Don't enable Install uMod at the same time!",
+        "Keywords":"install,carbon,mod",
+        "FieldName":"Carbon",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Carbon",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Install uMod",
+        "Category":"SteamCMD and Updates",
+        "Description":"If enabled, the uMod mod loader will be installed when the server is updated. NOTE: Don't enable Install Carbon at the same time!",
+        "Keywords":"install,umod,mod",
+        "FieldName":"uMod",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"uMod",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
         }
     }
 ]
