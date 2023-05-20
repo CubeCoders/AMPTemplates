@@ -20,23 +20,16 @@
         "UpdateStageName":"Modscript Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-experimentalmodscript.sh",
-        "UpdateSourceArgs":"modscript.sh",
+        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-experimentalconvertmods.sh",
+        "UpdateSourceArgs":"convertmods.sh",
         "UpdateSourceTarget":"{{$FullInstanceDir}}",
         "OverwriteExistingFiles":true
     },
     {
-        "UpdateStageName":"Convert and Symlink Mods",
+        "UpdateStageName":"Convert Mods",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"./modscript.sh"
-    },
-    {
-        "UpdateStageName":"Link Mods",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd .\\dayz\\1042420 && for /D %G in (.\\steamapps\\workshop\\content\\221100\\*) do mklink /J %~nxG %G"
+        "UpdateSourceArgs":"./convertmods.sh"
     }
 ]
