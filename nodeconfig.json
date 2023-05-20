@@ -2,7 +2,7 @@
     {
         "DisplayName":"Application Download Type",
         "Category":"Node - Settings",
-        "Description":"Sets where to download the application from. Update the application after setting this value.",
+        "Description":"Sets where to download the application from. Be sure to enter the \"Application Download Source\", \"GitHub Release Filename\", and \"GitHub Release Version\" where applicable. Update the application after setting this value.",
         "Keywords":"download,type",
         "FieldName":"DownloadType",
         "InputType":"enum",
@@ -18,14 +18,14 @@
         }
     },
     {
-        "DisplayName":"Application Download Location",
+        "DisplayName":"Application Download Source",
         "Category":"Node - Settings",
-        "Description":"Sets the location for the \"Application Download Type\". Enter the values based on the type you chose in the previous input. GitHub Repo = URL that ends in .git. GitHub Release = User/Repo. Download URL = URL to a zip file to download. Update the application after setting this value.",
-        "Keywords":"download,location",
-        "FieldName":"DownloadLocation",
+        "Description":"Sets the source for the \"Application Download Type\". Enter the values based on the type you chose in the previous input. GitHub Repo = URL that ends in .git. GitHub Release = User/Repo. Download URL = URL to a zip file to download. Update the application after setting this value.",
+        "Keywords":"download,source",
+        "FieldName":"DownloadSource",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"DownloadLocation",
+        "ParamFieldName":"DownloadSource",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
         "Placeholder":"https://github.com/IceOfWraith/IceBot.git",
@@ -43,6 +43,20 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"",
         "Placeholder":"discordbot.zip",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"GitHub Release Version",
+        "Category":"Node - Settings",
+        "Description":"If you chose \"GitHub Release\" for the \"Application Download Type\", you may enter the release version to download. Leave this blank to download the latest.",
+        "Keywords":"github,release,version",
+        "FieldName":"DownloadVersion",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"DownloadVersion",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"1.0.0",
         "EnumValues":{}
     },
     {
@@ -74,7 +88,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Application Location",
+        "DisplayName":"Application Installation Location",
         "Category":"Node - Settings",
         "Description":"If the app downloads in a subfolder of \"app\" you must specify the folders here.",
         "Keywords":"app,application,location",
@@ -98,13 +112,13 @@
         "ParamFieldName":"CommandLineArgs",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
-        "Placeholder":"value1=example value2=test",
+        "Placeholder":"value1=foo value2=bar",
         "EnumValues":{}
     },
     {
         "DisplayName":"npm Install Type",
         "Category":"Node - Settings",
-        "Description":"Specify \"npm i\" to use a packages.json or specify \"npm ci\" to use a packages-lock.json.",
+        "Description":"Specify \"npm i\" to use a packages.json or specify \"npm ci\" to use a packages-lock.json. If \"Specific Packages\" is chosen you must enter the packages in the \"Specific npm Packages\" input.",
         "Keywords":"npm,install,type",
         "FieldName":"NpmInstallType",
         "InputType":"enum",
@@ -116,13 +130,13 @@
             "none":"None",
             "npmci":"npm ci",
             "npmi":"npm i",
-            "specify":"Specify"
+            "specify":"Specific Packages"
         }
     },
     {
         "DisplayName":"Specific npm Packages",
         "Category":"Node - Settings",
-        "Description":"Specify any additional npm packages to install separated by a space. To use a packages.json or packages-lock.json select the \"npm Install Type\" input instead.",
+        "Description":"Specify any additional npm packages to install separated by a space. Select \"Specific Packages\" for the \"npm Install Type\".",
         "Keywords":"additional,npm,packages",
         "FieldName":"NpmPackages",
         "InputType":"text",

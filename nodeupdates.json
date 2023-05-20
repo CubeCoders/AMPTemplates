@@ -9,7 +9,7 @@
         "UpdateStageName":"Application Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"GitRepo",
-        "UpdateSourceData":"{{DownloadLocation}}",
+        "UpdateSourceData":"{{DownloadSource}}",
         "UpdateSourceTarget":"{{$FullBaseDir}}app",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"GitRepo"
@@ -18,8 +18,9 @@
         "UpdateStageName":"Application Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"GithubRelease",
-        "UpdateSourceArgs":"{{DownloadLocation}}",
+        "UpdateSourceArgs":"{{DownloadSource}}",
         "UpdateSourceData":"{{DownloadFilename}}",
+        "UpdateSourceVersion":"{{DownloadVersion}}",
         "UpdateSourceTarget":"{{$FullBaseDir}}app",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
@@ -31,7 +32,7 @@
         "UpdateStageName":"Application Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"{{DownloadLocation}}",
+        "UpdateSourceData":"{{DownloadSource}}",
         "UpdateSourceTarget":"{{$FullBaseDir}}app",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
@@ -42,6 +43,7 @@
     {
         "UpdateStageName":"Node.js Download",
         "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"x86_64",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-linux-x64.tar.gz",
         "UpdateSourceTarget":"{{$FullBaseDir}}"
@@ -49,9 +51,26 @@
     {
         "UpdateStageName":"Node.js Extract",
         "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"x86_64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-		"UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" && tar xfv node-{{NodeVersion}}-linux-x64.tar.gz > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && mv -v node-{{NodeVersion}}-linux-x64 node >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && rm node-{{NodeVersion}}-linux-x64.tar.gz'"
+        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" && tar xfv node-{{NodeVersion}}-linux-x64.tar.gz > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && mv -v node-{{NodeVersion}}-linux-x64 node >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && rm node-{{NodeVersion}}-linux-x64.tar.gz'"
+    },
+    {
+        "UpdateStageName":"Node.js Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-linux-arm64.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}"
+    },
+    {
+        "UpdateStageName":"Node.js Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && mv -v node-{{NodeVersion}}-linux-arm64 node >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && rm node-{{NodeVersion}}-linux-arm64.tar.gz'"
     },
     {
         "UpdateStageName":"Node.js Download",
@@ -84,7 +103,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" i {{NpmPackages}} >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1",
+        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node\\node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" i {{NpmPackages}} >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1",
         "UpdateSourceConditionSetting":"NpmInstallType",
         "UpdateSourceConditionValue":"specify"
     },
@@ -102,7 +121,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" i >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1",
+        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node\\node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" i >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1",
         "UpdateSourceConditionSetting":"NpmInstallType",
         "UpdateSourceConditionValue":"npmi"
     },
