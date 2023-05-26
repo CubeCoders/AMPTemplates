@@ -1,0 +1,105 @@
+[
+    {
+        "UpdateStageName":"Config Template Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/terrariaserverconfig.txt",
+        "UpdateSourceTarget":"serverfiles",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"SteamCMD Terraria",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"105600",
+        "UpdateSourceTarget":"serverfiles"
+    },
+    {
+        "UpdateStageName":"Backup Exclusions Download 1",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/CubeCoders/AMPTemplates/raw/main/exclusions/.backupExclusionsTerraria",
+        "UpdateSourceArgs":".backupExclude",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceConditionSetting":"backupExclude",
+        "UpdateSourceConditionValue":"true",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"TShock Server Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"Pryaxis/TShock",
+        "UpdateSourceData":"https://github.com/Pryaxis/TShock/releases/download/v5.2.0/TShock-5.2-for-Terraria-1.4.4.9-win-x64-Release.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"TShock"
+    },
+    {
+        "UpdateStageName":"TShock Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"Pryaxis/TShock",
+        "UpdateSourceData":"https://github.com/Pryaxis/TShock/releases/download/v5.2.0/TShock-5.2-for-Terraria-1.4.4.9-linux-x64-Release.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"TShock"
+    },
+    {
+        "UpdateStageName":"TShock Server Overwrite",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C move /Y Terraria\\serverfiles\\TShock.Server.exe Terraria\\serverfiles\\TerrariaServer.exe",
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"TShock"
+    },
+    {
+        "UpdateStageName":"TShock Server Overwrite",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'mv -f ./Terraria/serverfiles/TShock.Server ./Terraria/serverfiles/TerrariaServer && chmod +x ./Terraria/serverfiles/TerrariaServer'",
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"TShock"
+    },
+    {
+        "UpdateStageName":"Create Dotnet Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}dotnet",
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"TShock"
+    },
+    {
+        "UpdateStageName":"ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-win-x64.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"TShock"
+    },
+    {
+        "UpdateStageName":"ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-linux-x64.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"TShock"
+    }
+]
