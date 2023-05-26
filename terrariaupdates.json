@@ -44,7 +44,7 @@
         "UpdateSource":"GithubRelease",
         "UpdateSourceArgs":"Pryaxis/TShock",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UpdateSourceArch":"x86_64",
+        "UpdateSourceData":"TShock-5.2-for-Terraria-1.4.4.9-linux-x64-Release.zip",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true,
@@ -61,11 +61,11 @@
         "UpdateSourceConditionValue":"TShock"
     },
     {
-        "UpdateStageName":"TShock Server Overwrite",
+        "UpdateStageName":"TShock Server Unpack and Overwrite",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'mv -f ./Terraria/serverfiles/TShock.Server ./Terraria/serverfiles/TerrariaServer && chmod +x ./Terraria/serverfiles/TerrariaServer'",
+        "UpdateSourceArgs":"-c 'cd ./Terraria/serverfiles && tar -xf TShock-Beta-linux-x64-Release.tar && rm -f TShock-Beta-linux-x64-Release.tar && mv -f TShock.Server TerrariaServer && chmod +x TerrariaServer'",
         "UpdateSourceConditionSetting":"ServerVersion",
         "UpdateSourceConditionValue":"TShock"
     },
