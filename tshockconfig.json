@@ -401,31 +401,35 @@
     {
         "DisplayName":"Backup Retention Period",
         "Category":"TShock Server Settings",
-        "Description":"Sets the interval between backup autosaves",
-        "Keywords":"backup,interval,backupinterval",
-        "FieldName":"BackupInterval",
+        "Description":"Sets how long backup autosaves are kept",
+        "Keywords":"backup,retention,period,backupkeepfor",
+        "FieldName":"BackupKeepFor",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.BackupInterval",
+        "ParamFieldName":"$.Settings.BackupKeepFor",
         "IncludeInCommandLine":false,
-        "DefaultValue":"10",
-        "Placeholder":"10",
+        "DefaultValue":"240",
+        "Placeholder":"240",
         "Suffix":"minutes",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Backup Count",
+        "DisplayName":"Ignore Plugin Version Checks",
         "Category":"TShock Server Settings",
-        "Description":"Sets the number of autosave backups to keep",
-        "Keywords":"autosave,backup,count,rollback,worldrollbackstokeep",
-        "FieldName":"worldrollbackstokeep",
-        "InputType":"number",
-        "ParamFieldName":"worldrollbackstokeep",
+        "Description":"If set, the server will ignore API version checks for plugins, allowing old plugins to run",
+        "Keywords":"ignore,version,plugin,check,ignoreversion",
+        "FieldName":"ignoreversion",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ignoreversion",
         "IncludeInCommandLine":false,
-        "DefaultValue":"2",
-        "EnumValues":{}
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-ignoreversion "
+        },
     },
-        {
+    {
         "DisplayName":"Disable UPnP",
         "Category":"TShock Server Settings",
         "Description":"If set, disables UPnP (Universal Plug and Play) on the server",
@@ -472,8 +476,24 @@
         "ParamFieldName":"CustomServerArgs",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
-        "Placeholder":"",
+        "Placeholder":"-heaptile",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Force Server Running",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If set, the server will be forced to continue running, and not hibernate when no players are connected. This will result in time passing, grass growing, and the CPU running",
+        "Keywords":"force,update,running,forceupdate",
+        "FieldName":"forceupdate",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"forceupdate",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-forceupdate "
+        },
     },
     {
         "DisplayName":"PvP Mode",
@@ -483,7 +503,7 @@
         "FieldName":"PvPMode",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.PvPMode",
+        "ParamFieldName":"$.Settings.PvPMode",
         "IncludeInCommandLine":false,
         "DefaultValue":"normal",
         "EnumValues":{
@@ -500,7 +520,7 @@
         "FieldName":"DisableBuild",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.DisableBuild",
+        "ParamFieldName":"$.Settings.DisableBuild",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -516,7 +536,7 @@
         "FieldName":"SoftcoreOnly",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.SoftcoreOnly",
+        "ParamFieldName":"$.Settings.SoftcoreOnly",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -532,7 +552,7 @@
         "FieldName":"MediumcoreOnly",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.MediumcoreOnly",
+        "ParamFieldName":"$.Settings.MediumcoreOnly",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -548,7 +568,7 @@
         "FieldName":"HardcoreOnly",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.HardcoreOnly",
+        "ParamFieldName":"$.Settings.HardcoreOnly",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -564,7 +584,7 @@
         "FieldName":"KickOnBan",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.KickOnBan",
+        "ParamFieldName":"$.Settings.KickOnBan",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
