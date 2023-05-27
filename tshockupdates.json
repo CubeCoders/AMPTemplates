@@ -16,6 +16,19 @@
         "UpdateSource":"FetchURLFromJQ",
         "UpdateSourceData":"https://api.github.com/repos/Pryaxis/TShock/releases/latest",
         "UpdateSourceArgs":"$.assets[1].browser_download_url",
+        "UpdateSourceArch":"x86_64",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"TShock Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURLFromJQ",
+        "UpdateSourceData":"https://api.github.com/repos/Pryaxis/TShock/releases/latest",
+        "UpdateSourceArgs":"$.assets[0].browser_download_url",
+        "UpdateSourceArch":"aarch64",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
@@ -26,6 +39,15 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArch":"x86_64",
+        "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}} && tar -xf TShock-Beta-linux-x64-Release.tar && rm -f TShock-Beta-linux-x64-Release.tar && chmod +x TShockServer'"
+    },
+    {
+        "UpdateStageName":"TShock Server Unpack",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArch":"aarch64",
         "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}} && tar -xf TShock-Beta-linux-x64-Release.tar && rm -f TShock-Beta-linux-x64-Release.tar && chmod +x TShockServer'"
     },
     {
