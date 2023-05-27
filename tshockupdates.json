@@ -48,7 +48,7 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArch":"aarch64",
-        "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}} && tar -xf TShock-Beta-linux-x64-Release.tar && rm -f TShock-Beta-linux-x64-Release.tar && chmod +x TShockServer'"
+        "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}} && tar -xf TShock-Beta-linux-arm64-Release.tar && rm -f TShock-Beta-linux-arm64-Release.tar && chmod +x TShockServer'"
     },
     {
         "UpdateStageName":"Create Dotnet Directory",
@@ -71,6 +71,19 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-linux-x64.tar.gz",
+        "UpdateSourceArch":"x86_64",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-linux-arm64.tar.gz",
+        "UpdateSourceArch":"aarch64",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
         "UnzipUpdateSource":true,
@@ -81,7 +94,7 @@
         "UpdateStageName":"Vanilla Config File Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/terrariaserverconfig.txt",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/tshockserverconfig.txt",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UpdateSourceArgs":"serverconfig.txt",
         "OverwriteExistingFiles":false

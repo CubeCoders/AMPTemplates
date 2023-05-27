@@ -1,37 +1,69 @@
 [
     {
         "DisplayName":"Server Port",
-        "Category":"Terraria Server Settings",
+        "Category":"TShock Server Settings",
         "Description":"",
         "Keywords":"",
         "FieldName":"$ServerPort",
         "InputType":"number",
+        "Hidden":true,
+        "IsFlagArgument":false,
         "ParamFieldName":"$.Settings.ServerPort",
         "IncludeInCommandLine":false,
-        "Hidden":true
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Log Path",
+        "Category":"TShock Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"logpath",
+        "InputType":"text",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"logpath",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"tshock/logs",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Ban List",
+        "Category":"TShock Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"banlist",
+        "InputType":"text",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"banlist",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"banlist.txt",
+        "EnumValues":{}
     },
     {
         "DisplayName":"World Seed",
-        "Category":"Terraria Generator Settings",
-        "Description":"Which world seed to use when generating a new world",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the world seed to use for a newly generated world",
         "Keywords":"world,seed",
         "FieldName":"seed",
         "InputType":"text",
+        "IsFlagArgument":false,
         "ParamFieldName":"seed",
         "IncludeInCommandLine":true,
-        "DefaultValue":"",
-        "placeholder":"PoweredByAMP",
-        "suffix":""
+        "DefaultValue":"PoweredByAMP",
+        "Placeholder":"PoweredByAMP",
+        "EnumValues":{}
     },
     {
         "DisplayName":"World Size",
-        "Category":"Terraria Generator Settings",
-        "Description":"Set the size of the World",
-        "Keywords":"world,size",
-        "FieldName":"WorldSize",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the size of a newly generated world",
+        "Keywords":"world,size,autocreate",
+        "FieldName":"autocreate",
         "InputType":"enum",
-        "IncludeInCommandLine":true,
+        "IsFlagArgument":false,
         "ParamFieldName":"autocreate",
+        "IncludeInCommandLine":true,
         "DefaultValue":"3",
         "EnumValues":{
             "1":"Small",
@@ -40,160 +72,233 @@
         }
     },
     {
-        "DisplayName":"Difficulty",
-        "Category":"Terraria Generator Settings",
-        "Keywords":"difficulty new world journey expert master",
-        "Description":"The difficulty of a newly generated world",
-        "FieldName":"Difficulty",
-        "ParamFieldName":"difficulty",
+        "DisplayName":"World Difficulty Level",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the difficulty level of a newly generated world",
+        "Keywords":"difficulty,normal,expert,master,journey",
+        "FieldName":"difficulty",
         "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"difficulty",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
         "EnumValues":{
-            "0":"Classic",
+            "0":"Normal (default)",
             "1":"Expert",
             "2":"Master",
             "3":"Journey"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0"
+        }
     },
     {
-        "DisplayName":"Created World Name",
-        "Category":"Terraria Generator Settings",
-        "Keywords":"name new world",
-        "Description":"How to name the new world if one is generated. Make sure the World name under Terraria Server Settings matches this name if you want to load it in subsequent starts.",
-        "FieldName":"WorldName",
-        "ParamFieldName":"worldname",
-        "placeholder":"World",
-        "suffix":"",
-        "InputType":"text",
+        "DisplayName":"World Evil",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the evil state for a newly generated world",
+        "Keywords":"world,evil,state,worldevil",
+        "FieldName":"worldevil",
+        "InputType":"enum",
+        "ParamFieldName":"worldevil",
         "IncludeInCommandLine":true,
-        "DefaultValue":"world"
-    },
-    {
-        "DisplayName":"Backup Count",
-        "Category":"Terraria Generator Settings",
-        "Keywords":"backup backups count world rollback",
-        "Description":"Sets the number of rolling world backups to keep",
-        "FieldName":"Backups",
-        "ParamFieldName":"worldrollbackstokeep",
-        "placeholder":"some integer",
-        "suffix":"Backups",
-        "InputType":"number",
-        "IncludeInCommandLine":false,
-        "DefaultValue":2
-    },
-    {
-        "DisplayName":"World Path",
-        "Category":"Terraria Server Settings",
-        "Keywords":"folder path world saves savegame worlds",
-        "Description":"The relative path to save worlds in",
-        "FieldName":"WorldPath",
-        "ParamFieldName":"worldpath",
-        "placeholder":"Worlds",
-        "suffix":"",
-        "InputType":"text",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"Worlds"
+        "DefaultValue":"random",
+        "EnumValues":{
+            "random":"Random (default)",
+            "corrupt":"Corrupt",
+            "crimson":"Crimson"
+        }
     },
     {
         "DisplayName":"World Name",
-        "Category":"Terraria Server Settings",
-        "Keywords":"name world worldname load boot",
-        "Description":"Which world to load on boot",
-        "FieldName":"World",
-        "ParamFieldName":"world",
-        "placeholder":"Worlds/world.wld",
-        "suffix":"",
+        "Category":"TShock Server Settings",
+        "Keywords":"world,name,load,worldname",
+        "Description":"Unless Use Server Name For World Name is enabled, sets the name of the world in the Worlds directory to load on start. If it does not exist, it will be created in that directory",
+        "FieldName":"worldname",
         "InputType":"text",
+        "ParamFieldName":"worldname",
         "IncludeInCommandLine":true,
-        "DefaultValue":"Worlds/world.wld"
+        "DefaultValue":"world.wld",
+        "Placeholder":"world.wld",
+        "EnumValues":{}
     },
     {
-        "DisplayName":"Max Players",
-        "Category":"Terraria Server Settings",
-        "Keywords":"players max maximum",
-        "Description":"The maximum players in the server",
-        "FieldName":"$MaxUsers",
-        "ParamFieldName":"maxplayers",
-        "placeholder":"8",
-        "suffix":"players",
-        "InputType":"number",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"8",
-        "MinValue":"1",
-        "MaxValue":"255"
-    },
-    {
-        "DisplayName":"Max Players",
-        "Category":"Terraria Server Settings",
-        "Keywords":"",
-        "Description":"",
-        "FieldName":"$MaxUsers",
-        "ParamFieldName":"$.Settings.MaxSlots",
-        "InputType":"number",
-        "IncludeInCommandLine":false,
-        "Hidden":true
-    },
-    {
-        "DisplayName":"Password",
-        "Category":"Terraria Server Settings",
-        "Keywords":"password pw security",
-        "Description":"The password players must enter to join",
-        "FieldName":"Password",
-        "ParamFieldName":"password",
-        "placeholder":"Password123",
-        "suffix":"",
-        "InputType":"password",
-        "IncludeInCommandLine":false,
-        "DefaultValue":""
-    },
-    {
-        "DisplayName":"Password",
-        "Category":"Terraria Server Settings",
-        "Keywords":"",
-        "Description":"",
-        "FieldName":"Password",
-        "ParamFieldName":"$.Settings.ServerPassword",
-        "InputType":"password",
-        "IncludeInCommandLine":false,
-        "Hidden":true
-    },
-    {
-        "DisplayName":"Ban List",
-        "Category":"Terraria Server Settings",
-        "Keywords":"ban banlist bans security",
-        "Description":"Where to store the ban list",
-        "FieldName":"BanList",
-        "ParamFieldName":"banlist",
-        "placeholder":"somefilename.txt",
-        "suffix":"",
+        "DisplayName":"Server Name",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the name of the server shown publicly",
+        "Keywords":"server,name,servername",
+        "FieldName":"ServerName",
         "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.ServerName",
         "IncludeInCommandLine":false,
-        "DefaultValue":"banlist.txt"
+        "DefaultValue":"AMP Powered TShock Server",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Use Server Name For World Name",
+        "Category":"TShock Server Settings",
+        "Description":"If set, the Server Name will be used as the world name to create or load",
+        "Keywords":"world,name,useservername",
+        "FieldName":"UseServerName",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.UseServerName",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
         "DisplayName":"MOTD",
-        "Category":"Terraria Server Settings",
-        "Keywords":"motd motto message welcome",
-        "Description":"The motto/message of the day",
-        "FieldName":"Motd",
-        "ParamFieldName":"motd",
-        "placeholder":"Welcome!",
-        "suffix":"",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the server's MOTD (message of the day)",
+        "Keywords":"motd,welcome,message",
+        "FieldName":"motd",
         "InputType":"text",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"Welcome!"
+        "IsFlagArgument":false,
+        "ParamFieldName":"motd",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"Welcome to TShock!",
+        "EnumValues":{}
     },
     {
-        "DisplayName":"Language",
-        "Category":"Terraria Server Settings",
-        "Keywords":"language lang",
-        "Description":"The language of your server",
-        "FieldName":"Language",
-        "ParamFieldName":"language",
-        "InputType":"enum",
+        "DisplayName":"Server Password",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the password for players to join the server. Default is no password",
+        "Keywords":"password",
+        "FieldName":"password",
+        "InputType":"password",
+        "IsFlagArgument":false,
+        "ParamFieldName":"password",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Password",
+        "Category":"TShock Server Settings",
+        "Keywords":"",
+        "Description":"",
+        "FieldName":"password",
+        "InputType":"password",
+        "Hidden":true,
+        "ParamFieldName":"$.Settings.ServerPassword",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Whitelist",
+        "Category":"TShock Server Settings",
+        "Description":"If set, enables the server's whitelist based on IP addresses in the whitelist.txt file in the tshock directory",
+        "Keywords":"enable,whitelist",
+        "FieldName":"EnableWhitelist",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.EnableWhitelist",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
         "EnumValues":{
-            "en-US":"English",
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Whitelist Kick Reason",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the reason given when kicking players for not being on the whitelist",
+        "Keywords":"whitelist,kick,reason,whitelistkickreason",
+        "FieldName":"WhitelistKickReason",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.WhitelistKickReason",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"You are not on the whitelist.",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Limit",
+        "Category":"TShock Server Settings",
+        "Keywords":"player,limit,max,maximum,maxplayers",
+        "Description":"Sets the maximum numbers of players that can connect at one time",
+        "FieldName":"$MaxUsers",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "MinValue":"1",
+        "MaxValue":"255",
+        "ParamFieldName":"maxplayers",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"8",
+        "Placeholder":"8",
+        "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Limit",
+        "Category":"TShock Server Settings",
+        "Keywords":"",
+        "Description":"",
+        "FieldName":"$MaxUsers",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"$.Settings.MaxSlots",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Reserved Player Slots",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the number of reserved slots above the Player Limit that can be joined by reserved players",
+        "Keywords":"reserved,player,slots,reservedslots",
+        "FieldName":"ReservedSlots",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.ReservedSlots",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"20",
+        "Placeholder":"20",
+        "Suffix":"reserved players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server IP Binding",
+        "Category":"TShock Server Settings",
+        "Description":"If required, you can change the IP binding of the server by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Stop the instance (not just the server) first",
+        "Keywords":"ip,binding",
+        "FieldName":"ip",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ip",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Anti-Spam",
+        "Category":"TShock Server Settings",
+        "Description":"If set, enables the server's anti-spam feature",
+        "Keywords":"secure,anti-spam",
+        "FieldName":"secure",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"secure",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-secure "
+        },
+    },
+    {
+        "DisplayName":"Server Language",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the language of the server",
+        "Keywords":"language,lang",
+        "FieldName":"lang",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"lang",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"en-US",
+        "EnumValues":{
+            "en-US":"English (default)",
             "de-DE":"German",
             "it-IT":"Italian",
             "fr-FR":"French",
@@ -203,32 +308,47 @@
             "pt-PT":"Portuguese",
             "pt-BR":"Portuguese (Brazil)",
             "pl-PL":"Polish"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"en-US"
+        }
     },
     {
-        "DisplayName":"Priority",
-        "Category":"Terraria Server Settings",
-        "Keywords":"priority process prio performance",
-        "Description":"The process priority",
-        "FieldName":"Priority",
-        "ParamFieldName":"priority",
+        "DisplayName":"Disable UPnP",
+        "Category":"TShock Server Settings",
+        "Description":"If set, disables UPnP (Universal Plug and Play) on the server",
+        "Keywords":"upnp,noupnp",
+        "FieldName":"noupnp",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"noupnp",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"-noupnp ",
+        "EnumValues":{
+            "False":"",
+            "True":"-noupnp "
+        },
+    },
+    {
+        "DisplayName":"Server Process Priority",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the server process priority",
+        "Keywords":"process,priority,performance,forcepriority",
+        "FieldName":"forcepriority",
         "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"forcepriority",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
         "EnumValues":{
             "0":"Realtime",
-            "1":"High",
-            "2":"AboveNormal",
+            "1":"High (default)",
+            "2":"Above Normal",
             "3":"Normal",
-            "4":"BelowNormal",
+            "4":"Below Normal",
             "5":"Idle"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1"
+        }
     },
     {
         "DisplayName":"NPC Stream",
-        "Category":"Terraria Server Settings",
+        "Category":"TShock Server Settings",
         "Keywords":"npc stream skipping lag bandwidth performance",
         "Description":"Reduces enemy skipping but increases bandwidth usage. The lower the number the less skipping will happen, but more data is sent. 0 is off.",
         "FieldName":"NPCStream",
@@ -241,7 +361,7 @@
     },
     {
         "DisplayName":"Slower Liquids",
-        "Category":"Terraria Server Settings",
+        "Category":"TShock Server Settings",
         "Keywords":"slow liquid liquids slower lag performance",
         "Description":"Reduces maximum liquids moving at the same time. If enabled may reduce lag but liquids may take longer to settle.",
         "FieldName":"Slowliquids",
@@ -255,23 +375,8 @@
         "DefaultValue":"1"
     },
     {
-        "DisplayName":"Cheat Protection",
-        "Category":"Terraria Server Settings",
-        "Keywords":"security cheat cheats auto kick spam",
-        "Description":"Enable/Disable additional cheat protection. This may cause unwanted automatic kicks",
-        "FieldName":"Secure",
-        "ParamFieldName":"secure",
-        "InputType":"checkbox",
-        "IncludeInCommandLine":false,
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        },
-        "DefaultValue":"0"
-    },
-    {
         "DisplayName":"Disable Announcement Box",
-        "Category":"Terraria Server Settings",
+        "Category":"TShock Server Settings",
         "Keywords":"announcement box disable griefing",
         "Description":"Enable/Disable the text announcements Announcement Box makes when pulsed from wire.",
         "FieldName":"DisableAnnouncementBox",
@@ -283,7 +388,7 @@
     },
     {
         "DisplayName":"Announcement Box Range",
-        "Category":"Terraria Server Settings",
+        "Category":"TShock Server Settings",
         "Keywords":"announcement box range griefing",
         "Description":"Sets the announcement box text messaging range in pixels, -1 for serverwide announcements.",
         "FieldName":"AnnouncementBoxRange",
@@ -295,8 +400,371 @@
         "DefaultValue":"-1"
     },
     {
+        "DisplayName":"Enable Autosave",
+        "Category":"TShock Server Settings",
+        "Description":"If set, the server’s backup autosave will be enabled. , in minutes. Backups are stored in the tshock/backups folder.",
+        "Keywords":"auto,save,autosave",
+        "FieldName":"AutoSave",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.AutoSave",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Announce Autosaves",
+        "Category":"TShock Server Settings",
+        "Description":"If set, world autosave announcements will be enabled",
+        "Keywords":"announce,auto,save,autosave,announcesave",
+        "FieldName":"AnnounceSave",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.AnnounceSave",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Show Autosave Messages",
+        "Category":"TShock Server Settings",
+        "Description":"If set, backup autosave messages will be shown",
+        "Keywords":"auto,save,autosave,showbackupautosavemessages",
+        "FieldName":"ShowBackupAutosaveMessages",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.ShowBackupAutosaveMessages",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Backup Interval",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the interval between backup autosaves",
+        "Keywords":"backup,interval,backupinterval",
+        "FieldName":"BackupInterval",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.BackupInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "Placeholder":"10",
+        "Suffix":"minutes",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Backup Count",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the number of autosave backups to keep",
+        "Keywords":"autosave,backup,count,rollback,worldrollbackstokeep",
+        "FieldName":"worldrollbackstokeep",
+        "InputType":"number",
+        "ParamFieldName":"worldrollbackstokeep",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Additional Command Line Parameters",
+        "Category":"TShock Server Settings",
+        "Description":"Specifies additional command line parameters that are not otherwise set by AMP. ONE LINE ONLY! Use with care",
+        "Keywords":"custom,server,arguments,variables,parameters",
+        "FieldName":"CustomServerArgs",
+        "InputType":"Textarea",
+        "IsFlagArgument":false,
+        "ParamFieldName":"CustomServerArgs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"PvP Mode",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Sets the server's PvP (player vs player) mode",
+        "Keywords":"pvp,combat,pve,pvpmode",
+        "FieldName":"PvPMode",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.PvPMode",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"normal",
+        "EnumValues":{
+            "normal":"Normal (default)",
+            "always":"Always",
+            "disabled":"Disabled"
+        }
+    },
+    {
+        "DisplayName":"Disable Building",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If set, disables any placing or removal of blocks",
+        "Keywords":"disable,build,building,blocks,disablebuild",
+        "FieldName":"DisableBuild",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.DisableBuild",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Softcore Only",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If set, only softcore players can connect. Don't enable Mediumcore Only or Hardcore Only at the same time",
+        "Keywords":"softcore,mode,softcoreonly",
+        "FieldName":"SoftcoreOnly",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.SoftcoreOnly",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Mediumcore Only",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If set, softcore players cannot connect. Don't enable Softcore Only or Hardcore Only at the same time",
+        "Keywords":"mediumcore,mode,mediumcoreonly",
+        "FieldName":"MediumcoreOnly",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.MediumcoreOnly",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Hardcore Only",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If set, only hardcore players cann connect. Don't enable Softcore Only or Mediumcore Only at the same time",
+        "Keywords":"hardcore,mode,hardcoreonly",
+        "FieldName":"HardcoreOnly",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.HardcoreOnly",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Kick On Ban",
+        "Category":"TShock Server Settings",
+        "Description":"If set, kicks players when they get banned",
+        "Keywords":"kick,ban",
+        "FieldName":"KickOnBan",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.KickOnBan",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Allowed Groups To Spawn Banned Items",
+        "Category":"TShock Server Settings",
+        "Description":"Allows groups on the banned item allowed list to spawn banned items even if PreventBannedItemSpawn is set to true.",
+        "Keywords":"",
+        "FieldName":"AllowAllowedGroupsToSpawnBannedItems",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.AllowAllowedGroupsToSpawnBannedItems",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Corruption Creep",
+        "Category":"TShock Server Settings",
+        "Description":"Allows the corruption to spread when a world is in hardmode.",
+        "Keywords":"",
+        "FieldName":"AllowCorruptionCreep",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.AllowCorruptionCreep",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Crimson Creep",
+        "Category":"TShock Server Settings",
+        "Description":"Allows the crimson to spread when a world is in hardmode.",
+        "Keywords":"",
+        "FieldName":"AllowCrimsonCreep",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.AllowCrimsonCreep",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Cut Tiles and Breakables",
+        "Category":"TShock Server Settings",
+        "Description":"Allows players to break temporary tiles (grass, pots, etc) where they cannot usually build.",
+        "Keywords":"",
+        "FieldName":"AllowCutTilesAndBreakables",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.AllowCutTilesAndBreakables",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Hallow Creep",
+        "Category":"TShock Server Settings",
+        "Description":"Allows the hallow to spread when a world is in hardmode.",
+        "Keywords":"",
+        "FieldName":"AllowHallowCreep",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.AllowHallowCreep",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Ice",
+        "Category":"TShock Server Settings",
+        "Description":"Allows ice placement even where a user cannot usually build.",
+        "Keywords":"",
+        "FieldName":"AllowIce",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.AllowIce",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Login Any Username",
+        "Category":"TShock Server Settings",
+        "Description":"Allows users to login to any account even if the username doesn't match their character name.",
+        "Keywords":"",
+        "FieldName":"AllowLoginAnyUsername",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.AllowLoginAnyUsername",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Register Any Username",
+        "Category":"TShock Server Settings",
+        "Description":"Allows users to register a username that doesn't necessarily match their character name.",
+        "Keywords":"",
+        "FieldName":"AllowRegisterAnyUsername",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.AllowRegisterAnyUsername",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Anonymous Boss Invasions",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Whether or not to announce boss spawning or invasion starts",
+        "Keywords":"",
+        "FieldName":"AnonymousBossInvasions",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.AnonymousBossInvasions",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Ban On Hardcore Death",
+        "Category":"Player Settings",
+        "Description":"Whether or not to ban hardcore players on death",
+        "Keywords":"ban, hardcore, death, player",
+        "FieldName":"BanOnHardcoreDeath",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.BanOnHardcoreDeath",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Ban On Mediumcore Death",
+        "Category":"Player Settings",
+        "Description":"Whether or not to ban mediumcore players on death.",
+        "Keywords":"ban, mediumcore, death, player",
+        "FieldName":"BanOnMediumcoreDeath",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.ServerSettings.BanOnMediumcoreDeath",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Freeze Time",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
+        "Description":"Whether or not to ban hardcore players on death",
         "Keywords":"journey mode permissions power freeze time stop clock",
         "Description":"Journey mode power permissions for every individual power. 'Host' is only relevant when using steam integration, which is not supported by AMP by default.",
         "FieldName":"time_setfrozen",
@@ -312,7 +780,7 @@
     },
     {
         "DisplayName":"Set to Dawn",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power dawn time clock",
         "FieldName":"time_setdawn",
         "ParamFieldName":"journeypermission_time_setdawn",
@@ -327,7 +795,7 @@
     },
     {
         "DisplayName":"Set to Noon",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power noon time clock",
         "FieldName":"time_setnoon",
         "ParamFieldName":"journeypermission_time_setnoon",
@@ -342,7 +810,7 @@
     },
     {
         "DisplayName":"Set to Dusk",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power dusk time clock",
         "FieldName":"time_setdusk",
         "ParamFieldName":"journeypermission_time_setdusk",
@@ -357,7 +825,7 @@
     },
     {
         "DisplayName":"Set to Midnight",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power midnight time clock",
         "FieldName":"time_setmidnight",
         "ParamFieldName":"journeypermission_time_setmidnight",
@@ -372,22 +840,22 @@
     },
     {
         "DisplayName":"God Mode",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power god godmode",
         "FieldName":"godmode",
-        "ParamFieldName":"journeypermission_godmode",
         "InputType":"enum",
+        "ParamFieldName":"journeypermission_godmode",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"2",
         "EnumValues":{
             "0":"Locked for everyone",
             "1":"Can only be changed by host",
             "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
+        }
     },
     {
         "DisplayName":"Set Wind Intensity",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power wind set strength",
         "FieldName":"wind_setstrength",
         "ParamFieldName":"journeypermission_wind_setstrength",
@@ -402,7 +870,7 @@
     },
     {
         "DisplayName":"Set Rain Intensity",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power rain set strength",
         "FieldName":"rain_setstrength",
         "ParamFieldName":"journeypermission_rain_setstrength",
@@ -417,7 +885,7 @@
     },
     {
         "DisplayName":"Change Game Speed",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power speed time speedup",
         "FieldName":"time_setspeed",
         "ParamFieldName":"journeypermission_time_setspeed",
@@ -432,7 +900,7 @@
     },
     {
         "DisplayName":"Lock Rain Conditions",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power rain lock freeze",
         "FieldName":"rain_setfrozen",
         "ParamFieldName":"journeypermission_rain_setfrozen",
@@ -447,7 +915,7 @@
     },
     {
         "DisplayName":"Lock Wind Conditions",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power wind lock freeze",
         "FieldName":"wind_setfrozen",
         "ParamFieldName":"journeypermission_wind_setfrozen",
@@ -462,7 +930,7 @@
     },
     {
         "DisplayName":"Placement Range",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power placement range reach tile",
         "FieldName":"increaseplacementrange",
         "ParamFieldName":"journeypermission_increaseplacementrange",
@@ -477,7 +945,7 @@
     },
     {
         "DisplayName":"Difficulty Changing",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power difficulty",
         "FieldName":"setdifficulty",
         "ParamFieldName":"journeypermission_setdifficulty",
@@ -492,7 +960,7 @@
     },
     {
         "DisplayName":"Biome/Evil Spreading",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power evil spread biome crimson hallow corrupted",
         "FieldName":"biomespread_setfrozen",
         "ParamFieldName":"journeypermission_biomespread_setfrozen",
@@ -507,7 +975,7 @@
     },
     {
         "DisplayName":"Spawn Rate",
-        "Category":"Terraria Journey Permissions",
+        "Category":"TShock Journey Permissions",
         "Keywords":"journey mode permissions power spawn rate",
         "FieldName":"setspawnrate",
         "ParamFieldName":"journeypermission_setspawnrate",
@@ -532,7 +1000,9 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"6.0.16",
         "Placeholder":"6.0.16",
-        "EnumValues":{}
+        "EnumValues":{
+            
+        }
     },
     {
         "DisplayName":"Download Backup Exclude File",
