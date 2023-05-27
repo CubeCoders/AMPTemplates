@@ -311,70 +311,6 @@
         }
     },
     {
-        "DisplayName":"Disable UPnP",
-        "Category":"TShock Server Settings",
-        "Description":"If set, disables UPnP (Universal Plug and Play) on the server",
-        "Keywords":"upnp,noupnp",
-        "FieldName":"noupnp",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"noupnp",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"-noupnp ",
-        "EnumValues":{
-            "False":"",
-            "True":"-noupnp "
-        },
-    },
-    {
-        "DisplayName":"Server Process Priority",
-        "Category":"TShock Server Settings",
-        "Description":"Sets the server process priority",
-        "Keywords":"process,priority,performance,forcepriority",
-        "FieldName":"forcepriority",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"forcepriority",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"1",
-        "EnumValues":{
-            "0":"Realtime",
-            "1":"High (default)",
-            "2":"Above Normal",
-            "3":"Normal",
-            "4":"Below Normal",
-            "5":"Idle"
-        }
-    },
-    {
-        "DisplayName":"NPC Stream",
-        "Category":"TShock Server Settings",
-        "Keywords":"npc stream skipping lag bandwidth performance",
-        "Description":"Reduces enemy skipping but increases bandwidth usage. The lower the number the less skipping will happen, but more data is sent. 0 is off.",
-        "FieldName":"NPCStream",
-        "ParamFieldName":"npcstream",
-        "placeholder":"60",
-        "suffix":"",
-        "InputType":"number",
-        "IncludeInCommandLine":false,
-        "DefaultValue":60
-    },
-    {
-        "DisplayName":"Slower Liquids",
-        "Category":"TShock Server Settings",
-        "Keywords":"slow liquid liquids slower lag performance",
-        "Description":"Reduces maximum liquids moving at the same time. If enabled may reduce lag but liquids may take longer to settle.",
-        "FieldName":"Slowliquids",
-        "ParamFieldName":"slowliquids",
-        "InputType":"checkbox",
-        "IncludeInCommandLine":false,
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        },
-        "DefaultValue":"1"
-    },
-    {
         "DisplayName":"Disable Announcement Box",
         "Category":"TShock Server Settings",
         "Keywords":"announcement box disable griefing",
@@ -402,7 +338,7 @@
     {
         "DisplayName":"Enable Autosave",
         "Category":"TShock Server Settings",
-        "Description":"If set, the server’s backup autosave will be enabled. , in minutes. Backups are stored in the tshock/backups folder.",
+        "Description":"If set, the server’s backup autosave will be enabled. Backups are stored in the tshock/backups folder.",
         "Keywords":"auto,save,autosave",
         "FieldName":"AutoSave",
         "InputType":"checkbox",
@@ -463,6 +399,21 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Backup Retention Period",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the interval between backup autosaves",
+        "Keywords":"backup,interval,backupinterval",
+        "FieldName":"BackupInterval",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.BackupInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "Placeholder":"10",
+        "Suffix":"minutes",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Backup Count",
         "Category":"TShock Server Settings",
         "Description":"Sets the number of autosave backups to keep",
@@ -473,6 +424,42 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"2",
         "EnumValues":{}
+    },
+        {
+        "DisplayName":"Disable UPnP",
+        "Category":"TShock Server Settings",
+        "Description":"If set, disables UPnP (Universal Plug and Play) on the server",
+        "Keywords":"upnp,noupnp",
+        "FieldName":"noupnp",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"noupnp",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"-noupnp ",
+        "EnumValues":{
+            "False":"",
+            "True":"-noupnp "
+        },
+    },
+    {
+        "DisplayName":"Server Process Priority",
+        "Category":"TShock Server Settings",
+        "Description":"Sets the server process priority",
+        "Keywords":"process,priority,performance,forcepriority",
+        "FieldName":"forcepriority",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"forcepriority",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"Realtime",
+            "1":"High (default)",
+            "2":"Above Normal",
+            "3":"Normal",
+            "4":"Below Normal",
+            "5":"Idle"
+        }
     },
     {
         "DisplayName":"Additional Command Line Parameters",
@@ -760,233 +747,6 @@
             "False":"false",
             "True":"true"
         }
-    },
-    {
-        "DisplayName":"Freeze Time",
-        "Category":"TShock Journey Permissions",
-        "Description":"Whether or not to ban hardcore players on death",
-        "Keywords":"journey mode permissions power freeze time stop clock",
-        "Description":"Journey mode power permissions for every individual power. 'Host' is only relevant when using steam integration, which is not supported by AMP by default.",
-        "FieldName":"time_setfrozen",
-        "ParamFieldName":"journeypermission_time_setfrozen",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"Set to Dawn",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power dawn time clock",
-        "FieldName":"time_setdawn",
-        "ParamFieldName":"journeypermission_time_setdawn",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"Set to Noon",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power noon time clock",
-        "FieldName":"time_setnoon",
-        "ParamFieldName":"journeypermission_time_setnoon",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"Set to Dusk",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power dusk time clock",
-        "FieldName":"time_setdusk",
-        "ParamFieldName":"journeypermission_time_setdusk",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"Set to Midnight",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power midnight time clock",
-        "FieldName":"time_setmidnight",
-        "ParamFieldName":"journeypermission_time_setmidnight",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"God Mode",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power god godmode",
-        "FieldName":"godmode",
-        "InputType":"enum",
-        "ParamFieldName":"journeypermission_godmode",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        }
-    },
-    {
-        "DisplayName":"Set Wind Intensity",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power wind set strength",
-        "FieldName":"wind_setstrength",
-        "ParamFieldName":"journeypermission_wind_setstrength",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"Set Rain Intensity",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power rain set strength",
-        "FieldName":"rain_setstrength",
-        "ParamFieldName":"journeypermission_rain_setstrength",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"Change Game Speed",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power speed time speedup",
-        "FieldName":"time_setspeed",
-        "ParamFieldName":"journeypermission_time_setspeed",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"Lock Rain Conditions",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power rain lock freeze",
-        "FieldName":"rain_setfrozen",
-        "ParamFieldName":"journeypermission_rain_setfrozen",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"Lock Wind Conditions",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power wind lock freeze",
-        "FieldName":"wind_setfrozen",
-        "ParamFieldName":"journeypermission_wind_setfrozen",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"Placement Range",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power placement range reach tile",
-        "FieldName":"increaseplacementrange",
-        "ParamFieldName":"journeypermission_increaseplacementrange",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"Difficulty Changing",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power difficulty",
-        "FieldName":"setdifficulty",
-        "ParamFieldName":"journeypermission_setdifficulty",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"Biome/Evil Spreading",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power evil spread biome crimson hallow corrupted",
-        "FieldName":"biomespread_setfrozen",
-        "ParamFieldName":"journeypermission_biomespread_setfrozen",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
-    },
-    {
-        "DisplayName":"Spawn Rate",
-        "Category":"TShock Journey Permissions",
-        "Keywords":"journey mode permissions power spawn rate",
-        "FieldName":"setspawnrate",
-        "ParamFieldName":"journeypermission_setspawnrate",
-        "InputType":"enum",
-        "EnumValues":{
-            "0":"Locked for everyone",
-            "1":"Can only be changed by host",
-            "2":"Can be changed by everyone"
-        },
-        "IncludeInCommandLine":false,
-        "DefaultValue":"2"
     },
     {
         "DisplayName":"Dotnet Version",
