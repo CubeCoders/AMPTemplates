@@ -343,7 +343,7 @@
         "FieldName":"AutoSave",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.AutoSave",
+        "ParamFieldName":"$.Settings.AutoSave",
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
@@ -359,7 +359,7 @@
         "FieldName":"AnnounceSave",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.AnnounceSave",
+        "ParamFieldName":"$.Settings.AnnounceSave",
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
@@ -375,7 +375,7 @@
         "FieldName":"ShowBackupAutosaveMessages",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.ShowBackupAutosaveMessages",
+        "ParamFieldName":"$.Settings.ShowBackupAutosaveMessages",
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
@@ -412,6 +412,38 @@
         "Placeholder":"240",
         "Suffix":"minutes",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Save World On Crash",
+        "Category":"TShock Server Settings",
+        "Description":"If enabled, the world will be saved if the server crashes from an unhandled exception",
+        "Keywords":"save,crash,saveworldoncrash",
+        "FieldName":"SaveWorldOnCrash",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.SaveWorldOnCrash",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Save World On Last Player Exit",
+        "Category":"TShock Server Settings",
+        "Description":"If enabled, the world will be saved when the last player disconnects",
+        "Keywords":"save,last,player,exit,disconnect,saveworldonlastplayerExit",
+        "FieldName":"SaveWorldOnLastPlayerExit",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.SaveWorldOnLastPlayerExit",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
         "DisplayName":"Ignore Plugin Version Checks",
@@ -593,80 +625,16 @@
         }
     },
     {
-        "DisplayName":"Allow Allowed Groups To Spawn Banned Items",
-        "Category":"TShock Server Settings",
-        "Description":"Allows groups on the banned item allowed list to spawn banned items even if PreventBannedItemSpawn is set to true.",
-        "Keywords":"",
-        "FieldName":"AllowAllowedGroupsToSpawnBannedItems",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.AllowAllowedGroupsToSpawnBannedItems",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Allow Corruption Creep",
-        "Category":"TShock Server Settings",
-        "Description":"Allows the corruption to spread when a world is in hardmode.",
-        "Keywords":"",
-        "FieldName":"AllowCorruptionCreep",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.AllowCorruptionCreep",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Allow Crimson Creep",
-        "Category":"TShock Server Settings",
-        "Description":"Allows the crimson to spread when a world is in hardmode.",
-        "Keywords":"",
-        "FieldName":"AllowCrimsonCreep",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.AllowCrimsonCreep",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Allow Cut Tiles and Breakables",
         "Category":"TShock Server Settings",
-        "Description":"Allows players to break temporary tiles (grass, pots, etc) where they cannot usually build.",
+        "Description":"Allows players to break temporary tiles (grass, pots, etc) where they cannot usually build",
         "Keywords":"",
         "FieldName":"AllowCutTilesAndBreakables",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.AllowCutTilesAndBreakables",
+        "ParamFieldName":"$.Settings.AllowCutTilesAndBreakables",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Allow Hallow Creep",
-        "Category":"TShock Server Settings",
-        "Description":"Allows the hallow to spread when a world is in hardmode.",
-        "Keywords":"",
-        "FieldName":"AllowHallowCreep",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.AllowHallowCreep",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
         "EnumValues":{
             "False":"false",
             "True":"true"
@@ -675,12 +643,76 @@
     {
         "DisplayName":"Allow Ice",
         "Category":"TShock Server Settings",
-        "Description":"Allows ice placement even where a user cannot usually build.",
+        "Description":"Allows ice placement even where a player cannot usually build",
         "Keywords":"",
         "FieldName":"AllowIce",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.AllowIce",
+        "ParamFieldName":"$.Settings.AllowIce",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Crimson Creep",
+        "Category":"TShock Server Settings",
+        "Description":"Allows the crimson to spread when a world is in hardmode",
+        "Keywords":"",
+        "FieldName":"AllowCrimsonCreep",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.AllowCrimsonCreep",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Corruption Creep",
+        "Category":"TShock Server Settings",
+        "Description":"Allows the corruption to spread when a world is in hardmode",
+        "Keywords":"",
+        "FieldName":"AllowCorruptionCreep",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.AllowCorruptionCreep",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Hallow Creep",
+        "Category":"TShock Server Settings",
+        "Description":"Allows the hallow to spread when a world is in hardmode",
+        "Keywords":"",
+        "FieldName":"AllowHallowCreep",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.AllowHallowCreep",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Allowed Groups To Spawn Banned Items",
+        "Category":"TShock Server Settings",
+        "Description":"Allows groups on the banned item allowed list to spawn banned items even if PreventBannedItemSpawn is set to true.",
+        "Keywords":"",
+        "FieldName":"AllowAllowedGroupsToSpawnBannedItems",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.AllowAllowedGroupsToSpawnBannedItems",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -696,7 +728,7 @@
         "FieldName":"AllowLoginAnyUsername",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.AllowLoginAnyUsername",
+        "ParamFieldName":"$.Settings.AllowLoginAnyUsername",
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
@@ -712,7 +744,7 @@
         "FieldName":"AllowRegisterAnyUsername",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.AllowRegisterAnyUsername",
+        "ParamFieldName":"$.Settings.AllowRegisterAnyUsername",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -728,7 +760,7 @@
         "FieldName":"AnonymousBossInvasions",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.AnonymousBossInvasions",
+        "ParamFieldName":"$.Settings.AnonymousBossInvasions",
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
@@ -744,7 +776,7 @@
         "FieldName":"BanOnHardcoreDeath",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.BanOnHardcoreDeath",
+        "ParamFieldName":"$.Settings.BanOnHardcoreDeath",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -760,7 +792,7 @@
         "FieldName":"BanOnMediumcoreDeath",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.ServerSettings.BanOnMediumcoreDeath",
+        "ParamFieldName":"$.Settings.BanOnMediumcoreDeath",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
