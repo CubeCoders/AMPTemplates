@@ -27,22 +27,36 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Create World Name",
+        "DisplayName":"World Name",
         "Category":"TShock Server Settings",
-        "Keywords":"world,name,load,worldname",
-        "Description":"Unless Use Server Name For World Name is enabled, sets the name of the world in the Worlds directory to create on start. To load that world on subsequent starts, it must be set under Load World Name",
+        "Keywords":"world,name,generate,worldname",
+        "Description":"Unless \"Use Server Name For World Name\" is enabled, sets the name of a newly generated world. The world save file will be named accordingly in the Worlds directory. If the save file already exists and is not loaded under World Save Name, then an incrementally numbered save file will be created",
+        "FieldName":"worldname",
+        "InputType":"text",
+        "ParamFieldName":"worldname",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"World",
+        "Placeholder":"World",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"World Save Name",
+        "Category":"TShock Server Settings",
+        "Keywords":"world,save,name,load,worldname",
+        "Description":"Sets the name of the world save file in the Worlds directory to load on start. The specified save file will also be created if no World Name is set or \"Use Server Name For World Name\" is enabled. A default world save file will be created if not otherwise specified",
         "FieldName":"world",
         "InputType":"text",
         "ParamFieldName":"world",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"world.wld",
-        "Placeholder":"world.wld",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"World.wld",
+        "Placeholder":"World.wld",
         "EnumValues":{}
     },
     {
         "DisplayName":"World Seed",
         "Category":"TShock Server Settings",
-        "Description":"Sets the world seed to use for a newly generated world",
+        "Description":"Sets the world seed to use for a newly generated world. Blank = random seed",
         "Keywords":"world,seed",
         "FieldName":"seed",
         "InputType":"text",
@@ -105,19 +119,6 @@
         }
     },
     {
-        "DisplayName":"Load World Name",
-        "Category":"TShock Server Settings",
-        "Keywords":"world,name,load,worldname",
-        "Description":"Unless Use Server Name For World Name is enabled, sets the name of the world in the Worlds directory to load on start",
-        "FieldName":"worldname",
-        "InputType":"text",
-        "ParamFieldName":"worldname",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"world.wld",
-        "Placeholder":"world.wld",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Server Name",
         "Category":"TShock Server Settings",
         "Description":"Sets the name of the server shown publicly",
@@ -133,7 +134,7 @@
     {
         "DisplayName":"Use Server Name For World Name",
         "Category":"TShock Server Settings",
-        "Description":"If set, the Server Name will be used as the world name to create or load",
+        "Description":"If set, the Server Name will be used as the world name of a newly generated world, with the world save file named as specified under World Save Name",
         "Keywords":"world,name,useservername",
         "FieldName":"UseServerName",
         "InputType":"checkbox",
