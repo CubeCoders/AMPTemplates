@@ -13,6 +13,19 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"REST API Port",
+        "Category":"TShock Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"RestApiPort",
+        "InputType":"number",
+        "Hidden":true,
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.RestApiPort",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Ban List",
         "Category":"TShock Server Settings",
         "Description":"",
@@ -304,6 +317,7 @@
             "fr-FR":"French",
             "es-ES":"Spanish",
             "ru-RU":"Russian",
+            "ru-UA":"Ukrainian",
             "zh-Hans":"Chinese",
             "pt-PT":"Portuguese",
             "pt-BR":"Portuguese (Brazil)",
@@ -528,6 +542,63 @@
         }
     },
     {
+        "DisplayName":"Invasion Multiplier",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Sets the size of invasion events, based on: 100 + (multiplier x (number of active players with greater than 200 health))",
+        "Keywords":"invasion,multiplier,events,invasionmultiplier",
+        "FieldName":"InvasionMultiplier",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.InvasionMultiplier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{}
+    },
+       {
+        "DisplayName":"Default Maximum Spawns",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Sets the default maximum number of mobs that will spawn per wave. Higher = more mobs in that wave",
+        "Keywords":"default,maximum,spawns,mobs,waves,defaultmaximumspawns",
+        "FieldName":"DefaultMaximumSpawns",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.DefaultMaximumSpawns",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"5",
+        "Placeholder":"5",
+        "Suffix":"mobs",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Default Spawn Rate",
+        "Category":"TShock Gameplay Settings",
+        "Description":"The delay between waves. Lower values lead to more mobs",
+        "Keywords":"default spawn rate, waves, mobs",
+        "FieldName":"DefaultSpawnRate",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.DefaultSpawnRate",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"600",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Infinite Invasion",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Enables never-ending invasion events. You still need to start the event, such as with the /invade command",
+        "Keywords":"invasion events, never-ending, start event",
+        "FieldName":"InfiniteInvasion",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.InfiniteInvasion",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"PvP Mode",
         "Category":"TShock Gameplay Settings",
         "Description":"Sets the server's PvP (player vs player) mode",
@@ -545,14 +616,59 @@
         }
     },
     {
-        "DisplayName":"Enable Softcore Only",
+        "DisplayName":"Enable Spawn Protection",
         "Category":"TShock Gameplay Settings",
-        "Description":"If set, only softcore players can connect. Don't enable Mediumcore Only or Hardcore Only at the same time",
-        "Keywords":"softcore,mode,softcoreonly",
-        "FieldName":"SoftcoreOnly",
+        "Description":"If enable, prevents tiles from being placed within the Spawn Protection Radius of the default spawn",
+        "Keywords":"prevent,tiles,spawn,protection,radius,spawn,protection,radius",
+        "FieldName":"SpawnProtection",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.SoftcoreOnly",
+        "ParamFieldName":"$.Settings.SpawnProtection",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Spawn Protection Radius",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Sets the tile radius around the spawn tile that is protected by the Spawn Protection setting",
+        "Keywords":"spawn protection radius, spawn tile, tile radius",
+        "FieldName":"SpawnProtectionRadius",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.SpawnProtectionRadius",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Range Checks",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If set, enables anti-cheat range checks based on distance between the player and their block placements",
+        "Keywords":"range checks, anti-cheat, distance, block placements",
+        "FieldName":"RangeChecks",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.RangeChecks",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Hardcore Only",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If set, only hardcore players cann connect. Don't enable Softcore Only or Mediumcore Only at the same time",
+        "Keywords":"hardcore,mode,hardcoreonly",
+        "FieldName":"HardcoreOnly",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.HardcoreOnly",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -577,14 +693,14 @@
         }
     },
     {
-        "DisplayName":"Enable Hardcore Only",
+        "DisplayName":"Enable Softcore Only",
         "Category":"TShock Gameplay Settings",
-        "Description":"If set, only hardcore players cann connect. Don't enable Softcore Only or Mediumcore Only at the same time",
-        "Keywords":"hardcore,mode,hardcoreonly",
-        "FieldName":"HardcoreOnly",
+        "Description":"If set, only softcore players can connect. Don't enable Mediumcore Only or Hardcore Only at the same time",
+        "Keywords":"softcore,mode,softcoreonly",
+        "FieldName":"SoftcoreOnly",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.HardcoreOnly",
+        "ParamFieldName":"$.Settings.SoftcoreOnly",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -625,14 +741,185 @@
         }
     },
     {
-        "DisplayName":"Kick On Ban",
+        "DisplayName":"Disable Dungeon Guardian",
         "Category":"TShock Gameplay Settings",
-        "Description":"If set, kicks players when they get banned",
-        "Keywords":"kick,ban",
-        "FieldName":"KickOnBan",
+        "Description":"Prevents the dungeon guardian from being spawned while sending players to their spawn point instead",
+        "Keywords":"dungeon guardian, disable",
+        "FieldName":"DisableDungeonGuardian",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.KickOnBan",
+        "ParamFieldName":"$.Settings.DisableDungeonGuardian",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Disable Clown Bombs",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Disables clown bomb projectiles from spawning",
+        "Keywords":"clown bombs, disable",
+        "FieldName":"DisableClownBombs",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.DisableClownBombs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Disable Snowballs",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Disables snowball projectiles from spawning",
+        "Keywords":"snowballs, disable",
+        "FieldName":"DisableSnowBalls",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.DisableSnowBalls",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Disable Tombstones",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Disables tombstone dropping during death for all players",
+        "Keywords":"tombstones, disable",
+        "FieldName":"DisableTombstones",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.DisableTombstones",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Disable Prime Bombs",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Disables Skeletron Prime Bombs from spawning, useful for preventing unwanted world destruction on for the worthy seed world",
+        "Keywords":"prime bombs, disable",
+        "FieldName":"DisablePrimeBombs",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.DisablePrimeBombs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Force Time",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Forces the world time to be normal, day, or night",
+        "Keywords":"force time, world time, normal, day, night",
+        "FieldName":"ForceTime",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.ForceTime",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"normal",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Disable PvP Invisibility",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If set, disables the effect of invisibility potions while PvP is enabled, by making the player visible to the other players",
+        "Keywords":"invisibility,pvp,disable,disableinvispvp",
+        "FieldName":"DisableInvisPvP",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.DisableInvisPvP",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Maximum Range For Disabled Players",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Sets the maximum distance that disabled players can move from",
+        "Keywords":"maximum,range,disabled,maxrangefordisabled",
+        "FieldName":"MaxRangeForDisabled",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.MaxRangeForDisabled",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "Suffix":"tiles",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Region Protection For Chests",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If enabled, region protection will apply to chests",
+        "Keywords":"region,protection,chests,regionprotectionchests",
+        "FieldName":"RegionProtectChests",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.RegionProtectChests",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Region Protection For Gem Locks",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If enabled, region protection will apply to gem locks",
+        "Keywords":"region,protection,gem,locks,regionprotectiongemlocks",
+        "FieldName":"RegionProtectGemLocks",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.RegionProtectGemLocks",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Ignore Projectile Update",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If set, ignores checks to see if a player can update a projectile",
+        "Keywords":"ignore,checks,update,projectile,ignoreprojupdate",
+        "FieldName":"IgnoreProjUpdate",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.IgnoreProjUpdate",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Ignore Projectile Kill",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If set, ignores checks to see if a player can kill a projectile",
+        "Keywords":"ignore,checks,kill,projectile,ignoreprojkill",
+        "FieldName":"IgnoreProjKill",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.IgnoreProjKill",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -659,8 +946,8 @@
     {
         "DisplayName":"Allow Ice",
         "Category":"TShock Gameplay Settings",
-        "Description":"Allows ice placement even where a player cannot usually build",
-        "Keywords":"",
+        "Description":"If enabled, allows ice placement even where a player cannot usually build",
+        "Keywords":"allow,ice,allowice",
         "FieldName":"AllowIce",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -673,10 +960,10 @@
         }
     },
     {
-        "DisplayName":"Allow Crimson Creep",
+        "DisplayName":"Allow Hardmode Crimson Creep",
         "Category":"TShock Gameplay Settings",
-        "Description":"Allows the crimson to spread when a world is in hardmode",
-        "Keywords":"",
+        "Description":"If enabled, allows the crimson to spread when a world is in hardmode",
+        "Keywords":"allow,crimson,creep,hardmode,allowcrimsoncreep",
         "FieldName":"AllowCrimsonCreep",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -689,10 +976,10 @@
         }
     },
     {
-        "DisplayName":"Allow Corruption Creep",
+        "DisplayName":"Allow Hardmode Corruption Creep",
         "Category":"TShock Gameplay Settings",
-        "Description":"Allows the corruption to spread when a world is in hardmode",
-        "Keywords":"",
+        "Description":"If set, allows the corruption to spread when a world is in hardmode",
+        "Keywords":"allow,corruption,creep,hardmode,allowcorruptioncreep",
         "FieldName":"AllowCorruptionCreep",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -705,10 +992,10 @@
         }
     },
     {
-        "DisplayName":"Allow Hallow Creep",
+        "DisplayName":"Allow Hardmode Hallow Creep",
         "Category":"TShock Gameplay Settings",
         "Description":"Allows the hallow to spread when a world is in hardmode",
-        "Keywords":"",
+        "Keywords":"allow,hallow,creep,hardmode,allowhallowcreep",
         "FieldName":"AllowHallowCreep",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -833,22 +1120,6 @@
         }
     },
     {
-        "DisplayName":"Disable Clown Bombs",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Disables clown bomb projectiles from spawning",
-        "Keywords":"clown bombs, disable",
-        "FieldName":"DisableClownBombs",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DisableClownBombs",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Disable Custom Death Messages",
         "Category":"TShock Gameplay Settings",
         "Description":"Allows you to disable or enable protection against creating custom messages with death. Created for developers who came up with a more original solution to this problem",
@@ -873,38 +1144,6 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"$.Settings.DisableDefaultIPBan",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Disable Dungeon Guardian",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Prevents the dungeon guardian from being spawned while sending players to their spawn point instead",
-        "Keywords":"dungeon guardian, disable",
-        "FieldName":"DisableDungeonGuardian",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DisableDungeonGuardian",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Disable PvP Invisibility",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Disables the effect of invisibility potions while PvP is enabled by turning the player visible to the other clients",
-        "Keywords":"invisibility PvP, disable",
-        "FieldName":"DisableInvisPvP",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DisableInvisPvP",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -945,22 +1184,6 @@
         }
     },
     {
-        "DisplayName":"Disable Prime Bombs",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Disables Skeletron Prime Bombs from spawning, useful for preventing unwanted world destruction on for the worthy seed world",
-        "Keywords":"prime bombs, disable",
-        "FieldName":"DisablePrimeBombs",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DisablePrimeBombs",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Disable Second Update Logs",
         "Category":"TShock Server Settings",
         "Description":"Prevents OnSecondUpdate checks from writing to the log file",
@@ -977,22 +1200,6 @@
         }
     },
     {
-        "DisplayName":"Disable Snowballs",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Disables snowball projectiles from spawning",
-        "Keywords":"snowballs, disable",
-        "FieldName":"DisableSnowBalls",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DisableSnowBalls",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Disable Spew Logs",
         "Category":"TShock Server Settings",
         "Description":"Disables sending logs as messages to players with the log permission",
@@ -1001,22 +1208,6 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"$.Settings.DisableSpewLogs",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Disable Tombstones",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Disables tombstone dropping during death for all players",
-        "Keywords":"tombstones, disable",
-        "FieldName":"DisableTombstones",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DisableTombstones",
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
@@ -1169,54 +1360,6 @@
         }
     },
     {
-        "DisplayName":"Ignore Projectile Kill",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Ignores checks to see if a player 'can' kill a projectile",
-        "Keywords":"kill projectile, ignore checks",
-        "FieldName":"IgnoreProjKill",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.IgnoreProjKill",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Ignore Projectile Update",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Ignores checks to see if a player 'can' update a projectile",
-        "Keywords":"update projectile, ignore checks",
-        "FieldName":"IgnoreProjUpdate",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.IgnoreProjUpdate",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Enable Infinite Invasion",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Enables never-ending invasion events. You still need to start the event, such as with the /invade command",
-        "Keywords":"invasion events, never-ending, start event",
-        "FieldName":"InfiniteInvasion",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.InfiniteInvasion",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Kick Empty UUID",
         "Category":"TShock Player Settings",
         "Description":"Kick clients that don't send their UUID to the server",
@@ -1225,6 +1368,22 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"$.Settings.KickEmptyUUID",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Kick On Ban",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If set, kicks players when they get banned",
+        "Keywords":"kick,ban",
+        "FieldName":"KickOnBan",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.KickOnBan",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -1473,54 +1632,6 @@
         }
     },
     {
-        "DisplayName":"RangeChecks",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Enable or disable anti-cheat range checks based on distance between the player and their block placements",
-        "Keywords":"range checks, anti-cheat, distance, block placements",
-        "FieldName":"RangeChecks",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.RangeChecks",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"RegionProtectChests",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Whether or not region protection should apply to chests",
-        "Keywords":"region protection, chests",
-        "FieldName":"RegionProtectChests",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.RegionProtectChests",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Region Protect Gem Locks",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Whether or not region protection should apply to gem locks",
-        "Keywords":"region protection, gem locks",
-        "FieldName":"RegionProtectGemLocks",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.RegionProtectGemLocks",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Remember Leave Position",
         "Category":"TShock Player Settings",
         "Description":"Remembers where a player left off, based on their IP. Does not persist through server restarts",
@@ -1563,22 +1674,6 @@
         "ParamFieldName":"$.Settings.RestApiEnabled",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Spawn Protection",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Prevents tiles from being placed within SpawnProtectionRadius of the default spawn",
-        "Keywords":"prevent, tiles, placed, spawn protection radius, default spawn",
-        "FieldName":"SpawnProtection",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.SpawnProtection",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
         "EnumValues":{
             "False":"false",
             "True":"true"
@@ -1676,19 +1771,6 @@
         "ParamFieldName":"$.Settings.DefaultRegistrationGroupName",
         "IncludeInCommandLine":false,
         "DefaultValue":"default",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Force Time",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Forces the world time to be normal, day, or night",
-        "Keywords":"force time, world time, normal, day, night",
-        "FieldName":"ForceTime",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.ForceTime",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"normal",
         "EnumValues":{}
     },
     {
@@ -1824,32 +1906,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Default Maximum Spawns",
-        "Category":"TShock Gameplay Settings",
-        "Description":"The default maximum number of mobs that will spawn per wave. Higher means more mobs in that wave",
-        "Keywords":"default maximum spawns, mobs, waves",
-        "FieldName":"DefaultMaximumSpawns",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DefaultMaximumSpawns",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"5",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Default Spawn Rate",
-        "Category":"TShock Gameplay Settings",
-        "Description":"The delay between waves. Lower values lead to more mobs",
-        "Keywords":"default spawn rate, waves, mobs",
-        "FieldName":"DefaultSpawnRate",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DefaultSpawnRate",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"600",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Heal Other Threshold",
         "Category":"TShock Player Settings",
         "Description":"Disables a player if this number of HealOtherPlayer packets is sent within 1 second",
@@ -1860,19 +1916,6 @@
         "ParamFieldName":"$.Settings.HealOtherThreshold",
         "IncludeInCommandLine":false,
         "DefaultValue":"50",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Invasion Multiplier",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Determines the size of invasion events. The equation for calculating invasion size is 100 + (multiplier * (number of active players with greater than 200 health))",
-        "Keywords":"invasion multiplier, invasion events, players, health",
-        "FieldName":"InvasionMultiplier",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.InvasionMultiplier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
         "EnumValues":{}
     },
     {
@@ -1941,20 +1984,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Maximum Range For Disabled",
-        "Category":"TShock Player Settings",
-        "Description":"The maximum distance, in tiles, that disabled players can move from",
-        "Keywords":"max range for disabled, tiles, disabled players",
-        "FieldName":"MaxRangeForDisabled",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.MaxRangeForDisabled",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"10",
-        "Suffix":"tiles",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Minimum Password Length",
         "Category":"TShock Security Settings",
         "Description":"The minimum password length for new user accounts",
@@ -2014,19 +2043,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"RestApiPort",
-        "Category":"TShock Server Settings",
-        "Description":"The port used by the REST API",
-        "Keywords":"REST API port, port, server",
-        "FieldName":"RestApiPort",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.RestApiPort",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"7878",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"RESTMaximumRequestsPerInterval",
         "Category":"TShock Server Settings",
         "Description":"The maximum REST requests in the bucket before denying requests",
@@ -2053,19 +2069,6 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
         "Suffix":"minutes",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Spawn Protection Radius",
-        "Category":"TShock Gameplay Settings",
-        "Description":"The tile radius around the spawn tile that is protected by the SpawnProtection setting",
-        "Keywords":"spawn protection radius, spawn tile, tile radius",
-        "FieldName":"SpawnProtectionRadius",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.SpawnProtectionRadius",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"10",
         "EnumValues":{}
     },
     {
