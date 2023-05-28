@@ -309,19 +309,26 @@
         "IsFlagArgument":false,
         "ParamFieldName":"lang",
         "IncludeInCommandLine":true,
-        "DefaultValue":"en-US",
+        "DefaultValue":"en_US",
         "EnumValues":{
-            "en-US":"English (default)",
-            "de-DE":"German",
-            "it-IT":"Italian",
-            "fr-FR":"French",
-            "es-ES":"Spanish",
-            "ru-RU":"Russian",
-            "ru-UA":"Ukrainian",
-            "zh-Hans":"Chinese",
-            "pt-PT":"Portuguese",
-            "pt-BR":"Portuguese (Brazil)",
-            "pl-PL":"Polish"
+            "en_US":"English (default)",
+            "en_PT":"Pirate English",
+            "fr_QC":"Canadian French",
+            "zh_Hans":"Chinese",
+            "zh_CN":"Chinese (simplified)",
+            "fr_FR":"French",
+            "de_DE":"German",
+            "id_ID":"Indonesian",
+            "it_IT":"Italian",
+            "ja_JP":"Japanese",
+            "pl_PL":"Polish",
+            "pt_PT":"Portuguese",
+            "pt_BR":"Portuguese (Brazil)",
+            "ru_RU":"Russian",
+            "es_ES":"Spanish",
+            "tok":"Toki Pona",
+            "tr_TR":"Turkish",
+            "ru_UA":"Ukrainian"
         }
     },
     {
@@ -823,15 +830,19 @@
     {
         "DisplayName":"Force Time",
         "Category":"TShock Gameplay Settings",
-        "Description":"Forces the world time to be normal, day, or night",
-        "Keywords":"force time, world time, normal, day, night",
+        "Description":"Forces the world time to the specified setting",
+        "Keywords":"force,time,day,night,forcetime",
         "FieldName":"ForceTime",
-        "InputType":"text",
+        "InputType":"enum",
         "IsFlagArgument":false,
         "ParamFieldName":"$.Settings.ForceTime",
         "IncludeInCommandLine":false,
         "DefaultValue":"normal",
-        "EnumValues":{}
+        "EnumValues":{
+            "normal":"Normal (default)",
+            "day":"Day",
+            "night":"Night"
+        }
     },
     {
         "DisplayName":"Disable PvP Invisibility",
@@ -928,7 +939,7 @@
         }
     },
     {
-        "DisplayName":"Allow Cut Tiles and Breakables",
+        "DisplayName":"Allow Cut Tiles And Breakables",
         "Category":"TShock Gameplay Settings",
         "Description":"Allows players to break temporary tiles (grass, pots, etc) where they cannot usually build",
         "Keywords":"",
@@ -1280,22 +1291,6 @@
         }
     },
     {
-        "DisplayName":"Enable Token Endpoint Authentication",
-        "Category":"TShock Server Settings",
-        "Description":"Whether or not to require token authentication to use the public REST API endpoints",
-        "Keywords":"token authentication, REST API, endpoints",
-        "FieldName":"EnableTokenEndpointAuthentication",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.EnableTokenEndpointAuthentication",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Force Halloween",
         "Category":"TShock Gameplay Settings",
         "Description":"Forces Halloween-only events to occur all year",
@@ -1552,22 +1547,6 @@
         }
     },
     {
-        "DisplayName":"Log Rest",
-        "Category":"TShock Server Settings",
-        "Description":"Whether or not to log REST API connections",
-        "Keywords":"log, REST API, connections",
-        "FieldName":"LogRest",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.LogRest",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Prevent Banned ItemSpawn",
         "Category":"TShock Gameplay Settings",
         "Description":"Prevent banned items from being spawned or given with commands",
@@ -1656,22 +1635,6 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"$.Settings.RequireLogin",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Enable Rest API",
-        "Category":"TShock Server Settings",
-        "Description":"Enable or disable the REST API",
-        "Keywords":"enable, disable, REST API",
-        "FieldName":"RestApiEnabled",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.RestApiEnabled",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -2043,35 +2006,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"RESTMaximumRequestsPerInterval",
-        "Category":"TShock Server Settings",
-        "Description":"The maximum REST requests in the bucket before denying requests",
-        "Keywords":"REST maximum requests, REST requests, server",
-        "FieldName":"RESTMaximumRequestsPerInterval",
-        "InputType":"number",
-        "MinValue":"5",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.RESTMaximumRequestsPerInterval",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"5",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"RESTRequestBucketDecreaseIntervalMinutes",
-        "Category":"TShock Server Settings",
-        "Description":"How often in minutes the REST requests bucket is decreased by one",
-        "Keywords":"REST request bucket decrease interval, REST requests, server",
-        "FieldName":"RESTRequestBucketDecreaseIntervalMinutes",
-        "InputType":"number",
-        "MinValue":"1",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.RESTRequestBucketDecreaseIntervalMinutes",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "Suffix":"minutes",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Statue Spawn 200",
         "Category":"TShock Gameplay Settings",
         "Description":"How many NPCs a statue can spawn within 200 pixels(?) before it stops spawning",
@@ -2160,6 +2094,83 @@
         "ParamFieldName":"$.Settings.TilePlaceThreshold",
         "IncludeInCommandLine":false,
         "DefaultValue":"32",
+        "EnumValues":{}
+    },
+       {
+        "DisplayName":"Enable Rest API",
+        "Category":"TShock API Settings",
+        "Description":"Enable or disable the REST API",
+        "Keywords":"enable, disable, REST API",
+        "FieldName":"RestApiEnabled",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.RestApiEnabled",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Log REST API Connections",
+        "Category":"TShock API Settings",
+        "Description":"Whether or not to log REST API connections",
+        "Keywords":"log, REST API, connections",
+        "FieldName":"LogRest",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.LogRest",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable REST API Token Endpoint Authentication",
+        "Category":"TShock API Settings",
+        "Description":"Whether or not to require token authentication to use the public REST API endpoints",
+        "Keywords":"token authentication, REST API, endpoints",
+        "FieldName":"EnableTokenEndpointAuthentication",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.EnableTokenEndpointAuthentication",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Maximum REST API Requests Per Interval",
+        "Category":"TShock API Settings",
+        "Description":"Sets the maximum REST API requests in the bucket before denying requests",
+        "Keywords":"REST maximum requests, REST requests, server",
+        "FieldName":"RESTMaximumRequestsPerInterval",
+        "InputType":"number",
+        "MinValue":"5",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.RESTMaximumRequestsPerInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"5",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"REST API Request Bucket Decrease Interval",
+        "Category":"TShock API Settings",
+        "Description":"Sets how often in minutes the REST API requests bucket is decreased by one",
+        "Keywords":"REST request bucket decrease interval, REST requests, server",
+        "FieldName":"RESTRequestBucketDecreaseIntervalMinutes",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.RESTRequestBucketDecreaseIntervalMinutes",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "Suffix":"minutes",
         "EnumValues":{}
     },
     {
