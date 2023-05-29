@@ -410,6 +410,22 @@
         }
     },
     {
+        "DisplayName":"Enable Debug Logs",
+        "Category":"TShock Server Settings",
+        "Description":"If enabled, the server will output debug level messages related to system operation",
+        "Keywords":"debug,logs,debuglogs",
+        "FieldName":"DebugLogs",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.DebugLogs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Disable UPnP",
         "Category":"TShock Server Settings",
         "Description":"If set, disables UPnP (Universal Plug and Play) on the server",
@@ -872,8 +888,8 @@
     {
         "DisplayName":"Allow Cut Tiles And Breakables",
         "Category":"TShock Gameplay Settings",
-        "Description":"Allows players to break temporary tiles (grass, pots, etc) where they cannot usually build",
-        "Keywords":"",
+        "Description":"If enabled, allows players to break temporary tiles (grass, pots, etc) where they cannot usually build",
+        "Keywords":"break,cut,temporary,tiles,breakables,allowcuttilesandbreakables",
         "FieldName":"AllowCutTilesAndBreakables",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -984,8 +1000,8 @@
     {
         "DisplayName":"Allow Allowed Groups To Spawn Banned Items",
         "Category":"TShock Gameplay Settings",
-        "Description":"Allows groups on the banned item allowed list to spawn banned items even if PreventBannedItemSpawn is set to true",
-        "Keywords":"",
+        "Description":"If enabled, allows groups on the banned item allowed list to spawn banned items even if Prevent Banned Item Spawn is enabled",
+        "Keywords":"allowed,groups,banned,items,spawn,allowallowedgroupstospawnbanneditems",
         "FieldName":"AllowAllowedGroupsToSpawnBannedItems",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -997,34 +1013,21 @@
             "True":"true"
         }
     },
-        {
-        "DisplayName":"Enable Whitelist",
-        "Category":"TShock Player Settings",
-        "Description":"If set, enables the server's whitelist based on IP addresses in whitelist.txt in the tshock directory",
-        "Keywords":"enable,whitelist",
-        "FieldName":"EnableWhitelist",
+    {
+        "DisplayName":"Anonymous Boss Invasions",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If enabled, boss spawning and invasion starts will be announced",
+        "Keywords":"anonymous,boss,spawning,invasion,start,announce,anonymousbossinvasions",
+        "FieldName":"AnonymousBossInvasions",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.EnableWhitelist",
+        "ParamFieldName":"$.Settings.AnonymousBossInvasions",
         "IncludeInCommandLine":false,
-        "DefaultValue":"false",
+        "DefaultValue":"true",
         "EnumValues":{
             "False":"false",
             "True":"true"
         }
-    },
-    {
-        "DisplayName":"Whitelist Kick Reason",
-        "Category":"TShock Player Settings",
-        "Description":"Sets the reason given when kicking players for not being on the whitelist",
-        "Keywords":"whitelist,kick,reason,whitelistkickreason",
-        "FieldName":"WhitelistKickReason",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.WhitelistKickReason",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"You are not on the whitelist.",
-        "EnumValues":{}
     },
     {
         "DisplayName":"Player Limit",
@@ -1071,6 +1074,177 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Whitelist",
+        "Category":"TShock Player Settings",
+        "Description":"If set, enables the server's whitelist based on IP addresses in whitelist.txt in the tshock directory",
+        "Keywords":"enable,whitelist",
+        "FieldName":"EnableWhitelist",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.EnableWhitelist",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Whitelist Kick Reason",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the reason given when kicking players for not being on the whitelist",
+        "Keywords":"whitelist,kick,reason,whitelistkickreason",
+        "FieldName":"WhitelistKickReason",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.WhitelistKickReason",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"You are not on the whitelist.",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Full With No Reserved Slots Reason",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the reason given when kicking players that attempt to join while the server is full with no reserved slots available",
+        "Keywords":"server,full,reason,reserved,slots,serverfullnoreservedreason",
+        "FieldName":"ServerFullNoReservedReason",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.ServerFullNoReservedReason",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Server is full. No reserved slots open.",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Full Reason",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the reason given when kicking players that attempt to join while the server is full",
+        "Keywords":"server,full,reason,serverfullreason",
+        "FieldName":"ServerFullReason",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.ServerFullReason",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Server is full.",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Kick On Mediumcore Death",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, mediumcore players will be kicked on death",
+        "Keywords":"kick,mediumcore,death,kickonmediumcoredeath",
+        "FieldName":"KickOnMediumcoreDeath",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.KickOnMediumcoreDeath",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Mediumcore Kick Reason",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the reason given when kicking a mediumcore players on death",
+        "Keywords":"mediumcore,kick,death,reason,mediumcorekickreason",
+        "FieldName":"MediumcoreKickReason",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.MediumcoreKickReason",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Death results in a kick.",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Ban On Mediumcore Death",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, mediumcore players will be banned on death",
+        "Keywords":"ban,mediumcore,death,banonmediumcoredeath",
+        "FieldName":"BanOnMediumcoreDeath",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.BanOnMediumcoreDeath",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Mediumcore Ban Reason",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the reason given when banning a mediumcore player on death",
+        "Keywords":"mediumcore,ban,death,reason,mediumcorebanreason",
+        "FieldName":"MediumcoreBanReason",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.MediumcoreBanReason",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Death results in a ban.",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Kick On Hardcore Death",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, hardcore players will be kicked on death",
+        "Keywords":"kick,hardcore,death,kickonhardcoredeath",
+        "FieldName":"KickOnHardcoreDeath",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.KickOnHardcoreDeath",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Hardcore Kick Reason",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the reason given when kicking a hardcore player on death",
+        "Keywords":"hardcore,kick,death,reason,hardcorekickreason",
+        "FieldName":"HardcoreKickReason",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.HardcoreKickReason",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Death results in a kick.",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Ban On Hardcore Death",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, hardcore players will be banned on death",
+        "Keywords":"ban,hardcore,death,banonhardcoredeath",
+        "FieldName":"BanOnHardcoreDeath",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.BanOnHardcoreDeath",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Hardcore Ban Reason",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the reason given when banning a hardcore player on death",
+        "Keywords":"hardcore,ban,reason,hardcorebanreason",
+        "FieldName":"HardcoreBanReason",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.HardcoreBanReason",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"Death results in a ban.",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Allow Login Any Username",
         "Category":"TShock Player Settings",
         "Description":"Allows users to login to any account even if the username doesn't match their character name",
@@ -1103,152 +1277,38 @@
         }
     },
     {
-        "DisplayName":"Anonymous Boss Invasions",
+        "DisplayName":"Respawn Seconds",
         "Category":"TShock Gameplay Settings",
-        "Description":"Whether or not to announce boss spawning or invasion starts",
-        "Keywords":"",
-        "FieldName":"AnonymousBossInvasions",
-        "InputType":"checkbox",
+        "Description":"Sets the number of seconds a player must wait before being respawned. Use at your own risk",
+        "Keywords":"respawn,seconds,respawnseconds",
+        "FieldName":"RespawnSeconds",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"15",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.AnonymousBossInvasions",
+        "ParamFieldName":"$.Settings.RespawnSeconds",
         "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Kick On Mediumcore Death",
-        "Category":"TShock Player Settings",
-        "Description":"Whether or not to kick mediumcore players on death",
-        "Keywords":"kick, mediumcore players, death",
-        "FieldName":"KickOnMediumcoreDeath",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.KickOnMediumcoreDeath",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Mediumcore Kick Reason",
-        "Category":"TShock Player Settings",
-        "Description":"The reason given if kicking a mediumcore players on death",
-        "Keywords":"mediumcore kick reason, kicking, mediumcore players, death",
-        "FieldName":"MediumcoreKickReason",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.MediumcoreKickReason",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"Death results in a kick.",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"seconds",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Mediumcore Ban Reason",
-        "Category":"TShock Player Settings",
-        "Description":"The reason given if banning a mediumcore player on death",
-        "Keywords":"mediumcore ban reason, banning, mediumcore players, death",
-        "FieldName":"MediumcoreBanReason",
-        "InputType":"text",
+        "DisplayName":"Respawn Boss Seconds",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Sets the number of seconds a player must wait before being respawned if there is a boss nearby. Use at your own risk",
+        "Keywords":"respawn,seconds,boss,respawnbossseconds",
+        "FieldName":"RespawnBossSeconds",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"30",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.MediumcoreBanReason",
+        "ParamFieldName":"$.Settings.RespawnBossSeconds",
         "IncludeInCommandLine":false,
-        "DefaultValue":"Death results in a ban",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"seconds",
         "EnumValues":{}
-    },
-    {
-        "DisplayName":"Ban On Mediumcore Death",
-        "Category":"TShock Player Settings",
-        "Description":"Whether or not to ban mediumcore players on death",
-        "Keywords":"ban, mediumcore, death, player",
-        "FieldName":"BanOnMediumcoreDeath",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.BanOnMediumcoreDeath",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Kick On Hardcore Death",
-        "Category":"TShock Player Settings",
-        "Description":"Whether or not to kick hardcore players on death",
-        "Keywords":"kick, hardcore players, death",
-        "FieldName":"KickOnHardcoreDeath",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.KickOnHardcoreDeath",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Hardcore Kick Reason",
-        "Category":"TShock Player Settings",
-        "Description":"Sets the reason given when kicking hardcore players on death",
-        "Keywords":"hardcore,kick,death,reason,hardcorekickreason",
-        "FieldName":"HardcoreKickReason",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.HardcoreKickReason",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"Death results in a kick.",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Ban On Hardcore Death",
-        "Category":"TShock Player Settings",
-        "Description":"If enabled, hardcore players will be banned on death",
-        "Keywords":"ban,hardcore,death,banonhardcoredeath",
-        "FieldName":"BanOnHardcoreDeath",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.BanOnHardcoreDeath",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Hardcore Ban Reason",
-        "Category":"TShock Player Settings",
-        "Description":"The reason given when banning hardcore players on death",
-        "Keywords":"hardcore ban reason, banning, hardcore players, death",
-        "FieldName":"HardcoreBanReason",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.HardcoreBanReason",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"Death results in a ban.",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Debug Logs",
-        "Category":"TShock Server Settings",
-        "Description":"Whether or not the server should output debug level messages related to system operation",
-        "Keywords":"debug, logs",
-        "FieldName":"DebugLogs",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DebugLogs",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
     },
     {
         "DisplayName":"Disable Custom Death Messages",
@@ -1793,32 +1853,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Server Full No Reserved Reason",
-        "Category":"TShock Server Settings",
-        "Description":"The reason given when kicking players that attempt to join while the server is full with no reserved slots available",
-        "Keywords":"server full no reserved reason, kicking, players, server full, reserved slots",
-        "FieldName":"ServerFullNoReservedReason",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.ServerFullNoReservedReason",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"Server is full. No reserved slots open.",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Server Full Reason",
-        "Category":"TShock Server Settings",
-        "Description":"The reason given when kicking players that attempt to join while the server is full",
-        "Keywords":"server full reason, kicking, players, server full",
-        "FieldName":"ServerFullReason",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.ServerFullReason",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"Server is full.",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"SuperAdmin Chat Prefix",
         "Category":"TShock Gameplay Settings",
         "Description":"The superadmin chat prefix",
@@ -1978,38 +2012,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Respawn Boss Seconds",
-        "Category":"TShock Player Settings",
-        "Description":"The number of seconds a player must wait before being respawned if there is a boss nearby. Use at your own risk",
-        "Keywords":"respawn boss seconds, player, boss, respawn",
-        "FieldName":"RespawnBossSeconds",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"30",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.RespawnBossSeconds",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Respawn Seconds",
-        "Category":"TShock Player Settings",
-        "Description":"The number of seconds a player must wait before being respawned. Use at your own risk",
-        "Keywords":"respawn seconds, player, respawn",
-        "FieldName":"RespawnSeconds",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"15",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.RespawnSeconds",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Statue Spawn 200",
         "Category":"TShock Gameplay Settings",
         "Description":"How many NPCs a statue can spawn within 200 pixels(?) before it stops spawning",
@@ -2160,6 +2162,7 @@
         "ParamFieldName":"$.Settings.RESTMaximumRequestsPerInterval",
         "IncludeInCommandLine":false,
         "DefaultValue":"5",
+        "Placeholder":"5",
         "EnumValues":{}
     },
     {
@@ -2174,6 +2177,7 @@
         "ParamFieldName":"$.Settings.RESTRequestBucketDecreaseIntervalMinutes",
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
+        "Placeholder":"1",
         "Suffix":"minutes",
         "EnumValues":{}
     },
