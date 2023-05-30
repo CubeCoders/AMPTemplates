@@ -17,7 +17,7 @@
         "Category":"Server Settings",
         "Description":"",
         "Keywords":"",
-        "FieldName":"$GamePort",
+        "FieldName":"$ServerPort",
         "InputType":"number",
         "IsFlagArgument":false,
         "Hidden":true,
@@ -26,11 +26,25 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"HTTP Port",
+    
+        "DisplayName":"Listen Port",
         "Category":"Server Settings",
         "Description":"",
         "Keywords":"",
-        "FieldName":"$HTTPPort",
+        "FieldName":"$ServerPort",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "Hidden":true,
+        "ParamFieldName":"$.Server.ListenPort",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"HTTP Matchmaking Port",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$ServerPort",
         "InputType":"number",
         "IsFlagArgument":false,
         "Hidden":true,
@@ -52,22 +66,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Listen Port",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$GamePort",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "Hidden":true,
-        "ParamFieldName":"$.Server.ListenPort",
-        "IncludeInCommandLine":false,
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Build Stream",
         "Category":"Server Settings",
-        "Description":"Sets the build stream for the server - either the mainline release stream, or the nightly (CI) stream. Back up configuration and update the server!",
+        "Description":"Sets the build stream for the server - either the mainline release stream, or the nightly (CI) stream. The Server Version also needs to be set. Back up configuration and update the server!",
         "Keywords":"build,stream",
         "FieldName":"BuildStream",
         "InputType":"enum",
@@ -109,10 +110,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"HTTP Matchmaking Configuration",
+        "DisplayName":"Client and HTTP Matchmaking Configuration",
         "Category":"Server Settings",
-        "Description":"From late 2022, Among Us requires [HTTP matchmaking](https://github.com/Impostor/Impostor.Http#impostorhttp) for clients to connect. Set the desired HTTP Plugin Version to download, and configure plugins/config_http.json as needed",
-        "Keywords":"http,matchmaking,plugin,configuration",
+        "Description":"For a player to connect to the server, they must [configure their Among Us client](https://impostor.github.io/Impostor/). In addition, from late 2022, Among Us requires [HTTP matchmaking](https://github.com/Impostor/Impostor.Http#impostorhttp) for clients to connect. Set the desired HTTP Plugin Version to download, and configure the other Impostor.Http plugin settings as needed",
+        "Keywords":"client,configuration,http,matchmaking,plugin",
         "FieldName":"",
         "InputType":"hidden",
         "IsFlagArgument":false,
@@ -135,15 +136,46 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Client Configuration",
+        "DisplayName":"HTTP Matchmaking Plugin Binding",
         "Category":"Server Settings",
-        "Description":"For a player to connect to the server, they must [configure their Among Us client](https://impostor.github.io/Impostor/)",
-        "Keywords":"client,configuration",
-        "FieldName":"",
-        "InputType":"hidden",
+        "Description":"Sets the binding of the Impostor.Http plugin server. Use 0.0.0.0 if clients will connect to the plugin server directly. Otherwise you can use 127.0.0.1 or a local IP on the host, as appropriate, if using a reverse proxy for the plugin server traffic (preferred)",
+        "Keywords":"http,matchmaking,plugin,binding,listenip",
+        "FieldName":"HttpServerListenIp",
+        "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"",
+        "ParamFieldName":"$.HttpServer.ListenIp",
         "IncludeInCommandLine":false,
+        "DefaultValue":"0.0.0.0",
+        "Placeholder":"0.0.0.0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable HTTPS For HTTP Matchmaking Plugin",
+        "Category":"Server Settings",
+        "Description":"If set, the Impostor.Http plugin server will use its own HTTPS (encrypted HTTP) rather than plain HTTP. Requires the HTTP Matchmaking Plugin Certificate Path to be set. Using a reverse proxy to provide HTTPS is preferred instead of using this setting. Note: HTTPS is required for iOS/Android devices to connect",
+        "Keywords":"http,matchmaking,plugin,https,secure,usehttps",
+        "FieldName":"HttpServerUseHttps",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.HttpServer.UseHttps",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"HTTP Matchmaking Plugin Certificate Path",
+        "Category":"Server Settings",
+        "Description":"Sets the path to an SSL certificate (in PFX format) to enable the Impostor.Http plugin server to use its own HTTPS",
+        "Keywords":"http,matchmaking,plugin,https,secure,certificate,path,certificatepath",
+        "FieldName":"HttpServerCertificatePath",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.HttpServer.CertificatePath",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
