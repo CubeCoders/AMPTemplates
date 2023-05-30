@@ -775,7 +775,7 @@
     {
         "DisplayName":"Disable Prime Bombs",
         "Category":"TShock Gameplay Settings",
-        "Description":"If set, disables Skeletron Prime Bombs from spawning. Useful for preventing unwanted world destruction on \"for the worthy\" seed world",
+        "Description":"If set, disables Skeletron Prime Bombs from spawning. Useful for preventing unwanted world destruction on \"for the worthy\" seed worlds",
         "Keywords":"skeletron,prime,bombs,disable,disableprimebombs",
         "FieldName":"DisablePrimeBombs",
         "InputType":"checkbox",
@@ -980,6 +980,96 @@
         }
     },
     {
+        "DisplayName":"Statue Spawn Within 200 Pixels",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Sets how many NPCs a statue can spawn within 200 pixels before it stops spawning",
+        "Keywords":"statuespawn,npcs,statuespawn200",
+        "FieldName":"StatueSpawn200",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.StatueSpawn200",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"3",
+        "Placeholder":"3",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Statue Spawn Within 600 Pixels",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Sets how many NPCs a statue can spawn within 600 pixels before it stops spawning",
+        "Keywords":"statuespawn,npcs,statuespawn600",
+        "FieldName":"StatueSpawn600",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.StatueSpawn600",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"6",
+        "Placeholder":"6",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Statue Spawn Within World",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Sets how many NPCs a statue can spawn before it stops spawning",
+        "Keywords":"statuespawn,npcs,statuespawnworld",
+        "FieldName":"StatueSpawnWorld",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.StatueSpawnWorld",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"10",
+        "Placeholder":"10",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Prevent Banned Item Spawn",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If enabled, prevents banned items from being spawned or given with commands",
+        "Keywords":"prevent,banned,item,spawn,given,preventbanneditemspawn",
+        "FieldName":"PreventBannedItemSpawn",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.PreventBannedItemSpawn",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Prevent Dead Modification",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If enabled, prevents players from interacting with the world while they are dead",
+        "Keywords":"prevent,interaction,dead,preventdeadmodification",
+        "FieldName":"PreventDeadModification",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.PreventDeadModification",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Prevent Invalid Place Style",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If enabled, prevents players from placing tiles with an invalid style",
+        "Keywords":"prevent,tiles,invalid,style,preventinvalidplacestyle",
+        "FieldName":"PreventInvalidPlaceStyle",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.PreventInvalidPlaceStyle",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Force Christmas",
         "Category":"TShock Gameplay Settings",
         "Description":"If enabled, forces Christmas-only events to occur all year",
@@ -1038,6 +1128,37 @@
         "ParamFieldName":"$.Settings.AnonymousBossInvasions",
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Bomb Explosion Radius",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Set the range over which a bomb can affect tiles from its detonation point",
+        "Keywords":"bomb,explosion,radius,bombexplosionradius",
+        "FieldName":"BombExplosionRadius",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.BombExplosionRadius",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"5",
+        "Placeholder":"5",
+        "Suffix":"tiles",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Give Items Directly",
+        "Category":"TShock Gameplay Settings",
+        "Description":"If enabled, items given to players will be inserted directly into their inventory. Requires SSC. Otherwise, items given to players will spawn as dropped items. Experimental - may not work correctly or result in item loss",
+        "Keywords":"giveitems,directly,inventory,giveitemsdirectly",
+        "FieldName":"GiveItemsDirectly",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.GiveItemsDirectly",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
         "EnumValues":{
             "False":"false",
             "True":"true"
@@ -1141,6 +1262,161 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"Server is full.",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Default Registration Group Name",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the default group name to place newly registered users under",
+        "Keywords":"defaultregistration,group,defaultregistrationgroupname",
+        "FieldName":"DefaultRegistrationGroupName",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.DefaultRegistrationGroupName",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"default",
+        "Placeholder":"default",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Require Login Or Registration",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, require all players to register or login before being allowed to play",
+        "Keywords":"require,players,register,login,requirelogin",
+        "FieldName":"RequireLogin",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.RequireLogin",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Login With Any Username",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, allows players to login to any account even if the username doesn't match their character name",
+        "Keywords":"allow,login,username,allowloginanyusername",
+        "FieldName":"AllowLoginAnyUsername",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.AllowLoginAnyUsername",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Registration With Any Username",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, allows players to register a username that doesn't necessarily match their character name",
+        "Keywords":"allow,register,registration,username,allowregisteranyusername",
+        "FieldName":"AllowRegisterAnyUsername",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.AllowRegisterAnyUsername",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Maximum Login Attempts",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the number of failed login attempts before kicking a player",
+        "Keywords":"maximum,login,attempts,maximumloginattempts",
+        "FieldName":"MaximumLoginAttempts",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.MaximumLoginAttempts",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"3",
+        "Placeholder":"3",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Kick Proxy Users",
+        "Category":"TShock Player Settings",
+        "Description":"If set, and Geo IP is enabled, users identified as being under a proxy will be kicked",
+        "Keywords":"kick,users,proxy,geoip,kickproxyusers",
+        "FieldName":"KickProxyUsers",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.KickProxyUsers",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Disable Default IP Bans",
+        "Category":"TShock Player Settings",
+        "Description":"If set, disables IP bans by default, if no arguments are passed to the ban command",
+        "Keywords":"disable,default,ip,ban,disabledefaultipban",
+        "FieldName":"DisableDefaultIPBan",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.DisableDefaultIPBan",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Minimum Password Length",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the minimum password length for new user accounts",
+        "Keywords":"minimum,password,length,accounts,minimumpasswordlength",
+        "FieldName":"MinimumPasswordLength",
+        "InputType":"number",
+        "MinValue":"4",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.MinimumPasswordLength",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"4",
+        "Placeholder":"4",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Disable UUID Login",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, prevents players from being able to login with their client UUID",
+        "Keywords":"disable,uuid,login,disableuuidlogin",
+        "FieldName":"DisableUUIDLogin",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.DisableUUIDLogin",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Kick Empty UUID",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, clients that don't send their UUID to the server will be kicked",
+        "Keywords":"kick,empty,uuid,kickemptyuuid",
+        "FieldName":"KickEmptyUUID",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.KickEmptyUUID",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
         "DisplayName":"Kick On Mediumcore Death",
@@ -1259,41 +1535,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Allow Login Any Username",
+        "DisplayName":"Respawn Period",
         "Category":"TShock Player Settings",
-        "Description":"Allows users to login to any account even if the username doesn't match their character name",
-        "Keywords":"",
-        "FieldName":"AllowLoginAnyUsername",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.AllowLoginAnyUsername",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Allow Register Any Username",
-        "Category":"TShock Player Settings",
-        "Description":"Allows users to register a username that doesn't necessarily match their character name",
-        "Keywords":"",
-        "FieldName":"AllowRegisterAnyUsername",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.AllowRegisterAnyUsername",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Respawn Seconds",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Sets the number of seconds a player must wait before being respawned. Use at your own risk",
+        "Description":"Sets the period a player must wait before being respawned. Use at your own risk",
         "Keywords":"respawn,seconds,respawnseconds",
         "FieldName":"RespawnSeconds",
         "InputType":"number",
@@ -1308,9 +1552,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Respawn Boss Seconds",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Sets the number of seconds a player must wait before being respawned if there is a boss nearby. Use at your own risk",
+        "DisplayName":"Respawn Boss Period",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the period a player must wait before being respawned if there is a boss nearby. Use at your own risk",
         "Keywords":"respawn,seconds,boss,respawnbossseconds",
         "FieldName":"RespawnBossSeconds",
         "InputType":"number",
@@ -1325,6 +1569,34 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Maximum HP",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the maximum HP a player can have, before equipment buffs",
+        "Keywords":"max,hp,maxhp",
+        "FieldName":"MaxHP",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.MaxHP",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"500",
+        "Placeholder":"500",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum MP",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the maximum MP a player can have, before equipment buffs",
+        "Keywords":"max,mp,maxmp",
+        "FieldName":"MaxMP",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.MaxMP",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"200",
+        "Placeholder":"200",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Disable Custom Death Messages",
         "Category":"TShock Gameplay Settings",
         "Description":"Allows you to disable or enable protection against creating custom messages with death. Created for developers who came up with a more original solution to this problem",
@@ -1335,22 +1607,6 @@
         "ParamFieldName":"$.Settings.DisableCustomDeathMessages",
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Disable Default IP Ban",
-        "Category":"TShock Server Settings",
-        "Description":"Disables IP bans by default, if no arguments are passed to the ban command",
-        "Keywords":"default IP ban, disable",
-        "FieldName":"DisableDefaultIPBan",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DisableDefaultIPBan",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
         "EnumValues":{
             "False":"false",
             "True":"true"
@@ -1421,22 +1677,6 @@
         }
     },
     {
-        "DisplayName":"Disable UUID Login",
-        "Category":"TShock Server Settings",
-        "Description":"Prevents users from being able to login with their client UUID",
-        "Keywords":"UUID login, disable",
-        "FieldName":"DisableUUIDLogin",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DisableUUIDLogin",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Display IP To Admins",
         "Category":"TShock Server Settings",
         "Description":"Displays a player's IP on join to users with the log permission",
@@ -1485,22 +1725,6 @@
         }
     },
     {
-        "DisplayName":"Give Items Directly",
-        "Category":"TShock Gameplay Settings",
-        "Description":"If set to true, items given to players will be inserted directly into their inventory. Requires SSC. Otherwise, items given to players will spawn as dropped items. Experimental feature. May not work correctly or result in item loss",
-        "Keywords":"give items, direct, inventory, dropped items",
-        "FieldName":"GiveItemsDirectly",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.GiveItemsDirectly",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Ignore Chest Stacks On Load",
         "Category":"TShock Gameplay Settings",
         "Description":"Allows stacks in chests to go beyond the stack limit during world loading",
@@ -1509,22 +1733,6 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"$.Settings.IgnoreChestStacksOnLoad",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Kick Empty UUID",
-        "Category":"TShock Player Settings",
-        "Description":"Kick clients that don't send their UUID to the server",
-        "Keywords":"kick, clients, UUID",
-        "FieldName":"KickEmptyUUID",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.KickEmptyUUID",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -1661,70 +1869,6 @@
         }
     },
     {
-        "DisplayName":"Kick Proxy Users",
-        "Category":"TShock Player Settings",
-        "Description":"If GeoIP is enabled, this will kick users identified as being under a proxy",
-        "Keywords":"kick, users, proxy, GeoIP",
-        "FieldName":"KickProxyUsers",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.KickProxyUsers",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Prevent Banned ItemSpawn",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Prevent banned items from being spawned or given with commands",
-        "Keywords":"prevent, banned items, spawn, commands",
-        "FieldName":"PreventBannedItemSpawn",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.PreventBannedItemSpawn",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Prevent Dead Modification",
-        "Category":"TShock Player Settings",
-        "Description":"Prevent players from interacting with the world while they are dead",
-        "Keywords":"prevent, players, interaction, world, dead",
-        "FieldName":"PreventDeadModification",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.PreventDeadModification",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Prevent Invalid Place Style",
-        "Category":"TShock Player Settings",
-        "Description":"Prevents players from placing tiles with an invalid style",
-        "Keywords":"prevent, players, placing tiles, invalid style",
-        "FieldName":"PreventInvalidPlaceStyle",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.PreventInvalidPlaceStyle",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Proj Ignore Shrapnel",
         "Category":"TShock Gameplay Settings",
         "Description":"Whether or not to ignore shrapnel from crystal bullets for the projectile threshold count",
@@ -1749,22 +1893,6 @@
         "InputType":"checkbox",
         "IsFlagArgument":false,
         "ParamFieldName":"$.Settings.RememberLeavePos",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Require Login",
-        "Category":"TShock Player Settings",
-        "Description":"Require all players to register or login before being allowed to play",
-        "Keywords":"require, players, register, login, play",
-        "FieldName":"RequireLogin",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.RequireLogin",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -1854,32 +1982,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Default Registration GroupName",
-        "Category":"TShock Player Settings",
-        "Description":"The default group name to place newly registered users under",
-        "Keywords":"default registration group name, newly registered users",
-        "FieldName":"DefaultRegistrationGroupName",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DefaultRegistrationGroupName",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"default",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"SuperAdmin Chat Prefix",
-        "Category":"TShock Gameplay Settings",
-        "Description":"The superadmin chat prefix",
-        "Keywords":"superadmin chat prefix",
-        "FieldName":"SuperAdminChatPrefix",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.SuperAdminChatPrefix",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"(Super Admin)",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"SuperAdmin Chat Suffix",
         "Category":"TShock Gameplay Settings",
         "Description":"The superadmin chat suffix",
@@ -1905,19 +2007,6 @@
         "ParamFieldName":"$.Settings.BCryptWorkFactor",
         "IncludeInCommandLine":false,
         "DefaultValue":"7",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Bomb Explosion Radius",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Determines the range in tiles that a bomb can affect tiles from detonation point",
-        "Keywords":"bomb explosion radius, bombs, tiles",
-        "FieldName":"BombExplosionRadius",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.BombExplosionRadius",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"5",
         "EnumValues":{}
     },
     {
@@ -1947,45 +2036,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Maximum HP",
-        "Category":"TShock Player Settings",
-        "Description":"The maximum HP a player can have, before equipment buffs",
-        "Keywords":"max HP, player, equipment buffs",
-        "FieldName":"MaxHP",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.MaxHP",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"500",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Maximum Login Attempts",
-        "Category":"TShock Security Settings",
-        "Description":"Number of failed login attempts before kicking the player",
-        "Keywords":"maximum login attempts, failed login, security",
-        "FieldName":"MaximumLoginAttempts",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.MaximumLoginAttempts",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"3",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Maximum MP",
-        "Category":"TShock Player Settings",
-        "Description":"The maximum MP a player can have, before equipment buffs",
-        "Keywords":"max MP, player, equipment buffs",
-        "FieldName":"MaxMP",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.MaxMP",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"200",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Maximum Projectile Damage",
         "Category":"TShock Gameplay Settings",
         "Description":"The maximum damage a projectile can inflict",
@@ -1999,20 +2049,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Minimum Password Length",
-        "Category":"TShock Security Settings",
-        "Description":"The minimum password length for new user accounts",
-        "Keywords":"minimum password length, password, security",
-        "FieldName":"MinimumPasswordLength",
-        "InputType":"number",
-        "MinValue":"4",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.MinimumPasswordLength",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"4",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Projectile Threshold",
         "Category":"TShock Player Settings",
         "Description":"Disable a player if this number of projectiles is created within 1 second",
@@ -2023,45 +2059,6 @@
         "ParamFieldName":"$.Settings.ProjectileThreshold",
         "IncludeInCommandLine":false,
         "DefaultValue":"50",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Statue Spawn 200",
-        "Category":"TShock Gameplay Settings",
-        "Description":"How many NPCs a statue can spawn within 200 pixels(?) before it stops spawning",
-        "Keywords":"statue spawn, NPCs, statue, pixels",
-        "FieldName":"StatueSpawn200",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.StatueSpawn200",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"3",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Statue Spawn 600",
-        "Category":"TShock Gameplay Settings",
-        "Description":"How many NPCs a statue can spawn within 600 pixels(?) before it stops spawning",
-        "Keywords":"statue spawn, NPCs, statue, pixels",
-        "FieldName":"StatueSpawn600",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.StatueSpawn600",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"6",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Statue Spawn World",
-        "Category":"TShock Gameplay Settings",
-        "Description":"How many NPCs a statue can spawn before it stops spawning",
-        "Keywords":"statue spawn, NPCs, statue",
-        "FieldName":"StatueSpawnWorld",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.StatueSpawnWorld",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"10",
         "EnumValues":{}
     },
     {
@@ -2116,11 +2113,24 @@
         "DefaultValue":"32",
         "EnumValues":{}
     },
-       {
+    {
+        "DisplayName":"SuperAdmin Chat Prefix",
+        "Category":"TShock Gameplay Settings",
+        "Description":"The superadmin chat prefix",
+        "Keywords":"superadmin chat prefix",
+        "FieldName":"SuperAdminChatPrefix",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.SuperAdminChatPrefix",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"(Super Admin)",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Enable Rest API",
         "Category":"TShock API Settings",
-        "Description":"Enable or disable the REST API",
-        "Keywords":"enable, disable, REST API",
+        "Description":"If set, enables the REST API",
+        "Keywords":"enable,rest,api,restapienabled",
         "FieldName":"RestApiEnabled",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -2135,8 +2145,8 @@
     {
         "DisplayName":"Log REST API Connections",
         "Category":"TShock API Settings",
-        "Description":"Whether or not to log REST API connections",
-        "Keywords":"log, REST API, connections",
+        "Description":"If enabled, REST API connections will be logged",
+        "Keywords":"log,rest,api,connections,logrest",
         "FieldName":"LogRest",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -2151,8 +2161,8 @@
     {
         "DisplayName":"Enable REST API Token Endpoint Authentication",
         "Category":"TShock API Settings",
-        "Description":"Whether or not to require token authentication to use the public REST API endpoints",
-        "Keywords":"token authentication, REST API, endpoints",
+        "Description":"If enabled, token authentication will be required to use the public REST API endpoints",
+        "Keywords":"token,authentication,rest,api,enabletokenendpointauthentication",
         "FieldName":"EnableTokenEndpointAuthentication",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -2168,7 +2178,7 @@
         "DisplayName":"Maximum REST API Requests Per Interval",
         "Category":"TShock API Settings",
         "Description":"Sets the maximum REST API requests in the bucket before denying requests",
-        "Keywords":"REST maximum requests, REST requests, server",
+        "Keywords":"rest,api,maximum,requests,interval,restmaximumrequestsperinterval",
         "FieldName":"RESTMaximumRequestsPerInterval",
         "InputType":"number",
         "MinValue":"5",
@@ -2182,8 +2192,8 @@
     {
         "DisplayName":"REST API Request Bucket Decrease Interval",
         "Category":"TShock API Settings",
-        "Description":"Sets how often in minutes the REST API requests bucket is decreased by one",
-        "Keywords":"REST request bucket decrease interval, REST requests, server",
+        "Description":"Sets how often the REST API requests bucket is decreased by one",
+        "Keywords":"rest,api,request,bucket,decrease,interval,restrequestbucketdecreaseintervalminutes",
         "FieldName":"RESTRequestBucketDecreaseIntervalMinutes",
         "InputType":"number",
         "MinValue":"1",
