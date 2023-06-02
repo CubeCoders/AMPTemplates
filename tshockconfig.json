@@ -472,6 +472,22 @@
         }
     },
     {
+        "DisplayName":"Suppress Permission Failure Notices",
+        "Category":"TShock Server Settings",
+        "Description":"If enabled, the server will suppress build permission failure warnings from regions, spawn point, or server edit failure",
+        "Keywords":"suppress,build,permission,failure,warnings,notices,suppresspermissionfailurenotices",
+        "FieldName":"SuppressPermissionFailureNotices",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.SuppressPermissionFailureNotices",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Disable UPnP",
         "Category":"TShock Server Settings",
         "Description":"If set, disables UPnP (Universal Plug and Play) on the server",
@@ -1178,6 +1194,22 @@
         }
     },
     {
+        "DisplayName":"Ignore Chest Stacks On Load",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Allows stacks in chests to go beyond the stack limit during world loading",
+        "Keywords":"chest stacks, load, stack limit",
+        "FieldName":"IgnoreChestStacksOnLoad",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.IgnoreChestStacksOnLoad",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Anonymous Boss Invasions",
         "Category":"TShock Gameplay Settings",
         "Description":"If enabled, boss spawning and invasion starts will be announced",
@@ -1255,6 +1287,32 @@
             "False":"false",
             "True":"true"
         }
+    },
+    {
+        "DisplayName":"Command Specifier",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Specifies which string starts a command. Note: Will not function properly if the string length is bigger than 1",
+        "Keywords":"command,specifier,string,commandspecifier",
+        "FieldName":"CommandSpecifier",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.CommandSpecifier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"/",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Command Silent Specifier",
+        "Category":"TShock Gameplay Settings",
+        "Description":"Specifies which string starts a command silently. Note: Will not function properly if the string length is bigger than 1",
+        "Keywords":"command,silent,specifier,string,commandsilentspecifier",
+        "FieldName":"CommandSilentSpecifier",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.CommandSilentSpecifier",
+        "IncludeInCommandLine":false,
+        "DefaultValue":".",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Player Limit",
@@ -1384,6 +1442,22 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Remember Leave Position",
+        "Category":"TShock Player Settings",
+        "Description":"IF enabled, remembers where a player left off, based on their IP. Does not persist through server restarts",
+        "Keywords":"remember,player,leave,position,rememberleavepos",
+        "FieldName":"RememberLeavePos",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.RememberLeavePos",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Require Login Or Registration",
         "Category":"TShock Player Settings",
         "Description":"If enabled, require all players to register or login before being allowed to play",
@@ -1462,6 +1536,38 @@
         }
     },
     {
+        "DisplayName":"Display IP To Admins",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, displays a player's IP on join to users with the log permission",
+        "Keywords":"ip,admins,display,displayiptoadmins",
+        "FieldName":"DisplayIPToAdmins",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.DisplayIPToAdmins",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Geo IP",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, a player's geographic location will be announced on join, based on their IP",
+        "Keywords":"geoip,geographic,location,announce,enablegeoip",
+        "FieldName":"EnableGeoIP",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.EnableGeoIP",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Kick Proxy Users",
         "Category":"TShock Player Settings",
         "Description":"If set, and Geo IP is enabled, users identified as being under a proxy will be kicked",
@@ -1506,6 +1612,22 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"4",
         "Placeholder":"4",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"BCrypt Work Factor",
+        "Category":"TShock Player Settings",
+        "Description":"Determines the BCrypt work factor to use. If increased, all passwords will be upgraded to the new work-factor on verify. The number of computational rounds is 2^n. Increase with caution",
+        "Keywords":"bcrypt,work,factor,passwords,bcryptworkfactor",
+        "FieldName":"BCryptWorkFactor",
+        "InputType":"number",
+        "MinValue":"5",
+        "MaxValue":"31",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.BCryptWorkFactor",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"7",
+        "Placeholder":"7",
         "EnumValues":{}
     },
     {
@@ -1859,6 +1981,22 @@
         }
     },
     {
+        "DisplayName":"Ignore Shrapnel For Projectile Threshold",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, shrapnel from crystal bullets will be ignored for the projectile threshold count",
+        "Keywords":"ignore,shrapnel,crystal,bullets,projectile,threshold,projignoreshrapnel",
+        "FieldName":"ProjIgnoreShrapnel",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"$.Settings.ProjIgnoreShrapnel",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Projectile Threshold",
         "Category":"TShock Player Settings",
         "Description":"Disables a player if this number of projectiles is created within 1 second",
@@ -1920,42 +2058,24 @@
         }
     },
     {
-        "DisplayName":"Suppress Permission Failure Notices",
-        "Category":"TShock Server Settings",
-        "Description":"If enabled, the server will suppress build permission failure warnings from regions, spawn point, or server edit failure",
-        "Keywords":"suppress,build,permission,failure,warnings,notices,suppresspermissionfailurenotices",
-        "FieldName":"SuppressPermissionFailureNotices",
-        "InputType":"checkbox",
+        "DisplayName":"Chat Format",
+        "Category":"TShock Player Settings",
+        "Description":"Changes in-game chat format: {0} = Group Name, {1} = Group Prefix, {2} = Player Name, {3} = Group Suffix, {4} = Chat Message",
+        "Keywords":"chat,format,message,chatformat",
+        "FieldName":"ChatFormat",
+        "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.SuppressPermissionFailureNotices",
+        "ParamFieldName":"$.Settings.ChatFormat",
         "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Display IP To Admins",
-        "Category":"TShock Server Settings",
-        "Description":"Displays a player's IP on join to users with the log permission",
-        "Keywords":"IP, admins, display",
-        "FieldName":"DisplayIPToAdmins",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.DisplayIPToAdmins",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
+        "DefaultValue":"{1}{2}{3}: {4}",
+        "Placeholder":"{1}{2}{3}: {4}",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Enable Chat Above Heads",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Whether or not to display chat messages above players' heads",
-        "Keywords":"chat, display, above heads",
+        "Category":"TShock Player Settings",
+        "Description":"If enabled, chat messages will be displayed above players' heads",
+        "Keywords":"chat,display,heads,enablechataboveheads",
         "FieldName":"EnableChatAboveHeads",
         "InputType":"checkbox",
         "IsFlagArgument":false,
@@ -1968,74 +2088,10 @@
         }
     },
     {
-        "DisplayName":"Enable Geo IP",
-        "Category":"TShock Server Settings",
-        "Description":"Whether or not to announce a player's geographic location on join, based on their IP",
-        "Keywords":"GeoIP, geographic location, announce",
-        "FieldName":"EnableGeoIP",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.EnableGeoIP",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Ignore Chest Stacks On Load",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Allows stacks in chests to go beyond the stack limit during world loading",
-        "Keywords":"chest stacks, load, stack limit",
-        "FieldName":"IgnoreChestStacksOnLoad",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.IgnoreChestStacksOnLoad",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Proj Ignore Shrapnel",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Whether or not to ignore shrapnel from crystal bullets for the projectile threshold count",
-        "Keywords":"ignore, shrapnel, crystal bullets, projectile threshold",
-        "FieldName":"ProjIgnoreShrapnel",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.ProjIgnoreShrapnel",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Remember Leave Position",
-        "Category":"TShock Player Settings",
-        "Description":"Remembers where a player left off, based on their IP. Does not persist through server restarts",
-        "Keywords":"remember, player, left off, IP, server restarts",
-        "FieldName":"RememberLeavePos",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.RememberLeavePos",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
         "DisplayName":"Chat Above Heads Format",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Changes the player name when using chat above heads. Starts with a player name wrapped in brackets, as per Terraria's formatting. Same formatting as ChatFormat without the message",
-        "Keywords":"chat above heads, player name, chat format",
+        "Category":"TShock Player Settings",
+        "Description":"Changes the player name when using Chat Above Heads. Starts with a player name wrapped in brackets, as per Terraria's formatting. Same formatting as Chat Format without the message",
+        "Keywords":"chat,format,heads,chataboveheadsformat",
         "FieldName":"ChatAboveHeadsFormat",
         "InputType":"text",
         "IsFlagArgument":false,
@@ -2045,83 +2101,30 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Chat Format",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Changes in-game chat format: {0} = Group Name, {1} = Group Prefix, {2} = Player Name, {3} = Group Suffix, {4} = Chat Message",
-        "Keywords":"in-game chat, chat format, group name, group prefix, player name, group suffix, chat message",
-        "FieldName":"ChatFormat",
+        "DisplayName":"Superadmin Chat Prefix",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the superadmin chat prefix",
+        "Keywords":"superadmin,chat,prefix,superadminchatprefix",
+        "FieldName":"SuperAdminChatPrefix",
         "InputType":"text",
         "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.ChatFormat",
+        "ParamFieldName":"$.Settings.SuperAdminChatPrefix",
         "IncludeInCommandLine":false,
-        "DefaultValue":"{1}{2}{3}: {4}",
+        "DefaultValue":"(Super Admin) ",
+        "Placeholder":"(Super Admin) ",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Command Silent Specifier",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Specifies which string starts a command silently. Note: Will not function properly if the string length is bigger than 1",
-        "Keywords":"command silent specifier, string, command",
-        "FieldName":"CommandSilentSpecifier",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.CommandSilentSpecifier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":".",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Command Specifier",
-        "Category":"TShock Gameplay Settings",
-        "Description":"Specifies which string starts a command. Note: Will not function properly if the string length is bigger than 1",
-        "Keywords":"command specifier, string, command",
-        "FieldName":"CommandSpecifier",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.CommandSpecifier",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"/",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"SuperAdmin Chat Suffix",
-        "Category":"TShock Gameplay Settings",
-        "Description":"The superadmin chat suffix",
-        "Keywords":"superadmin chat suffix",
+        "DisplayName":"Superadmin Chat Suffix",
+        "Category":"TShock Player Settings",
+        "Description":"Sets the superadmin chat suffix",
+        "Keywords":"superadmin,chat,suffix,superadminchatsuffix",
         "FieldName":"SuperAdminChatSuffix",
         "InputType":"text",
         "IsFlagArgument":false,
         "ParamFieldName":"$.Settings.SuperAdminChatSuffix",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"BCrypt Work Factor",
-        "Category":"TShock Security Settings",
-        "Description":"Determines the BCrypt work factor to use. If increased, all passwords will be upgraded to new work-factor on verify. The number of computational rounds is 2^n. Increase with caution",
-        "Keywords":"BCrypt work factor, passwords, security",
-        "FieldName":"BCryptWorkFactor",
-        "InputType":"number",
-        "MinValue":"5",
-        "MaxValue":"31",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.BCryptWorkFactor",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"7",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"SuperAdmin Chat Prefix",
-        "Category":"TShock Gameplay Settings",
-        "Description":"The superadmin chat prefix",
-        "Keywords":"superadmin chat prefix",
-        "FieldName":"SuperAdminChatPrefix",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"$.Settings.SuperAdminChatPrefix",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"(Super Admin)",
         "EnumValues":{}
     },
     {
