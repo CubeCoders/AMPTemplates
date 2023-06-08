@@ -36,8 +36,8 @@
         "UpdateSourceData":"https://v-rising.thunderstore.io/package/download/BepInEx/BepInExPack_V_Rising/1.0.0/",
         "UpdateSourceArgs":"BepInEx-BepInExPack_V_Rising-1.0.0.zip",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UpdateSourceConditionSetting":"BepinexActive",
-        "UpdateSourceConditionValue":"true",
+        "UpdateSourceConditionSetting":"BepInExVersion",
+        "UpdateSourceConditionValue":"release",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -48,8 +48,8 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C xcopy /E /Y /I v-rising\\1829350\\BepInExPack_V_Rising\\* v-rising\\1829350\\ && rmdir /Q /S v-rising\\1829350\\BepInExPack_V_Rising",
-        "UpdateSourceConditionSetting":"BepinexActive",
-        "UpdateSourceConditionValue":"true"
+        "UpdateSourceConditionSetting":"BepInExVersion",
+        "UpdateSourceConditionValue":"release"
     },
     {
         "UpdateStageName":"BepInEx Copy",
@@ -57,8 +57,38 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c '\\cp -rf ./v-rising/1829350/BepInExPack_V_Rising/* ./v-rising/1829350/ && rm -rf ./v-rising/1829350/BepInExPack_V_Rising/'",
-        "UpdateSourceConditionSetting":"BepinexActive",
-        "UpdateSourceConditionValue":"true"
+        "UpdateSourceConditionSetting":"BepInExVersion",
+        "UpdateSourceConditionValue":"release"
+    },
+    {
+        "UpdateStageName":"Download BepInEx From GitHub",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"decaprime/VRising-Modding",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"BepInExVersion",
+        "UpdateSourceConditionValue":"experimental"
+    },
+    {
+        "UpdateStageName":"BepInEx Copy",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C move /Y v-rising\\1829350\\BepInEx_V_Rising_Experimental_Dev* v-rising\\1829350\\BepInEx_V_Rising_Experimental_Dev && xcopy /E /Y /I v-rising\\1829350\\BepInEx_V_Rising_Experimental_Dev\\* v-rising\\1829350\\ && rmdir /Q /S v-rising\\1829350\\BepInEx_V_Rising_Experimental_Dev",
+        "UpdateSourceConditionSetting":"BepInExVersion",
+        "UpdateSourceConditionValue":"experimental"
+    },
+    {
+        "UpdateStageName":"BepInEx Copy",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'find . -depth -type d -name ./v-rising/1829350/BepInEx_V_Rising_Experimental_Dev* -execdir mv {} ./v-rising/1829350/BepInEx_V_Rising_Experimental_Dev \\; && \\cp -rf ./v-rising/1829350/BepInEx_V_Rising_Experimental_Dev/* ./v-rising/1829350/ && rm -rf ./v-rising/1829350/BepInEx_V_Rising_Experimental_Dev/'",
+        "UpdateSourceConditionSetting":"BepInExVersion",
+        "UpdateSourceConditionValue":"experimental"
     },
     {
         "UpdateStageName":"Initialise Wine",
