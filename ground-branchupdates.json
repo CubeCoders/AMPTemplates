@@ -7,6 +7,30 @@
         "UpdateSourceArgs":"16900"
     },
     {
+        "UpdateStageName":"Create TShock Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}GroundBranch/ServerConfig"
+    },
+    {
+        "UpdateStageName":"Server.ini File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/dev/ground-branchserver.ini",
+        "UpdateSourceArgs":"Server.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}GroundBranch/ServerConfig",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Vote.ini File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/dev/ground-branchvote.ini",
+        "UpdateSourceArgs":"Vote.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}GroundBranch/ServerConfig",
+        "OverwriteExistingFiles":false
+    },
+    {
         "UpdateStageName":"Initialise Wine",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
