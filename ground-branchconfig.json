@@ -66,6 +66,18 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Maplist",
+        "Category":"Ground Branch Settings",
+        "Description":"Maplists can be specified in GroundBranch/ServerConfig/MapList.ini. Easiest to build from the in-game Admin menu, but can also be done manually",
+        "Keywords":"map,list,maplist",
+        "FieldName":"MapList",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"MapList",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Map",
         "Category":"Ground Branch Settings",
         "Description":"Sets the map for the server, if no maplist is specified in MapList.ini. Requires the Server Mission also to be set, otherwise the Server Default map will be used. If using a modded map, select Custom and set the \"Custom Map Name\"",
@@ -77,7 +89,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"747",
         "EnumValues":{
-            "747":"747",
+            "747":"747 (default)",
             "Arena":"Arena",
             "Arena2":"Arena 2",
             "City":"City",
@@ -113,7 +125,7 @@
     {
         "DisplayName":"Server Mission",
         "Category":"Ground Branch Settings",
-        "Description":"Sets the mission to be used with the selected map. Check missions available for a map in GroundBranch/Content/GroundBranch/Mission. If the desired mission is not listed, select Custom and set the \"Custom Mission Name\"",
+        "Description":"Sets the mission to be used with the selected map. Check missions available for a map in GroundBranch/Content/GroundBranch/Mission. If the desired mission is not listed in the dropdown, select Custom and set the \"Custom Mission Name\"",
         "Keywords":"mission",
         "FieldName":"ServerMission",
         "InputType":"enum",
@@ -122,7 +134,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"Deathmatch",
         "EnumValues":{
-            "Deathmatch":"Deathmatch",
+            "Deathmatch":"Deathmatch (default)",
+            "DTAS":"Dynamic Take And Secure (DTAS)",
             "IntelRetrieval":"Intel Retrieval",
             "TeamElimination":"Team Elimination",
             "TerroristHunt":"Terrorist Hunt",
@@ -232,6 +245,42 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"AI Number For Intel Retrieval / Terrorist Hunt",
+        "Category":"Ground Branch Settings",
+        "Description":"Sets the number of AI to spawn in the Intel Retrieval and Terrorist Hunt mission types. Limited to Maximum AI",
+        "Keywords":"ai,spawn,opforcount",
+        "FieldName":"OpForCount",
+        "InputType":"number",
+        "MinValue":"1",
+        "MaxValue":"50",
+        "IsFlagArgument":false,
+        "ParamFieldName":"OpForCount",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
+        "Placeholder":"1",
+        "Suffix":"AI",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"AI Difficulty Level",
+        "Category":"Ground Branch Settings",
+        "Description":"Sets the difficulty settings to use for AI in the Intel Retrieval and Terrorist Hunt mission types. 0 = custom settings",
+        "Keywords":"ai,difficulty",
+        "FieldName":"Difficulty",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"Difficulty",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"0",
+            "1":"1 (default)",
+            "2":"2",
+            "3":"3",
+            "4":"4"
+        }
+    },
+    {
         "DisplayName":"Time Limit",
         "Category":"Ground Branch Settings",
         "Description":"Sets the time period until the game ends and the map changes. 0 = disabled",
@@ -280,6 +329,38 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Round Time",
+        "Category":"Ground Branch Settings",
+        "Description":"Sets the time period for which each round lasts",
+        "Keywords":"round,time,roundtime",
+        "FieldName":"RoundTime",
+        "InputType":"number",
+        "MinValue":"3",
+        "IsFlagArgument":false,
+        "ParamFieldName":"RoundTime",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"3",
+        "Placeholder":"3",
+        "Suffix":"minutes",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Post Round Wait Time",
+        "Category":"Ground Branch Settings",
+        "Description":"Sets the time period after a round ends before players are sent back to the ready room",
+        "Keywords":"post,round,wait,time,postroundwaittime",
+        "FieldName":"PostRoundWaitTime",
+        "InputType":"number",
+        "MinValue":"5",
+        "IsFlagArgument":false,
+        "ParamFieldName":"PostRoundWaitTime",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"5",
+        "Placeholder":"5",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Default PvE/Co-op Match Type",
         "Category":"Ground Branch Settings",
         "Description":"Sets the default match type for the PvE/Co-op game mode",
@@ -291,7 +372,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"Continuous",
         "EnumValues":{
-            "Continuous":"Continuous",
+            "Continuous":"Continuous (default)",
             "BestOf":"Best Of",
             "FirstTo":"First To",
             "Play":"Play",
@@ -327,7 +408,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"Continuous",
         "EnumValues":{
-            "Continuous":"Continuous",
+            "Continuous":"Continuous (default)",
             "BestOf":"Best Of",
             "FirstTo":"First To",
             "Play":"Play",
@@ -363,7 +444,7 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"Continuous",
         "EnumValues":{
-            "Continuous":"Continuous",
+            "Continuous":"Continuous (default)",
             "BestOf":"Best Of",
             "FirstTo":"First To",
             "Play":"Play",
@@ -417,6 +498,134 @@
         "EnumValues":{
             "False":"0",
             "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Spectators To Follow Enemies",
+        "Category":"Ground Branch Settings",
+        "Description":"If enabled, spectators will be able to follow members of enemy teams",
+        "Keywords":"spectator,enemy,follow,spectateenemies",
+        "FieldName":"SpectateEnemies",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SpectateEnemies",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Force Spectator First Person View",
+        "Category":"Ground Branch Settings",
+        "Description":"If enabled, spectators' view mode will be forced to first-person only",
+        "Keywords":"spectator,view,first,person,spectateforcefirstferson",
+        "FieldName":"SpectateForceFirstPerson",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"SpectateForceFirstPerson",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Vote Duration",
+        "Category":"Ground Branch Settings",
+        "Description":"Sets the time period for voting",
+        "Keywords":"vote,duration,voteduration",
+        "FieldName":"VoteDuration",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/RBZooKeeper.ZKVote.VoteDuration",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Successful Vote Timeout",
+        "Category":"Ground Branch Settings",
+        "Description":"Sets the time period that must pass after a successful vote before another vote can be called",
+        "Keywords":"vote,successful,timeout,votesucceededtimeout",
+        "FieldName":"VoteSucceededTimeout",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/RBZooKeeper.ZKVote.VoteSucceededTimeout",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"60",
+        "Placeholder":"60",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Failed Vote Timeout",
+        "Category":"Ground Branch Settings",
+        "Description":"Sets the time period that must pass after a failed vote before another vote can be called",
+        "Keywords":"vote,failed,timeout,votefailedtimeout",
+        "FieldName":"VoteFailedTimeout",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/RBZooKeeper.ZKVote.VoteFailedTimeout",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"180",
+        "Placeholder":"180",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Map Vote Timeout",
+        "Category":"Ground Branch Settings",
+        "Description":"Sets the time period that must pass before another map vote can be called",
+        "Keywords":"vote,map,timeout,mapvotetimeout",
+        "FieldName":"MapVoteTimeout",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/RBZooKeeper.ZKVote.MapVoteTimeout",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"300",
+        "Placeholder":"300",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Minimum Players For Voting",
+        "Category":"Ground Branch Settings",
+        "Description":"Sets the minimum number of players required to cast a vote",
+        "Keywords":"vote,minimum,players,minplayers",
+        "FieldName":"MinPlayers",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/RBZooKeeper.ZKVote.MinPlayers",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
+        "Placeholder":"1",
+        "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow Voting Off Map List",
+        "Category":"Ground Branch Settings",
+        "Description":"If enabled, players can vote for maps outside of the server maplist",
+        "Keywords":"vote,map,off,list,ballowvotingoffmaplist",
+        "FieldName":"bAllowVotingOffMapList",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"bAllowVotingOffMapList",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
         }
     }
 ]
