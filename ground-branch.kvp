@@ -35,7 +35,7 @@ App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} GroundBranch {{ServerMap}}?Mission={{ServerMission}}?{{$FormattedArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} -nohomedir -log
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"SteamAppId":"16900"}
+App.EnvironmentVariables={"SteamAppId":"16900","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
 App.CommandLineParameterFormat={0}="{1}"
 App.CommandLineParameterDelimiter=?
 App.ExitMethod=OS_CLOSE
@@ -82,7 +82,7 @@ App.ApplicationReadyMode=RegexMatch
 App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
-Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
+Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|Could not find Wine Gecko.*)$
 Console.AppReadyRegex=^(?:\[[\d\.]+-[\d\.:]+\]\[[\d ]+\])?LogGameMode: Display: Match State Changed from WaitingToStart to InProgress$
 Console.UserJoinRegex=^$
 Console.UserLeaveRegex=^$
