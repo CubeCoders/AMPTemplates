@@ -109,5 +109,14 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
+    },
+    {
+        "UpdateStageName":"Install Dotnet 6",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd {{$FullRootDir}} && wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && chmod +x ./winetricks && env WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 ./winetricks dotnet6 corefonts > {{$FullBaseDir}}AMPSetupLog.txt 2>&1'",
+        "UpdateSourceConditionSetting":"BepInExVersion",
+        "UpdateSourceConditionValue":"experimental"
     }
 ]
