@@ -115,7 +115,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd {{$FullRootDir}} && wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && chmod +x ./winetricks >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && export WINEPREFIX=\"{{$FullRootDir}}.wine\"; export WINEARCH=win64; /usr/bin/xvfb-run -a {{$FullRootDir}}winetricks dotnet6 >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1'",
+        "UpdateSourceArgs":"-c 'cd {{$FullRootDir}} && wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && chmod +x ./winetricks >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && /usr/bin/Xvfb :5 -screen 0 1024x768x16 & >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && export DISPLAY=:5.0; export WINEPREFIX=\"{{$FullRootDir}}.wine\"; export WINEARCH=win64; ./winetricks dotnet6 >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1'",
         "UpdateSourceConditionSetting":"BepInExVersion",
         "UpdateSourceConditionValue":"experimental"
     }
