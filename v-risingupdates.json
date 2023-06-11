@@ -36,11 +36,11 @@
         "UpdateSourceData":"https://v-rising.thunderstore.io/package/download/BepInEx/BepInExPack_V_Rising/1.668.5/",
         "UpdateSourceArgs":"BepInEx-BepInExPack_V_Rising-1.668.5.zip",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UpdateSourceConditionSetting":"BepInExVersion",
-        "UpdateSourceConditionValue":"release",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"BepInExEnabled",
+        "UpdateSourceConditionValue":"true"
     },
     {
         "UpdateStageName":"BepInEx Copy",
@@ -48,8 +48,8 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C xcopy /E /Y /I v-rising\\1829350\\BepInExPack_V_Rising\\* v-rising\\1829350\\ && rmdir /Q /S v-rising\\1829350\\BepInExPack_V_Rising",
-        "UpdateSourceConditionSetting":"BepInExVersion",
-        "UpdateSourceConditionValue":"release"
+        "UpdateSourceConditionSetting":"BepInExEnabled",
+        "UpdateSourceConditionValue":"true"
     },
     {
         "UpdateStageName":"BepInEx Copy",
@@ -57,51 +57,8 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c '\\cp -rf ./v-rising/1829350/BepInExPack_V_Rising/* ./v-rising/1829350/ && rm -rf ./v-rising/1829350/BepInExPack_V_Rising/'",
-        "UpdateSourceConditionSetting":"BepInExVersion",
-        "UpdateSourceConditionValue":"release"
-    },
-    {
-        "UpdateStageName":"Download BepInEx From GitHub",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/decaprime/VRising-Modding/releases/download/1.668.4/BepInEx_V_Rising_Experimental_Dev_1.668.4.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
-        "UpdateSourceConditionSetting":"BepInExVersion",
-        "UpdateSourceConditionValue":"experimental"
-    },
-    {
-        "UpdateStageName":"Download BepInEx From GitHub",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURLFromJQ",
-        "UpdateSourceData":"https://api.github.com/repos/decaprime/VRising-Modding/releases",
-        "UpdateSourceArgs":".[0].assets[0].browser_download_url",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
-        "UpdateSourceConditionSetting":"BepInExVersion",
-        "UpdateSourceConditionValue":"placeholder"
-    },
-    {
-        "UpdateStageName":"BepInEx Copy",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C move /Y v-rising\\1829350\\BepInEx_V_Rising_Experimental_Dev* v-rising\\1829350\\BepInEx_V_Rising_Experimental_Dev && xcopy /E /Y /I v-rising\\1829350\\BepInEx_V_Rising_Experimental_Dev\\* v-rising\\1829350\\ && rmdir /Q /S v-rising\\1829350\\BepInEx_V_Rising_Experimental_Dev",
-        "UpdateSourceConditionSetting":"BepInExVersion",
-        "UpdateSourceConditionValue":"experimental"
-    },
-    {
-        "UpdateStageName":"BepInEx Copy",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'find ./v-rising/1829350/ -maxdepth 1 -type d -name \"BepInEx_V_Rising_Experimental_Dev*\" -execdir mv {} BepInEx_V_Rising_Experimental_Dev \\; && \\cp -rf ./v-rising/1829350/BepInEx_V_Rising_Experimental_Dev/* ./v-rising/1829350/ && rm -rf ./v-rising/1829350/BepInEx_V_Rising_Experimental_Dev/'",
-        "UpdateSourceConditionSetting":"BepInExVersion",
-        "UpdateSourceConditionValue":"experimental"
+        "UpdateSourceConditionSetting":"BepInExEnabled",
+        "UpdateSourceConditionValue":"true"
     },
     {
         "UpdateStageName":"Initialise Wine",
@@ -109,14 +66,5 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
-    },
-    {
-        "UpdateStageName":"Install Dotnet 6",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd {{$FullRootDir}} && wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && chmod +x ./winetricks >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && /usr/bin/Xvfb :5 -screen 0 1024x768x16 & >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && export DISPLAY=:5.0; export WINEPREFIX=\"{{$FullRootDir}}.wine\"; export WINEARCH=win64; {{$FullRootDir}}winetricks dotnet6 >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1'",
-        "UpdateSourceConditionSetting":"BepInExVersion",
-        "UpdateSourceConditionValue":"placeholder"
     }
 ]
