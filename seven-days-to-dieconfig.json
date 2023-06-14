@@ -209,14 +209,14 @@
             "True": "true"
         }
     },{
-        "DisplayName":"Control Panel Enabled",
+        "DisplayName":"Control Panel / Web Dashboard Enabled",
         "Category":"7d2d - Server Settings",
-        "Description":"Enable/Disable the web control panel.",
-        "Keywords":"Control,Panel,Enabled",
+        "Description":"Enable/Disable the web control panel / web dashboard.",
+        "Keywords":"Control,Panel,Web,Dashboard,Enabled",
         "FieldName":"ControlPanelEnabled",
         "InputType":"checkbox",
         "IsFlagArgument":false,
-        "ParamFieldName":"/ServerSettings/property[@name='ControlPanelEnabled']/@value",
+        "ParamFieldName":"/ServerSettings/property[@name='ControlPanelEnabled']/@value | /ServerSettings/property[@name='WebDashboardEnabled']/@value",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
@@ -224,14 +224,14 @@
             "True": "true"
         }
     },{
-        "DisplayName":"Control Panel Port",
+        "DisplayName":"Control Panel / Web Dashboard Port",
         "Category":"7d2d - Server Settings",
-        "Description":"Port of the control panel webpage.",
+        "Description":"Port of the control panel / web dashboard webpage.",
         "Keywords":"",
         "FieldName":"$ControlPanelPort",
         "InputType":"number",
         "IsFlagArgument":false,
-        "ParamFieldName":"/ServerSettings/property[@name='ControlPanelPort']/@value",
+        "ParamFieldName":"/ServerSettings/property[@name='ControlPanelPort']/@value | /ServerSettings/property[@name='WebDashboardPort']/@value",
         "IncludeInCommandLine":false,
         "DefaultValue":"8080",
         "EnumValues":{},
@@ -239,15 +239,43 @@
     },{
         "DisplayName":"Control Panel Password",
         "Category":"7d2d - Server Settings",
-        "Description":"Password to gain entry to the control panel.",
+        "Description":"Password to gain entry to the control panel. This only applies to game version 20.7 and below.",
         "Keywords":"Control,Panel,Password",
         "FieldName":"ControlPanelPassword",
-        "InputType":"RandomPassword",
+        "InputType":"password",
         "IsFlagArgument":false,
         "ParamFieldName":"/ServerSettings/property[@name='ControlPanelPassword']/@value",
         "IncludeInCommandLine":false,
-        "DefaultValue":"CHANGEME",
+        "DefaultValue":"{{newguid()}}",
         "EnumValues":{}
+    },{
+        "DisplayName":"Web Dashboard URL",
+        "Category":"7d2d - Server Settings",
+        "Description":"External URL to the web dashboard if not just using the public IP of the server, e.g. if the web dashboard is behind a reverse proxy. Needs to be the full URL, like \"https://domainOfReverseProxy.tld:1234/\". Can be left empty if directly using the public IP and dashboard port. Only applies to game version 21.0 and above.",
+        "Keywords":"Web,Dashboard,URL",
+        "FieldName":"WebDashboardUrl",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='WebDashboardUrl']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"https://domainOfReverseProxy.tld:1234/",
+        "EnumValues":{}
+    },{
+        "DisplayName":"Web Dashboard Map Rendering Enabled",
+        "Category":"7d2d - Server Settings",
+        "Description":"Enable/disable rendering of the map to tile images while exploring it. This is used e.g. by the web dashboard to display a view of the map.",
+        "Keywords":"Web,Dashboard,Map,Rendering",
+        "FieldName":"EnableMapRendering",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='EnableMapRendering']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False": "false",
+            "True": "true"
+        }
     },{
         "DisplayName":"Telnet Enabled",
         "Category":"7d2d - Server Settings",
@@ -395,7 +423,7 @@
     },{
         "DisplayName":"World Gen Size",
         "Category":"7d2d - Gameplay Settings",
-        "Description":"If RWG this controls the width and height of the created world. It is also used in combination with WorldGenSeed to create the internal RWG seed thus also creating a unique map name even if using the same WorldGenSeed. Has to be a multiple of 2048 between 2048 and 16384, though large map sizes will take long to generate / download / load.",
+        "Description":"If RWG, this controls the width and height of the created world. Officially supported sizes are between 6144 and 10240 and must be a multiple of 2048, e.g. 6144, 8192, 10240.",
         "Keywords":"World,Gen,Size",
         "FieldName":"WorldGenSize",
         "InputType":"number",
@@ -628,6 +656,21 @@
         "EnumValues":{},
         "Suffix": "minutes"
     },{
+        "DisplayName":"Allow Spawn Near Backpack",
+        "Category":"7d2d - Gameplay Settings",
+        "Description":"Allow players to respawn near their last dropped backpack when they die.",
+        "Keywords":"Allow,Spawn,Near,Backpack",
+        "FieldName":"AllowSpawnNearBackpack",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='AllowSpawnNearBackpack']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False": "false",
+            "True": "true"
+        }
+    },{
         "DisplayName":"Max Spawned Zombies",
         "Category":"7d2d - Gameplay Settings",
         "Description":"This setting covers the entire map. There can only be this many zombies on the entire map at one time. Changing this setting has a huge impact on performance.",
@@ -673,6 +716,20 @@
             "11": "11",
             "12": "12"
         }
+    },{
+        "DisplayName":"Max Queued Mesh Layers",
+        "Category":"7d2d - Gameplay Settings",
+        "Description":"Maximum amount of Chunk mesh layers that can be enqueued during mesh generation. Reducing this will improve memory usage but may increase Chunk generation time.",
+        "Keywords":"Max,Queued,Mesh,Layers",
+        "FieldName":"MaxQueuedMeshLayers",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='MaxQueuedMeshLayers']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1000",
+        "Placeholder":"1000",
+        "EnumValues":{},
+        "Suffix": "chunks"
     },{
         "DisplayName":"Enemy Spawn Mode",
         "Category":"7d2d - Gameplay Settings",
@@ -893,7 +950,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"/ServerSettings/property[@name='AirDropMarker']/@value",
         "IncludeInCommandLine":false,
-        "DefaultValue":"false",
+        "DefaultValue":"true",
         "EnumValues":{
             "False": "false",
             "True": "true"
@@ -938,7 +995,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"/ServerSettings/property[@name='LandClaimCount']/@value",
         "IncludeInCommandLine":false,
-        "DefaultValue":"1",
+        "DefaultValue":"3",
         "EnumValues":{},
         "Suffix": "claims"
     },{
@@ -1092,10 +1149,10 @@
         "EnumValues":{},
         "Suffix": "items"
     },{
-        "DisplayName":"TwitchServerPermission",
+        "DisplayName":"Twitch Server Permission Level",
         "Category":"7d2d - Gameplay Settings",
         "Description":"Required permission level to use twitch integration on the server.",
-        "Keywords":"Twitch,Server,Permission",
+        "Keywords":"Twitch,Server,Permission,Level",
         "FieldName":"TwitchServerPermission",
         "InputType":"number",
         "IsFlagArgument":false,
@@ -1119,6 +1176,36 @@
             "False": "false",
             "True": "true"
         }
+    },{
+        "DisplayName":"Max Chunk Age",
+        "Category":"7d2d - Server Settings",
+        "Description":"The number of in-game days which must pass since visiting a chunk before it will reset to its original state if not revisited or protected (e.g. by a land claim or bedroll being in close proximity).",
+        "Keywords":"Max,Chunk,Age",
+        "FieldName":"MaxChunkAge",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='MaxChunkAge']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"-1",
+        "Placeholder":"-1",
+        "MinValue":"-1",
+        "EnumValues":{},
+        "Suffix": "days"
+    },{
+        "DisplayName":"Save Data Limit",
+        "Category":"7d2d - Server Settings",
+        "Description":"The maximum disk space allowance for each saved game in megabytes (MB). Saved chunks may be forceably reset to their original states to free up space when this limit is reached. Negative values disable the limit.",
+        "Keywords":"Save,Data,Limit",
+        "FieldName":"SaveDataLimit",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='SaveDataLimit']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"-1",
+        "Placeholder":"-1",
+        "MinValue":"-1",
+        "EnumValues":{},
+        "Suffix": "mb"
     },{
         "DisplayName":"Release Stream",
         "Category":"SteamCMD and Updates",
@@ -1147,7 +1234,8 @@
             "seven-days-settings184": "18.4",
             "seven-days-settings196": "19.6",
             "seven-days-settings200-203": "20.0 to 20.3",
-            "seven-days-settings204": "20.4 and Higher",
+            "seven-days-settings204": "20.4 to 20.7",
+            "seven-days-settings210": "21.0 and Higher",
             "seven-days-settings-undead-legacy-stable": "Undead Legacy Stable",
             "seven-days-settings-undead-legacy-experimental": "Undead Legacy Experimental"
         }
