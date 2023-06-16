@@ -32,11 +32,11 @@ App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=405710/bin
 App.LinuxCommandLineArgs=-a /usr/bin/mono ./Staxel.Server.exe
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -port={{$ServerPort}} -interface={{$ApplicationIPBinding}} {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} --port={{$ServerPort}} --interface={{$ApplicationIPBinding}} {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}lib64:%LD_LIBRARY_PATH%","SteamAppId":"405710"}
-App.CommandLineParameterFormat=-{0}={1}
+App.CommandLineParameterFormat=--{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
 App.ExitTimeout=30
@@ -47,7 +47,7 @@ App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"TCP","Port":38465,"Ref":"ServerPort","Name":"Server Port","Description":"Port for game traffic"}]
+App.Ports=[{"Protocol":"TCP","Port":38465,"Ref":"ServerPort","Name":"Server Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":38466,"Ref":"QueryPort","Name":"Steam Query Port","Description":"Port for Steam query traffic"}]
 App.AdminPortRef=0
 App.PrimaryApplicationPortRef=ServerPort
 App.UniversalSleepApplicationUDPPortRef=ServerPort
