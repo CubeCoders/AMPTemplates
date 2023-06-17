@@ -58,7 +58,7 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c '\\cp -rf ./v-rising/1829350/BepInExPack_V_Rising/* ./v-rising/1829350/ && rm -rf ./v-rising/1829350/BepInExPack_V_Rising/'",
         "UpdateSourceConditionSetting":"BepInExEnabled",
-        "UpdateSourceConditionValue":"placeholder"
+        "UpdateSourceConditionValue":"true"
     },
     {
         "UpdateStageName":"Initialise Wine",
@@ -68,12 +68,23 @@
         "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDLLOVERRIDES=\"mscoree,mshtml=\" /usr/bin/wineboot --init --update'"
     },
     {
-        "UpdateStageName":"Install Dotnet 6",
+        "UpdateStageName":"Winescript Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/v-risingwinescript.sh",
+        "UpdateSourceArgs":"winescript.sh",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"BepInExEnabled",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Install Windows Components",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd {{$FullRootDir}} ; wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks ; chmod +x winetricks ; WINEPREFIX=\"{{$FullRootDir}}.wine\" /usr/bin/xvfb-run -s \":99 -screen 0 1024x768x16 -ac -nolisten tcp -nolisten unix\" ./winetricks -q dotnet6 > {{$FullBaseDir}}AMPSetupLog.txt 2>&1'",
+        "UpdateSourceArgs":"./winescript.sh",
         "UpdateSourceConditionSetting":"BepInExEnabled",
-        "UpdateSourceConditionValue":"placeholder"
+        "UpdateSourceConditionValue":"true"
     }
 ]
