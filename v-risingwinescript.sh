@@ -6,7 +6,7 @@ SCRIPTDIR=$(dirname "$SCRIPT_NAME")
 xvfb_pid=$!
 wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
-export WINEPREFIX=$SCRIPTDIR/.wine
+export WINEPREFIX=$SCRIPTDIR/v-rising/.wine
 export DISPLAY=:5
 ./winetricks -q --force dotnet6
 rm -rf ~/.cache/winetricks
