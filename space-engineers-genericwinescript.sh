@@ -10,8 +10,7 @@ export WINEPREFIX=$SCRIPTDIR/space-engineers-generic/.wine
 export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 export DISPLAY=:5.0
-/usr/bin/winecfg /v win10 > winescript_log.txt 2>&1
-./winetricks corefonts >> winescript_log.txt 2>&1
+./winetricks corefonts > winescript_log.txt 2>&1
 ./winetricks sound=disabled >> winescript_log.txt 2>&1
 ./winetricks -q vcrun2019 >> winescript_log.txt 2>&1
 ./winetricks -q dotnet48 >> winescript_log.txt 2>&1
