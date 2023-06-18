@@ -6,7 +6,7 @@ SCRIPTDIR=$(dirname "$SCRIPT_NAME")
 xvfb_pid=$!
 wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
-export WINEPREFIX=$SCRIPTDIR/v-rising/.wine
+export WINEPREFIX="$SCRIPTDIR/v-rising/.wine"
 export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 export DISPLAY=:5.0
