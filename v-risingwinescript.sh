@@ -10,9 +10,9 @@ export WINEPREFIX=$SCRIPTDIR/v-rising/.wine
 export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 export DISPLAY=:5
-./winetricks -q vcrun2019 > winescript_log.txt 2>&1
-./winetricks -q dotnet48 >> winescript_log.txt 2>&1
-./winetricks -q dotnet6 >> winescript_log.txt 2>&1
+./winetricks -q --force vcrun2019 > winescript_log.txt 2>&1
+./winetricks -q --force dotnet48 >> winescript_log.txt 2>&1
+./winetricks -q --force dotnet6 >> winescript_log.txt 2>&1
 rm -rf ~/.cache/winetricks
 kill $xvfb_pid
 
