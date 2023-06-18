@@ -8,9 +8,10 @@ wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winet
 chmod +x winetricks
 export WINEPREFIX=$SCRIPTDIR/v-rising/.wine
 export WINEDLLOVERRIDES="mscoree,mshtml="
+export WINEARCH=win64
 export DISPLAY=:5
-./winetricks -q --force vcrun2019
-./winetricks -q --force dotnet6
+./winetricks -q vcrun2019
+./winetricks -q dotnet6
 rm -rf ~/.cache/winetricks
 kill $xvfb_pid
 
