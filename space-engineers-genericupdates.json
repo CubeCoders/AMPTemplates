@@ -53,21 +53,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\"mscoree=d\" /usr/bin/wineboot --init --update'"
-    },
-    {
-        "UpdateStageName":"Winetricks Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "OverwriteExistingFiles":true
-    },
-    {
-        "UpdateStageName":"Set Winetricks Executable Flag",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"SetExecutableFlag",
-        "UpdateSourceArgs":"{{$FullRootDir}}winetricks"
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\"mscoree,mshtml=\" /usr/bin/wineboot --init --update'"
     },
     {
         "UpdateStageName":"Winescript Download",
