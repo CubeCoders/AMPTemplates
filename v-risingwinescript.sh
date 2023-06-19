@@ -9,6 +9,7 @@ chmod +x winetricks
 export WINEPREFIX="$SCRIPTDIR/v-rising/.wine"
 export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
+export WINEDEBUG=-fixme
 export DISPLAY=:5.0
 ./winetricks -q vcrun2019 > winescript_log.txt 2>&1
 ./winetricks -q dotnet48 >> winescript_log.txt 2>&1
