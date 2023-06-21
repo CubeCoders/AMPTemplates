@@ -21,7 +21,6 @@ export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
 ./winetricks -q vcrun2019 > winescript_log.txt 2>&1
-./winetricks -q dotnet48 >> winescript_log.txt 2>&1
 ./winetricks -q dotnet6 >> winescript_log.txt 2>&1
 rm -rf ~/.cache/winetricks
 
