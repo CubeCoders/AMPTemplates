@@ -2,7 +2,7 @@
     {
         "DisplayName": "IpAddress",
         "Category": "Server Settings",
-        "Description": "Listening interface for the game server, usually 0.0.0.0 if listening on all interfaces.",
+        "Description": "If required, you can change the binding of the server to an internal interface IP by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Stop the instance (not just the server) first.",
         "Keywords": "",
         "FieldName": "$ApplicationIPBinding",
         "InputType": "text",
@@ -126,7 +126,7 @@
     {
         "DisplayName": "Save Mode",
         "Category": "SotF - Server Settings",
-        "Description": "Game save initialization mode. • \"continue\": will create a new save on SaveSlot if it doesn’t exist, or load it if it exist. • \"new\": will create a new game, with a new game id, and overwrite any game previously saved on the SaveSlot. If the server stops and restarts, the previous save will be overwritten for as long as the mode is set to \"new\".",
+        "Description": "\"Continue\" will create a new save if it doesn’t exist, or load it if it exists. \"New\" will create a new game and overwrite any game save on the SaveSlot. The save will be overwritten as long as the mode is set to \"New\".",
         "Keywords": "save,mode",
         "FieldName": "SaveMode",
         "InputType": "enum",
@@ -142,7 +142,7 @@
     {
         "DisplayName": "Game Mode",
         "Category": "SotF - Server Settings",
-        "Description": "Sets the difficulty game mode when creating a new save. This parameter is ignored if loading a save (save mode set to \"continue\" with a save that exists on the slot). If the game mode is set to \"custom\", then the custom game mode settings will be read from \"SotF - Game Settings\".",
+        "Description": "Sets the difficulty game mode when creating a new save. This is ignored if loading a save. If set to \"custom\", the custom game mode settings will be read from \"SotF - Game Settings\".",
         "Keywords": "game,mode",
         "FieldName": "GameMode",
         "InputType": "enum",
@@ -237,7 +237,7 @@
     {
         "DisplayName": "Timestamp Log Filenames",
         "Category": "SotF - Server Settings",
-        "Description": "Enabled log files timestamping. • \"true\": every time the server runs will dump log output to a new file, with filename having the following format: sotf_log_{DateTime:yyyy-MM-dd_HH-mm-ss}.txt • \"false\": the filename will be sotf_log.txt and previous log will be overwritten if it already exists.",
+        "Description": "Every server start will create a new timestamped file. If disabled, the previous log will be overwritten.",
         "Keywords": "timestamp,log,filenames",
         "FieldName": "TimestampLogFilenames",
         "InputType": "checkbox",
@@ -269,7 +269,7 @@
     {
         "DisplayName":"Server Owners",
         "Category":"SotF - Server Settings",
-        "Description":"To administrate your server from in game directly, you need to setup server ownership. Add the Steam64 IDs of every server owner, one steam id per line. You can use # to comment out a line. That can be helpful to keep track of SteamIDs, you can include their name in the line above or below, starting with a #. [Find Steam64 IDs](https://steamidfinder.com/)",
+        "Description":"Add the Steam64 IDs of every server owner, one steam id per line. Use # to comment out a line to keep track of SteamIDs. Include their name in the line above. [Find Steam64 IDs](https://steamidfinder.com/)",
         "Keywords":"server,owners,admins",
         "FieldName":"ServerOwners",
         "InputType":"list",
@@ -279,18 +279,6 @@
         "DefaultValue":"",
         "Special":"listfile:./sons-of-the-forest/2465200/saves/ownerswhitelist.txt",
         "EnumValues": {}
-    },
-    {
-        "DisplayName":"Server IP Binding",
-        "Category":"SotF - Server Settings",
-        "Description":"If required, you can change the binding of the server to an internal interface IP by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Stop the instance (not just the server) first.",
-        "Keywords":"ip,binding,address,multihome",
-        "FieldName":"MultiHome",
-        "InputType":"hidden",
-        "IsFlagArgument":false,
-        "ParamFieldName":"MultiHome",
-        "IncludeInCommandLine":false,
-        "EnumValues":{}
     },
     {
         "DisplayName": "Game Mode Info",
