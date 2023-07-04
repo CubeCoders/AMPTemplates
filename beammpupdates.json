@@ -1,0 +1,36 @@
+[
+    {
+        "UpdateStageName": "BeamMP Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceData": "BeamMP-Server.exe",
+        "UpdateSourceArgs": "BeamMP/BeamMP-Server",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+    },
+    {
+        "UpdateStageName": "BeamMP Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceData": "BeamMP-Server-debian-11",
+        "UpdateSourceArgs": "BeamMP/BeamMP-Server",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+    },
+    {
+        "UpdateStageName":"Set Executable Flag",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"SetExecutableFlag",
+        "UpdateSourceArgs":"{{$FullBaseDir}}BeamMP-Server-debian-11"
+    },
+    {
+        "UpdateStageName": "Config Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/beammpServerConfig.toml",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": "true"
+    }
+]
