@@ -32,7 +32,7 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=321360
 App.LinuxCommandLineArgs="./Binaries/Win64/PrimalCarnageGame.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} {{ServerMap}}?game={{GameMode}}?bIsDedicated=true?{{$FormattedArgs}}{{CustomServerArgs}} Port={{$GamePort}} QueryPort={{$QueryPort}} MultiHome={{$ApplicationIPBinding}} -seekfreeloadingserver -stdout -FullStdOutLogOutput
+App.CommandLineArgs={{$PlatformArgs}} {{ServerMap}}?game={{GameMode}}?bIsDedicated=true?{{$FormattedArgs}}{{CustomServerArgs}} Port={{$GamePort}} PeerPort={{$PeerPort}} QueryPort={{$QueryPort}} MultiHome={{$ApplicationIPBinding}} -seekfreeloadingserver -stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"SteamAppId":"321360","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
@@ -47,12 +47,12 @@ App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"UDP","Port":7777,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":27015,"Ref":"QueryPort","Name":"Query Port","Description":"Port for Steam query traffic"}]
+App.Ports=[{"Protocol":"Both","Port":7777,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"Both","Port":7778,"Ref":"PeerPort","Name":"Peer Port","Description":"Port for Steam traffic"},{"Protocol":"UDP","Port":27015,"Ref":"QueryPort","Name":"Query Port","Description":"Port for Steam query traffic"}]
 App.AdminPortRef=0
 App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPortRef=GamePort
 App.UniversalSleepSteamQueryPortRef=QueryPort
-App.MaxUsers=24
+App.MaxUsers=16
 App.UseRandomAdminPassword=True
 App.PersistRandomPassword=True
 App.RemoteAdminPassword=
