@@ -31,7 +31,7 @@ for ($i = 1; $i -le [int]$args[0]; $i++) {
   } else {
     $connect = $args[1]
   }
-  $hcProcess = Start-Process -FilePath "ArmA3Server_x64.exe" -ArgumentList "-client", "-nosound", "-name=HeadlessClient$i", "-profiles=A3Master", "-connect=${connect}:$($args[2])", "-port=$basePort", "-password=`"$($args[3])`"", "`"-mod=$($args[4])`"", "`"$parfile_arg`"" -WindowStyle Hidden -PassThru
+  $hcProcess = Start-Process -FilePath "ArmA3Server_x64.exe" -ArgumentList "-client", "-nosound", "-profiles=A3Master", "-connect=${connect}:$($args[2])", "-port=$basePort", "-password=`"$($args[3])`"", "`"-mod=$($args[4])`"", "`"$parfile_arg`"" -WindowStyle Hidden -PassThru
   $clients += $hcProcess.Id
 }
 
