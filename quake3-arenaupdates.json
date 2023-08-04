@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://files.ioquake3.org/Windows.zip",
-        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -14,7 +14,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://files.ioquake3.org/Linux.zip",
-        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -22,26 +22,16 @@
     {
         "UpdateStageName":"Server Files Extract",
         "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"ExtractArchive",
-        "UpdateSourceArgs":"{{$FullInstanceDir}}release-mingw64-x86_64",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd quake3-arena\\server\\ && tar -xf release-mingw64-x86_64.zip && rm release-mingw64-x86_64.zip"
     },
     {
         "UpdateStageName":"Server Files Extract",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"ExtractArchive",
-        "UpdateSourceArgs":"{{$FullInstanceDir}}release-linux-x86_64",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
-    },
-    {
-        "UpdateStageName":"Set Executable Flag",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"SetExecutableFlag",
-        "UpdateSourceArgs":"{{$FullBaseDir}}/ioq3ded.x86_64"
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./quake3-arena/server/ && tar -xf release-linux-x86_64.zip && rm -f release-linux-x86_64.zip && chmod +x ioq3ded.x86_64'"
     },
     {
         "UpdateStageName":"SteamCMD Game Download",
