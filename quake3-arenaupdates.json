@@ -42,18 +42,28 @@
         "ForceDownloadPlatform":"Windows"
     },
     {
-        "UpdateStageName":"Client Files Copy",
+        "UpdateStageName":"Client File Copy",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I quake3-arena\\client\\baseq3\\*.pk3 quake3-arena\\server\\baseq3\\"
+        "UpdateSourceArgs":"/C xcopy /E /Y /I quake3-arena\\client\\baseq3\\pak0.pk3 quake3-arena\\server\\baseq3\\"
     },
     {
         "UpdateStageName":"Client Files Copy",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./quake3-arena/client/baseq3/*.pk3 ./quake3-arena/server/baseq3/'"
+        "UpdateSourceArgs":"-c '\\cp -rf ./quake3-arena/client/baseq3/pak0.pk3 ./quake3-arena/server/baseq3/'"
+    },
+    {
+        "UpdateStageName":"Patch Files Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://files.ioquake3.org/quake3-latest-pk3s.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
     },
     {
         "UpdateStageName":"Server.cfg Download",
