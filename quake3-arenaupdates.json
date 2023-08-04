@@ -1,0 +1,58 @@
+[
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://files.ioquake3.org/Windows.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://files.ioquake3.org/Linux.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Set Executable Flag",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"SetExecutableFlag",
+        "UpdateSourceArgs":"{{$FullBaseDir}}/ioq3ded.x86_64"
+    },
+    {
+        "UpdateStageName":"SteamCMD Game Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"2200",
+        "UpdateSourceTarget":"{{$FullRootDir}}/client"
+    },
+    {
+        "UpdateStageName":"Client Files Copy",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C xcopy /E /Y /I quake3-arena\\client\\baseq3\\*.pk3 quake3-arena\\server\\baseq3\\"
+    },
+    {
+        "UpdateStageName":"Client Files Copy",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '\\cp -rf ./quake3-arena/client/baseq3/*.pk3 ./quake3-arena/server/baseq3/'"
+    },
+    {
+        "UpdateStageName":"Server.cfg Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/quake3arenaserver.cfg",
+        "UpdateSourceArgs":"server.cfg",
+        "UpdateSourceTarget":"{{$FullBaseDir}}/baseq3",
+        "OverwriteExistingFiles":false
+    }
+]
