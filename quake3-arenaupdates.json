@@ -46,24 +46,38 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I quake3-arena\\client\\baseq3\\pak0.pk3 quake3-arena\\server\\baseq3\\"
+        "UpdateSourceArgs":"/C xcopy /E /Y /I quake3-arena\\client\\baseq3\\pak0.pk3 quake3-arena\\server\\baseq3\\ && rmdir /Q /S quake3-arena\\client\\"
     },
     {
-        "UpdateStageName":"Client Files Copy",
+        "UpdateStageName":"Client File Copy",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./quake3-arena/client/baseq3/pak0.pk3 ./quake3-arena/server/baseq3/'"
+        "UpdateSourceArgs":"-c '\\cp -rf ./quake3-arena/client/baseq3/pak0.pk3 ./quake3-arena/server/baseq3/ && rm -rf ./quake3-arena/client/'"
     },
     {
         "UpdateStageName":"Patch Files Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://files.ioquake3.org/quake3-latest-pk3s.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Patch Files Copy",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C xcopy /E /Y /I quake3-arena\\quake3-latest-pk3s\\baseq3\\*.pk3 quake3-arena\\server\\baseq3\\ && xcopy /E /Y /I quake3-arena\\quake3-latest-pk3s\\missionpack\\*.pk3 quake3-arena\\server\\missionpack\\ && rmdir /Q /S quake3-arena\\quake3-latest-pk3s\\"
+    },
+    {
+        "UpdateStageName":"Patch Files Copy",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '\\cp -rf ./quake3-arena/quake3-latest-pk3s//baseq3/*.pk3 ./quake3-arena/server/baseq3/ && \\cp -rf ./quake3-arena/quake3-latest-pk3s/missionpack/*.pk3 ./quake3-arena/server/missionpack/ && rm -rf ./quake3-arena/quake3-latest-pk3s/'"
     },
     {
         "UpdateStageName":"Server.cfg Download",
