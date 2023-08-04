@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://files.ioquake3.org/Windows.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -14,8 +14,26 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://files.ioquake3.org/Linux.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
         "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Server Files Extract",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"ExtractArchive",
+        "UpdateSourceArgs":"{{$FullInstanceDir}}release-mingw64-x86_64",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Server Files Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"ExtractArchive",
+        "UpdateSourceArgs":"{{$FullInstanceDir}}release-linux-x86_64",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
     },
