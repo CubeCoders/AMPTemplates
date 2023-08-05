@@ -5,7 +5,6 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://files.ioquake3.org/Windows.zip",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UpdateSourceArgs":"release-mingw64-x86_64.zip",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -16,10 +15,23 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://files.ioquake3.org/Linux.zip",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UpdateSourceArgs":"release-linux-x86_64.zip",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Server Files Extract",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd quake3-arena\\server\\ && tar -xf release-mingw64-x86_64.zip && rm release-mingw64-x86_64.zip"
+    },
+    {
+        "UpdateStageName":"Server Files Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./quake3-arena/server/ && unzip -ao release-linux-x86_64.zip && rm -f release-linux-x86_64.zip && chmod +x ioq3ded.x86_64'"
     },
     {
         "UpdateStageName":"SteamCMD Game Download",
