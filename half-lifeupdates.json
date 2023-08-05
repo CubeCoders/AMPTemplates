@@ -2,9 +2,11 @@
     {
         "UpdateStageName":"Engine Download",
         "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/FWGS/xash3d-fwgs/releases/download/continuous/xash3d-fwgs-win32-i386.7z",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"FWGS/xash3d-fwgs",
+        "UpdateSourceData":"xash3d-fwgs-win32-i386.7z",
+        "UpdateSourceVersion":"continuous",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -12,32 +14,34 @@
     {
         "UpdateStageName":"Engine Download",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/FWGS/xash3d-fwgs/releases/download/continuous/xashds-linux-i386.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"FWGS/xash3d-fwgs",
+        "UpdateSourceData":"xashds-linux-i386.tar.gz",
+        "UpdateSourceVersion":"continuous",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Engine Files Copy",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C xcopy /E /Y /I half-life\\xash3d-fwgs-win32-i386\\valve half-life\\server\\ && rmdir /Q /S half-life\\xash3d-fwgs-win32-i386\\"
+    },
+    {
+        "UpdateStageName":"Engine Files Copy",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '\\cp -rf ./half-life/xashds-linux-i386/valve ./half-life/server && rm -rf ./half-life/xashds-linux-i386/'"
     },
     {
         "UpdateStageName":"SteamCMD Game Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"70",
-        "UpdateSourceTarget":"{{$FullRootDir}}/client"
-    },
-    {
-        "UpdateStageName":"Game Directory Copy",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I half-life\\client\\valve half-life\\server\\ && rmdir /Q /S half-life\\client\\"
-    },
-    {
-        "UpdateStageName":"Game Directory Copy",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./half-life/client/valve ./half-life/server && rm -rf ./half-life/client/'"
+        "UpdateSourceTarget":"{{$FullBaseDir}}"
     }
 ]
