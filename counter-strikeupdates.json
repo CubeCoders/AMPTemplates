@@ -1,0 +1,47 @@
+[
+    {
+        "UpdateStageName":"SteamCMD Game Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"10",
+        "UpdateSourceTarget":"{{$FullBaseDir}}"
+    },
+    {
+        "UpdateStageName":"Engine Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"FWGS/xash3d-fwgs",
+        "UpdateSourceData":"xash3d-fwgs-win32-i386.7z",
+        "UpdateSourceVersion":"continuous",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Engine Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"FWGS/xash3d-fwgs",
+        "UpdateSourceData":"xashds-linux-i386.tar.gz",
+        "UpdateSourceVersion":"continuous",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Engine Files Copy",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C xcopy /E /Y /I counter-strike\\xash3d-fwgs-win32-i386\\* counter-strike\\server\\ && rmdir /Q /S counter-strike\\xash3d-fwgs-win32-i386\\"
+    },
+    {
+        "UpdateStageName":"Engine Files Copy",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '\\cp -rf ./counter-strike/xashds-linux-i386/* ./counter-strike/server && rm -rf ./counter-strike/xashds-linux-i386/'"
+    }
+]
