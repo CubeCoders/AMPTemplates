@@ -52,7 +52,7 @@
     {
         "DisplayName":"Make Server Public",
         "Category":"Q3A Server Settings",
-        "Description":"If enabled, the server will be visible publicly. Otherwise it will only be accessible from the local network",
+        "Description":"If enabled, the server will be visible publicly. Otherwise it will only be accessible from the LAN",
         "Keywords":"public,visible,dedicated",
         "FieldName":"dedicated",
         "InputType":"checkbox",
@@ -65,13 +65,28 @@
         }
     },
     {
+        "DisplayName":"Require Server Password",
+        "Category":"Q3A Server Settings",
+        "Description":"If enabled, the server will notify clients that it requires a password to connect. The password must be set under Server Password",
+        "Keywords":"server,password,g_needpass",
+        "FieldName":"g_needpass",
+        "InputType":"checkbox",
+        "ParamFieldName":"g_needpass",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Server Password",
         "Category":"Q3A Server Settings",
-        "Description":"Sets the password required to connect to the server. Default is no password",
-        "Keywords":"server,password,sv_privatepassword",
-        "FieldName":"sv_privatePassword",
+        "Description":"Sets the password required to connect to the server. Default is no password. Require Server Password must also be enabled",
+        "Keywords":"server,password,g_password",
+        "FieldName":"g_password",
         "InputType":"password",
-        "ParamFieldName":"sv_privatePassword",
+        "ParamFieldName":"g_password",
         "IncludeInCommandLine":true,
         "DefaultValue":"",
         "EnumValues":{}
@@ -88,19 +103,16 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Require Client Password",
+        "DisplayName":"Private Client Password",
         "Category":"Q3A Server Settings",
-        "Description":"If set, clients will require a password",
-        "Keywords":"client,password,required,private,sv_privateclients",
-        "FieldName":"sv_privateClients",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_privateClients",
+        "Description":"Sets the password for private clients, if any, to connect to the server. Specify the required number of private clients under Private Client Number. Server Password should not be set",
+        "Keywords":"private,client,password,sv_privatepassword",
+        "FieldName":"sv_privatePassword",
+        "InputType":"password",
+        "ParamFieldName":"sv_privatePassword",
         "IncludeInCommandLine":true,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
+        "DefaultValue":"",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Enable Pure Server",
@@ -152,7 +164,7 @@
     {
         "DisplayName":"Initial Map",
         "Category":"Q3A Server Settings",
-        "Description":"Sets the map to start the server with.  If \"Custom\" is selected, Custom Initial Map must also be specified. This setting will be overridden if Map Rotation is configured",
+        "Description":"Sets the map to start the server with.  If \"Custom\" is selected, Custom Initial Map must also be specified. This setting will be overridden if map rotation is configured in baseq3/server.cfg",
         "Keywords":"map",
         "FieldName":"map_name",
         "InputType":"enum",
@@ -226,18 +238,80 @@
         }
     },
     {
-        "DisplayName":"Player Limit",
+        "DisplayName":"Client Limit",
         "Category":"Q3A Server Settings",
-        "Description":"Sets the maximum number of players allowed on the server at one time. Increase from the default 8 for large FFA, TDM and CTF maps",
-        "Keywords":"max,players,limit,sv_maxclients",
+        "Description":"Sets the maximum number of players and spectators allowed on the server at one time",
+        "Keywords":"max,maximum,players,spectators,clients,limit,sv_maxclients",
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "MinValue":"1",
+        "MaxValue":"32",
         "ParamFieldName":"sv_maxclients",
         "IncludeInCommandLine":true,
         "DefaultValue":"8",
         "Placeholder":"8",
+        "Suffix":"clients",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Game Player Limit",
+        "Category":"Q3A Server Settings",
+        "Description":"Sets the maximum number of players (out of the Client Limit) that are able to join the game, while the rest will be spectators. 0 = disabled",
+        "Keywords":"max,maximum,game,players,limit,g_maxgameclients",
+        "FieldName":"g_maxGameClients",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"32",
+        "ParamFieldName":"g_maxGameClients",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "Placeholder":"0",
         "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Private Client Number",
+        "Category":"Q3A Server Settings",
+        "Description":"Sets the number of slots (out of the Client Limit) reserved for private players on a public server. 0 = disabled. Private Client Password must also be set",
+        "Keywords":"sv_privateClients",
+        "FieldName":"sv_privateClients",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"32",
+        "ParamFieldName":"sv_privateClients",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"private players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow Download From Server",
+        "Category":"Q3A Server Settings",
+        "Description":"If set, clients will be allowed to download content (maps, models, etc) from the server",
+        "Keywords":"allow,download,content,map,model,sv_allowdownload",
+        "FieldName":"sv_allowDownload",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_allowDownload",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Server FPS",
+        "Category":"Q3A Server Settings",
+        "Description":"Sets the maximum frames per second (FPS) that the server sends to clients",
+        "Keywords":"frames,second,fps,sv_fps",
+        "FieldName":"sv_fps",
+        "InputType":"number",
+        "ParamFieldName":"sv_fps",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"20",
+        "Placeholder":"20",
+        "Suffix":"frames/second",
         "EnumValues":{}
     },
     {
@@ -245,13 +319,28 @@
         "Category":"Q3A Server Settings",
         "Description":"Sets the amount of memory allocated for map and item loading",
         "Keywords":"ram,memory,com_hunkmegs",
-        "FieldName":"com_hunkmegs",
+        "FieldName":"com_hunkMegs",
         "InputType":"number",
-        "ParamFieldName":"com_hunkmegs",
+        "ParamFieldName":"com_hunkMegs",
         "IncludeInCommandLine":true,
         "DefaultValue":"128",
         "Placeholder":"128",
         "Suffix":"MB",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Minimum Client Rate",
+        "Category":"Q3A Server Settings",
+        "Description":"Sets the minimum allowable rate a client may have set when connected to the server. 0 = no minimum (default)",
+        "Keywords":"minimum,bandwidth,rate,sv_minrate",
+        "FieldName":"sv_minRate",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"sv_minRate",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"bytes/second",
         "EnumValues":{}
     },
     {
@@ -269,7 +358,37 @@
         "Suffix":"bytes/second",
         "EnumValues":{}
     },
-     {
+    {
+        "DisplayName":"Minimum Client Ping",
+        "Category":"Q3A Server Settings",
+        "Description":"Sets the minimum ping clients can have on the server. 0 = disabled",
+        "Keywords":"minimum,ping,sv_minPing",
+        "FieldName":"sv_minPing",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"sv_minPing",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Client Ping",
+        "Category":"Q3A Server Settings",
+        "Description":"Sets the maximum ping clients can have on the server. 0 = disabled",
+        "Keywords":"maximum,ping,sv_maxPing",
+        "FieldName":"sv_maxPing",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"sv_maxPing",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Additional Command Line Parameters",
         "Category":"Q3A Server Settings",
         "Description":"Specifies additional command line parameters that are not otherwise set by AMP. ONE LINE ONLY! Use with care. Alternatively, specify additional settings in baseq3/server.cfg",
@@ -320,7 +439,7 @@
     {
         "DisplayName":"Bot Minimum Players",
         "Category":"Q3A Gameplay Settings",
-        "Description":"The server will be filled with bots to satisfy the minimum set if there are otherwise not enough players",
+        "Description":"Bots will added to or removed from the server to ensure that the number of players on the server meets the minimum set (subject to client/player limits)",
         "Keywords":"bot,minimum,players,bot_minplayers",
         "FieldName":"bot_minplayers",
         "InputType":"number",
@@ -353,9 +472,7 @@
         "Keywords":"friendly,fire,g_friendlyfire",
         "FieldName":"g_friendlyFire",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
         "ParamFieldName":"g_friendlyFire",
-        "IncludeInCommandLine":true,
         "IncludeInCommandLine":true,
         "DefaultValue":"1",
         "EnumValues":{
@@ -410,7 +527,7 @@
         "DisplayName":"Enable Auto Team Joining",
         "Category":"Q3A Gameplay Settings",
         "Description":"If set, a new player will automatically join a team when connecting to the server (TDM or CTF game types). Otherwise they will go into spectator mode",
-        "Keywords":"team,auto,join,joining,spectator,g_teamAutoJoin",
+        "Keywords":"team,auto,join,joining,spectator,g_teamautojoin",
         "FieldName":"g_teamAutoJoin",
         "InputType":"checkbox",
         "ParamFieldName":"g_teamAutoJoin",
@@ -424,8 +541,8 @@
     {
         "DisplayName":"Enable Forced Team Balancing",
         "Category":"Q3A Gameplay Settings",
-        "Description":"If set, forces a new player onto the weak team (TDM or CTF game types). Otherwise, the player can select freely which team to join. Standard defaults: TDM - true, CTF - false",
-        "Keywords":"team,force,balance,balancing,selection,g_teamForceBalance",
+        "Description":"If set, forces a new player onto the smallest or losing team (TDM or CTF game types). Otherwise, the player can select freely which team to join. Standard defaults: TDM - true, CTF - false",
+        "Keywords":"team,force,balance,balancing,selection,g_teamforcebalance",
         "FieldName":"g_teamForceBalance",
         "InputType":"checkbox",
         "ParamFieldName":"g_teamForceBalance",
@@ -437,28 +554,28 @@
         }
     },
     {
-        "DisplayName":"Force Respawn",
+        "DisplayName":"Respawn Time Period",
         "Category":"Q3A Gameplay Settings",
-        "Description":"If set, players will have to press the primary button to respawn, rather than it being automatic",
-        "Keywords":"force,respawn,manual,g_forcerespawn",
+        "Description":"Sets the respawn time period. 0 = no forced respawn",
+        "Keywords":"force,respawn,time,period,manual,g_forcerespawn",
         "FieldName":"g_forcerespawn",
-        "InputType":"checkbox",
+        "InputType":"number",
+        "MinValue":"0",
         "ParamFieldName":"g_forcerespawn",
         "IncludeInCommandLine":true,
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
+        "DefaultValue":"10",
+        "Placeholder":"10",
+        "Suffix":"seconds",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Allow Voting",
         "Category":"Q3A Gameplay Settings",
         "Description":"If set, connected players can call for and vote on changes including: map, map restart, kick, and game type",
         "Keywords":"vote,voting,g_allowvote",
-        "FieldName":"g_allowvote",
+        "FieldName":"g_allowVote",
         "InputType":"checkbox",
-        "ParamFieldName":"g_allowvote",
+        "ParamFieldName":"g_allowVote",
         "IncludeInCommandLine":true,
         "DefaultValue":"1",
         "EnumValues":{
@@ -481,9 +598,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Weapon Respawn Time",
+        "DisplayName":"Weapon Respawn Time Period",
         "Category":"Q3A Gameplay Settings",
-        "Description":"Sets the time period between when a weapon is picked up and when it respawns. Only recommended to be changed from default (5) in FFA servers with a large number of players, in which case it can be lowered slightly. Otherwise not recommended to be modified or set to 0",
+        "Description":"Sets the time period between when a weapon is picked up and when it respawns. Only recommended to be changed from default (5) in FFA servers with a large number of players, in which case it can be lowered slightly. Otherwise not recommended to be modified or set to 0 (weapons stay)",
         "Keywords":"weapon,respawn,time,available,g_weaponrespawn",
         "FieldName":"g_weaponrespawn",
         "InputType":"number",
@@ -498,27 +615,43 @@
     {
         "DisplayName":"Inactivity Kick Time",
         "Category":"Q3A Gameplay Settings",
-        "Description":"Sets the time period after which inactive players will be kicked from the server",
+        "Description":"Sets the time period after which inactive players will be kicked from the server. 0 = disabled",
         "Keywords":"inactive,afk,idle,kick,g_inactivity",
         "FieldName":"g_inactivity",
         "InputType":"number",
+        "MinValue":"0",
         "ParamFieldName":"g_inactivity",
         "IncludeInCommandLine":true,
-        "DefaultValue":"120",
-        "Placeholder":"120",
+        "DefaultValue":"0",
+        "Placeholder":"0",
         "Suffix":"seconds",
         "EnumValues":{}
     },
     {
         "DisplayName":"Enable Synchronous Clients",
         "Category":"Q3A Gameplay Settings",
-        "Description":"If set, all clients are synced up to allow demo recording. Recommended to keep off to allow smoother play",
+        "Description":"If set, all clients movements are synced to allow demo recording. Recommended to keep off to allow smoother play",
         "Keywords":"synchronous,clients,demo,recording,g_syncronousclients",
         "FieldName":"g_syncronousclients",
         "InputType":"checkbox",
         "ParamFieldName":"g_syncronousclients",
         "IncludeInCommandLine":true,
         "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Flood Protection",
+        "Category":"Q3A Gameplay Settings",
+        "Description":"If set, the server will be protected from being flooded by players via chat",
+        "Keywords":"flood,protect,protection,sv_floodprotect",
+        "FieldName":"sv_floodProtect",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_floodProtect",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
             "True":"1"
