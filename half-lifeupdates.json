@@ -4,7 +4,21 @@
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"70",
-        "UpdateSourceTarget":"{{$FullBaseDir}}"
+        "UpdateSourceTarget":"{{$FullRootDir}}client"
+    },
+    {
+        "UpdateStageName":"Game Directory Symlink Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"mklink /J \"{{$FullBaseDir}}valve\" \"{{$FullRootDir}}client\\valve\""
+    },
+    {
+        "UpdateStageName":"Game Directory Symlink Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'ln -sf \"{{$FullRootDir}}client/valve\" \"{{$FullBaseDir}}\"'"
     },
     {
         "UpdateStageName":"Engine Download",
