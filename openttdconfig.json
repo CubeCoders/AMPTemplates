@@ -26,6 +26,23 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Public Status",
+        "Category":"OpenTTD Server Settings",
+        "Description":"Sets whether the server is local or public and, if public, whether it is included on the server list or is invite-only",
+        "Keywords":"local,public,invite,list,game,type,server_game_type",
+        "FieldName":"server_game_type",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"network.server_game_type",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"local",
+        "EnumValues":{
+            "local":"Local (default)",
+            "invite-only":"Public (invite only)",
+            "public":"Public"
+        }
+    },
+    {
         "DisplayName":"Server Name",
         "Category":"OpenTTD Server Settings",
         "Description":"Sets the name of the server as shown on the server list",
@@ -522,15 +539,16 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"0",
         "EnumValues":{
-            "0":"Permissive (default)",
+            "0":"Lenient (default)",
             "1":"Tolerant",
-            "2":"Hostile"
+            "2":"Hostile",
+            "3":"Permissive"
         }
     },
     {
-        "DisplayName":"Town Population Noise Level Increase - Permissive",
+        "DisplayName":"Town Population Noise Level Increase - Lenient",
         "Category":"OpenTTD Enviro Settings",
-        "Description":"If Town Council Tolerance is permissive, then the town noise limit will increase from the default for every specified number of inhabitants",
+        "Description":"If Town Council Tolerance is lenient, then the town noise limit will increase from the default for every specified number of inhabitants",
         "Keywords":"town,noise,population,permissive,town_noise_population[0]",
         "FieldName":"town_noise_population0",
         "InputType":"number",
@@ -567,6 +585,20 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"4000",
         "Placeholder":"4000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Town Population Noise Level Increase - Permissive",
+        "Category":"OpenTTD Enviro Settings",
+        "Description":"If Town Council Tolerance is permissive, then the town noise limit will increase from the default for every specified number of inhabitants",
+        "Keywords":"town,noise,population,permissive,town_noise_population[3]",
+        "FieldName":"town_noise_population3",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"economy.town_noise_population[3]",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"400",
+        "Placeholder":"400",
         "EnumValues":{}
     },
     {
@@ -1768,14 +1800,14 @@
         "IsFlagArgument":false,
         "ParamFieldName":"difficulty.industry_density",
         "IncludeInCommandLine":false,
-        "DefaultValue":"5",
+        "DefaultValue":"4",
         "EnumValues":{
             "0":"None (funding only)",
             "1":"Minimal",
             "2":"Very low",
             "3":"Low",
-            "4":"Normal",
-            "5":"High (default)"
+            "4":"Normal (default)",
+            "5":"High"
         }
     },
     {
