@@ -1,0 +1,25 @@
+[
+  {
+    "UpdateStageName": "Bot Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://github.com/k8thekat/GatekeeperV2/archive/refs/heads/main.zip",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true,
+    "DeleteAfterExtract": true
+  },
+  {
+    "UpdateStageName": "Create Virtual Environment",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"rm -rf '{{$FullRootDir}}venv' && /usr/bin/python3 -m venv '{{$FullRootDir}}venv' && source '{{$FullRootDir}}venv/bin/activate'\""
+  },
+  {
+    "UpdateStageName": "Pip & Discord.py Script",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"pip install --upgrade pip && pip install numpy requests && git clone https://github.com/Rapptz/discord.py && cd discord.py && python3 -m pip install discord.py\""
+  }
+]
