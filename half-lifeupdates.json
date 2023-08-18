@@ -1,5 +1,19 @@
 [
     {
+        "UpdateStageName":"Delete Server Directory Contents",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'rm -rf {{$FullBaseDir}}*'"
+    },
+    {
+        "UpdateStageName":"Delete Server Directory Contents",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}*"
+    },
+    {
         "UpdateStageName":"SteamCMD Game Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
@@ -30,14 +44,18 @@
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"EngineVersion",
+        "UpdateSourceConditionValue":"new"
     },
     {
         "UpdateStageName":"Delete Engine Download Zip",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C del /Q /F \"{{$FullBaseDir}}xash3d-fwgs-win32-i386.7z\""
+        "UpdateSourceArgs":"/C del /Q /F \"{{$FullBaseDir}}xash3d-fwgs-win32-i386.7z\"",
+        "UpdateSourceConditionSetting":"EngineVersion",
+        "UpdateSourceConditionValue":"new"
     },
     {
         "UpdateStageName":"Engine Download",
@@ -49,13 +67,86 @@
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"EngineVersion",
+        "UpdateSourceConditionValue":"new"
     },
     {
         "UpdateStageName":"Engine Files Copy",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./half-life/xashds-linux-i386/* ./half-life/server && rm -rf ./half-life/xashds-linux-i386/'"
+        "UpdateSourceArgs":"-c '\\cp -rf ./half-life/xashds-linux-i386/* ./half-life/server && rm -rf ./half-life/xashds-linux-i386/'",
+        "UpdateSourceConditionSetting":"EngineVersion",
+        "UpdateSourceConditionValue":"new"
+    },
+    {
+        "UpdateStageName":"Engine Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/FWGS/xash3d-deploy/raw/travis-master/xash3d-mingw.7z",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"EngineVersion",
+        "UpdateSourceConditionValue":"old"
+    },
+    {
+        "UpdateStageName":"Delete Engine Download Zip",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C del /Q /F \"{{$FullBaseDir}}xash3d-mingw.7z\"",
+        "UpdateSourceConditionSetting":"EngineVersion",
+        "UpdateSourceConditionValue":"old"
+    },
+    {
+        "UpdateStageName":"7-Zip Directory Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip",
+        "UpdateSourceConditionSetting":"EngineVersion",
+        "UpdateSourceConditionValue":"old"
+    },
+    {
+        "UpdateStageName":"7-Zip Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://www.7-zip.org/a/7z2301-linux-x64.tar.xz",
+        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"EngineVersion",
+        "UpdateSourceConditionValue":"old"
+    },
+    {
+        "UpdateStageName":"Engine Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/FWGS/xash3d-deploy/raw/travis-master/xash3d-linux.7z",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"EngineVersion",
+        "UpdateSourceConditionValue":"old"
+    },
+    {
+        "UpdateStageName":"Engine Files Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./half-life/server && ../7-Zip/7zzs x xash3d-linux.7z && rm -f xash3d-linux.7z'",
+        "UpdateSourceConditionSetting":"EngineVersion",
+        "UpdateSourceConditionValue":"old"
+    },
+    {
+        "UpdateStageName":"Old Binary Symlink",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && ln -sf ./xash3d ./xash'",
+        "UpdateSourceConditionSetting":"EngineVersion",
+        "UpdateSourceConditionValue":"old"
     }
 ]
