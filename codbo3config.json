@@ -1,5 +1,18 @@
 [
     {
+        "DisplayName":"Enable Logging",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"g_log",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"g_log",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Logfile",
         "Category":"Server Settings",
         "Description":"",
@@ -39,31 +52,31 @@
     {
         "DisplayName":"Server Password",
         "Category":"Server Settings",
-        "Description":"Sets the password required to connect to the server",
+        "Description":"Sets the password required to connect to the server. Default is no password",
         "Keywords":"server,password,live_steam_server_password",
         "FieldName":"live_steam_server_password",
         "InputType":"password",
         "ParamFieldName":"live_steam_server_password",
         "IncludeInCommandLine":true,
-        "DefaultValue":"{{newguid()}}",
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
         "DisplayName":"RCON Password",
         "Category":"Server Settings",
-        "Description":"Sets the RCON password",
-        "Keywords":"rcon,password,rcon_password",
+        "Description":"Sets the server's RCON password, to connect to the server with the remote console tool. Default is a strong random password",
+        "Keywords":"rcon,remote,console,password,rcon_password",
         "FieldName":"rcon_password",
         "InputType":"password",
         "ParamFieldName":"rcon_password",
         "IncludeInCommandLine":false,
-        "DefaultValue":"",
+        "DefaultValue":"{{newguid()}}",
         "EnumValues":{}
     },
     {
         "DisplayName":"Playlist",
         "Category":"Server Settings",
-        "Description":"Sets the playlist for the server to use from machinecfg/playlists.info",
+        "Description":"Sets the playlist for the server to use from those listed in machinecfg/playlists.info",
         "Keywords":"playlist,sv_playlist",
         "FieldName":"sv_playlist",
         "InputType":"number",
@@ -77,7 +90,7 @@
     {
         "DisplayName":"Mod",
         "Category":"Server Settings",
-        "Description":"Sets the mod the server will load",
+        "Description":"Sets the mod the server will load. The default mod \"usermaps\" can be run with user made maps. To load a different mod substitute the mod ID number (steam workshop ID)",
         "Keywords":"mod,fs_game",
         "FieldName":"fs_game",
         "InputType":"text",
@@ -85,6 +98,20 @@
         "IncludeInCommandLine":true,
         "DefaultValue":"usermaps",
         "Placeholder":"usermaps",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Lobby Wait Time Between Maps",
+        "Category":"Server Settings",
+        "Description":"Sets the wait time between maps in the lobby",
+        "Keywords":"lobby,wait,time,maps,lobbytimerstatusstartinterval",
+        "FieldName":"lobbyTimerStatusStartInterval",
+        "InputType":"number",
+        "ParamFieldName":"lobbyTimerStatusStartInterval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"30000",
+        "Placeholder":"30000",
+        "Suffix":"seconds",
         "EnumValues":{}
     }
 ]
