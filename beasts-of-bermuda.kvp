@@ -33,7 +33,7 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=882430
 App.LinuxCommandLineArgs="./WindowsServer\BeastsOfBermuda\Binaries\Win64\BeastsOfBermudaServer.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$SteamQueryPort}} -MultiHome={{$ApplicationIPBinding}} {{$FormattedArgs}} -log
+App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$SteamQueryPort}} -MultiHome={{$ApplicationIPBinding}} {{$FormattedArgs}} -stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"719890","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
@@ -84,7 +84,7 @@ App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=
-Console.AppReadyRegex=^LogServerSave: Display: Finished loading server data, game is now broadcasting online. Your server ID is: \d+\.$
+Console.AppReadyRegex=^\[[\d.]+-[\d.:]+\]\[\d+\]LogServerSave: Display: Finished loading server data, game is now broadcasting online. Your server ID is: \d+\.$
 Console.UserJoinRegex=^$
 Console.UserLeaveRegex=^$
 Console.UserChatRegex=^$
