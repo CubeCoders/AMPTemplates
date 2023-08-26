@@ -15,7 +15,7 @@ rm display.log
 wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
 
-export WINEPREFIX="$SCRIPTDIR/sbox/.wine"
+export WINEPREFIX="$SCRIPTDIR/s&box/.wine"
 export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 export WINEDEBUG=fixme-all
