@@ -9,13 +9,13 @@
     },
     {
         "UpdateStageName":"Create Dotnet Directory",
-        "UpdateSourcePlatform":"Windows",
+        "UpdateSourcePlatform":"All",
         "UpdateSource":"CreateDirectory",
         "UpdateSourceArgs":"{{$FullBaseDir}}dotnet"
     },
     {
         "UpdateStageName":"ASP.NET Core Runtime Download",
-        "UpdateSourcePlatform":"Windows",
+        "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-win-x64.zip",
         "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
@@ -28,22 +28,6 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDLLOVERRIDES=\"mscoree,mshtml=\" /usr/bin/wineboot --init --update'"
-    },
-    {
-        "UpdateStageName":"Winescript Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/sboxwinescript.sh",
-        "UpdateSourceArgs":"winescript.sh",
-        "UpdateSourceTarget":"{{$FullInstanceDir}}",
-        "OverwriteExistingFiles":true
-    },
-    {
-        "UpdateStageName":"Install Windows Components",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"./winescript.sh"
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
     }
 ]
