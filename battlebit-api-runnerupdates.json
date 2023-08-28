@@ -1,0 +1,28 @@
+[
+    {
+        "UpdateStageName":"API Runner Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"BattleBit-Community-Servers/BattleBitAPIRunner",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Create Dotnet Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}dotnet"
+    },
+    {
+        "UpdateStageName":"ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-win-x64.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    }
+]
