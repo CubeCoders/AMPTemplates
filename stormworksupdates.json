@@ -1,14 +1,11 @@
 [
   {
     "UpdateStageName": "Update",
-    "UpdateSourcePlatform": "Windows",
+    "UpdateSourcePlatform": "All",
     "UpdateSource": "SteamCMD",
-    "UpdateSourceData": "1247090 ",
+    "UpdateSourceData": "1247090",
     "UpdateSourceArgs": "573090",
-    "UnzipUpdateSource": false,
-    "OverwriteExistingFiles": false,
-    "DeleteAfterExtract": true,
-    "OneShot": false
+    "ForceDownloadPlatform": "Windows"
   },
   {
     "UpdateStageName": "Config Template Download",
@@ -18,5 +15,12 @@
     "UpdateSourceData": "https://raw.githubusercontent.com/JonathanArendt/AMPTemplates/main/stormworksserver_config.xml",
     "UpdateSourceTarget": "{{$FullBaseDir}}",
     "UpdateSourceArgs": "server_config.xml"
+  },
+  {
+    "UpdateStageName": "Initialise Wine",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
   }
 ]
