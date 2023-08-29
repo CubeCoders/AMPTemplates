@@ -4,7 +4,7 @@
     "Category": "Stormworks General",
     "Description": "The starting port for the server, game will use sequential ports. Default: 25564-25565",
     "Keywords": "",
-    "FieldName": "$GamePort",
+    "FieldName": "$GamePort1",
     "InputType": "number",
     "Hidden": true,
     "IsFlagArgument": false,
@@ -15,7 +15,7 @@
   {
     "DisplayName": "Server Name",
     "Category": "Stormworks General",
-    "Description": "Sets the name of the server as it appears in the server browser",
+    "Description": "Sets the name of the server as it appears in the server browser.",
     "Keywords": "server,name,servername",
     "FieldName": "name",
     "InputType": "text",
@@ -29,9 +29,9 @@
   {
     "DisplayName": "Save Name",
     "Category": "Stormworks General",
-    "Description": "Sets the name of the world save, as shown in the file directory",
+    "Description": "Sets the name of the world save, as shown in the file directory.",
     "Keywords": "save,name,savename",
-    "FieldName": "name",
+    "FieldName": "savename",
     "InputType": "text",
     "IsFlagArgument": false,
     "Required": true,
@@ -43,7 +43,7 @@
   {
     "DisplayName": "Server Password",
     "Category": "Stormworks General",
-    "Description": "Sets the password to join the server",
+    "Description": "Sets the password to join the server.",
     "Keywords": "password",
     "FieldName": "password",
     "InputType": "password",
@@ -56,7 +56,7 @@
   {
     "DisplayName": "Player Limit",
     "Category": "Stormworks General",
-    "Description": "Sets the number of players allowed to join the server at one time",
+    "Description": "Sets the number of players allowed to join the server at one time.",
     "Keywords": "player,limit,maxplayers",
     "FieldName": "$MaxUsers",
     "InputType": "number",
@@ -73,7 +73,7 @@
   {
     "DisplayName": "Player Despawn",
     "Category": "Stormworks General",
-    "Description": "If enabled, player's will despawn when they leave, good for public server",
+    "Description": "If Enabled, player's will despawn when they leave, good for public servers.",
     "Keywords": "despawn,player,character,leave",
     "FieldName": "DespawnOnLeave",
     "InputType": "checkbox",
@@ -107,7 +107,7 @@
   {
     "DisplayName": "Wildlife Enabled",
     "Category": "Stormworks General",
-    "Description": "If enabled, birds and fish spawn and are simulated",
+    "Description": "If Enabled, birds and fish spawn and are simulated.",
     "Keywords": "wildlife, wildlifeenabled",
     "FieldName": "WildlifeEnabled",
     "InputType": "checkbox",
@@ -123,7 +123,7 @@
   {
     "DisplayName": "Fish Spawn Rate",
     "Category": "Stormworks General",
-    "Description": "Rate of fish spawn around players, requires Wildlife Enabled (acceptable values are 0, 1, 2, 3)",
+    "Description": "Rate of fish spawn around players, requires Wildlife Enabled.",
     "Keywords": "fish, spawn, rate, fishspawn, spawnrate, fishspawnrate, fishrate",
     "FieldName": "FishSpawnRate",
     "InputType": "enum",
@@ -140,8 +140,8 @@
   },
   {
     "DisplayName": "World Seed",
-    "Category": "Stormworks World Creation Settings",
-    "Description": "Seed that will be used for the world generation (empty is random)",
+    "Category": "World Creation Settings",
+    "Description": "Seed that will be used for the world generation (empty is random).",
     "Keywords": "world, seed, worldseed",
     "FieldName": "World Seed",
     "InputType": "text",
@@ -153,8 +153,8 @@
   },
   {
     "DisplayName": "Start Island",
-    "Category": "Stormworks World Creation Settings",
-    "Description": "Player base that will be owned on start",
+    "Category": "World Creation Settings",
+    "Description": "Player base that will be owned on start.",
     "Keywords": "start,island,startisland",
     "FieldName": "BaseIsland",
     "InputType": "enum",
@@ -199,7 +199,7 @@
   },
   {
     "DisplayName": "Starting Currency",
-    "Category": "Stormworks World Creation Settings",
+    "Category": "World Creation Settings",
     "Description": "The ammount of money the players start out with at world creation.",
     "Keywords": "money, starting, startingmoney",
     "FieldName": "StartingCurrency",
@@ -212,8 +212,8 @@
   },
   {
     "DisplayName": "Enable Setting Menu",
-    "Category": "Stormworks World Creation Settings",
-    "Description": "Custom settings menu (available only for admins if locked)",
+    "Category": "World Creation Settings",
+    "Description": "Custom settings menu (available only for admins if locked).",
     "Keywords": "settings,menue,settingsmenu",
     "FieldName": "SettingsMenu",
     "InputType": "checkbox",
@@ -228,8 +228,8 @@
   },
   {
     "DisplayName": "Enable Search & Destroy DLC",
-    "Category": "Stormworks World Creation Settings",
-    "Description": "Search & Destroy DLC content for new world",
+    "Category": "World Creation Settings",
+    "Description": "Enable Search & Destroy DLC content for new world.",
     "Keywords": "dlc, enable, search, destory, arid, enabledlc, searchdestory",
     "FieldName": "WeaponDlc",
     "InputType": "checkbox",
@@ -244,13 +244,320 @@
   },
   {
     "DisplayName": "Enable Industrial Frontier DLC",
-    "Category": "Stormworks World Creation Settings",
-    "Description": "Industrial Frontier DLC content for new world",
+    "Category": "World Creation Settings",
+    "Description": "Enable Industrial Frontier DLC content for new world.",
     "Keywords": "dlc, enable, industrial, frontier, industrial, industrialfrontier, enabledlc",
     "FieldName": "AridDlc",
     "InputType": "checkbox",
     "IsFlagArgument": false,
     "ParamFieldName": "/server_data/@dlc_arid",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "false",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Day & Night Length",
+    "Category": "World Default Settings",
+    "Description": "Sets the Length of the day (in minutes) (increments of 10).",
+    "Keywords": "day,night,daynight,length,",
+    "FieldName": "DayNightLength",
+    "InputType": "number",
+    "MinValue": "1",
+    "MaxValue": "120",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@day_night_length",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "60",
+    "Placeholder": "60",
+    "Suffix": "minutes",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Sunrise Time",
+    "Category": "World Default Settings",
+    "Description": "Sunrise time (0-1 range)",
+    "Keywords": "surise, sunset, time, day, night, daynight",
+    "FieldName": "SunriseTime",
+    "InputType": "number",
+    "MinValue": "0",
+    "MaxValue": "1",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@sunrise",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "0.25",
+    "Placeholder": "0.25",
+    "Suffix": "",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Sunset Time",
+    "Category": "World Default Settings",
+    "Description": "Sunset time (0-1 range)",
+    "Keywords": "sunrise, sunset, time, day, night daynight",
+    "FieldName": "SunsetTime",
+    "InputType": "number",
+    "MinValue": "0",
+    "MaxValue": "1",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@sunset",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "0.791",
+    "Placeholder": "0.791",
+    "Suffix": "",
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Override Time",
+    "Category": "World Default Settings",
+    "Description": "Enables the option to Override time.",
+    "Keywords": "time, override, timeoverride",
+    "FieldName": "OverrideTime",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@override_time",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "false",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Override Weather",
+    "Category": "World Default Settings",
+    "Description": "Enables the option to Override Weather. (fog, wind, rain/snow)",
+    "Keywords": "weather, rain, snow, wind, fog, override, overrideweather",
+    "FieldName": "OverrideWeather",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@override_weather",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "false",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Override Wind",
+    "Category": "World Default Settings",
+    "Description": "Enavles the option to Override the Wind dirrection.",
+    "Keywords": "wind, direction, winddirrection, override, overridewind",
+    "FieldName": "OverrideWind",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@override_wind",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "false",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Vehicle Damage",
+    "Category": "World Default Settings",
+    "Description": "If Disabled, vehicles will be indestructible, and not take damage.",
+    "Keywords": "vehicle, damage, vehicledamage",
+    "FieldName": "VehicleDamage",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@vehicle_damage",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "true",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Engine Overheating",
+    "Category": "World Default Settings",
+    "Description": "If Disabled, turns of engine overheating simulation, preventing engine fires.",
+    "Keywords": "engine, over, heat, overheat, overheating",
+    "FieldName": "EngineOverheating",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@engine_overheating",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "true",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Player Damage",
+    "Category": "World Default Settings",
+    "Description": "If Disabled, players will be indestructible, and not take damage.",
+    "Keywords": "player, damage, playerdamage",
+    "FieldName": "PlayerDamage",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@player_damage",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "true",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "NPC Damage",
+    "Category": "World Default Settings",
+    "Description": "If Disabled, NPCs will be indestructible, and not take damage.",
+    "Keywords": "npc, damage, npcdamage",
+    "FieldName": "NPCDamage",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@npc_damage",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "true",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Aggresssive Animals",
+    "Category": "World Default Settings",
+    "Description": "If Disabled, aggressive animals will not spawn.",
+    "Keywords": "aggressive, agro, animals",
+    "FieldName": "AggressiveAnimals",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@aggressive_animals",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "true",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Sea Monsers",
+    "Category": "World Default Settings",
+    "Description": "If Disabled, sea monsters (aggressive monsters) will not spawn.",
+    "Keywords": "aggressive, agro, animals, monsters, sea, seamonsters",
+    "FieldName": "SeaMonsters",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@sea_monsters",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "true",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Lightning",
+    "Category": "World Default Settings",
+    "Description": "If Disabled, allows lightning that can hit vehicles at some altitude.",
+    "Keywords": "lightning",
+    "FieldName": "Lightning",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@lightning",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "true",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Infinite Resources",
+    "Category": "World Default Settings",
+    "Description": "If Enabled, removes money, fuel and minerals requirements for vehicle workbenches.",
+    "Keywords": "infinite, resources",
+    "FieldName": "InfiniteResources",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@infinite_resources",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "false",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Infinite Batteries",
+    "Category": "World Default Settings",
+    "Description": "If Enabled, removes electiric power requirments for vehicle components.",
+    "Keywords": "infintie, battery",
+    "FieldName": "InfiniteBatteries",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@infinite_batteries",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "false",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Infinite Fuel",
+    "Category": "World Default Settings",
+    "Description": "If Enabled, removes fuel and air requirements for vehicle components.",
+    "Keywords": "infinite, fuel",
+    "FieldName": "InfiniteFuel",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@infinite_fuel",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "false",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Infinite Ammo",
+    "Category": "World Default Settings",
+    "Description": "If Enabled, removes ammo requiremnets for weamons (requires DLC)",
+    "Keywords": "dlc, enable, search, destory, arid, enabledlc, searchdestory, ammo, weapons, infinite",
+    "FieldName": "InfiniteAmmo",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@infinite_ammo",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "false",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Ceasefire",
+    "Category": "World Default Settings",
+    "Description": "If Enabled, prevents weapon usage (requires DLC)",
+    "Keywords": "dlc, enable, search, destory, arid, enabledlc, searchdestory, weapons, disable",
+    "FieldName": "Ceasefire",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@ceasefire",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "false",
+    "EnumValues": {
+      "false": "False",
+      "true": "True"
+    }
+  },
+  {
+    "DisplayName": "Unlock Components",
+    "Category": "World Default Settings",
+    "Description": "If Enabled, start with all vehicle components researched (disables research).",
+    "Keywords": "research, unlock, components, vehicle",
+    "FieldName": "UnlockComponents",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/server_data/@unlock_components",
     "IncludeInCommandLine": false,
     "DefaultValue": "false",
     "EnumValues": {
