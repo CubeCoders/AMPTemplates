@@ -9,5 +9,21 @@
     "OverwriteExistingFiles": false,
     "DeleteAfterExtract": true,
     "OneShot": false
+  },
+  {
+    "UpdateStageName": "Directory Creation",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "cmd.exe",
+    "UpdateSourceArgs": "/C mkdir \"{{$FullBaseDir}}\""
+  },
+  {
+    "UpdateStageName": "Config Template Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "OverwriteExistingFiles": false,
+    "UpdateSourceData": "https://raw.githubusercontent.com/JonathanArendt/AMPTemplates/main/stormworksserver_config.xml",
+    "UpdateSourceTarget": "{{$FullBaseDir}}",
+    "UpdateSourceArgs": "server_settings.xml"
   }
 ]
