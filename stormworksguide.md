@@ -1,5 +1,9 @@
 # Stormworks Setup Guide
 
+## Linux Support
+
+The server requires Wine to run on Linux, Preferably Wine 8. Using a container avoids the need to install this dependency on the host, otherwise,  Wine is required to be installed on the host system to run the server. 
+
 ## Player Permissions
 
 There are 4 settings for player permissions. Admins, Authorized, Blacklist, and Whitelist. 
