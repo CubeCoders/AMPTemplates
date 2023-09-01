@@ -18,7 +18,7 @@ Admins are able to run the in game commands that are listed below, as well as ch
 
 ### Blacklist
 
-Simply a ban list, players can be banned in game, however, you have to remove their id from the ban list, similar to adding a player to the whitelist, however remove the `<id value="TheirID">`. 
+Simply a ban list, players can be banned in game, however, you have to remove their id from the ban list, similar to adding a player to the whitelist, however remove the `<id value="TheirID" />`. 
 
 ### Whitelist
 
