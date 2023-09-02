@@ -1,68 +1,95 @@
 [
     {
+        "DisplayName":"Server Port",
+        "Category":"STR Settings",
+        "Description":"",
+        "Keywords":"",
+        "Hidden":true,
+        "FieldName":"$GamePort",
+        "InputType":"number",
+        "ParamFieldName":"GameServer.uPort"
+    },
+    {
+        "DisplayName":"Enable Console",
+        "Category":"STR Settings",
+        "Description":"",
+        "Keywords":"",
+        "Hidden":true,
+        "FieldName":"bConsole",
+        "InputType":"text",
+        "ParamFieldName":"general.bConsole",
+        "DefaultValue":"true",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Download URL",
-        "Category":"Skyrim Together Settings",
-        "Description":"Sets the full URL to download the server from. [Login](https://www.nexusmods.com/skyrimspecialedition/mods/69993?tab=files&file_id=382435) to Nexus Mods, select manual download and continue until the download begins. Then cancel the download and copy the \"Click Here\" download URL",
+        "Category":"STR Settings",
+        "Description":"Sets the full URL to download the server from. [Login](https://www.nexusmods.com/skyrimspecialedition/mods/69993?tab=files&file_id=382435) to Nexus Mods, select manual download and continue until the download begins. Then cancel the download and copy the \"click here\" download URL",
         "Keywords":"download,url",
         "FieldName":"DownloadURL",
         "InputType":"text",
-        "IsFlagArgument":false,
         "ParamFieldName":"DownloadURL",
-        "IncludeInCommandLine":false,
         "DefaultValue":"",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Log Level",
-        "Category":"Skyrim Together Settings",
-        "Description":"This is used to configure the logger in the server console. This option currently does not work.",
-        "Keywords":"log,level,settings",
-        "Hidden": false,
-        "FieldName":"sLogLevel",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"general.sLogLevel",
+        "DisplayName":"Server Name",
+        "Category":"STR Settings",
+        "Description":"Sets the name of the server as shown on the server list",
+        "Keywords":"name,server,sservername",
+        "FieldName":"sServerName",
+        "InputType":"text",
+        "ParamFieldName":"GameServer.sServerName",
         "IncludeInCommandLine":false,
-        "DefaultValue":"info",
-        "EnumValues":{
-            "info":"Info",
-            "warn":"Warning",
-            "error":"Error"
-        }
-    },
-    {
-        "DisplayName":"Console",
-        "Category":"Skyrim Together Settings",
-        "Description":"Determines whether the interactive console is enabled or not.",
-        "Keywords":"console,settings",
-        "Hidden": false,
-        "FieldName":"bConsole",
-        "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"general.bConsole",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "true":"True",
-            "false":"False"
-        }
+        "DefaultValue":"AMP Powered Skyrim Together Reborn Server",
+        "Placeholder":"AMP Powered Skyrim Together Reborn Server"
     },
     {
         "DisplayName":"Announce Server",
-        "Category":"Skyrim Together Settings",
-        "Description":"Determines whether the server shows up on the server list or not. If the server has a password, it will not show up on the server list.",
-        "Keywords":"announce,server,settings",
-        "Hidden": false,
+        "Category":"STR Settings",
+        "Description":"If enabled, the server will show on the server list, assuming no password is set",
+        "Keywords":"announce,serverlist,bannounceserver",
         "FieldName":"bAnnounceServer",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
         "ParamFieldName":"LiveServices.bAnnounceServer",
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
-            "true":"True",
-            "false":"False"
+            "False":"false",
+            "True":"true"
         }
+    },
+    {
+        "DisplayName":"Server Password",
+        "Category":"STR Settings",
+        "Description":"Sets the password required for players to connect to the server. Blank = disabled. If a password is set, the server will not show up in the server list, and players must connect manually",
+        "Keywords":"password,server,spassword",
+        "FieldName":"sPassword",
+        "InputType":"password",
+        "ParamFieldName":"GameServer.sPassword",
+        "DefaultValue":""
+    },
+    {
+        "DisplayName":"Admin Password",
+        "Category":"STR Settings",
+        "Description":"Sets the admin password, for potential future admin panels. Default is a strong, random password. Currently unused",
+        "Keywords":"admin,password,sadminpassword",
+        "FieldName":"sAdminPassword",
+        "InputType":"password",
+        "ParamFieldName":"GameServer.sAdminPassword",
+        "DefaultValue":"{{newguid()}}"
+    },
+    {
+        "DisplayName":"Player Limit",
+        "Category":"STR Settings",
+        "Description":"Sets the maximum number of players that can connect to the server at one time",
+        "Keywords":"player,count,limit,maximum,umaxplayercount",
+        "FieldName":"uMaxPlayerCount",
+        "InputType":"number",
+        "ParamFieldName":"GameServer.uMaxPlayerCount",
+        "DefaultValue":"8",
+        "Placeholder":"8",
+        "Suffix":"players"
     },
     {
         "DisplayName":"Gold Loss Factor",
@@ -93,8 +120,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
-            "true":"True",
-            "false":"False"
+            "False":"false",
+            "True":"true"
         }
     },
     {
@@ -110,8 +137,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
-            "true":"True",
-            "false":"False"
+            "False":"false",
+            "True":"true"
         }
     },
     {
@@ -143,8 +170,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
-            "true":"True",
-            "false":"False"
+            "False":"false",
+            "True":"true"
         }
     },
     {
@@ -160,8 +187,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
-            "true":"True",
-            "false":"False"
+            "False":"false",
+            "True":"true"
         }
     },
     {
@@ -177,8 +204,8 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
-            "true":"True",
-            "false":"False"
+            "False":"false",
+            "True":"true"
         }
     },
     {
@@ -194,12 +221,12 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
-            "true":"True",
-            "false":"False"
+            "False":"false",
+            "True":"true"
         }
     },
     {
-        "DisplayName":"Difficulty",
+        "DisplayName":"Difficulty Level",
         "Category":"Skyrim Together Settings",
         "Description":"This sets the server side difficulty, which is enforced on all clients.",
         "Keywords":"difficulty,settings",
@@ -215,47 +242,41 @@
             "1":"Apprentice",
             "2":"Adept",
             "3":"Expert",
-            "4":"Master"
+            "4":"Master (default)"
         }
     },
     {
         "DisplayName":"Allow MO2",
         "Category":"Skyrim Together Settings",
-        "Description":"Sets whether the client is allowed to use mod organizer 2.",
-        "Keywords":"mod,policy,MO2,settings",
-        "Hidden": false,
+        "Description":"If enabled, clients will be allowed to use Mod Organizer 2",
+        "Keywords":"mod,policy,organizer,mo2,bAllowmo2",
         "FieldName":"bAllowMO2",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
         "ParamFieldName":"ModPolicy.bAllowMO2",
-        "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
-            "true":"True",
-            "false":"False"
+            "False":"false",
+            "True":"true"
         }
     },
     {
         "DisplayName":"Allow SKSE",
-        "Category":"Skyrim Together Settings",
-        "Description":"Sets whether the client is allowed to use SKSE.",
-        "Keywords":"mod,policy,SKSE,settings",
-        "Hidden": false,
+        "Category":"STR Settings",
+        "Description":"If enabled, clients will be allowed to use SKSE",
+        "Keywords":"mod,policy,skse,ballowskse",
         "FieldName":"bAllowSKSE",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
         "ParamFieldName":"ModPolicy.bAllowSKSE",
-        "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
-            "true":"True",
-            "false":"False"
+            "False":"false",
+            "True":"true"
         }
     },
     {
         "DisplayName":"Enable Mod Check",
         "Category":"Skyrim Together Settings",
-        "Description":"This is the mod policy feature, as descripted in the features page. To use this, you must create a Data folder in the same place as where you run SkyrimTogetherServer.exe. This Data folder must contain a file called loadorder.txt, which contains the load order that you want to enforce for all users.",
+        "Description":"If set, enables the [mod policy feature]. To use this, you must create a Data folder in the same place as where you run SkyrimTogetherServer.exe. This Data folder must contain a file called loadorder.txt, which contains the load order that you want to enforce for all users.",
         "Keywords":"mod,policy,settings",
         "Hidden": false,
         "FieldName":"bEnableModCheck",
@@ -265,50 +286,9 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
-            "true":"True",
-            "false":"False"
+            "False":"false",
+            "True":"true"
         }
-    },
-    {
-        "DisplayName":"Server Password",
-        "Category":"Skyrim Together Settings",
-        "Description":"This sets the password that players need to fill in when connecting to the server. Leave this blank if you do not want to set a password on the server. If you do set a password on the server, it will not show up in the serverlist, and people will have to connect manually.",
-        "Keywords":"game,password,server,settings",
-        "Hidden": false,
-        "FieldName":"sPassword",
-        "InputType":"password",
-        "IsFlagArgument":false,
-        "ParamFieldName":"GameServer.sPassword",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"",
-        "Placeholder":"MySafePassword"
-    },
-    {
-        "DisplayName":"Admin Password",
-        "Category":"Skyrim Together Settings",
-        "Description":"Used for potential admin panels in the future. This option is currently unused.",
-        "Keywords":"admin,password,server,settings",
-        "Hidden": false,
-        "FieldName":"sAdminPassword",
-        "InputType":"RandomPassword",
-        "IsFlagArgument":false,
-        "ParamFieldName":"GameServer.sAdminPassword",
-        "IncludeInCommandLine":false,
-        "DefaultValue":""
-    },
-    {
-        "DisplayName":"Server Name",
-        "Category":"Skyrim Together Settings",
-        "Description":"The name that shows up on the server list.",
-        "Keywords":"name,server,settings",
-        "Hidden": false,
-        "FieldName":"sServerName",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"GameServer.sServerName",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"Dedicated Together Server",
-        "Placeholder":"Dedicated Together Server"
     },
     {
         "DisplayName":"Enable Premium Mode",
@@ -323,34 +303,23 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
         "EnumValues":{
-            "true":"True",
-            "false":"False"
+            "False":"false",
+            "True":"true"
         }
     },
     {
-        "DisplayName":"Max Player Count",
-        "Category":"Skyrim Together Settings",
-        "Description":"The max number of players that can connect to your server.",
-        "Keywords":"player,count,server,settings",
-        "Hidden": false,
-        "FieldName":"uMaxPlayerCount",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"GameServer.uMaxPlayerCount",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"8",
-        "Placeholder":"8"
-    },
-    {
-        "DisplayName":"Server Port",
-        "Category":"Skyrim Together Settings",
-        "Description":"The port on which the server runs.",
-        "Keywords":"server,port,settings",
-        "Hidden": true,
-        "FieldName":"$GamePort1",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"GameServer.uPort",
-        "IncludeInCommandLine":false
+        "DisplayName":"Log Level",
+        "Category":"STR Settings",
+        "Description":"Sets the log level for the server console. Currently unused",
+        "Keywords":"log,level,sloglevel",
+        "FieldName":"sLogLevel",
+        "InputType":"enum",
+        "ParamFieldName":"general.sLogLevel",
+        "DefaultValue":"info",
+        "EnumValues":{
+            "info":"Display all logged information (default)",
+            "warn":"Display warnings and critical information only",
+            "error":"Display critical information only"
+        }
     }
 ]
