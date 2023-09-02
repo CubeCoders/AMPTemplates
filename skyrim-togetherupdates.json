@@ -1,0 +1,29 @@
+[
+    {
+        "UpdateStageName":"Config Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}SkyrimTogetherReborn/config",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"STServer.ini Config Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/skyrim-together-stserver.ini",
+        "UpdateSourceArgs":"STServer.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}SkyrimTogetherReborn/config",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"{{DownloadURL}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceArgs":"SkyrimTogetherReborn.zip",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    }
+]
