@@ -1,37 +1,51 @@
 [
-  {
-    "UpdateStageName": "BeamMP Download",
-    "UpdateSourcePlatform": "Windows",
-    "UpdateSource": "GithubRelease",
-    "UpdateSourceData": "BeamMP-Server.exe",
-    "UpdateSourceArgs": "BeamMP/BeamMP-Server",
-    "UpdateSourceTarget": "{{$FullBaseDir}}",
-    "UnzipUpdateSource": false,
-    "OverwriteExistingFiles": true
-  },
-  {
-    "UpdateStageName": "BeamMP Download",
-    "UpdateSourcePlatform": "Linux",
-    "UpdateSource": "GithubRelease",
-    "UpdateSourceData": "BeamMP-Server-linux",
-    "UpdateSourceArgs": "BeamMP/BeamMP-Server",
-    "UpdateSourceTarget": "{{$FullBaseDir}}",
-    "UnzipUpdateSource": false,
-    "OverwriteExistingFiles": true
-  },
-  {
-    "UpdateStageName": "Set Executable Flag",
-    "UpdateSourcePlatform": "Linux",
-    "UpdateSource": "SetExecutableFlag",
-    "UpdateSourceArgs": "{{$FullBaseDir}}BeamMP-Server-linux"
-  },
-  {
-    "UpdateStageName": "Config File Download",
-    "UpdateSourcePlatform": "All",
-    "UpdateSource": "FetchURL",
-    "UpdateSourceData": "https://github.com/IceOfWraith/AMPTemplates/raw/dev/beammpServerConfig.toml",
-    "UpdateSourceTarget": "{{$FullBaseDir}}",
-    "UpdateSourceArgs": "ServerConfig.toml",
-    "OverwriteExistingFiles": "true"
-  }
+    {
+        "UpdateStageName":"Binary Symlink Removal",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'rm {{$FullBaseDir}}BeamMP-Server'"
+    },
+    {
+        "UpdateStageName":"BeamMP Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceData":"BeamMP-Server.exe",
+        "UpdateSourceArgs":"BeamMP/BeamMP-Server",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":false,
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"BeamMP Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceData":"BeamMP-Server-{{ServerVersion}}",
+        "UpdateSourceArgs":"BeamMP/BeamMP-Server",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":false,
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Set Executable Flag",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"SetExecutableFlag",
+        "UpdateSourceArgs":"{{$FullBaseDir}}BeamMP-Server-{{ServerVersion}}"
+    },
+    {
+        "UpdateStageName":"Binary Symlink Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/ln",
+        "UpdateSourceArgs":"-s \"{{$FullBaseDir}}BeamMP-Server-{{ServerVersion}}\" \"{{$FullBaseDir}}BeamMP-Server\""
+    },
+    {
+        "UpdateStageName":"Config File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/IceOfWraith/AMPTemplates/raw/dev/beammpServerConfig.toml",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceArgs":"ServerConfig.toml",
+        "OverwriteExistingFiles":false
+    }
 ]
