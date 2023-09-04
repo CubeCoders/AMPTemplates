@@ -1,14 +1,17 @@
 [
     {
         "UpdateStageName":"Server Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"{{DownloadURL}}",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UpdateSourceArgs":"SkyrimTogetherReborn.zip",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd skyrim-together-reborn\\server && set \"url={{DownloadURL}}\" && set \"url=!url:Skyrim+Together+Reborn=Skyrim%%20Together%%20Reborn!\" && curl -o \"SkyrimTogetherReborn.zip\" \"!url!\" && tar -xf SkyrimTogetherReborn.zip && del /Q /F SkyrimTogetherReborn.zip"
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./skyrim-together-reborn/server/ && url=\"{{DownloadURL}}\" && url=\"${url//Skyrim+Together+Reborn/Skyrim%20Together%20Reborn}\" && curl -o \"SkyrimTogetherReborn.zip\" \"$url\" && unzip -ao SkyrimTogetherReborn.zip && rm SkyrimTogetherReborn.zip'"
     },
     {
         "UpdateStageName":"Create Data Directory",
