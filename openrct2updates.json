@@ -11,20 +11,25 @@
         "DeleteAfterExtract":true
     },
     {
+        "UpdateStageName":"Directory Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}OpenRCT2"
+    },
+    {
         "UpdateStageName":"OpenRCT2 Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"GithubRelease",
-        "UpdateSourceData":"OpenRCT2-0.4.6-linux-{{DistroVersion}}-x86_64.tar.gz",
+        "UpdateSourceData":"OpenRCT2-0.4.6-linux-x86_64.AppImage",
         "UpdateSourceArgs":"OpenRCT2/OpenRCT2",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateSourceTarget":"{{$FullBaseDir}}OpenRCT2",
+        "UnzipUpdateSource":false,
+        "OverwriteExistingFiles":true
     },
     {
         "UpdateStageName":"Set Executable Flag",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"SetExecutableFlag",
-        "UpdateSourceArgs":"{{$FullBaseDir}}OpenRCT2/openrct2-cli"
+        "UpdateSourceArgs":"{{$FullBaseDir}}OpenRCT2-0.4.6-linux-x86_64.AppImage"
     }
 ]
