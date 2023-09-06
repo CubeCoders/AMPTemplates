@@ -26,10 +26,10 @@ App.ExecutableLinux=server/squashfs-root/usr/bin/openrct2
 App.WorkingDir=server
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} {{$FormattedArgs}} --headless --port {{$GamePort}} --verbose --user-data-path ./user-data --rct2-data-path ../game
+App.CommandLineArgs={{$PlatformArgs}} {{HostMode}} --headless --port={{$GamePort}} --user-data-path=./user-data --rct2-data-path=../game {{$FormattedArgs}} --verbose
 App.UseLinuxIOREDIR=False
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%"}
-App.CommandLineParameterFormat={0} "{1}"
+App.CommandLineParameterFormat=--{0}="{1}"
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
 App.ExitTimeout=30
