@@ -1,5 +1,11 @@
 [
     {
+        "UpdateStageName":"User Data Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}user-data"
+    },
+    {
         "UpdateStageName":"OpenRCT2 Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"GithubRelease",
@@ -32,6 +38,16 @@
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"285330",
+        "UpdateSourceTarget":"{{$FullRootDir}}client",
         "ForceDownloadPlatform":"Windows"
+    },
+    {
+        "UpdateStageName":"Config.ini File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/openrct2config.ini",
+        "UpdateSourceArgs":"config.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}user-data",
+        "OverwriteExistingFiles":false
     }
 ]
