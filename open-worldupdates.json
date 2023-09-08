@@ -49,7 +49,7 @@
         "UpdateSource":"GithubRelease",
         "UpdateSourceData":"win-x64.zip",
         "UpdateSourceArgs":"D12-Dev/OpenWorld",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
         "UpdateSourceVersion":"{{ReleaseVersion}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
@@ -82,6 +82,29 @@
         "DeleteAfterExtract":true
     },
     {
+        "UpdateStageName":"Move Server Files",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C xcopy /E /Y /I open-world\\win-x64\\* open-world\\server\\ && rm /Q /S open-world\\win-x64\\"
+    },
+    {
+        "UpdateStageName":"Move Server Files",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '\\cp -rf ./open-world/linux-x64/* ./open-world/server/ && rm -rf ./open-world/linux-x64/'",
+        "UpdateSourceArch":"x86_64"
+    },
+    {
+        "UpdateStageName":"Move Server Files",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '\\cp -rf ./open-world/linux-arm64/* ./open-world/server/ && rm -rf ./open-world/linux-arm64/'",
+        "UpdateSourceArch":"aarch64"
+    },
+    {
         "UpdateStageName":"Set Executable Flag",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"SetExecutableFlag",
@@ -93,7 +116,7 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/open-worldserverconfig.json",
         "UpdateSourceArgs":"Config.json",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Data",
         "OverwriteExistingFiles":false
     },
     {
@@ -102,16 +125,7 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/open-worldserverdeepconfig.json",
         "UpdateSourceArgs":"Deep Config.json",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "OverwriteExistingFiles":false
-    },
-    {
-        "UpdateStageName":"Values.json File Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/open-worldservervalues.json",
-        "UpdateSourceArgs":"Values.json",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Data",
         "OverwriteExistingFiles":false
     }
 ]
