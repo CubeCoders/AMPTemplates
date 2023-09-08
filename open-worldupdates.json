@@ -86,7 +86,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I open-world\\win-x64\\* open-world\\server\\ && rm /Q /S open-world\\win-x64\\"
+        "UpdateSourceArgs":"/C xcopy /E /Y /I open-world\\win-x64\\* open-world\\server\\ && rmdir /Q /S open-world\\win-x64\\"
     },
     {
         "UpdateStageName":"Move Server Files",
@@ -131,6 +131,15 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/open-worldserverdeepconfig.json",
         "UpdateSourceArgs":"Deep Config.json",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Data",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Values.json File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/open-worldservervalues.json",
+        "UpdateSourceArgs":"Values.json",
         "UpdateSourceTarget":"{{$FullBaseDir}}Data",
         "OverwriteExistingFiles":false
     }
