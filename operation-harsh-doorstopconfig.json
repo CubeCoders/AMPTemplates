@@ -11,16 +11,15 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Map",
+        "DisplayName":"Initial Map",
         "Category":"OHD Server Settings",
-        "Description":"Sets the map for the server. If \"Custom\" is selected, Custom Map Name must also be set. Select \"Use Map Cycle\" and configure it accordingly under Map Cycle if you want to use that instead",
+        "Description":"Sets the map for the server. If \"Custom\" is selected, Custom Map Name must also be set",
         "Keywords":"map",
         "FieldName":"Map",
         "InputType":"enum",
         "ParamFieldName":"Map",
         "DefaultValue":"AAS-TestMap",
         "EnumValues":{
-            "":"--Use Map Cycle--",
             "AAS-TestMap":"AAS Test Map (default)",
             "Argonne":"WWI: Argonne",
             "SaintQuentin":"WWI: Saint Quentin (expansion)",
@@ -49,7 +48,7 @@
     {
         "DisplayName":"Map Cycle",
         "Category":"OHD Server Settings",
-        "Description":"List of [proper names](https://operation-harsh-doorstop.fandom.com/wiki/Server_Install_Instructions#MapCycle.cfg) of maps to run in sequence on the server, in the order to be run",
+        "Description":"List of [proper names](https://operation-harsh-doorstop.fandom.com/wiki/Server_Install_Instructions#MapCycle.cfg) of maps to run in sequence on the server after the initial map, in the order to be run",
         "Keywords":"map,cycle,list,mapcycle",
         "FieldName":"MapCycle",
         "InputType":"list",
@@ -208,7 +207,7 @@
     {
         "DisplayName":"BluFor Faction",
         "Category":"OHD Server Settings",
-        "Description":"Sets the BluFor team faction. Set to Map Default to use the default faction for the loaded map. If \"Custom\" is selected, Custom BluFor Faction must also be set",
+        "Description":"Sets the BluFor team faction. Set to \"Map Default\" to use the default faction for the loaded map. If \"Custom\" is selected, Custom BluFor Faction must also be set",
         "Keywords":"blufor,faction,bluforfaction",
         "FieldName":"BluforFaction",
         "InputType":"enum",
@@ -231,7 +230,6 @@
             "BP_HDFactionInfo_PMC":"Modern Era: PMC",
             "BP_HDFactionInfo_Insurgents":"Modern Era: Insurgents",
             "BP_HDFactionInfo_TG_BluFor":"Debug: BluFor (All Kits/Eras)",
-            "BP_HDFactionInfo_TG_OpFor":"Debug: OpFor (All Kits/Eras)",
             "{{CustomBluforFaction}}":"--Custom--"
         }
     },
@@ -253,7 +251,8 @@
         "Description":"Sets the starting number of BluFor team tickets",
         "Keywords":"blufor,tickets,BluforNumTickets",
         "FieldName":"BluforNumTickets",
-        "InputType":"text",
+        "InputType":"number",
+        "MinValue":"0",
         "ParamFieldName":"BluforNumTickets",
         "IncludeInCommandLine":true,
         "DefaultValue":"500",
@@ -267,7 +266,8 @@
         "Description":"Sets the number of BluFor team bots",
         "Keywords":"blufor,bots,BluforNumBots",
         "FieldName":"BluforNumBots",
-        "InputType":"text",
+        "InputType":"number",
+        "MinValue":"0",
         "ParamFieldName":"BluforNumBots",
         "IncludeInCommandLine":true,
         "DefaultValue":"0",
@@ -278,7 +278,7 @@
     {
         "DisplayName":"OpFor Faction",
         "Category":"OHD Server Settings",
-        "Description":"Sets the OpFor team faction. Set to Map Default to use the default faction for the loaded map. If \"Custom\" is selected, Custom OpFor Faction must also be set",
+        "Description":"Sets the OpFor team faction. Set to \"Map Default\" to use the default faction for the loaded map. If \"Custom\" is selected, Custom OpFor Faction must also be set",
         "Keywords":"blufor,faction",
         "FieldName":"OpforFaction",
         "InputType":"enum",
@@ -300,7 +300,6 @@
             "BP_HDFactionInfo_Russians":"Cold War: Soviet Union",
             "BP_HDFactionInfo_PMC":"Modern Era: PMC",
             "BP_HDFactionInfo_Insurgents":"Modern Era: Insurgents",
-            "BP_HDFactionInfo_TG_BluFor":"Debug: BluFor (All Kits/Eras)",
             "BP_HDFactionInfo_TG_OpFor":"Debug: OpFor (All Kits/Eras)",
             "{{CustomBluforFaction}}":"--Custom--"
         }
@@ -323,7 +322,8 @@
         "Description":"Sets the starting number of OpFor team tickets",
         "Keywords":"opfor,tickets,OpforNumTickets",
         "FieldName":"OpforNumTickets",
-        "InputType":"text",
+        "InputType":"number",
+        "MinValue":"0",
         "ParamFieldName":"OpforNumTickets",
         "IncludeInCommandLine":true,
         "DefaultValue":"500",
@@ -337,7 +337,8 @@
         "Description":"Sets the number of OpFor team bots",
         "Keywords":"opfor,bots,OpforNumBots",
         "FieldName":"OpforNumBots",
-        "InputType":"text",
+        "InputType":"number",
+        "MinValue":"0",
         "ParamFieldName":"OpforNumBots",
         "IncludeInCommandLine":true,
         "DefaultValue":"0",
