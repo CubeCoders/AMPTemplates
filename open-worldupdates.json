@@ -82,6 +82,12 @@
         "DeleteAfterExtract":true
     },
     {
+        "UpdateStageName":"Pause Update Stages",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Pause",
+        "UpdateSourceArgs":"2"
+    },
+    {
         "UpdateStageName":"Move Server Files",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
@@ -93,7 +99,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./open-world/linux-x64/* ./open-world/server/ && rm -rf ./open-world/linux-x64/'",
+        "UpdateSourceArgs":"-c '\\cp -rf ./open-world/linux-x64/* ./open-world/server/ && chmod +x ./open-world/server/OpenWorldServer ; rm -rf ./open-world/linux-x64/'",
         "UpdateSourceArch":"x86_64"
     },
     {
@@ -101,20 +107,8 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./open-world/linux-arm64/* ./open-world/server/ && rm -rf ./open-world/linux-arm64/'",
+        "UpdateSourceArgs":"-c '\\cp -rf ./open-world/linux-arm64/* ./open-world/server/ && chmod +x ./open-world/server/OpenWorldServer ; rm -rf ./open-world/linux-arm64/'",
         "UpdateSourceArch":"aarch64"
-    },
-    {
-        "UpdateStageName":"Pause Update Stages",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Pause",
-        "UpdateSourceArgs":"2"
-    },
-    {
-        "UpdateStageName":"Set Executable Flag",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"SetExecutableFlag",
-        "UpdateSourceArgs":"{{$FullBaseDir}}OpenWorldServer"
     },
     {
         "UpdateStageName":"Config.json File Download",
