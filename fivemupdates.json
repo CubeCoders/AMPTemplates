@@ -1,0 +1,52 @@
+[
+    {
+        "UpdateStageName":"Create Server Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}server",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Create Data Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}server-data",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/server.7z",
+        "UpdateSourceTarget":"{{$FullBaseDir}}server",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/fx.tar.xz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}server",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Clone cfx-server-data Repo",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GitRepo",
+        "UpdateSourceData":"https://github.com/citizenfx/cfx-server-data.git",
+        "UpdateSourceTarget":"{{$FullBaseDir}}"
+    },
+    {
+        "UpdateStageName":"Server.cfg Template Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/fivemserver.cfg",
+        "UpdateSourceArgs":"AMP_server.cfg",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true
+    }
+]
