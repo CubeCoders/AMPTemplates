@@ -29,9 +29,15 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/fx.tar.xz",
         "UpdateSourceTarget":"{{$FullBaseDir}}server",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UnzipUpdateSource":false,
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Server Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./fivem/server && tar -xf fx.tar.xz && rm -f fx.tar.xz'"
     },
     {
         "UpdateStageName":"Clone cfx-server-data Repo",
