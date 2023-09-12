@@ -28,8 +28,8 @@
     {
         "DisplayName":"Server Release Build",
         "Category":"Server Settings",
-        "Description":"Sets the server release build to install. Update the server after changing this setting",
-        "Keywords":"server,release,build,recommended,latest,optional,critical",
+        "Description":"Sets the server release build to install. If \"Specific version\" is selected, the relevant build number must be set under Specific Build Version. Update the server after changing this setting",
+        "Keywords":"server,release,build,artifact,recommended,latest,optional,critical",
         "FieldName":"ServerBuild",
         "InputType":"enum",
         "ParamFieldName":"ServerBuild",
@@ -38,7 +38,34 @@
             "recommended_download":"Recommended (default)",
             "optional_download":"Optional",
             "latest_download":"Latest",
-            "critical_download":"Critical"
+            "critical_download":"Critical",
+            "SpecificVersion:"Specific version"
+        }
+    },
+    {
+        "DisplayName":"Specific Build Version",
+        "Category":"Server Settings",
+        "Description":"Sets the specified server version to install, if \"Specific version\" is selected under Server Release Build",
+        "Keywords":"server,build,artifact,specific,version",
+        "FieldName":"SpecificBuildVersion",
+        "InputType":"text",
+        "ParamFieldName":"SpecificBuildVersion",
+        "DefaultValue":"",
+        "Placeholder":"6593-7672c8c849165dad70a1e82f89e31059d8fcf20d",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable txAdmin",
+        "Category":"Server Settings",
+        "Description":"If set, txAdmin will be enabled. Once the server is started in AMP, log in to txAdmin to set up and administer the server",
+        "Keywords":"txadmin",
+        "FieldName":"txAdmin",
+        "InputType":"checkbox",
+        "ParamFieldName":"txAdmin",
+        "DefaultValue":"+exec server.cfg ",
+        "EnumValues":{
+            "False":"+exec server.cfg ",
+            "True":""
         }
     },
     {
