@@ -14,10 +14,25 @@
         "OverwriteExistingFiles":false
     },
     {
+        "UpdateStageName":"Delete Binary Directory Contents",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'rm -rf {{$FullBaseDir}}server/alpine/*'"
+    },
+    {
+        "UpdateStageName":"Delete Binary Directory Contents",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}server\\alpine\\*"
+    },
+    {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/server.7z",
+        "UpdateSource":"FetchURLFromJQ",
+        "UpdateSourceData":"https://changelogs-live.fivem.net/api/changelog/versions/windows/server",
+        "UpdateSourceArgs":"$.{{ServerBuild}}",
         "UpdateSourceTarget":"{{$FullBaseDir}}server",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
@@ -26,11 +41,35 @@
     {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/5848-4f71128ee48b07026d6d7229a60ebc5f40f2b9db/fx.tar.xz",
+        "UpdateSource":"FetchURLFromJQ",
+        "UpdateSourceData":"https://changelogs-live.fivem.net/api/changelog/versions/linux/server",
+        "UpdateSourceArgs":"$.{{ServerBuild}}",
         "UpdateSourceTarget":"{{$FullBaseDir}}server",
         "UnzipUpdateSource":false,
         "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/{{SpecificVersion}}/server.7z",
+        "UpdateSourceTarget":"{{$FullBaseDir}}server",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"ServerBuild",
+        "UpdateSourceConditionValue":"SpecificVersion",
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/{{SpecificVersion}}/fx.tar.xz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}server",
+        "UnzipUpdateSource":false,
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"ServerBuild",
+        "UpdateSourceConditionValue":"SpecificVersion",
     },
     {
         "UpdateStageName":"Server Extract",
