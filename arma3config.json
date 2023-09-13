@@ -227,7 +227,7 @@
     {
         "DisplayName":"Minimum Client Version",
         "Category":"Arma Server Settings",
-        "Description":"Sets the minimum client version, below which clients won't be allowed to join. Default of 99999999 equates to the server version",
+        "Description":"Sets the minimum client version, below which clients won't be allowed to join. Default of 99999999 equates to the server version. NOTE: If the server uses the Performance Profiling Build in any way, set this to 0, otherwise no client can connect",
         "Keywords":"required,build,requiredbuild",
         "FieldName":"requiredBuild",
         "InputType":"number",
@@ -283,6 +283,22 @@
         "DefaultValue":"",
         "Placeholder":"\"127.0.0.1\",\"210.187.254.121\"",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Use Headless Client Startup Parameters File",
+        "Category":"Arma Server Settings",
+        "Description":"If enabled, allows the use of a [parameters file](https://community.bistudio.com/wiki/Startup_Parameters_Config_File) for additional startup parameters for headless clients. File is \"hc_parameters.txt\" in the server base directory. Useful if the server also uses its own Startup Parameters File for mods. Use with care",
+        "Keywords":"headless,client,custom,server,arguments,parameters,file,parfile",
+        "FieldName":"hc_parfile",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"hc_parfile",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"hc_parameters.txt"
+        }
     },
     {
         "DisplayName":"Local Headless Client IPs",
@@ -347,9 +363,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Use Startup Parameters File",
+        "DisplayName":"Use Server Startup Parameters File",
         "Category":"Arma Server Settings",
-        "Description":"If enabled, allows the use of a [parameters file](https://community.bistudio.com/wiki/Startup_Parameters_Config_File) for additional startup parameters. File is \"parameters.txt\" in the server base directory. Useful for long startup parameters such as -mods or -servermods. Use with care",
+        "Description":"If enabled, allows the use of a [parameters file](https://community.bistudio.com/wiki/Startup_Parameters_Config_File) for additional startup parameters for the server. File is \"parameters.txt\" in the server base directory. Useful for long startup parameters such as -mod or -serverMod. Use with care",
         "Keywords":"custom,server,arguments,parameters,file,parfile",
         "FieldName":"parfile",
         "InputType":"checkbox",
@@ -1178,7 +1194,7 @@
     {
         "DisplayName":"Server Branch",
         "Category":"SteamCMD and Updates",
-        "Description":"Sets the server branch to install. NOTE: Update the server after switching branches!",
+        "Description":"Sets the server branch (or branches) to install. NOTE: Update the server after switching branches, and set the Minimum Client Version to 0 if using the Performance Profiling Build in any way!",
         "Keywords":"server,branch,depot",
         "FieldName":"ServerBranch",
         "InputType":"enum",
@@ -1190,7 +1206,8 @@
             "public":"Public (default)",
             "profiling":"Performance Profiling Build",
             "creatordlc":"Creator DLC Build",
-            "contact":"Contact Build"
+            "contact":"Contact Build",
+            "creatordlc-profiling":"Creator DLC + Performance Profiling Builds"
         }
     }
 ]
