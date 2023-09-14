@@ -19,7 +19,7 @@
         "InputType":"number",
         "Hidden":true,
         "ParamFieldName":"logfile",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"2",
         "EnumValues":{}
     },
@@ -130,22 +130,6 @@
         }
     },
     {
-        "DisplayName":"Initial Game Type",
-        "Category":"WET Server Settings",
-        "Description":"Sets the game type to start the server with",
-        "Keywords":"game,type,g_gametype",
-        "FieldName":"g_gametype",
-        "InputType":"enum",
-        "ParamFieldName":"g_gametype",
-        "DefaultValue":"4",
-        "EnumValues":{
-            "2":"Objective",
-            "3":"Stop Watch",
-            "4":"Campaign (default)",
-            "5":"Last Man Standing"
-        }
-    },
-    {
         "DisplayName":"Initial Map",
         "Category":"WET Server Settings",
         "Description":"Sets the map to start the server with",
@@ -156,11 +140,27 @@
         "DefaultValue":"oasis",
         "EnumValues":{
             "oasis":"Siwa Oasis (default)",
-            "":"Seawall Battery",
-            "":"Gold Rush",
-            "":"Würzburg Radar",
-            "":"Rail Gun",
-            "":"Fuel Dump"
+            "battery":"Seawall Battery",
+            "goldrush":"Gold Rush",
+            "radar":"Würzburg Radar",
+            "railgun":"Rail Gun",
+            "fueldump":"Fuel Dump"
+        }
+    },
+    {
+        "DisplayName":"Map Rotation Mode",
+        "Category":"WET Server Settings",
+        "Description":"Sets the map rotation mode. Configure the relevant script in etmain",
+        "Keywords":"map,rotation",
+        "FieldName":"MapRotation",
+        "InputType":"enum",
+        "ParamFieldName":"MapRotation",
+        "DefaultValue":"campaigncycle.cfg",
+        "EnumValues":{
+            "campaigncycle.cfg":"Campaign mode (default)",
+            "objectivecycle.cfg":"Objective mode",
+            "lmscycle.cfg":"Last Man Standing mode",
+            "stopwatchcycle.cfg":"Stopwatch mode"
         }
     },
     {
@@ -323,6 +323,17 @@
         "DefaultValue":"0",
         "Placeholder":"0",
         "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server/RCON IP Binding",
+        "Category":"WET Server Settings",
+        "Description":"If required, you can change the IPv4 IP binding of the server and RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Default is 0.0.0.0 (all IPs). Stop the instance (not just the server) first",
+        "Keywords":"ip,binding",
+        "FieldName":"net_ip",
+        "InputType":"hidden",
+        "ParamFieldName":"net_ip",
+        "IncludeInCommandLine":false,
         "EnumValues":{}
     },
     {
