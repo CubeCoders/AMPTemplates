@@ -16,10 +16,17 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://www.etlegacy.com/download/file/554",
         "UpdateSourceArgs":"et-legacy.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Move Server Files",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '\\cp -rf ./et-legacy/etlegacy-*/* ./et-legacy/server/ && rm -rf ./et-legacy/etlegacy-*/'"
     },
     {
         "UpdateStageName":"SteamCMD Game Download",
