@@ -302,9 +302,38 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Antilag",
+        "Category":"WET Server Settings",
+        "Description":"If set, antilag will be enabled, which is better for high ping players",
+        "Keywords":"anti,lag,ping,g_antilag",
+        "FieldName":"g_antilag",
+        "InputType":"checkbox",
+        "ParamFieldName":"g_antilag",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Punkbuster",
+        "Category":"WET Server Settings",
+        "Description":"If set, the Punkbuster anti-cheat system will be enabled",
+        "Keywords":"enable,punkbuster,sv_punkbuster",
+        "FieldName":"sv_punkbuster",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_punkbuster",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Server/RCON IP Binding",
         "Category":"WET Server Settings",
-        "Description":"If required, you can change the IPv4 IP binding of the server and RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Default is 0.0.0.0 (all IPs). Stop the instance (not just the server) first",
+        "Description":"If required, you can change the IPv4 IP binding of the server and RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Default is 0.0.0.0 (all IPs). Stop the instance (not just the server) first. NOTE: The IP must be reachable by AMP, otherwise AMP's console won't work",
         "Keywords":"ip,binding",
         "FieldName":"$ApplicationIPBinding",
         "InputType":"hidden",
@@ -352,6 +381,21 @@
         }
     },
     {
+        "DisplayName":"Heavy Weapons Restriction",
+        "Category":"WET Gameplay Settings",
+        "Description":"Restricts heavy weapons to the set percentage of the team",
+        "Keywords":"heavy,weapons,g_heavyWeaponRestriction",
+        "FieldName":"g_heavyWeaponRestriction",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"100",
+        "ParamFieldName":"g_heavyWeaponRestriction",
+        "DefaultValue":"100",
+        "Placeholder":"100",
+        "Suffix":"%",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Enable Forced Team Balancing",
         "Category":"WET Gameplay Settings",
         "Description":"If set, forces a new player onto the smallest or losing team. Otherwise, the player can select freely which team to join",
@@ -394,8 +438,22 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Allow Voting",
+        "DisplayName":"Enable Flood Protection",
         "Category":"WET Gameplay Settings",
+        "Description":"If set, the server will be protected from being flooded by players via chat",
+        "Keywords":"flood,protect,protection,sv_floodprotect",
+        "FieldName":"sv_floodProtect",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_floodProtect",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Voting",
+        "Category":"WET Voting Settings",
         "Description":"If set, connected players can call for and vote on changes as set in etmain/server.cfg",
         "Keywords":"vote,voting,g_allowvote",
         "FieldName":"g_allowVote",
@@ -408,13 +466,220 @@
         }
     },
     {
-        "DisplayName":"Enable Flood Protection",
-        "Category":"WET Gameplay Settings",
-        "Description":"If set, the server will be protected from being flooded by players via chat",
-        "Keywords":"flood,protect,protection,sv_floodprotect",
-        "FieldName":"sv_floodProtect",
+        "DisplayName":"Allow Comp Settings Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to load 'comp' settings",
+        "FieldName":"vote_allow_comp",
         "InputType":"checkbox",
-        "ParamFieldName":"sv_floodProtect",
+        "ParamFieldName":"vote_allow_comp",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Gametype Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to change gametype.",
+        "FieldName":"vote_allow_gametype",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_gametype",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Kick Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to kick players.",
+        "FieldName":"vote_allow_kick",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_kick",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Map Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to change map.",
+        "FieldName":"vote_allow_map",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_map",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Match Reset Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to reset match.",
+        "FieldName":"vote_allow_matchreset",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_matchreset",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Mute Spectators Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to mute spectators.",
+        "FieldName":"vote_allow_mutespecs",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_mutespecs",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Next Map Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to skip to the next map in rotation.",
+        "FieldName":"vote_allow_nextmap",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_nextmap",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Pub Settings Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to load 'pub' settings.",
+        "FieldName":"vote_allow_pub",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_pub",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Referee Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to assign someone as Referee.",
+        "FieldName":"vote_allow_referee",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_referee",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Shuffle Teams XP Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to shuffle teams.",
+        "FieldName":"vote_allow_shuffleteamsxp",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_shuffleteamsxp",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Swap Teams Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to swap teams.",
+        "FieldName":"vote_allow_swapteams",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_swapteams",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Friendly Fire Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to toggle friendly fire.",
+        "FieldName":"vote_allow_friendlyfire",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_friendlyfire",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Timelimit Vote",
+        "Category":"WET Voting Settings",
+        "Description":"Toggles allowing votes to change the map timelimit.",
+        "FieldName":"vote_allow_timelimit",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_timelimit",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Warmup Damage Vote",
+        "Category":"WET Voting Settings",
+        "Description":"If enabled, voting to toggle the warmup damage setting will be allowed",
+        "FieldName":"vote_allow_warmupdamage",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_warmupdamage",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Antilag Vote",
+        "Category":"WET Voting Settings",
+        "Description":"If enabled, voting to toggle the antilag setting will be allowed",
+        "FieldName":"vote_allow_antilag",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_antilag",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Balanced Teams Vote",
+        "Category":"WET Voting Settings",
+        "Description":"If enabled, voting to toggle the balanced team requirement will be allowed",
+        "FieldName":"vote_allow_balancedteams",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_balancedteams",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Muting Vote",
+        "Category":"WET Voting Settings",
+        "Description":"If enabled, voting to mute individual players will be allowed",
+        "FieldName":"vote_allow_muting",
+        "InputType":"checkbox",
+        "ParamFieldName":"vote_allow_muting",
         "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
