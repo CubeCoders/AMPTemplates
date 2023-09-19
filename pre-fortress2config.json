@@ -64,6 +64,36 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Pure Server",
+        "Category":"Server Settings",
+        "Description":"Sets whether clients are only allowed to use certain files",
+        "Keywords":"pure,server,cheat,hack,integrity,sv_pure",
+        "FieldName":"sv_pure",
+        "InputType":"enum",
+        "ParamFieldName":"sv_pure",
+        "DefaultValue":"-1",
+        "EnumValues":{
+            "-1":"Do not restrict client files",
+            "0":"Apply rules in pf2/cfg/pure_server_minimal.txt only",
+            "1":"Apply rules in pf2/cfg/pure_server_full.txt and then pf2/cfg/pure_server_whitelist.txt",
+            "2":"Apply rules in pf2/cfg/pure_server_full.txt"
+        }
+    },
+    {
+        "DisplayName":"Kick Clients On Pure Server",
+        "Category":"Server Settings",
+        "Description":"If enabled, the server will kick clients with mismatching files. Otherwise, it will issue a warning to the clients",
+        "Keywords":"pure,server,cheat,hack,integrity,sv_pure_kick_clients",
+        "FieldName":"sv_pure_kick_clients",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_pure_kick_clients",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Initial Map",
         "Category":"Server Settings",
         "Description":"Sets the map to start the server with. If \"Custom\" is selected, Custom Initial Map must also be specified",
@@ -155,6 +185,21 @@
         }
     },
     {
+        "DisplayName":"Allow All Talk",
+        "Category":"Server Settings",
+        "Description":"If enabled, players can hear all other players, with no team restrictions",
+        "Keywords":"all,talk,sv_alltalk",
+        "FieldName":"sv_alltalk",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_alltalk",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Allow Download From Server",
         "Category":"Server Settings",
         "Description":"If set, clients will be allowed to download content from the server (maps, sprays and related)",
@@ -180,6 +225,49 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"",
         "Placeholder":"http://example.com",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow Upload To Server",
+        "Category":"Server Settings",
+        "Description":"If set, clients will be allowed to upload customisation files to the server",
+        "Keywords":"allow,upload,customisation,files,sv_allowupload",
+        "FieldName":"sv_allowupload",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_allowupload",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Minimum Client Rate",
+        "Category":"Server Settings",
+        "Description":"Sets the minimum allowable bandwidth rate a client may have set when connected to the server. 0 = no minimum",
+        "Keywords":"minimum,bandwidth,rate,sv_minrate",
+        "FieldName":"sv_minrate",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"sv_minrate",
+        "DefaultValue":"3500",
+        "Placeholder":"3500",
+        "Suffix":"bytes/second",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Client Rate",
+        "Category":"Server Settings",
+        "Description":"Sets the maximum allowable bandwidth rate a client may have set when connected to the server. 0 = no limit",
+        "Keywords":"maximum,bandwidth,rate,sv_maxrate",
+        "FieldName":"sv_maxrate",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"sv_maxrate",
+        "DefaultValue":"80000",
+        "Placeholder":"80000",
+        "Suffix":"bytes/second",
         "EnumValues":{}
     },
     {
