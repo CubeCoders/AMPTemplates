@@ -102,11 +102,11 @@
         "UpdateSourceArgs":"-c 'cd ./pre-fortress2/server && ../7-Zip/7zzs x -y pf2_full_{{ReleaseVersion}}.7z.001 && rm -f pf2_full_{{ReleaseVersion}}.7z.001 pf2_full_{{ReleaseVersion}}.7z.002'"
     },
     {
-        "UpdateStageName":"Create Library Symlinks",
+        "UpdateStageName":"Remove Old Library",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd ./pre-fortress2/server/bin && ln -s datacache_srv.so datacache.so && ln -sf dedicated_srv.so dedicated.so && ln -sf engine_srv.so engine.so && ln -sf materialsystem_srv.so materialsystem.so && ln -sf replay_srv.so replay.so && ln -sf scenefilecache_srv.so scenefilecache.so && ln -sf shaderapiempty_srv.so shaderapiempty.so && ln -sf soundemittersystem_srv.so soundemittersystem.so && ln -sf studiorender_srv.so studiorender.so && ln -sf vphysics_srv.so vphysics.so && mv libstdc++.so.6 libstdc++.so.6.old && cd ../pf2/bin && ln -s server.so server_srv.so'"
+        "UpdateSourceArgs":"-c 'rm -f ./pre-fortress2/server/bin/libstdc++.so.6'"
     },
     {
         "UpdateStageName":"Server.cfg File Download",
