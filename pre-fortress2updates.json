@@ -21,6 +21,31 @@
         "UpdateSourceTarget":"{{$FullBaseDir}}"
     },
     {
+        "UpdateStageName":"7-Zip Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip"
+    },
+    {
+        "UpdateStageName":"7-Zip Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://www.7-zip.org/a/7z2301-extra.7z",
+        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"PF2 Files Download 1",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/Pre-Fortress-2/pf2/releases/download/{{ReleaseVersion}}/pf2_full_{{ReleaseVersion}}.7z.001",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":false,
+        "OverwriteExistingFiles":true
+    },
+    {
         "UpdateStageName":"PF2 Files Download 2",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
@@ -30,27 +55,11 @@
         "OverwriteExistingFiles":true
     },
     {
-        "UpdateStageName":"PF2 Files Download 1",
+        "UpdateStageName":"PF2 Files Extract",
         "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/Pre-Fortress-2/pf2/releases/download/{{ReleaseVersion}}/pf2_full_{{ReleaseVersion}}.7z.001",
-        "UpdateSourceArgs":"pf2_full_{{ReleaseVersion}}.7z",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
-    },
-    {
-        "UpdateStageName":"Pause Update Stages",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Pause",
-        "UpdateSourceArgs":"30"
-    },
-    {
-        "UpdateStageName":"7-Zip Directory Creation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip"
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd pre-fortress2\\server && ..\\7-Zip\\7za.exe x -y pf2_full_{{ReleaseVersion}}.7z.001 && del /Q /F pf2_full_{{ReleaseVersion}}.7z.001 pf2_full_{{ReleaseVersion}}.7z.002"
     },
     {
         "UpdateStageName":"7-Zip Download",
@@ -86,7 +95,7 @@
         "OverwriteExistingFiles":true
     },
     {
-        "UpdateStageName":"Engine Files Extract",
+        "UpdateStageName":"PF2 Files Extract",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
