@@ -21,6 +21,31 @@
         "UpdateSourceTarget":"{{$FullBaseDir}}"
     },
     {
+        "UpdateStageName":"7-Zip Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip"
+    },
+    {
+        "UpdateStageName":"7-Zip Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://www.7-zip.org/a/7z2301-extra.7z",
+        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"PF2 Files Download 1",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/Pre-Fortress-2/pf2/releases/download/{{ReleaseVersion}}/pf2_full_{{ReleaseVersion}}.7z.001",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":false,
+        "OverwriteExistingFiles":true
+    },
+    {
         "UpdateStageName":"PF2 Files Download 2",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
@@ -30,27 +55,11 @@
         "OverwriteExistingFiles":true
     },
     {
-        "UpdateStageName":"PF2 Files Download 1",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/Pre-Fortress-2/pf2/releases/download/{{ReleaseVersion}}/pf2_full_{{ReleaseVersion}}.7z.001",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
-    },
-    {
-        "UpdateStageName":"Delete PF2 Download 2",
+        "UpdateStageName":"PF2 Files Extract",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C del /Q /F \"{{$FullBaseDir}}pf2_full_{{ReleaseVersion}}.7z.002\""
-    },
-    {
-        "UpdateStageName":"7-Zip Directory Creation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip"
+        "UpdateSourceArgs":"/C cd pre-fortress2\\server && ..\\7-Zip\\7za.exe x -y pf2_full_{{ReleaseVersion}}.7z.001 && del /Q /F pf2_full_{{ReleaseVersion}}.7z.001 pf2_full_{{ReleaseVersion}}.7z.002"
     },
     {
         "UpdateStageName":"7-Zip Download",
@@ -86,18 +95,18 @@
         "OverwriteExistingFiles":true
     },
     {
-        "UpdateStageName":"Engine Files Extract",
+        "UpdateStageName":"PF2 Files Extract",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd ./pre-fortress2/server && ../7-Zip/7zzs x -y pf2_full_{{ReleaseVersion}}.7z.001 && rm -f pf2_full_{{ReleaseVersion}}.7z.001 pf2_full_{{ReleaseVersion}}.7z.002'"
     },
     {
-        "UpdateStageName":"Create Library Symlinks",
+        "UpdateStageName":"Remove Redundsnt C++ Binary",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd ./pre-fortress2/server/bin && ln -s datacache_srv.so datacache.so && ln -sf dedicated_srv.so dedicated.so && ln -sf engine_srv.so engine.so && ln -sf materialsystem_srv.so materialsystem.so && ln -sf replay_srv.so replay.so && ln -sf scenefilecache_srv.so scenefilecache.so && ln -sf shaderapiempty_srv.so shaderapiempty.so && ln -sf soundemittersystem_srv.so soundemittersystem.so && ln -sf studiorender_srv.so studiorender.so && ln -sf vphysics_srv.so vphysics.so && mv libstdc++.so.6 libstdc++.so.6.old && cd ../pf2/bin && ln -s server.so server_srv.so'"
+        "UpdateSourceArgs":"-c 'rm -f ./pre-fortress2/server/bin/libstdc++.so.6'"
     },
     {
         "UpdateStageName":"Server.cfg File Download",
