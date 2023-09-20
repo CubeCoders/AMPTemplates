@@ -37,31 +37,6 @@
         "DeleteAfterExtract":true
     },
     {
-        "UpdateStageName":"PF2 Files Download 1",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/Pre-Fortress-2/pf2/releases/download/{{ReleaseVersion}}/pf2_full_{{ReleaseVersion}}.7z.001",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":false,
-        "OverwriteExistingFiles":true
-    },
-    {
-        "UpdateStageName":"PF2 Files Download 2",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/Pre-Fortress-2/pf2/releases/download/{{ReleaseVersion}}/pf2_full_{{ReleaseVersion}}.7z.002",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":false,
-        "OverwriteExistingFiles":true
-    },
-    {
-        "UpdateStageName":"PF2 Files Extract",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd pre-fortress2\\server && ..\\7-Zip\\7za.exe x -y pf2_full_{{ReleaseVersion}}.7z.001 && del /Q /F pf2_full_{{ReleaseVersion}}.7z.001 pf2_full_{{ReleaseVersion}}.7z.002"
-    },
-    {
         "UpdateStageName":"7-Zip Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
@@ -78,28 +53,37 @@
     },
     {
         "UpdateStageName":"PF2 Files Download 1",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/Pre-Fortress-2/pf2/releases/download/{{ReleaseVersion}}/pf2_full_{{ReleaseVersion}}.7z.001",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURLFromJQ",
+        "UpdateSourceData":"https://api.github.com/repos/Pre-Fortress-2/pf2/releases/latest",
+        "UpdateSourceArgs":"$.assets.[2].browser_download_url",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":false,
         "OverwriteExistingFiles":true
     },
     {
         "UpdateStageName":"PF2 Files Download 2",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/Pre-Fortress-2/pf2/releases/download/{{ReleaseVersion}}/pf2_full_{{ReleaseVersion}}.7z.002",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURLFromJQ",
+        "UpdateSourceData":"https://api.github.com/repos/Pre-Fortress-2/pf2/releases/latest",
+        "UpdateSourceArgs":"$.assets.[3].browser_download_url",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":false,
         "OverwriteExistingFiles":true
     },
     {
         "UpdateStageName":"PF2 Files Extract",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd pre-fortress2\\server && ..\\7-Zip\\7za.exe x -y pf2_full_*.7z.001 && del /Q /F pf2_full_*.7z.*"
+    },
+    {
+        "UpdateStageName":"PF2 Files Extract",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd ./pre-fortress2/server && ../7-Zip/7zzs x -y pf2_full_{{ReleaseVersion}}.7z.001 && rm -f pf2_full_{{ReleaseVersion}}.7z.001 pf2_full_{{ReleaseVersion}}.7z.002'"
+        "UpdateSourceArgs":"-c 'cd ./pre-fortress2/server && ../7-Zip/7zzs x -y pf2_full_*.7z.001 && rm -f pf2_full_*.7z.*'"
     },
     {
         "UpdateStageName":"Binary Symlinks and Deletion",
