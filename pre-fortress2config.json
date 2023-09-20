@@ -1,25 +1,25 @@
 [
     {
         "DisplayName":"Server Name",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"Sets the name of the server that appears in the server list",
         "Keywords":"server,name,hostname",
         "FieldName":"hostname",
         "InputType":"text",
         "ParamFieldName":"hostname",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"AMP Powered Pre-Fortress 2 Server",
         "EnumValues":{}
     },
     {
         "DisplayName":"LAN Server",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"If enabled, the server will operate as a LAN server: no heartbeat, no authentication, no non-class C addresses, 9999.0 rate, etc",
         "Keywords":"lan,local,sv_lan",
         "FieldName":"sv_lan",
         "InputType":"checkbox",
         "ParamFieldName":"sv_lan",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
@@ -28,19 +28,19 @@
     },
     {
         "DisplayName":"Server Password",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"Sets the password required to connect to the server. Default is no password",
         "Keywords":"server,password,sv_password",
         "FieldName":"sv_password",
         "InputType":"password",
         "ParamFieldName":"sv_password",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"",
         "EnumValues":{}
     },
     {
         "DisplayName":"RCON Password",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"See the Security and Privacy menu for configurable options for the server's RCON",
         "Keywords":"rcon,password,rcon_password",
         "FieldName":"$RemoteAdminPassword",
@@ -52,12 +52,13 @@
     },
     {
         "DisplayName":"Enable Pure Server",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"Sets whether clients are only allowed to use certain files",
         "Keywords":"pure,server,cheat,hack,integrity,sv_pure",
         "FieldName":"sv_pure",
         "InputType":"enum",
         "ParamFieldName":"sv_pure",
+        "IncludeInCommandLine":true,
         "DefaultValue":"-1",
         "EnumValues":{
             "-1":"Do not restrict client files",
@@ -68,12 +69,13 @@
     },
     {
         "DisplayName":"Kick Clients On Pure Server",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"If enabled, the server will kick clients with mismatching files. Otherwise, it will issue a warning to the clients",
         "Keywords":"pure,server,cheat,hack,integrity,sv_pure_kick_clients",
         "FieldName":"sv_pure_kick_clients",
         "InputType":"checkbox",
         "ParamFieldName":"sv_pure_kick_clients",
+        "IncludeInCommandLine":true,
         "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
@@ -82,7 +84,7 @@
     },
     {
         "DisplayName":"Initial Map",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"Sets the map to start the server with. If \"Custom\" is selected, Custom Initial Map must also be specified",
         "Keywords":"map",
         "FieldName":"map",
@@ -115,7 +117,7 @@
     },
     {
         "DisplayName":"Custom Initial Map",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"Sets a custom map to use for the Initial Map, if \"Custom\" is selected",
         "Keywords":"custom,map",
         "FieldName":"CustomMap",
@@ -127,13 +129,13 @@
     },
     {
         "DisplayName":"Player Limit",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"Sets the maximum number of players allowed on the server at one time",
         "Keywords":"max,players,limit,maxplayers",
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "MinValue":"2",
-        "MaxValue":"32",
+        "MaxValue":"33",
         "ParamFieldName":"maxplayers",
         "IncludeInCommandLine":true,
         "DefaultValue":"24",
@@ -142,14 +144,44 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Allow Spectators",
+        "Category":"PF2 Server Settings",
+        "Description":"If set, spectators will be allowed on the server",
+        "Keywords":"allow,spectators,mp_allowspectators",
+        "FieldName":"mp_allowspectators",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_allowspectators",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Restrict Spectator Mode",
+        "Category":"PF2 Server Settings",
+        "Description":"If enabled, the spectator mode for dead players will be restricted",
+        "Keywords":"spectator,camera,first,person,mp_forcecamera",
+        "FieldName":"mp_forcecamera",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_forcecamera",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Enable Cheats",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"If set, cheat convars will be allowed to be used on the server",
         "Keywords":"allow,cheat,hack,integrity,sv_cheats",
         "FieldName":"sv_cheats",
         "InputType":"checkbox",
         "ParamFieldName":"sv_cheats",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
@@ -158,13 +190,13 @@
     },
     {
         "DisplayName":"Allow Players To Pause Server",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"If set, players will be able to pause the server. Not recommended",
         "Keywords":"pause,pausable",
         "FieldName":"sv_pausable",
         "InputType":"checkbox",
         "ParamFieldName":"sv_pausable",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
@@ -172,14 +204,89 @@
         }
     },
     {
+        "DisplayName":"Allow Wait Command",
+        "Category":"PF2 Server Settings",
+        "Description":"If enabled, the wait command will be allowed on clients connected to the server. Recommended to keep disabled to prevent server crash exploits",
+        "Keywords":"wait,command,sv_allow_wait_command",
+        "FieldName":"sv_allow_wait_command",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_allow_wait_command",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Automatic Team Balancing",
+        "Category":"PF2 Server Settings",
+        "Description":"Sets whether to automatically balance teams based on the Teams Unbalance Limit",
+        "Keywords":"team,automatic,balance,balancing,mp_autoteambalance",
+        "FieldName":"mp_autoteambalance",
+        "InputType":"enum",
+        "ParamFieldName":"mp_autoteambalance",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"Off",
+            "1":"Forcibly switch (default)",
+            "2":"Ask for volunteers"
+        }
+    },
+    {
+        "DisplayName":"Teams Unbalance Limit",
+        "Category":"PF2 Server Settings",
+        "Description":"Teams will be considered unbalanced for the purpose of Automatic Team Balancing when one team has this many more players than the other team. 0 = check disabled",
+        "Keywords":"team,automatic,balance,balancing,limit,mp_teams_unbalance_limit",
+        "FieldName":"mp_teams_unbalance_limit",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_teams_unbalance_limit",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
+        "Placeholder":"1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Stalemate Mode",
+        "Category":"PF2 Server Settings",
+        "Description":"If set, the stalemate mode will be enabled",
+        "Keywords":"stalemate,mode,mp_stalemate_enable",
+        "FieldName":"mp_stalemate_enable",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_stalemate_enable",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Stalemate Mode Time Limit",
+        "Category":"PF2 Server Settings",
+        "Description":"Sets the time limit of the stalemate round",
+        "Keywords":"stalemate,round,time,limit,mp_stalemate_timelimit",
+        "FieldName":"mp_stalemate_timelimit",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_stalemate_timelimit",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"240",
+        "Placeholder":"240",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Allow All Talk",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"If enabled, players can hear all other players, with no team restrictions",
         "Keywords":"all,talk,sv_alltalk",
         "FieldName":"sv_alltalk",
         "InputType":"checkbox",
         "ParamFieldName":"sv_alltalk",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
@@ -188,13 +295,13 @@
     },
     {
         "DisplayName":"Allow Download From Server",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"If set, clients will be allowed to download content from the server (maps, sprays and related)",
         "Keywords":"allow,download,content,maps,sv_allow_download",
         "FieldName":"sv_allow_download",
         "InputType":"checkbox",
         "ParamFieldName":"sv_allow_download",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
@@ -203,26 +310,26 @@
     },
     {
         "DisplayName":"Fast Download URLs",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"Sets the URL(s) for clients to download custom content from, instead of sourcing the content from the server. This allows for faster downloads",
         "Keywords":"fastdl,download,url,sv_downloadurl",
         "FieldName":"sv_downloadurl",
         "InputType":"text",
         "ParamFieldName":"sv_downloadurl",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"",
         "Placeholder":"http://example.com",
         "EnumValues":{}
     },
     {
         "DisplayName":"Allow Upload To Server",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"If set, clients will be allowed to upload customisation files to the server",
         "Keywords":"allow,upload,customisation,files,sv_allowupload",
         "FieldName":"sv_allowupload",
         "InputType":"checkbox",
         "ParamFieldName":"sv_allowupload",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
@@ -230,14 +337,30 @@
         }
     },
     {
+        "DisplayName":"Maximum Upload File Size",
+        "Category":"PF2 Server Settings",
+        "Description":"Sets the maximum allowed file size for uploading to the server",
+        "Keywords":"maximum,upload,file,size,net_maxfilesize",
+        "FieldName":"net_maxfilesize",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"net_maxfilesize",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"64",
+        "Placeholder":"64",
+        "Suffix":"MB",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Minimum Client Rate",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"Sets the minimum allowable bandwidth rate a client may have set when connected to the server. 0 = no minimum",
         "Keywords":"minimum,bandwidth,rate,sv_minrate",
         "FieldName":"sv_minrate",
         "InputType":"number",
         "MinValue":"0",
         "ParamFieldName":"sv_minrate",
+        "IncludeInCommandLine":true,
         "DefaultValue":"3500",
         "Placeholder":"3500",
         "Suffix":"bytes/second",
@@ -245,36 +368,95 @@
     },
     {
         "DisplayName":"Maximum Client Rate",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"Sets the maximum allowable bandwidth rate a client may have set when connected to the server. 0 = no limit",
         "Keywords":"maximum,bandwidth,rate,sv_maxrate",
         "FieldName":"sv_maxrate",
         "InputType":"number",
         "MinValue":"0",
         "ParamFieldName":"sv_maxrate",
+        "IncludeInCommandLine":true,
         "DefaultValue":"80000",
         "Placeholder":"80000",
         "Suffix":"bytes/second",
         "EnumValues":{}
     },
     {
+        "DisplayName":"Minimum Server Update Rate",
+        "Category":"PF2 Server Settings",
+        "Description":"Sets the minimum number of updates per second of the positions of the server's models (players, guns, etc) that server sends to clients",
+        "Keywords":"minimum,update,rate,sv_minupdaterate",
+        "FieldName":"sv_minupdaterate",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"sv_minupdaterate",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"20",
+        "Placeholder":"20",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Server Update Rate",
+        "Category":"PF2 Server Settings",
+        "Description":"Sets the maximum number of updates per second of the positions of the server's models (players, guns, etc) that server sends to clients",
+        "Keywords":"maximum,update,rate,sv_maxupdaterate",
+        "FieldName":"sv_maxupdaterate",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"sv_maxupdaterate",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"66",
+        "Placeholder":"66",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Map Rotation Time Limit",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"Sets the time period between map rotations. 0 = disabled",
         "Keywords":"time,limit,rotation,mp_timelimit",
         "FieldName":"mp_timelimit",
         "InputType":"number",
         "MinValue":"0",
         "ParamFieldName":"mp_timelimit",
-        "IncludeInCommandLine":false,
+        "IncludeInCommandLine":true,
         "DefaultValue":"0",
         "Placeholder":"0",
         "Suffix":"minutes",
         "EnumValues":{}
     },
     {
+        "DisplayName":"Map Rotation Win Limit",
+        "Category":"PF2 Server Settings",
+        "Description":"Sets the maximum score one team can reach before the map rotates. 0 = disabled",
+        "Keywords":"win,limit,rotation,mp_winlimit",
+        "FieldName":"mp_winlimit",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_winlimit",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Disable Damage Spread",
+        "Category":"PF2 Server Settings",
+        "Description":"If set, the random damage spread applied to all player damage will be disabled",
+        "Keywords":"disable,damage,spread,tf_damage_disablespread",
+        "FieldName":"tf_damage_disablespread",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"tf_damage_disablespread",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Disable Valve Anti-Cheat",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"If set, Valve Anti-Cheat (VAC) will be disabled",
         "Keywords":"valve,anti,cheat,vac,insecure",
         "FieldName":"insecure",
@@ -284,13 +466,13 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"",
         "EnumValues":{
-            "True":"",
-            "False":"-insecure "
+            "False":"",
+            "True":"-insecure "
         }
     },
     {
         "DisplayName":"Disable HLTV",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"If set, HLTV will be disabled",
         "Keywords":"hltv,nohltv",
         "FieldName":"nohltv",
@@ -300,13 +482,13 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"-nohltv ",
         "EnumValues":{
-            "True":"",
-            "False":"-nohltv "
+            "False":"",
+            "True":"-nohltv "
         }
     },
     {
         "DisplayName":"Server/RCON IPv4 IP Binding",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"If required, you can change the IPv4 IP binding of the server and RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Default is 0.0.0.0 (all IPs). Stop the instance (not just the server) first",
         "Keywords":"ip,binding",
         "FieldName":"ip",
@@ -317,7 +499,7 @@
     },
     {
         "DisplayName":"Additional Command Line Parameters",
-        "Category":"Server Settings",
+        "Category":"PF2 Server Settings",
         "Description":"Specifies additional command line parameters (anything that begins with a -) that are not otherwise set by AMP. ONE LINE ONLY! Use with care",
         "Keywords":"custom,server,arguments,variables,cvars,convars,parameters",
         "FieldName":"CustomParameters",
@@ -331,8 +513,8 @@
     },
     {
         "DisplayName":"Additional Console Variables",
-        "Category":"Server Settings",
-        "Description":"Specifies additional console variables (anything that begins with a +) that are not otherwise set by AMP. ONE LINE ONLY! Use with care. Alternatively, specify additional console variables in valve/server.cfg",
+        "Category":"PF2 Server Settings",
+        "Description":"Specifies additional console variables (anything that begins with a +) that are not otherwise set by AMP. ONE LINE ONLY! Use with care. Alternatively, specify the equivalent under \"Additional Server Settings\"",
         "Keywords":"custom,server,arguments,variables,cvars,convars,parameters",
         "FieldName":"CustomConVars",
         "InputType":"Textarea",
@@ -341,6 +523,19 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"",
         "Placeholder":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Additional Server Settings",
+        "Category":"PF2 Server Settings",
+        "Description":"Specifies additional settings to include in \"server.cfg\" that are not otherwise set by AMP. Example: sv_maxcmdrate 66. One setting per line",
+        "Keywords":"additional,settings,custom",
+        "FieldName":"UserSettings",
+        "InputType":"Textarea",
+        "IsFlagArgument":false,
+        "ParamFieldName":"UserSettings",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
         "EnumValues":{}
     }
 ]
