@@ -11,19 +11,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Enable Synced Console Logging",
-        "Category":"WET Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"logfile",
-        "InputType":"number",
-        "Hidden":true,
-        "ParamFieldName":"logfile",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"2",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Log File Name",
         "Category":"WET Server Settings",
         "Description":"",
@@ -47,14 +34,25 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Message Of The Day",
+        "DisplayName":"Message Of The Day (First Line)",
         "Category":"WET Server Settings",
-        "Description":"Sets the first line of the message of the day (MOTD) displayed when players join. Additional lines can be specified in server.cfg",
+        "Description":"Sets the first line of the message of the day (MOTD) displayed when players join",
         "Keywords":"message,motd,server_motd0",
         "FieldName":"server_motd0",
         "InputType":"text",
         "ParamFieldName":"server_motd0",
         "DefaultValue":"^NWelcome to Wolfenstein: Enemy Territory!",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Message Of The Day (Second Line)",
+        "Category":"WET Server Settings",
+        "Description":"Sets the second line of the message of the day (MOTD) displayed when players join. Up to four additional lines can be specified under Additional Server Settings, for example: set server_motd2 \"third line\"",
+        "Keywords":"message,motd,server_motd1",
+        "FieldName":"server_motd1",
+        "InputType":"text",
+        "ParamFieldName":"server_motd1",
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
@@ -132,12 +130,18 @@
     {
         "DisplayName":"Map Rotation Mode",
         "Category":"WET Server Settings",
-        "Description":"Specify the map rotation mode in etmain/server.cfg, and configure the relevant script for that rotation mode accordingly",
+        "Description":"Sets the map rotation mode. Configure the relevant script for that rotation mode accordingly, eg etmain/AMP_campaigncycle.cfg",
         "Keywords":"map,rotation,mode",
         "FieldName":"MapRotation",
-        "InputType":"hidden",
+        "InputType":"enum",
         "ParamFieldName":"MapRotation",
-        "EnumValues":{}
+        "DefaultValue":"AMP_campaigncycle.cfg",
+        "EnumValues":{
+            "AMP_campaigncycle.cfg":"Campaign (default)",
+            "AMP_objectivecycle.cfg":"Objective",
+            "AMP_lmscycle.cfg":"Last Man Standing",
+            "AMP_stopwatchcycle.cfg":"Stopwatch"
+        }
     },
     {
         "DisplayName":"Player Limit",
@@ -243,6 +247,33 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Download While Disconnected",
+        "Category":"WET Server Settings",
+        "Description":"If set, clients will be told to perform their downloads while disconnected from the server",
+        "Keywords":"download,disconnected,sv_wwwDlDisconnected",
+        "FieldName":"sv_wwwDlDisconnected",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_wwwDlDisconnected",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Maximum Server Download Rate",
+        "Category":"WET Server Settings",
+        "Description":"Sets the maximum number of updates per second of the positions of the server's models (players, guns, etc) that server sends to clients",
+        "Keywords":"maximum,update,rate,sv_dl_maxRate",
+        "FieldName":"sv_dl_maxRate",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"sv_dl_maxRate",
+        "DefaultValue":"66",
+        "Placeholder":"66",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Memory Allocation",
         "Category":"WET Server Settings",
         "Description":"Sets the amount of memory allocated for players and items",
@@ -257,27 +288,14 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Minimum Client Rate",
-        "Category":"WET Server Settings",
-        "Description":"Sets the minimum allowable rate a client may have set when connected to the server. 0 = no minimum (default)",
-        "Keywords":"minimum,bandwidth,rate,sv_minrate",
-        "FieldName":"sv_minRate",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"sv_minRate",
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "Suffix":"bytes/second",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Maximum Client Rate",
         "Category":"WET Server Settings",
-        "Description":"Sets the maximum allowable rate a client may have set when connected to the server. 0 = no limit (default). Otherwise recommended to be 13000 if slower clients are having issues",
+        "Description":"Sets the maximum allowable bandwidth a client may have set when connected to the server. 0 = no limit",
         "Keywords":"maximum,bandwidth,rate,sv_maxrate",
         "FieldName":"sv_maxRate",
         "InputType":"number",
         "MinValue":"0",
+        "MaxValue":"25000",
         "ParamFieldName":"sv_maxRate",
         "DefaultValue":"13000",
         "Placeholder":"13000",
@@ -288,11 +306,11 @@
         "DisplayName":"Minimum Client Ping",
         "Category":"WET Server Settings",
         "Description":"Sets the minimum ping clients can have on the server. 0 = disabled",
-        "Keywords":"minimum,ping,sv_minPing",
-        "FieldName":"sv_minPing",
+        "Keywords":"minimum,ping,sv_minping",
+        "FieldName":"sv_minping",
         "InputType":"number",
         "MinValue":"0",
-        "ParamFieldName":"sv_minPing",
+        "ParamFieldName":"sv_minping",
         "DefaultValue":"0",
         "Placeholder":"0",
         "Suffix":"milliseconds",
@@ -302,11 +320,11 @@
         "DisplayName":"Maximum Client Ping",
         "Category":"WET Server Settings",
         "Description":"Sets the maximum ping clients can have on the server. 0 = disabled",
-        "Keywords":"maximum,ping,sv_maxPing",
-        "FieldName":"sv_maxPing",
+        "Keywords":"maximum,ping,sv_maxping",
+        "FieldName":"sv_maxping",
         "InputType":"number",
         "MinValue":"0",
-        "ParamFieldName":"sv_maxPing",
+        "ParamFieldName":"sv_maxping",
         "DefaultValue":"0",
         "Placeholder":"0",
         "Suffix":"milliseconds",
@@ -342,6 +360,62 @@
         }
     },
     {
+        "DisplayName":"Watchdog Interval",
+        "Category":"WET Server Settings",
+        "Description":"Sets the time interval for the Watchdog to check whether the game died with an ERR_DROP or any situation leading to server running with no map",
+        "Keywords":"watchdog,interval,crash,com_watchdog",
+        "FieldName":"com_watchdog",
+        "InputType":"number",
+        "MinValue":"1",
+        "ParamFieldName":"com_watchdog",
+        "DefaultValue":"60",
+        "Placeholder":"60",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Watchdog Command",
+        "Category":"WET Server Settings",
+        "Description":"Sets the console variable specifying the actions in an event where the Watchdog triggers. Blank = quit (default)",
+        "Keywords":"watchdog,console,variable,cvar,command,crash,com_watchdog_cmd",
+        "FieldName":"com_watchdog_cmd",
+        "InputType":"text",
+        "ParamFieldName":"com_watchdog_cmd",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Logging Mode",
+        "Category":"WET Server Settings",
+        "Description":"",
+        "Keywords":"logfile",
+        "FieldName":"logfile",
+        "InputType":"enum",
+        "ParamFieldName":"logfile",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"Disable logging",
+            "1":"Enable buffered logging (default)",
+            "2":"Enable logging that is flushed after each print"
+        }
+    },
+    {
+        "DisplayName":"Enable Synced Console Logging",
+        "Category":"WET Server Settings",
+        "Description":"",
+        "Keywords":"logsync",
+        "FieldName":"logsync",
+        "InputType":"checkbox",
+        "ParamFieldName":"logsync",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Server/RCON IP Binding",
         "Category":"WET Server Settings",
         "Description":"If required, you can change the IPv4 IP binding of the server and RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Default is 0.0.0.0 (all IPs). Stop the instance (not just the server) first. NOTE: The IP must be reachable by AMP, otherwise AMP's console won't work",
@@ -353,14 +427,15 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Additional Console Variables",
+        "DisplayName":"Additional Server Settings",
         "Category":"WET Server Settings",
-        "Description":"Additional console variables that are not otherwise set by AMP can be specified in etmain/server.cfg",
-        "Keywords":"custom,server,variables,cvars,convars,parameters",
-        "FieldName":"CustomConVars",
-        "InputType":"hidden",
-        "ParamFieldName":"CustomConVars",
-        "IncludeInCommandLine":false,
+        "Description":"Specifies additional settings to include in \"server.cfg\" that are not otherwise set by AMP. One setting per line",
+        "Keywords":"additional,settings,custom",
+        "FieldName":"UserSettings",
+        "InputType":"Textarea",
+        "IsFlagArgument":false,
+        "ParamFieldName":"UserSettings",
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
@@ -693,10 +768,10 @@
         }
     },
     {
-        "DisplayName":"Fixed Player Movement",
+        "DisplayName":"Enable Fixed Rate Game Physics",
         "Category":"WET Gameplay Settings",
-        "Description":"Affects game physics.",
-        "Keywords":"pmove_fixed",
+        "Description":"If set, the function responsible for game physics will be run at a fixed rate, as set under Game Physics Fixed Rate, to level the playing field",
+        "Keywords":"game,physics,fixed,rate,pmove_fixed",
         "FieldName":"pmove_fixed",
         "InputType":"checkbox",
         "ParamFieldName":"pmove_fixed",
@@ -707,15 +782,83 @@
         }
     },
     {
-        "DisplayName":"Player Movement Milliseconds",
+        "DisplayName":"Game Physics Fixed Rate",
         "Category":"WET Gameplay Settings",
-        "Description":"Affects game physics.",
-        "Keywords":"pmove_msec",
+        "Description":"Sets the fixed rate for the game physics function. Requires Enable Fixed Rate Game Physics to be set",
+        "Keywords":"game,physics,fixed,rate,pmove_msec",
         "FieldName":"pmove_msec",
         "InputType":"number",
         "ParamFieldName":"pmove_msec",
-        "DefaultValue":"0",
+        "DefaultValue":"8",
+        "Placeholder":"8",
+        "Suffix":"milliseconds",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"LMS: Follow Team Only",
+        "Category":"WET Gameplay Settings",
+        "Description":"If set, players will be restricted to only being able to spectate their teammates in Last Man Standing (LMS)",
+        "Keywords":"lms,last,man,standing,follow,team,g_lms_followTeamOnly",
+        "FieldName":"g_lms_followTeamOnly",
+        "InputType":"checkbox",
+        "ParamFieldName":"g_lms_followTeamOnly",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"LMS: Lock Teams",
+        "Category":"WET Gameplay Settings",
+        "Description":"If set, both teams will be locked when the warmup period is done and a match is started in Last Man Standing (LMS)",
+        "Keywords":"lms,last,man,standing,lock,teams,g_lms_lockTeams",
+        "FieldName":"g_lms_lockTeams",
+        "InputType":"checkbox",
+        "ParamFieldName":"g_lms_lockTeams",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"LMS: Match Limit",
+        "Category":"WET Gameplay Settings",
+        "Description":"Sets the number of matches to be played in Last Man Standing (LMS) before moving to the next map",
+        "Keywords":"lms,last,man,standing,match,limit,g_lms_matchlimit",
+        "FieldName":"g_lms_matchlimit",
+        "InputType":"number",
+        "ParamFieldName":"g_lms_matchlimit",
+        "DefaultValue":"2",
+        "Placeholder":"2",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"LMS: Round Limit",
+        "Category":"WET Gameplay Settings",
+        "Description":"Sets the maximum number of rounds to be played in Last Man Standing (LMS) to determine a team as the winner or a draw to finish a match. The winner is the first to reach (round limit / 2) + 1",
+        "Keywords":"lms,last,man,standing,round,limit,g_lms_roundlimit",
+        "FieldName":"g_lms_roundlimit",
+        "InputType":"number",
+        "ParamFieldName":"g_lms_roundlimit",
+        "DefaultValue":"3",
+        "Placeholder":"3",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"LMS: Enable Team Balancing",
+        "Category":"WET Gameplay Settings",
+        "Description":"If set, team balancing will be enabled in Last Man Standing (LMS) matches",
+        "Keywords":"lms,last,man,standing,team,balance,balancing,g_lms_teamForceBalance",
+        "FieldName":"g_lms_teamForceBalance",
+        "InputType":"checkbox",
+        "ParamFieldName":"g_lms_teamForceBalance",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
     },
     {
         "DisplayName":"Allow Voting",
