@@ -36,18 +36,18 @@
     {
         "DisplayName":"Message Of The Day (First Line)",
         "Category":"WET Server Settings",
-        "Description":"Sets the first line of the message of the day (MOTD) displayed when players join",
+        "Description":"Sets the first line of the message of the day (MOTD) displayed when players join. [Colour codes](https://etconfig.net/et-color-codes/et-color-codes/) can be used",
         "Keywords":"message,motd,server_motd0",
         "FieldName":"server_motd0",
         "InputType":"text",
         "ParamFieldName":"server_motd0",
-        "DefaultValue":"^NWelcome to Wolfenstein: Enemy Territory!",
+        "DefaultValue":"^1Welcome to Wolfenstein: Enemy Territory!",
         "EnumValues":{}
     },
     {
         "DisplayName":"Message Of The Day (Second Line)",
         "Category":"WET Server Settings",
-        "Description":"Sets the second line of the message of the day (MOTD) displayed when players join. Up to four additional lines can be specified under Additional Server Settings, for example: set server_motd2 \"third line\"",
+        "Description":"Sets the second line of the MOTD. [Colour codes](https://etconfig.net/et-color-codes/et-color-codes/) can be used. Up to four additional lines can be specified under Additional Server Settings, for example: set server_motd2 \"third line\"",
         "Keywords":"message,motd,server_motd1",
         "FieldName":"server_motd1",
         "InputType":"text",
@@ -56,10 +56,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Make Server Public",
+        "DisplayName":"Enable Internet Server",
         "Category":"WET Server Settings",
-        "Description":"If enabled, the server will be visible publicly. Otherwise it will only be accessible from the LAN",
-        "Keywords":"public,visible,dedicated",
+        "Description":"If enabled, the server will start as an internet server. Otherwise it will start as a LAN server",
+        "Keywords":"internet,lan,dedicated",
         "FieldName":"dedicated",
         "InputType":"checkbox",
         "ParamFieldName":"dedicated",
@@ -130,7 +130,7 @@
     {
         "DisplayName":"Map Rotation Mode",
         "Category":"WET Server Settings",
-        "Description":"Sets the map rotation mode. Configure the relevant script for that rotation mode accordingly, eg etmain/AMP_campaigncycle.cfg",
+        "Description":"Sets the map rotation mode. Configure the relevant script for that rotation mode accordingly in the relevant \"AMP_\" cycle.cfg file in etmain",
         "Keywords":"map,rotation,mode",
         "FieldName":"MapRotation",
         "InputType":"enum",
@@ -230,7 +230,7 @@
         "Description":"Sets the base URL for download redirection",
         "Keywords":"base,url,download,redirection,sv_wwwBaseURL",
         "FieldName":"sv_wwwBaseURL",
-        "InputType":"text",
+        "InputType":"url",
         "ParamFieldName":"sv_wwwBaseURL",
         "DefaultValue":"",
         "EnumValues":{}
@@ -241,7 +241,7 @@
         "Description":"Sets the URL to send to if an http/ftp fails or is refused client side",
         "Keywords":"fallback,url,download,redirection,sv_wwwFallbackURL",
         "FieldName":"sv_wwwFallbackURL",
-        "InputType":"text",
+        "InputType":"url",
         "ParamFieldName":"sv_wwwFallbackURL",
         "DefaultValue":"",
         "EnumValues":{}
@@ -263,7 +263,7 @@
     {
         "DisplayName":"Maximum Server Download Rate",
         "Category":"WET Server Settings",
-        "Description":"Sets the maximum number of updates per second of the positions of the server's models (players, guns, etc) that server sends to clients",
+        "Description":"Sets the maximum number of updates per second of the positions of the server's models (players, guns, etc) that the server sends to clients",
         "Keywords":"maximum,update,rate,sv_dl_maxRate",
         "FieldName":"sv_dl_maxRate",
         "InputType":"number",
@@ -362,7 +362,7 @@
     {
         "DisplayName":"Watchdog Interval",
         "Category":"WET Server Settings",
-        "Description":"Sets the time interval for the Watchdog to check whether the game died with an ERR_DROP or any situation leading to server running with no map",
+        "Description":"Sets the time interval for the Watchdog to check whether for the game dying with an ERR_DROP or any situation leading to the server running with no map",
         "Keywords":"watchdog,interval,crash,com_watchdog",
         "FieldName":"com_watchdog",
         "InputType":"number",
@@ -376,7 +376,7 @@
     {
         "DisplayName":"Watchdog Command",
         "Category":"WET Server Settings",
-        "Description":"Sets the console variable specifying the actions in an event where the Watchdog triggers. Blank = quit (default)",
+        "Description":"Sets the console variable to action in the event of a Watchdog trigger. Blank = quit (default)",
         "Keywords":"watchdog,console,variable,cvar,command,crash,com_watchdog_cmd",
         "FieldName":"com_watchdog_cmd",
         "InputType":"text",
@@ -387,7 +387,7 @@
     {
         "DisplayName":"Logging Mode",
         "Category":"WET Server Settings",
-        "Description":"Sets the mode for logging to etserver.log",
+        "Description":"Sets the mode for logging to etmain/etserver.log",
         "Keywords":"log,logging,mode,buffered,flush,logfile",
         "FieldName":"logfile",
         "InputType":"enum",
@@ -429,7 +429,7 @@
     {
         "DisplayName":"Additional Server Settings",
         "Category":"WET Server Settings",
-        "Description":"Specifies additional settings to include in \"server.cfg\" that are not otherwise set by AMP. One setting per line",
+        "Description":"Specifies additional settings to include in \"etmain/server.cfg\" that are not otherwise set by AMP. One setting per line",
         "Keywords":"additional,settings,custom",
         "FieldName":"UserSettings",
         "InputType":"Textarea",
@@ -470,7 +470,7 @@
     {
         "DisplayName":"Enable Forced Team Balancing",
         "Category":"WET Gameplay Settings",
-        "Description":"If set, forces a new player onto the smallest or losing team. Otherwise, the player can select freely which team to join",
+        "Description":"If set, a new player will be forced onto the smallest or losing team. Otherwise, the player can select freely which team to join",
         "Keywords":"team,force,balance,balancing,selection,g_teamforcebalance",
         "FieldName":"g_teamforcebalance",
         "InputType":"checkbox",
@@ -496,38 +496,10 @@
         }
     },
     {
-        "DisplayName":"Maximum Player Lives",
-        "Category":"WET Gameplay Settings",
-        "Description":"Sets the maximum number of lives that players can have. 0 = unlimited",
-        "Keywords":"max,maximum,lives,g_maxlives",
-        "FieldName":"g_maxlives",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"g_maxlives",
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "Suffix":"lives",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Flood Protection",
-        "Category":"WET Gameplay Settings",
-        "Description":"If set, the server will be protected from being flooded by players via chat",
-        "Keywords":"flood,protect,protection,sv_floodprotect",
-        "FieldName":"sv_floodProtect",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_floodProtect",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
         "DisplayName":"Enable Alternate Stopwatch Mode",
         "Category":"WET Gameplay Settings",
         "Description":"If enabled, the stopwatch mode format will be A-B-A-B instead of A-B-B-A",
-        "Keywords":"stopwatch,mode,g_altStopwatchMode",
+        "Keywords":"alternate,stopwatch,mode,g_altStopwatchMode",
         "FieldName":"g_altStopwatchMode",
         "InputType":"checkbox",
         "ParamFieldName":"g_altStopwatchMode",
@@ -541,7 +513,7 @@
         "DisplayName":"Enable Automatic Fireteams",
         "Category":"WET Gameplay Settings",
         "Description":"If enabled, players will be automatically put into fireteams",
-        "Keywords":"automatic,fireteams,g_autoFireteams",
+        "Keywords":"automatic,fireteams,g_autofireteams",
         "FieldName":"g_autofireteams",
         "InputType":"checkbox",
         "ParamFieldName":"g_autofireteams",
@@ -558,6 +530,7 @@
         "Keywords":"complaint,limit,kick,g_complaintlimit",
         "FieldName":"g_complaintlimit",
         "InputType":"number",
+        "MinValue":"0",
         "ParamFieldName":"g_complaintlimit",
         "DefaultValue":"6",
         "Placeholder":"6",
@@ -570,6 +543,7 @@
         "Keywords":"ip,complaint,limit,kick,g_ipcomplaintlimit",
         "FieldName":"g_ipcomplaintlimit",
         "InputType":"number",
+        "MinValue":"0",
         "ParamFieldName":"g_ipcomplaintlimit",
         "DefaultValue":"3",
         "Placeholder":"3",
@@ -592,7 +566,7 @@
     {
         "DisplayName":"Maximum Lives For Allied Players",
         "Category":"WET Gameplay Settings",
-        "Description":"Sets the number of lives each Allied player has individually",
+        "Description":"Sets the number of lives each Allied player has individually. 0 = unlimited",
         "Keywords":"maximum,lives,allied,g_alliedmaxlives",
         "FieldName":"g_alliedmaxlives",
         "InputType":"number",
@@ -605,7 +579,7 @@
     {
         "DisplayName":"Maximum Lives For Axis Players",
         "Category":"WET Gameplay Settings",
-        "Description":"Sets the number of lives each Axis player has individually",
+        "Description":"Sets the number of lives each Axis player has individually. 0 = unlimited",
         "Keywords":"maximum,lives,axis,g_axismaxlives",
         "FieldName":"g_axismaxlives",
         "InputType":"number",
@@ -627,6 +601,20 @@
         "DefaultValue":"4",
         "Placeholder":"4",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Flood Protection",
+        "Category":"WET Gameplay Settings",
+        "Description":"If set, the server will be protected from being flooded by players via chat",
+        "Keywords":"flood,protect,protection,sv_floodprotect",
+        "FieldName":"sv_floodProtect",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_floodProtect",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
     },
     {
         "DisplayName":"Enable Warmup",
@@ -673,7 +661,7 @@
     {
         "DisplayName":"Enable Late Joining",
         "Category":"WET Gameplay Settings",
-        "Description":"Toggles allowing players to join a match in progress.",
+        "Description":"If enabled, players will be allowed to join a match in progress",
         "Keywords":"late,join,match,progress,match_latejoin",
         "FieldName":"match_latejoin",
         "InputType":"checkbox",
@@ -702,7 +690,7 @@
         "DisplayName":"Ready Percentage To Start Round",
         "Category":"WET Gameplay Settings",
         "Description":"Sets the percentage of players required to have set ready before a round will commence",
-        "Keywords":"match_readypercent",
+        "Keywords":"player,percentage,commence,start,round,ready,match_readypercent",
         "FieldName":"match_readypercent",
         "InputType":"number",
         "MinValue":"0",
@@ -751,6 +739,7 @@
         "ParamFieldName":"team_maxplayers",
         "DefaultValue":"0",
         "Placeholder":"0",
+        "Suffix":"players",
         "EnumValues":{}
     },
     {
@@ -832,6 +821,7 @@
         "ParamFieldName":"g_lms_matchlimit",
         "DefaultValue":"2",
         "Placeholder":"2",
+        "Suffix":"matches",
         "EnumValues":{}
     },
     {
@@ -844,6 +834,7 @@
         "ParamFieldName":"g_lms_roundlimit",
         "DefaultValue":"3",
         "Placeholder":"3",
+        "Suffix":"rounds",
         "EnumValues":{}
     },
     {
@@ -863,7 +854,7 @@
     {
         "DisplayName":"Allow Voting",
         "Category":"WET Voting Settings",
-        "Description":"If set, connected players can call for and vote on changes permitted by the other settings in this menu, or otherwise as set in etmain/server.cfg",
+        "Description":"If set, connected players can call for and vote on changes permitted by the other settings in this menu, or otherwise as set in Additional Server Settings",
         "Keywords":"vote,voting,g_allowvote",
         "FieldName":"g_allowVote",
         "InputType":"checkbox",
@@ -877,7 +868,7 @@
     {
         "DisplayName":"Maximum Votes Per Map",
         "Category":"WET Voting Settings",
-        "Description":"Sets maximum number of votes allowed per map",
+        "Description":"Sets the maximum number of votes allowed per map",
         "Keywords":"vote,voting,number,maximum,vote_limit",
         "FieldName":"vote_limit",
         "InputType":"number",
@@ -885,6 +876,7 @@
         "ParamFieldName":"vote_limit",
         "DefaultValue":"5",
         "Placeholder":"5",
+        "Suffix":"votes",
         "EnumValues":{}
     },
     {
@@ -1032,7 +1024,7 @@
         "DisplayName":"Allow Shuffle Teams Vote",
         "Category":"WET Voting Settings",
         "Description":"If enabled, voting to shuffle teams will be allowed",
-        "Keywords":"vote,voting,shuffle,teams,,vote_allow_shuffleteams",
+        "Keywords":"vote,voting,shuffle,teams,vote_allow_shuffleteams",
         "FieldName":"vote_allow_shuffleteams",
         "InputType":"checkbox",
         "ParamFieldName":"vote_allow_shuffleteams",
