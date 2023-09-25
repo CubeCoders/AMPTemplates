@@ -50,7 +50,7 @@
         "Description":"Sets the gamemode to start the server with. If \"Custom\" is selected, Custom Initial Gamemode must also be specified. Subsequent gamemodes (gamemode1 to gamemode15) can be set under Additional Server Settings",
         "Keywords":"initial,gamemode,gamemode0",
         "FieldName":"gamemode0",
-        "InputType":"text",
+        "InputType":"enum",
         "ParamFieldName":"gamemode0",
         "DefaultValue":"grandlarc",
         "EnumValues":{
@@ -96,6 +96,18 @@
         "ParamFieldName":"filterscripts",
         "DefaultValue":"base gl_actions gl_property gl_realtime",
         "Placeholder":"base gl_actions gl_property gl_realtime",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Plugins",
+        "Category":"Server Settings",
+        "Description":"Space-separated list of plugins (scripts designed to enhance gamemodes and filterscripts). Specify the names of scripts (without the .dll or .so extension) in the plugins directory",
+        "Keywords":"plugins,scripts",
+        "FieldName":"plugins",
+        "InputType":"text",
+        "ParamFieldName":"plugins",
+        "DefaultValue":"",
+        "Placeholder":"crashdetect filemanager geoip mysql regex routeconnector sscanf streamer xml",
         "EnumValues":{}
     },
     {
@@ -177,6 +189,18 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Language",
+        "Category":"Server Settings",
+        "Description":"Sets the language of the server that appears in the server browser",
+        "Keywords":"language",
+        "FieldName":"language",
+        "InputType":"text",
+        "ParamFieldName":"language",
+        "DefaultValue":"English",
+        "Placeholder":"English",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Maximum NPCs",
         "Category":"Server Settings",
         "Description":"Sets the maximum number of NPCs (bots) that the server can hold, limiting how many player slots can be taken by NPCs",
@@ -222,7 +246,7 @@
     {
         "DisplayName":"Weapon Rate",
         "Category":"Server Settings",
-        "Description":"Sets Sets the time that a client should update the server with new data while firing a weapon",
+        "Description":"Sets the time that a client should update the server with new data while firing a weapon",
         "Keywords":"weapon,rate,weapon_rate",
         "FieldName":"weapon_rate",
         "InputType":"number",
@@ -260,6 +284,32 @@
         "DefaultValue":"1000",
         "Placeholder":"1000",
         "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Lag Compensation Mode",
+        "Category":"Server Settings",
+        "Description":"Sets the lag compensation mode for the server",
+        "Keywords":"lag,compensation,mode,lagcompmode",
+        "FieldName":"lagcompmode",
+        "InputType":"enum",
+        "ParamFieldName":"lagcompmode",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"Disabled",
+            "1":"Full (default)",
+            "2":"Position only"
+        }
+    },
+    {
+        "DisplayName":"Server/RCON IP Binding",
+        "Category":"Server Settings",
+        "Description":"If required, you can change the IP binding of the server and RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Stop the instance (not just the server) first",
+        "Keywords":"ip,binding,bind",
+        "FieldName":"$ApplicationIPBinding",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"bind",
         "EnumValues":{}
     },
     {
