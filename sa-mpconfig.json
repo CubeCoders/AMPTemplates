@@ -36,29 +36,41 @@
     {
         "DisplayName":"Initial Gamemode",
         "Category":"Server Settings",
-        "Description":"Sets the gamemode to start the server with. Subsequent gamemodes (gamemode1 to gamemode15) can be specified in server.cfg",
-        "Keywords":"gamemode,gamemode0",
+        "Description":"Sets the gamemode to start the server with. If \"Custom\" is selected, Custom Initial Gamemode must also be specified. Subsequent gamemodes (gamemode1 to gamemode15) can be specified under Additional Server Settings",
+        "Keywords":"initial,gamemode,gamemode0",
         "FieldName":"gamemode0",
         "InputType":"text",
         "ParamFieldName":"gamemode0",
-        "DefaultValue":"grandlarc {{GamemodeCount}}",
+        "DefaultValue":"grandlarc {{gamemode0count}}",
         "EnumValues":{
-            "grandlarc {{GamemodeCount}}":"Grand Larceny",
-            "rivershell {{GamemodeCount}}":"Rivershell",
-            "lvdm {{GamemodeCount}}":"LVDM (Moneygrub)",
-            "timertest {{GamemodeCount}}":"Timertest",
-            "barron {{GamemodeCount}}":"Barron",
-            "bare {{GamemodeCount}}":"Bare"
+            "grandlarc {{gamemode0count}}":"Grand Larceny",
+            "rivershell {{gamemode0count}}":"Rivershell",
+            "lvdm {{gamemode0count}}":"LVDM (Moneygrub)",
+            "timertest {{gamemode0count}":"Timertest",
+            "barron {{gamemode0count}}":"Barron",
+            "bare {{gamemode0count}}":"Bare",
+            "{{CustomGamemode}} {{gamemode0count}}":"--Custom--"
         }
+    },
+    {
+        "DisplayName":"Custom Initial Gamemode",
+        "Category":"Server Settings",
+        "Description":"Sets a custom gamemode to use for the Initial Gamemode, if \"Custom\" is selected. The custom gamemode files must be included in the gamemodes directory",
+        "Keywords":"custom,initial,gamemode,gamemode0",
+        "FieldName":"CustomGamemode",
+        "InputType":"text",
+        "ParamFieldName":"CustomGamemode",
+        "DefaultValue":"",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Initial Gamemode Count",
         "Category":"Server Settings",
         "Description":"Sets how many times the server should run the initial gamemode before switching to the next gamemode",
-        "Keywords":"gamemode,count",
-        "FieldName":"GamemodeCount",
+        "Keywords":"initial,gamemode,gamemode0,count",
+        "FieldName":"gamemode0count",
         "InputType":"number",
-        "ParamFieldName":"GamemodeCount",
+        "ParamFieldName":"gamemode0count",
         "DefaultValue":"1",
         "Placeholder":"1",
         "EnumValues":{}
@@ -74,6 +86,20 @@
         "DefaultValue":"base gl_actions gl_property gl_realtime",
         "Placeholder":"base gl_actions gl_property gl_realtime",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable LAN Mode",
+        "Category":"Server Settings",
+        "Description":"If set, the server will run in LAN mode, allowing higher bandwidth",
+        "Keywords":"lan,mode,lanmode",
+        "FieldName":"lanmode",
+        "InputType":"checkbox",
+        "ParamFieldName":"lanmode",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
     },
     {
         "DisplayName":"Announce To Master Server List",
@@ -104,15 +130,24 @@
         }
     },
     {
+        "DisplayName":"Server Password",
+        "Category":"Server Settings",
+        "Description":"Sets the password required for players to join the server. Default is no password",
+        "Keywords":"server,password",
+        "FieldName":"password",
+        "InputType":"password",
+        "ParamFieldName":"password",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"RCON Password",
         "Category":"Server Settings",
         "Description":"See the Security and Privacy menu for configurable options for the server's RCON",
         "Keywords":"rcon,password,rcon_password",
         "FieldName":"$RemoteAdminPassword",
         "InputType":"hidden",
-        "IsFlagArgument":false,
         "ParamFieldName":"rcon_password",
-        "IncludeInCommandLine":false,
         "EnumValues":{}
     },
     {
@@ -146,7 +181,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"On Foot Update Rate",
+        "DisplayName":"On-Foot Update Rate",
         "Category":"Server Settings",
         "Description":"Sets the time that a client should update the server with new data while on foot",
         "Keywords":"onfoot,foot,rate,onfoot_rate",
@@ -160,7 +195,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"In Vehicle Update Rate",
+        "DisplayName":"In-Vehicle Update Rate",
         "Category":"Server Settings",
         "Description":"Sets the time that a client should update the server with new data while in a vehicle",
         "Keywords":"incar,car,vehicle,rate,incar_rate",
@@ -214,6 +249,18 @@
         "DefaultValue":"1000",
         "Placeholder":"1000",
         "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Additional Server Settings",
+        "Category":"Server Settings",
+        "Description":"Specifies additional settings to include in \"server.cfg\" that are not otherwise set by AMP. One setting per line",
+        "Keywords":"additional,settings,custom",
+        "FieldName":"UserSettings",
+        "InputType":"Textarea",
+        "IsFlagArgument":false,
+        "ParamFieldName":"UserSettings",
+        "DefaultValue":"",
         "EnumValues":{}
     }
 ]
