@@ -22,18 +22,30 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Web URL",
+        "Category":"Server Settings",
+        "Description":"Sets the URL of a website that will be displayed in the server browser and that has more information about the server",
+        "Keywords":"web,url,weburl",
+        "FieldName":"weburl",
+        "InputType":"text",
+        "ParamFieldName":"weburl",
+        "DefaultValue":"www.sa-mp.com",
+        "Placeholder":"www.sa-mp.com",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Initial Gamemode",
         "Category":"Server Settings",
-        "Description":"Sets the gamemode to start the server with",
+        "Description":"Sets the gamemode to start the server with. Subsequent gamemodes (gamemode1 to gamemode15) can be specified in server.cfg",
         "Keywords":"gamemode,gamemode0",
         "FieldName":"gamemode0",
         "InputType":"text",
         "ParamFieldName":"gamemode0",
         "DefaultValue":"grandlarc {{GamemodeCount}}",
         "EnumValues":{
-            "grandlarc {{GamemodeCount}}":"Grandlarc",
+            "grandlarc {{GamemodeCount}}":"Grand Larceny",
             "rivershell {{GamemodeCount}}":"Rivershell",
-            "lvdm {{GamemodeCount}}":"LVDM",
+            "lvdm {{GamemodeCount}}":"LVDM (Moneygrub)",
             "timertest {{GamemodeCount}}":"Timertest",
             "barron {{GamemodeCount}}":"Barron",
             "bare {{GamemodeCount}}":"Bare"
@@ -49,6 +61,18 @@
         "ParamFieldName":"GamemodeCount",
         "DefaultValue":"1",
         "Placeholder":"1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Filterscripts",
+        "Category":"Server Settings",
+        "Description":"Space-separated list of filterscripts (scripts that run in the background of the gamemode and add extras to the server without editing the gamemode). Specify the names of scripts (without the .amx extension) in the filterscripts directory or using a path relative to that directory",
+        "Keywords":"filterscripts,scripts",
+        "FieldName":"filterscripts",
+        "InputType":"text",
+        "ParamFieldName":"filterscripts",
+        "DefaultValue":"base gl_actions gl_property gl_realtime",
+        "Placeholder":"base gl_actions gl_property gl_realtime",
         "EnumValues":{}
     },
     {
@@ -119,6 +143,77 @@
         "DefaultValue":"0",
         "Placeholder":"0",
         "Suffix":"NPCs",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"On Foot Update Rate",
+        "Category":"Server Settings",
+        "Description":"Sets the time that a client should update the server with new data while on foot",
+        "Keywords":"onfoot,foot,rate,onfoot_rate",
+        "FieldName":"onfoot_rate",
+        "InputType":"number",
+        "MinValue":"1",
+        "ParamFieldName":"onfoot_rate",
+        "DefaultValue":"40",
+        "Placeholder":"40",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"In Vehicle Update Rate",
+        "Category":"Server Settings",
+        "Description":"Sets the time that a client should update the server with new data while in a vehicle",
+        "Keywords":"incar,car,vehicle,rate,incar_rate",
+        "FieldName":"incar_rate",
+        "InputType":"number",
+        "MinValue":"1",
+        "ParamFieldName":"incar_rate",
+        "DefaultValue":"40",
+        "Placeholder":"40",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Weapon Rate",
+        "Category":"Server Settings",
+        "Description":"Sets Sets the time that a client should update the server with new data while firing a weapon",
+        "Keywords":"weapon,rate,weapon_rate",
+        "FieldName":"weapon_rate",
+        "InputType":"number",
+        "MinValue":"1",
+        "ParamFieldName":"weapon_rate",
+        "DefaultValue":"40",
+        "Placeholder":"40",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Stream Distance",
+        "Category":"Server Settings",
+        "Description":"Sets the distance on the X,Y plane that players will stream in server entities. Higher values makes players see server entities at a greater distance, but requires more client processing and potentially more bandwidth",
+        "Keywords":"stream,distance,stream_distance",
+        "FieldName":"stream_distance",
+        "InputType":"number",
+        "MinValue":"50",
+        "MaxValue":"400",
+        "ParamFieldName":"stream_distance",
+        "DefaultValue":"300.0",
+        "Placeholder":"300.0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Stream Rate",
+        "Category":"Server Settings",
+        "Description":"Sets the time before the streaming in of server entities is retested for each player. Lower values increases server processing as it has to recheck streaming conditions more frequently for each player",
+        "Keywords":"stream,rate,stream_rate",
+        "FieldName":"stream_rate",
+        "InputType":"number",
+        "MinValue":"500",
+        "MaxValue":"5000",
+        "ParamFieldName":"stream_rate",
+        "DefaultValue":"1000",
+        "Placeholder":"1000",
+        "Suffix":"milliseconds",
         "EnumValues":{}
     }
 ]
