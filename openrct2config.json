@@ -36,21 +36,22 @@
     {
         "DisplayName":"Host Mode",
         "Category":"OpenRCT2 Server Settings",
-        "Description":"Sets whether the server will load a scenario (essentially creating a new game) or load an existing savegame instead. Specify \"Scenario\" or \"Savegame\" accordingly",
+        "Description":"Sets whether the server will load an official or custom scenario (essentially creating a new game) or load an existing savegame instead. Specify \"Official Scenario\", \"Custom Scenario\" or \"Savegame\" accordingly",
         "Keywords":"host,mode,scenario,savegame",
         "FieldName":"HostMode",
         "InputType":"enum",
         "ParamFieldName":"HostMode",
         "DefaultValue":"host \"{{Scenario}}\"",
         "EnumValues":{
-            "host \"{{Scenario}}\"":"Load Scenario",
+            "host \"{{Scenario}}\"":"Load Official Scenario",
+            "host \"./user-data/scenario/{{CustomScenario}}\"":"Load Custom Scenario",
             "host \"./user-data/save/{{Savegame}}\"":"Load Savegame"
         }
     },
     {
-        "DisplayName":"Scenario",
+        "DisplayName":"Official Scenario",
         "Category":"OpenRCT2 Server Settings",
-        "Description":"Set the scenario to load. \"Load Scenario\" must also be selected under Host Mode, and if \"Custom\" is selected, Custom Scenario must also be specified. You can then stop the server and load the relevant savegame by switching Host Mode",
+        "Description":"Set the official scenario to load from rct2game or rct1game. \"Load Official Scenario\" must also be selected under Host Mode. You can then stop the server and load the relevant savegame by switching Host Mode",
         "Keywords":"scenario,host",
         "FieldName":"Scenario",
         "InputType":"enum",
@@ -198,14 +199,13 @@
             "./rct1game/Scenarios/SC31.SC4":"RCT1: Wacky Warren",
             "./rct1game/Scenarios/SC40.SC4":"RCT1: Whispering Cliffs",
             "./rct1game/Scenarios/sc9.sc4":"RCT1: White Water Park",
-            "./rct1game/Scenarios/SC83.SC4":"RCT1: Woodworm Park",
-            "./user-data/scenario/{{CustomScenario}}":"--Custom--"
+            "./rct1game/Scenarios/SC83.SC4":"RCT1: Woodworm Park"
         }
     },
     {
         "DisplayName":"Custom Scenario",
         "Category":"OpenRCT2 Server Settings",
-        "Description":"Sets a custom scenario to use for the Scenario, if \"Custom\" is selected. The custom scenario file must be in user-data/scenario",
+        "Description":"Sets a custom scenario to load. \"Load Custom Scenario\" must also be selected under Host Mode, and the custom scenario file must be in user-data/scenario. You can then stop the server and load the relevant savegame by switching Host Mode",
         "Keywords":"custom,scenario",
         "FieldName":"CustomScenario",
         "InputType":"text",
@@ -465,7 +465,7 @@
     {
         "DisplayName":"Disable RCT2 Game Files Download",
         "Category":"SteamCMD and Updates",
-        "Description":"If set, AMP will not download the RCT2 game files from Steam when the server is updated. The files will need to be installed manually in the rct2game directory in the instance's base directory in order to be used. Note that the Scenario selector may not work if the manually added files don't match those on Steam",
+        "Description":"If set, AMP will not download the RCT2 game files from Steam when the server is updated. The files will need to be installed manually in the rct2game directory in the instance's base directory in order to be used. Note that the Official Scenario selector may not work if the manually added files don't match those on Steam",
         "Keywords":"steam,rct2,game,files,download",
         "FieldName":"DisableRCT2Download",
         "InputType":"checkbox",
@@ -479,7 +479,7 @@
     {
         "DisplayName":"Disable RCT1 Game Files Download",
         "Category":"SteamCMD and Updates",
-        "Description":"If set, AMP will not download the RCT1 game files from Steam when the server is updated. The files will need to be installed manually in the rct1game directory in the instance's base directory in order to be used. Note that the Scenario selector may not work if the manually added files don't match those on Steam",
+        "Description":"If set, AMP will not download the RCT1 game files from Steam when the server is updated. The files will need to be installed manually in the rct1game directory in the instance's base directory in order to be used. Note that the Official Scenario selector may not work if the manually added files don't match those on Steam",
         "Keywords":"steam,rct1,game,files,download",
         "FieldName":"DisableRCT1Download",
         "InputType":"checkbox",
