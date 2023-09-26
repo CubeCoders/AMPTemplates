@@ -1,15 +1,21 @@
 [
     {
+        "UpdateStageName":"Server Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}server"
+    },
+    {
+        "UpdateStageName":"AppImage Directory Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}appimage"
+    },
+    {
         "UpdateStageName":"Support Directory Creation",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"CreateDirectory",
         "UpdateSourceArgs":"{{$FullBaseDir}}Support"
-    },
-    {
-        "UpdateStageName":"Dotnet Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}dotnet"
     },
     {
         "UpdateStageName":"OpenRA Download",
@@ -17,7 +23,7 @@
         "UpdateSource":"FetchURLFromJQ",
         "UpdateSourceData":"https://api.github.com/repos/OpenRA/OpenRA/releases/latest",
         "UpdateSourceArgs":"$.assets.[5].browser_download_url",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}server",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -28,7 +34,7 @@
         "UpdateSource":"FetchURLFromJQ",
         "UpdateSourceData":"https://api.github.com/repos/OpenRA/OpenRA/releases/latest",
         "UpdateSourceArgs":"$.assets.[2].browser_download_url",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}appimage",
         "UnzipUpdateSource":false,
         "OverwriteExistingFiles":true
     },
@@ -37,6 +43,13 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd ./openra && chmod +x OpenRA-Red-Alert-x86_64.AppImage && ./OpenRA-Red-Alert-x86_64.AppImage --appimage-extract && rm -f OpenRA-Red-Alert-x86_64.AppImage'"
+        "UpdateSourceArgs":"-c 'cd ./openra/appimage && chmod +x OpenRA-Red-Alert-x86_64.AppImage && ./OpenRA-Red-Alert-x86_64.AppImage --appimage-extract && rm -f OpenRA-Red-Alert-x86_64.AppImage'"
+    },
+    {
+        "UpdateStageName":"AppImage Directory Symlink Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./openra && ln -sf appimage server'"
     }
 ]
