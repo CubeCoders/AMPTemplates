@@ -1,0 +1,62 @@
+[
+    {
+        "UpdateStageName":"Support Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Support"
+    },
+    {
+        "UpdateStageName":"Dotnet Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}dotnet"
+    },
+    {
+        "UpdateStageName":"OpenRA Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURLFromJQ",
+        "UpdateSourceData":"https://api.github.com/repos/OpenRA/OpenRA/releases/latest",
+        "UpdateSourceArgs":"$.assets.[5].browser_download_url",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"OpenRA Red Alert Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURLFromJQ",
+        "UpdateSourceData":"https://api.github.com/repos/OpenRA/OpenRA/releases/latest",
+        "UpdateSourceArgs":"$.assets.[2].browser_download_url",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":false,
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"OpenRA Red Alert Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./openra && chmod +x OpenRA-Red-Alert-x86_64.AppImage && ./OpenRA-Red-Alert-x86_64.AppImage --appimage-extract && rm -f OpenRA-Red-Alert-x86_64.AppImage'"
+    },
+    {
+        "UpdateStageName":"ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-win-x64.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-linux-x64.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    }
+]
