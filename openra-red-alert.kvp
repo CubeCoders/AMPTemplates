@@ -29,11 +29,11 @@ App.RootDir=./openra/
 App.BaseDirectory=./openra/
 App.SteamWorkshopDownloadLocation=
 App.ExecutableWin=OpenRA.Server.exe
-App.ExecutableLinux=squashfs-root/usr/bin/openra-ra-server
+App.ExecutableLinux=squashfs-root/usr/lib/openra/OpenRA.Server
 App.WorkingDir=
-App.LinuxCommandLineArgs=Engine.EngineDir=".." Engine.SupportDir="../../../../Support"
-App.WindowsCommandLineArgs=Engine.EngineDir="." Engine.SupportDir="./Support"
-App.CommandLineArgs={{$PlatformArgs}} Server.ListenPort={{$GamePort}} Game.Mod="ra" {$FormattedArgs}}
+App.LinuxCommandLineArgs=
+App.WindowsCommandLineArgs=
+App.CommandLineArgs={{$PlatformArgs}} Engine.EngineDir="." Engine.SupportDir="{{$FullBaseDir}}Support" Server.ListenPort={{$ServerPort}} Game.Mod="ra" {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={"DOTNET_ROOT":"{{$FullBaseDir}}dotnet"}
 App.EnvironmentVariables={}
@@ -48,12 +48,12 @@ App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"TCP","Port":1234,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"}]
+App.Ports=[{"Protocol":"TCP","Port":1234,"Ref":"ServerPort","Name":"Server Port","Description":"Port for game traffic"}]
 App.AdminPortRef=0
-App.PrimaryApplicationPortRef=GamePort
+App.PrimaryApplicationPortRef=ServerPort
 App.UniversalSleepApplicationUDPPortRef=0
 App.UniversalSleepSteamQueryPortRef=0
-App.MaxUsers=16
+App.MaxUsers=8
 App.UseRandomAdminPassword=False
 App.PersistRandomPassword=True
 App.RemoteAdminPassword=
