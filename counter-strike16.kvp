@@ -29,14 +29,14 @@ App.RootDir=./counter-strike/
 App.BaseDirectory=./counter-strike/90/
 App.SteamWorkshopDownloadLocation=
 App.ExecutableWin=90\hlds.exe
-App.ExecutableLinux=90/hlds
+App.ExecutableLinux=90/hlds_linux
 App.WorkingDir=90
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -dedicated -console -game cstrike -sys_ticrate={{sys_ticrate}} {{insecure}}{{pingboost}}{{CustomParameters}} +port {{$GameRCONPort}} +ip {{$ApplicationIPBinding}} +rcon_password {{$RemoteAdminPassword}} {{$FormattedArgs}} {{CustomConVars}} +log on
+App.CommandLineArgs={{$PlatformArgs}} -console -game cstrike -sys_ticrate={{sys_ticrate}} {{insecure}}{{pingboost}}{{CustomParameters}} +port {{$GameRCONPort}} +ip {{$ApplicationIPBinding}} +rcon_password {{$RemoteAdminPassword}} {{$FormattedArgs}} {{CustomConVars}} +log on
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"10"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":".:%LD_LIBRARY_PATH%","SteamAppId":"10"}
 App.CommandLineParameterFormat=+{0} "{1}"
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
