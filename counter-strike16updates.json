@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"90",
-        "UpdateSourceTarget":"{{$FullBaseDir}}"
+        "UpdateSourceArgs":"10"
     },
     {
         "UpdateStageName":"ReHLDS Download",
@@ -18,9 +18,16 @@
     },
     {
         "UpdateStageName":"ReHLDS Files Copy",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C xcopy /E /Y /I \"{{$FullBaseDir}}bin\\win32/*\" \"{{$FullBaseDir}}\" && rmdir /Q /S \"{{$FullBaseDir}}bin\" \"{{$FullBaseDir}}hlsdk\""
+    },
+    {
+        "UpdateStageName":"ReHLDS Files Copy",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf \"{{$FullBaseDir}}bin/linux32/*\" {{$FullBaseDir}} && rm -rf {{$FullBaseDir}}bin {{$FullBaseDir}}hlsdk'"
+        "UpdateSourceArgs":"-c '\\cp -rf \"{{$FullBaseDir}}bin/linux32/*\" \"{{$FullBaseDir}}\" && rm -rf \"{{$FullBaseDir}}bin\" \"{{$FullBaseDir}}hlsdk\"'"
     }
 ]
