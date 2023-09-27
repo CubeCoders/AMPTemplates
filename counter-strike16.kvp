@@ -33,10 +33,10 @@ App.ExecutableLinux=90/hlds_linux
 App.WorkingDir=90
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -console -game cstrike -port {{$GameRCONPort}} -sys_ticrate={{sys_ticrate}} -nobreakpad {{insecure}}{{pingboost}}{{CustomParameters}} +ip {{$ApplicationIPBinding}} +rcon_password {{$RemoteAdminPassword}} {{$FormattedArgs}} {{CustomConVars}} +log on
+App.CommandLineArgs={{$PlatformArgs}} -console -game cstrike -port {{$GameRCONPort}} -sys_ticrate={{sys_ticrate}} -nobreakpad {{insecure}}{{pingboost}}{{CustomParameters}} +ip {{$ApplicationIPBinding}} +rcon_password {{$RemoteAdminPassword}} {{$FormattedArgs}} {{CustomConVars}} +log 1
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":".:../linux32:%LD_LIBRARY_PATH%","SteamAppId":"10"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}:{{$FullRootDir}}linux32:%LD_LIBRARY_PATH%","SteamAppId":"10"}
 App.CommandLineParameterFormat=+{0} "{1}"
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=String

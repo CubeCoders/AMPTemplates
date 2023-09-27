@@ -5,5 +5,22 @@
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"90",
         "UpdateSourceTarget":"{{$FullBaseDir}}"
+    },
+    {
+        "UpdateStageName":"ReHLDS Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"dreamstalker/rehlds",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"ReHLDS Files Copy",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '\\cp -rf \"{{$FullBaseDir}}bin/linux32/*\" {{$FullBaseDir}}'"
     }
 ]
