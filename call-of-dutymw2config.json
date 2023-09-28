@@ -104,10 +104,25 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Make Server Public",
+        "DisplayName":"Enable Private LAN Party Mode",
+        "Category":"Server Settings",
+        "Description":"If enabled, the server will be unlisted publicly and added to the local serverlist only. Otherwise, heartbeats will be sent to the online serverlist",
+        "Keywords":"public,online,private,lan,party,sv_lanonly",
+        "FieldName":"sv_lanonly",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_lanonly",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Internet/LAN Server",
         "Category":"Server Settings",
         "Description":"If enabled, the server will be started as an internet server. Otherwise, it will be started as a LAN server",
-        "Keywords":"public,visible,dedicated,lan,internet",
+        "Keywords":"lan,internet,dedicated",
         "FieldName":"dedicated",
         "InputType":"checkbox",
         "ParamFieldName":"dedicated",
@@ -191,13 +206,13 @@
             "war":"Team Deathmatch (default)",
             "dm":"Free-for-All",
             "dom":"Domination",
-            "koth":"King Of The Hill / Headquarters",
+            "koth":"King of the Hill / Headquarters",
             "sab":"Sabotage",
             "sd":"Search and Destroy",
             "arena":"Arena",
             "dd":"Demolition",
             "ctf":"Capture the Flag",
-            "oneflag":"One_Flag CTF",
+            "oneflag":"One-Flag CTF",
             "gtnw":"Global Thermo-Nuclear War"
         }
     },
@@ -235,34 +250,6 @@
         "InputType":"number",
         "Hidden":true,
         "ParamFieldName":"party_maxplayers",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Voice Chat",
-        "Category":"Server Settings",
-        "Description":"If set, server voice chat will be enabled (teams only)",
-        "Keywords":"voice,chat,sv_voice",
-        "FieldName":"sv_voice",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_voice",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Voice Chat Quality",
-        "Category":"Server Settings",
-        "Description":"Sets the server voice quality level",
-        "Keywords":"voice,chat,quality,sv_voicequality",
-        "FieldName":"sv_voicequality",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"9",
-        "ParamFieldName":"sv_voicequality",
-        "DefaultValue":"9",
-        "Placeholder":"9",
         "EnumValues":{}
     },
     {
@@ -339,6 +326,75 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Security Level",
+        "Category":"Server Settings",
+        "Description":"Sets the server's security level",
+        "Keywords":"security,level,sv_securityLevel",
+        "FieldName":"sv_securityLevel",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"sv_securityLevel",
+        "DefaultValue":"23",
+        "Placeholder":"23",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Pure Server",
+        "Category":"Server Settings",
+        "Description":"If enabled, only clients with verified files will be able to join the server",
+        "Keywords":"pure,verify,sv_pure",
+        "FieldName":"sv_pure",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_pure",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Voice Chat",
+        "Category":"Server Settings",
+        "Description":"If set, server voice chat will be enabled (teams only)",
+        "Keywords":"voice,chat,sv_voice",
+        "FieldName":"sv_voice",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_voice",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Voice Chat Quality",
+        "Category":"Server Settings",
+        "Description":"Sets the server voice quality level",
+        "Keywords":"voice,chat,quality,sv_voicequality",
+        "FieldName":"sv_voicequality",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"9",
+        "ParamFieldName":"sv_voicequality",
+        "DefaultValue":"9",
+        "Placeholder":"9",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Disable Chat",
+        "Category":"Server Settings",
+        "Description":"If set, chat messages from clients will be disabled",
+        "Keywords":"disable,chat,messages,sv_disableChat",
+        "FieldName":"sv_disableChat",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_disableChat",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Allow Download From Web",
         "Category":"Server Settings",
         "Description":"If set, clients will be allowed to download maps and mods from a different server instead of the game server",
@@ -393,19 +449,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Security Level",
-        "Category":"Server Settings",
-        "Description":"Sets the server's security level",
-        "Keywords":"security,level,sv_securityLevel",
-        "FieldName":"sv_securityLevel",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"sv_securityLevel",
-        "DefaultValue":"23",
-        "Placeholder":"23",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Allow Voting",
         "Category":"Server Settings",
         "Description":"If enabled, voting will be allowed on the server",
@@ -428,20 +471,6 @@
         "InputType":"checkbox",
         "ParamFieldName":"sv_allowClientConsole",
         "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Enable Pure Server",
-        "Category":"Server Settings",
-        "Description":"If enabled, only clients with verified files will be able to join the server",
-        "Keywords":"pure,verify,sv_pure",
-        "FieldName":"sv_pure",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_pure",
-        "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -510,20 +539,6 @@
         "InputType":"checkbox",
         "ParamFieldName":"sv_allowColoredNames",
         "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Disable Chat",
-        "Category":"Server Settings",
-        "Description":"If set, chat messages from clients will be disabled",
-        "Keywords":"disable,chat,messages,sv_disableChat",
-        "FieldName":"sv_disableChat",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_disableChat",
-        "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
             "True":"1"
