@@ -119,6 +119,33 @@
         "EnumValues": {}
     },
     {
+        "DisplayName":"Map Rotation Time Limit",
+        "Category":"CS Gameplay Settings",
+        "Description":"Sets the time period between map rotations. 0 = disabled",
+        "Keywords":"time,limit,rotation,mp_timelimit",
+        "FieldName":"mp_timelimit",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_timelimit",
+        "DefaultValue":"20",
+        "Placeholder":"20",
+        "Suffix":"minutes",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Map Rounds",
+        "Category":"CS Gameplay Settings",
+        "Description":"Sets the maximum number of rounds that can be played on a map. Set to 0 to have the Map Rotation Time Limit apply",
+        "Keywords":"maximum,rounds,map,mp_maxrounds",
+        "FieldName":"mp_maxrounds",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_maxrounds",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Region",
         "Category":"CS Server Settings",
         "Description":"Sets the server region shown in the server browser",
@@ -377,7 +404,7 @@
     {
         "DisplayName":"Additional Console Variables",
         "Category":"CS Server Settings",
-        "Description":"Specifies additional console variables (anything that begins with a +) that are not otherwise set by AMP. Use with care. Preferably, specify the equivalent under \"Additional CS Server Settings\"",
+        "Description":"Specifies additional console variables (anything that begins with a +) that are not otherwise set by AMP. Use with care. Preferably, specify the equivalent under \"Additional Server Settings\"",
         "Keywords":"custom,server,arguments,variables,cvars,convars,parameters",
         "FieldName":"CustomConVars",
         "InputType":"text",
@@ -388,7 +415,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Additional CS Server Settings",
+        "DisplayName":"Additional Server Settings",
         "Category":"CS Server Settings",
         "Description":"Specifies additional settings to include in \"server.cfg\" that are not otherwise set by AMP. One setting per line",
         "Keywords":"additional,settings,custom",
@@ -398,61 +425,6 @@
         "ParamFieldName":"UserSettings",
         "DefaultValue":"",
         "EnumValues":{}
-    },
-    {
-        "DisplayName":"Map Rotation Time Limit",
-        "Category":"CS Gameplay Settings",
-        "Description":"Sets the time period between map rotations. 0 = disabled",
-        "Keywords":"time,limit,rotation,mp_timelimit",
-        "FieldName":"mp_timelimit",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"mp_timelimit",
-        "DefaultValue":"20",
-        "Placeholder":"20",
-        "Suffix":"minutes",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Maximum Map Rounds",
-        "Category":"CS Gameplay Settings",
-        "Description":"Sets the maximum number of rounds that can be played on a map. Set to 0 to have the Map Rotation Time Limit apply",
-        "Keywords":"maximum,rounds,map,mp_maxrounds",
-        "FieldName":"mp_maxrounds",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"mp_maxrounds",
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Auto Aim",
-        "Category":"CS Gameplay Settings",
-        "Description":"If set, enables auto aim when a player's crosshair is near an enemy",
-        "Keywords":"auto,aim,crosshair,sv_aim",
-        "FieldName":"sv_aim",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_aim",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Allow Players To Pause Server",
-        "Category":"CS Server Settings",
-        "Description":"If set, players will be able to pause the server. Not recommended",
-        "Keywords":"pause,pausable",
-        "FieldName":"pausable",
-        "InputType":"checkbox",
-        "ParamFieldName":"pausable",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
     },
     {
         "DisplayName":"Map Vote Ratio",
@@ -509,6 +481,90 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Friendly Fire",
+        "Category":"CS Gameplay Settings",
+        "Description":"If set, friendly fire will be enabled (teammates can cause damage to other teammates)",
+        "Keywords":"friendly,fire,mp_friendlyfire",
+        "FieldName":"mp_friendlyfire",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_friendlyfire",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Flashlight",
+        "Category":"CS Gameplay Settings",
+        "Description":"If sets, allows the use of the flashlight by pressing the F button",
+        "Keywords":"flashlight,mp_flashlight",
+        "FieldName":"mp_flashlight",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_flashlight",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Footsteps",
+        "Category":"CS Gameplay Settings",
+        "Description":"If set, footstep sounds will be enabled",
+        "Keywords":"footstep,sounds,mp_footsteps",
+        "FieldName":"mp_footsteps",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_footsteps",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Auto Aim",
+        "Category":"CS Gameplay Settings",
+        "Description":"If set, enables auto aim when a player's crosshair is near an enemy",
+        "Keywords":"auto,aim,crosshair,sv_aim",
+        "FieldName":"sv_aim",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_aim",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Auto Crosshair",
+        "Category":"CS Gameplay Settings",
+        "Description":"If set, the red crosshair will be enabled. Requires Auto Aim to be enabled",
+        "Keywords":"auto,crosshair,mp_autocrosshair",
+        "FieldName":"mp_autocrosshair",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_autocrosshair",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Players To Pause Server",
+        "Category":"CS Server Settings",
+        "Description":"If set, players will be able to pause the server. Not recommended",
+        "Keywords":"pause,pausable",
+        "FieldName":"pausable",
+        "InputType":"checkbox",
+        "ParamFieldName":"pausable",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Allow All Talk",
         "Category":"CS Gameplay Settings",
         "Description":"If enabled, players can communicate with all other players, with no team restrictions",
@@ -545,20 +601,6 @@
         "FieldName":"mp_fadetoblack",
         "InputType":"checkbox",
         "ParamFieldName":"mp_fadetoblack",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Enable Auto Crosshair",
-        "Category":"CS Gameplay Settings",
-        "Description":"If set, the red crosshair will be enabled. Requires Auto Aim to be enabled",
-        "Keywords":"auto,crosshair,mp_autocrosshair",
-        "FieldName":"mp_autocrosshair",
-        "InputType":"checkbox",
-        "ParamFieldName":"mp_autocrosshair",
         "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
@@ -609,48 +651,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Enable Friendly Fire",
-        "Category":"CS Gameplay Settings",
-        "Description":"If set, friendly fire will be enabled (teammates can cause damage to other teammates)",
-        "Keywords":"friendly,fire,mp_friendlyfire",
-        "FieldName":"mp_friendlyfire",
-        "InputType":"checkbox",
-        "ParamFieldName":"mp_friendlyfire",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Enable Flashlight",
-        "Category":"CS Gameplay Settings",
-        "Description":"If sets, allows the use of the flashlight by pressing the F button",
-        "Keywords":"flashlight,mp_flashlight",
-        "FieldName":"mp_flashlight",
-        "InputType":"checkbox",
-        "ParamFieldName":"mp_flashlight",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Enable Footsteps",
-        "Category":"CS Gameplay Settings",
-        "Description":"If set, footstep sounds will be enabled",
-        "Keywords":"footstep,sounds,mp_footsteps",
-        "FieldName":"mp_footsteps",
-        "InputType":"checkbox",
-        "ParamFieldName":"mp_footsteps",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
         "DisplayName":"Freeze Time",
         "Category":"CS Gameplay Settings",
         "Description":"Sets the length of the freeze period at the beginning of rounds. 0 = disabled",
@@ -675,5 +675,5 @@
         "DefaultValue":"13",
         "Placeholder":"13",
         "EnumValues":{}
-    },
+    }
 ]
