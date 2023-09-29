@@ -12,6 +12,32 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Tags",
+        "Category":"CS2 Server Settings",
+        "Description":"Comma-separated list of server tags that give additional information about the server in the server browser",
+        "Keywords":"tags,sv_tags",
+        "FieldName":"sv_tags",
+        "InputType":"text",
+        "ParamFieldName":"sv_tags",
+        "IncludeInCommandLine":true,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"LAN Server",
+        "Category":"CS2 Server Settings",
+        "Description":"If enabled, the server will operate as a LAN server: no heartbeat, no authentication, no non-class C addresses, 9999.0 rate, etc",
+        "Keywords":"lan,local,sv_lan",
+        "FieldName":"sv_lan",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_lan",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Server Password",
         "Category":"CS2 Server Settings",
         "Description":"Sets the password required to connect to the server. Default is no password",
@@ -37,7 +63,7 @@
     {
         "DisplayName":"Initial Game Mode",
         "Category":"CS2 Server Settings",
-        "Description":"Sets the game mode (game_type and game_mode) to start the server with",
+        "Description":"Sets the game mode (game_type, game_mode) to start the server with. Set sv_game_mode_flags or sv_skirmish_id separately to modify the game mode",
         "Keywords":"game,mode,gamemode,game_mode,game_type",
         "FieldName":"gamemode",
         "InputType":"enum",
@@ -72,7 +98,7 @@
         "EnumValues":{
             "de_ancient":"Ancient",
             "de_anubis":"Anubis",
-            "de_dust2":"Dust II",
+            "de_dust2":"Dust II (default)",
             "de_inferno":"Inferno",
             "cs_italy":"Italy",
             "de_mirage":"Mirage",
@@ -95,6 +121,21 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Cheats",
+        "Category":"CS2 Server Settings",
+        "Description":"If set, cheat convars will be allowed to be used on the server",
+        "Keywords":"allow,cheat,hack,integrity,sv_cheats",
+        "FieldName":"sv_cheats",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_cheats",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Disable Valve Anti-Cheat",
         "Category":"CS2 Server Settings",
         "Description":"If set, Valve Anti-Cheat (VAC) will be disabled",
@@ -107,6 +148,16 @@
             "False":"",
             "True":"-insecure "
         }
+    },
+    {
+        "DisplayName":"Server/RCON IPv4 IP Binding",
+        "Category":"CS2 Server Settings",
+        "Description":"If required, you can change the IPv4 IP binding of the server and RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Default is 0.0.0.0 (all IPs). Stop the instance (not just the server) first. NOTE: The IP must be reachable by AMP, otherwise AMP's console won't work",
+        "Keywords":"ip,binding",
+        "FieldName":"ip",
+        "InputType":"hidden",
+        "ParamFieldName":"ip",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Additional Command Line Parameters",
