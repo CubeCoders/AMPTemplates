@@ -1,0 +1,25 @@
+[
+  {
+    "UpdateStageName": "Bot Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://github.com/Cog-Creators/Red-DiscordBot/archive/refs/heads/V3/develop.zip",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true,
+    "DeleteAfterExtract": true
+  },
+  {
+    "UpdateStageName": "Create Virtual Environment",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"rm -rf '{{$FullRootDir}}venv/redenv' && /usr/bin/python3 -m venv '{{$FullRootDir}}venv/redenv'\""
+  },
+  {
+    "UpdateStageName": "Pip & RedBot Setup and Install",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"source '{{$FullRootDir}}venv/bin/activate' && python3 -m pip install --upgrade pip && python3 -m pip install -U Red-DiscordBot\""
+  }
+]
