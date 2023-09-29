@@ -4,19 +4,21 @@
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"730",
+        "ForceDownloadPlatform":"Windows"
     },
     {
         "UpdateStageName":"SteamCMD Component Download",
-        "UpdateSourcePlatform":"Windows",
+        "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"1007",
-        "UpdateSourceTarget":"{{$FullBaseDir}}game/bin/win64"
+        "UpdateSourceTarget":"{{$FullBaseDir}}game/bin/win64",
+        "ForceDownloadPlatform":"Windows"
     },
     {
-        "UpdateStageName":"SteamCMD Component Download",
+        "UpdateStageName":"Initialise Wine",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"1007",
-        "UpdateSourceTarget":"{{$FullBaseDir}}game/bin/linuxsteamrt64"
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
     }
 ]
