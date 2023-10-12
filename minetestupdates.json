@@ -45,14 +45,23 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd ./minetest && rm -f server ; ln -s appimage/squashfs-root/usr/lib/minetest server'"
+        "UpdateSourceArgs":"-c 'cd ./minetest && rm -f server ; ln -s appimage/squashfs-root/usr/share/minetest server'"
     },
     {
         "UpdateStageName":"Game Config File Copy",
-        "UpdateSourcePlatform":"All",
+        "UpdateSourcePlatform":"Windows",
         "UpdateSource":"CopyFilePath",
         "UpdateSourceData":"{{$FullBaseDir}}minetest.conf",
         "UpdateSourceArgs":"{{$FullBaseDir}}minetest.conf.example",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Game Config File Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/minetest/minetest/master/minetest.conf.example",
+        "UpdateSourceArgs":"minetest.conf",
+        "UpdateSourceTarget":"{{$FullBaseDir}}server",
         "OverwriteExistingFiles":false
     }
 ]
