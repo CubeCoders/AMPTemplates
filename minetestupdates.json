@@ -1,0 +1,57 @@
+[
+    {
+        "UpdateStageName":"Server Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}server"
+    },
+    {
+        "UpdateStageName":"AppImage Directory Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}appimage"
+    },
+    {
+        "UpdateStageName":"Minetest Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURLFromJQ",
+        "UpdateSourceData":"https://api.github.com/repos/minetest/minetest/releases/latest",
+        "UpdateSourceArgs":"$.assets.[6].browser_download_url",
+        "UpdateSourceTarget":"{{$FullBaseDir}}server",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Minetest Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://gitlab.com/minetest/minetest/-/jobs/4096592257/artifacts/download?file_type=archive",
+        "UpdateSourceTarget":"{{$FullBaseDir}}appimage",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Minetest Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./minetest/appimage && chmod +x Minetest-5.7.0-1b95998d-x86_64.AppImage && ./Minetest-5.7.0-1b95998d-x86_64.AppImage --appimage-extract && rm -f Minetest-5.7.0-1b95998d-x86_64.AppImage'"
+    },
+    {
+        "UpdateStageName":"AppImage Directory Symlink Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./minetest && rm -f server ; ln -s appimage/squashfs-root/usr/lib/minetest server'"
+    },
+    {
+        "UpdateStageName":"Game Config File Copy",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}minetest.conf",
+        "UpdateSourceArgs":"{{$FullBaseDir}}minetest.conf.example",
+        "OverwriteExistingFiles":false
+    }
+]
