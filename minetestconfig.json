@@ -11,6 +11,32 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Announce Server",
+        "Category":"Server Settings",
+        "Description":"If enabled, the server will be automatically reported to the server list that is specified under Serverlist URL. Server Address must also be set for the server to be listed",
+        "Keywords":"server,announce,public,server_announce",
+        "FieldName":"server_announce",
+        "InputType":"checkbox",
+        "ParamFieldName":"server_announce",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Server List URL",
+        "Category":"Server Settings",
+        "Description":"Sets the URL of the server list to which the server can be announced",
+        "Keywords":"serverlist,url,serverlist_url",
+        "FieldName":"serverlist_url",
+        "InputType":"text",
+        "ParamFieldName":"serverlist_url",
+        "DefaultValue":"servers.minetest.net",
+        "Placeholder":"servers.minetest.net",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Name",
         "Category":"Server Settings",
         "Description":"Sets the name of the server as shown in the server list and when players join the server",
@@ -48,13 +74,11 @@
     {
         "DisplayName":"Server Address",
         "Category":"Server Settings",
-        "Description":"Sets the domain name of server as shown in the server list. Do not set this if you do not have a domain name for your server",
+        "Description":"Sets the public IP address (IPv4 or IPv6) or domain name of server as shown in the server list. If an IPv6 address or domain name is used, the Server Binding must also be to an IPv6 socket",
         "Keywords":"server,domain,name,address",
-        "FieldName":"address",
+        "FieldName":"server_address",
         "InputType":"text",
         "ParamFieldName":"address",
-        "IncludeInCommandLine":true,
-        "SkipIfEmpty":true,
         "DefaultValue":"",
         "Placeholder":"game.minetest.net",
         "EnumValues":{}
@@ -95,32 +119,6 @@
         "ParamFieldName":"worldname",
         "DefaultValue":"world",
         "Placeholder":"world",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Announce Server",
-        "Category":"Server Settings",
-        "Description":"If enabled, the server will be automatically reported to the server list that is specified under Serverlist URL",
-        "Keywords":"server,announce,public,server_announce",
-        "FieldName":"server_announce",
-        "InputType":"checkbox",
-        "ParamFieldName":"server_announce",
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Server List URL",
-        "Category":"Server Settings",
-        "Description":"Sets the URL of the server list to which the server can be announced",
-        "Keywords":"serverlist,url,serverlist_url",
-        "FieldName":"serverlist_url",
-        "InputType":"text",
-        "ParamFieldName":"serverlist_url",
-        "DefaultValue":"servers.minetest.net",
-        "Placeholder":"servers.minetest.net",
         "EnumValues":{}
     },
     {
@@ -185,9 +183,20 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Binding",
+        "DisplayName":"Server IP Binding",
         "Category":"Server Settings",
-        "Description":"The network interface that the server listens on.",
+        "Description":"If required, you can change the IP binding (IPv4 or IPv6) of the server by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Default is 0.0.0.0 (all IPs). Stop the instance (not just the server) first",
+        "Keywords":"ip,binding",
+        "FieldName":"ip",
+        "InputType":"hidden",
+        "ParamFieldName":"ip",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Binding",
+        "Category":"Server Settings",
+        "Description":"Sets the The network interface that the server listens on.",
         "Keywords":"network, bind address",
         "FieldName":"bind_address",
         "InputType":"text",
