@@ -17,10 +17,17 @@
         "UpdateSource":"FetchURLFromJQ",
         "UpdateSourceData":"https://api.github.com/repos/minetest/minetest/releases/latest",
         "UpdateSourceArgs":"$.assets.[6].browser_download_url",
-        "UpdateSourceTarget":"{{$FullBaseDir}}server",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Minetest Copy",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C xcopy /E /Y /I minetest\\minetest-5.7.0-win64\\* minetest\\server\\ && rmdir /Q /S minetest\\minetest-5.7.0-win64"
     },
     {
         "UpdateStageName":"Minetest Download",
