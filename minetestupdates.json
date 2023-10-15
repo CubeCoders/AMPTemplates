@@ -9,7 +9,7 @@
         "UpdateStageName":"AppImage Directory Creation",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}.appimage"
+        "UpdateSourceArgs":"{{$FullRootDir}}.appimage"
     },
     {
         "UpdateStageName":"Minetest Download",
@@ -26,14 +26,14 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I minetest\\minetest-{{ServerVersion}}-win64\\* minetest\\server\\ && rmdir /Q /S minetest\\minetest-{{ServerVersion}}-win64"
+        "UpdateSourceArgs":"/C xcopy /E /Y /I minetest\\server\\minetest-{{ServerVersion}}-win64\\* minetest\\server\\ && rmdir /Q /S minetest\\server\\minetest-{{ServerVersion}}-win64"
     },
     {
         "UpdateStageName":"Minetest Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://github.com/An0n3m0us/Minetest-AppImages/releases/download/{{ServerVersion}}/Minetest-{{ServerVersion}}-x86_64.AppImage",
-        "UpdateSourceTarget":"{{$FullBaseDir}}.appimage"
+        "UpdateSourceTarget":"{{$FullRootDir}}.appimage"
     },
     {
         "UpdateStageName":"Minetest Extract",
@@ -47,20 +47,20 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd ./minetest && rm -f server ; ln -s .appimage/squashfs-root/usr server'"
+        "UpdateSourceArgs":"-c 'cd ./minetest && rm -rf server ; ln -s .appimage/squashfs-root/usr server'"
     },
     {
         "UpdateStageName":"Mods Directory Creation",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}server/mods"
+        "UpdateSourceArgs":"{{$FullBaseDir}}mods"
     },
     {
         "UpdateStageName":"Game Config File Copy",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"CopyFilePath",
         "UpdateSourceData":"{{$FullBaseDir}}minetest.conf",
-        "UpdateSourceArgs":"{{$FullBaseDir}}server/minetest.conf.example",
+        "UpdateSourceArgs":"{{$FullBaseDir}}minetest.conf.example",
         "OverwriteExistingFiles":false
     },
     {
