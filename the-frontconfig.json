@@ -562,7 +562,7 @@
     {
         "DisplayName":"Show All Spacetime Beacons",
         "Category":"The Front Gameplay Settings",
-        "Description":"If enabled, the location of other players' Beacons will be displayed on the map",
+        "Description":"If enabled, the location of other players' beacons will be displayed on the map",
         "Keywords":"show,spacetime,beacons,location,display,map,OpenAllHouseFlag",
         "FieldName":"OpenAllHouseFlag",
         "InputType":"checkbox",
@@ -657,6 +657,62 @@
         "DefaultValue":"10",
         "Placeholder":"10",
         "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Beacon Limit",
+        "Category":"The Front Gameplay Settings",
+        "Description":"Sets the maximum number of beacons each player can build",
+        "Keywords":"player,beacon,limit,GMMaxHouseFlagNumber",
+        "FieldName":"GMMaxHouseFlagNumber",
+        "InputType":"number",
+        "MinValue":"1",
+        "MaxValue":"5",
+        "ParamFieldName":"BaseServerConfig.GMMaxHouseFlagNumber",
+        "DefaultValue":"1",
+        "Placeholder":"1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Beacon Trap Limit",
+        "Category":"The Front Gameplay Settings",
+        "Description":"Sets the maximum number of traps that can be within beacon coverage",
+        "Keywords":"beacon,trap,limit,GMHFTrapMaxNum",
+        "FieldName":"GMHFTrapMaxNum",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"10000",
+        "ParamFieldName":"BaseServerConfig.GMHFTrapMaxNum",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Beacon Turret Limit",
+        "Category":"The Front Gameplay Settings",
+        "Description":"Sets the maximum number of turrets that can be within beacon coverage",
+        "Keywords":"beacon,turret,limit,GMHFTurretMaxNum",
+        "FieldName":"GMHFTurretMaxNum",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"10000",
+        "ParamFieldName":"BaseServerConfig.GMHFTurretMaxNum",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Beacon Daily Non-Protection Duration",
+        "Category":"The Front Gameplay Settings",
+        "Description":"Sets the amount of time daily that beacons can be attacked",
+        "Keywords":"beacon,daily,non-protection,attack,time,GMHouseFlagExcitantTime",
+        "FieldName":"GMHouseFlagExcitantTime",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"24",
+        "ParamFieldName":"BaseServerConfig.GMHouseFlagExcitantTime",
+        "DefaultValue":"3",
+        "Placeholder":"3",
         "EnumValues":{}
     },
     {
@@ -1066,10 +1122,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Food And Medication Duration Rate",
+        "DisplayName":"Food And Medication Effect Duration Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"food,med,medication,duration,rate,GMFoodDragDurationRate",
+        "Description":"Sets the multiplier applied to the duration of effect of food and medication",
+        "Keywords":"food,med,medication,duration,effect,rate,multiplier,GMFoodDragDurationRate",
         "FieldName":"GMFoodDragDurationRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1080,10 +1136,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Wild NPC Corpse Drop Rate",
+        "DisplayName":"Wild NPC Corpse Drop Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"wild,npc,corpse,drop,rate,GMNPCLootableItemRatio",
+        "Description":"Sets the multiplier for the amount of items dropped by a wild NPC on death",
+        "Keywords":"wild,npc,corpse,drop,rate,multiplier,GMNPCLootableItemRatio",
         "FieldName":"GMNPCLootableItemRatio",
         "InputType":"number",
         "MinValue":"0",
@@ -1094,10 +1150,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Wild NPC Starting Level Rate",
+        "DisplayName":"Wild NPC Starting Level Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"wild,starting,level,rate,NpcSpawnLevelRatio",
+        "Description":"Sets the multiplier for the starting level of wild NPCs, making them more powerful",
+        "Keywords":"wild,starting,level,rate,multiplier,NpcSpawnLevelRatio",
         "FieldName":"NpcSpawnLevelRatio",
         "InputType":"number",
         "MinValue":"1",
@@ -1108,10 +1164,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Wild NPC Damage Rate",
+        "DisplayName":"Wild NPC Damage Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"wild,npc,damage,rate,WildNPCDamageRate",
+        "Description":"Sets the multiplier for the damage dealt by wild NPCs",
+        "Keywords":"wild,npc,damage,rate,multiplier,WildNPCDamageRate",
         "FieldName":"WildNPCDamageRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1122,10 +1178,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Wild NPC HP Rate",
+        "DisplayName":"Wild NPC HP Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"Minimum is 0.1",
-        "Keywords":"wild,npc,hp,health,rate,WildNPCHealthRate",
+        "Description":"Sets the multiplier for the HP of wild NPCs. Minimum is 0.1",
+        "Keywords":"wild,npc,hp,health,rate,multiplier,WildNPCHealthRate",
         "FieldName":"WildNPCHealthRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1136,10 +1192,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Wild NPC Speed Rate",
+        "DisplayName":"Wild NPC Movement Speed Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"Minimum is 0.1",
-        "Keywords":"wild,npc,speed,rate,WildNPCSpeedRate",
+        "Description":"Sets the multiplier for the movement speed of wild NPCs. Minimum is 0.1",
+        "Keywords":"wild,npc,movement,speed,rate,multiplier,WildNPCSpeedRate",
         "FieldName":"WildNPCSpeedRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1150,10 +1206,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Raid NPC Level Rate",
+        "DisplayName":"Raid NPC Level Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"raid,level,rate,CityNPCLevelRate",
+        "Description":"Sets the multiplier for the level of raid NPCs, making them more powerful",
+        "Keywords":"raid,level,rate,multiplier,CityNPCLevelRate",
         "FieldName":"CityNPCLevelRate",
         "InputType":"number",
         "MinValue":"1",
@@ -1164,10 +1220,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Raid NPC DMG Rate",
+        "DisplayName":"Raid NPC Damage Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"raid,npc,damage,rate,CityNPCDamageRate",
+        "Description":"Sets the multiplier for the damage dealt by raid NPCs",
+        "Keywords":"raid,npc,damage,rate,multiplier,CityNPCDamageRate",
         "FieldName":"CityNPCDamageRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1178,10 +1234,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Raid NPC HP Rate",
+        "DisplayName":"Raid NPC HP Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"Minimum is 0.1",
-        "Keywords":"raid,npc,hp,rate,CityNPCHealthRate",
+        "Description":"Sets the multiplier for the HP of raid NPCs. Minimum is 0.1",
+        "Keywords":"raid,npc,hp,rate,multiplier,CityNPCHealthRate",
         "FieldName":"CityNPCHealthRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1192,10 +1248,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Raid NPC Speed Multiplier",
+        "DisplayName":"Raid NPC Movement Speed Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"Minimum is 0.1",
-        "Keywords":"raid,npc,speed,multiplier,rate,CityNPCSpeedRate",
+        "Description":"Sets the multiplier for the movement speed of raid NPCs. Minimum is 0.1",
+        "Keywords":"raid,npc,movement,speed,rate,multiplier,rate,CityNPCSpeedRate",
         "FieldName":"CityNPCSpeedRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1206,10 +1262,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Raid NPC Amount Rate",
+        "DisplayName":"Raid NPC Amount Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"Minimum is 0.1",
-        "Keywords":"raid,npc,amount,rate,CityNPCNumRate",
+        "Description":"Sets the multiplier for the total number of raid NPCs summoned each round. Minimum is 0.1",
+        "Keywords":"raid,npc,amount,rate,multiplier,CityNPCNumRate",
         "FieldName":"CityNPCNumRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1220,10 +1276,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Collectible Resource Spawn Rate",
+        "DisplayName":"Collectible Resource Spawn Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"collectible,inventory,resource,spawn,rate,GMInventoryGainRate",
+        "Description":"Sets the multiplier for the amount of resources received upon collection",
+        "Keywords":"collectible,inventory,resource,spawn,rate,multiplier,GMInventoryGainRate",
         "FieldName":"GMInventoryGainRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1234,10 +1290,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Raid Corpse Drop Rate",
+        "DisplayName":"Raid Corpse Drop Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"raid,corpse,drop,rate,GMCityATKNPCLootItemRatio",
+        "Description":"Sets the multiplier for the amount of items dropped by a raid NPC upon death",
+        "Keywords":"raid,corpse,drop,rate,multiplier,GMCityATKNPCLootItemRatio",
         "FieldName":"GMCityATKNPCLootItemRatio",
         "InputType":"number",
         "MinValue":"0",
@@ -1248,24 +1304,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Player Beacon Limit",
+        "DisplayName":"Player Work-Type Structures Limit Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"player,beacon,limit,GMMaxHouseFlagNumber",
-        "FieldName":"GMMaxHouseFlagNumber",
-        "InputType":"number",
-        "MinValue":"1",
-        "MaxValue":"5",
-        "ParamFieldName":"BaseServerConfig.GMMaxHouseFlagNumber",
-        "DefaultValue":"1",
-        "Placeholder":"1",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Player Work Construct Limit",
-        "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"player,work,construct,limit,GMSetGJConstructMaxNumRatio",
+        "Description":"Sets the multiplier for the maximum number of work-type structures each player can build",
+        "Keywords":"player,work,construct,structure,limit,maximum,multiplier,GMSetGJConstructMaxNumRatio",
         "FieldName":"GMSetGJConstructMaxNumRatio",
         "InputType":"number",
         "MinValue":"1",
@@ -1276,38 +1318,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Beacon Trap Limit",
+        "DisplayName":"Non-Trap Structure Damage Resistance Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"beacon,trap,limit,GMHFTrapMaxNum",
-        "FieldName":"GMHFTrapMaxNum",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"10000",
-        "ParamFieldName":"BaseServerConfig.GMHFTrapMaxNum",
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Beacon Turret Limit",
-        "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"beacon,turret,limit,GMHFTurretMaxNum",
-        "FieldName":"GMHFTurretMaxNum",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"10000",
-        "ParamFieldName":"BaseServerConfig.GMHFTurretMaxNum",
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Non-trap Construct Damage",
-        "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"non-trap,construct,damage,GMConstructDefenseRatio",
+        "Description":"Sets multiplier for the damage taken by structures other than traps, turrets and beacons",
+        "Keywords":"non-trap,construct,structure,damage,resistance,rate,multiplier,GMConstructDefenseRatio",
         "FieldName":"GMConstructDefenseRatio",
         "InputType":"number",
         "MinValue":"0",
@@ -1318,10 +1332,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Trap Damage RES Rate",
+        "DisplayName":"Trap Damage Resistance Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"trap,damage,res,rate,GMTrapDefenseRatio",
+        "Description":"Sets the multiplier for the damage taken by traps",
+        "Keywords":"trap,damage,resistance,rate,multiplier,GMTrapDefenseRatio",
         "FieldName":"GMTrapDefenseRatio",
         "InputType":"number",
         "MinValue":"0",
@@ -1332,10 +1346,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Turret Damage RES Rate",
+        "DisplayName":"Turret Damage Resistance Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"turret,damage,res,rate,GMTurretDefenseRatio",
+        "Description":"Sets the multiplier for the damage taken by turrets",
+        "Keywords":"turret,damage,resistance,rate,multiplier,GMTurretDefenseRatio",
         "FieldName":"GMTurretDefenseRatio",
         "InputType":"number",
         "MinValue":"0",
@@ -1346,10 +1360,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Trap Damage Rate",
+        "DisplayName":"Trap Damage Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"trap,damage,rate,GMTrapDamageRatio",
+        "Description":"Sets the multiplier for the damage dealt by traps",
+        "Keywords":"trap,damage,rate,multiplier,GMTrapDamageRatio",
         "FieldName":"GMTrapDamageRatio",
         "InputType":"number",
         "MinValue":"0",
@@ -1360,10 +1374,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Turret Damage Rate",
+        "DisplayName":"Turret Damage Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"turret,damage,rate,GMTurretDamageRatio",
+        "Description":"Sets the multiplier for the damage dealt by turrets",
+        "Keywords":"turret,damage,rate,multiplier,GMTurretDamageRatio",
         "FieldName":"GMTurretDamageRatio",
         "InputType":"number",
         "MinValue":"0",
@@ -1374,10 +1388,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Construct Health Ratio",
+        "DisplayName":"Structure Durability Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"Minimum is 0.1",
-        "Keywords":"construct,maximum,health,ratio,GMConstructMaxHealthRatio",
+        "Description":"Sets the multiplier for the maximum durability of structures. Minimum is 0.1",
+        "Keywords":"construct,structure,maximum,durability,health,rate,multiplier,GMConstructMaxHealthRatio",
         "FieldName":"GMConstructMaxHealthRatio",
         "InputType":"number",
         "MinValue":"0",
@@ -1388,10 +1402,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Construct DUR Recovery Ratio",
+        "DisplayName":"Structure Durability Recovery Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"construct,dur,recovery,GMConstructReturnHPRatio",
+        "Description":"Sets the multiplier for the durability recovery speed of placed structures",
+        "Keywords":"construct,structure,durability,recovery,rate,multiplier,GMConstructReturnHPRatio",
         "FieldName":"GMConstructReturnHPRatio",
         "InputType":"number",
         "MinValue":"0",
@@ -1402,10 +1416,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Spacetime Beacon Auto-repair Rate",
+        "DisplayName":"Spacetime Beacon Auto-repair Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"spacetime,beacon,auto-repair,GMHouseFlagRepairHealthRatio",
+        "Description":"Sets the multiplier for the durability recovery speed of structures within the auto-repair range of a beacon",
+        "Keywords":"spacetime,beacon,auto-repair,durability,recovery,rate,multiplier,GMHouseFlagRepairHealthRatio",
         "FieldName":"GMHouseFlagRepairHealthRatio",
         "InputType":"number",
         "MinValue":"0",
@@ -1416,10 +1430,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Oil Well Work Production Rate",
+        "DisplayName":"Oil Well Work Production Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"oil,well,work,production,rate,GMTTC_Oil_Rate",
+        "Description":"Sets the multiplier for resources collected from oil wells",
+        "Keywords":"oil,well,work,production,rate,multiplier,GMTTC_Oil_Rate",
         "FieldName":"GMTTC_Oil_Rate",
         "InputType":"number",
         "MinValue":"0",
@@ -1430,10 +1444,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Dew Collector Work Production Rate",
+        "DisplayName":"Dew Collector Work Production Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"dew,water,collector,work,production,rate,GMWaterCollecter_Rate",
+        "Description":"Sets the multiplier for resources collected from dew collectors",
+        "Keywords":"dew,water,collector,work,production,rate,multiplier,GMWaterCollecter_Rate",
         "FieldName":"GMWaterCollecter_Rate",
         "InputType":"number",
         "MinValue":"0",
@@ -1444,10 +1458,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Mine Work Production Rate",
+        "DisplayName":"Mine Work Production Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"mine,ore,work,production,rate,GMTTC_Ore_Rate",
+        "Description":"Sets the multiplier for resources collected from mines",
+        "Keywords":"mine,ore,work,production,rate,multiplier,GMTTC_Ore_Rate",
         "FieldName":"GMTTC_Ore_Rate",
         "InputType":"number",
         "MinValue":"0",
@@ -1458,10 +1472,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Fish Basket Work Production Rate",
+        "DisplayName":"Fish Basket Work Production Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"fish,basket,work,production,rate,GMTTC_Fish_Rate",
+        "Description":"Sets the multiplier for resources collected from fish baskets",
+        "Keywords":"fish,basket,work,production,rate,multiplier,GMTTC_Fish_Rate",
         "FieldName":"GMTTC_Fish_Rate",
         "InputType":"number",
         "MinValue":"0",
@@ -1472,10 +1486,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Beacon Player Gun Damage Rate",
+        "DisplayName":"Beacon Player Gun Damage Resistance Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"beacon,player,gun,damage,rate,CHFDamagedByPlayer",
+        "Description":"Sets the multiplier for the damage that beacons take from player firearms",
+        "Keywords":"beacon,player,gun,damage,resistance,rate,multiplier,CHFDamagedByPlayer",
         "FieldName":"CHFDamagedByPlayer",
         "InputType":"number",
         "MinValue":"0",
@@ -1486,10 +1500,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Beacon Player Vehicle Damage Rate",
+        "DisplayName":"Beacon Player Vehicle Damage Resistance Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"beacon,player,vehicle,damage,rate,CHFDamagedByVehicle",
+        "Description":"Sets the multiplier for the damage that beacons take from player vehicles",
+        "Keywords":"beacon,player,vehicle,damage,resistance,rate,multiplier,CHFDamagedByVehicle",
         "FieldName":"CHFDamagedByVehicle",
         "InputType":"number",
         "MinValue":"0",
@@ -1500,10 +1514,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Beacon NPC Damage RES Rate",
+        "DisplayName":"Beacon NPC Damage Resistance Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"beacon,npc,damage,rate,CHFDamagedByNpc",
+        "Description":"Sets the multiplier for the damage that beacons take from NPCs",
+        "Keywords":"beacon,npc,damage,resistance,rate,multiplier,CHFDamagedByNpc",
         "FieldName":"CHFDamagedByNpc",
         "InputType":"number",
         "MinValue":"0",
@@ -1514,24 +1528,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Beacon Daily Non-Protection",
+        "DisplayName":"Resource Collection Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"beacon,daily,non-protection,GMHouseFlagExcitantTime",
-        "FieldName":"GMHouseFlagExcitantTime",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"24",
-        "ParamFieldName":"BaseServerConfig.GMHouseFlagExcitantTime",
-        "DefaultValue":"3",
-        "Placeholder":"3",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Resource Collection Rate",
-        "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"resource,collection,rate,GMMaxRetrieveProductsRate",
+        "Description":"Sets the multiplier for the maximum gains from collection. This value must be bigger than other collection multipliers",
+        "Keywords":"resource,collection,rate,multiplier,GMMaxRetrieveProductsRate",
         "FieldName":"GMMaxRetrieveProductsRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1542,10 +1542,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Wood Production Rate",
+        "DisplayName":"Wood Production Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"wood,tree,production,rate,GMTreeGainRate",
+        "Description":"Sets the multiplier for the amount of wood collected",
+        "Keywords":"wood,tree,production,rate,multiplier,GMTreeGainRate",
         "FieldName":"GMTreeGainRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1556,10 +1556,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Plant Production Rate",
+        "DisplayName":"Plant Production Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"plant,bush,production,rate,GMBushGainRate",
+        "Description":"Sets the multiplier for the amount of plants collected",
+        "Keywords":"plant,bush,production,rate,multiplier,GMBushGainRate",
         "FieldName":"GMBushGainRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1570,10 +1570,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Ore Production Rate",
+        "DisplayName":"Ore Production Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"ore,production,rate,GMOreGainRate",
+        "Description":"Sets the multiplier for the amount of ore collected",
+        "Keywords":"ore,production,rate,multiplier,GMOreGainRate",
         "FieldName":"GMOreGainRate",
         "InputType":"number",
         "MinValue":"0",
@@ -1584,10 +1584,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Crop Production Rate",
+        "DisplayName":"Crop Production Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"crop,production,rate,ratio,GMCropVegetableReapRatio",
+        "Description":"Sets the multiplier for the amount of crops collected",
+        "Keywords":"crop,production,rate,multiplier,GMCropVegetableReapRatio",
         "FieldName":"GMCropVegetableReapRatio",
         "InputType":"number",
         "MinValue":"0",
@@ -1598,10 +1598,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Animal Production Rate",
+        "DisplayName":"Animal Production Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"animal,production,rate,ratio,GMFleshGainRate",
+        "Description":"Sets the multiplier for the amount of items collected from corpses",
+        "Keywords":"animal,production,corpse,items,rate,multiplier,GMFleshGainRate",
         "FieldName":"GMFleshGainRate",
         "InputType":"number",
         "MinValue":"1",
@@ -1612,10 +1612,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Crop Growth Speed",
+        "DisplayName":"Crop Growth Speed Multiplier",
         "Category":"The Front Multiplier Settings",
-        "Description":"",
-        "Keywords":"crop,growth,speed,ratio,GMCropVegetableGrowRatio",
+        "Description":"Sets the multiplier for the growth speed of planted crops",
+        "Keywords":"crop,growth,speed,rate,multiplier,GMCropVegetableGrowRatio",
         "FieldName":"GMCropVegetableGrowRatio",
         "InputType":"number",
         "MinValue":"0",
