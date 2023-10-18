@@ -1,45 +1,13 @@
 [
     {
-        "DisplayName":"Game Port",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$GamePort",
-        "InputType":"number",
-        "Hidden":true,
-        "ParamFieldName":"BaseServerConfig.Port",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Beacon Port",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$BeaconPort",
-        "InputType":"number",
-        "Hidden":true,
-        "ParamFieldName":"BaseServerConfig.BeaconPort",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Shutdown Service Port",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$ShutDownServicePort",
-        "InputType":"number",
-        "Hidden":true,
-        "ParamFieldName":"BaseServerConfig.ShutDownServicePort",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Server Name",
         "Category":"Server Settings",
         "Description":"Sets the name of the server to be displayed in the server list",
         "Keywords":"server,name,ServerName",
         "FieldName":"ServerName",
         "InputType":"text",
-        "ParamFieldName":"BaseServerConfig.ServerName",
+        "ParamFieldName":"ServerName",
+        "IncludeInCommandLine":true,
         "DefaultValue":"AMP Powered The Front Server",
         "Placeholder":"AMP Powered The Front Server",
         "EnumValues":{}
@@ -53,6 +21,7 @@
         "InputType":"text",
         "ParamFieldName":"ServerTags",
         "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
         "DefaultValue":"",
         "Placeholder":"0,2,3",
         "EnumValues":{}
@@ -64,7 +33,9 @@
         "Keywords":"server,password,ServerPassword",
         "FieldName":"ServerPassword",
         "InputType":"password",
-        "ParamFieldName":"BaseServerConfig.ServerPassword",
+        "ParamFieldName":"ServerPassword",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
         "DefaultValue":"",
         "EnumValues":{}
     },
@@ -78,6 +49,7 @@
         "MinValue":"1",
         "MaxValue":"80",
         "ParamFieldName":"MaxPlayers",
+        "IncludeInCommandLine":true,
         "DefaultValue":"10",
         "Placeholder":"10",
         "Suffix":"players",
@@ -90,7 +62,8 @@
         "Keywords":"server,admins,ServerAdminAccounts",
         "FieldName":"ServerAdminAccounts",
         "InputType":"text",
-        "ParamFieldName":"BaseServerConfig.ServerAdminAccounts",
+        "ParamFieldName":"ServerAdminAccounts",
+        "IncludeInCommandLine":true,
         "DefaultValue":"",
         "EnumValues":{}
     },
@@ -101,7 +74,8 @@
         "Keywords":"label,admin,icon,IsShowGmTitle",
         "FieldName":"IsShowGmTitle",
         "InputType":"checkbox",
-        "ParamFieldName":"BaseServerConfig.IsShowGmTitle",
+        "ParamFieldName":"IsShowGmTitle",
+        "IncludeInCommandLine":true,
         "DefaultValue":"0",
         "EnumValues":{
              "False":"0",
@@ -115,7 +89,8 @@
         "Keywords":"novice,protection,GreenHand",
         "FieldName":"GreenHand",
         "InputType":"checkbox",
-        "ParamFieldName":"BaseServerConfig.GreenHand",
+        "ParamFieldName":"GreenHand",
+        "IncludeInCommandLine":true,
         "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
@@ -129,7 +104,8 @@
         "Keywords":"anticheat,UseACE",
         "FieldName":"UseACE",
         "InputType":"checkbox",
-        "ParamFieldName":"BaseServerConfig.UseACE",
+        "ParamFieldName":"UseACE",
+        "IncludeInCommandLine":true,
         "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
@@ -158,7 +134,8 @@
         "InputType":"number",
         "MinValue":"150",
         "MaxValue":"600",
-        "ParamFieldName":"BaseServerConfig.SaveWorldInterval",
+        "ParamFieldName":"SaveWorldInterval",
+        "IncludeInCommandLine":true,
         "DefaultValue":"300",
         "Placeholder":"300",
         "Suffix":"seconds",
@@ -171,7 +148,8 @@
         "Keywords":"steam,socket,network,penetration,UseSteamSocket",
         "FieldName":"UseSteamSocket",
         "InputType":"checkbox",
-        "ParamFieldName":"BaseServerConfig.UseSteamSocket",
+        "ParamFieldName":"UseSteamSocket",
+        "IncludeInCommandLine":true,
         "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
@@ -185,7 +163,8 @@
         "Keywords":"pve,pvp,game,mode,",
         "FieldName":"ServerFightModeType",
         "InputType":"checkbox",
-        "ParamFieldName":"BaseServerConfig.ServerFightModeType",
+        "ParamFieldName":"ServerFightModeType",
+        "IncludeInCommandLine":true,
         "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
@@ -199,7 +178,8 @@
         "Keywords":"damage,self,IsCanSelfDamage",
         "FieldName":"IsCanSelfDamage",
         "InputType":"checkbox",
-        "ParamFieldName":"BaseServerConfig.IsCanSelfDamage",
+        "ParamFieldName":"IsCanSelfDamage",
+        "IncludeInCommandLine":true,
         "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
@@ -213,7 +193,8 @@
         "Keywords":"damage,friends,allies,IsCanFriendDamage",
         "FieldName":"IsCanFriendDamage",
         "InputType":"checkbox",
-        "ParamFieldName":"BaseServerConfig.IsCanFriendDamage",
+        "ParamFieldName":"IsCanFriendDamage",
+        "IncludeInCommandLine":true,
         "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
@@ -227,11 +208,26 @@
         "Keywords":"profanity,sensitive,words,filter,SensitiveWords",
         "FieldName":"SensitiveWords",
         "InputType":"checkbox",
-        "ParamFieldName":"BaseServerConfig.SensitiveWords",
+        "ParamFieldName":"SensitiveWords",
+        "IncludeInCommandLine":true,
         "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
             "True":"1"
         }
+    },
+    {
+        "DisplayName":"Additional Command Line Parameters",
+        "Category":"Server Settings",
+        "Description":"Specifies additional command line parameters that are not otherwise set by AMP. ONE LINE ONLY! Use with care",
+        "Keywords":"custom,server,arguments,variables,cvars,convars,parameters",
+        "FieldName":"CustomServerArgs",
+        "InputType":"Textarea",
+        "IsFlagArgument":false,
+        "ParamFieldName":"CustomServerArgs",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "Placeholder":"-JumpRate=\"1\"",
+        "EnumValues":{}
     }
 ]
