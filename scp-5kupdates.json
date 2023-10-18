@@ -1,0 +1,39 @@
+[
+    {
+        "UpdateStageName":"SCP: 5K SteamCMD Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"884110",
+        "UpdateSourceArgs":"872670"
+    },
+    {
+        "UpdateStageName":"Saved Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}WindowsServer/Pandemic/Saved"
+    },
+    {
+        "UpdateStageName":"Saved Directory Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}LinuxServer/Pandemic/Saved"
+    },
+    {
+        "UpdateStageName":"Config File Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/scp-5kserverconfig.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}WindowsServer/Pandemic/Saved",
+        "UpdateSourceArgs":"ServerConfig.ini",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Config File Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/scp-5kserverconfig.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}LinuxServer/Pandemic/Saved",
+        "UpdateSourceArgs":"ServerConfig.ini",
+        "OverwriteExistingFiles":false
+    }
+]
