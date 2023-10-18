@@ -32,11 +32,11 @@ App.ExecutableLinux=884110/LinuxServer/Pandemic/Binaries/Linux/PandemicServer
 App.WorkingDir=884110
 App.LinuxCommandLineArgs=-stdout
 App.WindowsCommandLineArgs=-stdout -FullStdOutLogOutput
-App.CommandLineArgs=Pandemic {{Map}} -maxplayers={{$MaxUsers}} -servername={{ServerName}} -SteamServerName={{ServerName}} -port={{$GamePort}} -queryport={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} {{$FormattedArgs}} {{$PlatformArgs}} -force_steamclient_link
+App.CommandLineArgs=Pandemic {{Map}} -maxplayers={{$MaxUsers}} -servername="{{ServerName}}" -SteamServerName="{{ServerName}}" -port={{$GamePort}} -queryport={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} {{$FormattedArgs}} {{$PlatformArgs}} -force_steamclient_link
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"872670"}
-App.CommandLineParameterFormat={0}={1}
+App.CommandLineParameterFormat=-{0}="{1}"
 App.CommandLineParameterDelimiter=?
 App.ExitMethod=OS_CLOSE
 App.ExitTimeout=30
@@ -52,7 +52,7 @@ App.AdminPortRef=0
 App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPortRef=GamePort
 App.UniversalSleepSteamQueryPortRef=QueryPort
-App.MaxUsers=16
+App.MaxUsers=4
 App.UseRandomAdminPassword=True
 App.PersistRandomPassword=True
 App.RemoteAdminPassword=
@@ -78,12 +78,12 @@ App.MonitorChildProcessWaitMs=100
 App.MonitorChildProcessName=
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
-App.ApplicationReadyMode=Immediate
+App.ApplicationReadyMode=RegexMatch
 App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|Could not find Wine Gecko.*)$
-Console.AppReadyRegex=^$
+Console.AppReadyRegex=^\[[\d.]+-[\d.:]+\]\[[\d ]+\]LogLoad: \(Engine Initialization\) Total time: \d+\.\d+ seconds$
 Console.UserJoinRegex=^$
 Console.UserLeaveRegex=^$
 Console.UserChatRegex=^$
