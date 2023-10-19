@@ -8,6 +8,21 @@
         "ForceDownloadPlatform":"Windows"
     },
     {
+        "UpdateStageName":"Config Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}SNM2020/Saved/Config/WindowsServer"
+    },
+    {
+        "UpdateStageName":"Config File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/swords-n-magic-and-stuffgame.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}SNM2020/Saved/Config/WindowsServer",
+        "UpdateSourceArgs":"Game.ini",
+        "OverwriteExistingFiles":false
+    },
+    {
         "UpdateStageName":"Initialise Wine",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
