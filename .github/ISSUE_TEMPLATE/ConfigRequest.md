@@ -6,7 +6,7 @@ about: To request a new application configuration
 # Module Request
 
 Note: Please try setting up a configuration yourself before raising an issue to request a configuration:  ~~https://config.getamp.sh/~~
-***There is a newer beta version available at https://config.iceofwraith.com
+***There is a newer beta version available at https://iceofwraith.github.io/GenericConfigGen/
 
 ## Game Information:
 
