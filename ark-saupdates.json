@@ -8,14 +8,14 @@
     },
     {
         "UpdateStageName":"Config Directory Creation",
-        "UpdateSourcePlatform":"Windows",
+        "UpdateSourcePlatform":"All",
         "UpdateSource":"CreateDirectory",
         "UpdateSourceArgs":"{{$FullBaseDir}}ShooterGame/Saved/Config/WindowsServer",
         "OverwriteExistingFiles":false
     },
     {
         "UpdateStageName":"Game.ini Config Download",
-        "UpdateSourcePlatform":"Windows",
+        "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/ark-sagame.ini",
         "UpdateSourceArgs":"Game.ini",
@@ -24,7 +24,7 @@
     },
     {
         "UpdateStageName":"GameUserSettings.ini Config Download",
-        "UpdateSourcePlatform":"Windows",
+        "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/ark-sawin-gameusersettings.ini",
         "UpdateSourceArgs":"GameUserSettings.ini",
@@ -52,5 +52,12 @@
         "UpdateSourceConditionSetting":"backupExclude",
         "UpdateSourceConditionValue":"true",
         "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Initialise Wine",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
     }
 ]
