@@ -1,0 +1,56 @@
+[
+    {
+        "UpdateStageName":"SteamCMD Server Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"2430930",
+        "UpdateSourceArgs":"2399830"
+    },
+    {
+        "UpdateStageName":"Config Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}ShooterGame/Saved/Config/WindowsServer",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Game.ini Config Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/ark-sagame.ini",
+        "UpdateSourceArgs":"Game.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}ShooterGame/Saved/Config/WindowsServer/",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"GameUserSettings.ini Config Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/ark-sawin-gameusersettings.ini",
+        "UpdateSourceArgs":"GameUserSettings.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}ShooterGame/Saved/Config/WindowsServer/",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"First Backup Exclusions Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/exclusions/.backupExclusionsArk1",
+        "UpdateSourceArgs":".backupExclude",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceConditionSetting":"backupExclude",
+        "UpdateSourceConditionValue":"true",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Second Backup Exclusions Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/exclusions/.backupExclusionsArk2",
+        "UpdateSourceArgs":".backupExclude",
+        "UpdateSourceTarget":"{{$FullBaseDir}}ShooterGame",
+        "UpdateSourceConditionSetting":"backupExclude",
+        "UpdateSourceConditionValue":"true",
+        "OverwriteExistingFiles":false
+    }
+]
