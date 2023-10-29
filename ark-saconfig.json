@@ -51,38 +51,37 @@
     {
         "DisplayName":"Custom Map Name",
         "Category":"ARK Server Settings",
-        "Description":"Sets a custom map for the server. \"Custom\" type must be selected under Map, and the map files included in ShooterGame/Content/Mods. Automatically Manage Mods can be used for this purpose",
+        "Description":"Sets a custom map for the server. \"Custom\" type must be selected under Map, and the CurseForge Project ID for the map included under Mods List",
         "Keywords":"custom,map",
         "FieldName":"CustomMap",
         "InputType":"text",
         "ParamFieldName":"CustomMap",
         "DefaultValue":"",
+        "Placeholder":"Svartalfheim_WP",
         "EnumValues":{}
     },
     {
         "DisplayName":"Automatically Manage Mods",
         "Category":"ARK Server Settings",
-        "Description":"If set, enables automatic mod download and updating (on server start). Specify the relevant mods under Mods List. Alternatively, specify them in Game.ini under the heading [ModInstaller] and with one mod per line in the format: ModIDS=<value>",
-        "Keywords":"auto,managed,mods,automanagedmods",
-        "FieldName":"automanagedmods",
+        "Description":"If set, enables automatic mod download, updating and loading (on server start). Specify the relevant mods under Mods List. Don't enable this setting if no mods are specified under Mods List or the server will not start",
+        "Keywords":"auto,managed,mods",
+        "FieldName":"mods",
         "InputType":"checkbox",
-        "ParamFieldName":"automanagedmods",
-        "DefaultValue":"-automanagedmods ",
+        "ParamFieldName":"mods",
+        "DefaultValue":"",
         "EnumValues":{
             "False":"",
-            "True":"-automanagedmods "
+            "True":"-mods={{modslist}} "
         }
     },
     {
         "DisplayName":"Mods List",
         "Category":"ARK Server Settings",
-        "Description":"Comma-separated and ordered list of IDs of mods to load (map mods will not load unless named as a \"Custom\" map under Custom Map Name). ONE LINE ONLY! Mod files must be in ShooterGame/Content/Mods. If \"Automatically Manage Mods\" is enabled, the mods listed will be installed by the server",
-        "Keywords":"load,mods,gamemodids,activemods",
-        "FieldName":"GameModIds",
+        "Description":"Comma-separated and ordered list of [CurseForge Project IDs](https://www.curseforge.com/ark-survival-ascended) for mods to install and load on server start (map mods will not load unless also named as a \"Custom\" map under Custom Map Name). ONE LINE ONLY! Requires Automatically Manage Mods to be enabled",
+        "Keywords":"mods,list",
+        "FieldName":"modslist",
         "InputType":"Textarea",
-        "ParamFieldName":"GameModIds",
-        "IncludeInCommandLine":true,
-        "SkipIfEmpty":true,
+        "ParamFieldName":"modslist",
         "DefaultValue":"",
         "EnumValues":{}
     },
@@ -112,7 +111,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Whitelisted Server Admins",
+        "DisplayName":"Whitelisted Server Admins [Not Working]",
         "Category":"ARK Server Settings",
         "Description":"List of [Steam64 IDs](https://steamidfinder.com/) for whitelisted server admins. These admins do not need to use the server admin password",
         "Keywords":"admin,whitelist,allowedcheatersteamids",
@@ -147,7 +146,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Enable Player Whitelist",
+        "DisplayName":"Enable Player Whitelist [Not Working]",
         "Category":"ARK Server Settings",
         "Description":"If set, only players with Steam64 IDs listed under Whitelisted Players can join the server",
         "Keywords":"player,whitelist,exclusivejoin",
@@ -162,7 +161,7 @@
         }
     },
     {
-        "DisplayName":"Whitelisted Players",
+        "DisplayName":"Whitelisted Players [Not Working]",
         "Category":"ARK Server Settings",
         "Description":"List of [Steam64 IDs](https://steamidfinder.com/) for whitelisted players",
         "Keywords":"player,whitelist,playersexclusivejoinlist",
