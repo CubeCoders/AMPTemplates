@@ -27,7 +27,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"$mod = '{{mod}}' -split ';'; Set-Location dayz\\1042420; Get-ChildItem -Path 'keys' -Filter '*.bikey' -Exclude 'dayz.bikey' | ForEach-Object { Remove-Item -LiteralPath $_.FullName -Force }; foreach ($a in $mod) { Get-ChildItem -Path ('{0}\\keys' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'keys' -Force }\"",
+        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"$mod = '{{mod}}' -split ';'; Set-Location dayz\\1042420; Get-ChildItem -Path 'keys' -Filter '*.bikey' | ForEach-Object { if ($_.Name -ne 'dayz.bikey' -and -not ($_.Name -like '*dayz.bikey*')) { Remove-Item -LiteralPath $_.FullName -Force } }; foreach ($a in $mod) { Get-ChildItem -Path ('{0}\\keys' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'keys' -Force }\"",
         "UpdateSourceConditionSetting":"ManageBikeys",
         "UpdateSourceConditionValue":"true"
     }
