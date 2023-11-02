@@ -27,7 +27,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"$mod = '{{mod}}' -split ';'; Set-Location arma3\\233780; Get-ChildItem -Path 'keys' -Filter '*.bikey' | ForEach-Object { if ($_.Name -ne 'a3.bikey' -and -not ($_.Name -like '*a3.bikey*')) { Remove-Item -LiteralPath $_.FullName -Force } }; foreach ($a in $mod) { Get-ChildItem -Path ('{0}\\keys' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'keys' -Force }\"",
+        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"$mod = '{{mod}}' -split ';'; Set-Location arma3\\233780; Get-ChildItem -Path 'keys' -Filter '*.bikey' -Exclude 'a3.bikey' | ForEach-Object { Remove-Item -LiteralPath $_.FullName -Force }; foreach ($a in $mod) { Get-ChildItem -Path ('{0}\\keys' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'keys' -Force }\"",
         "UpdateSourceConditionSetting":"ManageBikeys",
         "UpdateSourceConditionValue":"true"
     },
