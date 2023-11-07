@@ -22,7 +22,7 @@ App.ExecutableLinux=412680/TheIsle/Binaries/Linux/TheIsleServer-Linux-Shipping
 App.WorkingDir=412680
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs=TheIsle {{$PlatformArgs}} ?Port={{$GamePort}}?MaxPlayers={{$MaxUsers}} {{$FormattedArgs}} -stdout -FullStdOutLogOutput -ini:Engine:[EpicOnlineServices]:DedicatedServerClientId=xyza7891gk5PRo3J7G9puCJGFJjmEguW -ini:Engine:[EpicOnlineServices]:DedicatedServerClientSecret=pKWl6t5i9NJK8gTpVlAxzENZ65P8hYzodV8Dqe5Rlc8
+App.CommandLineArgs=TheIsle {{$PlatformArgs}} ?Port={{$GamePort}}?QueryPort={{$QueryPort}}?MaxPlayers={{$MaxUsers}} {{$FormattedArgs}} -stdout -FullStdOutLogOutput -ini:Engine:[EpicOnlineServices]:DedicatedServerClientId=xyza7891gk5PRo3J7G9puCJGFJjmEguW -ini:Engine:[EpicOnlineServices]:DedicatedServerClientSecret=pKWl6t5i9NJK8gTpVlAxzENZ65P8hYzodV8Dqe5Rlc8
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"376210"}
 App.CommandLineParameterFormat=-{0}={1}
@@ -36,12 +36,12 @@ App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"Both","Port":7777,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},
-{"Protocol":"Both","Port":7778,"Ref":"GamePort2","Name":"Game Port 2","Description":"Port for game traffic"},{"Protocol":"Both","Port":7779,"Ref":"GamePort3","Name":"Game Port 3","Description":"Port for game traffic"},{"Protocol":"TCP","Port":10000,"Ref":"QueuePort","Name":"Queue Port","Description":"Port for queue server traffic"},{"Protocol":"TCP","Port":8888,"Ref":"RCONPort","Name":"RCON Port","Description":"Port for RCON traffic"}]
+App.Ports=[{"Protocol":"UDP","Port":7777,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},
+{"Protocol":"UDP","Port":27015,"Ref":"QueryPort","Name":"Query Port","Description":"Port for server query traffic"},{"Protocol":"TCP","Port":10000,"Ref":"QueuePort","Name":"Queue Port","Description":"Port for queue server traffic"},{"Protocol":"TCP","Port":8888,"Ref":"RCONPort","Name":"RCON Port","Description":"Port for RCON traffic"}]
 App.PrimaryApplicationPortRef=GamePort
 App.AdminPortRef=RCONPort
 App.UniversalSleepApplicationUDPPortRef=GamePort
-App.UniversalSleepSteamQueryPortRef=0
+App.UniversalSleepSteamQueryPortRef=QueryPort
 App.MaxUsers=50
 App.UseRandomAdminPassword=False
 App.RemoteAdminPassword=
