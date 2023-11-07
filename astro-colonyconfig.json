@@ -16,7 +16,7 @@
         "Keywords":"server,name,ServerName",
         "FieldName":"ServerName",
         "InputType":"text",
-        "ParamFieldName":"/Script/AstroColony.EHServerSubsystem.ServerName",
+        "ParamFieldName":"ServerName",
         "DefaultValue":"AMP Powered Astro Colony Server",
         "Placeholder":"AMP Powered Astro Colony Server",
         "EnumValues":{}
@@ -40,7 +40,7 @@
         "Keywords":"server,password,ServerPassword",
         "FieldName":"ServerPassword",
         "InputType":"password",
-        "ParamFieldName":"/Script/AstroColony.EHServerSubsystem.ServerPassword",
+        "ParamFieldName":"ServerPassword",
         "SkipIfEmpty":true,
         "DefaultValue":"",
         "EnumValues":{}
@@ -52,7 +52,7 @@
         "Keywords":"map,name,MapName",
         "FieldName":"MapName",
         "InputType":"text",
-        "ParamFieldName":"/Script/AstroColony.EHServerSubsystem.MapName",
+        "ParamFieldName":"MapName",
         "DefaultValue":"MyAstroColony",
         "Placeholder":"MyAstroColony",
         "EnumValues":{}
@@ -65,7 +65,7 @@
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "MinValue":"1",
-        "ParamFieldName":"/Script/AstroColony.EHServerSubsystem.MaxPlayers",
+        "ParamFieldName":"MaxPlayers",
         "DefaultValue":"5",
         "Placeholder":"5",
         "Suffix":"players",
@@ -78,8 +78,20 @@
         "Keywords":"server,admins,ServerAdminAccounts",
         "FieldName":"AdminList",
         "InputType":"text",
-        "ParamFieldName":"/Script/AstroColony.EHServerSubsystem.AdminList",
+        "ParamFieldName":"AdminList",
         "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Seed",
+        "Category":"Server Settings",
+        "Description":"Sets a seed to create a new savegame with. Default is a random seed",
+        "Keywords":"seed",
+        "FieldName":"Seed",
+        "InputType":"number",
+        "MinValue":"1",
+        "ParamFieldName":"Seed",
+        "DefaultValue":"{{randomdigits(8)}}",
         "EnumValues":{}
     },
     {
@@ -89,7 +101,7 @@
         "Keywords":"savegame,name,SavegameName",
         "FieldName":"SavegameName",
         "InputType":"text",
-        "ParamFieldName":"/Script/AstroColony.EHServerSubsystem.SavegameName",
+        "ParamFieldName":"SavegameName",
         "DefaultValue":"MyAstroColony",
         "DefaultValue":"MyAstroColony",
         "EnumValues":{}
@@ -101,7 +113,7 @@
         "Keywords":"load,latest,savegame,ShouldLoadLatestSavegame",
         "FieldName":"ShouldLoadLatestSavegame",
         "InputType":"checkbox",
-        "ParamFieldName":"/Script/AstroColony.EHServerSubsystem.ShouldLoadLatestSavegame",
+        "ParamFieldName":"ShouldLoadLatestSavegame",
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -115,7 +127,7 @@
         "Keywords":"shared,technologies,research,SharedTechnologies",
         "FieldName":"SharedTechnologies",
         "InputType":"checkbox",
-        "ParamFieldName":"/Script/AstroColony.EHServerSubsystem.SharedTechnologies",
+        "ParamFieldName":"SharedTechnologies",
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -129,7 +141,7 @@
         "Keywords":"oxygen,consumption,OxygenConsumption",
         "FieldName":"OxygenConsumption",
         "InputType":"checkbox",
-        "ParamFieldName":"/Script/AstroColony.EHServerSubsystem.OxygenConsumption",
+        "ParamFieldName":"OxygenConsumption",
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -143,11 +155,39 @@
         "Keywords":"free,construction,cost,resources,FreeConstruction",
         "FieldName":"FreeConstruction",
         "InputType":"checkbox",
-        "ParamFieldName":"/Script/AstroColony.EHServerSubsystem.FreeConstruction",
+        "ParamFieldName":"FreeConstruction",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
             "True":"True"
         }
+    },
+    {
+        "DisplayName":"Autosave Interval",
+        "Category":"Server Settings",
+        "Description":"Sets the server autosave interval",
+        "Keywords":"server,autosave,interval,AutosaveInterval",
+        "FieldName":"AutosaveInterval",
+        "InputType":"number",
+        "MinValue":"1",
+        "ParamFieldName":"AutosaveInterval",
+        "DefaultValue":"5.0",
+        "Placeholder":"5.0",
+        "Suffix":"minutes",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Autosave Count",
+        "Category":"Server Settings",
+        "Description":"Sets the limit on the number of autosaves that are retained",
+        "Keywords":"server,save,autosave,limit,count,AutosavesCount",
+        "FieldName":"AutosavesCount",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"AutosavesCount",
+        "DefaultValue":"10",
+        "Placeholder":"10",
+        "Suffix":"autosaves",
+        "EnumValues":{}
     }
 ]
