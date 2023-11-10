@@ -89,15 +89,44 @@
     {
         "DisplayName":"Server Password",
         "Category":"Server Settings",
-        "Description":"Sets the password to connect to the server. Default is no password. Require Server Password must be enabled",
+        "Description":"Sets the password to connect to the server. Default is a strong random password. Require Server Password must be enabled. Even if Require Server Password is disabled, this setting must have a value for the server to appear in the server browser",
         "Keywords":"server,password,ServerPassword",
         "FieldName":"ServerPassword",
         "InputType":"password",
         "IsFlagArgument":false,
         "ParamFieldName":"/Script/TheIsle.TIGameSession.ServerPassword",
         "IncludeInCommandLine":false,
-        "DefaultValue":"",
+        "DefaultValue":"{{newguid()}}",
+        "Required":true,
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Admins",
+        "Category":"Server Settings",
+        "Description":"Server admins can be specified by including their Steam64 IDs in the [/Script/TheIsle.TIGameStateBase] section of Game.ini. One entry per admin. Format: AdminsSteamIDs=71231XXXXXXXXXXXX",
+        "Keywords":"admins,AdminsSteamIDs",
+        "FieldName":"AdminsSteamIDs",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"AdminsSteamIDs",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Whitelist",
+        "Category":"Server Settings",
+        "Description":"If set, the server whitelist will be enabled, so that only players whose Steam64 IDs are listed in the [/Script/TheIsle.TIGameStateBase] section of Game.ini will be able to join the server (in addition to server admins). One entry per player. Format: WhitelistIDs=71231XXXXXXXXXXXX",
+        "Keywords":"whitelist,bServerWhitelist",
+        "FieldName":"bServerWhitelist",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/Script/TheIsle.TIGameSession.bServerWhitelist",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
         "DisplayName":"Enable RCON",
