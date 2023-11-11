@@ -8,33 +8,12 @@
         "UpdateSourceVersion":"evrima"
     },
     {
-        "UpdateStageName":"Config Directory Creation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}TheIsle/Saved/Config/WindowsServer"
-    },
-    {
-        "UpdateStageName":"Config Directory Creation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}TheIsle/Saved/Config/LinuxServer"
-    },
-    {
-        "UpdateStageName":"Game Config File Download",
-        "UpdateSourcePlatform":"Windows",
+        "UpdateStageName":"Game Config Template File Download",
+        "UpdateSourcePlatform":"Both",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/theisleevrima/theisle-evrimagame.ini",
-        "UpdateSourceArgs":"Game.ini",
-        "UpdateSourceTarget":"{{$FullBaseDir}}TheIsle/Saved/Config/WindowsServer/",
-        "OverwriteExistingFiles":true
-    },
-    {
-        "UpdateStageName":"Game Config File Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/theisleevrima/theisle-evrimagame.ini",
-        "UpdateSourceArgs":"Game.ini",
-        "UpdateSourceTarget":"{{$FullBaseDir}}TheIsle/Saved/Config/LinuxServer/",
+        "UpdateSourceArgs":"AMP_Game.ini",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
         "OverwriteExistingFiles":true
     }
 ]

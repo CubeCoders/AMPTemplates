@@ -1,16 +1,5 @@
 [
     {
-        "DisplayName":"Server Port",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$GamePort",
-        "InputType":"number",
-        "Hidden":true,
-        "ParamFieldName":"URL.Port",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Queue Port",
         "Category":"Server Settings",
         "Description":"",
@@ -18,7 +7,7 @@
         "FieldName":"$QueuePort",
         "InputType":"number",
         "Hidden":true,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.QueuePort",
+        "ParamFieldName":"QueuePort",
         "EnumValues":{}
     },
     {
@@ -29,7 +18,7 @@
         "FieldName":"$RCONPort",
         "InputType":"number",
         "Hidden":true,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.RconPort",
+        "ParamFieldName":"RconPort",
         "EnumValues":{}
     },
     {
@@ -39,8 +28,9 @@
         "Keywords":"name",
         "FieldName":"ServerName",
         "InputType":"text",
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.ServerName",
+        "ParamFieldName":"ServerName",
         "DefaultValue":"The Isle Server - Powered by AMP",
+        "Placeholder":"The Isle Server - Powered by AMP",
         "EnumValues":{}
     },
     {
@@ -64,7 +54,7 @@
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "MinValue":"1",
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.MaxPlayerCount",
+        "ParamFieldName":"MaxPlayerCount",
         "DefaultValue":"50",
         "Placeholder":"50",
         "Suffix":"players",
@@ -77,9 +67,7 @@
         "Keywords":"server,password,enable,bServerPassword",
         "FieldName":"bServerPassword",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.bServerPassword",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"bServerPassword",
         "DefaultValue":"false",
         "EnumValues":{
             "False":"false",
@@ -93,9 +81,7 @@
         "Keywords":"server,password,ServerPassword",
         "FieldName":"ServerPassword",
         "InputType":"password",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.ServerPassword",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"ServerPassword",
         "DefaultValue":"{{newguid()}}",
         "Required":true,
         "EnumValues":{}
@@ -103,30 +89,38 @@
     {
         "DisplayName":"Server Admins",
         "Category":"Server Settings",
-        "Description":"Server admins can be specified by including their Steam64 IDs in the [/Script/TheIsle.TIGameStateBase] section of Game.ini. One entry per admin. Format: AdminsSteamIDs=71231XXXXXXXXXXXX",
+        "Description":"Specifies the [Steam64 IDs](https://steamidfinder.com/) of server admins. One line per admin. Format: AdminsSteamIDs=71231XXXXXXXXXXXX",
         "Keywords":"admins,AdminsSteamIDs",
         "FieldName":"AdminsSteamIDs",
-        "InputType":"hidden",
-        "IsFlagArgument":false,
+        "InputType":"Textarea",
         "ParamFieldName":"AdminsSteamIDs",
-        "IncludeInCommandLine":false,
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
         "DisplayName":"Enable Whitelist",
         "Category":"Server Settings",
-        "Description":"If set, the server whitelist will be enabled, so that only players whose Steam64 IDs are listed in the [/Script/TheIsle.TIGameStateBase] section of Game.ini will be able to join the server (in addition to server admins). One entry per player. Format: WhitelistIDs=71231XXXXXXXXXXXX",
-        "Keywords":"whitelist,bServerWhitelist",
+        "Description":"If set, the server whitelist will be enabled, so that only players whose Steam64 IDs are listed under Whitelisted Players will be able to join the server (in addition to server admins)",
+        "Keywords":"whitelist,enable,bServerWhitelist",
         "FieldName":"bServerWhitelist",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.bServerWhitelist",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"bServerWhitelist",
         "DefaultValue":"false",
         "EnumValues":{
             "False":"false",
             "True":"true"
         }
+    },
+    {
+        "DisplayName":"Whitelisted Players",
+        "Category":"Server Settings",
+        "Description":"Specifies the [Steam64 IDs](https://steamidfinder.com/) of whitelisted players. One line per player. Format: WhitelistIDs=71231XXXXXXXXXXXX",
+        "Keywords":"whitelist,players,WhitelistIDs",
+        "FieldName":"WhitelistIDs",
+        "InputType":"Textarea",
+        "ParamFieldName":"WhitelistIDs",
+        "DefaultValue":"",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Enable RCON",
@@ -135,9 +129,7 @@
         "Keywords":"rcon,enable,bRconEnabled",
         "FieldName":"bRconEnabled",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.bRconEnabled",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"bRconEnabled",
         "DefaultValue":"false",
         "EnumValues":{
             "False":"false",
@@ -151,9 +143,7 @@
         "Keywords":"rcon,password,RconPassword",
         "FieldName":"RconPassword",
         "InputType":"password",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.RconPassword",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"RconPassword",
         "DefaultValue":"{{newguid()}}",
         "EnumValues":{}
     },
@@ -164,9 +154,7 @@
         "Keywords":"queue,server,bQueueEnabled",
         "FieldName":"bQueueEnabled",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.bQueueEnabled",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"bQueueEnabled",
         "DefaultValue":"true",
         "EnumValues":{
             "False":"false",
@@ -180,9 +168,7 @@
         "Keywords":"human,characters,bEnableHumans",
         "FieldName":"bEnableHumans",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.bEnableHumans",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"bEnableHumans",
         "DefaultValue":"false",
         "EnumValues":{
             "False":"false",
@@ -196,9 +182,7 @@
         "Keywords":"dynamic,weather,bServerDynamicWeather",
         "FieldName":"bServerDynamicWeather",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.bServerDynamicWeather",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"bServerDynamicWeather",
         "DefaultValue":"true",
         "EnumValues":{
             "False":"false",
@@ -212,9 +196,7 @@
         "Keywords":"replay,system,recording,bAllowReplay",
         "FieldName":"bAllowReplay",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.bAllowReplay",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"bAllowReplay",
         "DefaultValue":"true",
         "EnumValues":{
             "False":"false",
