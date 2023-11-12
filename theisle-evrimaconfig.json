@@ -1,31 +1,5 @@
 [
     {
-        "DisplayName":"Server Port",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$GamePort",
-        "InputType":"number",
-        "Hidden":true,
-        "IsFlagArgument":false,
-        "ParamFieldName":"URL.Port",
-        "IncludeInCommandLine":false,
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Query Port",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$QueryPort",
-        "InputType":"number",
-        "Hidden":true,
-        "IsFlagArgument":false,
-        "ParamFieldName":"URL.PeerPort",
-        "IncludeInCommandLine":false,
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Queue Port",
         "Category":"Server Settings",
         "Description":"",
@@ -33,9 +7,7 @@
         "FieldName":"$QueuePort",
         "InputType":"number",
         "Hidden":true,
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.QueuePort",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"QueuePort",
         "EnumValues":{}
     },
     {
@@ -46,9 +18,7 @@
         "FieldName":"$RCONPort",
         "InputType":"number",
         "Hidden":true,
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/Engine.Game.RconPort",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"RconPort",
         "EnumValues":{}
     },
     {
@@ -58,10 +28,9 @@
         "Keywords":"name",
         "FieldName":"ServerName",
         "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.ServerName",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"ServerName",
         "DefaultValue":"The Isle Server - Powered by AMP",
+        "Placeholder":"The Isle Server - Powered by AMP",
         "EnumValues":{}
     },
     {
@@ -71,7 +40,6 @@
         "Keywords":"multihome,ip",
         "FieldName":"MultiHome",
         "InputType":"text",
-        "IsFlagArgument":false,
         "SkipIfEmpty":true,
         "ParamFieldName":"MultiHome",
         "IncludeInCommandLine":true,
@@ -81,57 +49,87 @@
     {
         "DisplayName":"Player Limit",
         "Category":"Server Settings",
-        "Description":"Maximum number of players that may connect to the server",
-        "Keywords":"players,limit",
+        "Description":"Sets the maximum number of players that may connect to the server at one time",
+        "Keywords":"players,limit,maxplayers,maxplayercount",
         "FieldName":"$MaxUsers",
         "InputType":"number",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.MaxPlayerCount",
-        "IncludeInCommandLine":false,
+        "MinValue":"1",
+        "ParamFieldName":"MaxPlayerCount",
         "DefaultValue":"50",
+        "Placeholder":"50",
         "Suffix":"players",
-        "EnumValues":{},
-        "MinValue":"1"
-    },
-    {
-        "DisplayName":"Player Limit",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$MaxUsers",
-        "InputType":"number",
-        "IsFlagArgument":false,
-        "Hidden":true,
-        "ParamFieldName":"/Script/Engine.GameSession.MaxPlayers",
-        "IncludeInCommandLine":false,
         "EnumValues":{}
     },
     {
-        "DisplayName":"Enable Global Chat",
+        "DisplayName":"Require Server Password",
         "Category":"Server Settings",
-        "Description":"If enabled, all players will be able to use the global chat channel, not just admins",
-        "Keywords":"chat,global",
-        "FieldName":"bEnableGlobalChat",
+        "Description":"If enabled, a password will be required to join the server. Specify the password under Server Password",
+        "Keywords":"server,password,enable,bServerPassword",
+        "FieldName":"bServerPassword",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.bEnableGlobalChat",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"true",
+        "ParamFieldName":"bServerPassword",
+        "DefaultValue":"false",
         "EnumValues":{
             "False":"false",
             "True":"true"
         }
     },
     {
+        "DisplayName":"Server Password",
+        "Category":"Server Settings",
+        "Description":"Sets the password to connect to the server. Default is a strong random password. Require Server Password must be enabled. Even if Require Server Password is disabled, this setting must have a value for the server to appear in the server browser",
+        "Keywords":"server,password,ServerPassword",
+        "FieldName":"ServerPassword",
+        "InputType":"password",
+        "ParamFieldName":"ServerPassword",
+        "DefaultValue":"{{newguid()}}",
+        "Required":true,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Admins",
+        "Category":"Server Settings",
+        "Description":"Specifies the [Steam64 IDs](https://steamidfinder.com/) of server admins. One line per admin. Format: AdminsSteamIDs=71231XXXXXXXXXXXX",
+        "Keywords":"admins,AdminsSteamIDs",
+        "FieldName":"AdminsSteamIDs",
+        "InputType":"Textarea",
+        "ParamFieldName":"AdminsSteamIDs",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Whitelist",
+        "Category":"Server Settings",
+        "Description":"If set, the server whitelist will be enabled, so that only players whose Steam64 IDs are listed under Whitelisted Players will be able to join the server (in addition to server admins)",
+        "Keywords":"whitelist,enable,bServerWhitelist",
+        "FieldName":"bServerWhitelist",
+        "InputType":"checkbox",
+        "ParamFieldName":"bServerWhitelist",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Whitelisted Players",
+        "Category":"Server Settings",
+        "Description":"Specifies the [Steam64 IDs](https://steamidfinder.com/) of whitelisted players. One line per player. Format: WhitelistIDs=71231XXXXXXXXXXXX",
+        "Keywords":"whitelist,players,WhitelistIDs",
+        "FieldName":"WhitelistIDs",
+        "InputType":"Textarea",
+        "ParamFieldName":"WhitelistIDs",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Enable RCON",
         "Category":"Server Settings",
-        "Description":"Enables the RCON server",
-        "Keywords":"rcon,enable",
-        "FieldName":"RconEnabled",
+        "Description":"If set, the server's RCON will be enabled. Specify the RCON password under RCON Password",
+        "Keywords":"rcon,enable,bRconEnabled",
+        "FieldName":"bRconEnabled",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/Engine.Game.RconEnabled",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"bRconEnabled",
         "DefaultValue":"false",
         "EnumValues":{
             "False":"false",
@@ -141,26 +139,22 @@
     {
         "DisplayName":"RCON Password",
         "Category":"Server Settings",
-        "Description":"Password to connect to RCON. NOTE: You should generate a password after enabling RCON",
-        "Keywords":"rcon,password",
+        "Description":"Sets the password to connect to the server's RCON. Default is a strong, random password",
+        "Keywords":"rcon,password,RconPassword",
         "FieldName":"RconPassword",
-        "InputType":"RandomPassword",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/Engine.Game.RconPassword",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"",
+        "InputType":"password",
+        "ParamFieldName":"RconPassword",
+        "DefaultValue":"{{newguid()}}",
         "EnumValues":{}
     },
     {
         "DisplayName":"Enable Queue Server",
         "Category":"Server Settings",
         "Description":"If enabled, players can queue to join a full server. Requires the Queue Port to be opened",
-        "Keywords":"queue,server",
+        "Keywords":"queue,server,bQueueEnabled",
         "FieldName":"bQueueEnabled",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.bQueueEnabled",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"bQueueEnabled",
         "DefaultValue":"true",
         "EnumValues":{
             "False":"false",
@@ -171,13 +165,39 @@
         "DisplayName":"Enable Humans",
         "Category":"Server Settings",
         "Description":"If set, human characters will be enabled on the server",
-        "Keywords":"human,characters",
+        "Keywords":"human,characters,bEnableHumans",
         "FieldName":"bEnableHumans",
         "InputType":"checkbox",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/Script/TheIsle.TIGameSession.bEnableHumans",
-        "IncludeInCommandLine":false,
+        "ParamFieldName":"bEnableHumans",
         "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Dynamic Weather",
+        "Category":"Server Settings",
+        "Description":"If set, dynamic weather will be enabled on the server",
+        "Keywords":"dynamic,weather,bServerDynamicWeather",
+        "FieldName":"bServerDynamicWeather",
+        "InputType":"checkbox",
+        "ParamFieldName":"bServerDynamicWeather",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Replay",
+        "Category":"Server Settings",
+        "Description":"If set, the server's replay system will be enabled. Recording can be started and stopped in-game via the F2 key. Replays must be a minimum of 5 seconds and cannot be viewed until 30 minutes has passed",
+        "Keywords":"replay,system,recording,bAllowReplay",
+        "FieldName":"bAllowReplay",
+        "InputType":"checkbox",
+        "ParamFieldName":"bAllowReplay",
+        "DefaultValue":"true",
         "EnumValues":{
             "False":"false",
             "True":"true"
