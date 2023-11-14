@@ -112,18 +112,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Whitelisted Server Admins [Not Working]",
-        "Category":"ARK Server Settings",
-        "Description":"List of [Steam64 IDs](https://steamidfinder.com/) for whitelisted server admins. These admins do not need to use the server admin password",
-        "Keywords":"admin,whitelist,allowedcheatersteamids",
-        "FieldName":"AdminWhitelist",
-        "InputType":"list",
-        "ParamFieldName":"AdminWhitelist",
-        "DefaultValue":"",
-        "Special":"listfile:./ark-sa/2430930/ShooterGame/Saved/AllowedCheaterSteamIDs.txt",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"RCON/Server Admin Password",
         "Category":"ARK Server Settings",
         "Description":"See the Security and Privacy menu for configurable options for the server's RCON password. The RCON password is also used in the in-game console for players to access administrator commands (unless they are whitelisted)",
@@ -143,44 +131,6 @@
         "InputType":"password",
         "ParamFieldName":"ServerSettings.ServerPassword",
         "IncludeInCommandLine":false,
-        "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Player Whitelist [Not Working]",
-        "Category":"ARK Server Settings",
-        "Description":"If set, only players with Steam64 IDs listed under Whitelisted Players can join the server",
-        "Keywords":"player,whitelist,exclusivejoin",
-        "FieldName":"exclusivejoin",
-        "InputType":"checkbox",
-        "ParamFieldName":"exclusivejoin",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"",
-        "EnumValues":{
-            "False":"",
-            "True":"-exclusivejoin "
-        }
-    },
-    {
-        "DisplayName":"Whitelisted Players [Not Working]",
-        "Category":"ARK Server Settings",
-        "Description":"List of [Steam64 IDs](https://steamidfinder.com/) for whitelisted players",
-        "Keywords":"player,whitelist,playersexclusivejoinlist",
-        "FieldName":"PlayerWhitelist",
-        "InputType":"list",
-        "ParamFieldName":"PlayerWhitelist",
-        "DefaultValue":"",
-        "Special":"listfile:./ark-sa/2430930/ShooterGame/Binaries/Win64/PlayersExclusiveJoinList.txt",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Spectator Password [Working?]",
-        "Category":"ARK Server Settings",
-        "Description":"Sets the password for non-admin spectators on the server",
-        "Keywords":"spectator,password,spectatorpassword",
-        "FieldName":"SpectatorPassword",
-        "InputType":"password",
-        "ParamFieldName":"ServerSettings.SpectatorPassword",
         "DefaultValue":"",
         "EnumValues":{}
     },
@@ -225,7 +175,7 @@
     {
         "DisplayName":"Enable Vivox",
         "Category":"ARK Server Settings",
-        "Description":"If set, enables Vivox on Steam only servers (Vivox is the default for Epic Game Store enabled servers)",
+        "Description":"If set, enables Vivox on the server",
         "Keywords":"vivox,usevivox",
         "FieldName":"UseVivox",
         "InputType":"checkbox",
@@ -251,7 +201,7 @@
         }
     },
     {
-        "DisplayName":"Banlist URL [Working?]",
+        "DisplayName":"Banlist URL",
         "Category":"ARK Server Settings",
         "Description":"Sets a banlist to disallow access to the server to specified players (identified by Steam64 ID). Use either the global banlist of ARK, or a custom banlist URL",
         "Keywords":"ban,banlist,blacklist,banlisturl",
@@ -271,7 +221,7 @@
         "InputType":"checkbox",
         "ParamFieldName":"AdminLogging",
         "IncludeInCommandLine":true,
-        "DefaultValue":"True",
+        "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
             "True":"True"
@@ -325,7 +275,7 @@
     {
         "DisplayName":"Disable Hang Detection",
         "Category":"ARK Server Settings",
-        "Description":"If set, hang detection will be disabled",
+        "Description":"If set, prevents the server from shutdown if its start-time takes more than 2700 seconds (45 minutes). Useful for servers with big saves or very slow machines",
         "Keywords":"hang,detection,disabled,NoHangDetection",
         "FieldName":"NoHangDetection",
         "InputType":"checkbox",
@@ -401,9 +351,9 @@
         "Category":"ARK Gameplay Settings",
         "Description":"If set, PvE will be enabled, and PvP disabled",
         "Keywords":"pve,pvp,serverpve",
-        "FieldName":"serverPVE",
+        "FieldName":"ServerPVE",
         "InputType":"checkbox",
-        "ParamFieldName":"serverPVE",
+        "ParamFieldName":"ServerPVE",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -414,13 +364,13 @@
     {
         "DisplayName":"Enable Offline Raiding Prevention",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, the Offline Raiding Prevention option will be enabled in PvP mode, preventing damage to a player's structures and creatures while the player is offline. For tribe creatures and structures, all tribe members must be offline",
+        "Description":"If set, the Offline Raiding Prevention option will be enabled, so that when all tribe members are logged off, tribe characters, creatures and structures become invulnerable. Creature starvation still applies, and characters and creatures can still die if drowned",
         "Keywords":"offline,pvp,raiding,prevention,preventofflinepvp",
         "FieldName":"PreventOfflinePvP",
         "InputType":"checkbox",
         "ParamFieldName":"PreventOfflinePvP",
         "IncludeInCommandLine":true,
-        "DefaultValue":"True",
+        "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
             "True":"True"
@@ -429,14 +379,14 @@
     {
         "DisplayName":"Offline Raiding Prevention Interval",
         "Category":"ARK Gameplay Settings",
-        "Description":"Sets the time period after which an logged off player will be considered offline for the Offline Raiding Prevention option",
+        "Description":"Sets the time period after which Offline Raiding Prevention becomes active for tribes/players and related creatures/structures. Recommended to set a minimum for performance reasons",
         "Keywords":"offline,pvp,raiding,prevention,preventofflinepvpinterval",
         "FieldName":"PreventOfflinePvPInterval",
         "InputType":"number",
         "ParamFieldName":"PreventOfflinePvPInterval",
         "IncludeInCommandLine":true,
-        "DefaultValue":"60.0",
-        "Placeholder":"60.0",
+        "DefaultValue":"0.0",
+        "Placeholder":"0.0",
         "Suffix":"seconds",
         "EnumValues":{}
     },
@@ -445,9 +395,9 @@
         "Category":"ARK Gameplay Settings",
         "Description":"If set, enables hardcore mode, meaning player characters revert to level 1 upon death",
         "Keywords":"hardcore,serverhardcore",
-        "FieldName":"serverHardcore",
+        "FieldName":"ServerHardcore",
         "InputType":"checkbox",
-        "ParamFieldName":"serverHardcore",
+        "ParamFieldName":"ServerHardcore",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -472,7 +422,7 @@
     {
         "DisplayName":"Difficulty Override Level",
         "Category":"ARK Gameplay Settings",
-        "Description":"Sets the value of the difficulty level to be applied if \"Override Official Difficulty\" is enabled, allowing the level to go above the default 4.0. Be careful not to go too high!",
+        "Description":"Sets the value of the difficulty level to be applied if \"Override Official Difficulty\" is enabled, allowing the level to go above the default 4.0. Value of 5.0 will allow common creatures to spawn up to level 150. Be careful not to go too high!",
         "Keywords":"override,official,difficulty,level,overrideofficialdifficulty",
         "FieldName":"DifficultyOverrideLevel",
         "InputType":"number",
@@ -515,11 +465,11 @@
     {
         "DisplayName":"Disable HUD",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, the HUD (head-up display) will always be disabled",
+        "Description":"If set, the HUD (head-up display) will always be disabled for non-tribe owned NPCs",
         "Keywords":"hud,head-up,heads-up,display,serverforcenohud",
-        "FieldName":"serverForceNoHud",
+        "FieldName":"ServerForceNoHUD",
         "InputType":"checkbox",
-        "ParamFieldName":"serverForceNoHud",
+        "ParamFieldName":"ServerForceNoHUD",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -536,7 +486,7 @@
         "InputType":"checkbox",
         "ParamFieldName":"ShowMapPlayerLocation",
         "IncludeInCommandLine":true,
-        "DefaultValue":"False",
+        "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
             "True":"True"
@@ -545,11 +495,11 @@
     {
         "DisplayName":"Allow Third Person View",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, third person view is enabled",
-        "Keywords":"third,person,3rd,view,allowthirdpersonplayer",
+        "Description":"If set, the third person camera is enabled",
+        "Keywords":"third,person,3rd,view,camera,allowthirdpersonplayer",
         "FieldName":"AllowThirdPersonPlayer",
         "InputType":"checkbox",
-        "ParamFieldName":"allowThirdPersonPlayer",
+        "ParamFieldName":"AllowThirdPersonPlayer",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -626,21 +576,21 @@
         "InputType":"number",
         "ParamFieldName":"MaxTamedDinos",
         "IncludeInCommandLine":true,
-        "DefaultValue":"4000",
-        "Placeholder":"4000",
+        "DefaultValue":"5000",
+        "Placeholder":"5000",
         "EnumValues":{}
     },
     {
         "DisplayName":"Maximum Personal Tamed Creatures",
         "Category":"ARK Gameplay Settings",
-        "Description":"Sets the maximum number of tamed creatures that a tribe is allowed to have",
+        "Description":"Sets the maximum number of tamed creatures that a tribe is allowed to have. 0 = disabled",
         "Keywords":"maximum,tamed,personal,creatures,limit,maxpersonaltameddinos",
         "FieldName":"MaxPersonalTamedDinos",
         "InputType":"number",
         "ParamFieldName":"MaxPersonalTamedDinos",
         "IncludeInCommandLine":true,
-        "DefaultValue":"500",
-        "Placeholder":"500",
+        "DefaultValue":"0",
+        "Placeholder":"0",
         "EnumValues":{}
     },
     {
@@ -650,6 +600,7 @@
         "Keywords":"maximum,tribute,creatures,limit,maxtributedinos",
         "FieldName":"MaxTributeDinos",
         "InputType":"number",
+        "MinValue":"20",
         "ParamFieldName":"MaxTributeDinos",
         "IncludeInCommandLine":true,
         "DefaultValue":"20",
@@ -659,7 +610,7 @@
     {
         "DisplayName":"Maximum Structures",
         "Category":"ARK Gameplay Settings",
-        "Description":"Sets the maximum number of structures that can be constructed within a certain range",
+        "Description":"Sets the maximum number of structures that can be constructed within a certain (currently hard-coded) range",
         "Keywords":"maximum,structures,limit,themaxstructuresinrange",
         "FieldName":"TheMaxStructuresInRange",
         "InputType":"number",
@@ -676,6 +627,7 @@
         "Keywords":"maximum,tribute,items,limit,maxtributeitems",
         "FieldName":"MaxTributeItems",
         "InputType":"number",
+        "MinValue":"50",
         "ParamFieldName":"MaxTributeItems",
         "IncludeInCommandLine":true,
         "DefaultValue":"50",
@@ -713,7 +665,7 @@
     {
         "DisplayName":"Disable PvP Friendly Fire",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, prevents friendly fire among tribe-mates, tribe-creatures and tribe-structures on PvP servers",
+        "Description":"If set, prevents friendly fire among tribe-mates, tribe-dinosaurs and tribe-structures on PvP servers",
         "Keywords":"pvp,friendly,fire,bdisablefriendlyfire",
         "FieldName":"bDisableFriendlyFire",
         "InputType":"checkbox",
@@ -727,7 +679,7 @@
     {
         "DisplayName":"Disable PvE Friendly Fire",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, prevents friendly fire among tribe-mates, tribe-creatures and tribe-structures on PvE servers",
+        "Description":"If set, prevents friendly fire among tribe-mates, tribe-dinosaurs and tribe-structures on PvE servers",
         "Keywords":"pve,friendly,fire,bpvedisablefriendlyfire",
         "FieldName":"bPvEDisableFriendlyFire",
         "InputType":"checkbox",
@@ -741,11 +693,11 @@
     {
         "DisplayName":"Enable PvP Gamma",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, allows gamma changes in PvP mode",
+        "Description":"If set, allows use of console command \"gamma\" in PvP mode",
         "Keywords":"pvp,gamma,enablepvpgamma",
-        "FieldName":"EnablePVPGamma",
+        "FieldName":"EnablePvPGamma",
         "InputType":"checkbox",
-        "ParamFieldName":"EnablePVPGamma",
+        "ParamFieldName":"EnablePvPGamma",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -756,11 +708,11 @@
     {
         "DisplayName":"Disable PvE Gamma",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, prevents gamma changes in PvE mode",
+        "Description":"If set, prevents use of console command \"gamma\" in PvE mode",
         "Keywords":"pve,gamma,disablepvegamma",
-        "FieldName":"DisablePVEGamma",
+        "FieldName":"DisablePvEGamma",
         "InputType":"checkbox",
-        "ParamFieldName":"DisablePVEGamma",
+        "ParamFieldName":"DisablePvEGamma",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -783,28 +735,13 @@
         }
     },
     {
-        "DisplayName":"Notify Player Leave [Working?]",
-        "Category":"ARK Gameplay Settings",
-        "Description":"If set, players will always be notified if someone leaves the server",
-        "Keywords":"notify,player,leave,alwaysnotifyplayerleft",
-        "FieldName":"AlwaysNotifyPlayerLeft",
-        "InputType":"checkbox",
-        "ParamFieldName":"AlwaysNotifyPlayerLeft",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
         "DisplayName":"Enable Global Voice Chat",
         "Category":"ARK Gameplay Settings",
         "Description":"If set, voice chat will be enabled globally",
         "Keywords":"voice,chat,globalvoicechat",
-        "FieldName":"globalVoiceChat",
+        "FieldName":"GlobalVoiceChat",
         "InputType":"checkbox",
-        "ParamFieldName":"globalVoiceChat",
+        "ParamFieldName":"GlobalVoiceChat",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -817,9 +754,9 @@
         "Category":"ARK Gameplay Settings",
         "Description":"If set, only players near each other can see each other's chat messages",
         "Keywords":"proximity,chat,proximitychat",
-        "FieldName":"proximityChat",
+        "FieldName":"ProximityChat",
         "InputType":"checkbox",
-        "ParamFieldName":"proximityChat",
+        "ParamFieldName":"ProximityChat",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -887,7 +824,7 @@
     {
         "DisplayName":"Allow Cave Flyers",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, flyers will always be allowed into caves",
+        "Description":"If set, flyers will always be allowed into caves (flyers are able to go into caves by default on custom maps)",
         "Keywords":"allow,cave,flyers,forceallowcaveflyers",
         "FieldName":"ForceAllowCaveFlyers",
         "InputType":"checkbox",
@@ -913,23 +850,9 @@
         }
     },
     {
-        "DisplayName":"Prevent Hibernation",
-        "Category":"ARK Gameplay Settings",
-        "Description":"If set, creatures in inactive zones will not hibernate, at the cost of performance and memory usage",
-        "Keywords":"prevent,hibernation,preventhibernation",
-        "FieldName":"PreventHibernation",
-        "InputType":"checkbox",
-        "ParamFieldName":"PreventHibernation",
-        "DefaultValue":"",
-        "EnumValues":{
-            "False":"",
-            "True":"-PreventHibernation "
-        }
-    },
-    {
         "DisplayName":"Force Wild Creature Respawn On Start",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, all wild creatures that are not currently being tamed will be destroyed on server start",
+        "Description":"If set, all wild creatures that are not currently tamed will be destroyed on server start",
         "Keywords":"force,creature,respawn,forcerespawndinos",
         "FieldName":"ForceRespawnDinos",
         "InputType":"checkbox",
@@ -939,21 +862,6 @@
             "False":"",
             "True":"-ForceRespawnDinos "
         }
-    },
-    {
-        "DisplayName":"Force Wild Creature Respawn At Interval [Working?]",
-        "Category":"ARK Gameplay Settings",
-        "Description":"Sets the period to force respawns of wild creatures to prevent certain types (like the Basilo and Spino) from becoming depopulated on long running servers, as well as removing any lingering event creatures. 0 = disabled",
-        "Keywords":"auto,force,respawn,wild,creatures,interval,serverautoforcerespawnwilddinosinterval",
-        "FieldName":"ServerAutoForceRespawnWildDinosInterval",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"ServerAutoForceRespawnWildDinosInterval",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"604800",
-        "Placeholder":"604800",
-        "Suffix":"seconds",
-        "EnumValues":{}
     },
     {
         "DisplayName":"Disable Tek Railgun",
@@ -1027,13 +935,13 @@
     {
         "DisplayName":"Enable PvP Creature Decay",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, the gradual decay (or unclaiming) of creature ownership will be enabled in PvP mode",
+        "Description":"If set, the gradual decay (or unclaiming) of creature ownership will be enabled in PvP mode while Offline Raid Prevention is active",
         "Keywords":"pvp,dino,decay,unclaim,pvpdinodecay",
         "FieldName":"PvPDinoDecay",
         "InputType":"checkbox",
         "ParamFieldName":"PvPDinoDecay",
         "IncludeInCommandLine":true,
-        "DefaultValue":"True",
+        "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
             "True":"True"
@@ -1042,7 +950,7 @@
     {
         "DisplayName":"Enable Passive Defence Damage",
         "Category":"ARK Gameplay Settings",
-        "Description":"If set, wild creatures and riderless creatures can take damage from passive defence structures like spikewalls",
+        "Description":"If set, wild and riderless dinosaurs can take damage from passive defence structures like spikewalls",
         "Keywords":"passive,defense,defence,damage,bpassivedefensesdamageriderlessdinos",
         "FieldName":"bPassiveDefensesDamageRiderlessDinos",
         "InputType":"checkbox",
@@ -1159,36 +1067,6 @@
         }
     },
     {
-        "DisplayName":"Optimize Harvest Amount Multiplier [Working?]",
-        "Category":"ARK Gameplay Settings",
-        "Description":"If set, optimizes the server performance when using a higher Harvest Amount Multiplier, by reducing the bias towards yielding rarer items",
-        "Keywords":"optimized,harvest,multiplier,useoptimizedharvestinghealth",
-        "FieldName":"UseOptimizedHarvestingHealth",
-        "InputType":"checkbox",
-        "ParamFieldName":"UseOptimizedHarvestingHealth",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Force Flyer Explosives",
-        "Category":"ARK Gameplay Settings",
-        "Description":"If set, allows flyers to fly with C4 attached to them. Otherwise, except for Quetzal and Wyvern, they can't fly",
-        "Keywords":"flyer,explosives,forceflyerexplosives",
-        "FieldName":"ForceFlyerExplosives",
-        "InputType":"checkbox",
-        "ParamFieldName":"ForceFlyerExplosives",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
         "DisplayName":"Allow Multiple Attached C4",
         "Category":"ARK Gameplay Settings",
         "Description":"If enabled, more than one C4 can be attached per creature",
@@ -1196,21 +1074,6 @@
         "FieldName":"AllowMultipleAttachedC4",
         "InputType":"checkbox",
         "ParamFieldName":"AllowMultipleAttachedC4",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Allow Flying Stamina Recovery [Working?]",
-        "Category":"ARK Gameplay Settings",
-        "Description":"If set, flyers can recover stamina when a player is standing on them instead of riding",
-        "Keywords":"flying,stamina,recovery,allowflyingstaminarecovery",
-        "FieldName":"AllowFlyingStaminaRecovery",
-        "InputType":"checkbox",
-        "ParamFieldName":"AllowFlyingStaminaRecovery",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
         "EnumValues":{
@@ -1236,7 +1099,7 @@
     {
         "DisplayName":"Enable Random Supply Crate Points",
         "Category":"ARK Gameplay Settings",
-        "Description":"If enabled, supply drops will be in random locations. NOTE: This setting is known to cause artifacts to become inaccessible on the Ragnarok map",
+        "Description":"If enabled, supply drops will be in random locations",
         "Keywords":"random,supply,crate,points,randomsupplycratepoints",
         "FieldName":"RandomSupplyCratePoints",
         "InputType":"checkbox",
@@ -1290,7 +1153,7 @@
     {
         "DisplayName":"XP Multiplier",
         "Category":"ARK Multiplier Settings",
-        "Description":"Sets the scaling factor for experience (XP) received by players, tribes and creatures for various actions. The default value 1 provides the same experience as a singleplayer game. Higher values increase XP amounts awarded, lower values decrease it",
+        "Description":"Sets the scaling factor for experience (XP) received by players, tribes and dinosaurs for various actions. The default value 1 provides the same experience as a singleplayer game. Higher values increase XP amounts awarded, lower values decrease it",
         "Keywords":"xp,experience,multiplier,xpmultiplier",
         "FieldName":"XPMultiplier",
         "InputType":"number",
@@ -1444,39 +1307,13 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Creature Spawn Multiplier [Working?]",
-        "Category":"ARK Multiplier Settings",
-        "Description":"Sets the scaling factor for creature spawns. Higher values increase the number of creatures spawned throughout the server",
-        "Keywords":"creature,spawn,multiplier,dinocountmultiplier",
-        "FieldName":"DinoCountMultiplier",
-        "InputType":"number",
-        "ParamFieldName":"DinoCountMultiplier",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"1.000000",
-        "Placeholder":"1.000000",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"PvE Creature Decay Period Multiplier",
         "Category":"ARK Multiplier Settings",
-        "Description":"Set the scaling factor for the unclaiming speed of creatures in PvE mode",
+        "Description":"Set the scaling factor for the unclaiming speed of creatures in PvE mode. Requires Disable PvE Creature Decay to be off",
         "Keywords":"pve,creature,decay,period,multiplier,pvedinodecayperiodmultiplier",
         "FieldName":"PvEDinoDecayPeriodMultiplier",
         "InputType":"number",
         "ParamFieldName":"PvEDinoDecayPeriodMultiplier",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"1.000000",
-        "Placeholder":"1.000000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Structure Damage Multiplier [Working?]",
-        "Category":"ARK Multiplier Settings",
-        "Description":"Sets the scaling factor for the damage that structures (spikewalls) cause with their attacks. The default value 1 causes normal damage. Higher values increase damage, lower values decrease it",
-        "Keywords":"structure,damage,multiplier,structuredamagemultiplier",
-        "FieldName":"StructureDamageMultiplier",
-        "InputType":"number",
-        "ParamFieldName":"StructureDamageMultiplier",
         "IncludeInCommandLine":true,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
@@ -1511,7 +1348,7 @@
     {
         "DisplayName":"PvE Structure Decay Period Multiplier [Working?]",
         "Category":"ARK Multiplier Settings",
-        "Description":"Sets the scaling factor for the decay rate of player structures in PvE mode",
+        "Description":"Sets the scaling factor for the decay rate of player structures. 2.0 = double, 0.5 = half",
         "Keywords":"pve,structure,decay,pvestructuredecayperiodmultiplier",
         "FieldName":"PvEStructureDecayPeriodMultiplier",
         "InputType":"number",
@@ -1529,19 +1366,6 @@
         "FieldName":"PerPlatformMaxStructuresMultiplier",
         "InputType":"number",
         "ParamFieldName":"PerPlatformMaxStructuresMultiplier",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"1.000000",
-        "Placeholder":"1.000000",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Auto Structure Destruction Multiplier [Working?]",
-        "Category":"ARK Multiplier Settings",
-        "Description":"Sets the scaling factor, relative to the period for allowing claims, to automatically destroy structures if there has been no near tribe player during that time. Requires Auto Destroy Structures to be enabled",
-        "Keywords":"time,tribe,structure,destroy,autodestroyoldstructuresmultiplier",
-        "FieldName":"AutoDestroyOldStructuresMultiplier",
-        "InputType":"number",
-        "ParamFieldName":"AutoDestroyOldStructuresMultiplier",
         "IncludeInCommandLine":true,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
@@ -1653,50 +1477,6 @@
         }
     },
     {
-        "DisplayName":"Auto Destroy Structures",
-        "Category":"ARK Structure Settings",
-        "Description":"If set, auto destruction of old structures will be enabled. The destruction timer can be adjusted with Auto Structure Destruction Multiplier",
-        "Keywords":"auto,destroy,structures,autodestroystructures",
-        "FieldName":"AutoDestroyStructures",
-        "InputType":"checkbox",
-        "ParamFieldName":"AutoDestroyStructures",
-        "DefaultValue":"-AutoDestroyStructures ",
-        "EnumValues":{
-            "False":"",
-            "True":"-AutoDestroyStructures "
-        }
-    },
-    {
-        "DisplayName":"Auto Destroy Core Structures Only [Working?]",
-        "Category":"ARK Structure Settings",
-        "Description":"If set, any non-core/non-foundation structures will not be auto destroyed (assuming Auto Destroy Structures is enabled), except if a floor they are on is auto destroyed",
-        "Keywords":"auto,destroy,core,structures,onlyautodestroycorestructures",
-        "FieldName":"OnlyAutoDestroyCoreStructures",
-        "InputType":"checkbox",
-        "ParamFieldName":"OnlyAutoDestroyCoreStructures",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Only Auto Destroy Unsnapped Core Structures [Working?]",
-        "Category":"ARK Structure Settings",
-        "Description":"If set, only unsnapped core structures will decay (be auto destroyed). Useful for eliminating lone pillar/foundation spam on servers in PvP mode",
-        "Keywords":"auto,destroy,unsnapped,core,structures,onlydecayunsnappedcorestructures",
-        "FieldName":"OnlyDecayUnsnappedCoreStructures",
-        "InputType":"checkbox",
-        "ParamFieldName":"OnlyDecayUnsnappedCoreStructures",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
         "DisplayName":"Disable PvE Structure Decay",
         "Category":"ARK Structure Settings",
         "Description":"If set, the gradual (7 days) decay of player structures will be disabled in PvE mode",
@@ -1710,74 +1490,6 @@
             "False":"False",
             "True":"True"
         }
-    },
-    {
-        "DisplayName":"Enable PvP Structure Decay [Working?]",
-        "Category":"ARK Structure Settings",
-        "Description":"If set, the gradual decay of structures will be enabled in PvP mode",
-        "Keywords":"pvp,structure,decay,pvpstructuredecay",
-        "FieldName":"PvPStructureDecay",
-        "InputType":"checkbox",
-        "ParamFieldName":"PvPStructureDecay",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Fast Decay Unsnapped Core Structures [Working?]",
-        "Category":"ARK Structure Settings",
-        "Description":"If set, unsnapped foundations/pillars will decay at 5x speed",
-        "Keywords":"fast,decay,unsnapped,core,structure,fastdecayunsnappedcorestructures",
-        "FieldName":"FastDecayUnsnappedCoreStructures",
-        "InputType":"checkbox",
-        "ParamFieldName":"FastDecayUnsnappedCoreStructures",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Structure Damage Repair Cooldown",
-        "Category":"ARK Structure Settings",
-        "Description":"Sets the cooldown period on structure repair from the last time damaged. 0 =  disabled (structures can always be repaired)",
-        "Keywords":"structure,damage,repair,cooldown,structuredamagerepaircooldown",
-        "FieldName":"StructureDamageRepairCooldown",
-        "InputType":"number",
-        "ParamFieldName":"/Script/ShooterGame.ShooterGameMode.StructureDamageRepairCooldown",
-        "DefaultValue":"180",
-        "Placeholder":"180",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Maximum Platform Saddle Limit [Working?]",
-        "Category":"ARK Structure Settings",
-        "Description":"Sets the maximum number of platformed-creatures/rafts allowed on the server",
-        "Keywords":"maximum,platform,saddle,structure,limit,maxplatformsaddlestructurelimit",
-        "FieldName":"MaxPlatformSaddleStructureLimit",
-        "InputType":"number",
-        "ParamFieldName":"ServerSettings.MaxPlatformSaddleStructureLimit",
-        "DefaultValue":"100",
-        "Placeholder":"100",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Platform Saddle Cost [Working?]",
-        "Category":"ARK Structure Settings",
-        "Description":"Sets the number of \"tamed creature slots\" a platform saddle will use",
-        "Keywords":"tamed,creature,cost,saddle,platform,personaltameddinossaddlestructurecost",
-        "FieldName":"PersonalTamedDinosSaddleStructureCost",
-        "InputType":"number",
-        "ParamFieldName":"PersonalTamedDinosSaddleStructureCost",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"19",
-        "Placeholder":"19",
-        "EnumValues":{}
     },
     {
         "DisplayName":"Override Structure Platform Prevention",
@@ -1804,21 +1516,6 @@
         "ParamFieldName":"EnableExtraStructurePreventionVolumes",
         "IncludeInCommandLine":true,
         "DefaultValue":"False",
-        "EnumValues":{
-            "False":"False",
-            "True":"True"
-        }
-    },
-    {
-        "DisplayName":"Allow Crate Spawns On Structures [Working?]",
-        "Category":"ARK Structure Settings",
-        "Description":"If set, from-the-air supply crates can appear on top of structures, rather than being prevented by structures",
-        "Keywords":"crates,structures,allowcratespawnsontopofstructures",
-        "FieldName":"AllowCrateSpawnsOnTopOfStructures",
-        "InputType":"checkbox",
-        "ParamFieldName":"AllowCrateSpawnsOnTopOfStructures",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
             "True":"True"
