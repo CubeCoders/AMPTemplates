@@ -1,0 +1,148 @@
+[
+    {
+        "DisplayName":"Bot Download Type",
+        "Category":"Bot Runner Settings",
+        "Description":"Sets how to download the bot. Specify the Application Download Source, GitHub Release Filename, GitHub Release Version or PyPI Name accordingly. Update the server after changing this setting",
+        "Keywords":"download,type",
+        "FieldName":"DownloadType",
+        "InputType":"enum",
+        "ParamFieldName":"DownloadType",
+        "DefaultValue":"GitRepo",
+        "EnumValues":{
+            "DownloadURL":"Download URL",
+            "GithubRelease":"GitHub release",
+            "GitRepo":"GitHub repo (default)",
+            "PyPIPackage":"PyPI package",
+            "None":"None"
+        }
+    },
+    {
+        "DisplayName":"Bot Download Source",
+        "Category":"Bot Runner Settings",
+        "Description":"Sets the source for the Application Download Type. GitHub repo = URL that ends in .git. GitHub release = User/Repo. Download URL = URL to a zip file to download. Update the server after changing this setting",
+        "Keywords":"download,source",
+        "FieldName":"DownloadSource",
+        "InputType":"text",
+        "ParamFieldName":"DownloadSource",
+        "DefaultValue":"",
+        "Placeholder":"https://github.com/user/mybot.git",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"GitHub Release Filename",
+        "Category":"Bot Runner Settings",
+        "Description":"If \"GitHub Release\" is selected under Bot Download Type, sets the name of the zip file to download",
+        "Keywords":"github,release,filename",
+        "FieldName":"DownloadFilename",
+        "InputType":"text",
+        "ParamFieldName":"DownloadFilename",
+        "DefaultValue":"",
+        "Placeholder":"discordbot.zip",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"GitHub Release Version",
+        "Category":"Bot Runner Settings",
+        "Description":"If \"GitHub Release\" is selected under Bot Download Type, sets the release version to download. Blank = latest",
+        "Keywords":"github,release,version",
+        "FieldName":"DownloadVersion",
+        "InputType":"text",
+        "ParamFieldName":"DownloadVersion",
+        "DefaultValue":"",
+        "Placeholder":"1.0.0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"PyPI Package Name",
+        "Category":"Bot Runner Settings",
+        "Description":"If \"PyPI package\" is selected under Bot Download Type, sets the name of the package to install",
+        "Keywords":"pypi,install,package,name",
+        "FieldName":"DownloadPackage",
+        "InputType":"text",
+        "ParamFieldName":"DownloadPackage",
+        "DefaultValue":"",
+        "Placeholder":"discord-bot",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Python Version",
+        "Category":"Bot Runner Settings",
+        "Description":"Sets the specific Python 3 version to run the bot with. The version must be installed on the system for all users (and in the System Path on Windows). If using AMP's Docker, you will limited to its installed version",
+        "Keywords":"python,version",
+        "FieldName":"PythonVersion",
+        "InputType":"enum",
+        "ParamFieldName":"PythonVersion",
+        "DefaultValue":"3",
+        "EnumValues":{
+            "3":"System default",
+            "3.8":"3.8",
+            "3.9":"3.9",
+            "3.10":"3.10",
+            "3.11":"3.11",
+            "3.12":"3.12"
+        }
+    },
+    {
+        "DisplayName":"Python Packages Install Method",
+        "Category":"Bot Runner Settings",
+        "Description":"Sets the method to install additional Python packages from PyPI to run the bot. If \"Requirements specifier\" is selected, list the packages under Specific Python Package Requirements. Setuptools, discord.py and python-dotenv are installed by default",
+        "Keywords":"python,install,method,packages,requirements",
+        "FieldName":"PackagesInstallType",
+        "InputType":"enum",
+        "ParamFieldName":"PackagesInstallType",
+        "DefaultValue":"",
+        "EnumValues":{
+            "none":"None",
+            "file":"Requirements.txt file",
+            "specifier":"Requirements specifier"
+        }
+    },
+    {
+        "DisplayName":"Specific Python Package Requirements",
+        "Category":"Bot Runner Settings",
+        "Description":"Specifies a space-separated list of additional Python packages to install. Select \"Requirements specifier\" under Python Packages Install Method. Otherwise select the \"Requirements.txt file\" method",
+        "Keywords":"additional,python,packages",
+        "FieldName":"PythonPackages",
+        "InputType":"text",
+        "ParamFieldName":"PythonPackages",
+        "DefaultValue":"",
+        "Placeholder":"numpy requests",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Bot Name",
+        "Category":"Bot Runner Settings",
+        "Description":"Sets the name of the Python bot to run",
+        "Keywords":"bot,name,BotName",
+        "FieldName":"BotName",
+        "InputType":"text",
+        "ParamFieldName":"BotName",
+        "DefaultValue":"",
+        "Placeholder":"bot.py",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Bot Environment Variables",
+        "Category":"Bot Runner Settings",
+        "Description":"Sets a list of environment variables to run the bot with. For example, this would include your [Discord bot token](https://discord.com/developers/applications/). Consult any example .env file included with the bot for relevant variables to specify",
+        "Keywords":"environment,variables,EnvVars",
+        "FieldName":"EnvVars",
+        "InputType":"list",
+        "ParamFieldName":"EnvVars",
+        "DefaultValue":"",
+        "Special":"listfile:./python-bot-runner/.env",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Bot Command Line Arguments",
+        "Category":"Bot Runner Settings",
+        "Description":"Specifies any command line arguments to include when running the bot",
+        "Keywords":"command,line,arguments,args",
+        "FieldName":"CommandLineArgs",
+        "InputType":"text",
+        "ParamFieldName":"CommandLineArgs",
+        "DefaultValue":"",
+        "Placeholder":"value1=foo value2=bar",
+        "EnumValues":{}
+    }
+]

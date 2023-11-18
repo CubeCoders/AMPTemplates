@@ -1,0 +1,119 @@
+[
+    {
+        "UpdateStageName":"Bot Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GitRepo",
+        "UpdateSourceData":"{{DownloadSource}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceConditionSetting":"DownloadType",
+        "UpdateSourceConditionValue":"GitRepo"
+    },
+    {
+        "UpdateStageName":"Bot Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"{{DownloadSource}}",
+        "UpdateSourceData":"{{DownloadFilename}}",
+        "UpdateSourceVersion":"{{DownloadVersion}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"DownloadType",
+        "UpdateSourceConditionValue":"GithubRelease"
+    },
+    {
+        "UpdateStageName":"Bot Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"{{DownloadSource}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"DownloadType",
+        "UpdateSourceConditionValue":"DownloadURL"
+    },
+    {
+        "UpdateStageName":"Create Virtual Environment",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '/usr/bin/python{{PythonVersion}} -m venv --upgrade-deps \"{{$FullRootDir}}venv\"'"
+    },
+    {
+        "UpdateStageName":"Create Virtual Environment",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C py -{{PythonVersion}} -m venv --upgrade-deps \"{{$FullBaseDir}}venv\""
+    },
+    {
+        "UpdateStageName":"Install Basic Python Packages",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd python-bot-runner && venv/bin/python3 -m pip install -U setuptools discord.py python-dotenv > AMPSetupLog.txt 2>&1'"
+    },
+    {
+        "UpdateStageName":"Install Basic Python Packages",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd python-bot-runner && venv\\Scripts\\python.exe -m pip install -U setuptools discord.py python-dotenv > AMPSetupLog.txt 2>&1"
+    },
+    {
+        "UpdateStageName":"Bot Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd python-bot-runner && venv/bin/python3 -m pip install -U {{DownloadPackage}} >> AMPSetupLog.txt 2>&1'",
+        "UpdateSourceConditionSetting":"DownloadType",
+        "UpdateSourceConditionValue":"PyPIPackage"
+    },
+    {
+        "UpdateStageName":"Bot Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd python-bot-runner && venv\\Scripts\\python.exe -m pip install -U {{DownloadPackage}} >> AMPSetupLog.txt 2>&1",
+        "UpdateSourceConditionSetting":"DownloadType",
+        "UpdateSourceConditionValue":"PyPIPackage"
+    },
+    {
+        "UpdateStageName":"Install Additional Python Packages",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd python-bot-runner && venv/bin/python3 -m pip install -r requirements.txt >> AMPSetupLog.txt 2>&1'",
+        "UpdateSourceConditionSetting":"PackagesInstallType",
+        "UpdateSourceConditionValue":"file"
+    },
+    {
+        "UpdateStageName":"Install Additional Python Packages",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd python-bot-runner && venv\\Scripts\\python.exe -m pip install -r requirements.txt >> AMPSetupLog.txt 2>&1",
+        "UpdateSourceConditionSetting":"PackagesInstallType",
+        "UpdateSourceConditionValue":"file"
+    },
+    {
+        "UpdateStageName":"Install Additional Python Packages",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd python-bot-runner && venv/bin/python3 -m pip install -U {{PythonPackages}} >> AMPSetupLog.txt 2>&1'",
+        "UpdateSourceConditionSetting":"PackagesInstallType",
+        "UpdateSourceConditionValue":"specifier"
+    },
+    {
+        "UpdateStageName":"Install Additional Python Packages",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd python-bot-runner && venv\\Scripts\\python.exe -m pip install -U {{PythonPackages}} >> AMPSetupLog.txt 2>&1",
+        "UpdateSourceConditionSetting":"PackagesInstallType",
+        "UpdateSourceConditionValue":"specifier"
+    }
+]
