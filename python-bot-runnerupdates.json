@@ -39,7 +39,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '/usr/bin/python{{PythonVersion}} -m venv --clear --upgrade-deps \"{{$FullRootDir}}venv\"'"
+        "UpdateSourceArgs":"-c \"/usr/bin/python{{PythonVersion}} -m venv --clear --upgrade-deps '{{$FullRootDir}}venv'\""
     },
     {
         "UpdateStageName":"Create Virtual Environment",
@@ -53,7 +53,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd python-bot-runner && source venv/bin/activate && python -m pip install -U setuptools wheel discord.py python-dotenv > AMPSetupLog.txt 2>&1\""
+        "UpdateSourceArgs":"-c \"cd python-bot-runner && source ./venv/bin/activate && python -m pip install -U setuptools wheel discord.py python-dotenv > AMPSetupLog.txt 2>&1\""
     },
     {
         "UpdateStageName":"Install Basic Python Packages",
@@ -67,7 +67,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd python-bot-runner && source venv/bin/activate && python -m pip install -U {{DownloadPackageArgs}} {{DownloadPackage}} >> AMPSetupLog.txt 2>&1\"",
+        "UpdateSourceArgs":"-c \"cd python-bot-runner && source ./venv/bin/activate && python -m pip install -U {{DownloadPackageArgs}} {{DownloadPackage}} >> AMPSetupLog.txt 2>&1\"",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"PyPIPackage"
     },
@@ -85,7 +85,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd python-bot-runner && source venv/bin/activate && python -m pip install -U -r requirements.txt >> AMPSetupLog.txt 2>&1\"",
+        "UpdateSourceArgs":"-c \"cd python-bot-runner && source ./venv/bin/activate && python -m pip install -U -r requirements.txt >> AMPSetupLog.txt 2>&1\"",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"file"
     },
@@ -103,7 +103,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd python-bot-runner && source venv/bin/activate && python -m pip install -U {{PythonPackages}} >> AMPSetupLog.txt 2>&1\"",
+        "UpdateSourceArgs":"-c \"cd python-bot-runner && source ./venv/bin/activate && python -m pip install -U {{PythonPackages}} >> AMPSetupLog.txt 2>&1\"",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"specifier"
     },
@@ -121,7 +121,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd python-bot-runner && source venv/bin/activate && {{BotSetupCommand}}\"",
+        "UpdateSourceArgs":"-c \"cd python-bot-runner && source ./venv/bin/activate && {{BotSetupCommand}}\"",
         "UpdateSourceConditionSetting":"RunBotSetupCommand",
         "UpdateSourceConditionValue":"true"
     },
