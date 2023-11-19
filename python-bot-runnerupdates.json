@@ -67,7 +67,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd python-bot-runner && venv/bin/python3 -m pip install -U {{DownloadPackage}} >> AMPSetupLog.txt 2>&1'",
+        "UpdateSourceArgs":"-c 'cd python-bot-runner && ./venv/bin/python3 -m pip install -U {{DownloadPackage}} >> AMPSetupLog.txt 2>&1'",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"PyPIPackage"
     },
@@ -85,7 +85,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd python-bot-runner && venv/bin/python3 -m pip install -U -r requirements.txt >> AMPSetupLog.txt 2>&1'",
+        "UpdateSourceArgs":"-c 'cd python-bot-runner && ./venv/bin/python3 -m pip install -U -r requirements.txt >> AMPSetupLog.txt 2>&1'",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"file"
     },
@@ -103,7 +103,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd python-bot-runner && venv/bin/python3 -m pip install -U {{PythonPackages}} >> AMPSetupLog.txt 2>&1'",
+        "UpdateSourceArgs":"-c 'cd python-bot-runner && ./venv/bin/python3 -m pip install -U {{PythonPackages}} >> AMPSetupLog.txt 2>&1'",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"specifier"
     },
@@ -115,5 +115,23 @@
         "UpdateSourceArgs":"/C cd python-bot-runner && venv\\Scripts\\python.exe -m pip install -U {{PythonPackages}} >> AMPSetupLog.txt 2>&1",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"specifier"
+    },
+    {
+        "UpdateStageName":"Run Bot Setup Command",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd python-bot-runner && source ./venv/bin/activate && {{BotSetupCommand}} >> AMPSetupLog.txt 2>&1'",
+        "UpdateSourceConditionSetting":"RunBotSetupCommand",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Run Bot Setup Command",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd python-bot-runner && venv\\Scripts\\activate.bat && {{BotSetupCommand}} >> AMPSetupLog.txt 2>&1",
+        "UpdateSourceConditionSetting":"RunBotSetupCommand",
+        "UpdateSourceConditionValue":"true"
     }
 ]
