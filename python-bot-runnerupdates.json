@@ -67,7 +67,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U {{DownloadPackageArgs}} {{DownloadPackage}} >> AMPSetupLog.txt 2>&1\"",
+        "UpdateSourceArgs":"-c 'cd python-bot-runner && ./venv/bin/python3 -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}} >> AMPSetupLog.txt 2>&1'",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"PyPIPackage"
     },
@@ -76,7 +76,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd python-bot-runner && venv\\Scripts\\python.exe -m pip install -U {{DownloadPackageArgs}} {{DownloadPackage}} >> AMPSetupLog.txt 2>&1",
+        "UpdateSourceArgs":"/C cd python-bot-runner && venv\\Scripts\\python.exe -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}} >> AMPSetupLog.txt 2>&1",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"PyPIPackage"
     },
