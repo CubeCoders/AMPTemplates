@@ -1,6 +1,6 @@
 [
     {
-        "UpdateStageName":"Bot Download",
+        "UpdateStageName":"App Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"GitRepo",
         "UpdateSourceData":"{{DownloadSource}}",
@@ -9,7 +9,7 @@
         "UpdateSourceConditionValue":"GitRepo"
     },
     {
-        "UpdateStageName":"Bot Download",
+        "UpdateStageName":"App Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"GithubRelease",
         "UpdateSourceArgs":"{{DownloadSource}}",
@@ -23,7 +23,7 @@
         "UpdateSourceConditionValue":"GithubRelease"
     },
     {
-        "UpdateStageName":"Bot Download",
+        "UpdateStageName":"App Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"{{DownloadSource}}",
@@ -63,7 +63,7 @@
         "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U setuptools wheel discord.py python-dotenv > AMPSetupLog.txt 2>&1"
     },
     {
-        "UpdateStageName":"Bot Download",
+        "UpdateStageName":"App Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
@@ -72,7 +72,7 @@
         "UpdateSourceConditionValue":"PyPIPackage"
     },
     {
-        "UpdateStageName":"Bot Download",
+        "UpdateStageName":"App Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
@@ -117,21 +117,21 @@
         "UpdateSourceConditionValue":"specifier"
     },
     {
-        "UpdateStageName":"Run Bot Setup Command",
+        "UpdateStageName":"Run App Setup Command",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && {{BotSetupCommand}}\"",
-        "UpdateSourceConditionSetting":"RunBotSetupCommand",
+        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && {{AppSetupCommand}}\"",
+        "UpdateSourceConditionSetting":"RunAppSetupCommand",
         "UpdateSourceConditionValue":"true"
     },
     {
-        "UpdateStageName":"Run Bot Setup Command",
+        "UpdateStageName":"Run App Setup Command",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && {{BotSetupCommand}}",
-        "UpdateSourceConditionSetting":"RunBotSetupCommand",
+        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && {{AppSetupCommand}}",
+        "UpdateSourceConditionSetting":"RunAppSetupCommand",
         "UpdateSourceConditionValue":"true"
     }
 ]
