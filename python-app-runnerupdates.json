@@ -9,6 +9,24 @@
         "UpdateSourceConditionValue":"GitRepo"
     },
     {
+        "UpdateStageName":"Update GitRepo",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c \"cd python-app-runner && git restore . && git pull '{{DownloadSource}}'\"",
+        "UpdateSourceConditionSetting":"DownloadType",
+        "UpdateSourceConditionValue":"GitRepo"
+    },
+    {
+        "UpdateStageName":"Update GitRepo",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd python-app-runner && git restore . && git pull \"{{DownloadSource}}\"",
+        "UpdateSourceConditionSetting":"DownloadType",
+        "UpdateSourceConditionValue":"GitRepo"
+    },
+    {
         "UpdateStageName":"App Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"GithubRelease",
