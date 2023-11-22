@@ -142,16 +142,16 @@
         "FieldName":"AppRunMode",
         "InputType":"enum",
         "ParamFieldName":"AppRunMode",
-        "DefaultValue":"{{AppScriptName}}",
+        "DefaultValue":"./{{AppDir}}/{{AppScriptName}}",
         "EnumValues":{
-            "{{AppScriptName}}":"Python script (default)",
+            "./{{AppDir}}/{{AppScriptName}}":"Python script (default)",
             "-m {{AppModuleName}}":"Python module"
         }
     },
     {
         "DisplayName":"App Script Filename",
         "Category":"App Runner Settings",
-        "Description":"If \"Python script\" is selected under App Run Mode, sets the script filename to run, including any subfolder under the root directory",
+        "Description":"If \"Python script\" is selected under App Run Mode, sets the script filename to run. Also set App Subdirectory as needed, or include the script path under the root directory here if App Subdirectory is not otherwise appropriate",
         "Keywords":"app,script,name,filename,AppScriptName",
         "FieldName":"AppScriptName",
         "InputType":"text",
@@ -173,15 +173,26 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"App Subdirectory",
+        "Category":"App Runner Settings",
+        "Description":"Sets any applicable subdirectory path under the root directory that the app is installed in, for the purpose of running a script selected under App Script Filename, installing packages with a 'requirements.txt' file under Python Packages Install Method, and setting a '.env' file under App Environment Variables",
+        "Keywords":"app,directory,subdirectory,path,AppScriptName",
+        "FieldName":"AppDir",
+        "InputType":"text",
+        "ParamFieldName":"AppDir",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"App Environment Variables",
         "Category":"App Runner Settings",
-        "Description":"Sets a list of environment variables to run the app with, if applicable. For example, this may include a [Discord bot token](https://discord.com/developers/applications/). Consult any example .env file included with the app for relevant variables to specify",
+        "Description":"Sets a list of environment variables to run the app with, if applicable. For example, this may include a [Discord bot token](https://discord.com/developers/applications/). Consult any example '.env' file included with the app for relevant variables to specify",
         "Keywords":"environment,variables,EnvVars",
         "FieldName":"EnvVars",
         "InputType":"list",
         "ParamFieldName":"EnvVars",
         "DefaultValue":"",
-        "Special":"listfile:./python-app-runner/.env",
+        "Special":"listfile:./python-app-runner/{{AppDir}}/.env",
         "EnumValues":{}
     },
     {
