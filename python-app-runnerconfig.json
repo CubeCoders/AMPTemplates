@@ -175,7 +175,7 @@
     {
         "DisplayName":"App Subdirectory",
         "Category":"App Runner Settings",
-        "Description":"Sets any applicable subdirectory path under the root directory that the app is installed in, for the purpose of running a script selected under App Script Filename, installing packages with a 'requirements.txt' file under Python Packages Install Method, and setting a '.env' file under App Environment Variables",
+        "Description":"Sets any applicable subdirectory path under the root directory that the app is installed in, for the purpose of running a script selected under App Script Filename or installing packages with a 'requirements.txt' file under Python Packages Install Method",
         "Keywords":"app,directory,subdirectory,path,AppScriptName",
         "FieldName":"AppDir",
         "InputType":"text",
@@ -186,13 +186,13 @@
     {
         "DisplayName":"App Environment Variables",
         "Category":"App Runner Settings",
-        "Description":"Sets a list of environment variables to run the app with, if applicable. For example, this may include a [Discord bot token](https://discord.com/developers/applications/). Consult any example '.env' file included with the app for relevant variables to specify",
+        "Description":"Sets a list of environment variables to run the app with, if applicable. For example, this may include a [Discord bot token](https://discord.com/developers/applications/). Consult any example '.env' file included with the app for relevant variables to specify. This may not work if an App Subdirectory is used",
         "Keywords":"environment,variables,EnvVars",
         "FieldName":"EnvVars",
         "InputType":"list",
         "ParamFieldName":"EnvVars",
         "DefaultValue":"",
-        "Special":"listfile:./python-app-runner/{{AppDir}}/.env",
+        "Special":"listfile:./python-app-runner/.env",
         "EnumValues":{}
     },
     {
