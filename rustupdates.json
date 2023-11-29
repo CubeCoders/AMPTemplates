@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}server/AMPRustServer\" && rm -f *.map *.sav* {{ModDBWipelist}} ; cd \"{{$FullBaseDir}}carbon/data\" && rm -f {{CarbonOxideDataWipelist}} ; cd \"{{$FullBaseDir}}oxide/data\" && rm -f {{CarbonOxideDataWipelist}}'",
+        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}server/{{ServerIdentity}}\" && rm -f *.map *.sav* {{ModDBWipelist}} ; cd \"{{$FullBaseDir}}carbon/data\" && rm -f {{CarbonOxideDataWipelist}} ; cd \"{{$FullBaseDir}}oxide/data\" && rm -f {{CarbonOxideDataWipelist}}'",
         "UpdateSourceConditionSetting":"EnableWipe",
         "UpdateSourceConditionValue":"true"
     },
@@ -13,7 +13,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}server\\AMPRustServer\" && del /Q /F *.map *.sav* {{ModDBWipelist}} & cd \"{{$FullBaseDir}}carbon\\data\" && del /Q /F {{CarbonOxideDataWipelist}} & cd \"{{$FullBaseDir}}oxide\\data\" && del /Q /F {{CarbonOxideDataWipelist}}",
+        "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}server\\{{ServerIdentity}}\" && del /Q /F *.map *.sav* {{ModDBWipelist}} & cd \"{{$FullBaseDir}}carbon\\data\" && del /Q /F {{CarbonOxideDataWipelist}} & cd \"{{$FullBaseDir}}oxide\\data\" && del /Q /F {{CarbonOxideDataWipelist}}",
         "UpdateSourceConditionSetting":"EnableWipe",
         "UpdateSourceConditionValue":"true"
     },
@@ -45,7 +45,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd rust\\258550\\ && del /Q /F carbon doorstop_config.ini winhttp.dll",
+        "UpdateSourceArgs":"/C cd rust\\258550 && del /Q /F carbon doorstop_config.ini winhttp.dll",
         "UpdateSourceConditionSetting":"ModLoader",
         "UpdateSourceConditionValue":"umod"
     },
@@ -64,6 +64,42 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C cd rust\\258550 && del /Q /F carbon doorstop_config.ini winhttp.dll",
+        "UpdateSourceConditionSetting":"ModLoader",
+        "UpdateSourceConditionValue":"none"
+    },
+    {
+        "UpdateStageName":"Remove uMod",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./rust/258550 && rm -rf oxide Oxide.Compiler compiler*.log'",
+        "UpdateSourceConditionSetting":"ModLoader",
+        "UpdateSourceConditionValue":"carbon"
+    },
+    {
+        "UpdateStageName":"Remove uMod",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd rust\\258550 && del /Q /F oxide Oxide.Compiler.exe compiler*.log",
+        "UpdateSourceConditionSetting":"ModLoader",
+        "UpdateSourceConditionValue":"carbon"
+    },
+    {
+        "UpdateStageName":"Remove uMod",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./rust/258550 && rm -rf oxide Oxide.Compiler compiler*.log'",
+        "UpdateSourceConditionSetting":"ModLoader",
+        "UpdateSourceConditionValue":"none"
+    },
+    {
+        "UpdateStageName":"Remove uMod",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd rust\\258550 && del /Q /F oxide Oxide.Compiler.exe compiler*.log",
         "UpdateSourceConditionSetting":"ModLoader",
         "UpdateSourceConditionValue":"none"
     },
