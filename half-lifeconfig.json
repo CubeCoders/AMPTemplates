@@ -13,11 +13,12 @@
     {
         "DisplayName":"Server MOTD",
         "Category":"HL Server Settings",
-        "Description":"The message of the day (MOTD) that is shown to joining players can be configured in valve/motd.txt. Plain text or HTML formatting is allowed",
+        "Description":"Sets the message of the day (MOTD) that is shown to joining players",
         "Keywords":"message,welcome,motd",
         "FieldName":"motd",
-        "InputType":"hidden",
+        "InputType":"Textarea",
         "ParamFieldName":"motd",
+        "DefaultValue":"Welcome to Half-Life!",
         "EnumValues":{}
     },
     {
@@ -203,22 +204,9 @@
         "InputType":"number",
         "MinValue":"0",
         "ParamFieldName":"mp_timelimit",
-        "DefaultValue":"20",
-        "Placeholder":"20",
+        "DefaultValue":"30",
+        "Placeholder":"30",
         "Suffix":"minutes",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Maximum Map Rounds",
-        "Category":"HL Server Settings",
-        "Description":"Sets the maximum number of rounds that can be played on a map. Set to 0 to have the Map Rotation Time Limit apply",
-        "Keywords":"maximum,rounds,map,mp_maxrounds",
-        "FieldName":"mp_maxrounds",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"mp_maxrounds",
-        "DefaultValue":"0",
-        "Placeholder":"0",
         "EnumValues":{}
     },
     {
@@ -419,8 +407,8 @@
         "InputType":"number",
         "MinValue":"10",
         "ParamFieldName":"sv_minupdaterate",
-        "DefaultValue":"10",
-        "Placeholder":"10",
+        "DefaultValue":"50",
+        "Placeholder":"50",
         "EnumValues":{}
     },
     {
@@ -432,8 +420,8 @@
         "InputType":"number",
         "MinValue":"10",
         "ParamFieldName":"sv_maxupdaterate",
-        "DefaultValue":"30",
-        "Placeholder":"30",
+        "DefaultValue":"101",
+        "Placeholder":"101",
         "EnumValues":{}
     },
     {
@@ -444,10 +432,10 @@
         "FieldName":"sys_ticrate",
         "InputType":"number",
         "MinValue":"0",
-        "MaxValue":"1000",
+        "MaxValue":"10000",
         "ParamFieldName":"sys_ticrate",
-        "DefaultValue":"100",
-        "Placeholder":"100",
+        "DefaultValue":"1000",
+        "Placeholder":"1000",
         "Suffix":"fps",
         "EnumValues":{}
     },
@@ -541,47 +529,6 @@
         "IsFlagArgument":false,
         "ParamFieldName":"UserSettings",
         "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Map Vote Ratio",
-        "Category":"HL Gameplay Settings",
-        "Description":"Sets the ratio of players required to vote on the same map before the server changes to that map. Example: 0.66 = 66%",
-        "Keywords":"map,vote,ratio,mp_mapvoteratio",
-        "FieldName":"mp_mapvoteratio",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"1",
-        "ParamFieldName":"mp_mapvoteratio",
-        "DefaultValue":"0.66",
-        "Placeholder":"0.66",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Automatic Team Balancing",
-        "Category":"HL Gameplay Settings",
-        "Description":"If set, the server will always ensure that teams are balanced and that there is no advantaged team",
-        "Keywords":"team,automatic,balance,balancing,mp_autoteambalance",
-        "FieldName":"mp_autoteambalance",
-        "InputType":"checkbox",
-        "ParamFieldName":"mp_autoteambalance",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Limit Teams",
-        "Category":"HL Gameplay Settings",
-        "Description":"Sets the maximum number of players that one team can have over the other. 0 = team limiting disabled",
-        "Keywords":"team,balance,limit,mp_limitteams",
-        "FieldName":"mp_limitteams",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"mp_limitteams",
-        "DefaultValue":"2",
-        "Placeholder":"2",
         "EnumValues":{}
     },
     {
@@ -694,104 +641,6 @@
             "False":"0",
             "True":"1"
         }
-    },
-    {
-        "DisplayName":"Spectator Mode",
-        "Category":"HL Gameplay Settings",
-        "Description":"Sets the spectator mode for dead players",
-        "Keywords":"spectator,camera,first,person,mp_forcechasecam",
-        "FieldName":"mp_forcechasecam",
-        "InputType":"enum",
-        "ParamFieldName":"mp_forcechasecam",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "0":"Spectators can spectate anyone (default)",
-            "1":"Spectators can only spectate their own team",
-            "2":"Spectators can't spectate anyone and can only see their dead body"
-        }
-    },
-    {
-        "DisplayName":"Enable Fade To Black",
-        "Category":"HL Gameplay Settings",
-        "Description":"If enabled, a player's screen fades to black for the remainder of the round after death (HUD and chat still works). Overrides Spectator Mode",
-        "Keywords":"fade,black,spectator,death,mp_fadetoblack",
-        "FieldName":"mp_fadetoblack",
-        "InputType":"checkbox",
-        "ParamFieldName":"mp_fadetoblack",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Enable Auto Kick",
-        "Category":"HL Gameplay Settings",
-        "Description":"If set, automatic team-killer banning and idle client kicking will be enabled",
-        "Keywords":"auto,kick,team,killer,idle,mp_autokick",
-        "FieldName":"mp_autokick",
-        "InputType":"checkbox",
-        "ParamFieldName":"mp_autokick",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Buy Time",
-        "Category":"HL Gameplay Settings",
-        "Description":"Sets the designated amount of buy time for each round",
-        "Keywords":"buy,time,mp_buytime",
-        "FieldName":"mp_buytime",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"mp_buytime",
-        "DefaultValue":"1.5",
-        "Placeholder":"1.5",
-        "Suffix":"minutes",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"C4 Timer",
-        "Category":"HL Gameplay Settings",
-        "Description":"Sets the time after which the C4 bomb will blow up",
-        "Keywords":"c4,bomb,time,mp_c4timer",
-        "FieldName":"mp_c4timer",
-        "InputType":"number",
-        "MinValue":"15",
-        "MaxValue":"90",
-        "ParamFieldName":"mp_c4timer",
-        "DefaultValue":"45",
-        "Placeholder":"45",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Freeze Time",
-        "Category":"HL Gameplay Settings",
-        "Description":"Sets the length of the freeze period at the beginning of rounds. 0 = disabled",
-        "Keywords":"mp_freezetime,freezetime",
-        "FieldName":"mp_freezetime",
-        "InputType":"number",
-        "ParamFieldName":"mp_freezetime",
-        "DefaultValue":"6",
-        "Placeholder":"6",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Hostage Penalty",
-        "Category":"HL Gameplay Settings",
-        "Description":"Sets how many hostages can be killed before a player is kicked from the server. 0 = disabled",
-        "Keywords":"hostages,team,killers,mp_hostagepenalty",
-        "FieldName":"mp_hostagepenalty",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"mp_hostagepenalty",
-        "DefaultValue":"13",
-        "Placeholder":"13",
-        "EnumValues":{}
     },
     {
         "DisplayName":"Server Branch",
