@@ -54,9 +54,39 @@
         "UpdateSourceTarget":"{{$FullBaseDir}}valve",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
         "UpdateSourceConditionSetting":"InstallMetamod",
-        "UpdateSourceConditionValue":"true",
-        "DeleteAfterExtract":true
+        "UpdateSourceConditionValue":"metamod-amx"
+    },
+    {
+        "UpdateStageName":"Metamod Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"theAsmodai/metamod-r",
+        "UpdateSourceTarget":"{{$FullBaseDir}}valve",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"InstallMetamod",
+        "UpdateSourceConditionValue":"metamod-r"
+    },
+    {
+        "UpdateStageName":"Metamod Download Cleanup",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C rmdir /Q /S half-life\\90\\valve\\sdk half-life\\90\\valve\\example_plugin",
+        "UpdateSourceConditionSetting":"InstallMetamod",
+        "UpdateSourceConditionValue":"metamod-r"
+    },
+    {
+        "UpdateStageName":"Metamod Download Cleanup",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'rm -rf ./half-life/90/valve/sdk/ ./half-life/90/valve/example_plugin/'",
+        "UpdateSourceConditionSetting":"InstallMetamod",
+        "UpdateSourceConditionValue":"metamod-r"
     },
     {
         "UpdateStageName":"AMX Mod X Plugin Download",
