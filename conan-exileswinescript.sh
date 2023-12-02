@@ -21,7 +21,7 @@ export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
 ./winetricks -q vcrun2013 > winescript_log.txt 2>&1
-./winetricks -q vsrun2015 >> winescript_log.txt 2>&1
+./winetricks -q vcrun2015 >> winescript_log.txt 2>&1
 ./winetricks -q corefonts >> winescript_log.txt 2>&1
 rm -rf ~/.cache/winetricks
 
