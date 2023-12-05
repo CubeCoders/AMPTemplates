@@ -7,6 +7,38 @@
         "UpdateSourceArgs":"2399830"
     },
     {
+        "UpdateStageName":"ServerAPI Launcher Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceData":"ServersHub/ServerAPI",
+        "UpdateSourceTarget":"{{$FullBaseDir}}ShooterGame/Binaries/Win64/",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"EnableServerAPI",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Binary Copy",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}ShooterGame/Binaries/Win64/ASAServer.exe",
+        "UpdateSourceArgs":"{{$FullRootDir}}ShooterGame/Binaries/Win64/ArkAscendedServer.exe",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"EnableServerAPI",
+        "UpdateSourceConditionValue":"false"
+    },
+    {
+        "UpdateStageName":"Binary Copy",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}ShooterGame/Binaries/Win64/ASAServer.exe",
+        "UpdateSourceArgs":"{{$FullRootDir}}ShooterGame/Binaries/Win64/AsaApiLoader.exe",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"EnableServerAPI",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
         "UpdateStageName":"Config Directory Creation",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"CreateDirectory",
