@@ -1,9 +1,9 @@
 [
     {
-        "UpdateStageName":"Create TS3 Plugins Directory",
+        "UpdateStageName":"Create Text-To-Speech Directory",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}TeamSpeak3-Client-linux_amd64/plugins"
+        "UpdateSourceArgs":"{{$FullBaseDir}}tts"
     },
     {
         "UpdateStageName":"Create yt-dlp Directory",
@@ -12,10 +12,10 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}yt-dlp"
     },
     {
-        "UpdateStageName":"Create Text-To-Speech Directory",
+        "UpdateStageName":"Create TS3 Plugins Directory",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}tts"
+        "UpdateSourceArgs":"{{$FullBaseDir}}TeamSpeak3-Client-linux_amd64/plugins"
     },
     {
         "UpdateStageName":"Download SinusBot",
@@ -25,29 +25,6 @@
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
-    },
-    {
-        "UpdateStageName":"Download TeamSpeak 3 Client",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURLFromJQ",
-        "UpdateSourceData":"https://teamspeak.com/versions/client.json",
-        "UpdateSourceArgs":"$['linux']['x86_64']['mirrors']['teamspeak.com']",
-        "OverwriteExistingFiles":true
-    },
-    {
-        "UpdateStageName":"Install TeamSpeak 3 Client",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd sinusbot && chmod 755 TeamSpeak3-Client-linux_amd64-*.run && yes | ./TeamSpeak3-Client-linux_amd64-*.run && rm -f TeamSpeak3-Client-linux_amd64-*.run TeamSpeak3-Client-linux_amd64/xcbglintegrations/libqxcb-glx-integration.so && \\cp -f plugin/libsoundbot_plugin.so TeamSpeak3-Client-linux_amd64/plugins\""
-    },
-    {
-        "UpdateStageName":"Download yt-dlp",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp",
-        "UpdateSourceTarget":"{{$FullBaseDir}}yt-dlp",
-        "OverwriteExistingFiles":true
     },
     {
         "UpdateStageName":"Download Text-To-Speech",
@@ -64,7 +41,30 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd sinusbot/tts && unzip -q /tmp/tts_service_x86_64.nexe.zip && mv -f tts_service_x86_64.nexe /tmp/voice_lstm_en-US.zvoice /tmp/mv voice_lstm_de-DE.zvoice .\""
+        "UpdateSourceArgs":"-c \"cd sinusbot/tts && unzip -q /tmp/tts_service_x86_64.nexe.zip && mv -f tts_service_x86_64.nexe /tmp/voice_lstm_en-US.zvoice /tmp/voice_lstm_de-DE.zvoice .\""
+    },
+    {
+        "UpdateStageName":"Download yt-dlp",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp",
+        "UpdateSourceTarget":"{{$FullBaseDir}}yt-dlp",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Download TeamSpeak 3 Client",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURLFromJQ",
+        "UpdateSourceData":"https://teamspeak.com/versions/client.json",
+        "UpdateSourceArgs":"$['linux']['x86_64']['mirrors']['teamspeak.com']",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Install TeamSpeak 3 Client",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c \"cd sinusbot && chmod 755 TeamSpeak3-Client-linux_amd64-*.run && yes | ./TeamSpeak3-Client-linux_amd64-*.run && rm -f TeamSpeak3-Client-linux_amd64-*.run TeamSpeak3-Client-linux_amd64/xcbglintegrations/libqxcb-glx-integration.so && \\cp -f plugin/libsoundbot_plugin.so TeamSpeak3-Client-linux_amd64/plugins\""
     },
     {
         "UpdateStageName":"Config.ini Download",
