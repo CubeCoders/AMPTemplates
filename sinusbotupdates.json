@@ -12,7 +12,13 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}yt-dlp"
     },
     {
-        "UpdateStageName":"Download Sinusbot",
+        "UpdateStageName":"Create Text-To-Speech Directory",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}tts"
+    },
+    {
+        "UpdateStageName":"Download SinusBot",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://www.sinusbot.com/dl/sinusbot.current.tar.bz2",
@@ -33,7 +39,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd sinusbot && chmod +x TeamSpeak3-Client-linux_amd64-*.run && printf '\\ny\\n' | LESS='+q' ./TeamSpeak3-Client-linux_amd64-*.run --quiet && rm -f TeamSpeak3-Client-linux_amd64-*.run TeamSpeak3-Client-linux_amd64/xcbglintegrations/libqxcb-glx-integration.so && \\cp -f plugin/libsoundbot_plugin.so TeamSpeak3-Client-linux_amd64/plugins\""
+        "UpdateSourceArgs":"-c \"cd sinusbot && chmod 755 TeamSpeak3-Client-linux_amd64-*.run && yes | ./TeamSpeak3-Client-linux_amd64-*.run && rm -f TeamSpeak3-Client-linux_amd64-*.run TeamSpeak3-Client-linux_amd64/xcbglintegrations/libqxcb-glx-integration.so && \\cp -f plugin/libsoundbot_plugin.so TeamSpeak3-Client-linux_amd64/plugins\""
     },
     {
         "UpdateStageName":"Download yt-dlp",
@@ -42,6 +48,23 @@
         "UpdateSourceData":"https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp",
         "UpdateSourceTarget":"{{$FullBaseDir}}yt-dlp",
         "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Download Text-To-Speech",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://chromium.googlesource.com/chromiumos/platform/assets/+archive/master/speech_synthesis/patts.tar.gz",
+        "UpdateSourceTarget":"/tmp",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Install Text-To-Speech",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c \"cd sinusbot/tts && unzip -q /tmp/tts_service_x86_64.nexe.zip && mv -f tts_service_x86_64.nexe /tmp/voice_lstm_en-US.zvoice /tmp/mv voice_lstm_de-DE.zvoice .\""
     },
     {
         "UpdateStageName":"Config.ini Download",
@@ -57,6 +80,6 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd sinusbot && chmod +x sinusbot && chmod a+rx yt-dlp/yt-dlp'"
+        "UpdateSourceArgs":"-c 'cd sinusbot && chmod 755 sinusbot && chmod 755 yt-dlp/yt-dlp'"
     }
 ]
