@@ -1,0 +1,62 @@
+[
+    {
+        "UpdateStageName":"Create TS3 Plugins Directory",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}TeamSpeak3-Client-linux_amd64/plugins"
+    },
+    {
+        "UpdateStageName":"Create yt-dlp Directory",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}yt-dlp"
+    },
+    {
+        "UpdateStageName":"Download Sinusbot",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://www.sinusbot.com/dl/sinusbot.current.tar.bz2",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Download TeamSpeak 3 Client",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURLFromJQ",
+        "UpdateSourceData":"https://teamspeak.com/versions/client.json",
+        "UpdateSourceArgs":"$['linux']['x86_64']['mirrors']['teamspeak.com']",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Install TeamSpeak 3 Client",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd sinusbot && chmod +x TeamSpeak3-Client-linux_amd64-*.run && printf '\\ny\\n' | LESS='+q' ./TeamSpeak3-Client-linux_amd64-*.run --quiet && rm -f TeamSpeak3-Client-linux_amd64-*.run TeamSpeak3-Client-linux_amd64/xcbglintegrations/libqxcb-glx-integration.so && \\cp -f plugin/libsoundbot_plugin.so TeamSpeak3-Client-linux_amd64/plugins'"
+    },
+    {
+        "UpdateStageName":"Download yt-dlp",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp",
+        "UpdateSourceTarget":"{{$FullBaseDir}}yt-dlp",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Config.ini Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/sinusbotconfig.ini",
+        "UpdateSourceArgs":"config.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Make Binaries Executable",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd sinusbot && chmod +x sinusbot && chmod a+rx yt-dlp/yt-dlp'"
+    }
+]
