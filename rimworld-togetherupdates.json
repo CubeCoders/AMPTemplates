@@ -1,16 +1,22 @@
 [
     {
+        "UpdateStageName":"Create Core Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Core"
+    },
+    {
         "UpdateStageName":"Create Dotnet Directory",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}dotnet"
+        "UpdateSourceArgs":"{{$FullBaseDir}}Dotnet"
     },
     {
         "UpdateStageName":"ASP.NET Core Runtime Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-win-x64.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Dotnet",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -21,7 +27,7 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-linux-x64.tar.gz",
         "UpdateSourceArch":"x86_64",
-        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Dotnet",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -32,7 +38,7 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-linux-arm64.tar.gz",
         "UpdateSourceArch":"aarch64",
-        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Dotnet",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -80,5 +86,29 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"SetExecutableFlag",
         "UpdateSourceArgs":"{{$FullBaseDir}}GameServer"
+    },
+    {
+        "UpdateStageName":"ServerConfig.json File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/rimworld-togetherserverconfig.json",
+        "UpdateSourceArgs":"ServerConfig.json",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Core",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Start Server",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"StartApplication"
+    },
+    {
+        "UpdateStageName":"Wait For Server Start",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"WaitForStartupComplete"
+    },
+    {
+        "UpdateStageName":"Stop Server",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"ShutdownApplication"
     }
 ]
