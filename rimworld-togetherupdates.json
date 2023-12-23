@@ -43,7 +43,7 @@
         "UpdateSource":"GithubRelease",
         "UpdateSourceData":"Windows-x64.zip",
         "UpdateSourceArgs":"Nova-Atomic/Rimworld-Together",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UpdateSourceVersion":"{{ReleaseVersion}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
@@ -55,7 +55,7 @@
         "UpdateSource":"GithubRelease",
         "UpdateSourceData":"Linux-x64.zip",
         "UpdateSourceArgs":"Nova-Atomic/Rimworld-Together",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UpdateSourceVersion":"{{ReleaseVersion}}",
         "UpdateSourceArch":"x86_64",
         "UnzipUpdateSource":true,
@@ -68,40 +68,11 @@
         "UpdateSource":"GithubRelease",
         "UpdateSourceData":"Linux-ARM-x64.zip",
         "UpdateSourceArgs":"Nova-Atomic/Rimworld-Together",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UpdateSourceVersion":"{{ReleaseVersion}}",
         "UpdateSourceArch":"aarch64",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
-    },
-    {
-        "UpdateStageName":"Pause Update Stages",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Pause",
-        "UpdateSourceArgs":"2"
-    },
-    {
-        "UpdateStageName":"Move Server Files",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I rimworld-together\\Windows-x64\\* rimworld-together\\server\\ && rmdir /Q /S rimworld-together\\Windows-x64\\"
-    },
-    {
-        "UpdateStageName":"Move Server Files",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./rimworld-together/Linux-x64/* ./rimworld-together/server/ && chmod +x ./rimworld-together/server/GameServer ; rm -rf ./rimworld-together/Linux-x64/'",
-        "UpdateSourceArch":"x86_64"
-    },
-    {
-        "UpdateStageName":"Move Server Files",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./rimworld-together/Linux-ARM-x64/* ./rimworld-together/server/ && chmod +x ./rimworld-together/server/GameServer ; rm -rf ./rimworld-together/Linux-ARM-x64/'",
-        "UpdateSourceArch":"aarch64"
     }
 ]
