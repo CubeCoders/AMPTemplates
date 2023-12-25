@@ -120,21 +120,18 @@
         "OverwriteExistingFiles":false
     },
     {
-        "UpdateStageName":"Deep Config.json File Download",
+        "UpdateStageName":"Start Server",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/open-worldserverdeepconfig.json",
-        "UpdateSourceArgs":"Deep Config.json",
-        "UpdateSourceTarget":"{{$FullBaseDir}}Data",
-        "OverwriteExistingFiles":false
+        "UpdateSource":"StartApplication"
     },
     {
-        "UpdateStageName":"Values.json File Download",
+        "UpdateStageName":"Wait For Server Start",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/open-worldservervalues.json",
-        "UpdateSourceArgs":"Values.json",
-        "UpdateSourceTarget":"{{$FullBaseDir}}Data",
-        "OverwriteExistingFiles":false
+        "UpdateSource":"WaitForStartupComplete"
+    },
+    {
+        "UpdateStageName":"Stop Server",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"ShutdownApplication"
     }
 ]
