@@ -1,0 +1,23 @@
+[
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd smalland && wget -q -O SMALLAND.zip \"https://www.dropbox.com/scl/fo/npnfynj1de24gmid2b4v6/h/SMALLANDDedicatedServer.zip?rlkey=5yqehd802qy0hbsmvl59zdlme&dl=0\" && unzip SMALLAND.zip ; wait $! && unzip SMALLANDDedicatedServer.zip && mv -f SMALLANDDedicatedServer/* 808040/ && rm -rf SMALLAND* README_WIN.txt'"
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd smalland && curl -o SMALLAND.zip -L \"https://www.dropbox.com/scl/fo/npnfynj1de24gmid2b4v6/h/SMALLANDDedicatedServer.zip?rlkey=5yqehd802qy0hbsmvl59zdlme&dl=0\" && tar -xf SMALLAND.zip && tar -xf SMALLANDDedicatedServer.zip && xcopy /E /Y /I SMALLANDDedicatedServer\\* 808040\\ && rd /S /Q SMALLANDDedicatedServer && del /Q SMALLAND*.zip README_WIN.txt"
+    },
+    {
+        "UpdateStageName":"Initialise Wine",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
+    }
+]

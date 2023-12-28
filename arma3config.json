@@ -150,9 +150,20 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Client Mods",
+        "Category":"Arma Server Settings",
+        "Description":"Semi-colon separated list (moddir1;moddir2) of client-side only mod directories. ONE LINE ONLY! These won't be loaded by the server, but will be used by the Manage Bikeys setting if enabled. Specify simply the mod ID for any mods downloaded under SteamCMD and Updates. Otherwise, use mod directory paths relative to the server base directory or full paths",
+        "Keywords":"mods,addons,modding,modification,workshop,plugins,client,clientmod",
+        "FieldName":"clientmod",
+        "InputType":"Textarea",
+        "ParamFieldName":"clientmod",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Manage Bikeys",
         "Category":"Arma Server Settings",
-        "Description":"If enabled, the bikey files for each of the mods specified in Load Mods will be copied to the 'keys' directory on server start, to enable addon signature verification. All existing bikeys in that directory (other than the default 'a3.bikey') will be deleted",
+        "Description":"If enabled, the bikey files for each of the mods specified in Load Mods and Client Mods will be copied to the 'keys' directory on server start, to enable addon signature verification. All existing bikeys in that directory (other than the default 'a3.bikey') will be deleted",
         "Keywords":"mods,addons,bikeys",
         "FieldName":"ManageBikeys",
         "InputType":"checkbox",
@@ -611,30 +622,13 @@
         "IsFlagArgument":false,
         "ParamFieldName":"forcedDifficulty",
         "IncludeInCommandLine":false,
-        "DefaultValue":"Regular",
+        "DefaultValue":"",
         "EnumValues":{
+            "":"None (default)",
             "Recruit":"Recruit",
-            "Regular":"Regular (default)",
+            "Regular":"Regular",
             "Veteran":"Veteran",
             "Custom":"Custom"
-        }
-    },
-    {
-        "DisplayName":"AI Level",
-        "Category":"Arma Gameplay Settings",
-        "Description":"Sets the AI skill level on the server. To use custom AI level settings, you must configure them in the profile within the A3Master directory",
-        "Keywords":"ai,level,preset,ailevelpreset",
-        "FieldName":"aiLevelPreset",
-        "InputType":"enum",
-        "IsFlagArgument":false,
-        "ParamFieldName":"aiLevelPreset",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"1",
-        "EnumValues":{
-            "0":"Low",
-            "1":"Normal (default)",
-            "2":"High",
-            "3":"Custom"
         }
     },
     {
