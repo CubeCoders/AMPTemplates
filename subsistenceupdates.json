@@ -16,18 +16,19 @@
         "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
     },
     {
-        "UpdateStageName":"Start Server",
+        "UpdateStageName":"ServerSettings File Copy",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"StartApplication"
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}UDKGame/Config/UDKDedServerSettings.ini",
+        "UpdateSourceArgs":"{{$FullBaseDir}}UDKGame/Config/DefaultDedServerSettings.ini",
+        "OverwriteExistingFiles":false
     },
     {
-        "UpdateStageName":"Wait For Server Start",
+        "UpdateStageName":"ServerSettings File Copy",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"WaitForStartupComplete"
-    },
-    {
-        "UpdateStageName":"Stop Server",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"ShutdownApplication"
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}UDKGame/Config/UDKEngine.ini",
+        "UpdateSourceArgs":"{{$FullBaseDir}}UDKGame/Config/DefaultEngine.ini",
+        "OverwriteExistingFiles":false
     }
 ]
