@@ -6,6 +6,12 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}tts"
     },
     {
+        "UpdateStageName":"Create Text-To-Speech Download Directory",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}tts/download"
+    },
+    {
         "UpdateStageName":"Create yt-dlp Directory",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"CreateDirectory",
@@ -33,7 +39,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://chromium.googlesource.com/chromiumos/platform/assets/+archive/master/speech_synthesis/patts.tar.gz",
-        "UpdateSourceTarget":"/tmp",
+        "UpdateSourceTarget":"{{$FullBaseDir}}tts/download",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -43,7 +49,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd /tmp && unzip -q tts_service_x86_64.nexe.zip && mv -f tts_service_x86_64.nexe voice_lstm_*.zvoice '{{$FullBaseDir}}tts'\""
+        "UpdateSourceArgs":"-c \"cd sinusbot/tts/download && unzip -q tts_service_x86_64.nexe.zip && mv -f tts_service_x86_64.nexe voice_lstm_*.zvoice '{{$FullBaseDir}}tts' && cd .. && rm -rf download\""
     },
     {
         "UpdateStageName":"Download yt-dlp",
