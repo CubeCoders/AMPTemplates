@@ -20,9 +20,12 @@ export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
-./winetricks -q vcrun2022 > winescript_log.txt 2>&1
-./winetricks -q dotnet7 >> winescript_log.txt 2>&1
-./winetricks -q win10 >> winescript_log.txt 2>&1
+
+PACKAGES="vcrun2022 dotnet7 win10"
+echo "" > winescript_log.txt 2>&1
+for PACKAGE in $PACKAGES; do
+  ./winetricks -q $PACKAGE >> winescript_log.txt 2>&1
+done
 rm -rf ~/.cache/winetricks
 
 exec 6>&-
