@@ -21,9 +21,13 @@ export DISPLAY=:$DPY_NUM
 wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
 
-./winetricks -q vcrun2010 > winescript_log.txt 2>&1
+./winetricks -q win7 > winescript_log.txt 2>&1
+./winetricks -q vcrun6 >> winescript_log.txt 2>&1
 ./winetricks -q vcrun2019 >> winescript_log.txt 2>&1
+./winetricks -q corefonts >> winescript_log.txt 2>&1
+./winetricks -q d3dcompiler_43 >> winescript_log.txt 2>&1
 ./winetricks -q d3dx9 >> winescript_log.txt 2>&1
+./winetricks -q dotnet40 >> winescript_log.txt 2>&1
 
 rm -rf ~/.cache/winetricks
 
