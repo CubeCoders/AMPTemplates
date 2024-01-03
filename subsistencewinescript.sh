@@ -29,7 +29,7 @@ chmod +x winetricks
 ./winetricks -q d3dx9 >> winescript_log.txt 2>&1
 ./winetricks -q dotnet40 >> winescript_log.txt 2>&1
 
-rm -rf ~/.cache/winetricks
+rm -rf ~/.cache/winetricks ~/.cache/fontconfig
 
 exec 6>&-
 kill $XVFB_PID
