@@ -140,36 +140,23 @@
     "UpdateSourceConditionSetting": "DarknessFalls",
     "UpdateSourceConditionValue": "A20"
   },
-    {
-    "UpdateStageName":"Download Darkness Falls",
-    "UpdateSourcePlatform":"All",
-    "UpdateSource": "FetchURL",
-    "UpdateSourceData": "https://dev.azure.com/KhaineUK/292933d3-b55a-46b5-9fbc-f4e138ad47a4/_apis/git/repositories/0571597f-cf8c-42cd-8e35-7e799218cfe7/items?path=/&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true",
-    "UpdateSourceArgs":"DarknessFallsA21.zip",
-    "UpdateSourceTarget":"{{$FullBaseDir}}",
-    "UnzipUpdateSource": true,
-    "OverwriteExistingFiles": true,
-    "UpdateSourceConditionSetting": "DarknessFalls",
-    "UpdateSourceConditionValue": "A21",
-    "DeleteAfterExtract": true
-  },
   {
-    "UpdateStageName": "Darkness Falls Copy",
-    "UpdateSourcePlatform": "Windows",
-    "UpdateSource": "Executable",
-    "UpdateSourceData": "cmd.exe",
-    "UpdateSourceArgs": "/C xcopy /E /Y /I seven-days-to-die\\294420\\darkness-falls-a20-main\\* seven-days-to-die\\294420\\ && rmdir /Q /S seven-days-to-die\\294420\\darkness-falls-a20-main",
-    "UpdateSourceConditionSetting": "DarknessFalls",
-    "UpdateSourceConditionValue": "A21"
-  },
-  {
-    "UpdateStageName": "Darkness Falls Copy",
+    "UpdateStageName": "Download Darkness Falls",
     "UpdateSourcePlatform": "Linux",
     "UpdateSource": "Executable",
     "UpdateSourceData": "/bin/bash",
-    "UpdateSourceArgs": "-c \"cp -rf ./seven-days-to-die/294420/darkness-falls-a20-main/* ./seven-days-to-die/294420/ && rm -rf ./seven-days-to-die/294420/darkness-falls-a20-main*/\"",
+    "UpdateSourceArgs": "-c 'cd seven-days-to-die/294420 && wget -q -O DarknessFallsA21.zip \"https://dev.azure.com/KhaineUK/292933d3-b55a-46b5-9fbc-f4e138ad47a4/_apis/git/repositories/0571597f-cf8c-42cd-8e35-7e799218cfe7/items?path=/&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true\" && unzip DarknessFallsA21.zip && rm -rf DarknessFallsA21.zip'",
     "UpdateSourceConditionSetting": "DarknessFalls",
-    "UpdateSourceConditionValue": "A21"
+    "UpdateSourceConditionValue": "A21",
+  },
+  {
+    "UpdateStageName": "Download Darkness Falls",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "cmd.exe",
+    "UpdateSourceArgs": "/C cd seven-days-to-die\\294420 && curl -o DarknessFallsA21.zip -L \"https://dev.azure.com/KhaineUK/292933d3-b55a-46b5-9fbc-f4e138ad47a4/_apis/git/repositories/0571597f-cf8c-42cd-8e35-7e799218cfe7/items?path=/&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=zip&api-version=5.0&download=true\" && tar -xf DarknessFallsA21.zip && del /Q DarknessFallsA21.zip",
+    "UpdateSourceConditionSetting": "DarknessFalls",
+    "UpdateSourceConditionValue": "A21",
   },
   {
     "UpdateStageName":"Backup Exclusions Download 1",
