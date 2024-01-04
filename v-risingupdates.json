@@ -31,7 +31,7 @@
     },
     {
         "UpdateStageName":"Download BepInEx From Thunderstore",
-        "UpdateSourcePlatform":"Windows",
+        "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://v-rising.thunderstore.io/package/download/BepInEx/BepInExPack_V_Rising/1.668.5/",
         "UpdateSourceArgs":"BepInEx-BepInExPack_V_Rising-1.668.5.zip",
@@ -52,10 +52,39 @@
         "UpdateSourceConditionValue":"true"
     },
     {
+        "UpdateStageName":"BepInEx Copy",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '\\cp -rf ./v-rising/1829350/BepInExPack_V_Rising/* ./v-rising/1829350/ && rm -rf ./v-rising/1829350/BepInExPack_V_Rising/'",
+        "UpdateSourceConditionSetting":"BepInExEnabled",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
         "UpdateStageName":"Initialise Wine",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDLLOVERRIDES=\"mscoree,mshtml=\" /usr/bin/wineboot --init --update'"
+    },
+    {
+        "UpdateStageName":"Winescript Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/v-risingwinescript.sh",
+        "UpdateSourceArgs":"winescript.sh",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"BepInExEnabled",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Install Windows Components",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"./winescript.sh",
+        "UpdateSourceConditionSetting":"BepInExEnabled",
+        "UpdateSourceConditionValue":"true"
     }
 ]
