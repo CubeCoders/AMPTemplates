@@ -60,7 +60,22 @@
         "ParamFieldName":"rcon_password",
         "EnumValues":{}
     },
-   {
+    {
+        "DisplayName":"Initial Gamemode",
+        "Category":"E.Y.E Server Settings",
+        "Description":"Sets the gamemode to start the server with. Specify an Initial Map and Map Rotation Cycle to suit",
+        "Keywords":"game,mode,style,eye_gamestylech",
+        "FieldName":"EYE_GameStyleCh",
+        "InputType":"enum",
+        "ParamFieldName":"EYE_GameStyleCh",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"1",
+        "EnumValues":{
+            "1":"Team Artifact (default)",
+            "2":"Battle Royal"
+        }
+    },
+    {
         "DisplayName":"Initial Map",
         "Category":"E.Y.E Server Settings",
         "Description":"Sets the map to start the server with. If \"Custom\" is selected, Custom Initial Map must also be specified",
@@ -69,9 +84,10 @@
         "InputType":"enum",
         "ParamFieldName":"map",
         "IncludeInCommandLine":true,
-        "DefaultValue":"cc_ancient",
+        "DefaultValue":"tm_street",
         "EnumValues":{
-            "cc_ancient":"cc_ancient",
+            "tm_street":"tm_street",
+            "br_street":"br_street",
             "{{CustomMap}}":"--Custom--"
         }
     },
@@ -90,25 +106,27 @@
         "DisplayName":"Map Rotation Cycle",
         "Category":"E.Y.E Server Settings",
         "Description":"Sets the map rotation list",
-        "Keywords":"map,rotation,cycle,mapcycle",
-        "FieldName":"mapcycle",
-        "InputType":"list",
-        "ParamFieldName":"mapcycle",
-        "DefaultValue":"[]",
-        "Special":"listfile:./eye-dc/91720/EYE/mapcycle.txt",
-        "EnumValues": {}
+        "Keywords":"map,rotation,cycle,mapcyclefile",
+        "FieldName":"mapcyclefile",
+        "InputType":"enum",
+        "ParamFieldName":"mapcyclefile",
+        "DefaultValue":"TMcycle.txt",
+        "EnumValues":{
+            "TMcycle.txt":"TMcycle.txt",
+            "BRcycle.txt":"BRcycle.txt",
+        }
     },
     {
         "DisplayName":"Map Game Time Limit",
         "Category":"E.Y.E Server Settings",
-        "Description":"Sets the game time per map. 0 = disabled",
+        "Description":"Sets the game time per map. 0 = disabled. Defaults: TM = 20, BR = 15",
         "Keywords":"time,limit,rotation,mp_timelimit",
         "FieldName":"mp_timelimit",
         "InputType":"number",
         "MinValue":"0",
         "ParamFieldName":"mp_timelimit",
-        "DefaultValue":"0",
-        "Placeholder":"0",
+        "DefaultValue":"15",
+        "Placeholder":"15",
         "Suffix":"minutes",
         "EnumValues":{}
     },
@@ -144,8 +162,8 @@
         "MinValue":"1",
         "MaxValue":"64",
         "ParamFieldName":"maxplayers",
-        "DefaultValue":"16",
-        "Placeholder":"16",
+        "DefaultValue":"8",
+        "Placeholder":"8",
         "Suffix":"players",
         "EnumValues":{}
     },
