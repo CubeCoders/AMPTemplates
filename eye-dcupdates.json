@@ -8,6 +8,14 @@
         "ForceDownloadPlatform":"Windows"
     },
     {
+        "UpdateStageName":"SteamCMD Component Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"1007",
+        "UpdateSourceTarget":"91720",
+        "ForceDownloadPlatform":"Windows"
+    },
+    {
         "UpdateStageName":"Server.cfg Template File Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
@@ -15,5 +23,12 @@
         "UpdateSourceArgs":"AMP_server.cfg",
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Initialise Wine",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win32 /usr/bin/wineboot --init --update'"
     }
 ]
