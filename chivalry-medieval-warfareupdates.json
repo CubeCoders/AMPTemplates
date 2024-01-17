@@ -1,11 +1,4 @@
 [
-     {
-        "UpdateStageName":"Symlink Removal",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm {{$FullBaseDir}}Binaries/Win64'"
-    },
     {
         "UpdateStageName":"SteamCMD Download",
         "UpdateSourcePlatform":"All",
@@ -14,17 +7,10 @@
         "UpdateSourceArgs":"219640"
     },
     {
-        "UpdateStageName":"Working Directory Replacement",
+        "UpdateStageName":"Initialise Wine",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -rf {{$FullBaseDir}}Binaries/Win64; ln -sf {{$FullBaseDir}}Binaries/Linux {{$FullBaseDir}}Binaries/Win64'"
-    },
-    {
-        "UpdateStageName":"SteamCMD Component Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"1007",
-        "UpdateSourceTarget":"220070/Binaries/Linux"
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
     }
 ]
