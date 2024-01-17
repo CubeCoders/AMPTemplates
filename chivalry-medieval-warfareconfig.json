@@ -28,9 +28,7 @@
         "Keywords":"password,server,gamepassword",
         "FieldName":"GamePassword",
         "InputType":"password",
-        "ParamFieldName":"ini:PCServer-UDKGame:Engine.AccessControl.GamePassword",
-        "IncludeInCommandLine":true,
-        "SkipIfEmpty":true,
+        "ParamFieldName":"Engine.AccessControl.GamePassword",
         "DefaultValue":"",
         "EnumValues":{}
     },
@@ -41,7 +39,7 @@
         "Keywords":"admin,password,adminpassword",
         "FieldName":"AdminPassword",
         "InputType":"password",
-        "ParamFieldName":"ini:PCServer-UDKGame:Engine.AccessControl.AdminPassword",
+        "ParamFieldName":"Engine.AccessControl.AdminPassword",
         "DefaultValue":"{{newguid()}}",
         "IncludeInCommandLine":true,
         "SkipIfEmpty":true,
@@ -162,12 +160,39 @@
     {
         "DisplayName":"Custom Initial Map",
         "Category":"Chivalry Server Settings",
-        "Description":"Sets a custom map to use for the Initial Map, if \"Custom\" is selected",
+        "Description":"Sets a custom map to use for the Initial Map, if \"Custom\" is selected. Use Workshop Items to install the custom map",
         "Keywords":"custom,map",
         "FieldName":"CustomMap",
         "InputType":"text",
         "ParamFieldName":"CustomMap",
         "DefaultValue":"",
+        "Placeholder":"AOCTO-Shore_alpha_p",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Use Custom Gamemode",
+        "Category":"Chivalry Server Settings",
+        "Description":"If enabled, the server will start with a custom gamemode. Requires the custom gamemode to be set under Custom Gamemode",
+        "Keywords":"custom,gamemode,modname",
+        "FieldName":"modname",
+        "InputType":"checkbox",
+        "ParamFieldName":"modname",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"?modname={{CustomGamemode}}"
+        }
+    },
+    {
+        "DisplayName":"Custom Gamemode",
+        "Category":"Chivalry Server Settings",
+        "Description":"Sets a custom gamemode to use, if Use Custom Gamemode is enabled. Use Workshop Items to install the custom gamemode",
+        "Keywords":"custom,gamemode",
+        "FieldName":"CustomGamemode",
+        "InputType":"text",
+        "ParamFieldName":"CustomGamemode",
+        "DefaultValue":"",
+        "Placeholder":"BlackKnight",
         "EnumValues":{}
     },
     {
@@ -183,6 +208,18 @@
         "DefaultValue":"32",
         "Placeholder":"32",
         "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Workshop Items",
+        "Category":"Chivalry Server Settings",
+        "Description":"Space-separated list of switches to install and update [workshop items](https://steamcommunity.com/workshop/browse?appid=219640). Format: -sdkfileid=<workshop_id>",
+        "Keywords":"workshop,items,custom,mods,sdkfileid",
+        "FieldName":"sdkfileid",
+        "InputType":"text",
+        "ParamFieldName":"sdkfileid",
+        "DefaultValue":"",
+        "Placeholder":"-sdkfileid=230012942 -sdkfileid=232823090",
         "EnumValues":{}
     }
 ]
