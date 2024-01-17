@@ -1,10 +1,24 @@
 [
+     {
+        "UpdateStageName":"Symlink Removal",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'rm {{$FullBaseDir}}Binaries/Win64'"
+    },
     {
         "UpdateStageName":"SteamCMD Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"220070",
         "UpdateSourceArgs":"219640"
+    },
+    {
+        "UpdateStageName":"Working Directory Replacement",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'rm -rf {{$FullBaseDir}}Binaries/Win64; ln -sf {{$FullBaseDir}}Binaries/Linux {{$FullBaseDir}}Binaries/Win64'"
     },
     {
         "UpdateStageName":"SteamCMD Component Download",
