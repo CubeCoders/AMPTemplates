@@ -22,6 +22,17 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Public IP",
+        "Category":"Palworld Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$ExternalIP",
+        "InputType":"text",
+        "Hidden":true,
+        "ParamFieldName":"/Script/Pal.PalGameWorldSettings.PublicIP",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Enable RCON",
         "Category":"Palworld Server Settings",
         "Description":"",
@@ -56,6 +67,20 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Make Community Server",
+        "Category":"Palworld Server Settings",
+        "Description":"If enabled, the server will appear in the list of community servers in-game",
+        "Keywords":"community,server,public",
+        "FieldName":"CommunityServer",
+        "InputType":"checkbox",
+        "ParamFieldName":"CommunityServer",
+        "DefaultValue":"EpicApp=PalServer",
+        "EnumValues":{
+            "False":"",
+            "True":"EpicApp=PalServer "
+        }
+    },
+    {
         "DisplayName":"Server Password",
         "Category":"Palworld Server Settings",
         "Description":"Sets the password required for players to join the server. Default is no password",
@@ -67,14 +92,13 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Admin Password",
+        "DisplayName":"RCON/Admin Password",
         "Category":"Palworld Server Settings",
-        "Description":"Sets the password for server admin login. Default is a strong, random password",
-        "Keywords":"admin,password,adminpassword",
-        "FieldName":"AdminPassword",
-        "InputType":"password",
+        "Description":"See the Security and Privacy menu for configurable options for the server's RCON password. The RCON password is also used in the in-game console for players to access administrator commands",
+        "Keywords":"rcon,password,admin,adminpassword",
+        "FieldName":"$RemoteAdminPassword",
+        "InputType":"hidden",
         "ParamFieldName":"/Script/Pal.PalGameWorldSettings.AdminPassword",
-        "DefaultValue":"{{newguid()}}",
         "EnumValues":{}
     },
     {
@@ -91,5 +115,19 @@
         "Placeholder":"32",
         "Suffix":"players",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Multi-Threaded Performance Improvements",
+        "Category":"Palworld Server Settings",
+        "Description":"If enabled, the server's performance will be enhanced in multi-threaded CPU environments",
+        "Keywords":"multi,thread,threaded,performance,improvements",
+        "FieldName":"MultiThread",
+        "InputType":"checkbox",
+        "ParamFieldName":"MultiThread",
+        "DefaultValue":"-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS",
+        "EnumValues":{
+            "False":"",
+            "True":"-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS "
+        }
     }
 ]
