@@ -5,5 +5,35 @@
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"2394010",
         "UpdateSourceArgs":"1623730"
+    },
+    {
+        "UpdateStageName":"Config Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Pal/Saved/Config/WindowsServer"
+    },
+    {
+        "UpdateStageName":"Config Directory Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Pal/Saved/Config/LinuxServer"
+    },
+    {
+        "UpdateStageName":"Config File Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/palworldsettings.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Pal/Saved/Config/WindowsServer",
+        "UpdateSourceArgs":"PalWorldSettings.ini",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Config File Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/palworldsettings.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Pal/Saved/Config/LinuxServer",
+        "UpdateSourceArgs":"PalWorldSettings.ini",
+        "OverwriteExistingFiles":false
     }
 ]
