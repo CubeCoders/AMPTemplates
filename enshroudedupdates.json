@@ -1,0 +1,42 @@
+[
+    {
+        "UpdateStageName":"SteamCMD Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"2278520",
+        "UpdateSourceArgs":"1203620",
+        "ForceDownloadPlatform":"Windows"
+    },
+    {
+        "UpdateStageName":"Enshrouded_server.json Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/enshroudedserver.json",
+        "UpdateSourceArgs":"enshrouded_server.json",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Initialise Wine",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
+    },
+    {
+        "UpdateStageName":"Winescript Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/enshroudedwinescript.sh",
+        "UpdateSourceArgs":"winescript.sh",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Install Windows Components",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"./winescript.sh"
+    }
+]
