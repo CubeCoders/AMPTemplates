@@ -8,19 +8,19 @@
         "ForceDownloadPlatform": "Windows"
     },
     {
-        "UpdateStageName": "Initialise Wine",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
-    },
-    {
         "UpdateStageName":"Settings.json Download",
-        "UpdateSourcePlatform":"Linux",
+        "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/assetto-corsa-compsettings.json",
         "UpdateSourceArgs":"settings.json",
         "UpdateSourceTarget":"{{$FullBaseDir}}server/cfg",
         "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
     }
 ]
