@@ -1,5 +1,14 @@
 [
     {
+        "UpdateStageName":"Remove uMod/Oxide",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd rok\\381690 && del /Q /F oxide Oxide.Compiler.exe compiler*.log ROK_Data\\Managed\\Oxide*",
+        "UpdateSourceConditionSetting":"InstalluMod",
+        "UpdateSourceConditionValue":"false"
+    },
+    {
         "UpdateStageName":"SteamCMD Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
@@ -21,6 +30,19 @@
         "UpdateSourceArgs":"ServerSettings.cfg",
         "UpdateSourceTarget":"{{$FullBaseDir}}Configuration",
         "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"uMod/Oxide Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"OxideMod/Oxide.ReignOfKings",
+        "UpdateSourceData":"Oxide.ReignOfKings.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"InstalluMod",
+        "UpdateSourceConditionValue":"true"
     },
     {
         "UpdateStageName":"Initialise Wine",
