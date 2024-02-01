@@ -43,7 +43,7 @@ App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
 App.Ports=[{"Protocol":"Both","Port":7350,"Ref":"ServerPort","Name":"Game and Ping Port","Description":"Port for game and ping traffic"},{"Protocol":"UDP","Port":27015,"Ref":"AuthPort","Name":"Auth Port","Description":"Port for steam auth traffic"}]
 App.AdminPortRef=0
-App.PrimaryApplicationPortRef=GamePort
+App.PrimaryApplicationPortRef=ServerPort
 App.UniversalSleepApplicationUDPPortRef=0
 App.UniversalSleepSteamQueryPortRef=0
 App.MaxUsers=32
@@ -56,7 +56,7 @@ App.RCONConnectRetrySeconds=5
 App.RCONHeartbeatMinutes=0
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat=login {0}
-App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"381690","UpdateSourceArgs":"344760","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Create Config Directory","UpdateSourcePlatform":"All","UpdateSource":"CreateDirectory","UpdateSourceArgs":"{{$FullBaseDir}}Configuration"},{"UpdateStageName":"ServerSettings.cfg File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/reign-of-kingsserversettings.cfg","UpdateSourceArgs":"ServerSettings.cfg","UpdateSourceTarget":"{{$FullBaseDir}}Configuration","OverwriteExistingFiles":false},{"UpdateStageName":"Initialise Wine","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"},{"UpdateStageName":"Install Mono","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'cd rok && wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && chmod +x winetricks; export WINEPREFIX=\"{{$FullRootDir}}.wine\"; export WINEARCH=win64; ./winetricks -q mono > winescript_log.txt 2>&1'"}]
+App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"381690","UpdateSourceArgs":"344760","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Create Config Directory","UpdateSourcePlatform":"All","UpdateSource":"CreateDirectory","UpdateSourceArgs":"{{$FullBaseDir}}Configuration"},{"UpdateStageName":"ServerSettings.cfg File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/reign-of-kingsserversettings.cfg","UpdateSourceArgs":"ServerSettings.cfg","UpdateSourceTarget":"{{$FullBaseDir}}Configuration","OverwriteExistingFiles":false},{"UpdateStageName":"Initialise Wine","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"},{"UpdateStageName":"Install Mono","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'cd rok && wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && chmod +x winetricks; wget -N https://dl.winehq.org/wine/wine-mono/8.0.0/wine-mono-8.0.0-x86.msi; export WINEPREFIX=\"{{$FullRootDir}}.wine\"; export WINEARCH=win64; /usr/bin/wine msiexec /i wine-mono-8.0.0-x86.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log'"}]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
