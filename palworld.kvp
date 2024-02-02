@@ -11,11 +11,11 @@ Meta.ConfigManifest=palworldconfig.json
 Meta.MetaConfigManifest=palworldmetaconfig.json
 Meta.ConfigRoot=palworld.kvp
 Meta.MinAMPVersion=2.4.7
-Meta.SpecificDockerImage=
+Meta.SpecificDockerImage=cubecoders/ampbase:wine8
 Meta.DockerRequired=False
 Meta.DockerBaseReadOnly=False
-Meta.ContainerPolicy=Supported
-Meta.ContainerPolicyReason=
+Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
+Meta.ContainerPolicyReason=The server requires Wine to run on Linux. Using a container avoids the need to install this dependency on the host.
 Meta.ExtraSetupStepsURI=
 Meta.Prerequsites=[]
 Meta.ExtraContainerPackages=[]
@@ -30,14 +30,14 @@ App.RootDir=./palworld/
 App.BaseDirectory=./palworld/2394010/
 App.SteamWorkshopDownloadLocation=
 App.ExecutableWin=2394010\Pal\Binaries\Win64\PalServer-Win64-Test.exe
-App.ExecutableLinux=.proton/proton
+App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=2394010
-App.LinuxCommandLineArgs=run "{{$FullBaseDir}}Pal/Binaries/Win64/PalServer-Win64-Test.exe"
+App.LinuxCommandLineArgs="./Pal/Binaries/Win64/PalServer-Win64-Test.exe"
 App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} Pal {{CommunityServer}}-Port={{$GamePort}} -QueryPort={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} -publicport={{$GamePort}} -publicip={{$ExternalIP}} -players={{$MaxUsers}} {{MultiThread}}{{$FormattedArgs}} {{CustomArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1623730","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullBaseDir}}.steam/steam","HOME":"{{$FullBaseDir}}","WINEDLLOVERRIDES":"xinput1_3.dll=n,b"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1623730","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"xinput1_3.dll=n,b"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
@@ -79,7 +79,7 @@ App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
 App.RapidStartup=False
 App.DumpFullChildProcessTree=False
-App.MonitorChildProcessName=PalServer-Win64-Test.exe
+App.MonitorChildProcessName=Pal/Binaries/Win64/PalServer-Win64-Test.exe
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RCONConnected
