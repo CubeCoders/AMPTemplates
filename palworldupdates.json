@@ -1,5 +1,23 @@
 [
     {
+        "UpdateStageName":"Remove UE4SS",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd palworld\\2394010\\Pal\\Binaries\\Win64 && del /Q /F Changelog.md xinput1_3.dll UE4SS-settings.ini Readme.md && rmdir /Q /S Mods E4SS_Signatures",
+        "UpdateSourceConditionSetting":"InstallUE4SS",
+        "UpdateSourceConditionValue":"false"
+    },
+    {
+        "UpdateStageName":"Remove UE4SS",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./palworld/2394010/Pal/Binaries/Win64 && rm -rf Changelog.md xinput1_3.dll UE4SS-settings.ini Mods Readme.md E4SS_Signatures'",
+        "UpdateSourceConditionSetting":"InstallUE4SS",
+        "UpdateSourceConditionValue":"false"
+    },
+    {
         "UpdateStageName":"SteamCMD Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
@@ -41,5 +59,37 @@
         "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.proton/compatdata\" \"{{$FullBaseDir}}.steam/steam\" \"{{$FullBaseDir}}.steam/sdk32\" \"{{$FullBaseDir}}.steam/sdk64\" && \\cp -f \"{{$FullRootDir}}linux32/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk32/\" && \\cp -f \"{{$FullRootDir}}linux64/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk64/\" && curl -sLOJ \"https://github.com/GloriousEggroll/proton-ge-custom/releases/download/{{SpecificReleaseVersion}}/{{SpecificReleaseVersion}}.tar.gz\" && tar -xzf GE-Proton*.tar.gz -C \"{{$FullRootDir}}.proton\" --strip-components=1 && rm GE-Proton*.*'",
         "UpdateSourceConditionSetting":"ProtonRelease",
         "UpdateSourceConditionValue":"specificversion"
+    },
+    {
+        "UpdateStageName":"UE4SS Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURLFromJQ",
+        "UpdateSourceData":"https://api.github.com/repos/UE4SS-RE/RE-UE4SS/releases/latest",
+        "UpdateSourceArgs":"$.assets.[1].browser_download_url",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Pal/Binaries/Win64",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"InstallUE4SS",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Create E4SS_Signatures Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Pal/Binaries/Win64/E4SS_Signatures",
+        "UpdateSourceConditionSetting":"InstallUE4SS",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"FName_Constructor.lua Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://gist.githubusercontent.com/DRayX/2079b1398a4c0bd4271dea544f23043a/raw/f28cc0938beb7182ed1976a2e4da83191ced5a5b/FName_Constructor.lua",
+        "UpdateSourceArgs":"FName_Constructor.lua",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Pal/Binaries/Win64/E4SS_Signatures",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"InstallUE4SS",
+        "UpdateSourceConditionValue":"true"
     }
 ]
