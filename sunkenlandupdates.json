@@ -22,11 +22,18 @@
         "UpdateSourceArgs":"/C mkdir \"%AppData%\\LocalLow\\Vector3 Studio\\Sunkenland\\Worlds\" & mklink /J \"{{$FullBaseDir}}Worlds\" \"%AppData%\\LocalLow\\Vector3 Studio\\Sunkenland\\Worlds\""
     },
     {
+        "UpdateStageName":"Saves Directory Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.wine/drive_c/users/steam/AppData/LocalLow/Vector3 Studio/Sunkenland/Worlds\" ; ln -sf \"{{$FullRootDir}}.wine/drive_c/users/steam/AppData/LocalLow/Vector3 Studio/Sunkenland/Worlds\" \"{{$FullBaseDir}}\"'"
+    },
+    {
         "UpdateStageName":"Create Readme File",
-        "UpdateSourcePlatform":"All",
+        "UpdateSourcePlatform":"Windows",
         "UpdateSource":"CreateFile",
         "UpdateSourceArgs":"{{$FullBaseDir}}Worlds/README.txt",
-        "UpdateSourceData":"WARNING: This directory may include the save data of multiple Sunkenland servers\nrun on this system.\n\nIf viewing this directory from AMP’s ADS File Manager/SFTP, you will see the\nsave data of all Sunkenland servers run on this system.\n\nYou will see the same save data if viewing this directory from AMP’s File Manager/SFTP\nfor a particular Sunkenland instance.\n\nTake care when managing files in this directory or its subdirectory!",
+        "UpdateSourceData":"WARNING: This directory will include the save data of multiple Sunkenland servers\nrun on this system.\n\nIf viewing this directory from AMP’s ADS File Manager/SFTP, you will see the\nsave data of all Sunkenland servers run on this system.\n\nYou will see the same save data if viewing this directory from AMP’s File Manager/SFTP\nfor a particular Sunkenland instance.\n\nTake care when managing files in this directory or its subdirectory!",
         "OverwriteExistingFiles":true
     }
 ]
