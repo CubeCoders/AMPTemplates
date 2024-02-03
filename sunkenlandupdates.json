@@ -29,6 +29,16 @@
         "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.wine/drive_c/users/steam/AppData/LocalLow/Vector3 Studio/Sunkenland/Worlds\" ; ln -sf \"{{$FullRootDir}}.wine/drive_c/users/steam/AppData/LocalLow/Vector3 Studio/Sunkenland/Worlds\" \"{{$FullBaseDir}}\"'"
     },
     {
+        "UpdateStageName":"Default World Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/sunkenlandworld.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Worlds",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":false,
+        "DeleteAfterExtract":true
+    },
+    {
         "UpdateStageName":"Create Readme File",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"CreateFile",
