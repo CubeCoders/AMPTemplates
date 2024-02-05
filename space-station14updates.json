@@ -58,7 +58,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd space-station14/server && curl -sLo jq.exe https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe && for /f \"delims=\" %i in ('curl -s https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json ^| jq.exe -r \".builds | to_entries | last | .value.server.\\\"win-x64\\\".url\"') do set \"download_url=%i\" && curl -sLo SS14.Server_win-x64.zip \"%download_url%\" && tar -xf SS14.Server_win-x64.zip && rm SS14.Server_win-x64.zip"
+        "UpdateSourceArgs":"/C cd space-station14/server && curl -sLo jq.exe https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe && for /f %i in ('curl -s https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json ^| jq.exe -r \".builds | to_entries | last | .value.server.\\\"win-x64\\\".url\"') do set \"download_url=%i\" && curl -sLo SS14.Server_win-x64.zip \"%download_url%\" && tar -xf SS14.Server_win-x64.zip && rm SS14.Server_win-x64.zip"
     },
     {
         "UpdateStageName":"Config File Download",
