@@ -58,7 +58,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd space-station14/server && curl -sLo jq.exe https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe && for /f %i in ('curl -s https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json ^| jq.exe -r \".builds | to_entries | last | .value.server.\\\"win-x64\\\".url\"') do set \"download_url=%i\" && curl -sLo SS14.Server_win-x64.zip \"%download_url%\" && tar -xf SS14.Server_win-x64.zip && rm SS14.Server_win-x64.zip"
+        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"cd space-station14/server; Invoke-WebRequest -Uri 'https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe' -OutFile 'jq.exe'; $download_url = Invoke-Expression -Command 'curl -s https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json | jq.exe -r ''.builds | to_entries | last | .value.server.\\\"win-x64\\\".url'''; Invoke-WebRequest -Uri $download_url -OutFile 'SS14.Server_win-x64.zip'; Expand-Archive -Path 'SS14.Server_win-x64.zip' -DestinationPath .; Remove-Item 'SS14.Server_win-x64.zip'\""
     },
     {
         "UpdateStageName":"Config File Download",
