@@ -1,0 +1,72 @@
+[
+    {
+        "UpdateStageName":"Create Dotnet Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Dotnet"
+    },
+    {
+        "UpdateStageName":".NET Runtime Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/Runtime/{{DotnetVersion}}/dotnet-runtime-{{DotnetVersion}}-win-x64.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":".NET Runtime Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/Runtime/{{DotnetVersion}}/dotnet-runtime-{{DotnetVersion}}-linux-x64.tar.gz",
+        "UpdateSourceArch":"x86_64",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":".NET Runtime Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/Runtime/{{DotnetVersion}}/dotnet-runtime-{{DotnetVersion}}-linux-arm64.tar.gz",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd space-station14/server && curl -s https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json | jq.exe -r \".builds | to_entries | last | .value.server.\\\"linux-x64\\\".url\" && unzip -qo SS14.Server_linux-x64.zip && rm -rf SS14.Server_linux-x64.zip'",
+        "UpdateSourceArch":"x86_64"
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd space-station14/server && curl -s https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json | jq.exe -r \".builds | to_entries | last | .value.server.\\\"linux-arm64\\\".url\" && unzip -qo SS14.Server_linux-arm64.zip && rm -rf SS14.Server_linux-arm64.zip'",
+        "UpdateSourceArch":"aarch64"
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd space-station14/server && curl -sLo jq.exe https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe && curl -s https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json | jq.exe -r \".builds | to_entries | last | .value.server.\\\"win-x64\\\".url\" && tar -xf SS14.Server_win-x64.zip && rm SS14.Server_win-x64.zip"
+    },
+    {
+        "UpdateStageName":"Config File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/space-station14server_config.toml",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceArgs":"AMP_server_config.toml",
+        "OverwriteExistingFiles":false
+    }
+]
