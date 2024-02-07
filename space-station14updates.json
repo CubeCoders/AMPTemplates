@@ -62,7 +62,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs": "/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"cd space-station14/server ; $Builds = (Invoke-WebRequest -Uri https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json | ConvertFrom-Json).builds ; $LastBuild = $Builds | Get-Member -MemberType NoteProperty | Select-Object -Last 1 ; $DownloadUrl = $Builds.$($LastBuild.Name).server.'win-x64'.url ; Invoke-WebRequest -Uri $DownloadUrl -OutFile 'SS14.Server_win-x64.zip' ; Expand-Archive -Path 'SS14.Server_win-x64.zip' ; Remove-Item 'SS14.Server_win-x64.zip'\"",
+        "UpdateSourceArgs": "/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"cd space-station14/server ; Invoke-WebRequest -Uri 'https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe' -OutFile 'jq.exe' ; $DownloadUrl = (Invoke-WebRequest -Uri https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json | .\\jq.exe -r '.builds | to_entries | last | .value.server.\"win-x64\".url') ; Invoke-WebRequest -Uri $DownloadUrl -OutFile 'SS14.Server_win-x64.zip' ; Expand-Archive -Path 'SS14.Server_win-x64.zip' ; Remove-Item 'SS14.Server_win-x64.zip'\"",
         "UpdateSourceConditionSetting":"ServerBuild",
         "UpdateSourceConditionValue":"latest"
     },
