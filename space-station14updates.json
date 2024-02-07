@@ -58,11 +58,22 @@
         "UpdateSourceConditionValue":"latest"
     },
     {
+        "UpdateStageName":"Server Download Script Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/dev/space-station14server_download.ps1",
+        "UpdateSourceArgs":"server_download.ps1",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"ServerBuild",
+        "UpdateSourceConditionValue":"latest"
+    },
+    {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs": "/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"cd space-station14/server ; $Manifest = Invoke-WebRequest -Uri https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json | ConvertFrom-Json ; $LastBuildKey = $Manifest.builds | Get-Member -MemberType NoteProperty | Select-Object -Last 1 ; $DownloadUrl = $Manifest.builds.$($LastBuildKey.Name).server.'win-x64'.url ; Invoke-WebRequest -Uri $DownloadUrl -OutFile 'SS14.Server_win-x64.zip' ; Expand-Archive -Path 'SS14.Server_win-x64.zip' -DestinationPath '.' -Force ; Remove-Item 'SS14.Server_win-x64.zip'\"",
+        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"server_download.ps1\"",
         "UpdateSourceConditionSetting":"ServerBuild",
         "UpdateSourceConditionValue":"latest"
     },
