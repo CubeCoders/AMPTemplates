@@ -62,7 +62,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs": "/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"cd space-station14/server ; $Manifest = Invoke-WebRequest -UseBasicParsing -Uri 'https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json' | ConvertFrom-Json ; $LastBuildKey = $Manifest.builds | Select-Object -Last 1 | ForEach-Object { $_.PSObject.Properties.Name } ; $DownloadUrl = $Manifest.builds.$($LastBuildKey.Name).server.'win-x64'.url ; Invoke-WebRequest -UseBasicParsing -Uri $DownloadUrl -OutFile 'SS14.Server_win-x64.zip' ; Expand-Archive -Path 'SS14.Server_win-x64.zip' -DestinationPath '.' -Force ; Remove-Item 'SS14.Server_win-x64.zip'\"",
+        "UpdateSourceArgs": "/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"cd space-station14/server ; $Manifest = Invoke-WebRequest -UseBasicParsing -Uri 'https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json' | ConvertFrom-Json ; $LastBuildKey = $Manifest.builds | Select-Object -Last 1 | ForEach-Object { $_.Name } ; $DownloadUrl = $Manifest.builds.$($LastBuildKey.Name).server.'win-x64'.url ; Invoke-WebRequest -UseBasicParsing -Uri $DownloadUrl -OutFile 'SS14.Server_win-x64.zip' ; Expand-Archive -Path 'SS14.Server_win-x64.zip' -DestinationPath '.' -Force ; Remove-Item 'SS14.Server_win-x64.zip'\"",
         "UpdateSourceConditionSetting":"ServerBuild",
         "UpdateSourceConditionValue":"latest"
     },
