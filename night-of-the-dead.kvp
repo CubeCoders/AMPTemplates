@@ -18,12 +18,12 @@ Meta.ConfigReleaseState=NotSpecified
 App.DisplayName=Night of the Dead
 App.RootDir=./night-of-the-dead/
 App.BaseDirectory=./night-of-the-dead/1420710/
-App.ExecutableWin=1420710\LF\Binaries\Win64\LFServer.exe
+App.ExecutableWin=1420710\LF\Binaries\Win64\LFServer-Win64-Shipping.exe
 App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=1420710
-App.LinuxCommandLineArgs=-a wine "./LF/Binaries/Win64/LFServer.exe"
+App.LinuxCommandLineArgs=-a wine "./LF/Binaries/Win64/LFServer-Win64-Shipping.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} ?listen -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{$FormattedArgs}} -stdout -FullStdOutLogOutput -CRASHREPORTS
+App.CommandLineArgs={{$PlatformArgs}} ?listen -Port={{$GamePort}} -QueryPort={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} {{$FormattedArgs}} -stdout -FullStdOutLogOutput -CRASHREPORTS
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1377380","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
 App.CommandLineParameterFormat=-{0}="{1}"
@@ -53,9 +53,7 @@ App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
 App.RapidStartup=False
-App.MonitorChildProcess=True
-App.MonitorChildProcessWaitMs=2000
-App.MonitorChildProcessName=wine64
+App.MonitorChildProcessName=LF/Binaries/Win64/LFServer-Win64-Shipping.exe
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RegexMatch

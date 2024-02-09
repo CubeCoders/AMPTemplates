@@ -1,0 +1,37 @@
+[
+    {
+        "UpdateStageName":"SteamCMD Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"2278520",
+        "UpdateSourceArgs":"1203620",
+        "ForceDownloadPlatform":"Windows"
+    },
+    {
+        "UpdateStageName":"Enshrouded_server.json Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/enshroudedserver.json",
+        "UpdateSourceArgs":"enshrouded_server.json",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Proton GE Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.proton/compatdata\" \"{{$FullBaseDir}}.steam/steam\" \"{{$FullBaseDir}}.steam/sdk32\" \"{{$FullBaseDir}}.steam/sdk64\" && \\cp -f \"{{$FullRootDir}}linux32/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk32/\" && \\cp -f \"{{$FullRootDir}}linux64/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk64/\" && rm -rf \"{{$FullRootDir}}.proton/compatdata/pfx\" && curl -sLOJ \"$(curl -s https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest | grep browser_download_url | cut -d\\\" -f4 | grep .tar.gz)\" && tar -xzf GE-Proton*.tar.gz -C \"{{$FullRootDir}}.proton\" --strip-components=1 && rm GE-Proton*.*'",
+        "UpdateSourceConditionSetting":"ProtonRelease",
+        "UpdateSourceConditionValue":"latest"
+    },
+    {
+        "UpdateStageName":"Proton GE Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.proton/compatdata\" \"{{$FullBaseDir}}.steam/steam\" \"{{$FullBaseDir}}.steam/sdk32\" \"{{$FullBaseDir}}.steam/sdk64\" && \\cp -f \"{{$FullRootDir}}linux32/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk32/\" && \\cp -f \"{{$FullRootDir}}linux64/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk64/\" && rm -rf \"{{$FullRootDir}}.proton/compatdata/pfx\" && curl -sLOJ \"https://github.com/GloriousEggroll/proton-ge-custom/releases/download/{{SpecificReleaseVersion}}/{{SpecificReleaseVersion}}.tar.gz\" && tar -xzf GE-Proton*.tar.gz -C \"{{$FullRootDir}}.proton\" --strip-components=1 && rm GE-Proton*.*'",
+        "UpdateSourceConditionSetting":"ProtonRelease",
+        "UpdateSourceConditionValue":"specificversion"
+    }
+]

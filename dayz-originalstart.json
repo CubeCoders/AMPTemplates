@@ -1,0 +1,18 @@
+[
+    {
+        "UpdateStageName":"Delete Active File",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}battleye\\beserver_x64_active_*.cfg"
+    },
+    {
+        "UpdateStageName":"Manage Bikeys",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"$mods = '{{mod}};{{clientmod}}' -split ';'; Set-Location dayz\\223350; Get-ChildItem -Path 'keys' -Filter '*.bikey' | ForEach-Object { if ($_.Name -ne 'dayz.bikey' -and -not ($_.Name -like '*dayz.bikey*')) { Remove-Item -LiteralPath $_.FullName -Force } }; foreach ($a in $mods) { Get-ChildItem -Path ('{0}\\keys' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'keys' -Force ; Get-ChildItem -Path ('{0}\\key' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'keys' -Force }\"",
+        "UpdateSourceConditionSetting":"ManageBikeys",
+        "UpdateSourceConditionValue":"true"
+    }
+]
