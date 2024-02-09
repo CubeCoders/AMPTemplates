@@ -12,7 +12,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd mxbikes\\server && mxbikes-beta18j.exe -extract & tar -xf mxbikes.zip && del /Q /F mxbikes-beta18j.exe mxbikes.zip"
+        "UpdateSourceArgs":"/C cd mxbikes\\server && mxbikes-beta18j.exe -extract & del /Q /F mxbikes-beta18j.exe && tar -xf mxbikes.zip && del /Q /F mxbikes.zip"
     },
     {
         "UpdateStageName":"Results Directory Creation",
@@ -41,5 +41,12 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
+    },
+    {
+        "UpdateStageName":"Extract Server",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"/C cd mxbikes/server && WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wine ./mxbikes-beta18j.exe -extract ; rm -f mxbikes-beta18j.exe && unzip -qo mxbikes.zip && rm -f mxbikes.zip"
     }
 ]
