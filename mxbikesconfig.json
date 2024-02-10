@@ -22,6 +22,90 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Saves Directory",
+        "Category":"MX Bikes Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"save_directory",
+        "InputType":"text",
+        "Hidden":true,
+        "ParamFieldName":"save.directory",
+        "DefaultValue":"saves",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Pause Directory",
+        "Category":"MX Bikes Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"pause_directory",
+        "InputType":"text",
+        "Hidden":true,
+        "ParamFieldName":"pause.directory",
+        "DefaultValue":"saves",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Replays Directory",
+        "Category":"MX Bikes Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"replay_directory",
+        "InputType":"text",
+        "Hidden":true,
+        "ParamFieldName":"replay.directory",
+        "DefaultValue":"replays",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Results Directory",
+        "Category":"MX Bikes Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"export_directory",
+        "InputType":"text",
+        "Hidden":true,
+        "ParamFieldName":"export.directory",
+        "DefaultValue":"results",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Log File",
+        "Category":"MX Bikes Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"log_file",
+        "InputType":"text",
+        "Hidden":true,
+        "ParamFieldName":"log.file",
+        "DefaultValue":"logs.txt",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Whitelist Filename",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"connection_whitelist",
+        "InputType":"text",
+        "Hidden":true,
+        "ParamFieldName":"connection.whitelist",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Blacklist Filename",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"connection_blacklist",
+        "InputType":"text",
+        "Hidden":true,
+        "ParamFieldName":"connection.blacklist",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Windows Compatibility",
         "Category":"MX Bikes Server Settings",
         "Description":"",
@@ -55,6 +139,17 @@
         "ParamFieldName":"connection.motd",
         "DefaultValue":"Welcome to my server!",
         "Placeholder":"Welcome to my server!",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Location",
+        "Category":"MX Bikes Server Settings",
+        "Description":"Sets information about the server location",
+        "Keywords":"server,location,info,information,server.location",
+        "FieldName":"server_location",
+        "InputType":"text",
+        "ParamFieldName":"server.location",
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
@@ -154,11 +249,695 @@
         "DisplayName":"Remote Admin Password",
         "Category":"MX Bikes Server Settings",
         "Description":"Sets the password required to connect to remote admin. Default is no password",
-        "Keywords":"server,password",
+        "Keywords":"remote,admin,password,admin.password,remote_admin.password",
         "FieldName":"remote_admin_password",
         "InputType":"password",
         "ParamFieldName":"remote_admin.password",
         "DefaultValue":"",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Client Ping Limit",
+        "Category":"MX Bikes Server Settings",
+        "Description":"Sets the ping limit for clients. 0 = no limit",
+        "Keywords":"max,maximum,ping,limit,max_ping,connection.max_ping",
+        "FieldName":"connection_max_ping",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"connection.max_ping",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Disable Polls",
+        "Category":"MX Bikes Server Settings",
+        "Description":"If set, polls will be disabled",
+        "Keywords":"disable,polls,polls.disable",
+        "FieldName":"polls_disable",
+        "InputType":"checkbox",
+        "ParamFieldName":"polls.disable",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Polls Disable During Races",
+        "Category":"MX Bikes Server Settings",
+        "Description":"If set, polls will be disabled during races",
+        "Keywords":"polls,disable,during,races,disable_during_races,polls.disable_during_races",
+        "FieldName":"polls_disable_during_races",
+        "InputType":"checkbox",
+        "ParamFieldName":"polls.disable_during_races",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Results Export Format",
+        "Category":"MX Bikes Data Settings",
+        "Description":"Specifies the format for exporting results. If set, it will automatically export results at the end of the last session",
+        "Keywords":"export,results,format,export.results",
+        "FieldName":"export_results",
+        "InputType":"text",
+        "ParamFieldName":"export.results",
+        "DefaultValue":"",
+        "EnumValues":{
+            "":"None",
+            "html":"HTML",
+            "xml":"XML",
+            "both":"Both HTML and XML"
+        }
+    },
+    {
+        "DisplayName":"Results Export Units",
+        "Category":"MX Bikes Data Settings",
+        "Description":"Specifies the units for exporting results",
+        "Keywords":"export,units,export.units",
+        "FieldName":"export_units",
+        "InputType":"enum",
+        "ParamFieldName":"export.units",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Metric units",
+            "1":"US units",
+            "2":"UK units"
+        }
+    },
+    {
+        "DisplayName":"Results Filename Prefix",
+        "Category":"MX Bikes Data Settings",
+        "Description":"Sets the filename prefix for exported results",
+        "Keywords":"export,prefix,filename,export.prefix",
+        "FieldName":"export_prefix",
+        "InputType":"text",
+        "ParamFieldName":"export.prefix",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Export Incremental Results",
+        "Category":"MX Bikes Data Settings",
+        "Description":"If enabled, results will be exported at the end of each session",
+        "Keywords":"export,incremental,export.incremental",
+        "FieldName":"export_incremental",
+        "InputType":"checkbox",
+        "ParamFieldName":"export.incremental",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Export Contacts",
+        "Category":"MX Bikes Data Settings",
+        "Description":"Specifies the contacts to include in the exported results",
+        "Keywords":"export,results,contacts,export.contacts",
+        "FieldName":"export_contacts",
+        "InputType":"number",
+        "ParamFieldName":"export.contacts",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"None",
+            "1":"Contacts between bikes",
+            "2":"Contacts between bikes and with walls"
+        }
+    },
+    {
+        "DisplayName":"Automatically Save Replays",
+        "Category":"MX Bikes Data Settings",
+        "Description":"If enabled, the server will automatically save the full replay at the end of the race",
+        "Keywords":"replay,save,replay.save",
+        "FieldName":"replay_save",
+        "InputType":"checkbox",
+        "ParamFieldName":"replay.save",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Replay Filename Prefix",
+        "Category":"MX Bikes Data Settings",
+        "Description":"Sets the filename prefix for saved replays",
+        "Keywords":"replay,prefix,filename,replay.prefix",
+        "FieldName":"replay_prefix",
+        "InputType":"text",
+        "ParamFieldName":"replay.prefix",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Live File",
+        "Category":"MX Bikes Data Settings",
+        "Description":"Name of the file to write live data",
+        "Keywords":"live,file",
+        "FieldName":"live_file",
+        "InputType":"text",
+        "ParamFieldName":"live.file",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Live Track Position",
+        "Category":"MX Bikes Data Settings",
+        "Description":"If set to 1, track centerline and bike positions are written",
+        "Keywords":"live,track,position",
+        "FieldName":"live_track_position",
+        "InputType":"checkbox",
+        "ParamFieldName":"live.track_position",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Live Contacts",
+        "Category":"MX Bikes Data Settings",
+        "Description":"Specifies which contacts to include in live data",
+        "Keywords":"live,contacts",
+        "FieldName":"live_contacts",
+        "InputType":"number",
+        "ParamFieldName":"live.contacts",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Event Name",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"The name of the event (optional)",
+        "Keywords":"event,name",
+        "FieldName":"event_name",
+        "InputType":"text",
+        "ParamFieldName":"event.name",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Event Track",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Track ID (the track folder name)",
+        "Keywords":"event,track,track ID",
+        "FieldName":"event_track",
+        "InputType":"text",
+        "ParamFieldName":"event.track",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Event Track Layout",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Track layout (empty -> default)",
+        "Keywords":"event,track,layout",
+        "FieldName":"event_track_layout",
+        "InputType":"text",
+        "ParamFieldName":"event.track_layout",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Event Tracks Shuffle",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Specifies if tracks are shuffled",
+        "Keywords":"event,tracks,shuffle",
+        "FieldName":"event_tracks_shuffle",
+        "InputType":"number",
+        "ParamFieldName":"event.tracks_shuffle",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Event Category",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Allowed bike category",
+        "Keywords":"event,category,bike",
+        "FieldName":"event_category",
+        "InputType":"text",
+        "ParamFieldName":"event.category",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Event Allowed Bikes",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"List of IDs of allowed bikes",
+        "Keywords":"event,allowed,bikes",
+        "FieldName":"event_allowed_bikes",
+        "InputType":"text",
+        "ParamFieldName":"event.allowed_bikes",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Rating Class",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Rating class",
+        "Keywords":"rating,class",
+        "FieldName":"rating_class",
+        "InputType":"text",
+        "ParamFieldName":"rating.class",
+        "DefaultValue":"A",
+        "EnumValues":{
+            "A":"2000+",
+            "B":"1600-1999",
+            "C":"1200-1599",
+            "D":"800-1199"
+        }
+    },
+    {
+        "DisplayName":"Enable Realistic Weather",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"If enabled, the weather will be realistic, and the following weather settings will be ignored",
+        "Keywords":"weather,realistic,weather.realistic",
+        "FieldName":"weather_realistic",
+        "InputType":"checkbox",
+        "ParamFieldName":"weather.realistic",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Weather Conditions",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Sets the weather conditions. Ignored if Realistic Weather is enabled",
+        "Keywords":"weather,conditions,weather.conditions",
+        "FieldName":"weather_conditions",
+        "InputType":"enum",
+        "ParamFieldName":"weather.conditions",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Sunny",
+            "1":"Cloudy",
+            "2":"Rainy"
+        }
+    },
+    {
+        "DisplayName":"Weather Temperature",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Sets the air temperature. Ignored if Realistic Weather is enabled",
+        "Keywords":"weather,temperature,weather.temperature",
+        "FieldName":"weather_temperature",
+        "InputType":"number",
+        "ParamFieldName":"weather.temperature",
+        "DefaultValue":"20",
+        "Placeholder":"20",
+        "Suffix":"°C",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Wind Direction",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Sets the wind direction. Ignored if Realistic Weather is enabled",
+        "Keywords":"weather,wind,direction,wind_direction,weather.wind_direction",
+        "FieldName":"weather_wind_direction",
+        "InputType":"enum",
+        "ParamFieldName":"weather.wind_direction",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"North",
+            "1":"North-east",
+            "2":"East",
+            "3":"South-east",
+            "4":"South",
+            "5":"South-west",
+            "6":"West",
+            "7":"North-west"
+        }
+    },
+    {
+        "DisplayName":"Wind Speed",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Sets the wind speed. Ignored if Realistic Weather is enabled",
+        "Keywords":"weather,wind,speed,wind_speed,weather.wind_speed",
+        "FieldName":"weather_wind_speed",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"weather.wind_speed",
+        "DefaultValue":"1",
+        "Placeholder":"1",
+        "Suffix":"metres/second",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Track Conditions",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Sets the track conditions. Ignored if Realistic Weather is enabled",
+        "Keywords":"weather,track,conditions,track_conditions,weather.track_conditions",
+        "FieldName":"weather_track_conditions",
+        "InputType":"enum",
+        "ParamFieldName":"weather.track_conditions",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Dry",
+            "1":"Wet"
+        }
+    },
+    {
+        "DisplayName":"Force Cockpit",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"If enabled, the cockpit view will be forced",
+        "Keywords":"hardcore,force,cockpit,force_cockpit,hardcore.force_cockpit",
+        "FieldName":"hardcore_force_cockpit",
+        "InputType":"checkbox",
+        "ParamFieldName":"hardcore.force_cockpit",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Disable Aids",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"If enabled, no driving aids will be allowed",
+        "Keywords":"hardcore,no,aids,no_aids,hardcore.no_aids",
+        "FieldName":"hardcore_no_aids",
+        "InputType":"checkbox",
+        "ParamFieldName":"hardcore.no_aids",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Limit Tyre Sets",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"If enabled, tyre sets will be limited",
+        "Keywords":"hardcore,limited,tyre,sets,limited_tyre_sets,hardcore.limited_tyre_sets",
+        "FieldName":"hardcore_limited_tyre_sets",
+        "InputType":"checkbox",
+        "ParamFieldName":"hardcore.limited_tyre_sets",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Reset Delay Mode",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Sets the bike reset delay mode",
+        "Keywords":"reset,type,mode,delay,reset.type",
+        "FieldName":"reset_type",
+        "InputType":"enum",
+        "ParamFieldName":"reset.type",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"No bike reset delay",
+            "1":"Fixed time reset delay",
+            "2":"Reset delay based on distance of rider from bike",
+            "3":"Reset delay based on distance of crash speed"
+        }
+    },
+    {
+        "DisplayName":"Reset Delay Time",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Sets the reset delay time, if the Reset Delay Mode is set to 'Fixed time reset delay'",
+        "Keywords":"reset,time,delay,fixed,reset.time",
+        "FieldName":"reset_time",
+        "InputType":"number",
+        "ParamFieldName":"reset.time",
+        "DefaultValue":"100",
+        "Placeholder":"100",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Race Open Practice",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"If set to 1, the following race settings are unused",
+        "Keywords":"race,open,practice",
+        "FieldName":"race_open_practice",
+        "InputType":"checkbox",
+        "ParamFieldName":"race.open_practice",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Race Format",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Specifies the race format",
+        "Keywords":"race,format",
+        "FieldName":"race_format",
+        "InputType":"number",
+        "ParamFieldName":"race.format",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Quick Race",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"If set to 1, only essential sessions are included",
+        "Keywords":"quick,race",
+        "FieldName":"quick_race",
+        "InputType":"checkbox",
+        "ParamFieldName":"quick_race",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Race Length Format",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Specifies the format for race length",
+        "Keywords":"race,length,format",
+        "FieldName":"race_length_format",
+        "InputType":"number",
+        "ParamFieldName":"race.length_format",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Race Length",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Percentage of full length + extra laps",
+        "Keywords":"race,length",
+        "FieldName":"race_length",
+        "InputType":"number",
+        "ParamFieldName":"race.length",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Race Minutes",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Timed race length in minutes",
+        "Keywords":"race,minutes",
+        "FieldName":"race_minutes",
+        "InputType":"number",
+        "ParamFieldName":"race.minutes",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Race Extra Laps",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Number of extra laps for timed races",
+        "Keywords":"race,extra,laps",
+        "FieldName":"race_extra_laps",
+        "InputType":"number",
+        "ParamFieldName":"race.extra_laps",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Race Laps",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Number of laps for lap-based races",
+        "Keywords":"race,laps",
+        "FieldName":"race_laps",
+        "InputType":"number",
+        "ParamFieldName":"race.laps",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Restart Delay",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Server restart time",
+        "Keywords":"restart,delay",
+        "FieldName":"restart_delay",
+        "InputType":"number",
+        "ParamFieldName":"restart.delay",
+        "DefaultValue":"300",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Event Pause",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"If set to 1, the event is paused and saved at the end of Pause Session",
+        "Keywords":"pause,event",
+        "FieldName":"pause",
+        "InputType":"checkbox",
+        "ParamFieldName":"pause",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Pause Session",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Session to pause",
+        "Keywords":"pause,session",
+        "FieldName":"pause_session",
+        "InputType":"enum",
+        "ParamFieldName":"pause_session",
+        "DefaultValue":"practice",
+        "EnumValues":{
+            "practice":"Practice",
+            "prequalify":"Pre-qualifying",
+            "qualifypractice":"Qualifying practice",
+            "qualify":"Qualifying",
+            "warmup":"Warm-up",
+            "race1":"Race 1",
+            "race2":"Race 2"
+        }
+    },
+    {
+        "DisplayName":"Resume",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"File to load to resume an event",
+        "Keywords":"resume,event",
+        "FieldName":"resume",
+        "InputType":"text",
+        "ParamFieldName":"resume",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Event Save",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"If set to 1, the event is paused and saved at the end of Save Session. If Event Pause is enabled, this setting is ignored",
+        "Keywords":"save,event",
+        "FieldName":"save",
+        "InputType":"checkbox",
+        "ParamFieldName":"save",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Save Session",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Session to save",
+        "Keywords":"save,session",
+        "FieldName":"save_session",
+        "InputType":"text",
+        "ParamFieldName":"save_session",
+        "DefaultValue":"practice",
+        "EnumValues":{
+            "practice":"Practice",
+            "prequalify":"Pre-qualifying",
+            "qualifypractice":"Qualifying practice",
+            "qualify":"Qualifying",
+            "warmup":"Warm-up",
+            "race1":"Race 1",
+            "race2":"Race 2"
+        }
+    },
+    {
+        "DisplayName":"Disable Collisions",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"If sets, collisions between bikes will be disabled",
+        "Keywords":"collision,disable,collision.disable",
+        "FieldName":"collision_disable",
+        "InputType":"checkbox",
+        "ParamFieldName":"collision.disable",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Collision Max Ping",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Set the ping over which collisions will be disabled (but high-ping clients will still collide with low-ping ones). 0 = collisions are never disabled",
+        "Keywords":"collision,max,maximum,ping,max_ping,collision.max_ping",
+        "FieldName":"collision_max_ping",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"collision.max_ping",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Deformation Scale",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"Sets the terrain deformation scale. 0 = disabled",
+        "Keywords":"deformation,scale,deformation.scale",
+        "FieldName":"deformation_scale",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"1",
+        "ParamFieldName":"deformation.scale",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Deformation Auto Reset",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"If enabled, terrain deformation will be reset at the beginning of each session",
+        "Keywords":"deformation,auto,reset,deformation.auto_reset",
+        "FieldName":"deformation_auto_reset",
+        "InputType":"checkbox",
+        "ParamFieldName":"deformation.auto_reset",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Disable Dynamic Track Surfaces",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"If set, dynamic track surfaces will be disabled",
+        "Keywords":"dynamic,surface,disable,dynamic_surface.disable",
+        "FieldName":"dynamic_surface_disable",
+        "InputType":"checkbox",
+        "ParamFieldName":"dynamic_surface.disable",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Persistent Dynamic Track Surfaces",
+        "Category":"MX Bikes Gameplay Settings",
+        "Description":"If enabled, dynamic track surfaces will not be reset between events",
+        "Keywords":"dynamic,surface,persistent,dynamic_surface.persistent",
+        "FieldName":"dynamic_surface_persistent",
+        "InputType":"checkbox",
+        "ParamFieldName":"dynamic_surface.persistent",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
     }
 ]

@@ -36,6 +36,20 @@
         "OverwriteExistingFiles":false
     },
     {
+        "UpdateStageName":"Whitelist.txt Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"",
+        "UpdateSourceArgs":"{{$FullBaseDir}}whitelist.txt"
+    },
+    {
+        "UpdateStageName":"Blacklist.txt Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"",
+        "UpdateSourceArgs":"{{$FullBaseDir}}blacklist.txt"
+    },
+    {
         "UpdateStageName":"Initialise Wine",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
@@ -47,6 +61,6 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"/C cd mxbikes/server && WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wine ./mxbikes-beta18j.exe -extract ; rm -f mxbikes-beta18j.exe && unzip -qo mxbikes.zip && rm -f mxbikes.zip"
+        "UpdateSourceArgs":"/C cd mxbikes/server && WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/xvfb-run -a wine \"./mxbikes-beta18j.exe\" -extract ; rm -f mxbikes-beta18j.exe && unzip -qo mxbikes.zip && rm -f mxbikes.zip"
     }
 ]
