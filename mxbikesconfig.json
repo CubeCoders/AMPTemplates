@@ -90,7 +90,7 @@
         "InputType":"text",
         "Hidden":true,
         "ParamFieldName":"connection.whitelist",
-        "DefaultValue":"",
+        "DefaultValue":"whitelist.txt",
         "EnumValues":{}
     },
     {
@@ -102,7 +102,7 @@
         "InputType":"text",
         "Hidden":true,
         "ParamFieldName":"connection.blacklist",
-        "DefaultValue":"",
+        "DefaultValue":"blacklist.txt",
         "EnumValues":{}
     },
     {
@@ -433,8 +433,8 @@
     {
         "DisplayName":"Event Name",
         "Category":"MX Bikes Gameplay Settings",
-        "Description":"The name of the event (optional)",
-        "Keywords":"event,name",
+        "Description":"Sets the name of the event",
+        "Keywords":"event,name,event.name",
         "FieldName":"event_name",
         "InputType":"text",
         "ParamFieldName":"event.name",
@@ -442,43 +442,25 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Event Track",
+        "DisplayName":"Tracks Shuffle Mode",
         "Category":"MX Bikes Gameplay Settings",
-        "Description":"Track ID (the track folder name)",
-        "Keywords":"event,track,track ID",
-        "FieldName":"event_track",
-        "InputType":"text",
-        "ParamFieldName":"event.track",
-        "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Event Track Layout",
-        "Category":"MX Bikes Gameplay Settings",
-        "Description":"Track layout (empty -> default)",
-        "Keywords":"event,track,layout",
-        "FieldName":"event_track_layout",
-        "InputType":"text",
-        "ParamFieldName":"event.track_layout",
-        "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Event Tracks Shuffle",
-        "Category":"MX Bikes Gameplay Settings",
-        "Description":"Specifies if tracks are shuffled",
-        "Keywords":"event,tracks,shuffle",
+        "Description":"Sets the tracks shuffle mode",
+        "Keywords":"event,tracks,shuffle,tracks_shuffle,event.tracks_shuffle",
         "FieldName":"event_tracks_shuffle",
-        "InputType":"number",
+        "InputType":"enum",
         "ParamFieldName":"event.tracks_shuffle",
-        "DefaultValue":"",
-        "EnumValues":{}
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"No shuffling",
+            "1":"Shuffle at start only",
+            "2":"Shuffle at end of list"
+        }
     },
     {
-        "DisplayName":"Event Category",
+        "DisplayName":"Allowed Bike Categories",
         "Category":"MX Bikes Gameplay Settings",
-        "Description":"Allowed bike category",
-        "Keywords":"event,category,bike",
+        "Description":"Sets the allowed bike categories. Empty = Open. Multiple categories can be set with a slash in between, such as: MX1/MX2",
+        "Keywords":"event,category,categories,bike,allowed,open,event.category",
         "FieldName":"event_category",
         "InputType":"text",
         "ParamFieldName":"event.category",
@@ -486,9 +468,9 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Event Allowed Bikes",
+        "DisplayName":"Allowed Bikes",
         "Category":"MX Bikes Gameplay Settings",
-        "Description":"List of IDs of allowed bikes",
+        "Description":"List of IDs of allowed bikes, separated by a slash. For example: 350xf/450xf",
         "Keywords":"event,allowed,bikes",
         "FieldName":"event_allowed_bikes",
         "InputType":"text",
