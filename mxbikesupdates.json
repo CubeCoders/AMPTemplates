@@ -1,18 +1,11 @@
 [
     {
-        "UpdateStageName":"Server Download",
+        "UpdateStageName":"SteamCMD Download",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://betas.mxb-mods.com/files/mxbikes-beta18j.exe",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "OverwriteExistingFiles":true
-    },
-    {
-        "UpdateStageName":"Extract Server",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd mxbikes\\server && mxbikes-beta18j.exe -extract & del /Q /F mxbikes-beta18j.exe && tar -xf mxbikes.zip && del /Q /F mxbikes.zip"
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"655500",
+        "UpdateSourceArgs":"655500",
+        "ForceDownloadPlatform":"Windows"
     },
     {
         "UpdateStageName":"Results Directory Creation",
@@ -55,12 +48,5 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
-    },
-    {
-        "UpdateStageName":"Extract Server",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"/C cd mxbikes/server && WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/xvfb-run -a wine \"./mxbikes-beta18j.exe\" -extract ; rm -f mxbikes-beta18j.exe && unzip -qo mxbikes.zip && rm -f mxbikes.zip"
     }
 ]
