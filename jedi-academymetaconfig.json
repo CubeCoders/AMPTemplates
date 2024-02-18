@@ -1,23 +1,35 @@
 [
-    {
-        "ConfigFile":"{{mod}}/server.cfg",
-        "AutoMap":true,
+	{
+        "ConfigFile":"{{mod}}/base.cfg", 
         "ConfigType":"kvp",
-        "ConfigFormat":"set {0} \"{1}\"",
-        "ConfigFormatRegex":"^set (?<key>.+?) \"?(?<value>.*?)\"?$"
-    },
-    {
-        "ConfigFile":"{{mod}}/server.cfg",
-        "AutoMap":true,
-        "ConfigType":"kvp",
-        "ConfigFormat":"seta {0} \"{1}\"",
-        "ConfigFormatRegex":"^seta (?<key>.+?) \"?(?<value>.*?)\"?$"
-    },
-    {
-        "ConfigFile":"{{mod}}/server.cfg",
-        "AutoMap":true,
-        "ConfigType":"kvp",
-        "ConfigFormat":"{0} \"{1}\"",
-        "ConfigFormatRegex":"^(?<key>.+?) \"?(?<value>.*?)\"?$"
+		"ConfigFormat":"{0} \"{1}\"",
+        "Subsections":[
+            {
+                "Heading":"$root",
+                "SettingMappings":{
+                    "exec":"server.cfg",
+                    "set sv_hostname":"sv_hostname",
+					"set g_motd":"g_motd",
+                    "set g_needpass":"g_needpass",
+                    "set g_password":"g_password",
+                    "rconpassword":"$RemoteAdminPassword",
+                    "set sv_privatePassword":"sv_privatePassword",
+                    "set sv_pure":"sv_pure",
+                    "set sv_cheats":"sv_cheats",
+                    "set g_gametype":"g_gametype",
+                    "set sv_maxclients":"$MaxUsers",
+                    "set g_maxGameClients":"g_maxGameClients",
+                    "set sv_privateClients":"sv_privateClients",
+                    "set sv_allowDownload":"sv_allowDownload",
+                    "set sv_fps":"sv_fps",
+                    "set sv_minRate":"sv_minRate",
+                    "set sv_maxRate":"sv_maxRate",
+                    "set sv_minPing":"sv_minPing",
+                    "set sv_maxPing":"sv_maxPing",
+                    "set logfile":"3",
+                    "set g_log":"server.log"                
+                }
+            }
+        ]
     }
 ]
