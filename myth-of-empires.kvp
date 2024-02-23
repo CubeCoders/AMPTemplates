@@ -34,7 +34,7 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=1794810
 App.LinuxCommandLineArgs="./MOE/Binaries/Win64/MOEServer.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} {{Map}} -game -server -DataLocalFile -NotCheckServerSteamAuth -stdout log={{ServerListId}}.log -LOCALLOGTIMES -PrivateServer -disable_qim -Port={{$GamePort}} -QueryPort={{$QueryPort}} -ShutDownServicePort={{$RCONPort}} -bStartShutDownServiceInPrivateServer=true -MultiHome={{$ApplicationIPBinding}} -ShutDownServiceIP=127.0.0.1 -OutAddress={{$ExternalIP}} -SessionName="{{SessionName}}" -SteamServerName="{{SessionName}}" -Description="{{Description}}" -PrivateServerPassword="{{PrivateServerPassword}}" -ShutDownServiceKey="{{$RemoteAdminPassword}}" -pakdir="{{$FullBaseDir}}MOE/{{ServerListId}}Mods" {{UseACE}}{{ForceSteamNet}}{{$FormattedArgs}} -NoticeEnterServer="{{NoticeEnterServer}}" -NoticeLeaveServer="{{NoticeLeaveServer}}" {{CustomArgs}}
+App.CommandLineArgs={{$PlatformArgs}} {{Map}} -game -server -DataLocalFile -NotCheckServerSteamAuth -stdout log={{ServerListId}}.log -LOCALLOGTIMES -PrivateServer -Port={{$GamePort}} -QueryPort={{$QueryPort}} -ShutDownServicePort={{$RCONPort}} -bStartShutDownServiceInPrivateServer=true -MultiHome={{$ApplicationIPBinding}} -ShutDownServiceIP=127.0.0.1 -OutAddress={{$ExternalIP}} -SessionName="{{SessionName}}" -SteamServerName="{{SessionName}}" -Description="{{Description}}" -PrivateServerPassword="{{PrivateServerPassword}}" -ShutDownServiceKey="{{$RemoteAdminPassword}}" -pakdir="{{$FullBaseDir}}MOE/{{ServerListId}}Mods" {{UseACE}}{{ForceSteamNet}}{{$FormattedArgs}} -NoticeEnterServer="{{NoticeEnterServer}}" -NoticeLeaveServer="{{NoticeLeaveServer}}" {{CustomArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"SteamAppId":"1371580","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
@@ -49,7 +49,7 @@ App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"UDP","Port":11888,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":12888,"Ref":"QueryPort","Name":"Query Port","Description":"Port for Steam query traffic"},{"Protocol":"TCP","Port":13888,"Ref":"RCONPort","Name":"Remote Management Port","Description":"Port for RCON traffic"}]
+App.Ports=[{"Protocol":"UDP","Port":8888,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":8889,"Ref":"QueryPort","Name":"Query Port","Description":"Port for Steam query traffic"},{"Protocol":"TCP","Port":8890,"Ref":"RCONPort","Name":"Remote Management Port","Description":"Port for RCON traffic"}]
 App.AdminPortRef=RCONPort
 App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPortRef=GamePort
