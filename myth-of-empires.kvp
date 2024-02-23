@@ -6,7 +6,7 @@ Meta.Arch=x86_64
 Meta.Author=Greelan
 Meta.URL=https://www.mythofempires.com/
 Meta.DisplayImageSource=steam:1371580
-Meta.EndpointURIFormat=
+Meta.EndpointURIFormat=steam://connect/{ip}:{GenericModule.App.Ports.$QueryPort}
 Meta.ConfigManifest=myth-of-empiresconfig.json
 Meta.MetaConfigManifest=myth-of-empiresmetaconfig.json
 Meta.ConfigRoot=myth-of-empires.kvp
@@ -34,7 +34,7 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=1794810
 App.LinuxCommandLineArgs="./MOE/Binaries/Win64/MOEServer.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -ShutdownServicePort={{$RCONPort}} -MultiHome={{$ApplicationIPBinding}} -ShutdownServiceIP={{$ApplicationIPBinding}} -ShutdownServiceKey="{{$RemoteAdminPassword}}" {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -ShutdownServicePort={{$RCONPort}} -MultiHome={{$ApplicationIPBinding}} -ShutdownServiceIP={{$ApplicationIPBinding}} -SessionName="{{SessionName}}" -PrivateServerPassword="{{PrivateServerPassword}}" -ShutdownServiceKey="{{$RemoteAdminPassword}}" {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"SteamAppId":"1371580","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
@@ -78,7 +78,7 @@ App.DumpFullChildProcessTree=False
 App.MonitorChildProcessName=MOE/Binaries/Win64/MOEServer.exe
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
-App.ApplicationReadyMode=Immediate
+App.ApplicationReadyMode=RCONConnected
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=
