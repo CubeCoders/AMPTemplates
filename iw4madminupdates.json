@@ -4,11 +4,24 @@
         "UpdateSourcePlatform":"All",
         "UpdateSource":"GithubRelease",
         "UpdateSourceArgs":"RaidMax/IW4M-Admin",
-        "UpdateSourceVersion":"{{ServerVersion}}",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"latest"
+    },
+    {
+        "UpdateStageName":"AIW4MAdmin Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/RaidMax/IW4M-Admin/releases/download/{{ServerPrereleaseVersion}}-prerelease/IW4MAdmin-{{ServerPrereleaseVersion}}.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"prerelease"
     },
     {
         "UpdateStageName":"Create Dotnet Directory",
