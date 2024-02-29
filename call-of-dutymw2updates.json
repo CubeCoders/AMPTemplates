@@ -6,6 +6,12 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}userraw"
     },
     {
+        "UpdateStageName":"Players Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}players"
+    },
+    {
         "UpdateStageName":"Mods Directory Creation",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"CreateDirectory",
@@ -59,7 +65,7 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/call-of-dutymw2server.cfg",
         "UpdateSourceArgs":"server.cfg",
-        "UpdateSourceTarget":"{{$FullBaseDir}}userraw",
+        "UpdateSourceTarget":"{{$FullBaseDir}}players",
         "OverwriteExistingFiles":false
     },
     {
@@ -75,5 +81,16 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd call-of-dutymw2 && wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && chmod +x winetricks; export WINEPREFIX=\"{{$FullRootDir}}.wine\"; export WINEARCH=win32; ./winetricks sound=disabled > winescript_log.txt 2>&1'"
+    },
+    {
+        "UpdateStageName":"Backup Exclusions Download 1",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/CubeCoders/AMPTemplates/raw/main/exclusions/.backupExclusionsMw2",
+        "UpdateSourceArgs":".backupExclude",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceConditionSetting":"backupExclude",
+        "UpdateSourceConditionValue":"true",
+        "OverwriteExistingFiles":false
     }
 ]
