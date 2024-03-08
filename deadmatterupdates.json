@@ -1,33 +1,28 @@
 [
-  {
-    "UpdateStageName": "Update",
-    "UpdateSourcePlatform": "All",
-    "UpdateSource": "SteamCMD",
-    "UpdateSourceData": "2584780",
-    "UpdateSourceArgs": "2184150",
-    "ForceDownloadPlatform": "Windows"
-  },
-  {
-    "UpdateStageName": "Initialise Wine",
-    "UpdateSourcePlatform": "Linux",
-    "UpdateSource": "Executable",
-    "UpdateSourceData": "/bin/bash",
-    "UpdateSourceArgs": "-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
-  },
-  {
-    "UpdateStageName": "Winescript Download",
-    "UpdateSourcePlatform": "Linux",
-    "UpdateSource": "FetchURL",
-    "UpdateSourceData": "https://raw.githubusercontent.com/winglessraven/AMPTemplates/deadmatter/deadmatterwinescript.sh",
-    "UpdateSourceArgs": "winescript.sh",
-    "UpdateSourceTarget": "{{$FullInstanceDir}}",
-    "OverwriteExistingFiles": true
-  },
-  {
-    "UpdateStageName": "Install Windows Components",
-    "UpdateSourcePlatform": "Linux",
-    "UpdateSource": "Executable",
-    "UpdateSourceData": "/bin/bash",
-    "UpdateSourceArgs": "./winescript.sh"
-  }
+    {
+        "UpdateStageName":"SteamCMD Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"2278520",
+        "UpdateSourceArgs":"1203620",
+        "ForceDownloadPlatform":"Windows"
+    },
+    {
+        "UpdateStageName":"Proton GE Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.proton/compatdata\" \"{{$FullBaseDir}}.steam/steam\" \"{{$FullBaseDir}}.steam/sdk32\" \"{{$FullBaseDir}}.steam/sdk64\" && \\cp -f \"{{$FullRootDir}}linux32/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk32/\" && \\cp -f \"{{$FullRootDir}}linux64/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk64/\" && rm -rf \"{{$FullRootDir}}.proton/compatdata/pfx\" && wget -q \"$(wget -qO- https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest | grep browser_download_url | cut -d\\\" -f4 | grep .tar.gz)\" && tar -xzf GE-Proton*.tar.gz -C \"{{$FullRootDir}}.proton\" --strip-components=1 && rm GE-Proton*.*'",
+        "UpdateSourceConditionSetting":"ProtonRelease",
+        "UpdateSourceConditionValue":"latest"
+    },
+    {
+        "UpdateStageName":"Proton GE Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.proton/compatdata\" \"{{$FullBaseDir}}.steam/steam\" \"{{$FullBaseDir}}.steam/sdk32\" \"{{$FullBaseDir}}.steam/sdk64\" && \\cp -f \"{{$FullRootDir}}linux32/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk32/\" && \\cp -f \"{{$FullRootDir}}linux64/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk64/\" && rm -rf \"{{$FullRootDir}}.proton/compatdata/pfx\" && wget -q \"https://github.com/GloriousEggroll/proton-ge-custom/releases/download/{{SpecificReleaseVersion}}/{{SpecificReleaseVersion}}.tar.gz\" && tar -xzf GE-Proton*.tar.gz -C \"{{$FullRootDir}}.proton\" --strip-components=1 && rm GE-Proton*.*'",
+        "UpdateSourceConditionSetting":"ProtonRelease",
+        "UpdateSourceConditionValue":"specificversion"
+    }
 ]
