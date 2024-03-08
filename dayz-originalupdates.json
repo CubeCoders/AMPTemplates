@@ -1,15 +1,14 @@
 [
     {
         "UpdateStageName":"SteamCMD Download",
-        "UpdateSourcePlatform":"Windows",
+        "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"223350",
-        "UpdateSourceArgs":"221100",
-        "UpdateSourceTarget":"{{$FullBaseDir}}"
+        "UpdateSourceArgs":"221100"
     },
     {
         "UpdateStageName":"Config Template Download",
-        "UpdateSourcePlatform":"Windows",
+        "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
         "OverwriteExistingFiles":false,
         "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-originalserver.cfg",
@@ -17,10 +16,19 @@
         "UpdateSourceArgs":"AMP_serverDZ.cfg"
     },
     {
-        "UpdateStageName":"Link Mods",
-        "UpdateSourcePlatform":"Windows",
+        "UpdateStageName":"Modscript Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-originalconvertmods.sh",
+        "UpdateSourceArgs":"convertmods.sh",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Convert Mods",
+        "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd .\\dayz\\223350 && for /D %G in (.\\steamapps\\workshop\\content\\221100\\*) do mklink /J %~nxG %G"
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"./convertmods.sh"
     }
 ]

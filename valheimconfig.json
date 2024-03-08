@@ -6,9 +6,11 @@
     "InputType": "text",
     "Category": "Valheim - General Settings",
     "ParamFieldName": "name",
-    "IncludeInCommandLine": true,
+    "IncludeInCommandLine": false,
+    "Required": true,
     "DefaultValue":  "My Valheim Server - Powered by AMP"
-  },{
+  },
+  {
     "DisplayName": "World Name",
     "Description": "Name of the world .db file to load. Also used as the random seed used for terrain random generation",
     "FieldName": "WorldName",
@@ -16,18 +18,22 @@
     "InputType": "text",
     "Category": "Valheim - General Settings",
     "ParamFieldName": "world",
-    "IncludeInCommandLine": true,
+    "IncludeInCommandLine": false,
+    "Required": true,
     "DefaultValue": "PoweredByAMP"
-  },{
+  },
+  {
     "DisplayName": "Server Password",
     "Description": "Password that clients must supply in order to connect. NOTE: Minimum password length is 5 characters & Password can't be in the server name. Default Password: 12345",
     "FieldName": "ServerPassword",
     "InputType": "password",
     "Category": "Valheim - General Settings",
     "ParamFieldName": "password",
-    "IncludeInCommandLine": true,
+    "IncludeInCommandLine": false,
+    "Required": true,
     "DefaultValue": "12345"
-  },{
+  },
+  {
     "DisplayName": "Server is Public",
     "Description": "Whether or not the server appears on the server list. Disable for a LAN-only server.",
     "FieldName": "ServerPublic",
@@ -40,7 +46,8 @@
       "True": "1",
       "False": "0"
     }
-  },{
+  },
+  {
     "DisplayName": "Enable Crossplay",
     "Description": "When enabled, the backend will be running Playfab instead of Steamworks. A \"Join code\" will appear when you join a Dedicated server supporting crossplay. Players can use this code to join the server. This Join code is regenerated whenever the server is restarted.",
     "FieldName": "crossplay",
@@ -53,28 +60,227 @@
       "False": ""
     },
     "DefaultValue": ""
-  },{
+  },
+  {
     "DisplayName": "Admin Players",
     "Description": "A list of Steam64 IDs for players that are in-game admins. [Find your Steam64 ID](https://steamidfinder.com/)",
     "FieldName": "AdminPlayers",
     "Category": "Valheim - General Settings",
     "InputType": "list",
     "Special": "listfile:./Valheim/896660/Saves/adminlist.txt"
-  },{
+  },
+  {
     "DisplayName": "Permitted Players",
     "Description": "A list of Steam64 IDs for players that are permitted in-game. [Find your Steam64 ID](https://steamidfinder.com/)",
     "FieldName": "PermittedPlayers",
     "Category": "Valheim - General Settings",
     "InputType": "list",
     "Special": "listfile:./Valheim/896660/Saves/permittedlist.txt"
-  },{
+  },
+  {
+    "DisplayName":"World Preset",
+    "Category":"Valheim - General Settings",
+    "Description":"Sets the world modifiers preset, which applies each modifier according to preconfigured levels. The preset can be overriden by custom modifier settings.",
+    "Keywords":"preset,modifier",
+    "FieldName":"preset",
+    "InputType":"enum",
+    "ParamFieldName":"preset",
+    "IncludeInCommandLine":true,
+    "DefaultValue":"normal",
+    "EnumValues":{
+      "normal":"Normal (default)",
+      "casual":"Casual",
+      "easy":"Easy",
+      "hard":"Hard",
+      "hardcore":"Hardcore",
+      "immersive":"Immersive",
+      "hammer":"Hammer"
+    }
+  },
+  {
+    "DisplayName":"Custom Combat Modifier",
+    "Category":"Valheim - General Settings",
+    "Description":"Governs how much damage you give and take. Also governs how likely you are to encounter higher leveled enemies, and how dangerous they are.",
+    "Keywords":"preset,combat,modifier",
+    "FieldName":"combatModifier",
+    "InputType":"enum",
+    "ParamFieldName":"modifier",
+    "IncludeInCommandLine":true,
+    "SkipIfEmpty":true,
+    "DefaultValue":"",
+    "EnumValues":{
+      "":"No custom combat modifier (default)",
+      "combat veryeasy":"Very easy",
+      "combat easy":"Easy",
+      "combat hard":"Hard",
+      "combat veryhard":"Very hard"
+    }
+  },
+  {
+    "DisplayName":"Custom Death Penalty Modifier",
+    "Category":"Valheim - General Settings",
+    "Description":"Governs what happens when you die. From not dropping equipment and items, and heavily reduced skill loss, to permanent loss of equipment and skills.",
+    "Keywords":"preset,death,penalty,deathpenalty,modifier",
+    "FieldName":"deathpenaltyModifier",
+    "InputType":"enum",
+    "ParamFieldName":"modifier",
+    "IncludeInCommandLine":true,
+    "SkipIfEmpty":true,
+    "DefaultValue":"",
+    "EnumValues":{
+      "":"No custom death penalty modifier (default)",
+      "deathpenalty casual":"Casual",
+      "deathpenalty veryeasy":"Very easy",
+      "deathpenalty easy":"Easy",
+      "deathpenalty hard":"Hard",
+      "deathpenalty hardcore":"Hardcore"
+    }
+  },
+  {
+    "DisplayName":"Custom Resources Modifier",
+    "Category":"Valheim - General Settings",
+    "Description":"Governs the amount of resources you gain from the world and from enemies.",
+    "Keywords":"preset,resources,modifier",
+    "FieldName":"resourcesModifier",
+    "InputType":"enum",
+    "ParamFieldName":"modifier",
+    "IncludeInCommandLine":true,
+    "SkipIfEmpty":true,
+    "DefaultValue":"",
+    "EnumValues":{
+      "":"No custom resources modifier (default)",
+      "resources muchless":"Much less (x 0.5)",
+      "resources less":"Less (x 0.75)",
+      "resources more":"More (x 1.5)",
+      "resources muchmore":"Much more (x 2.0)",
+      "resources most":"Most (x 3.0)"
+    }
+  },
+  {
+    "DisplayName":"Custom Raids Modifier",
+    "Category":"Valheim - General Settings",
+    "Description":"Governs how often enemies may raid your base.",
+    "Keywords":"preset,raids,modifier",
+    "FieldName":"raidsModifier",
+    "InputType":"enum",
+    "ParamFieldName":"modifier",
+    "IncludeInCommandLine":true,
+    "SkipIfEmpty":true,
+    "DefaultValue":"",
+    "EnumValues":{
+      "":"No custom raids modifier (default)",
+      "raids none":"Never",
+      "raids muchless":"Much less",
+      "raids less":"Less",
+      "raids more":"More",
+      "raids muchmore":"Much more"
+    }
+  },
+  {
+    "DisplayName":"Custom Portals Modifier",
+    "Category":"Valheim - General Settings",
+    "Description":"Changes how portals work in the game. From bringing all items through portal, to no portals at all.",
+    "Keywords":"preset,portals,modifier",
+    "FieldName":"portalsModifier",
+    "InputType":"enum",
+    "ParamFieldName":"modifier",
+    "IncludeInCommandLine":true,
+    "SkipIfEmpty":true,
+    "DefaultValue":"",
+    "EnumValues":{
+      "":"No custom portals modifier (default)",
+      "portals casual":"Casual (portal items)",
+      "portals hard":"Hard (no boss portals)",
+      "portals veryhard":"Very hard (no portals)"
+    }
+  },
+  {
+    "DisplayName":"Custom Build Cost Modifier",
+    "Category":"Valheim - General Settings",
+    "Description":"If set, build pieces require no materials to build. You still need to discover recipes as per usual.",
+    "Keywords":"setkey,build,cost,nobuildcost",
+    "FieldName":"nobuildcost",
+    "InputType":"checkbox",
+    "ParamFieldName":"setkey",
+    "IncludeInCommandLine":true,
+    "SkipIfEmpty":true,
+    "DefaultValue":"",
+    "EnumValues":{
+      "False":"",
+      "True":"nobuildcost"
+    }
+  },
+  {
+    "DisplayName":"Custom Passive Enemies Modifier",
+    "Category":"Valheim - General Settings",
+    "Description":"If enabled, enemies won't attack until you provoke them.",
+    "Keywords":"setkey,passive,enemies,passivemobs",
+    "FieldName":"passivemobs",
+    "InputType":"checkbox",
+    "ParamFieldName":"setkey",
+    "IncludeInCommandLine":true,
+    "SkipIfEmpty":true,
+    "DefaultValue":"",
+    "EnumValues":{
+      "False":"",
+      "True":"passivemobs"
+    }
+  },
+  {
+    "DisplayName":"Custom Player Based Raids Modifier",
+    "Category":"Valheim - General Settings",
+    "Description":"If enabled, raids are based on the progress of each individual player, rather than on which bosses have been killed on the server. Recommended if you want the game to be slightly friendlier to players with different progress.",
+    "Keywords":"setkey,player,events,raids,playerevents",
+    "FieldName":"playerevents",
+    "InputType":"checkbox",
+    "ParamFieldName":"setkey",
+    "IncludeInCommandLine":true,
+    "SkipIfEmpty":true,
+    "DefaultValue":"",
+    "EnumValues":{
+      "False":"",
+      "True":"playerevents"
+    }
+  },
+  {
+    "DisplayName":"Custom Map Modifier",
+    "Category":"Valheim - General Settings",
+    "Description":"If set, you will not have access to the map or the minimap. This makes the game harder than intended, by requiring navigation by the stars and world tree.",
+    "Keywords":"setkey,disable,map,minimap,nomap",
+    "FieldName":"nomap",
+    "InputType":"checkbox",
+    "ParamFieldName":"setkey",
+    "IncludeInCommandLine":true,
+    "SkipIfEmpty":true,
+    "DefaultValue":"",
+    "EnumValues":{
+      "False":"",
+      "True":"nomap"
+    }
+  },
+  {
     "DisplayName": "Banned Players",
     "Description": "A list of Steam64 IDs for players that are banned [Find a Steam64 ID](https://steamidfinder.com/)",
     "FieldName": "BannedPlayers",
     "Category": "Valheim - General Settings",
     "InputType": "list",
     "Special": "listfile:./Valheim/896660/Saves/bannedlist.txt"
-  },{
+  },
+  {
+    "DisplayName": "World Save Interval",
+    "Category": "Valheim - General Settings",
+    "Description": "Changes how often the world is saved in seconds. Default is 1800 seconds (30 minutes).",
+    "Keywords": "save,autosave,interval,time,timer,frequency",
+    "FieldName": "saveinterval",
+    "InputType": "number",
+    "ParamFieldName": "saveinterval",
+    "IncludeInCommandLine": true,
+    "SkipIfEmpty": true,
+    "DefaultValue":"1800",
+    "EnumValues": {},
+    "Suffix": "seconds"
+  },
+  {
     "DisplayName":"Release Stream",
     "Category":"SteamCMD and Updates",
     "Description":"\"public\" is default. Choose a custom release on [SteamDB](https://steamdb.info/app/896660/depots/). NOTE: Update the server after changing release streams.",
@@ -112,8 +318,8 @@
     "IsFlagArgument":false,
     "ParamFieldName":"bepinex_version",
     "IncludeInCommandLine":false,
-    "DefaultValue":"5.4.2105",
-    "Placeholder":"5.4.2105",
+    "DefaultValue":"5.4.2202",
+    "Placeholder":"5.4.2202",
     "EnumValues":{}
   },{
     "DisplayName":"Install Valheim Plus",

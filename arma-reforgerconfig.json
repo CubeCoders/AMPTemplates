@@ -39,6 +39,19 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server/RCON IP Binding",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$ApplicationIPBinding",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "Hidden":true,
+        "ParamFieldName":"bindAddress",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Public IP Binding",
         "Category":"Server Settings",
         "Description":"",
@@ -116,18 +129,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Server/RCON IP Binding",
-        "Category":"Server Settings",
-        "Description":"If required, you can change the binding of the server and BattlEye RCON by editing App.ApplicationIPBinding in GenericModule.kvp for the instance. Stop the instance (not just the server) first",
-        "Keywords":"ip,binding,gamehostbindaddress,rconip,steam,query,a2saddress",
-        "FieldName":"$ApplicationIPBinding",
-        "InputType":"hidden",
-        "IsFlagArgument":false,
-        "ParamFieldName":"bindAddress",
-        "IncludeInCommandLine":false,
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Steam Query IP Binding",
         "Category":"Server Settings",
         "Description":"",
@@ -186,6 +187,18 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Admins",
+        "Category":"Server Settings",
+        "Description":"Sets a whitelist of Identity IDs and/or SteamIDs of server admins. Listed admins won't need to use the Admin Password. Format is \"ID\",\"ID\"",
+        "Keywords":"admin,admins,whitelist",
+        "FieldName":"admins",
+        "InputType":"password",
+        "ParamFieldName":"game.admins",
+        "DefaultValue":"",
+        "Placeholder":"\"12345678901234567\",\"76543210987654321\"",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Admin Password",
         "Category":"Server Settings",
         "Description":"Sets the password required for admin access to the server. Only use alphanumeric, dash or underscore characters. Maximum 32 characters. Default is a strong random password",
@@ -201,13 +214,11 @@
     {
         "DisplayName":"RCON Password",
         "Category":"Server Settings",
-        "Description":"See the Security and Privacy menu for configurable options for the server's RCON",
+        "Description":"See the Security and Privacy menu for configurable options for the server's BattlEye RCON",
         "Keywords":"rcon,password",
         "FieldName":"RCONPassword",
         "InputType":"hidden",
-        "IsFlagArgument":false,
         "ParamFieldName":"RCONPassword",
-        "IncludeInCommandLine":false,
         "EnumValues":{}
     },
     {
@@ -238,6 +249,20 @@
         "ParamFieldName":"operating.lobbyPlayerSynchronise",
         "IncludeInCommandLine":false,
         "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Disable Navmesh Streaming",
+        "Category":"Server Settings",
+        "Description":"If set, the server will disable navmesh streaming on all navmesh components and load the entire navmesh into memory. This increases server performance but also increases memory consumption",
+        "Keywords":"disable,navmesh,streaming,disableNavmeshStreaming",
+        "FieldName":"disableNavmeshStreaming",
+        "InputType":"checkbox",
+        "ParamFieldName":"operating.disableNavmeshStreaming",
+        "DefaultValue":"false",
         "EnumValues":{
             "False":"false",
             "True":"true"
@@ -402,6 +427,20 @@
         }
     },
     {
+        "DisplayName":"Enable Cross-Faction VON Transmission",
+        "Category":"Server Settings",
+        "Description":"If set, players will be allowed to transmit on other factions' radios. Otherwise, players' radios will be listen-only",
+        "Keywords":"cross,faction,transmit,von,voice,VONCanTransmitCrossFaction",
+        "FieldName":"VONCanTransmitCrossFaction",
+        "InputType":"checkbox",
+        "ParamFieldName":"game.gameProperties.VONCanTransmitCrossFaction",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Mission Header",
         "Category":"Server Settings",
         "Description":"Comma-separated list of settings that will overwrite a mission/scenario's SCR_MissionHeaderCampaign. Example: \"m_iPlayerCount\":\"64\",\"m_eEditableGameFlags\":\"6\"",
@@ -445,6 +484,20 @@
         "Placeholder":"60",
         "Suffix":"seconds",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Disable Crash Reporter",
+        "Category":"Server Settings",
+        "Description":"If set, the automatic server-side [Crash Report](https://community.bistudio.com/wiki/Arma_Reforger:Crash_Report) will be disabled",
+        "Keywords":"disable,crash,report,reporter,disableCrashReporter",
+        "FieldName":"disableCrashReporter",
+        "InputType":"checkbox",
+        "ParamFieldName":"operating.disableCrashReporter",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
         "DisplayName":"Log Statistics",
