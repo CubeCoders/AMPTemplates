@@ -17,6 +17,22 @@
         "ForceDownloadPlatform":"Windows"
     },
     {
+        "UpdateStageName":"Config Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}DeadMatter/Saved/Config/WindowsServer",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Game.ini Config Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/winglessraven/AMPTemplates/deadmatter/deadmattergame.ini",
+        "UpdateSourceArgs":"Game.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}DeadMatter/Saved/Config/WindowsServer/",
+        "OverwriteExistingFiles":false
+    },
+    {
         "UpdateStageName":"Proton GE Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
