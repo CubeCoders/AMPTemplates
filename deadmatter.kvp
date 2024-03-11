@@ -33,7 +33,7 @@ App.ExecutableLinux=.proton/proton
 App.WorkingDir=2584780/DeadMatter/Binaries/Win64
 App.LinuxCommandLineArgs=runinprefix "{{$FullBaseDir}}DeadMatter/Binaries/Win64/DeadMatterServer-Win64-Test.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -stdout -FullStdOutLogOutput -Port={{$ApplicationPort1}} -QueryPort={{$ApplicationPort2}} {{$FormattedArgs}} {{$ServerSwitches}} -Wait
+App.CommandLineArgs={{$PlatformArgs}} -log -Port={{$ApplicationPort1}} -QueryPort={{$ApplicationPort2}} {{$FormattedArgs}} {{$ServerSwitches}} -Wait
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"2184150","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullRootDir}}2584780/.steam/steam","HOME":"{{$FullBaseDir}}"}
@@ -83,9 +83,9 @@ App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=
-Console.AppReadyRegex=^\[\d{4}\.\d{2}\.\d{2}-\d{2}\.\d{2}\.\d{2}:\d{3}\]\[\d+\]LogOnline: STEAM: AUTH: Revoking all tickets\.$
-Console.UserJoinRegex=^\[\d{4}\.\d{2}\.\d{2}-\d{2}\.\d{2}\.\d{2}:\d{3}\]\[\d+\]LogDMDebug: \[ASurvivalBaseGamemode::PostLogin: \d+\] Player (?<username>.+) connected\!$
-Console.UserLeaveRegex=^\[\d{4}\.\d{2}\.\d{2}-\d{2}\.\d{2}\.\d{2}:\d{3}\]\[\d+\]LogDMDebug: \[ASurvivalBaseGamemode::Logout: \d+\] Player (?<username>.+) left\!$
+Console.AppReadyRegex=^LogOnline: Warning: OSS: Async task \'FOnlineAsyncTaskSteamUpdateServer bWasSuccessful: 0 Session: GameSession\' failed in \d+.\d+ seconds$
+Console.UserJoinRegex=^LogDMDebug: \[ASurvivalBaseGamemode::PostLogin: \d+\] Player (?<username>.+) connected\!$
+Console.UserLeaveRegex=^LogDMDebug: \[ASurvivalBaseGamemode::Logout: \d+\] Player (?<username>.+) left\!$
 Console.UserChatRegex=^$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
 Console.MetricsRegex=
