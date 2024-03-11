@@ -406,6 +406,62 @@
         }
     },
     {
+        "DisplayName":"Stored Saves Limit",
+        "Category":"ASRD Server Settings",
+        "Description":"Sets the maximum number of saves that will be stored on the server",
+        "Keywords":"max,maximum,saves,limit,asw_max_saves",
+        "FieldName":"asw_max_saves",
+        "InputType":"number",
+        "MinValue":"2",
+        "ParamFieldName":"asw_max_saves",
+        "DefaultValue":"10",
+        "Placeholder":"10",
+        "Suffix":"saves",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable CPU Stats Collection",
+        "Category":"ASRD Server Settings",
+        "Description":"If set, CPU stats will be collected",
+        "Keywords":"cpu,stats,sv_stats",
+        "FieldName":"sv_stats",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_stats",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Lobby Connections Only",
+        "Category":"ASRD Server Settings",
+        "Description":"If set, players may only join the server from the matchmaking lobby, and may not connect directly",
+        "Keywords":"connect,lobby,matchmaking,direct,sv_allow_lobby_connect_only",
+        "FieldName":"sv_allow_lobby_connect_only",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_allow_lobby_connect_only",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Force Server Side Preloading",
+        "Category":"ASRD Server Settings",
+        "Description":"If set, server side preloading will be enforced",
+        "Keywords":"force,server,side,preloading,preload,sv_forcepreload",
+        "FieldName":"sv_forcepreload",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_forcepreload",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Server/RCON IPv4 IP Binding",
         "Category":"ASRD Server Settings",
         "Description":"If required, you can change the IPv4 IP binding of the server and RCON by changing the 'Server IP Address' setting under Security and Privacy. NOTE: AMP requires the server to be bound to a specific IP, rather than 0.0.0.0, for the server to log to AMP's console. The IP must also be reachable by AMP",
@@ -449,6 +505,20 @@
         "ParamFieldName":"UserSettings",
         "DefaultValue":"",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Friendly Fire",
+        "Category":"ASRD Gameplay Settings",
+        "Description":"If set, the wait command will be enabled",
+        "Keywords":"friendly,fire,mp_friendlyfire",
+        "FieldName":"mp_friendlyfire",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_friendlyfire",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
     },
     {
         "DisplayName":"Enable Friendly Fire",
@@ -543,6 +613,91 @@
         "InputType":"checkbox",
         "ParamFieldName":"mp_fadetoblack",
         "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Ignore Two Player Mission Requirement",
+        "Category":"ASRD Gameplay Settings",
+        "Description":"If set, the server will ignore the mission setting that states two players are needed to start the mission",
+        "Keywords":"ignore,two,player,mission,requirement,setting,asw_ignore_need_two_player_requirement",
+        "FieldName":"asw_ignore_need_two_player_requirement",
+        "InputType":"checkbox",
+        "ParamFieldName":"asw_ignore_need_two_player_requirement",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Slow Time On Marine Death",
+        "Category":"ASRD Gameplay Settings",
+        "Description":"If set, time will be slowed when a marine dies",
+        "Keywords":"slow,time,camera,death,marine,asw_marine_death_cam_slowdown",
+        "FieldName":"asw_marine_death_cam_slowdown",
+        "InputType":"checkbox",
+        "ParamFieldName":"asw_marine_death_cam_slowdown",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Update Workshop On Mission Restart",
+        "Category":"ASRD Gameplay Settings",
+        "Description":"If set, workshop items will be checked during each mission restart (workshop.cfg will be executed). Otherwise, workshop items will only update once during server startup",
+        "Keywords":"update,workshop,items,round,mission,restart,rd_workshop_update_every_round",
+        "FieldName":"rd_workshop_update_every_round",
+        "InputType":"checkbox",
+        "ParamFieldName":"rd_workshop_update_every_round",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Camera Rotation Mode",
+        "Category":"ASRD Gameplay Settings",
+        "Description":"Sets the camera rotation mode",
+        "Keywords":"camera,rotate,rotation,mode,rd_override_allow_rotate_camera",
+        "FieldName":"rd_override_allow_rotate_camera",
+        "InputType":"enum",
+        "ParamFieldName":"rd_override_allow_rotate_camera",
+        "DefaultValue":"-1",
+        "EnumValues":{
+            "-1":"Use asw_gamerules setting (default)",
+            "0":"Disable rotation",
+            "1":"Enable rotation"
+        }
+    },
+    {
+        "DisplayName":"Make Players Auto-Ready",
+        "Category":"ASRD Gameplay Settings",
+        "Description":"If set, all players will be auto-ready, with the green ready mark set to the checked state",
+        "Keywords":"player,auto,ready,rd_ready_mark_override",
+        "FieldName":"rd_ready_mark_override",
+        "InputType":"checkbox",
+        "ParamFieldName":"rd_ready_mark_override",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Mission Restart Countdown",
+        "Category":"ASRD Gameplay Settings",
+        "Description":"If set, there will be a 5 second countdown if a leader chooses to restart a mission",
+        "Keywords":"mission,restart,countdown,timer,leader,rd_restart_mission_countdown",
+        "FieldName":"rd_restart_mission_countdown",
+        "InputType":"checkbox",
+        "ParamFieldName":"rd_restart_mission_countdown",
+        "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
             "True":"1"
