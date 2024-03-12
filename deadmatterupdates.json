@@ -27,7 +27,7 @@
         "UpdateStageName":"Game.ini Config Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/winglessraven/AMPTemplates/deadmatter/deadmattergame.ini",
+        "UpdateSourceData":"https://raw.githubusercontent.com/winglessraven/AMPTemplates/deadmatter-wine/deadmattergame.ini",
         "UpdateSourceArgs":"Game.ini",
         "UpdateSourceTarget":"{{$FullBaseDir}}DeadMatter/Saved/Config/WindowsServer/",
         "OverwriteExistingFiles":false
@@ -38,5 +38,21 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
+    },
+    {
+        "UpdateStageName":"Winescript Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/winglessraven/AMPTemplates/deadmatter-wine/deadmatterwinescript.sh",
+        "UpdateSourceArgs":"winescript.sh",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Install Windows Components",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"./winescript.sh"
     }
 ]
