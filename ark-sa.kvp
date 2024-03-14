@@ -11,11 +11,11 @@ Meta.ConfigManifest=ark-saconfig.json
 Meta.MetaConfigManifest=ark-sametaconfig.json
 Meta.ConfigRoot=ark-sa.kvp
 Meta.MinAMPVersion=2.5.0
-Meta.SpecificDockerImage=cubecoders/ampbase:wine8
+Meta.SpecificDockerImage=
 Meta.DockerRequired=False
 Meta.DockerBaseReadOnly=False
-Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
-Meta.ContainerPolicyReason=The server requires Wine 8 to run on Linux. Using a container avoids the need to install this dependency on the host.
+Meta.ContainerPolicy=Supported
+Meta.ContainerPolicyReason=
 Meta.ExtraSetupStepsURI=https://discourse.cubecoders.com/docs?topic=6738?utm_source=ampcreate&utm_content=arksa
 Meta.Prerequsites=[]
 Meta.ExtraContainerPackages=[]
@@ -30,14 +30,14 @@ App.RootDir=./ark-sa/
 App.BaseDirectory=./ark-sa/2430930/
 App.SteamWorkshopDownloadLocation=
 App.ExecutableWin=2430930\ShooterGame\Binaries\Win64\{{ServerExecutable}}.exe
-App.ExecutableLinux=/usr/bin/wine
+App.ExecutableLinux=.proton/proton
 App.WorkingDir=2430930/ShooterGame/Binaries/Win64
-App.LinuxCommandLineArgs=./{{ServerExecutable}}.exe
+App.LinuxCommandLineArgs=run "{{$FullBaseDir}}{{ServerExecutable}}.exe"
 App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} {{Map}}?listen?Port={{$GamePort}}?RCONEnabled=True?RCONServerGameLogBuffer=600?RCONPort={{$RCONPort}}?MultiHome={{$ApplicationIPBinding}}?{{$FormattedArgs}}{{OverrideOfficialDifficulty}}{{CustomOptions}}?ServerAdminPassword={{$RemoteAdminPassword}} -WinLiveMaxPlayers={{$MaxUsers}} {{mods}}{{pconlymods}}{{BattlEye}} -ServerPlatform={{ServerPlatform}} {{EnableIdlePlayerKick}}{{NoHangDetection}}{{AllowSpeedLeveling}}{{ForceAllowCaveFlyers}}{{nodinos}}{{ForceRespawnDinos}}{{DisableRailgunPVP}}{{UseStructureStasisGrid}} -culture={{culture}} -ClusterDirOverride="{{ClusterDirOverride}}" -clusterID={{clusterID}} {{CustomFlags}} -servergamelog
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"SteamAppId":"2399830","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
+App.EnvironmentVariables={"SteamAppId":"2399830","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullBaseDir}}.steam/steam","HOME":"{{$FullBaseDir}}"}
 App.CommandLineParameterFormat={0}={1}
 App.CommandLineParameterDelimiter=?
 App.ExitMethod=String
