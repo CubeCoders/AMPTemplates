@@ -124,9 +124,47 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Player Whitelist",
+        "Category":"ARK Server Settings",
+        "Description":"If set, only players with EOS IDs listed under Whitelisted Players or Whitelisted Players Above Limit can join the server",
+        "Keywords":"player,whitelist,exclusivejoin",
+        "FieldName":"exclusivejoin",
+        "InputType":"checkbox",
+        "ParamFieldName":"exclusivejoin",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-exclusivejoin "
+        }
+    },
+    {
+        "DisplayName":"Whitelisted Players",
+        "Category":"ARK Server Settings",
+        "Description":"List of EOS IDs for normal whitelisted players. EOS IDs can be found by using the 'whoami' command, by viewing another player's character in spectator mode, or by inspecting the server's log files",
+        "Keywords":"player,whitelist,playersexclusivejoinlist",
+        "FieldName":"PlayerWhitelist",
+        "InputType":"list",
+        "ParamFieldName":"PlayerWhitelist",
+        "DefaultValue":"",
+        "Special":"listfile:./ark-sa/2430930/ShooterGame/Binaries/Win64/PlayersExclusiveJoinList.txt",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Whitelisted Players Above Limit",
+        "Category":"ARK Server Settings",
+        "Description":"List of EOS IDs for whitelisted players who can join the server even if the number of player slots is exhausted",
+        "Keywords":"player,whitelist,above,limit,PlayersJoinNoCheckList",
+        "FieldName":"PlayerWhitelistAboveLimit",
+        "InputType":"list",
+        "ParamFieldName":"PlayerWhitelistAboveLimit",
+        "DefaultValue":"",
+        "Special":"listfile:./ark-sa/2430930/ShooterGame/Binaries/Win64/PlayersJoinNoCheckList.txt",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Player Limit",
         "Category":"ARK Server Settings",
-        "Description":"Sets the maximum number of players allowed on the server",
+        "Description":"Sets the maximum number of players allowed on the server. May be exceeded as a result of players listed under Whitelisted Players Above Limit",
         "Keywords":"max,players,limit,maxplayers",
         "FieldName":"$MaxUsers",
         "InputType":"number",
@@ -258,6 +296,20 @@
         "EnumValues":{
             "False":"",
             "True":"-NoHangDetection "
+        }
+    },
+    {
+        "DisplayName":"Filter Transfers",
+        "Category":"ARK Server Settings",
+        "Description":"If set, prevents ARK data usage between single player and servers that do not have a Cluster ID set. Even with a Cluster ID set, it is suggested to enable this option",
+        "Keywords":"filter,data,transfer,notransferfromfiltering",
+        "FieldName":"NoTransferFromFiltering",
+        "InputType":"checkbox",
+        "ParamFieldName":"NoTransferFromFiltering",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-NoTransferFromFiltering "
         }
     },
     {
@@ -1127,6 +1179,18 @@
         "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"XP Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"XPMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"XPMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
