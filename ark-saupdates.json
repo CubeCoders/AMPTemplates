@@ -4,7 +4,8 @@
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"2430930",
-        "UpdateSourceArgs":"2399830"
+        "UpdateSourceArgs":"2399830",
+        "ForceDownloadPlatform":"Windows"
     },
     {
         "UpdateStageName":"ServerAPI Launcher Download",
@@ -15,28 +16,8 @@
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true,
-        "UpdateSourceConditionSetting":"EnableServerAPI",
-        "UpdateSourceConditionValue":"true"
-    },
-    {
-        "UpdateStageName":"Binary Copy",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CopyFilePath",
-        "UpdateSourceData":"{{$FullBaseDir}}ShooterGame/Binaries/Win64/ASAServer.exe",
-        "UpdateSourceArgs":"{{$FullBaseDir}}ShooterGame/Binaries/Win64/ArkAscendedServer.exe",
-        "OverwriteExistingFiles":true,
-        "UpdateSourceConditionSetting":"EnableServerAPI",
-        "UpdateSourceConditionValue":"false"
-    },
-    {
-        "UpdateStageName":"Binary Copy",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CopyFilePath",
-        "UpdateSourceData":"{{$FullBaseDir}}ShooterGame/Binaries/Win64/ASAServer.exe",
-        "UpdateSourceArgs":"{{$FullBaseDir}}ShooterGame/Binaries/Win64/AsaApiLoader.exe",
-        "OverwriteExistingFiles":true,
-        "UpdateSourceConditionSetting":"EnableServerAPI",
-        "UpdateSourceConditionValue":"true"
+        "UpdateSourceConditionSetting":"ServerExecutable",
+        "UpdateSourceConditionValue":"AsaApiLoader"
     },
     {
         "UpdateStageName":"Config Directory Creation",
@@ -58,7 +39,7 @@
         "UpdateStageName":"GameUserSettings.ini Config Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/ark-sawin-gameusersettings.ini",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/ark-sawin-gameusersettings.ini",
         "UpdateSourceArgs":"GameUserSettings.ini",
         "UpdateSourceTarget":"{{$FullBaseDir}}ShooterGame/Saved/Config/WindowsServer/",
         "OverwriteExistingFiles":false
@@ -86,10 +67,21 @@
         "OverwriteExistingFiles":false
     },
     {
-        "UpdateStageName":"Initialise Wine",
+        "UpdateStageName":"Proton GE Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
+        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.proton/compatdata\" \"{{$FullBaseDir}}.steam/steam\" \"{{$FullBaseDir}}.steam/sdk32\" \"{{$FullBaseDir}}.steam/sdk64\" && \\cp -f \"{{$FullRootDir}}linux32/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk32/\" && \\cp -f \"{{$FullRootDir}}linux64/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk64/\" && rm -rf \"{{$FullRootDir}}.proton/compatdata/*\" && wget -q \"$(wget -qO- https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest | grep browser_download_url | cut -d\\\" -f4 | grep .tar.gz)\" && tar -xzf GE-Proton*.tar.gz -C \"{{$FullRootDir}}.proton\" --strip-components=1 && rm GE-Proton*.* && STEAM_COMPAT_DATA_PATH=\"{{$FullRootDir}}.proton/compatdata\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\"{{$FullBaseDir}}.steam/steam\" {{$FullRootDir}}.proton/proton PROTON_LOG=1 run'",
+        "UpdateSourceConditionSetting":"ProtonRelease",
+        "UpdateSourceConditionValue":"latest"
+    },
+    {
+        "UpdateStageName":"Proton GE Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.proton/compatdata\" \"{{$FullBaseDir}}.steam/steam\" \"{{$FullBaseDir}}.steam/sdk32\" \"{{$FullBaseDir}}.steam/sdk64\" && \\cp -f \"{{$FullRootDir}}linux32/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk32/\" && \\cp -f \"{{$FullRootDir}}linux64/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk64/\" && rm -rf \"{{$FullRootDir}}.proton/compatdata/*\" && wget -q \"https://github.com/GloriousEggroll/proton-ge-custom/releases/download/{{SpecificReleaseVersion}}/{{SpecificReleaseVersion}}.tar.gz\" && tar -xzf GE-Proton*.tar.gz -C \"{{$FullRootDir}}.proton\" --strip-components=1 && rm GE-Proton*.* && STEAM_COMPAT_DATA_PATH=\"{{$FullRootDir}}.proton/compatdata\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\"{{$FullBaseDir}}.steam/steam\" {{$FullRootDir}}.proton/proton PROTON_LOG=1 run'",
+        "UpdateSourceConditionSetting":"ProtonRelease",
+        "UpdateSourceConditionValue":"specificversion"
     }
 ]
