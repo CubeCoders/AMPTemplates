@@ -101,6 +101,19 @@
         }
     },
     {
+        "DisplayName":"Whitelisted Server Admins",
+        "Category":"ARK Server Settings",
+        "Description":"List of EOS IDs for whitelisted server admins. These admins do not need to use the server admin password",
+        "Keywords":"admin,whitelist,AllowedCheaterAccountIDs",
+        "FieldName":"AdminWhitelist",
+        "InputType":"list",
+        "IsFlagArgument":false,
+        "ParamFieldName":"AdminWhitelist",
+        "DefaultValue":"",
+        "Special":"listfile:./ark-sa/2430930/ShooterGame/Saved/AllowedCheaterAccountIDs.txt",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"RCON/Server Admin Password",
         "Category":"ARK Server Settings",
         "Description":"See the Security and Privacy menu for configurable options for the server's RCON password. The RCON password is also used in the in-game console for players to access administrator commands (unless they are whitelisted)",
@@ -121,6 +134,44 @@
         "ParamFieldName":"ServerSettings.ServerPassword",
         "IncludeInCommandLine":false,
         "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Player Whitelist",
+        "Category":"ARK Server Settings",
+        "Description":"If set, only players with EOS IDs listed under Whitelisted Players or Whitelisted Players Above Limit can join the server",
+        "Keywords":"player,whitelist,exclusivejoin",
+        "FieldName":"exclusivejoin",
+        "InputType":"checkbox",
+        "ParamFieldName":"exclusivejoin",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-exclusivejoin "
+        }
+    },
+    {
+        "DisplayName":"Whitelisted Players",
+        "Category":"ARK Server Settings",
+        "Description":"List of EOS IDs for normal whitelisted players",
+        "Keywords":"player,whitelist,playersexclusivejoinlist",
+        "FieldName":"PlayerWhitelist",
+        "InputType":"list",
+        "ParamFieldName":"PlayerWhitelist",
+        "DefaultValue":"",
+        "Special":"listfile:./ark-sa/2430930/ShooterGame/Binaries/Win64/PlayersExclusiveJoinList.txt",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Whitelisted Players Above Limit",
+        "Category":"ARK Server Settings",
+        "Description":"List of EOS IDs for whitelisted players who can join the server even if the number of player slots is exhausted",
+        "Keywords":"player,whitelist,above,limit,PlayersJoinNoCheckList",
+        "FieldName":"PlayerWhitelistAboveLimit",
+        "InputType":"list",
+        "ParamFieldName":"PlayerWhitelistAboveLimit",
+        "DefaultValue":"",
+        "Special":"listfile:./ark-sa/2430930/ShooterGame/Binaries/Win64/PlayersJoinNoCheckList.txt",
         "EnumValues":{}
     },
     {
@@ -258,6 +309,20 @@
         "EnumValues":{
             "False":"",
             "True":"-NoHangDetection "
+        }
+    },
+    {
+        "DisplayName":"Filter Transfers",
+        "Category":"ARK Server Settings",
+        "Description":"If set, prevents uploads from and downloads to servers",
+        "Keywords":"filter,data,transfer,notransferfromfiltering",
+        "FieldName":"NoTransferFromFiltering",
+        "InputType":"checkbox",
+        "ParamFieldName":"NoTransferFromFiltering",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-NoTransferFromFiltering "
         }
     },
     {
