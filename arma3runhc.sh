@@ -25,7 +25,7 @@ fi
 # Start the headless clients
 baseport=$(($3 + 498))
 parfile="${6:-}"
-export LD_LIBRARY_PATH=$(dirname "$0")/linux64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$(dirname "$0")/arma3/linux64:$LD_LIBRARY_PATH
 cd ./arma3/233780
 for i in $(seq 1 "$1"); do
   if [[ "$2" == "0.0.0.0" ]]; then
