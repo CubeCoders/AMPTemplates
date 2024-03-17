@@ -16,6 +16,7 @@ Meta.ContainerPolicyReason=The server requires Wine 7 (or later) to run on Linux
 Meta.ExtraSetupStepsURI=
 Meta.Prerequsites=[]
 Meta.ConfigReleaseState=NotSpecified
+Meta.AppConfigId=630a4794-6466-4de6-956d-91393d6f48e1
 App.DisplayName=Icarus
 App.RootDir=./icarus/
 App.BaseDirectory=./icarus/2089300/
@@ -24,7 +25,7 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=2089300
 App.LinuxCommandLineArgs="./Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe" Icarus -ini:Engine:[OnlineSubsystemSteam]:AsyncTaskTimeout={{AsyncTaskTimeout}}
 App.WindowsCommandLineArgs=Icarus
-App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{StartupMode}}{{$FormattedArgs}} -stdout -FullStdOutLogOutput
+App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} {{StartupMode}}{{$FormattedArgs}} -stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1149460","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
@@ -60,13 +61,10 @@ App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
 App.RapidStartup=False
-App.MonitorChildProcess=True
-App.MonitorChildProcessWaitMs=1000
-App.MonitorChildProcessName=IcarusServer-Win64-Shipping.exe
+App.MonitorChildProcessName=Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RegexMatch
-App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|Could not find Wine Gecko.*)$
