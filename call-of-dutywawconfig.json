@@ -1,27 +1,5 @@
 [
     {
-        "DisplayName":"Game Port",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$ServerPort",
-        "InputType":"number",
-        "Hidden":true,
-        "ParamFieldName":"net_port",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"IP Binding",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$ApplicationIPBinding",
-        "InputType":"number",
-        "Hidden":true,
-        "ParamFieldName":"net_ip",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Enable Log File",
         "Category":"Server Settings",
         "Description":"",
@@ -30,7 +8,7 @@
         "InputType":"number",
         "Hidden":true,
         "ParamFieldName":"logfile",
-        "DefaultValue":"1",
+        "DefaultValue":"2",
         "EnumValues":{}
     },
     {
@@ -38,11 +16,11 @@
         "Category":"Server Settings",
         "Description":"",
         "Keywords":"",
-        "FieldName":"g_logsync",
+        "FieldName":"g_logSync",
         "InputType":"number",
         "Hidden":true,
-        "ParamFieldName":"g_logsync",
-        "DefaultValue":"2",
+        "ParamFieldName":"g_logSync",
+        "DefaultValue":"1",
         "EnumValues":{}
     },
     {
@@ -57,19 +35,6 @@
         "DefaultValue":"games_mp.log",
         "EnumValues":{}
     },
-    {
-        "DisplayName":"Disable Punkbuster",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"sv_punkbuster",
-        "InputType":"number",
-        "Hidden":true,
-        "ParamFieldName":"sv_punkbuster",
-        "DefaultValue":"0",
-        "EnumValues":{}
-    },
-    [
     {
         "DisplayName":"Game Mode",
         "Category":"Server Settings",
@@ -123,13 +88,13 @@
         "Category":"Server Settings",
         "Description":"Sets whether to enable map rotation (the Map Rotation List must then also be set) or to load a specific initial map (the Initial Game Type and Initial Map must then also be set)",
         "Keywords":"map,mode,map_rotate",
-        "FieldName":"map_mode",
+        "FieldName":"MapMode",
         "InputType":"enum",
-        "ParamFieldName":"map_mode",
-        "DefaultValue":"+map_rotate ",
+        "ParamFieldName":"MapMode",
+        "DefaultValue":"+map_rotate",
         "EnumValues":{
-            "+map_rotate ":"Map rotation (default)",
-            "+map \"{{map_name}}\" ":"Specific initial map"
+            "+map_rotate":"Map rotation (default)",
+            "+map \"{{map_name}}\"":"Specific initial map"
         }
     },
     {
@@ -137,9 +102,9 @@
         "Category":"Server Settings",
         "Description":"Configure the map rotation in 'server.cfg' or 'server_zm.cfg' (as applicable)",
         "Keywords":"map,rotation,list,sv_maprotation",
-        "FieldName":"maprotation",
+        "FieldName":"MapRotation",
         "InputType":"hidden",
-        "ParamFieldName":"maprotation",
+        "ParamFieldName":"MapRotation",
         "DefaultValue":"",
         "EnumValues":{}
     },
@@ -248,7 +213,7 @@
         "FieldName":"sv_voice",
         "InputType":"checkbox",
         "ParamFieldName":"sv_voice",
-        "DefaultValue":"0",
+        "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -259,13 +224,13 @@
         "Category":"Server Settings",
         "Description":"Sets the server voice quality level",
         "Keywords":"voice,chat,quality,sv_voicequality",
-        "FieldName":"sv_voicequality",
+        "FieldName":"sv_voiceQuality",
         "InputType":"number",
         "MinValue":"0",
         "MaxValue":"9",
-        "ParamFieldName":"sv_voicequality",
-        "DefaultValue":"4",
-        "Placeholder":"4",
+        "ParamFieldName":"sv_voiceQuality",
+        "DefaultValue":"3",
+        "Placeholder":"3",
         "EnumValues":{}
     },
     {
@@ -273,44 +238,14 @@
         "Category":"Server Settings",
         "Description":"If enabled, dead players will be allowed to chat with living players",
         "Keywords":"voice,dead,chat,voice_deadchat",
-        "FieldName":"voice_deadchat",
+        "FieldName":"voice_deadChat",
         "InputType":"checkbox",
-        "ParamFieldName":"voice_deadchat",
-        "DefaultValue":"0",
+        "ParamFieldName":"voice_deadChat",
+        "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
             "True":"1"
         }
-    },
-    {
-        "DisplayName":"Minimum Ping",
-        "Category":"Server Settings",
-        "Description":"Sets the minimum ping required for a player to be allowed to join",
-        "Keywords":"minimum,ping,sv_minping",
-        "FieldName":"sv_minPing",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"1000",
-        "ParamFieldName":"sv_minPing",
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "Suffix":"milliseconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Maximum Ping",
-        "Category":"Server Settings",
-        "Description":"Sets the maximum ping permitted for a player to be allowed to join",
-        "Keywords":"maximum,ping,sv_maxping",
-        "FieldName":"sv_maxping",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"1000",
-        "ParamFieldName":"sv_maxping",
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "Suffix":"milliseconds",
-        "EnumValues":{}
     },
     {
         "DisplayName":"Maximum Bandwidth",
@@ -328,50 +263,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Client Timeout Period",
-        "Category":"Server Settings",
-        "Description":"Sets the time before the server will kick a client if no response is sent to the server",
-        "Keywords":"timeout,sv_timeout",
-        "FieldName":"sv_timeout",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"1800",
-        "ParamFieldName":"sv_timeout",
-        "DefaultValue":"300",
-        "Placeholder":"300",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Player Inactivity Kick Period",
-        "Category":"Server Settings",
-        "Description":"Sets the time before the server will kick a player for inactivity. 0 = disabled",
-        "Keywords":"inactivity,afk,period,g_inactivity",
-        "FieldName":"g_inactivity",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"g_inactivity",
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Spectator Kick Period",
-        "Category":"Server Settings",
-        "Description":"Sets the time before the server will kick a spectator",
-        "Keywords":"inactivity,period,spectator,g_inactivityspectator",
-        "FieldName":"g_inactivityspectator",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"g_inactivityspectator",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Temporary Ban Period",
         "Category":"Server Settings",
         "Description":"Sets the time for a player temporary ban (on kick/tempban)",
@@ -381,52 +272,9 @@
         "MinValue":"0",
         "MaxValue":"3600",
         "ParamFieldName":"sv_kickBanTime",
-        "DefaultValue":"3600",
-        "Placeholder":"3600",
+        "DefaultValue":"300",
+        "Placeholder":"300",
         "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Zombie Retention Period",
-        "Category":"Server Settings",
-        "Description":"Sets the time for keeping a disconnected client on the server to transmit the last message",
-        "Keywords":"zombie,time",
-        "FieldName":"sv_zombietime",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"1800",
-        "ParamFieldName":"sv_zombietime",
-        "DefaultValue":"1",
-        "Placeholder":"1",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Flood Protection",
-        "Category":"Server Settings",
-        "Description":"If enabled, flood protection applies, so user commands are throttled. Should be enabled on non-password-protected public servers",
-        "Keywords":"flood,protection,sv_floodprotect",
-        "FieldName":"sv_floodprotect",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_floodprotect",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Reconnect Limit",
-        "Category":"Server Settings",
-        "Description":"Sets the number of times a player can reconnect after disconnection",
-        "Keywords":"reconnect,limit,sv_reconnectlimit",
-        "FieldName":"sv_reconnectlimit",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"1800",
-        "ParamFieldName":"sv_reconnectlimit",
-        "DefaultValue":"5",
-        "Placeholder":"5",
         "EnumValues":{}
     }
 ]
