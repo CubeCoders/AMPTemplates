@@ -37,11 +37,21 @@
         "UpdateSourceArgs":"-c 'cd call-of-dutywaw/10090 && export WINEPREFIX=\"{{$FullRootDir}}.wine\"; export WINEARCH=win32; export WINEDEBUG=-all; /usr/bin/wine plutonium.exe -install-dir .'"
     },
     {
-        "UpdateStageName":"Config Files Download",
+        "UpdateStageName":"Multiplayer Config Files Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/xerxes-at/T4ServerConfigs/archive/refs/heads/main.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceData":"https://raw.githubusercontent.com/xerxes-at/T4ServerConfigs/main/main/server.cfg",
+        "UpdateSourceTarget":"{{$FullBaseDir}}main",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":false,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Zombies Config File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/xerxes-at/T4ServerConfigs/main/main/server_zm.cfg",
+        "UpdateSourceTarget":"{{$FullBaseDir}}main",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":false,
         "DeleteAfterExtract":true
