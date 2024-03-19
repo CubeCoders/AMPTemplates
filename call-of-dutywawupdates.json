@@ -1,6 +1,6 @@
 [
     {
-        "UpdateStageName":"SteamCMD Download",
+        "UpdateStageName":"SteamCMD Client Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"10090",
@@ -8,20 +8,19 @@
         "ForceDownloadPlatform":"Windows"
     },
     {
-        "UpdateStageName":"Config File Download",
+        "UpdateStageName":"Plutonium Launcher Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/call-of-dutywawserver.cfg",
-        "UpdateSourceArgs":"server.cfg",
-        "UpdateSourceTarget":"{{$FullBaseDir}}main",
-        "OverwriteExistingFiles":false
+        "UpdateSourceData":"https://cdn.plutonium.pw/updater/plutonium.exe",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "OverwriteExistingFiles":true
     },
     {
-        "UpdateStageName":"Create Custom Maps Directory",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}usermaps",
-        "OverwriteExistingFiles":false
+        "UpdateStageName":"Plutonium Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd call-of-dutywaw\\10090 && plutonium.exe -install-dir ."
     },
     {
         "UpdateStageName":"Initialise Wine",
@@ -29,5 +28,22 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win32 /usr/bin/wineboot --init --update'"
+    },
+    {
+        "UpdateStageName":"Plutonium Installation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd call-of-dutywaw/10090 && export WINEPREFIX=\"{{$FullRootDir}}.wine\"; export WINEARCH=win32; export WINEDEBUG=-all; /usr/bin/wine plutonium.exe -install-dir .'"
+    },
+    {
+        "UpdateStageName":"Config Files Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/xerxes-at/T4ServerConfigs/archive/refs/heads/main.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":false,
+        "DeleteAfterExtract":true
     }
 ]
