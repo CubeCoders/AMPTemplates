@@ -69,41 +69,32 @@
         "DefaultValue":"0",
         "EnumValues":{}
     },
+    [
     {
-        "DisplayName":"Server Name",
+        "DisplayName":"Game Mode",
         "Category":"Server Settings",
-        "Description":"Sets the name of the server. Limit of 22 characters. Colour codes can be used: ^0=Black, ^1=Red, ^2=Green, ^3=Yellow, ^4=Blue, ^5=Cyan, ^6=Pink/Magenta, ^7=White",
-        "Keywords":"server,name",
-        "FieldName":"sv_hostname",
-        "InputType":"text",
-        "ParamFieldName":"sv_hostname",
-        "DefaultValue":"^1AMP Hosted COD:WaW Server",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Message Of The Day",
-        "Category":"Server Settings",
-        "Description":"Sets the message of the day (MOTD) displayed when players join. Colour codes can also be used, as per the Server Name",
-        "Keywords":"message,motd",
-        "FieldName":"scr_motd",
-        "InputType":"text",
-        "ParamFieldName":"scr_motd",
-        "DefaultValue":"^4Welcome to COD:WaW!",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Make Server Public",
-        "Category":"Server Settings",
-        "Description":"If enabled, the server will be visible publicly. Otherwise it will only be accessible from the local network",
-        "Keywords":"public,visible,dedicated",
-        "FieldName":"dedicated",
-        "InputType":"checkbox",
-        "ParamFieldName":"dedicated",
-        "DefaultValue":"2",
+        "Description":"Sets the game mode. Configure the relevant config file accordingly - 'server.cfg' for Multiplayer, 'server_zm.cfg' for Zombies",
+        "Keywords":"game,mode,gamemode",
+        "FieldName":"GameMode",
+        "InputType":"enum",
+        "ParamFieldName":"GameMode",
+        "DefaultValue":"t4mp \"{{$FullBaseDir}}\" -dedicated +set key {{ServerKey}} +set fs_game {{Mod}} +exec server.cfg",
         "EnumValues":{
-            "False":"1",
-            "True":"2"
+            "t4mp \"{{$FullBaseDir}}\" -dedicated +set key {{ServerKey}} +set fs_game {{Mod}} +exec server.cfg":"Multiplayer (default)",
+            "t4sp \"{{$FullBaseDir}}\" -dedicated +set zombiemode 1 +set key {{ServerKey}} +set fs_game {{Mod}} +exec server_zm.cfg":"Zombies"
         }
+    },
+    {
+        "DisplayName":"Server Key",
+        "Category":"Server Settings",
+        "Description":"Sets the [server key](https://platform.plutonium.pw/serverkeys) required to run the server. This also sets the server name",
+        "Keywords":"server,key,serverkey",
+        "FieldName":"ServerKey",
+        "InputType":"text",
+        "ParamFieldName":"ServerKey",
+        "DefaultValue":"",
+        "Required":true,
+        "EnumValues":{}
     },
     {
         "DisplayName":"Server Password",
@@ -127,7 +118,7 @@
         "DefaultValue":"",
         "EnumValues":{}
     },
-    {
+        {
         "DisplayName":"Map Mode",
         "Category":"Server Settings",
         "Description":"Sets whether to enable map rotation (the Map Rotation List must then also be set) or to load a specific initial map (the Initial Game Type and Initial Map must then also be set)",
@@ -137,26 +128,25 @@
         "ParamFieldName":"map_mode",
         "DefaultValue":"+map_rotate ",
         "EnumValues":{
-            "+map_rotate ":"Map Rotation (Default)",
-            "+map \"{{map_name}}\" ":"Specific Initial Map"
+            "+map_rotate ":"Map rotation (default)",
+            "+map \"{{map_name}}\" ":"Specific initial map"
         }
     },
     {
         "DisplayName":"Map Rotation List",
         "Category":"Server Settings",
-        "Description":"Sets the map list to use for map rotations for the server. Each entry must be in the format: gametype <gametype> map <mapname> (for example, gametype dm map mp_downfall). Map Rotation must be configured",
+        "Description":"Configure the map rotation in 'server.cfg' or 'server_zm.cfg' (as applicable)",
         "Keywords":"map,rotation,list,sv_maprotation",
-        "FieldName":"sv_maprotation",
-        "InputType":"Textarea",
-        "ParamFieldName":"sv_maprotation",
-        "DefaultValue":"gametype dm map mp_downfall gametype dm map mp_dome gametype dm map mp_airfield gametype dm map mp_castle gametype dm map mp_courtyard gametype dm map mp_makin_day gametype dm map mphangar gametype dm map mp_suburban gametype dm map mp_makin gametype dm map mp_asylum gametype dm map mp_rondhouse gametype dm map mp_seelow gametype dm map mp_outskirts gametype dm map mp_roundhouse gametype dm map mp_shrine",
-        "Placeholder":"gametype dm map mp_downfall gametype dm map mp_dome gametype dm map mp_airfield gametype dm map mp_castle gametype dm map mp_courtyard gametype dm map mp_makin_day gametype dm map mphangar gametype dm map mp_suburban gametype dm map mp_makin gametype dm map mp_asylum gametype dm map mp_rondhouse gametype dm map mp_seelow gametype dm map mp_outskirts gametype dm map mp_roundhouse gametype dm map mp_shrine",
+        "FieldName":"maprotation",
+        "InputType":"hidden",
+        "ParamFieldName":"maprotation",
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
         "DisplayName":"Initial Game Type",
         "Category":"Server Settings",
-        "Description":"Sets the game type to start the server with. This setting will be overridden if Map Rotation is configured. Settings for each game type can be set in 'server.cfg'",
+        "Description":"Sets the game type to start the server with. This setting will be overridden if map rotation is configured. Settings for each game type can be set in 'server.cfg' or 'server_zm.cfg' (as applicable)",
         "Keywords":"game,type,g_gametype",
         "FieldName":"g_gametype",
         "InputType":"enum",
@@ -176,22 +166,23 @@
     {
         "DisplayName":"Initial Map",
         "Category":"Server Settings",
-        "Description":"Sets the map to start the server with. This setting will be overridden if Map Rotation is configured",
+        "Description":"Sets the map to start the server with. See 'server.cfg' or 'server_zm.cfg' (as applicable) for map names. This setting will be overridden if map rotation is configured",
         "Keywords":"map",
         "FieldName":"map_name",
         "InputType":"text",
         "ParamFieldName":"map_name",
         "DefaultValue":"mp_downfall",
+        "Placeholder":"mp_downfall",
         "EnumValues":{}
     },
     {
         "DisplayName":"Load Mod",
         "Category":"Server Settings",
         "Description":"Sets the mod to load when starting the server, based on the path to the mod in the Mods directory",
-        "Keywords":"mods,fs_game",
-        "FieldName":"fs_game",
+        "Keywords":"mods,mod,fs_game",
+        "FieldName":"Mod",
         "InputType":"text",
-        "ParamFieldName":"fs_game",
+        "ParamFieldName":"Mod",
         "IncludeInCommandLine":true,
         "SkipIfEmpty":true,
         "DefaultValue":"",
@@ -201,15 +192,27 @@
     {
         "DisplayName":"Player Limit",
         "Category":"Server Settings",
-        "Description":"Sets the maximum number of players allowed on the server at one time",
+        "Description":"Sets the maximum number of players allowed on the server at one time. Maximum 64 for Multiplayer, 4 for Zombies",
         "Keywords":"max,players,limit,sv_maxclients",
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "MinValue":"1",
+        "MaxValue":"64",
         "ParamFieldName":"sv_maxclients",
-        "DefaultValue":"24",
-        "Placeholder":"24",
+        "DefaultValue":"32",
+        "Placeholder":"32",
         "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Limit",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$MaxUsers",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"ui_maxclients",
         "EnumValues":{}
     },
     {
@@ -221,8 +224,8 @@
         "InputType":"number",
         "MinValue":"0",
         "ParamFieldName":"sv_privateclients",
-        "DefaultValue":"4",
-        "Placeholder":"4",
+        "DefaultValue":"0",
+        "Placeholder":"0",
         "Suffix":"players",
         "EnumValues":{}
     },
@@ -284,11 +287,11 @@
         "Category":"Server Settings",
         "Description":"Sets the minimum ping required for a player to be allowed to join",
         "Keywords":"minimum,ping,sv_minping",
-        "FieldName":"sv_minping",
+        "FieldName":"sv_minPing",
         "InputType":"number",
         "MinValue":"0",
         "MaxValue":"1000",
-        "ParamFieldName":"sv_minping",
+        "ParamFieldName":"sv_minPing",
         "DefaultValue":"0",
         "Placeholder":"0",
         "Suffix":"milliseconds",
@@ -314,11 +317,11 @@
         "Category":"Server Settings",
         "Description":"Sets the maximum bandwidth for the server",
         "Keywords":"maximum,bandwidth,sv_maxrate",
-        "FieldName":"sv_maxrate",
+        "FieldName":"sv_maxRate",
         "InputType":"number",
         "MinValue":"0",
         "MaxValue":"100000",
-        "ParamFieldName":"sv_maxrate",
+        "ParamFieldName":"sv_maxRate",
         "DefaultValue":"25000",
         "Placeholder":"25000",
         "Suffix":"bytes/second",
