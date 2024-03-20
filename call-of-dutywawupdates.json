@@ -9,7 +9,7 @@
     },
     {
         "UpdateStageName":"Plutonium Launcher Download",
-        "UpdateSourcePlatform":"All",
+        "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://cdn.plutonium.pw/updater/plutonium.exe",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
@@ -23,18 +23,27 @@
         "UpdateSourceArgs":"/C cd call-of-dutywaw\\10090 && plutonium.exe -install-dir ."
     },
     {
-        "UpdateStageName":"Initialise Wine",
+        "UpdateStageName":"Create Plutonium Updater Directory",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}plutonium-updater"
+    },
+    {
+        "UpdateStageName":"Plutonium Updater Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/mxve/plutonium-updater.rs/releases/latest/download/plutonium-updater-x86_64-unknown-linux-gnu.tar.gz",
+        "UpdateSourceTarget":"{{$FullRootDir}}plutonium-updater",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
     },
     {
         "UpdateStageName":"Plutonium Installation",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd call-of-dutywaw/10090 && export WINEPREFIX=\"{{$FullRootDir}}.wine\"; export WINEARCH=win64; export WINEDEBUG=-all; /usr/bin/wine plutonium.exe -install-dir .'"
+        "UpdateSourceArgs":"-c 'cd call-of-dutywaw/plutonium-updater && chmod +x plutonium-updater && ./plutonium-updater -sfd \"{{$FullBaseDir}}\"'"
     },
     {
         "UpdateStageName":"Multiplayer Config Files Download",
@@ -55,5 +64,12 @@
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":false,
         "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Initialise Wine",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
     }
 ]
