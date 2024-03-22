@@ -1,0 +1,95 @@
+[
+    {
+        "UpdateStageName":"SteamCMD Multiplayer Client Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"202990",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceArgs":"202970",
+        "ForceDownloadPlatform":"Windows"
+    },
+    {
+        "UpdateStageName":"SteamCMD Zombies Client Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"212910",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceArgs":"202970",
+        "ForceDownloadPlatform":"Windows"
+    },
+    {
+        "UpdateStageName":"Plutonium Launcher Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://cdn.plutonium.pw/updater/plutonium.exe",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Plutonium Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd call-of-dutybo2\\server && plutonium.exe -install-dir ."
+    },
+    {
+        "UpdateStageName":"Create Plutonium Updater Directory",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}plutonium-updater"
+    },
+    {
+        "UpdateStageName":"Plutonium Updater Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/mxve/plutonium-updater.rs/releases/latest/download/plutonium-updater-x86_64-unknown-linux-gnu.tar.gz",
+        "UpdateSourceTarget":"{{$FullRootDir}}plutonium-updater",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Plutonium Installation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd call-of-dutybo2/plutonium-updater && chmod +x plutonium-updater && ./plutonium-updater -sfd \"{{$FullBaseDir}}\"'"
+    },
+    {
+        "UpdateStageName":"Create Config Download Directory",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}configs"
+    },
+    {
+        "UpdateStageName":"Plutonium Config Files Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/xerxes-at/T6ServerConfigs/archive/master.zip",
+        "UpdateSourceTarget":"{{$FullRootDir}}configs",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Config Files Copy",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '\\cp -r ./call-of-dutybo2/configs/T6ServerConfigs-master/localappdata/Plutonium/storage/t6/* ./call-of-dutybo2/server/storage/t6 && rm -rf ./call-of-dutybo2/configs/'"
+    },
+    {
+        "UpdateStageName":"Config Files Copy",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C robocopy call-of-dutybo2\\configs\\T6ServerConfigs-master\\localappdata\\Plutonium\\storage\\t6 call-of-dutybo2\\server\\storage\\t6 /E /XC /XN /XO && rd /S /Q call-of-dutybo2\\configs"
+    },
+    {
+        "UpdateStageName":"Initialise Wine",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
+    }
+]

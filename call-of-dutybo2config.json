@@ -1,0 +1,132 @@
+[
+    {
+        "DisplayName":"RCON Password",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$RemoteAdminPassword",
+        "InputType":"text",
+        "Hidden":true,
+        "ParamFieldName":"rcon_password",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Continuous Log",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"g_logSync",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"g_logSync",
+        "DefaultValue":"2",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Log File Name",
+        "Category":"Server Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"g_log",
+        "InputType":"text",
+        "Hidden":true,
+        "ParamFieldName":"g_log",
+        "DefaultValue":"logs\games_mp.log",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Game Mode",
+        "Category":"Server Settings",
+        "Description":"Sets the game mode. Configure the relevant config file accordingly - 'dedicated.cfg' for Multiplayer, 'dedicated_zm.cfg' for Zombies",
+        "Keywords":"game,mode,gamemode",
+        "FieldName":"GameMode",
+        "InputType":"enum",
+        "ParamFieldName":"GameMode",
+        "DefaultValue":"t6mp \"{{$FullBaseDir}}\" -dedicated +set key {{ServerKey}} +set fs_game {{Mod}} +exec dedicated.cfg",
+        "EnumValues":{
+            "t6mp \"{{$FullBaseDir}}\" -dedicated +set key {{ServerKey}} +set fs_game {{Mod}} +exec dedicated.cfg":"Multiplayer (default)",
+            "t6zm \"{{$FullBaseDir}}\" -dedicated +set key {{ServerKey}} +set fs_game {{Mod}} +exec dedicated_zm.cfg":"Zombies"
+        }
+    },
+    {
+        "DisplayName":"Server Key",
+        "Category":"Server Settings",
+        "Description":"Sets the [server key](https://platform.plutonium.pw/serverkeys) required to run the server. This also sets the server name",
+        "Keywords":"server,key,serverkey",
+        "FieldName":"ServerKey",
+        "InputType":"text",
+        "ParamFieldName":"ServerKey",
+        "DefaultValue":"",
+        "Required":true,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Password",
+        "Category":"Server Settings",
+        "Description":"Sets the password to join the server. Default is no password",
+        "Keywords":"password,g_password",
+        "FieldName":"g_password",
+        "InputType":"password",
+        "ParamFieldName":"g_password",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Load Mod",
+        "Category":"Server Settings",
+        "Description":"Sets the mod to load when starting the server, based on the path to the mod in the Mods directory",
+        "Keywords":"mods,mod,fs_game",
+        "FieldName":"Mod",
+        "InputType":"text",
+        "ParamFieldName":"Mod",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"",
+        "Placeholder":"Mods/pezbot_bo2",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Limit",
+        "Category":"Server Settings",
+        "Description":"Sets the maximum number of players allowed on the server at one time. Maximum 18 for Multiplayer, 8 for Zombies",
+        "Keywords":"max,players,limit,sv_maxclients",
+        "FieldName":"$MaxUsers",
+        "InputType":"number",
+        "MinValue":"1",
+        "MaxValue":"18",
+        "ParamFieldName":"sv_maxclients",
+        "DefaultValue":"8",
+        "Placeholder":"8",
+        "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Voice Chat Mode",
+        "Category":"Server Settings",
+        "Description":"Sets the server voice chat mode",
+        "Keywords":"voice,chat,mode,sv_voice",
+        "FieldName":"sv_voice",
+        "InputType":"enum",
+        "ParamFieldName":"sv_voice",
+        "DefaultValue":"2",
+        "EnumValues":{
+            "0":"Disabled",
+            "1":"Everyone hears",
+            "2":"Teams only hear"
+        }
+    },
+    {
+        "DisplayName":"Server Voice Chat Quality",
+        "Category":"Server Settings",
+        "Description":"Sets the server voice quality level",
+        "Keywords":"voice,chat,quality,sv_voicequality",
+        "FieldName":"sv_voicequality",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"9",
+        "ParamFieldName":"sv_voicequality",
+        "DefaultValue":"3",
+        "Placeholder":"3",
+        "EnumValues":{}
+    }
+]
