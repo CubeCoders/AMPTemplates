@@ -42,7 +42,7 @@
     {
         "DisplayName":"Server Password",
         "Category":"Server Settings",
-        "Description":"Password to connect to the server",
+        "Description":"Password to connect to the server. Default is no password",
         "Keywords":"password",
         "FieldName":"password",
         "InputType":"password",
@@ -59,14 +59,14 @@
         "Keywords":"player,limit,maximum",
         "FieldName":"$MaxUsers",
         "InputType":"number",
+        "MinValue":"1",
         "IsFlagArgument":false,
         "ParamFieldName":"/data/@max_players",
         "IncludeInCommandLine":false,
         "DefaultValue":"4",
-        "Suffix":"players",
         "Placeholder":"4",
-        "EnumValues":{},
-        "MinValue":"1"
+        "Suffix":"players",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Island Count",
@@ -79,6 +79,8 @@
         "ParamFieldName":"/data/@island_count",
         "IncludeInCommandLine":false,
         "DefaultValue":"16",
+        "Placeholder":"16",
+        "Suffix":"islands",
         "EnumValues":{}
     },
     {
@@ -92,6 +94,7 @@
         "ParamFieldName":"/data/@team_count_human",
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
+        "Placeholder":"1",
         "EnumValues":{}
     },
     {
@@ -106,6 +109,7 @@
         "IncludeInCommandLine":false,
         "SkipIfEmpty":false,
         "DefaultValue":"1",
+        "Placeholder":"1",
         "EnumValues":{}
     },
     {
@@ -119,6 +123,7 @@
         "ParamFieldName":"/data/@base_difficulty",
         "IncludeInCommandLine":false,
         "DefaultValue":"1",
+        "Placeholder":"1",
         "EnumValues":{}
     },
     {
@@ -154,5 +159,29 @@
             "1":"None",
             "2":"All"
         }
+    },
+    {
+        "DisplayName":"Player Permissions",
+        "Category":"Server Settings",
+        "Description":"The ['permissions' section](https://geometa.co.uk/wiki/carrier_command_2/view/dedicated_servers) of 'server_config.xml' can be used to control which players have admin powers on the server, and which players are banned",
+        "Keywords":"permissions,admins,ban",
+        "FieldName":"permissions",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"permissions",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Active Mods",
+        "Category":"Server Settings",
+        "Description":"The ['active_mod_folders' section](https://geometa.co.uk/wiki/carrier_command_2/view/dedicated_servers) of 'server_config.xml' can be used to enable mods on the server. Example path: mods/2824746567. Mods can be downloaded via Steam Workshop Items under the SteamCMD and Updates menu",
+        "Keywords":"mods,active_mod_folders",
+        "FieldName":"active_mod_folders",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"active_mod_folders",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
     }
 ]
