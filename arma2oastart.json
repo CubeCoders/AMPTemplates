@@ -1,0 +1,66 @@
+[
+    {
+        "UpdateStageName":"Delete Active File",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'rm -f {{$FullBaseDir}}battleye/beserver_active_*.cfg'"
+    },
+    {
+        "UpdateStageName":"Delete Active File",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}battleye\\beserver_active_*.cfg"
+    },
+    {
+        "UpdateStageName":"Manage Bisigns",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd arma2oa/33935; find keys/ -name \"*.bisign\" ! -name \"a2.bisign\" -exec rm {} +; IFS=\";\" read -ra subdirs_array <<< \"{{mod}}\" && for subdir in \"${subdirs_array[@]}\"; do find \"$subdir/keys\" -maxdepth 1 -mindepth 1 -type f -name \"*.bisign\" -exec \\cp -t keys/ {} +; find \"$subdir/key\" -maxdepth 1 -mindepth 1 -type f -name \"*.bisign\" -exec \\cp -t keys/ {} +; done'",
+        "UpdateSourceConditionSetting":"ManageBisigns",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Manage Bisigns",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"$mods = '{{mod}}' -split ';'; Set-Location arma2oa\\33935; Get-ChildItem -Path 'keys' -Filter '*.bisign' | ForEach-Object { if ($_.Name -ne 'a2.bisign' -and -not ($_.Name -like '*a2.bisign*')) { Remove-Item -LiteralPath $_.FullName -Force } }; foreach ($a in $mods) { Get-ChildItem -Path ('{0}\\keys' -f $a) -Filter '*.bisign' | Copy-Item -Destination 'keys' -Force ; Get-ChildItem -Path ('{0}\\key' -f $a) -Filter '*.bisign' | Copy-Item -Destination 'keys' -Force }\"",
+        "UpdateSourceConditionSetting":"ManageBisigns",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Headless Client Script Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/dev/arma2oarunhc.sh",
+        "UpdateSourceArgs":"runhc.sh",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Headless Client Script Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/dev/arma2oarunhc.ps1",
+        "UpdateSourceArgs":"runhc.ps1",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Start Headless Clients",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'chmod +x ./runhc.sh; ./runhc.sh {{HeadlessClientsNum}} {{$ApplicationIPBinding}} {{$GamePort}} \"{{password}}\" \"{{mod}}\" \"{{hc_parfile}}\" &'"
+    },
+    {
+        "UpdateStageName":"Start Headless Clients",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"runhc.ps1\" {{HeadlessClientsNum}} {{$ApplicationIPBinding}} {{$GamePort}} \"{{password}}\" \"{{mod}}\" \"{{hc_parfile}}\""
+    }
+]
