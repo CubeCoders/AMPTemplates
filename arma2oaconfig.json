@@ -141,13 +141,15 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Manage Bisigns",
+        "DisplayName":"Manage Bikeys",
         "Category":"Arma Server Settings",
-        "Description":"If enabled, the bisign files for each of the mods specified in Load Mods and Client Mods will be copied to the 'keys' directory on server start, to enable addon signature verification. All existing bisigns in that directory (other than the default 'a2.bisign') will be deleted",
-        "Keywords":"mods,addons,bisigns",
-        "FieldName":"ManageBisigns",
+        "Description":"If enabled, the bikey files for each of the mods specified in Load Mods will be copied to the 'keys' directory on server start, to enable addon signature verification. All existing bikeys in that directory (other than the default 'bi.bikey') will be deleted",
+        "Keywords":"mods,addons,bikeys",
+        "FieldName":"ManageBikeys",
         "InputType":"checkbox",
-        "ParamFieldName":"ManageBisigns",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ManageBikeys",
+        "IncludeInCommandLine":false,
         "DefaultValue":"false",
         "EnumValues":{
             "False":"false",
@@ -181,16 +183,17 @@
     {
         "DisplayName":"Addon Signature Verification",
         "Category":"Arma Server Settings",
-        "Description":"Sets whether players with unknown or unsigned mods will be allowed to join",
+        "Description":"If enabled, players with unknown or unsigned mods will not be allowed to join",
         "Keywords":"mods,addons,verify,verifysignatures",
         "FieldName":"verifySignatures",
-        "InputType":"enum",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
         "ParamFieldName":"verifySignatures",
+        "IncludeInCommandLine":false,
         "DefaultValue":"2",
         "EnumValues":{
-            "0":"Disabled",
-            "1":"Prefer v2 signatures but accept v1 too",
-            "2":"Only allow v2 signatures"
+            "False":"0",
+            "True":"2"
         }
     },
     {
