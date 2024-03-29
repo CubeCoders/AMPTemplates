@@ -33,7 +33,7 @@ while [[ ! -s display.log ]]; do
   sleep 1
 done
 read -r DPY_NUM < display.log
-rm display.log
+#rm display.log
 
 baseport=$(($3 + 498))
 parfile="${6:-}"
@@ -68,3 +68,8 @@ while true; do
   fi
   sleep 1
 done
+
+exec 6>&-
+kill $XVFB_PID
+
+exit 0
