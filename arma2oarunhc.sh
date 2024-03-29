@@ -37,7 +37,6 @@ read -r DPY_NUM < display.log
 
 baseport=$(($3 + 498))
 parfile="${6:-}"
-export LD_LIBRARY_PATH=$SCRIPT_NAME/arma2oa/linux32:$LD_LIBRARY_PATH
 export WINEPREFIX="$SCRIPT_NAME/arma2oa/.wine"
 export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
