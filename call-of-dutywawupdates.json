@@ -8,25 +8,27 @@
         "ForceDownloadPlatform":"Windows"
     },
     {
-        "UpdateStageName":"Plutonium Launcher Download",
+        "UpdateStageName":"Create Plutonium Updater Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}plutonium-updater"
+    },
+    {
+        "UpdateStageName":"Plutonium Updater Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://cdn.plutonium.pw/updater/plutonium.exe",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "OverwriteExistingFiles":true
+        "UpdateSourceData":"https://github.com/mxve/plutonium-updater.rs/releases/download/v0.4.2/plutonium-updater-x86_64-pc-windows-msvc.zip",
+        "UpdateSourceTarget":"{{$FullRootDir}}plutonium-updater",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
     },
     {
         "UpdateStageName":"Plutonium Installation",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd call-of-dutywaw\\10090 && plutonium.exe -install-dir ."
-    },
-    {
-        "UpdateStageName":"Create Plutonium Updater Directory",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullRootDir}}plutonium-updater"
+        "UpdateSourceArgs":"/C cd call-of-dutywaw\\plutonium-updater && plutonium-updater.exe -sfd \"{{$FullBaseDir}}\" -e \"games\\iw5mp.exe\" -e \"games\\iw5sp.exe\" -e \"games\\t5mp.exe\" -e \"games\\t5sp.exe\" -e \"games\\t6mp.exe\" -e \"games\\t6zm.exe\" -e \"storage\\iw5\" -e \"storage\\t5\" -e \"storage\\t6\""
     },
     {
         "UpdateStageName":"Plutonium Updater Download",
@@ -43,7 +45,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd call-of-dutywaw/plutonium-updater && chmod +x plutonium-updater && ./plutonium-updater -sfd \"{{$FullBaseDir}}\"'"
+        "UpdateSourceArgs":"-c 'cd call-of-dutywaw/plutonium-updater && chmod +x plutonium-updater && ./plutonium-updater -sfd \"{{$FullBaseDir}}\" -e \"games/iw5mp.exe\" -e \"games/iw5sp.exe\" -e \"games/t5mp.exe\" -e \"games/t5sp.exe\" -e \"games/t6mp.exe\" -e \"games/t6zm.exe\" -e \"storage/iw5\" -e \"storage/t5\" -e \"storage/t6\"'"
     },
     {
         "UpdateStageName":"Multiplayer Config File Download",
