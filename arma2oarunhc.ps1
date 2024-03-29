@@ -31,7 +31,7 @@ for ($i = 1; $i -le [int]$args[0]; $i++) {
   } else {
     $connect = $args[1]
   }
-  $hcProcess = Start-Process -FilePath "arma2oaserver.exe" -ArgumentList "-client", "-nosound", "-profiles=a2oamaster", "-connect=${connect}:$($args[2])", "-port=$basePort", "-password=`"$($args[3])`"", "`"-mod=$($args[4])`"", "`"-par=$parfile`"" -WindowStyle Hidden -PassThru
+  $hcProcess = Start-Process -FilePath "arma2oaserver.exe" -ArgumentList "-client", "-nosound", "-profiles=A2OAMaster", "-connect=${connect}:$($args[2])", "-port=$basePort", "-password=`"$($args[3])`"", "`"-mod=$($args[4])`"", "`"-par=$parfile`"" -WindowStyle Hidden -PassThru
   $clients += $hcProcess.Id
 }
 

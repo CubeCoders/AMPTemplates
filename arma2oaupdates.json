@@ -21,35 +21,19 @@
     },
     {
         "UpdateStageName":"Server Download",
-        "UpdateSourcePlatform":"Windows",
+        "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"33935",
         "UpdateSourceArgs":"33930",
-        "UpdateSourceVersion":"{{ServerBranch}}"
-    },
-    {
-        "UpdateStageName":"Server Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"http://downloads.bistudio.com/arma2.com/update/a2oa-server-1.62.102451.tar.bz2",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":false,
-        "DeleteAfterExtract":true
-    },
-    {
-        "UpdateStageName":"Server Installation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd arma2oa/33935 && ./install'"
+        "UpdateSourceVersion":"{{ServerBranch}}",
+        "ForceDownloadPlatform":"Windows"
     },
     {
         "UpdateStageName":"Server Config Template Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/dev/arma2oaserver.cfg",
-        "UpdateSourceArgs":"amp_server.cfg",
+        "UpdateSourceArgs":"AMP_server.cfg",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "OverwriteExistingFiles":false
     },
@@ -77,19 +61,10 @@
         "OverwriteExistingFiles":false
     },
     {
-        "UpdateStageName":"Modscript Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/dev/arma2oaconvertmods.sh",
-        "UpdateSourceArgs":"convertmods.sh",
-        "UpdateSourceTarget":"{{$FullInstanceDir}}",
-        "OverwriteExistingFiles":true
-    },
-    {
-        "UpdateStageName":"Convert Mods",
+        "UpdateStageName":"Initialise Wine",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"./convertmods.sh"
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
     }
 ]

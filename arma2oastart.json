@@ -4,21 +4,21 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -f {{$FullBaseDir}}battleye/beserver_active_*.cfg'"
+        "UpdateSourceArgs":"-c 'rm -f {{$FullBaseDir}}BattlEye/BEServer_active_*.cfg'"
     },
     {
         "UpdateStageName":"Delete Active File",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}battleye\\beserver_active_*.cfg"
+        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}BattlEye\\BEServer_active_*.cfg"
     },
     {
         "UpdateStageName":"Manage Bikeys",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd arma2oa/33935; find keys/ -name \"*.bikey\" ! -name \"bi.bikey\" -exec rm {} +; IFS=\";\" read -ra subdirs_array <<< \"{{mod}}\" && for subdir in \"${subdirs_array[@]}\"; do find \"$subdir/keys\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t keys/ {} +; find \"$subdir/key\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t keys/ {} +; done'",
+        "UpdateSourceArgs":"-c 'cd arma2oa/33935; find Keys/ -name \"*.bikey\" ! -name \"bi.bikey\" ! -name \"bi2.bikey\" -exec rm {} +; IFS=\";\" read -ra subdirs_array <<< \"{{mod}}\" && for subdir in \"${subdirs_array[@]}\"; do find \"$subdir/keys\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t Keys/ {} +; find \"$subdir/key\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t Keys/ {} +; find \"$subdir/Keys\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t Keys/ {} +; find \"$subdir/Key\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t Keys/ {} +; done'",
         "UpdateSourceConditionSetting":"ManageBikeys",
         "UpdateSourceConditionValue":"true"
     },
@@ -27,7 +27,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"$mods = '{{mod}}' -split ';'; Set-Location arma2oa\\33935; Get-ChildItem -Path 'keys' -Filter '*.bikey' | ForEach-Object { if ($_.Name -ne 'bi.bikey' -and -not ($_.Name -like '*bi.bikey*')) { Remove-Item -LiteralPath $_.FullName -Force } }; foreach ($a in $mods) { Get-ChildItem -Path ('{0}\\keys' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'keys' -Force ; Get-ChildItem -Path ('{0}\\key' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'keys' -Force }\"",
+        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"$mods = '{{mod}}' -split ';'; Set-Location arma2oa\\33935; Get-ChildItem -Path 'Keys' -Filter '*.bikey' | ForEach-Object { if ($_.Name -ne 'bi.bikey' -and -not ($_.Name -like '*bi.bikey*') -and $_.Name -ne 'bi2.bikey' -and -not ($_.Name -like '*bi2.bikey*')) { Remove-Item -LiteralPath $_.FullName -Force } }; foreach ($a in $mods) { Get-ChildItem -Path ('{0}\\keys' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'Keys' -Force ; Get-ChildItem -Path ('{0}\\key' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'Keys' -Force }\"",
         "UpdateSourceConditionSetting":"ManageBikeys",
         "UpdateSourceConditionValue":"true"
     },
@@ -35,7 +35,7 @@
         "UpdateStageName":"Headless Client Script Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/dev/arma2oarunhc.sh",
+        "UpdateSourceData":"https://github.com/Greelan/AMPTemplates/raw/dev/arma2oa-winerunhc.sh",
         "UpdateSourceArgs":"runhc.sh",
         "UpdateSourceTarget":"{{$FullInstanceDir}}",
         "OverwriteExistingFiles":true

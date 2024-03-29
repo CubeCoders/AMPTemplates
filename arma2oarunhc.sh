@@ -23,9 +23,27 @@ if ! $server_started; then
 fi
 
 # Start the headless clients
+SCRIPT_NAME=$(echo \"$0\" | xargs readlink -f)
+SCRIPTDIR=$(dirname "$SCRIPT_NAME")
+
+exec 6>display.log
+/usr/bin/Xvfb -displayfd 6 &
+XVFB_PID=$!
+while [[ ! -s display.log ]]; do
+  sleep 1
+done
+read -r DPY_NUM < display.log
+#rm display.log
+
 baseport=$(($3 + 498))
 parfile="${6:-}"
-export LD_LIBRARY_PATH=$(dirname "$0")/arma2oa/linux32:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$SCRIPT_NAME/arma2oa/linux32:$LD_LIBRARY_PATH
+export WINEPREFIX="$SCRIPT_NAME/arma2oa/.wine"
+export WINEDLLOVERRIDES="mscoree,mshtml="
+export WINEARCH=win64
+export WINEDEBUG=fixme-all
+export DISPLAY=:$DPY_NUM
+
 cd ./arma2oa/33935
 for i in $(seq 1 "$1"); do
   if [[ "$2" == "0.0.0.0" ]]; then
@@ -33,7 +51,7 @@ for i in $(seq 1 "$1"); do
   else
     connect="$2"
   fi
-  ./server -client -nosound -profiles=a2oamaster -connect=$connect:$3 -port=$baseport -password="$4" "-mod=$5" "-par=$parfile" >/dev/null 2>&1 &
+  /usr/bin/wine arma2oaserver.exe -client -nosound -profiles=A2AOMaster -connect=$connect:$3 -port=$baseport -password="$4" "-mod=$5" "-par=$parfile" >/dev/null 2>&1 &
   clients+=($!)
 done
 
@@ -50,3 +68,8 @@ while true; do
   fi
   sleep 1
 done
+
+exec 6>&-
+kill $XVFB_PID
+
+exit 0
