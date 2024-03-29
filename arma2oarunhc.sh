@@ -33,7 +33,7 @@ for i in $(seq 1 "$1"); do
   else
     connect="$2"
   fi
-  ./server -client -nosound -profiles=a2aomaster -connect=$connect:$3 -port=$baseport -password="$4" "-mod=$5" "-par=$parfile" >/dev/null 2>&1 &
+  ./server -client -nosound -profiles=a2oamaster -connect=$connect:$3 -port=$baseport -password="$4" "-mod=$5" "-par=$parfile" >/dev/null 2>&1 &
   clients+=($!)
 done
 
