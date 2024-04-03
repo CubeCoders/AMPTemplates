@@ -1,6 +1,6 @@
 Meta.DisplayName=Myth of Empires
 Meta.Description=Myth of Empires Dedicated Server
-Meta.OS=Linux
+Meta.OS=Windows, Linux
 Meta.AarchSupport=NotSupported
 Meta.Arch=x86_64
 Meta.Author=Greelan
@@ -30,14 +30,14 @@ App.RootDir=./moe/
 App.BaseDirectory=./moe/1794810/
 App.SteamWorkshopDownloadLocation=
 App.ExecutableWin=1794810\MOE\Binaries\Win64\MOEServer.exe
-App.ExecutableLinux=1794810/LinuxPrivateServer/MOE/Binaries/Linux/MOEServer
+App.ExecutableLinux=.proton/proton
 App.WorkingDir=1794810
-App.LinuxCommandLineArgs=
-App.WindowsCommandLineArgs=-sdtout -FullStdOutLogOutput 
-App.CommandLineArgs=MOE {{Map}} -game -server -DataLocalFile -NotCheckServerSteamAuth {{$PlatformArgs}}log={{ServerListId}}.log -LOCALLOGTIMES -PrivateServer -Port={{$GamePort}} -QueryPort={{$QueryPort}} -ShutDownServicePort={{$RCONPort}} -bStartShutDownServiceInPrivateServer=true -MultiHome={{$ApplicationIPBinding}} -ShutDownServiceIP=127.0.0.1 -OutAddress={{$ExternalIP}} -SessionName="{{SessionName}}" -SteamServerName="{{SessionName}}" -Description="{{Description}}" -ShutDownServiceKey="{{$RemoteAdminPassword}}" -pakdir="{{$FullBaseDir}}MOE/{{ServerListId}}Mods" {{UseACE}}{{ForceSteamNet}}{{$FormattedArgs}} -NoticeEnterServer="{{NoticeEnterServer}}" -NoticeLeaveServer="{{NoticeLeaveServer}}" {{CustomArgs}}
+App.LinuxCommandLineArgs=runinprefix "{{$FullBaseDir}}MOE/Binaries/Win64/MOEServer.exe"
+App.WindowsCommandLineArgs=
+App.CommandLineArgs={{$PlatformArgs}} MOE {{Map}} -game -server -DataLocalFile -NotCheckServerSteamAuth -stdout -FullStdOutLogOutput log={{ServerListId}}.log -LOCALLOGTIMES -PrivateServer -Port={{$GamePort}} -QueryPort={{$QueryPort}} -ShutDownServicePort={{$RCONPort}} -bStartShutDownServiceInPrivateServer=true -MultiHome={{$ApplicationIPBinding}} -ShutDownServiceIP=127.0.0.1 -OutAddress={{$ExternalIP}} -SessionName="{{SessionName}}" -SteamServerName="{{SessionName}}" -Description="{{Description}}" -ShutDownServiceKey="{{$RemoteAdminPassword}}" -pakdir="{{$FullBaseDir}}MOE/{{ServerListId}}Mods" {{UseACE}}{{ForceSteamNet}}{{$FormattedArgs}} -NoticeEnterServer="{{NoticeEnterServer}}" -NoticeLeaveServer="{{NoticeLeaveServer}}" {{CustomArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1371580"}
+App.EnvironmentVariables={"SteamAppId":"1371580","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullBaseDir}}.steam/steam","HOME":"{{$FullBaseDir}}"}
 App.CommandLineParameterFormat=-{0}="{1}"
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=String
@@ -75,7 +75,7 @@ App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
 App.RapidStartup=True
 App.DumpFullChildProcessTree=False
-App.MonitorChildProcessName=
+App.MonitorChildProcessName=MOE/Binaries/Win64/MOEServer.exe
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RCONConnected
