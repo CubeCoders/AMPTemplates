@@ -295,7 +295,7 @@
         "IsFlagArgument":false,
         "ParamFieldName":"/serversettings/@StartWhenClientsReady",
         "IncludeInCommandLine":false,
-        "DefaultValue":"True",
+        "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
             "True":"True"
@@ -384,7 +384,7 @@
     {
         "DisplayName":"Mod Loading",
         "Category":"Barotrauma General",
-        "Description":"Download mods by workshop item ID under SteamCMD and Updates. Load them by editing config_player.xml in accordance with [these instructions](https://gist.github.com/Greelan/87d640a370304fcdc25e3663f6b86666#2-mods)",
+        "Description":"Download mods by workshop item ID under SteamCMD and Updates. Load them by editing config_player.xml in accordance with [these instructions](https://discourse.cubecoders.com/t/barotrauma-guide/3952#h-2-mods-4)",
         "Keywords":"load,mod",
         "FieldName":"Mods",
         "InputType":"hidden",
@@ -451,8 +451,8 @@
         "IsFlagArgument":false,
         "ParamFieldName":"/serversettings/@AllowedClientNameChars",
         "IncludeInCommandLine":false,
-        "DefaultValue":"32-33,38-46,48-57,65-90,91-91,93-93,95-122,192-255,384-591,1024-1279,19968-21327,21329-40959,13312-19903,131072-173791,173824-178207,178208-183983,63744-64255,194560-195103",
-        "Placeholder":"32-33,38-46,48-57,65-90,91-91,93-93,95-122,192-255,384-591,1024-1279,19968-21327,21329-40959,13312-19903,131072-173791,173824-178207,178208-183983,63744-64255,194560-195103",
+        "DefaultValue":"32-33,38-46,48-57,65-90,91-91,93-93,95-122,192-255,384-591,1024-1279,4352-4607,44032-55215,19968-21327,21329-40959,13312-19903,131072-173791,173824-178207,178208-183983,63744-64255,194560-195103",
+        "Placeholder":"32-33,38-46,48-57,65-90,91-91,93-93,95-122,192-255,384-591,1024-1279,4352-4607,44032-55215,19968-21327,21329-40959,13312-19903,131072-173791,173824-178207,178208-183983,63744-64255,194560-195103",
         "EnumValues":{}
     },
     {
@@ -617,6 +617,23 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Skill Loss On Death",
+        "Category":"Barotrauma Gameplay",
+        "Description":"Sets the percentage of a player's skill level that is lost on death",
+        "Keywords":"skill,level,loss,death,SkillLossPercentageOnDeath",
+        "FieldName":"SkillLossPercentageOnDeath",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"100",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@SkillLossPercentageOnDeath",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"50",
+        "Placeholder":"50",
+        "Suffix":"%",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Enable Respawn Shuttle",
         "Category":"Barotrauma Gameplay",
         "Description":"If enabled, respawning players may spawn in a shuttle away from the main submarine and must dock or otherwise merge with the crew. Otherwise, players are spawned in the submarine on certain job spawnpoints, depending on their job",
@@ -684,21 +701,36 @@
         }
     },
     {
-        "DisplayName":"Enable Traitors",
+        "DisplayName":"Traitor Probability",
         "Category":"Barotrauma Gameplay",
-        "Description":"Sets the chance of traitors appearing in a round. Yes = will definitely appear. No = will not appear. Maybe = have a 50/50 chance of appearing",
-        "Keywords":"enable,traitors,traitorsenabled",
-        "FieldName":"TraitorsEnabled",
-        "InputType":"enum",
+        "Description":"Sets the percentage probability that a traitor will be on board",
+        "Keywords":"traitor,probability,TraitorProbability",
+        "FieldName":"TraitorProbability",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"100",
         "IsFlagArgument":false,
-        "ParamFieldName":"/serversettings/@TraitorsEnabled",
+        "ParamFieldName":"/serversettings/@TraitorProbability",
         "IncludeInCommandLine":false,
-        "DefaultValue":"No",
-        "EnumValues":{
-            "No":"No (default)",
-            "Yes":"Yes",
-            "Maybe":"Maybe"
-        }
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"%",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Traitor Danger Level",
+        "Category":"Barotrauma Gameplay",
+        "Description":"Sets the severity of damage a traitor’s work is likely to cause during a round",
+        "Keywords":"traitor,danger,level,TraitorDangerLevel",
+        "FieldName":"TraitorDangerLevel",
+        "InputType":"number",
+        "MinValue":"1",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@TraitorDangerLevel",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"1",
+        "Placeholder":"1",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Traitor Minimum Player Count",
@@ -716,63 +748,20 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Traitor Minimum Start Delay",
+        "DisplayName":"Traitor Accusation Minimum Player Percentage",
         "Category":"Barotrauma Gameplay",
-        "Description":"Sets the minimum amount of time that must pass before a traitor is selected",
-        "Keywords":"traitor,minimum,time,delay,traitorsminstartdelay",
-        "FieldName":"TraitorsMinStartDelay",
+        "Description":"Sets the minimum required percentage of players who must vote in favour to successfully accuse a traitor",
+        "Keywords":"traitor,player,percentage,accusation,MinPercentageOfPlayersForTraitorAccusation",
+        "FieldName":"MinPercentageOfPlayersForTraitorAccusation",
         "InputType":"number",
-        "MinValue":"1",
+        "MinValue":"0",
+        "MaxValue":"100",
         "IsFlagArgument":false,
-        "ParamFieldName":"/serversettings/@TraitorsMinStartDelay",
+        "ParamFieldName":"/serversettings/@MinPercentageOfPlayersForTraitorAccusation",
         "IncludeInCommandLine":false,
-        "DefaultValue":"90",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Traitor Maximum Start Delay",
-        "Category":"Barotrauma Gameplay",
-        "Description":"Sets the maximum amount of time that must pass before a traitor is selected",
-        "Keywords":"traitor,maximum,time,delay,traitorsmaxstartdelay",
-        "FieldName":"TraitorsMaxStartDelay",
-        "InputType":"number",
-        "MinValue":"1",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/serversettings/@TraitorsMaxStartDelay",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"180",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Traitor Minimum Restart Delay",
-        "Category":"Barotrauma Gameplay",
-        "Description":"Sets the minimum amount of time that must pass before another traitor is selected",
-        "Keywords":"traitor,minimum,time,delay,restart,traitorsminrestartdelay",
-        "FieldName":"TraitorsMinRestartDelay",
-        "InputType":"number",
-        "MinValue":"1",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/serversettings/@TraitorsMinRestartDelay",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"30",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Traitor Maximum Restart Delay",
-        "Category":"Barotrauma Gameplay",
-        "Description":"Sets the maximum amount of time that must pass before another traitor is selected",
-        "Keywords":"traitor,maximum,time,delay,traitorsmaxrestartdelay",
-        "FieldName":"TraitorsMaxRestartDelay",
-        "InputType":"number",
-        "MinValue":"1",
-        "IsFlagArgument":false,
-        "ParamFieldName":"/serversettings/@TraitorsMaxRestartDelay",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"90",
-        "Suffix":"seconds",
+        "DefaultValue":"50",
+        "Placeholder":"50",
+        "Suffix":"%",
         "EnumValues":{}
     },
     {
@@ -1107,6 +1096,38 @@
         "DefaultValue":"3",
         "Placeholder":"3",
         "Suffix":"retries",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable DOS Protection",
+        "Category":"Barotrauma Anti-Griefing",
+        "Description":"If set, the server will automatically kick players who are causing the server to perform poorly",
+        "Keywords":"dos,protection,kick,EnableDoSProtection",
+        "FieldName":"EnableDoSProtection",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@EnableDoSProtection",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Maximum Packet Amount",
+        "Category":"Barotrauma Anti-Griefing",
+        "Description":"The server will automatically kick players who are sending more than the set amount of network packets per minute. 1200 or less = disabled",
+        "Keywords":"maximum,packets,minute,kick,MaxPacketAmount",
+        "FieldName":"MaxPacketAmount",
+        "InputType":"number",
+        "MinValue":"0",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/serversettings/@MaxPacketAmount",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"4000",
+        "Placeholder":"4000",
+        "Suffix":"packets/minute",
         "EnumValues":{}
     },
     {
