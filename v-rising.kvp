@@ -26,7 +26,7 @@ App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=1829350
 App.LinuxCommandLineArgs=-a wine "./VRisingServer.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -persistentDataPath ./save-data {{LanMode}}
+App.CommandLineArgs={{$PlatformArgs}} -persistentDataPath "{{$FullBaseDir}}save-data" {{LanMode}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1604030","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDLLOVERRIDES":"winhttp=n,b","WINEDEBUG":"-all"}
@@ -62,7 +62,7 @@ App.RapidStartup=False
 App.SupportsUniversalSleep=True
 App.WakeupMode=Any
 App.ApplicationReadyMode=RCONConnected
-App.MonitorChildProcessName=^.*VRisingServer.exe.*$
+App.MonitorChildProcessName=^Z:\\.*VRisingServer\.exe -persistentDataPath {{$FullBaseDir}}save-data.*$
 App.RCONHeartbeatMinutes=4
 App.RCONHeartbeatCommand=ping
 Console.FilterMatchRegex=
