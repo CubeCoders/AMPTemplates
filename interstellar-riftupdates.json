@@ -1,0 +1,34 @@
+[
+    {
+        "UpdateStageName":"SteamCMD Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"363360",
+        "UpdateSourceArgs":"363360",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "ForceDownloadPlatform":"Windows"
+    },
+    {
+        "UpdateStageName":"Initialise Wine",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win32 WINEDEBUG=-all /usr/bin/wineboot --init --update'"
+    },
+    {
+        "UpdateStageName":"Winescript Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/interstellar-riftwinescript.sh",
+        "UpdateSourceArgs":"winescript.sh",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Install Windows Components",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"./winescript.sh"
+    }
+]
