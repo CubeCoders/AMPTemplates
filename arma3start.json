@@ -4,21 +4,21 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -f {{$FullBaseDir}}battleye/beserver_x64_active_*.cfg'"
+        "UpdateSourceArgs":"-c 'rm -f {{$FullBaseDir}}battleye/beserver_x64_active_*.cfg >/dev/null 2>&1'"
     },
     {
         "UpdateStageName":"Delete Active File",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}battleye\\beserver_x64_active_*.cfg"
+        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}battleye\\beserver_x64_active_*.cfg > NUL 2>&1"
     },
     {
         "UpdateStageName":"Manage Bikeys",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd arma3/233780; find keys/ -name \"*.bikey\" ! -name \"a3.bikey\" -exec rm {} +; IFS=\";\" read -ra subdirs_array <<< \"{{mod}};{{clientmod}}\" && for subdir in \"${subdirs_array[@]}\"; do find \"$subdir/keys\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t keys/ {} +; find \"$subdir/key\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t keys/ {} +; done'",
+        "UpdateSourceArgs":"-c 'cd arma3/233780; find keys/ -name \"*.bikey\" ! -name \"a3.bikey\" -exec rm {} +; IFS=\";\" read -ra subdirs_array <<< \"{{mod}};{{clientmod}}\" && for subdir in \"${subdirs_array[@]}\"; do find \"$subdir/keys\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t keys/ {} + >/dev/null 2>&1; find \"$subdir/key\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t keys/ {} + >/dev/null 2>&1; done'",
         "UpdateSourceConditionSetting":"ManageBikeys",
         "UpdateSourceConditionValue":"true"
     },
