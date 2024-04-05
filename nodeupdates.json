@@ -70,7 +70,7 @@
         "UpdateSourceArch":"aarch64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && mv -v node-{{NodeVersion}}-linux-arm64 node >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && rm node-{{NodeVersion}}-linux-arm64.tar.gz'"
+        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz && mv -v node-{{NodeVersion}}-linux-arm64 node && rm node-{{NodeVersion}}-linux-arm64.tar.gz'"
     },
     {
         "UpdateStageName":"Node.js Download",
@@ -94,7 +94,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}app/{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" i {{NpmPackages}} >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1'",
+        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}app/{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" i {{NpmPackages}}'",
         "UpdateSourceConditionSetting":"NpmInstallType",
         "UpdateSourceConditionValue":"specify"
     },
@@ -103,7 +103,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}\\\" && \"{{$FullBaseDir}}node\\node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" i {{NpmPackages}} >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1",
+        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}\\\" && \"{{$FullBaseDir}}node\\node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" i {{NpmPackages}}",
         "UpdateSourceConditionSetting":"NpmInstallType",
         "UpdateSourceConditionValue":"specify"
     },
@@ -112,7 +112,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}app/{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" i >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1'",
+        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}app/{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" i'",
         "UpdateSourceConditionSetting":"NpmInstallType",
         "UpdateSourceConditionValue":"npmi"
     },
@@ -121,7 +121,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}\\\" && \"{{$FullBaseDir}}node\\node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" i >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1",
+        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}\\\" && \"{{$FullBaseDir}}node\\node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" i",
         "UpdateSourceConditionSetting":"NpmInstallType",
         "UpdateSourceConditionValue":"npmi"
     },
@@ -130,7 +130,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}app/{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" ci >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1'",
+        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}app/{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" ci'",
         "UpdateSourceConditionSetting":"NpmInstallType",
         "UpdateSourceConditionValue":"npmci"
     },
@@ -139,7 +139,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}\\\" && \"{{$FullBaseDir}}node\\node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" ci >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1",
+        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}\\\" && \"{{$FullBaseDir}}node\\node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" ci",
         "UpdateSourceConditionSetting":"NpmInstallType",
         "UpdateSourceConditionValue":"npmci"
     }
