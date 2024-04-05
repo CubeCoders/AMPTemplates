@@ -72,23 +72,31 @@
         "Description":"Sets the region for the server",
         "Keywords":"server,region",
         "FieldName":"Region",
-        "InputType":"text",
+        "InputType":"enum",
         "ParamFieldName":"Region",
         "DefaultValue":"",
-        "EnumValues":{}
+        "EnumValues":{
+            "":"None (default)",
+            "NA":"North America",
+            "SA":"South America",
+            "China":"China",
+            "Asia":"Asia",
+            "EU":"European Union",
+            "JP":"Japan"
+        }
     },
     {
         "DisplayName":"Make Community Server",
         "Category":"Palworld Server Settings",
         "Description":"If enabled, the server will appear in the list of community servers in-game",
-        "Keywords":"community,server,public,list",
+        "Keywords":"community,server,public,list,epicapp,palserver,publiclobby",
         "FieldName":"CommunityServer",
         "InputType":"checkbox",
         "ParamFieldName":"CommunityServer",
-        "DefaultValue":"EpicApp=PalServer ",
+        "DefaultValue":"-publiclobby ",
         "EnumValues":{
             "False":"",
-            "True":"EpicApp=PalServer "
+            "True":"-publiclobby "
         }
     },
     {
@@ -120,7 +128,7 @@
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "MinValue":"1",
-        "MaxValue":"32",
+        "MaxValue":"64",
         "ParamFieldName":"ServerPlayerMaxNum",
         "DefaultValue":"32",
         "Placeholder":"32",
@@ -145,7 +153,7 @@
         "DisplayName":"Enable Multi-Threaded Performance Improvements",
         "Category":"Palworld Server Settings",
         "Description":"If enabled, the server's performance will be enhanced in multi-threaded CPU environments",
-        "Keywords":"multi,thread,threaded,performance,improvements",
+        "Keywords":"multi,thread,threaded,performance,improvements,useperfthreads,NoAsyncLoadingThread,UseMultithreadForDS",
         "FieldName":"MultiThread",
         "InputType":"checkbox",
         "ParamFieldName":"MultiThread",
@@ -182,12 +190,25 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Custom Command Line Arguments",
+        "Category":"Palworld Server Settings",
+        "Description":"Sets custom command line arguments. Don't use arguments already in AMP's settings!",
+        "Keywords":"custom,command,line,arguments",
+        "FieldName":"CustomArgs",
+        "InputType":"text",
+        "ParamFieldName":"CustomArgs",
+        "DefaultValue":"",
+        "Placeholder":"-nosteam",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Difficulty Level",
         "Category":"Palworld Gameplay Settings",
         "Description":"Sets the game difficulty level",
         "Keywords":"difficulty,game",
         "FieldName":"Difficulty",
         "InputType":"text",
+        "Hidden":true,
         "ParamFieldName":"Difficulty",
         "DefaultValue":"None",
         "EnumValues":{}
