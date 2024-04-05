@@ -18,7 +18,7 @@ export WINEARCH=win32
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
 
-wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+wget -q https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
 
 PACKAGES="corefonts vcrun2012 dotnet472"
