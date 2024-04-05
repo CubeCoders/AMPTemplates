@@ -14,7 +14,7 @@ rm display.log
 
 export WINEPREFIX="$SCRIPTDIR/interstellar-rift/.wine"
 export WINEDLLOVERRIDES="mscoree,mshtml="
-export WINEARCH=win32
+export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
 
