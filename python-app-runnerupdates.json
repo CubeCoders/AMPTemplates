@@ -71,21 +71,21 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U setuptools wheel discord.py python-dotenv > AMPSetupLog.txt 2>&1\""
+        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U setuptools wheel discord.py python-dotenv\""
     },
     {
         "UpdateStageName":"Install Basic Python Packages",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U setuptools wheel discord.py python-dotenv > AMPSetupLog.txt 2>&1"
+        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U setuptools wheel discord.py python-dotenv"
     },
     {
         "UpdateStageName":"App Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}} >> AMPSetupLog.txt 2>&1\"",
+        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}}\"",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"PyPIPackage"
     },
@@ -94,7 +94,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}} >> AMPSetupLog.txt 2>&1",
+        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}}",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"PyPIPackage"
     },
@@ -103,7 +103,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd '{{$FullBaseDir}}' && source ./venv/bin/activate && python3 -m pip install -U -r ./{{AppDir}}/requirements.txt >> AMPSetupLog.txt 2>&1\"",
+        "UpdateSourceArgs":"-c \"cd '{{$FullBaseDir}}' && source ./venv/bin/activate && python3 -m pip install -U -r ./{{AppDir}}/requirements.txt\"",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"file"
     },
@@ -112,7 +112,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}\" && venv\\Scripts\\activate.bat && python.exe -m pip install -U -r .\\{{AppDir}}\\requirements.txt >> AMPSetupLog.txt 2>&1",
+        "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}\" && venv\\Scripts\\activate.bat && python.exe -m pip install -U -r .\\{{AppDir}}\\requirements.txt",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"file"
     },
@@ -121,7 +121,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U {{PythonPackages}} >> AMPSetupLog.txt 2>&1\"",
+        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U {{PythonPackages}}\"",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"specifier"
     },
@@ -130,7 +130,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U {{PythonPackages}} >> AMPSetupLog.txt 2>&1",
+        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U {{PythonPackages}}",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"specifier"
     },
