@@ -20,11 +20,12 @@ export DISPLAY=:$DPY_NUM
 wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
 
-PACKAGES="corefonts vcrun2012 dotnet48 sound=disabled"
+PACKAGES="corefonts vcrun2012 sound=disabled"
 echo "" > winescript_log.txt 2>&1
 for PACKAGE in $PACKAGES; do
   ./winetricks -q $PACKAGE >> winescript_log.txt 2>&1
 done
+./winetricks -q --force dotnet48 >> winescript_log.txt 2>&1
 rm -rf ~/.cache/winetricks ~/.cache/fontconfig
 
 exec 6>&-
