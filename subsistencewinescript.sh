@@ -18,7 +18,7 @@ export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
 
-wget -q https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
 
 PACKAGES="win7 vcrun6 vcrun2019 corefonts d3dcompiler_43 d3dx9 dotnet40"
