@@ -13,7 +13,6 @@ read -r DPY_NUM < display.log
 rm display.log
 
 export WINEPREFIX="$SCRIPTDIR/interstellar-rift/.wine"
-export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
