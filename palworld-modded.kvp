@@ -1,4 +1,4 @@
-Meta.DisplayName=Palworld [Modded]
+Meta.DisplayName=Palworld (Modded)
 Meta.Description=Palworld Dedicated Server with Unreal Engine 4/5 Scripting System modding support
 Meta.OS=Windows, Linux
 Meta.AarchSupport=Unknown
@@ -22,7 +22,7 @@ Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
 Meta.AppConfigId=aa4a646a-f7bd-49ce-9042-ddb0573f0087
-Meta.ConfigVersion=1.4
+Meta.ConfigVersion=1.5
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
 Meta.ImportableExtensions=[]
@@ -35,7 +35,7 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=2394010
 App.LinuxCommandLineArgs="./Pal/Binaries/Win64/PalServer-Win64-Shipping-Cmd.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} Pal {{CommunityServer}}-Port={{$GamePort}} -QueryPort={{$QueryPort}} -RCONPort={{$RCONPort}} -MultiHome={{$ApplicationIPBinding}} -publicport={{$GamePort}} -publicip={{$ExternalIP}} -players={{$MaxUsers}} {{MultiThread}}{{$FormattedArgs}} {{CustomArgs}}
+App.CommandLineArgs={{$PlatformArgs}} Pal {{CommunityServer}}-Port={{$GamePort}} -QueryPort={{$QueryPort}} -RCONPort={{$RCONPort}} -MultiHome={{$ApplicationIPBinding}} -publicport={{$GamePort}} -publicip={{$ExternalIP}} -players={{$MaxUsers}} {{MultiThread}}{{$FormattedArgs}} {{CustomArgs}} -stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1623730","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"dwmapi.dll=n,b"}
@@ -68,7 +68,7 @@ App.AdminLoginTransform=None
 App.LoginTransformPrefix=
 App.RCONConnectDelaySeconds=10
 App.RCONConnectRetrySeconds=10
-App.RCONHeartbeatMinutes=0.2
+App.RCONHeartbeatMinutes=0
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat={0}
 App.UpdateSources=@IncludeJson[palworld-moddedupdates.json]
@@ -80,7 +80,7 @@ App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
 App.RapidStartup=False
 App.DumpFullChildProcessTree=False
-App.MonitorChildProcessName=^.*PalServer-Win64-Shipping-Cmd.exe.*-Port={{$GamePort}}.*$
+App.MonitorChildProcessName=^Z:\\.*PalServer-Win64-Shipping-Cmd.exe.*-Port={{$GamePort}}.*$
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RCONConnected
@@ -88,8 +88,8 @@ Console.FilterMatchRegex=(Setting breakpad minidump AppID = 1623730|\[S_API FAIL
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
 Console.AppReadyRegex=^$
-Console.UserJoinRegex=^$
-Console.UserLeaveRegex=^$
+Console.UserJoinRegex=^(?:\[[\d-]+ [\d:]+\] \[LOG\] )?(?<username>.+?) joined the server\. \(User id: (?<userid>.+?)\)$
+Console.UserLeaveRegex=^(?:\[[\d-]+ [\d:]+\] \[LOG\] )?(?<username>.+?) left the server\. \(User id: (?<userid>.+?)\)$
 Console.UserChatRegex=^$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
 Console.MetricsRegex=
