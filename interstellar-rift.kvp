@@ -1,6 +1,6 @@
 Meta.DisplayName=Interstellar Rift [WIP]
 Meta.Description=Interstellar Rift Dedicated Server
-Meta.OS=
+Meta.OS=Linux
 Meta.AarchSupport=Unknown
 Meta.Arch=x86_64
 Meta.Author=Greelan
@@ -15,10 +15,10 @@ Meta.SpecificDockerImage=cubecoders/ampbase:wine8
 Meta.DockerRequired=False
 Meta.DockerBaseReadOnly=False
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
-Meta.ContainerPolicyReason=The server requires Wine, Xvfb and cabextract to install and run on Linux. Using a container avoids the need to install these dependencies on the host.
+Meta.ContainerPolicyReason=The server requires Wine 8 Stable, Xvfb and cabextract to install and run on Linux. Using a container avoids the need to install these dependencies on the host.
 Meta.ExtraSetupStepsURI=
 Meta.Prerequsites=[]
-Meta.ExtraContainerPackages=[]
+Meta.ExtraContainerPackages=["winehq-stable=8.0.2~bookworm-1","wine-stable=8.0.2~bookworm-1","wine-stable-amd64=8.0.2~bookworm-1","wine-stable-i386=8.0.2~bookworm-1"]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
 Meta.AppConfigId=a17ac474-f303-467f-b5b6-73a9fa54229e
@@ -38,7 +38,7 @@ App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} -server -inline -linux -nossl -noConsoleAutoComplete
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"SteamAppId":"363360","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
+App.EnvironmentVariables={"SteamAppId":"363360","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDLLOVERRIDES":"mscoree,mshtml=","WINEDEBUG":"-all"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
