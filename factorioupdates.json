@@ -28,9 +28,7 @@
         "UpdateSourceData":"https://factorio.com/get-download/stable/headless/linux64",
         "UpdateSourceArgs":"factorio.tar.xz",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
         "UpdateSourceConditionSetting":"InstallBeta",
         "UpdateSourceConditionValue":"false"
     },
@@ -46,6 +44,13 @@
         "DeleteAfterExtract":true,
         "UpdateSourceConditionSetting":"InstallBeta",
         "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Factorio Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd factorio/server && /usr/bin/tar -xJf factorio.tar.xz >/dev/null 2>&1 && rm -f factorio.tar.xz'"
     },
     {
         "UpdateStageName":"Server-Settings File Copy",
