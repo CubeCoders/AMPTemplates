@@ -12,14 +12,14 @@
     "UpdateSourcePlatform": "Windows",
     "UpdateSource": "Executable",
     "UpdateSourceData": "cmd.exe",
-    "UpdateSourceArgs": "/C move {{$FullBaseDir}}\\Data {{$FullBaseDir}}\\Saves"
+    "UpdateSourceArgs": "/C move {{$FullBaseDir}}\\Data {{$FullBaseDir}}\\Saves > NUL 2>&1"
   },
   {
     "UpdateStageName": "Update Saves Directory - Linux",
     "UpdateSourcePlatform": "Linux",
     "UpdateSource": "Executable",
     "UpdateSourceData": "/bin/bash",
-    "UpdateSourceArgs": "-c \"mv {{$FullBaseDir}}/Data/ {{$FullBaseDir}}/Saves/\""
+    "UpdateSourceArgs": "-c \"mv {{$FullBaseDir}}/Data/ {{$FullBaseDir}}/Saves/ >/dev/null 2>&1\""
   },
   {
     "UpdateStageName": "Fetch ValheimPlus from Github - Windows",
@@ -58,7 +58,7 @@
     "UpdateStageName": "Fetch BepInEx from Thunderstore",
     "UpdateSourcePlatform": "All",
     "UpdateSource": "FetchURL",
-    "UpdateSourceData": "https://valheim.thunderstore.io/package/download/denikson/BepInExPack_Valheim/{{bepinex_version}}/",
+    "UpdateSourceData": "https://thunderstore.io/package/download/denikson/BepInExPack_Valheim/{{bepinex_version}}/",
     "UpdateSourceArgs": "denikson-BepInExPack_Valheim-{{bepinex_version}}.zip",
     "UpdateSourceConditionSetting": "bepinex_install",
     "UpdateSourceConditionValue": "true",
@@ -71,7 +71,7 @@
     "UpdateSourcePlatform": "Windows",
     "UpdateSource": "Executable",
     "UpdateSourceData": "cmd.exe",
-    "UpdateSourceArgs": "/C xcopy /E /Y /I Valheim\\896660\\BepInExPack_Valheim\\* Valheim\\896660\\ && rmdir /Q /S Valheim\\896660\\BepInExPack_Valheim",
+    "UpdateSourceArgs": "/C xcopy /E /Y /I Valheim\\896660\\BepInExPack_Valheim\\* Valheim\\896660\\ > NUL 2>&1 && rmdir /Q /S Valheim\\896660\\BepInExPack_Valheim",
     "UpdateSourceConditionSetting": "bepinex_install",
     "UpdateSourceConditionValue": "true"
   },
@@ -80,7 +80,7 @@
     "UpdateSourcePlatform": "Linux",
     "UpdateSource": "Executable",
     "UpdateSourceData": "/bin/bash",
-    "UpdateSourceArgs": "-c \"cp -rf ./Valheim/896660/BepInExPack_Valheim/* ./Valheim/896660/ && rm -rf ./Valheim/896660/BepInExPack_Valheim/\"",
+    "UpdateSourceArgs": "-c \"cp -rf ./Valheim/896660/BepInExPack_Valheim/* ./Valheim/896660/ >/dev/null 2>&1 && rm -rf ./Valheim/896660/BepInExPack_Valheim/\"",
     "UpdateSourceConditionSetting": "bepinex_install",
     "UpdateSourceConditionValue": "true"
   }
