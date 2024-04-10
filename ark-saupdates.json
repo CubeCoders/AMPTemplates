@@ -8,6 +8,16 @@
         "ForceDownloadPlatform":"Windows"
     },
     {
+        "UpdateStageName":"ServerAPI Config Backup",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}ShooterGame/Binaries/Win64/ArkApi/Plugins/Permissions/config.json.bak",
+        "UpdateSourceArgs":"{{$FullBaseDir}}ShooterGame/Binaries/Win64/ArkApi/Plugins/Permissions/config.json",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"ServerExecutable",
+        "UpdateSourceConditionValue":"AsaApiLoader"
+    },
+    {
         "UpdateStageName":"ServerAPI Launcher Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"GithubRelease",
@@ -16,6 +26,16 @@
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"ServerExecutable",
+        "UpdateSourceConditionValue":"AsaApiLoader"
+    },
+    {
+        "UpdateStageName":"ServerAPI Config Restore",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}ShooterGame/Binaries/Win64/ArkApi/Plugins/Permissions/config.json",
+        "UpdateSourceArgs":"{{$FullBaseDir}}ShooterGame/Binaries/Win64/ArkApi/Plugins/Permissions/config.json.bak",
+        "OverwriteExistingFiles":true,
         "UpdateSourceConditionSetting":"ServerExecutable",
         "UpdateSourceConditionValue":"AsaApiLoader"
     },
