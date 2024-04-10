@@ -63,7 +63,7 @@
     {
         "DisplayName":"Player Limit",
         "Category":"Factorio Server Settings",
-        "Description":"Sets the maximum number of players that may connect to the server at one time. Admins can still join a full server. 0 = unlimited",
+        "Description":"Sets the maximum number of players that may connect to the server at one time. Admins can still join a full server, as can returning players if Ignore Player Limit For Returning Players is enabled. 0 = unlimited",
          "Keywords":"maximum,players,clients,limit,max_players",
         "FieldName":"$MaxUsers",
         "InputType":"number",
@@ -73,6 +73,20 @@
         "Placeholder":"0",
         "Suffix":"players",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Ignore Player Limit For Returning Players",
+        "Category":"Factorio Server Settings",
+        "Description":"If enabled, players that have played on this map already can join even when the Player Limit is reached",
+        "Keywords":"ignore,player,limit,returning,ignore_player_limit_for_returning_players",
+        "FieldName":"ignore_player_limit_for_returning_players",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.ignore_player_limit_for_returning_players",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
         "DisplayName":"Make Server Visible Publicly",
@@ -218,29 +232,19 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Ignore Player Limit for Returning Players",
+        "DisplayName":"Commands Permission Level",
         "Category":"Factorio Server Settings",
-        "Description":"Players that played on this map already can join even when the max player limit was reached",
-        "Keywords":"ignore,player,limit,returning,server",
-        "FieldName":"ignore_player_limit_for_returning_players",
-        "InputType":"checkbox",
-        "ParamFieldName":"$.ignore_player_limit_for_returning_players",
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Allow Commands",
-        "Category":"Factorio Server Settings",
-        "Description":"Permission level for allowing commands. Possible values are true, false, and admins-only",
-        "Keywords":"allow,commands,server",
+        "Description":"Sets the permission level for allowing commands to be run by clients on the server",
+        "Keywords":"allow,commands,permissions,allow_commands",
         "FieldName":"allow_commands",
-        "InputType":"text",
+        "InputType":"enum",
         "ParamFieldName":"$.allow_commands",
         "DefaultValue":"admins-only",
-        "EnumValues":{}
+        "EnumValues":{
+            "admins-only":"Admins only (default)",
+            "true":"Everyone",
+            "false":"No-one"
+        }
     },
     {
         "DisplayName":"Autosave Interval",
@@ -329,7 +333,7 @@
     {
         "DisplayName":"Enable Non-Blocking Saving",
         "Category":"Factorio Server Settings",
-        "Description":"Highly experimental feature. Enable only at your own risk of losing your saves. On Linux systems, the server will fork itself to create an autosave. Autosaving on connected Windows clients will be disabled regardless of Enable Autosave Only On Server",
+        "Description":"Highly experimental feature. Enable only at your own risk of losing saves. On Linux systems, the server will fork itself to create an autosave. Autosaving on connected Windows clients will be disabled regardless of Enable Autosave Only On Server",
         "Keywords":"non-blocking,saving,experimental,non_blocking_saving",
         "FieldName":"non_blocking_saving",
         "InputType":"checkbox",
