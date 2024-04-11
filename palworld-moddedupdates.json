@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd palworld\\2394010\\Pal\\Binaries\\Win64 && del /Q /F Changelog.md xinput1_3.dll dwmapi.dll UE4SS.dll UE4SS-settings.ini Readme.md README.md && rd /S /Q Mods E4SS_Signatures",
+        "UpdateSourceArgs":"/C cd palworld\\2394010\\Pal\\Binaries\\Win64 && del /Q /F Changelog.md xinput1_3.dll dwmapi.dll UE4SS.dll UE4SS-settings.ini Readme.md README.md > NUL 2>&1 && rd /S /Q Mods E4SS_Signatures > NUL 2>&1",
         "UpdateSourceConditionSetting":"InstallUE4SS",
         "UpdateSourceConditionValue":"false"
     },
@@ -13,7 +13,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd ./palworld/2394010/Pal/Binaries/Win64 && rm -rf Changelog.md xinput1_3.dll dwmapi.dll UE4SS.dll UE4SS-settings.ini Mods Readme.md README.md E4SS_Signatures'",
+        "UpdateSourceArgs":"-c 'cd ./palworld/2394010/Pal/Binaries/Win64 && rm -rf Changelog.md xinput1_3.dll dwmapi.dll UE4SS.dll UE4SS-settings.ini Mods Readme.md README.md E4SS_Signatures >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"InstallUE4SS",
         "UpdateSourceConditionValue":"false"
     },
@@ -37,7 +37,7 @@
         "UpdateStageName":"Config Template Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/palworldtemplatesettings.ini",
+        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/palworld1-5templatesettings.ini",
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UpdateSourceArgs":"AMP_PalWorldSettings.ini",
         "OverwriteExistingFiles":true
@@ -47,7 +47,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update'"
     },
     {
         "UpdateStageName":"UE4SS Download",
