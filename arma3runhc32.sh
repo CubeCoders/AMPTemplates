@@ -25,7 +25,7 @@ fi
 # Start the headless clients
 baseport=$(($3 + 498))
 parfile="${6:-}"
-export LD_LIBRARY_PATH=$(dirname "$0")/arma3/linux64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$(dirname "$0")/arma3/linux32:$LD_LIBRARY_PATH
 cd ./arma3/233780
 for i in $(seq 1 "$1"); do
   if [[ "$2" == "0.0.0.0" ]]; then
@@ -33,7 +33,7 @@ for i in $(seq 1 "$1"); do
   else
     connect="$2"
   fi
-  ./arma3server_x64 -client -nosound -profiles=A3Master -connect=$connect:$3 -port=$baseport -password="$4" "-mod=$5" "-par=$parfile" >/dev/null 2>&1 &
+  ./arma3server -client -nosound -profiles=A3Master -connect=$connect:$3 -port=$baseport -password="$4" "-mod=$5" "-par=$parfile" >/dev/null 2>&1 &
   clients+=($!)
 done
 
