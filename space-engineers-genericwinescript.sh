@@ -20,15 +20,13 @@ export DISPLAY=:$DPY_NUM
 
 wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
-
 wget -q -O $WINEPREFIX/mono.msi https://dl.winehq.org/wine/wine-mono/9.0.0/wine-mono-9.0.0-x86.msi
-/usr/bin/wine msiexec /i $WINEPREFIX/mono.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log
 
-PACKAGES="win11 vcrun2022 corefonts sound=disabled"
-echo "" > winescript_log.txt 2>&1
-for PACKAGE in $PACKAGES; do
-  ./winetricks -q $PACKAGE >> winescript_log.txt 2>&1
-done
+./winetricks -q win11 > winescript_log.txt 2>&1
+./winetricks -q vcrun2022 >> winescript_log.txt 2>&1
+/usr/bin/wine msiexec /i $WINEPREFIX/mono.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log
+./winetricks -q corefonts >> winescript_log.txt 2>&1
+./winetricks -q sound=disabled >> winescript_log.txt 2>&1
 rm -rf ~/.cache/winetricks ~/.cache/fontconfig
 
 exec 6>&-
