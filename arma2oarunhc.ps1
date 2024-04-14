@@ -2,7 +2,7 @@
 
 # Check if any headless clients are to be run
 # If none, immediately exit
-if ($args[0] -eq "0") { exit }
+if ($args[0] -eq "0") { exit 0 }
 
 # Check if server starts successfully within 3 minutes
 # If not, exit
@@ -14,7 +14,7 @@ for ($i = 1; $i -le 180; $i++) {
   }
   Start-Sleep -Seconds 1
 }
-if (-not $serverStarted) { exit 1 }
+if (-not $serverStarted) { exit 0 }
 
 # Start the headless clients
 $clients = @()
