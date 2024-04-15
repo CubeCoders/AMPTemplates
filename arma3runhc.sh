@@ -19,7 +19,7 @@ for i in $(seq 1 180); do
   sleep 1
 done
 if ! $server_started; then
-  exit 1
+  exit 0
 fi
 
 # Start the headless clients
