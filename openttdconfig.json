@@ -1929,5 +1929,177 @@
             "testing":"Testing (beta and RC)",
             "nightly":"Nightly"
         }
+    },
+    {
+        "DisplayName":"Only applies to new save games",
+        "Category":"OpenTTD Cargodist Settings",
+        "Description":"These settings are only applied upon creating a new save games.",
+        "Keywords":"",
+        "FieldName":"new_save",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },    
+    {
+        "DisplayName":"Recalulation Intervals",
+        "Category":"OpenTTD Cargodist Settings",
+        "Description":"How long between subsequent link graph recalculations.",
+        "Keywords":"cargodist,recalc_interval",
+        "FieldName":"recalc_interval",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"linkgraph.recalc_interval",
+        "IncludeInCommandLine":false,
+        "Suffix":"seconds",
+        "DefaultValue":"8",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Recalulation Time",
+        "Category":"OpenTTD Cargodist Settings",
+        "Description":"How long to take for each recalculation of the link graph component.",
+        "Keywords":"cargodist,recalc_time",
+        "FieldName":"recalc_time",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"linkgraph.recalc_interval",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"32",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },    
+    {
+        "DisplayName":"Distribution mode for passengers",
+        "Category":"OpenTTD Cargodist Settings",
+        "Description":"\"Manual\" means no distribution, \"Asymmetric\" will spread out passengers along your network, while \"Symetric\" will try to distribute them evenly between stations.",
+        "Keywords":"cargodist,distribution_pax",
+        "FieldName":"distribution_pax",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"linkgraph.distribution_pax",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Manual",
+            "1":"Asymmetric",
+            "2":"Symetric"
+        }
+    },
+    {
+        "DisplayName":"Distribution mode for mail",
+        "Category":"OpenTTD Cargodist Settings",
+        "Description":"\"Manual\" means no distribution, \"Asymmetric\" will spread out passengers along your network, while \"Symetric\" will try to distribute them evenly between stations.",
+        "Keywords":"cargodist,distribution_mail",
+        "FieldName":"distribution_mail",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"linkgraph.distribution_mail",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Manual",
+            "1":"Asymmetric",
+            "2":"Symetric"
+        }
+    },
+    {
+        "DisplayName":"Distribution mode for armoured",
+        "Category":"OpenTTD Cargodist Settings",
+        "Description":"\"Manual\" means no distribution, \"Asymmetric\" will spread out passengers along your network, while \"Symetric\" will try to distribute them evenly between stations.",
+        "Keywords":"cargodist,distribution_armoured",
+        "FieldName":"distribution_armoured",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"linkgraph.distribution_armoured",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Manual",
+            "1":"Asymmetric",
+            "2":"Symetric"
+        }
+    },
+    {
+        "DisplayName":"Distribution mode for cargo",
+        "Category":"OpenTTD Cargodist Settings",
+        "Description":"\"Manual\" means no distribution, \"Asymmetric\" will spread out passengers along your network, while \"Symetric\" will try to distribute them evenly between stations.",
+        "Keywords":"cargodist,distribution_default",
+        "FieldName":"distribution_default",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"linkgraph.distribution_default",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"0",
+        "EnumValues":{
+            "0":"Manual",
+            "1":"Asymmetric",
+            "2":"Symetric"
+        }
+    },
+    {
+        "DisplayName":"Distribution accuracy",
+        "Category":"OpenTTD Cargodist Settings",
+        "Description":"Accuracy of distribution.",
+        "Keywords":"cargodist,accuracy",
+        "FieldName":"accuracy",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"linkgraph.accuracy",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"16",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Effect of distance on demand",
+        "Category":"OpenTTD Cargodist Settings",
+        "Description":"If you set this to a value higher than 0, distance between stations will have an effect on how much cargo is sent. A higher setting means less is sent far away.",
+        "Keywords":"cargodist,demand_distance",
+        "FieldName":"demand_distance",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"linkgraph.demand_distance",
+        "IncludeInCommandLine":false,
+        "MinValue":"0",
+        "MaxValue":"255",
+        "DefaultValue":"100",
+        "Placeholder":"100",
+        "Suffix":"%",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Amount of returning cargo for symmetric mode",
+        "Category":"OpenTTD Cargodist Settings",
+        "Description":"Setting this to less than 100% makes the symmetric distribution behave more like the asymmetric one. Less cargo will be forcibly sent back if a certain amount is sent to a station. If you set it to 0% the symmetric distribution behaves just like the asymmetric one.",
+        "Keywords":"cargodist,demand_size",
+        "FieldName":"demand_size",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"linkgraph.demand_size",
+        "IncludeInCommandLine":false,
+        "MinValue":"0",
+        "MaxValue":"100",
+        "DefaultValue":"100",
+        "Placeholder":"100",
+        "Suffix":"%",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Saturation of short paths before using high-capacity paths",
+        "Category":"OpenTTD Cargodist Settings",
+        "Description":"Frequently there are multiple paths between two given stations. Cargodist will saturate the shortest path first, then use the second shortest path until that is saturated and so on. Saturation is determined by an estimation of capacity and planned usage.",
+        "Keywords":"cargodist,short_path_saturation",
+        "FieldName":"short_path_saturation",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"linkgraph.short_path_saturation",
+        "IncludeInCommandLine":false,
+        "MinValue":"0",
+        "MaxValue":"250",
+        "DefaultValue":"80",
+        "Placeholder":"80",
+        "Suffix":"%",
+        "EnumValues":{}
     }
 ]
