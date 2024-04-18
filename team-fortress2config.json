@@ -59,6 +59,28 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Account ID",
+        "Category":"TF2 Server Settings",
+        "Description":"Sets the server account ID",
+        "Keywords":"server,account,id,tf_server_identity_account_id",
+        "FieldName":"tf_server_identity_account_id",
+        "InputType":"text",
+        "ParamFieldName":"tf_server_identity_account_id",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Account Token",
+        "Category":"TF2 Server Settings",
+        "Description":"Sets the server account token",
+        "Keywords":"server,account,token,tf_server_identity_token",
+        "FieldName":"tf_server_identity_token",
+        "InputType":"password",
+        "ParamFieldName":"tf_server_identity_token",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Initial Map",
         "Category":"TF2 Server Settings",
         "Description":"Sets the map to start the server with. If \"Custom\" is selected, Custom Initial Map must also be specified",
@@ -280,6 +302,20 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Map Round Limit",
+        "Category":"TF2 Server Settings",
+        "Description":"Sets the round limit per map. 0 = disabled",
+        "Keywords":"round,limit,rotation,mp_maxrounds",
+        "FieldName":"mp_maxrounds",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_maxrounds",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"rounds",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Region",
         "Category":"TF2 Server Settings",
         "Description":"Sets the server region shown in the server browser",
@@ -309,8 +345,23 @@
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "MinValue":"1",
-        "MaxValue":"32",
+        "MaxValue":"100",
         "ParamFieldName":"maxplayers",
+        "DefaultValue":"8",
+        "Placeholder":"8",
+        "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Visible Player Limit",
+        "Category":"TF2 Server Settings",
+        "Description":"Sets the maximum players reported to prospective clients, regardless of the Player Limit",
+        "Keywords":"visible,max,players,sv_visiblemaxplayers",
+        "FieldName":"sv_visiblemaxplayers",
+        "InputType":"number",
+        "MinValue":"1",
+        "MaxValue":"100",
+        "ParamFieldName":"sv_visiblemaxplayers",
         "DefaultValue":"8",
         "Placeholder":"8",
         "Suffix":"players",
@@ -339,10 +390,12 @@
         "InputType":"enum",
         "ParamFieldName":"sv_pure",
         "IncludeInCommandLine":true,
-        "DefaultValue":"1",
+        "DefaultValue":"-1",
         "EnumValues":{
-            "1":"All client files must match server files, except as whitelisted in 'pure_server_whitelist.txt'",
-            "2":"All client files must match server files"
+           "-1":"Do not restrict client files",
+            "0":"Apply rules in 'pure_server_minimal.txt' only",
+            "1":"Apply rules in 'pure_server_full.txt' and then 'pure_server_whitelist.txt'",
+            "2":"Apply rules in 'pure_server_full.txt'"
         }
     },
     {
@@ -485,7 +538,7 @@
     {
         "DisplayName":"Decal Frequency",
         "Category":"TF2 Server Settings",
-        "Description":"",
+        "Description":"Sets the time between decal sprays",
         "Keywords":"decalfrequency",
         "FieldName":"decalfrequency",
         "InputType":"number",
@@ -493,6 +546,7 @@
         "ParamFieldName":"decalfrequency",
         "DefaultValue":"10",
         "Placeholder":"10",
+        "Suffix":"seconds",
         "EnumValues":{}
     },
     {
@@ -509,6 +563,20 @@
             "-pingboost 1 ":"1",
             "-pingboost 2 ":"2",
             "-pingboost 3 ":"3"
+        }
+    },
+    {
+        "DisplayName":"Enable CPU Stats Collection",
+        "Category":"TF2 Server Settings",
+        "Description":"If set, CPU stats will be collected",
+        "Keywords":"cpu,stats,sv_stats",
+        "FieldName":"sv_stats",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_stats",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
         }
     },
     {
