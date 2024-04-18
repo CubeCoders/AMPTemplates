@@ -288,34 +288,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Map Game Time Limit",
-        "Category":"TF2 Server Settings",
-        "Description":"Sets the game time per map. 0 = disabled",
-        "Keywords":"time,limit,rotation,mp_timelimit",
-        "FieldName":"mp_timelimit",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"mp_timelimit",
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "Suffix":"minutes",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Map Round Limit",
-        "Category":"TF2 Server Settings",
-        "Description":"Sets the round limit per map. 0 = disabled",
-        "Keywords":"round,limit,rotation,mp_maxrounds",
-        "FieldName":"mp_maxrounds",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"mp_maxrounds",
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "Suffix":"rounds",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Server Region",
         "Category":"TF2 Server Settings",
         "Description":"Sets the server region shown in the server browser",
@@ -396,6 +368,20 @@
             "0":"Apply rules in 'pure_server_minimal.txt' only",
             "1":"Apply rules in 'pure_server_full.txt' and then 'pure_server_whitelist.txt'",
             "2":"Apply rules in 'pure_server_full.txt'"
+        }
+    },
+    {
+        "DisplayName":"Kick Clients On Pure Server",
+        "Category":"TF2 Server Settings",
+        "Description":"If enabled, the server will kick clients with mismatching files. Otherwise, it will issue a warning to the clients",
+        "Keywords":"pure,server,cheat,hack,integrity,sv_pure_kick_clients",
+        "FieldName":"sv_pure_kick_clients",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_pure_kick_clients",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
         }
     },
     {
@@ -695,6 +681,34 @@
         }
     },
     {
+        "DisplayName":"Allow Players To Pause Server",
+        "Category":"TF2 Gameplay Settings",
+        "Description":"If set, players will be able to pause the server. Not recommended",
+        "Keywords":"pause,pausable,sv_pausable",
+        "FieldName":"sv_pausable",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_pausable",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Wait Command",
+        "Category":"TF2 Gameplay Settings",
+        "Description":"If enabled, the wait command will be allowed on clients connected to the server. Recommended to keep disabled to prevent server crash exploits",
+        "Keywords":"wait,command,sv_allow_wait_command",
+        "FieldName":"sv_allow_wait_command",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_allow_wait_command",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Allow All Talk",
         "Category":"TF2 Gameplay Settings",
         "Description":"If enabled, players can communicate with all other players, with no team restrictions",
@@ -716,6 +730,132 @@
         "FieldName":"mp_fadetoblack",
         "InputType":"checkbox",
         "ParamFieldName":"mp_fadetoblack",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Automatic Team Balancing",
+        "Category":"TF2 Gameplay Settings",
+        "Description":"Sets whether to automatically balance teams based on the Teams Unbalance Limit",
+        "Keywords":"team,automatic,balance,balancing,mp_autoteambalance",
+        "FieldName":"mp_autoteambalance",
+        "InputType":"enum",
+        "ParamFieldName":"mp_autoteambalance",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "0":"Off",
+            "1":"Forcibly switch (default)",
+            "2":"Ask for volunteers"
+        }
+    },
+    {
+        "DisplayName":"Teams Unbalance Limit",
+        "Category":"TF2 Gameplay Settings",
+        "Description":"Teams will be considered unbalanced for the purpose of Automatic Team Balancing when one team has this many more players than the other team. 0 = check disabled",
+        "Keywords":"team,automatic,balance,balancing,limit,mp_teams_unbalance_limit",
+        "FieldName":"mp_teams_unbalance_limit",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_teams_unbalance_limit",
+        "DefaultValue":"1",
+        "Placeholder":"1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Stalemate Mode",
+        "Category":"TF2 Gameplay Settings",
+        "Description":"If set, the stalemate mode will be enabled",
+        "Keywords":"stalemate,mode,mp_stalemate_enable",
+        "FieldName":"mp_stalemate_enable",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_stalemate_enable",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Stalemate Mode Time Limit",
+        "Category":"TF2 Gameplay Settings",
+        "Description":"Sets the time limit of the stalemate round",
+        "Keywords":"stalemate,round,time,limit,mp_stalemate_timelimit",
+        "FieldName":"mp_stalemate_timelimit",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_stalemate_timelimit",
+        "DefaultValue":"240",
+        "Placeholder":"240",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Map Rotation Time Limit",
+        "Category":"TF2 Server Settings",
+        "Description":"Sets the game time per map. 0 = disabled",
+        "Keywords":"time,limit,rotation,mp_timelimit",
+        "FieldName":"mp_timelimit",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_timelimit",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"minutes",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Map Rotation Round Limit",
+        "Category":"TF2 Server Settings",
+        "Description":"Sets the maximum number of rounds to play before the map rotates. 0 = disabled",
+        "Keywords":"round,limit,rotation,mp_maxrounds",
+        "FieldName":"mp_maxrounds",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_maxrounds",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"rounds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Map Rotation Win Limit",
+        "Category":"TF2 Gameplay Settings",
+        "Description":"Sets the maximum score one team can reach before the map rotates. 0 = disabled",
+        "Keywords":"win,limit,rotation,mp_winlimit",
+        "FieldName":"mp_winlimit",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_winlimit",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Disable Damage Spread",
+        "Category":"TF2 Gameplay Settings",
+        "Description":"If set, the random damage spread applied to all player damage will be disabled",
+        "Keywords":"disable,damage,spread,tf_damage_disablespread",
+        "FieldName":"tf_damage_disablespread",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"tf_damage_disablespread",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Restrict Spectator Mode",
+        "Category":"TF2 Gameplay Settings",
+        "Description":"If enabled, the spectator mode for dead players will be restricted",
+        "Keywords":"spectator,camera,first,person,mp_forcecamera",
+        "FieldName":"mp_forcecamera",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_forcecamera",
         "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
