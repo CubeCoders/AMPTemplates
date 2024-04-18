@@ -63,6 +63,7 @@ while true; do
       kill "$client" >/dev/null 2>&1
     done
     wait
+    break
   fi
   sleep 1
 done
