@@ -37,7 +37,7 @@ rm display.log
 
 baseport=$(($3 + 498))
 parfile="${6:-}"
-export WINEPREFIX="$SCRIPT_NAME/arma2oa/.wine"
+export WINEPREFIX="$SCRIPTDIR/arma2oa/.wine"
 export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 #export WINEDEBUG=fixme-all
