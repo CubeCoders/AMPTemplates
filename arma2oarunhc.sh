@@ -56,13 +56,13 @@ done
 
 # Monitor server process and terminate headless clients
 # when server terminates or SIGTERM/SIGINT received
-trap 'for client in "${clients[@]}"; do kill "$client" >/dev/null 2>&1; done; wait' SIGTERM SIGINT
+trap 'for client in "${clients[@]}"; do kill "$client" >/dev/null 2>&1; done; wait "${clients[@]}"; exec 6>&-; kill $XVFB_PID' SIGTERM SIGINT
 while true; do
   if ! $netcommand -uln | grep -q ":$3 "; then
     for client in "${clients[@]}"; do
       kill "$client" >/dev/null 2>&1
     done
-    wait
+    wait "${clients[@]}"
     exec 6>&-
     kill $XVFB_PID
     exit 0
