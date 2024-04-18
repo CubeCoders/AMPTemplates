@@ -63,12 +63,10 @@ while true; do
       kill "$client" >/dev/null 2>&1
     done
     wait
-    break
+    exec 6>&-
+    kill $XVFB_PID
+    exit 0
   fi
   sleep 1
 done
 
-exec 6>&-
-kill $XVFB_PID
-
-exit 0
