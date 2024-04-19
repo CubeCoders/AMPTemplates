@@ -12,7 +12,7 @@ done
 read -r DPY_NUM < display.log
 rm display.log
 
-wget -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
 
 export WINEPREFIX="$SCRIPTDIR/space-engineers-generic/.wine"

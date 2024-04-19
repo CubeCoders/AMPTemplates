@@ -9,7 +9,7 @@ Meta.EndpointURIFormat=steam://connect/{ip}:{GenericModule.App.Ports.$MasterServ
 Meta.ConfigManifest=call-of-dutymw3config.json
 Meta.MetaConfigManifest=call-of-dutymw3metaconfig.json
 Meta.ConfigRoot=call-of-dutymw3.kvp
-Meta.MinAMPVersion=2.4.0.8
+Meta.MinAMPVersion=2.5.0.4
 Meta.SpecificDockerImage=cubecoders/ampbase:wine
 Meta.DockerRequired=False
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
@@ -56,12 +56,12 @@ App.RCONConnectRetrySeconds=5
 App.RCONHeartbeatMinutes=0
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat=login {0}
-App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"42750","UpdateSourceArgs":"42690","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Initialise Wine","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win32 /usr/bin/wineboot --init --update'"}]
+App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"42750","UpdateSourceArgs":"42690","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Initialise Wine","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win32 WINEDEBUG=-all /usr/bin/wineboot --init --update'"}]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=False
 App.SteamForceLoginPrompt=False
 App.RapidStartup=False
-App.MonitorChildProcessName=iw5mp_server.exe
+App.MonitorChildProcessName=^.*iw5mp_server\.exe.*\+set net_port {{$OpenGamePort}}.*$
 App.SupportsUniversalSleep=True
 App.WakeupMode=Any
 App.ApplicationReadyMode=Immediate
