@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd python-app-runner && DownloadSource=\"{{DownloadSource}}\"; DownloadBranch=\"{{DownloadBranch}}\"; { [[ -n \"{{DownloadUsername}}\" ]] && download_url=\"${DownloadSource/https:\/\//https:\/\/{{DownloadUsername}}:{{DownloadPassword}}@}\" || download_url=\"$DownloadSource\"; }; git clone ${DownloadBranch:+-b $DownloadBranch --single-branch} \"$download_url\" . || { git restore . && git pull \"$download_url\"; }'",
+        "UpdateSourceArgs":"-c 'cd python-app-runner && DownloadSource=\"{{DownloadSource}}\"; DownloadBranch=\"{{DownloadBranch}}\"; { [[ -n \"{{DownloadUsername}}\" ]] && download_url=\"${DownloadSource/https:\/\//https:\/\/{{DownloadUsername}}:{{DownloadPassword}}@}\"; echo $download_url || download_url=\"$DownloadSource\"; }; git clone ${DownloadBranch:+-b $DownloadBranch --single-branch} \"$download_url\" . || { git restore . && git pull \"$download_url\"; }'",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"GitRepo"
     },
