@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd python-app-runner && DownloadSource=\"{{DownloadSource}}\"; DownloadBranch=\"{{DownloadBranch}}\"; { [[ -n \"{{DownloadUsername}}\" ]] && download_url=\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\"; echo $download_url || download_url=\"$DownloadSource\"; }; git clone ${DownloadBranch:+-b $DownloadBranch --single-branch} \"$download_url\" . || { git restore . && git pull \"$download_url\"; }'",
+        "UpdateSourceArgs":"-c 'cd python-app-runner && DownloadSource=\"{{DownloadSource}}\"; DownloadBranch=\"{{DownloadBranch}}\"; { [[ -n \"{{DownloadUsername}}\" ]] && download_url=\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\" || download_url=\"$DownloadSource\"; }; git clone ${DownloadBranch:+-b $DownloadBranch --single-branch} \"$download_url\" . || { git restore . && git pull \"$download_url\"; }'",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"GitRepo"
     },
@@ -13,7 +13,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd python-app-runner && (set \"DownloadSource={{DownloadSource}}\" && set \"DownloadBranch={{DownloadBranch}}\" && set \"DownloadUsername={{DownloadUsername}}\" && set \"DownloadPassword={{DownloadPassword}}\" && if not \"%DownloadUsername%\"==\"\" (set \"download_url=%DownloadSource:https://%=https://%DownloadUsername%:%DownloadPassword%@%\") else (set \"download_url=%DownloadSource%\") && if not \"%DownloadBranch%\"==\"\" (git clone -b %DownloadBranch% --single-branch \"%download_url%\" .) else (git clone \"%download_url%\" .) && if not errorlevel 1 () else (git restore . && git pull \"%download_url%\"))",
+        "UpdateSourceArgs":"/C cd python-app-runner && set \"DownloadSource={{DownloadSource}}\" & set \"DownloadBranch={{DownloadBranch}}\" & set \"DownloadUsername={{DownloadUsername}}\" & set \"DownloadPassword={{DownloadPassword}}\" & if not \"%DownloadUsername%\"==\"\" (set \"download_url=%DownloadSource:https://%=https://%DownloadUsername%:%DownloadPassword%@%\") else (set \"download_url=%DownloadSource%\") & if not \"%DownloadBranch%\"==\"\" (git clone -b %DownloadBranch% --single-branch \"%download_url%\" .) else (git clone \"%download_url%\" .) & if not errorlevel 1 () else (git restore . && git pull \"%download_url%\")",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"GitRepo"
     },
