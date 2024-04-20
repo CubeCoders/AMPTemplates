@@ -13,7 +13,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"cd python-app-runner; $DownloadSource = '{{DownloadSource}}'; $DownloadBranch = '{{DownloadBranch}}'; if ($null -ne '{{DownloadUsername}}') { $download_url = $DownloadSource -replace 'https://', 'https://{{DownloadUsername}}:{{DownloadPassword}}@' } else { $download_url = '$DownloadSource' }; if ($DownloadBranch) { git clone -b $DownloadBranch --single-branch '$download_url' . } else { git clone '$download_url' . }; if ($?) { } else { git restore .; git pull '$download_url' }\"",
+        "UpdateSourceArgs":"/C cd python-app-runner && (set \"DownloadSource={{DownloadSource}}\" && set \"DownloadBranch={{DownloadBranch}}\" && set \"DownloadUsername={{DownloadUsername}}\" && set \"DownloadPassword={{DownloadPassword}}\" && if not \"%DownloadUsername%\"==\"\" (set \"download_url=%DownloadSource:https://%=https://%DownloadUsername%:%DownloadPassword%@%\") else (set \"download_url=%DownloadSource%\") && if not \"%DownloadBranch%\"==\"\" (git clone -b %DownloadBranch% --single-branch \"%download_url%\" .) else (git clone \"%download_url%\" .) && if not errorlevel 1 () else (git restore . && git pull \"%download_url%\"))",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"GitRepo"
     },
