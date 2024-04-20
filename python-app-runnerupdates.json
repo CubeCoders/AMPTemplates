@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd python-app-runner && DownloadSource=\"{{DownloadSource}}\"; DownloadBranch=\"{{DownloadBranch}}\"; { [[ -n \"{{DownloadUsername}}\" ]] && download_url=\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\" || download_url=\"$DownloadSource\"; }; git clone ${DownloadBranch:+-b $DownloadBranch --single-branch} \"$download_url\" . || { git restore . && git pull \"$download_url\"; }'",
+        "UpdateSourceArgs":"-c 'cd python-app-runner && DownloadSource=\"{{DownloadSource}}\"; DownloadBranch=\"{{DownloadBranch}}\"; { [[ -n \"{{DownloadUsername}}\" ]] && DownloadUrl=\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\" || DownloadUrl=\"$DownloadSource\"; }; git clone ${DownloadBranch:+-b $DownloadBranch --single-branch} \"$DownloadUrl\" . || { git restore . && git pull \"$DownloadUrl\"; }'",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"GitRepo"
     },
@@ -12,8 +12,8 @@
         "UpdateStageName":"App Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"cd python-app-runner; $DownloadSource = \\\"{{DownloadSource}}\\\"; $DownloadBranch = \\\"{{DownloadBranch}}\\\"; if ($null -ne \\\"{{DownloadUsername}}\\\") { $download_url = $DownloadSource -replace \\\"https://\\\", \\\"https://{{DownloadUsername}}:{{DownloadPassword}}@\\\" } else { $download_url = \\\"$DownloadSource\\\" }; if ($DownloadBranch) { git clone -b $DownloadBranch --single-branch \\\"$download_url\\\" . } else { git clone \\\"$download_url\\\" . }; if ($?) { } else { git restore .; git pull \\\"$download_url\\\" }\"",
+        "UpdateSourceData":"powershell.exe",
+        "UpdateSourceArgs":"-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"cd python-app-runner; $DownloadSource = \\\"{{DownloadSource}}\\\"; $DownloadBranch = \\\"{{DownloadBranch}}\\\"; if ($null -ne \\\"{{DownloadUsername}}\\\") { $DownloadUrl = $DownloadSource -replace \\\"https://\\\", \\\"https://{{DownloadUsername}}:{{DownloadPassword}}@\\\" } else { $DownloadUrl = \\\"$DownloadSource\\\" }; if ($DownloadBranch) { git clone -b $DownloadBranch --single-branch \\\"$DownloadUrl\\\" . } else { git clone \\\"$DownloadUrl\\\" . }; if ($?) { } else { git restore .; git pull \\\"$DownloadUrl\\\" }\"",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"GitRepo"
     },
