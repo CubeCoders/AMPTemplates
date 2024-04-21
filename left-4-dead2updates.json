@@ -1,0 +1,94 @@
+[
+    {
+        "UpdateStageName":"SteamCMD Server Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"222860",
+        "UpdateSourceArgs":"550"
+    },
+    {
+        "UpdateStageName":"Server.cfg Template File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/team-fortress2server.cfg",
+        "UpdateSourceArgs":"AMP_server.cfg",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Metamod Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://mms.alliedmods.net/mmsdrop/{{ModBranch}}/mmsource-{{ModBranch}}.0-git{{MetamodBuild}}-windows.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}left4dead2",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"InstallMod",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Metamod Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://mms.alliedmods.net/mmsdrop/{{ModBranch}}/mmsource-{{ModBranch}}.0-git{{MetamodBuild}}-linux.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}left4dead2",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"InstallMod",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Sourcemod Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://sm.alliedmods.net/smdrop/{{ModBranch}}/sourcemod-{{ModBranch}}.0-git{{SourcemodBuild}}-windows.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}left4dead2",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"InstallMod",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Sourcemod Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://sm.alliedmods.net/smdrop/{{ModBranch}}/sourcemod-{{ModBranch}}.0-git{{SourcemodBuild}}-linux.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}left4dead2",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"InstallMod",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Activate Metamod and Sourcemod",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"\"Plugin\"\n{\n\t\"file\"\t\"../left4dead2/addons/metamod/bin/server\"\n}",
+        "UpdateSourceArgs":"{{$FullBaseDir}}left4dead2/addons/metamod.vdf",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"InstallMod",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Disable Metamod and Sourcemod",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd l4d2\\222860\\left4dead2\\addons && del /Q /F metamod.vdf > NUL 2>&1",
+        "UpdateSourceConditionSetting":"InstallMod",
+        "UpdateSourceConditionValue":"false"
+    },
+    {
+        "UpdateStageName":"Disable Metamod and Sourcemod",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd l4d2/222860/left4dead2/addons && rm -rf metamod.vdf >/dev/null 2>&1'",
+        "UpdateSourceConditionSetting":"InstallMod",
+        "UpdateSourceConditionValue":"false"
+    }
+]
