@@ -22,6 +22,17 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Search Key",
+        "Category":"L4D2 Server Settings",
+        "Description":"Sets a search key for finding the server in the lobby",
+        "Keywords":"search,key,lobby,sv_search_key",
+        "FieldName":"sv_search_key",
+        "InputType":"text",
+        "ParamFieldName":"sv_search_key",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Tags",
         "Category":"L4D2 Server Settings",
         "Description":"Comma-separated list of server tags that give additional information about the server in the server browser",
@@ -32,6 +43,31 @@
         "DefaultValue":"",
         "Placeholder":"increased_maxplayers",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Steam Group",
+        "Category":"L4D2 Server Settings",
+        "Description":"Sets the ID of the steam group that the server belongs to. You can find your group's ID on the admin profile page in the steam community",
+        "Keywords":"steam,group,id,sv_steamgroup",
+        "FieldName":"sv_steamgroup",
+        "InputType":"text",
+        "ParamFieldName":"sv_steamgroup",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable MOTD",
+        "Category":"L4D2 Server Settings",
+        "Description":"If set, the server message of the day (MOTD) will be shown to clients when they connect. Configure the MOTD in 'left4dead2/motd.txt'",
+        "Keywords":"motd,show,enable,motd_enabled",
+        "FieldName":"motd_enabled",
+        "InputType":"checkbox",
+        "ParamFieldName":"motd_enabled",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
     },
     {
         "DisplayName":"LAN Server",
@@ -511,7 +547,7 @@
     {
         "DisplayName":"Additional Server Settings",
         "Category":"L4D2 Server Settings",
-        "Description":"Specifies additional [settings](https://developer.valvesoftware.com/wiki/List_of_L4D2_Cvars) to include in \"server.cfg\" that are not otherwise set by AMP. Example: sv_maxcmdrate 66. One setting per line",
+        "Description":"Specifies additional [settings](https://developer.valvesoftware.com/wiki/List_of_L4D2_Cvars) to include in 'server.cfg' that are not otherwise set by AMP. Example: sv_maxcmdrate 66. One setting per line",
         "Keywords":"additional,settings,custom",
         "FieldName":"UserSettings",
         "InputType":"Textarea",
@@ -519,6 +555,22 @@
         "ParamFieldName":"UserSettings",
         "DefaultValue":"",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Difficulty Level",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Sets the game difficulty level",
+        "Keywords":"difficulty,level,z_difficulty",
+        "FieldName":"z_difficulty",
+        "InputType":"enum",
+        "ParamFieldName":"z_difficulty",
+        "DefaultValue":"Normal",
+        "EnumValues":{
+            "Easy":"Easy",
+            "Normal":"Normal",
+            "Hard":"Advanced",
+            "Impossible":"Expert"
+        }
     },
     {
         "DisplayName":"Enable Friendly Fire",
@@ -533,6 +585,58 @@
             "False":"0",
             "True":"1"
         }
+    },
+    {
+        "DisplayName":"Friendly Fire Damage Factor (Easy)",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Sets the friendly fire damage factor for survivors on Easy difficulty. 0 = disabled",
+        "Keywords":"friendly,fire,survivors,easy,survivor_friendly_fire_factor_easy",
+        "FieldName":"survivor_friendly_fire_factor_easy",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"survivor_friendly_fire_factor_easy",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Friendly Fire Damage Factor (Normal)",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Sets the friendly fire damage factor for survivors on Normal difficulty. 0 = disabled",
+        "Keywords":"friendly,fire,survivors,normal,survivor_friendly_fire_factor_normal",
+        "FieldName":"survivor_friendly_fire_factor_normal",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"survivor_friendly_fire_factor_normal",
+        "DefaultValue":"0.5",
+        "Placeholder":"0.5",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Friendly Fire Damage Factor (Advanced)",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Sets the friendly fire damage factor for survivors on Advanced difficulty. 0 = disabled",
+        "Keywords":"friendly,fire,survivors,hard,survivor_friendly_fire_factor_hard",
+        "FieldName":"survivor_friendly_fire_factor_hard",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"survivor_friendly_fire_factor_hard",
+        "DefaultValue":"0.3",
+        "Placeholder":"0.3",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Friendly Fire Damage Factor (Expert)",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Sets the friendly fire damage factor for survivors on Expert difficulty. 0 = disabled",
+        "Keywords":"friendly,fire,survivors,expert,survivor_friendly_fire_factor_expert",
+        "FieldName":"survivor_friendly_fire_factor_expert",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"survivor_friendly_fire_factor_expert",
+        "DefaultValue":"0.1",
+        "Placeholder":"0.1",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Enable Flashlight",
@@ -599,6 +703,20 @@
         "InputType":"checkbox",
         "ParamFieldName":"sv_allow_wait_command",
         "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Voice Communication",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"If set, voice communication will be enabled on the server",
+        "Keywords":"voice,communication,sv_voiceenable",
+        "FieldName":"sv_voiceenable",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_voiceenable",
+        "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -753,6 +871,202 @@
         "InputType":"checkbox",
         "ParamFieldName":"mp_forcecamera",
         "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Versus Round Limit",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Sets the number of rounds to play for the versus game mode",
+        "Keywords":"round,limit,versus,mp_roundlimit",
+        "FieldName":"mp_roundlimit",
+        "InputType":"number",
+        "ParamFieldName":"mp_roundlimit",
+        "DefaultValue":"2",
+        "Placeholder":"2",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Disable Survivor Glow",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Disable glow effect on survivors",
+        "Keywords":"disable,glow,survivors,sv_disable_glow_survivors",
+        "FieldName":"sv_disable_glow_survivors",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_disable_glow_survivors",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Disable Glow on Far Items",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Disable glow effect on far items",
+        "Keywords":"disable,glow,far,items,sv_disable_glow_faritems",
+        "FieldName":"sv_disable_glow_faritems",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_disable_glow_faritems",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Disable Rescue",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Disable rescue",
+        "Keywords":"disable,rescue,sv_rescue_disabled",
+        "FieldName":"sv_rescue_disabled",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_rescue_disabled",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Advertisements Enabled",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Enable advertisements",
+        "Keywords":"advertisements,enable,sm_advertisements_enabled",
+        "FieldName":"sm_advertisements_enabled",
+        "InputType":"checkbox",
+        "ParamFieldName":"sm_advertisements_enabled",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Advertisements Interval",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Interval between advertisements",
+        "Keywords":"advertisements,interval,sm_advertisements_interval",
+        "FieldName":"sm_advertisements_interval",
+        "InputType":"number",
+        "ParamFieldName":"sm_advertisements_interval",
+        "DefaultValue":"480"
+    },
+    {
+        "DisplayName":"Allow Lobby Connect Only",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Allow only lobby connections",
+        "Keywords":"allow,lobby,connect,sv_allow_lobby_connect_only",
+        "FieldName":"sv_allow_lobby_connect_only",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_allow_lobby_connect_only",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Survivor Limit",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Limit the number of survivors",
+        "Keywords":"survivor,limit,l4d_survivor_limit",
+        "FieldName":"sm_cvar l4d_survivor_limit",
+        "InputType":"number",
+        "ParamFieldName":"sm_cvar l4d_survivor_limit",
+        "DefaultValue":"8"
+    },
+    {
+        "DisplayName":"Remove Human Limit",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Remove limit on humans",
+        "Keywords":"remove,human,limit,sv_removehumanlimit",
+        "FieldName":"sm_cvar sv_removehumanlimit",
+        "InputType":"checkbox",
+        "ParamFieldName":"sm_cvar sv_removehumanlimit",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Pipe Bomb Timer Duration",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Duration of pipe bomb timer",
+        "Keywords":"pipe,bomb,timer,duration,pipe_bomb_timer_duration",
+        "FieldName":"sm_cvar pipe_bomb_timer_duration",
+        "InputType":"number",
+        "ParamFieldName":"sm_cvar pipe_bomb_timer_duration",
+        "DefaultValue":"10"
+    },
+    {
+        "DisplayName":"Disable Autokick",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"If set, players will not be auto-kicked",
+        "Keywords":"disable,autokick,mp_disable_autokick",
+        "FieldName":"mp_disable_autokick",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_disable_autokick",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Alternate Ticks",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Alternate ticks",
+        "Keywords":"alternate,ticks,sv_alternateticks",
+        "FieldName":"sv_alternateticks",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_alternateticks",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Clear Hint History",
+        "Category":"L4D2 Gameplay Settings",
+        "Description":"Clear server side hint history",
+        "Keywords":"clear,hint,history,sv_clearhinthistory",
+        "FieldName":"sv_clearhinthistory",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_clearhinthistory",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Require File Consistency",
+        "Category":"L4D2 Server Settings",
+        "Description":"If set, the server will enforce file consistency for critical files",
+        "Keywords":"consistency,files,sv_consistency",
+        "FieldName":"sv_consistency",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_consistency",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Force Preload",
+        "Category":"L4D2 Server Settings",
+        "Description":"If set, server side preloading will be forced",
+        "Keywords":"force,preload,sv_forcepreload",
+        "FieldName":"sv_forcepreload",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_forcepreload",
+        "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
             "True":"1"
