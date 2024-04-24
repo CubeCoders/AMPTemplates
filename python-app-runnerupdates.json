@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd python-app-runner && DownloadSource=\"{{DownloadSource}}\"; DownloadBranch=\"{{DownloadBranch}}\"; { [[ -n \"{{DownloadUsername}}\" ]] && DownloadUrl=\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\" || DownloadUrl=\"$DownloadSource\"; }; [ ! -d \".git\" ] && git clone ${DownloadBranch:+-b $DownloadBranch} \"$DownloadUrl\" . || { [[ -z \"$DownloadBranch\" ]] && DownloadBranch=$(git symbolic-ref refs/remotes/origin/HEAD | sed \"s|.*/||\"); git switch $DownloadBranch && git restore . && git pull \"$DownloadUrl\" $DownloadBranch; }; ResultStatus = $?; [[ $ResultStatus -ne 0 ]] && exit 1 || exit 0'",
+        "UpdateSourceArgs":"-c 'cd python-app-runner && DownloadSource=\"{{DownloadSource}}\"; DownloadBranch=\"{{DownloadBranch}}\"; { [[ -n \"{{DownloadUsername}}\" ]] && DownloadUrl=\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\" || DownloadUrl=\"$DownloadSource\"; }; [ ! -d \".git\" ] && git clone ${DownloadBranch:+-b $DownloadBranch} \"$DownloadUrl\" . || { [[ -z \"$DownloadBranch\" ]] && DownloadBranch=$(git symbolic-ref refs/remotes/origin/HEAD | sed \"s|.*/||\"); git switch $DownloadBranch && git restore . && git pull \"$DownloadUrl\" $DownloadBranch; }; ResultStatus=$?; [[ $ResultStatus -ne 0 ]] && exit 1 || exit 0'",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"GitRepo"
     },
