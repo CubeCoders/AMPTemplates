@@ -40,7 +40,7 @@ parfile="${6:-}"
 export WINEPREFIX="$SCRIPTDIR/arma2oa/.wine"
 export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
-export WINEDEBUG=fixme-all
+export WINEDEBUG=-all
 export DISPLAY=:$DPY_NUM
 
 cd ./arma2oa/33935
