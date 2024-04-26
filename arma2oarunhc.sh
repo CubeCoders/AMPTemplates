@@ -50,7 +50,7 @@ for i in $(seq 1 "$1"); do
   else
     connect="$2"
   fi
-  /usr/bin/wine ArmA2OA.exe -client -nosplash -nosound -profiles=A2OAMaster -connect=$connect -port=$3 -password="$4" "-mod=$5" "-par=$parfile" > hcstartlog.txt &
+  /usr/bin/wine ArmA2OA.exe -client -nosplash -nosound -profiles=A2OAMaster -connect=$connect -port=$3 -password="$4" "-mod=$5" &
   clients+=($!)
 done
 
