@@ -23,7 +23,8 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C RD /S /Q .\\geyser\\java > NUL 2>&1"
+        "UpdateSourceArgs":"/C RD /S /Q .\\geyser\\java > NUL 2>&1",
+        "SkipOnFailure":true
     },
     {
         "UpdateStageName":"Java Download",
@@ -58,14 +59,16 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C move .\\geyser\\jdk* .\\geyser\\java"
+        "UpdateSourceArgs":"/C move .\\geyser\\jdk* .\\geyser\\java",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Replace Java Directory",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -rf ./geyser/java >/dev/null 2>&1; mv ./geyser/jdk* ./geyser/java ; chmod +x ./geyser/java/bin/java'"
+        "UpdateSourceArgs":"-c 'rm -rf ./geyser/java >/dev/null 2>&1; mv ./geyser/jdk* ./geyser/java ; chmod +x ./geyser/java/bin/java'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Pause Update Stages",

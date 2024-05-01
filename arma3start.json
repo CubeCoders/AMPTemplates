@@ -4,14 +4,16 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -f {{$FullBaseDir}}battleye/beserver*_active_*.cfg >/dev/null 2>&1'"
+        "UpdateSourceArgs":"-c 'rm -f {{$FullBaseDir}}battleye/beserver*_active_*.cfg >/dev/null 2>&1'",
+        "SkipOnFailure":true
     },
     {
         "UpdateStageName":"Delete Active File",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}battleye\\beserver*_active_*.cfg > NUL 2>&1"
+        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}battleye\\beserver*_active_*.cfg > NUL 2>&1",
+        "SkipOnFailure":true
     },
     {
         "UpdateStageName":"Copy Steamclient",
@@ -20,7 +22,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'mkdir -p arma3/linux ; \\cp -f arma3/linux64/steamclient.so arma3/linux/steamclient.so'",
         "UpdateSourceConditionSetting":"ServerExecutable",
-        "UpdateSourceConditionValue":"_x64"
+        "UpdateSourceConditionValue":"_x64",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Copy Steamclient",
@@ -29,7 +32,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'mkdir -p arma3/linux ; \\cp -f arma3/linux32/steamclient.so arma3/linux/steamclient.so'",
         "UpdateSourceConditionSetting":"ServerExecutable",
-        "UpdateSourceConditionValue":""
+        "UpdateSourceConditionValue":"",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Manage Bikeys",
@@ -38,7 +42,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd arma3/233780; find keys/ -name \"*.bikey\" ! -name \"a3.bikey\" -exec rm {} +; IFS=\";\" read -ra subdirs_array <<< \"{{mod}};{{clientmod}}\" && for subdir in \"${subdirs_array[@]}\"; do find \"$subdir/keys\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t keys/ {} + >/dev/null 2>&1; find \"$subdir/key\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t keys/ {} + >/dev/null 2>&1; done; exit 0'",
         "UpdateSourceConditionSetting":"ManageBikeys",
-        "UpdateSourceConditionValue":"true"
+        "UpdateSourceConditionValue":"true",
+        "SkipOnFailure":true
     },
     {
         "UpdateStageName":"Manage Bikeys",
@@ -47,7 +52,8 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"$mods = '{{mod}};{{clientmod}}' -split ';'; Set-Location arma3\\233780; Get-ChildItem -Path 'keys' -Filter '*.bikey' | ForEach-Object { if ($_.Name -ne 'a3.bikey' -and -not ($_.Name -like '*a3.bikey*')) { Remove-Item -LiteralPath $_.FullName -Force } }; foreach ($a in $mods) { Get-ChildItem -Path ('{0}\\keys' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'keys' -Force ; Get-ChildItem -Path ('{0}\\key' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'keys' -Force }\"",
         "UpdateSourceConditionSetting":"ManageBikeys",
-        "UpdateSourceConditionValue":"true"
+        "UpdateSourceConditionValue":"true",
+        "SkipOnFailure":true
     },
     {
         "UpdateStageName":"Headless Client Script Download",
@@ -101,7 +107,8 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'chmod +x ./runhc.sh; ./runhc.sh {{HeadlessClientsNum}} {{$ApplicationIPBinding}} {{$GamePort}} \"{{password}}\" \"{{mod}}\" \"{{hc_parfile}}\" &'",
-        "RunInBackground":true
+        "RunInBackground":true,
+        "SkipOnFailure":true
     },
     {
         "UpdateStageName":"Start Headless Clients",
@@ -109,6 +116,7 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"runhc.ps1\" {{HeadlessClientsNum}} {{$ApplicationIPBinding}} {{$GamePort}} \"{{password}}\" \"{{mod}}\" \"{{hc_parfile}}\"",
-        "RunInBackground":true
+        "RunInBackground":true,
+        "SkipOnFailure":true
     }
 ]

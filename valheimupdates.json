@@ -12,14 +12,16 @@
     "UpdateSourcePlatform": "Windows",
     "UpdateSource": "Executable",
     "UpdateSourceData": "cmd.exe",
-    "UpdateSourceArgs": "/C move {{$FullBaseDir}}\\Data {{$FullBaseDir}}\\Saves > NUL 2>&1"
+    "UpdateSourceArgs": "/C move {{$FullBaseDir}}\\Data {{$FullBaseDir}}\\Saves > NUL 2>&1",
+    "SkipOnFailure":false
   },
   {
     "UpdateStageName": "Update Saves Directory - Linux",
     "UpdateSourcePlatform": "Linux",
     "UpdateSource": "Executable",
     "UpdateSourceData": "/bin/bash",
-    "UpdateSourceArgs": "-c \"mv {{$FullBaseDir}}/Data/ {{$FullBaseDir}}/Saves/ >/dev/null 2>&1\""
+    "UpdateSourceArgs": "-c \"mv {{$FullBaseDir}}/Data/ {{$FullBaseDir}}/Saves/ >/dev/null 2>&1\"",
+    "SkipOnFailure":false
   },
   {
     "UpdateStageName": "Fetch ValheimPlus from Github - Windows",
@@ -72,7 +74,8 @@
     "UpdateSourceData": "cmd.exe",
     "UpdateSourceArgs": "/C xcopy /E /Y /I Valheim\\896660\\BepInExPack_Valheim\\* Valheim\\896660\\ > NUL 2>&1 && rmdir /Q /S Valheim\\896660\\BepInExPack_Valheim",
     "UpdateSourceConditionSetting": "bepinex_install",
-    "UpdateSourceConditionValue": "true"
+    "UpdateSourceConditionValue": "true",
+    "SkipOnFailure":false
   },
   {
     "UpdateStageName": "BepInEx Copy",
@@ -81,6 +84,7 @@
     "UpdateSourceData": "/bin/bash",
     "UpdateSourceArgs": "-c \"cp -rf ./Valheim/896660/BepInExPack_Valheim/* ./Valheim/896660/ >/dev/null 2>&1 && rm -rf ./Valheim/896660/BepInExPack_Valheim/\"",
     "UpdateSourceConditionSetting": "bepinex_install",
-    "UpdateSourceConditionValue": "true"
+    "UpdateSourceConditionValue": "true",
+    "SkipOnFailure":false
   }
 ]

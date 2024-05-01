@@ -49,7 +49,8 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd sinusbot/tts/download && unzip -q tts_service_x86_64.nexe.zip && mv -f tts_service_x86_64.nexe voice_lstm_*.zvoice '{{$FullBaseDir}}tts' && cd .. && rm -rf download\""
+        "UpdateSourceArgs":"-c \"cd sinusbot/tts/download && unzip -q tts_service_x86_64.nexe.zip && mv -f tts_service_x86_64.nexe voice_lstm_*.zvoice '{{$FullBaseDir}}tts' && cd .. && rm -rf download\"",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Download yt-dlp",
@@ -66,7 +67,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c \"rm -rf sinusbot/TeamSpeak3-Client-linux_amd64\"",
         "UpdateSourceConditionSetting":"BotMode",
-        "UpdateSourceConditionValue":""
+        "UpdateSourceConditionValue":"",
+        "SkipOnFailure":true
     },
     {
         "UpdateStageName":"Download TeamSpeak 3 Client",
@@ -85,7 +87,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c \"cd sinusbot && chmod 755 TeamSpeak3-Client-linux_amd64-*.run && yes | ./TeamSpeak3-Client-linux_amd64-*.run && rm -rf TeamSpeak3-Client-linux_amd64-*.run data/ts3 TeamSpeak3-Client-linux_amd64/xcbglintegrations/libqxcb-glx-integration.so && \\cp -f plugin/libsoundbot_plugin.so TeamSpeak3-Client-linux_amd64/plugins\"",
         "UpdateSourceConditionSetting":"BotMode",
-        "UpdateSourceConditionValue":"./TeamSpeak3-Client-linux_amd64/ts3client_linux_amd64"
+        "UpdateSourceConditionValue":"./TeamSpeak3-Client-linux_amd64/ts3client_linux_amd64",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Config.ini Download",
@@ -101,6 +104,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd sinusbot && chmod 755 sinusbot yt-dlp/yt-dlp'"
+        "UpdateSourceArgs":"-c 'cd sinusbot && chmod 755 sinusbot yt-dlp/yt-dlp'",
+        "SkipOnFailure":false
     }
 ]
