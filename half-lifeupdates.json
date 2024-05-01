@@ -27,7 +27,8 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C xcopy /E /Y /I half-life\\90\\bin\\win32\\* half-life\\90\\ && rd /S /Q half-life\\90\\bin half-life\\90\\hlsdk",
         "UpdateSourceConditionSetting":"InstallreHLDS",
-        "UpdateSourceConditionValue":"true"
+        "UpdateSourceConditionValue":"true",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"ReHLDS Files Copy",
@@ -36,7 +37,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c '\\cp -rf ./half-life/90/bin/linux32/* ./half-life/90/ && rm -rf ./half-life/90/bin/ ./half-life/90/hlsdk/'",
         "UpdateSourceConditionSetting":"InstallreHLDS",
-        "UpdateSourceConditionValue":"true"
+        "UpdateSourceConditionValue":"true",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Server.cfg Template File Download",
@@ -78,7 +80,8 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C rd /S /Q half-life\\90\\valve\\sdk half-life\\90\\valve\\example_plugin",
         "UpdateSourceConditionSetting":"InstallMetamod",
-        "UpdateSourceConditionValue":"metamod-r"
+        "UpdateSourceConditionValue":"metamod-r",
+        "SkipOnFailure":true
     },
     {
         "UpdateStageName":"Metamod Download Cleanup",
@@ -87,7 +90,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'rm -rf ./half-life/90/valve/sdk/ ./half-life/90/valve/example_plugin/'",
         "UpdateSourceConditionSetting":"InstallMetamod",
-        "UpdateSourceConditionValue":"metamod-r"
+        "UpdateSourceConditionValue":"metamod-r",
+        "SkipOnFailure":true
     },
     {
         "UpdateStageName":"Activate Metamod",
@@ -96,7 +100,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c \"sed -i '/^gamedll_linux .*$/ { s//gamedll_linux \\\"addons\\/metamod\\/dlls\\/metamod.so\\\"/ }' half-life/90/valve/liblist.gam\"",
         "UpdateSourceConditionSetting":"InstallMetamod",
-        "UpdateSourceConditionValue":"metamod-amx"
+        "UpdateSourceConditionValue":"metamod-amx",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Activate Metamod",
@@ -105,7 +110,8 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C start powershell -Command \"(Get-Content 'half-life\\90\\valve\\liblist.gam') -replace '^gamedll .+$', 'gamedll \\\"addons\\metamod\\dlls\\metamod.dll\\\"' | Set-Content 'half-life\\90\\valve\\liblist.gam'\"",
         "UpdateSourceConditionSetting":"InstallMetamod",
-        "UpdateSourceConditionValue":"metamod-amx"
+        "UpdateSourceConditionValue":"metamod-amx",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Activate Metamod",
@@ -114,7 +120,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c \"sed -i '/^gamedll_linux .*$/ { s//gamedll_linux \\\"addons\\/metamod\\/metamod_i386.so\\\"/ }' half-life/90/valve/liblist.gam\"",
         "UpdateSourceConditionSetting":"InstallMetamod",
-        "UpdateSourceConditionValue":"metamod-r"
+        "UpdateSourceConditionValue":"metamod-r",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Activate Metamod",
@@ -123,7 +130,8 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C start powershell -Command \"(Get-Content 'half-life\\90\\valve\\liblist.gam') -replace '^gamedll .+$', 'gamedll \\\"addons\\metamod\\metamod.dll\\\"' | Set-Content 'half-life\\90\\valve\\liblist.gam'\"",
         "UpdateSourceConditionSetting":"InstallMetamod",
-        "UpdateSourceConditionValue":"metamod-r"
+        "UpdateSourceConditionValue":"metamod-r",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"AMX Mod X Plugin Download",

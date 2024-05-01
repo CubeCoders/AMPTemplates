@@ -24,14 +24,16 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd quake3-arena\\server\\ && tar -xf release-mingw64-x86_64.zip && del /Q /S release-mingw64-x86_64.zip"
+        "UpdateSourceArgs":"/C cd quake3-arena\\server\\ && tar -xf release-mingw64-x86_64.zip && del /Q /S release-mingw64-x86_64.zip",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Server Files Extract",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd ./quake3-arena/server/ && unzip -ao release-linux-x86_64.zip && rm -f release-linux-x86_64.zip && chmod +x ioq3ded.x86_64'"
+        "UpdateSourceArgs":"-c 'cd ./quake3-arena/server/ && unzip -ao release-linux-x86_64.zip && rm -f release-linux-x86_64.zip && chmod +x ioq3ded.x86_64'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"SteamCMD Game Download",
@@ -46,14 +48,16 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I quake3-arena\\client\\baseq3\\pak0.pk3 quake3-arena\\server\\baseq3\\ && rmdir /Q /S quake3-arena\\client\\"
+        "UpdateSourceArgs":"/C xcopy /E /Y /I quake3-arena\\client\\baseq3\\pak0.pk3 quake3-arena\\server\\baseq3\\ && rmdir /Q /S quake3-arena\\client\\",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Client File Copy",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./quake3-arena/client/baseq3/pak0.pk3 ./quake3-arena/server/baseq3/ && rm -rf ./quake3-arena/client/'"
+        "UpdateSourceArgs":"-c '\\cp -rf ./quake3-arena/client/baseq3/pak0.pk3 ./quake3-arena/server/baseq3/ && rm -rf ./quake3-arena/client/'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Patch Files Download",
@@ -70,14 +74,16 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I quake3-arena\\quake3-latest-pk3s\\baseq3\\*.pk3 quake3-arena\\server\\baseq3\\ && xcopy /E /Y /I quake3-arena\\quake3-latest-pk3s\\missionpack\\*.pk3 quake3-arena\\server\\missionpack\\ && rmdir /Q /S quake3-arena\\quake3-latest-pk3s\\"
+        "UpdateSourceArgs":"/C xcopy /E /Y /I quake3-arena\\quake3-latest-pk3s\\baseq3\\*.pk3 quake3-arena\\server\\baseq3\\ && xcopy /E /Y /I quake3-arena\\quake3-latest-pk3s\\missionpack\\*.pk3 quake3-arena\\server\\missionpack\\ && rmdir /Q /S quake3-arena\\quake3-latest-pk3s\\",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Patch Files Copy",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./quake3-arena/quake3-latest-pk3s//baseq3/*.pk3 ./quake3-arena/server/baseq3/ && \\cp -rf ./quake3-arena/quake3-latest-pk3s/missionpack/*.pk3 ./quake3-arena/server/missionpack/ && rm -rf ./quake3-arena/quake3-latest-pk3s/'"
+        "UpdateSourceArgs":"-c '\\cp -rf ./quake3-arena/quake3-latest-pk3s//baseq3/*.pk3 ./quake3-arena/server/baseq3/ && \\cp -rf ./quake3-arena/quake3-latest-pk3s/missionpack/*.pk3 ./quake3-arena/server/missionpack/ && rm -rf ./quake3-arena/quake3-latest-pk3s/'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Base.cfg Download",
