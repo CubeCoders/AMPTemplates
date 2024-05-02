@@ -1,0 +1,55 @@
+[
+    {
+        "UpdateStageName":"Draconia SteamCMD Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"1956500",
+        "UpdateSourceArgs":"1295900"
+    },
+    {
+        "UpdateStageName":"SteamCMD Component Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"1007",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Draconia/Binaries/Win64",
+        "UpdateSourceArgs":"1295900"
+    },
+    {
+        "UpdateStageName":"SteamCMD Component Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"1007",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Draconia/Binaries/Linux",
+        "UpdateSourceArgs":"1295900"
+    },
+    {
+        "UpdateStageName":"Config Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Draconia/Saved/Config"
+    },
+    {
+        "UpdateStageName":"Config Directory Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Draconia/Saved/Config"
+    },
+    {
+        "UpdateStageName":"Config File Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/draconiaserversettings.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Draconia/Saved/Config",
+        "UpdateSourceArgs":"ServerSettings_Dedicated_{{ServerID}}.ini",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Config File Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/draconiaserversettings.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Draconia/Saved/Config",
+        "UpdateSourceArgs":"ServerSettings_Dedicated_{{ServerID}}.ini",
+        "OverwriteExistingFiles":false
+    }
+]
