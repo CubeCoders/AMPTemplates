@@ -54,7 +54,8 @@
         "UpdateSourceArch":"x86_64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-x64.tar.gz > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && mv -v node-{{NodeVersion}}-linux-x64 node >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && rm node-{{NodeVersion}}-linux-x64.tar.gz'"
+        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-x64.tar.gz > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && mv -v node-{{NodeVersion}}-linux-x64 node >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && rm node-{{NodeVersion}}-linux-x64.tar.gz'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Node.js Download",
@@ -70,7 +71,8 @@
         "UpdateSourceArch":"aarch64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz && mv -v node-{{NodeVersion}}-linux-arm64 node && rm node-{{NodeVersion}}-linux-arm64.tar.gz'"
+        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz && mv -v node-{{NodeVersion}}-linux-arm64 node && rm node-{{NodeVersion}}-linux-arm64.tar.gz'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Node.js Download",
@@ -87,7 +89,8 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}\" & rmdir /S /Q \"{{$FullBaseDir}}node/\" > NUL 2>&1 & rename node-{{NodeVersion}}-win-x64 node > {{$FullBaseDir}}AMPSetupLog.txt 2>&1"
+        "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}\" & rmdir /S /Q \"{{$FullBaseDir}}node/\" > NUL 2>&1 & rename node-{{NodeVersion}}-win-x64 node > {{$FullBaseDir}}AMPSetupLog.txt 2>&1",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"npm Packages",
@@ -105,7 +108,8 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}\\\" && \"{{$FullBaseDir}}node\\node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" i {{NpmPackages}}",
         "UpdateSourceConditionSetting":"NpmInstallType",
-        "UpdateSourceConditionValue":"specify"
+        "UpdateSourceConditionValue":"specify",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"npm Packages",
@@ -114,7 +118,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}app/{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" i'",
         "UpdateSourceConditionSetting":"NpmInstallType",
-        "UpdateSourceConditionValue":"npmi"
+        "UpdateSourceConditionValue":"npmi",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"npm Packages",
@@ -123,7 +128,8 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}\\\" && \"{{$FullBaseDir}}node\\node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" i",
         "UpdateSourceConditionSetting":"NpmInstallType",
-        "UpdateSourceConditionValue":"npmi"
+        "UpdateSourceConditionValue":"npmi",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"npm Packages",
@@ -132,7 +138,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}app/{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" ci'",
         "UpdateSourceConditionSetting":"NpmInstallType",
-        "UpdateSourceConditionValue":"npmci"
+        "UpdateSourceConditionValue":"npmci",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"npm Packages",
@@ -141,6 +148,7 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}app\\{{ApplicationLocation}}\\\" && \"{{$FullBaseDir}}node\\node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" ci",
         "UpdateSourceConditionSetting":"NpmInstallType",
-        "UpdateSourceConditionValue":"npmci"
+        "UpdateSourceConditionValue":"npmci",
+        "SkipOnFailure":false
     }
 ]

@@ -23,7 +23,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.proton/compatdata\" \"{{$FullBaseDir}}.steam/steam\" \"{{$FullBaseDir}}.steam/sdk32\" \"{{$FullBaseDir}}.steam/sdk64\" && \\cp -f \"{{$FullRootDir}}linux32/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk32/\" && \\cp -f \"{{$FullRootDir}}linux64/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk64/\" && rm -rf \"{{$FullRootDir}}.proton/compatdata/\"* >/dev/null 2>&1 && wget -q \"$(wget -qO- https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest | grep browser_download_url | cut -d\\\" -f4 | grep .tar.gz)\" && tar -xzf GE-Proton*.tar.gz -C \"{{$FullRootDir}}.proton\" --strip-components=1 ; rm GE-Proton*.* && STEAM_COMPAT_DATA_PATH=\"{{$FullRootDir}}.proton/compatdata\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\"{{$FullBaseDir}}.steam/steam\" {{$FullRootDir}}.proton/proton PROTON_LOG=1 >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"ProtonRelease",
-        "UpdateSourceConditionValue":"latest"
+        "UpdateSourceConditionValue":"latest",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Proton GE Download",
@@ -32,6 +33,7 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.proton/compatdata\" \"{{$FullBaseDir}}.steam/steam\" \"{{$FullBaseDir}}.steam/sdk32\" \"{{$FullBaseDir}}.steam/sdk64\" && \\cp -f \"{{$FullRootDir}}linux32/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk32/\" && \\cp -f \"{{$FullRootDir}}linux64/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk64/\" && rm -rf \"{{$FullRootDir}}.proton/compatdata/\"* >/dev/null 2>&1 && wget -q \"https://github.com/GloriousEggroll/proton-ge-custom/releases/download/{{SpecificReleaseVersion}}/{{SpecificReleaseVersion}}.tar.gz\" && tar -xzf GE-Proton*.tar.gz -C \"{{$FullRootDir}}.proton\" --strip-components=1 ; rm GE-Proton*.* && STEAM_COMPAT_DATA_PATH=\"{{$FullRootDir}}.proton/compatdata\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\"{{$FullBaseDir}}.steam/steam\" {{$FullRootDir}}.proton/proton PROTON_LOG=1 >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"ProtonRelease",
-        "UpdateSourceConditionValue":"specificversion"
+        "UpdateSourceConditionValue":"specificversion",
+        "SkipOnFailure":false
     }
 ]
