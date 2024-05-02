@@ -6,7 +6,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd python-app-runner && DownloadSource=\"{{DownloadSource}}\"; DownloadBranch=\"{{DownloadBranch}}\"; { [[ -n \"{{DownloadUsername}}\" ]] && DownloadUrl=\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\" || DownloadUrl=\"$DownloadSource\"; }; [ ! -d \".git\" ] && /usr/bin/git clone ${DownloadBranch:+-b $DownloadBranch} \"$DownloadUrl\" . || { [[ -z \"$DownloadBranch\" ]] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \"s|.*/||\"); /usr/bin/git switch $DownloadBranch && /usr/bin/git restore . && /usr/bin/git pull \"$DownloadUrl\" $DownloadBranch; }; exit $?'",
         "UpdateSourceConditionSetting":"DownloadType",
-        "UpdateSourceConditionValue":"GitRepo"
+        "UpdateSourceConditionValue":"GitRepo",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"App Download",
@@ -15,7 +16,8 @@
         "UpdateSourceData":"powershell.exe",
         "UpdateSourceArgs":"-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"cd python-app-runner; $DownloadSource = \\\"{{DownloadSource}}\\\"; $DownloadBranch = \\\"{{DownloadBranch}}\\\"; if ($null -ne \\\"{{DownloadUsername}}\\\") { $DownloadUrl = $DownloadSource -replace \\\"https://\\\", \\\"https://{{DownloadUsername}}:{{DownloadPassword}}@\\\" } else { $DownloadUrl = \\\"$DownloadSource\\\" }; if (!(Test-Path .\\.git -PathType Container)) { if ($DownloadBranch) { git clone -b $DownloadBranch \\\"$DownloadUrl\\\" . } else { git clone \\\"$DownloadUrl\\\" . } } else { if (-not $DownloadBranch) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git switch $DownloadBranch; if ($?) { git restore . }; if ($?) { git pull \\\"$DownloadUrl\\\" $DownloadBranch } }; exit $LASTEXITCODE\"",
         "UpdateSourceConditionSetting":"DownloadType",
-        "UpdateSourceConditionValue":"GitRepo"
+        "UpdateSourceConditionValue":"GitRepo",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"App Download",
@@ -48,28 +50,32 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"/usr/bin/python{{PythonVersion}} -m venv --clear --upgrade-deps '{{$FullBaseDir}}venv'\""
+        "UpdateSourceArgs":"-c \"/usr/bin/python{{PythonVersion}} -m venv --clear --upgrade-deps '{{$FullBaseDir}}venv'\"",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Create Virtual Environment",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C py -{{PythonVersion}} -m venv --clear --upgrade-deps \"{{$FullBaseDir}}venv\""
+        "UpdateSourceArgs":"/C py -{{PythonVersion}} -m venv --clear --upgrade-deps \"{{$FullBaseDir}}venv\"",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Install Basic Python Packages",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U setuptools wheel discord.py python-dotenv\""
+        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U setuptools wheel discord.py python-dotenv\"",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Install Basic Python Packages",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U setuptools wheel discord.py python-dotenv"
+        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U setuptools wheel discord.py python-dotenv",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"App Download",
@@ -78,7 +84,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}}\"",
         "UpdateSourceConditionSetting":"DownloadType",
-        "UpdateSourceConditionValue":"PyPIPackage"
+        "UpdateSourceConditionValue":"PyPIPackage",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"App Download",
@@ -87,7 +94,8 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}}",
         "UpdateSourceConditionSetting":"DownloadType",
-        "UpdateSourceConditionValue":"PyPIPackage"
+        "UpdateSourceConditionValue":"PyPIPackage",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Install Additional Python Packages",
@@ -96,7 +104,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c \"cd '{{$FullBaseDir}}' && source ./venv/bin/activate && python3 -m pip install -U -r ./{{AppDir}}/requirements.txt\"",
         "UpdateSourceConditionSetting":"PackagesInstallType",
-        "UpdateSourceConditionValue":"file"
+        "UpdateSourceConditionValue":"file",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Install Additional Python Packages",
@@ -105,7 +114,8 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}\" && venv\\Scripts\\activate.bat && python.exe -m pip install -U -r .\\{{AppDir}}\\requirements.txt",
         "UpdateSourceConditionSetting":"PackagesInstallType",
-        "UpdateSourceConditionValue":"file"
+        "UpdateSourceConditionValue":"file",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Install Additional Python Packages",
@@ -114,7 +124,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U {{PythonPackages}}\"",
         "UpdateSourceConditionSetting":"PackagesInstallType",
-        "UpdateSourceConditionValue":"specifier"
+        "UpdateSourceConditionValue":"specifier",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Install Additional Python Packages",
@@ -123,7 +134,8 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U {{PythonPackages}}",
         "UpdateSourceConditionSetting":"PackagesInstallType",
-        "UpdateSourceConditionValue":"specifier"
+        "UpdateSourceConditionValue":"specifier",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Run App Setup Command",
@@ -132,7 +144,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c \"cd '{{$FullBaseDir}}' && source ./venv/bin/activate && {{AppSetupCommand}}\"",
         "UpdateSourceConditionSetting":"RunAppSetupCommand",
-        "UpdateSourceConditionValue":"true"
+        "UpdateSourceConditionValue":"true",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Run App Setup Command",
@@ -141,6 +154,7 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}\" && venv\\Scripts\\activate.bat && {{AppSetupCommand}}",
         "UpdateSourceConditionSetting":"RunAppSetupCommand",
-        "UpdateSourceConditionValue":"true"
+        "UpdateSourceConditionValue":"true",
+        "SkipOnFailure":false
     }
 ]
