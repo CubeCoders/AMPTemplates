@@ -27,7 +27,7 @@ App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=2915550
 App.LinuxCommandLineArgs=-a wine "./FoundryDedicatedServer.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -SteamServerName="{{ServerName}}" {{$FormattedArgs}} -stdout -FullStdOutLogOutput
+App.CommandLineArgs={{$PlatformArgs}} -Port={{$ServerPort}} -QueryPort={{$QueryPort}} -SteamServerName="{{ServerName}}" {{$FormattedArgs}} -stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"983870","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
@@ -42,10 +42,10 @@ App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"Both","Port":3724,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"Both","Port":27015,"Ref":"QueryPort","Name":"Query Port","Description":"Port for query traffic"}]
+App.Ports=[{"Protocol":"Both","Port":3724,"Ref":"ServerPort","Name":"Server Port","Description":"Port for game traffic"},{"Protocol":"Both","Port":27015,"Ref":"QueryPort","Name":"Query Port","Description":"Port for query traffic"}]
 App.AdminPortRef=0
-App.PrimaryApplicationPortRef=GamePort
-App.UniversalSleepApplicationUDPPortRef=GamePort
+App.PrimaryApplicationPortRef=ServerPort
+App.UniversalSleepApplicationUDPPortRef=ServerPort
 App.UniversalSleepSteamQueryPortRef=QueryPort
 App.MaxUsers=32
 App.UseRandomAdminPassword=False
