@@ -27,7 +27,7 @@ App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=2915550
 App.LinuxCommandLineArgs=-a wine "./FoundryDedicatedServer.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -Port={{$ServerPort}} -QueryPort={{$QueryPort}} -SteamServerName="{{server_name}}" {{$FormattedArgs}} -stdout -FullStdOutLogOutput
+App.CommandLineArgs={{$PlatformArgs}} {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"983870","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
@@ -62,7 +62,7 @@ App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
 App.RapidStartup=False
-App.MonitorChildProcessName=^{{$WineBaseDir}}FoundryDedicatedServer\.exe -Port={{$ServerPort}}.*$
+App.MonitorChildProcessName=^{{$WineBaseDir}}FoundryDedicatedServer\.exe.*$
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RegexMatch
