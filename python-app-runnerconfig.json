@@ -2,7 +2,7 @@
     {
         "DisplayName":"App Download Type",
         "Category":"App Runner Settings",
-        "Description":"Sets how to download the app. Specify the App Download Source, GitHub Release Filename, GitHub Release Version and/or PyPI Package Installation Arguments accordingly. Update the server after changing this setting",
+        "Description":"Sets how to download the app. Specify the App Download Source and the relevant Git repo, GitHub release or PyPI package settings accordingly. Update the app after changing this setting",
         "Keywords":"download,type,DownloadType",
         "FieldName":"DownloadType",
         "InputType":"enum",
@@ -11,7 +11,7 @@
         "EnumValues":{
             "DownloadURL":"Download URL",
             "GithubRelease":"GitHub release",
-            "GitRepo":"GitHub repo (default)",
+            "GitRepo":"Git repo (default)",
             "PyPIPackage":"PyPI package",
             "None":"None"
         }
@@ -19,11 +19,44 @@
     {
         "DisplayName":"App Download Source",
         "Category":"App Runner Settings",
-        "Description":"Sets the source for the App Download Type. GitHub repo = URL that ends in .git. GitHub release = User/Repo. Download URL = URL to a zip file. PyPI package = package name (and version if needed). Update the app after changing this setting",
+        "Description":"Sets the source for the App Download Type. Git repo = URL that ends in .git. GitHub release = User/Repo. Download URL = URL to a zip file. PyPI package = package name (and version if needed). Update the app after changing this setting",
         "Keywords":"download,source,DownloadSource",
         "FieldName":"DownloadSource",
         "InputType":"text",
         "ParamFieldName":"DownloadSource",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Git Repo Branch",
+        "Category":"App Runner Settings",
+        "Description":"If \"Git repo\" is selected under App Download Type, sets the branch if required. Blank = default branch",
+        "Keywords":"git,repo,branch,DownloadBranch",
+        "FieldName":"DownloadBranch",
+        "InputType":"text",
+        "ParamFieldName":"DownloadBranch",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Git Repo Username",
+        "Category":"App Runner Settings",
+        "Description":"If \"Git repo\" is selected under App Download Type, sets the username if login is required",
+        "Keywords":"git,repo,username,DownloadUsername",
+        "FieldName":"DownloadUsername",
+        "InputType":"text",
+        "ParamFieldName":"DownloadUsername",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Git Repo Password/Token",
+        "Category":"App Runner Settings",
+        "Description":"If \"Git repo\" is selected under App Download Type, sets the password/token if login is required",
+        "Keywords":"git,repo,password,token,DownloadPassword",
+        "FieldName":"DownloadPassword",
+        "InputType":"password",
+        "ParamFieldName":"DownloadPassword",
         "DefaultValue":"",
         "EnumValues":{}
     },

@@ -7,12 +7,23 @@
     },
     {
         "UpdateStageName":"Application Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"GitRepo",
-        "UpdateSourceData":"{{DownloadSource}}",
-        "UpdateSourceTarget":"{{$FullBaseDir}}app",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd node-server/app && DownloadSource=\"{{DownloadSource}}\"; DownloadBranch=\"{{DownloadBranch}}\"; { [[ -n \"{{DownloadUsername}}\" ]] && DownloadUrl=\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\" || DownloadUrl=\"$DownloadSource\"; }; [ ! -d \".git\" ] && /usr/bin/git clone ${DownloadBranch:+-b $DownloadBranch} \"$DownloadUrl\" . || { [[ -z \"$DownloadBranch\" ]] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \"s|.*/||\"); /usr/bin/git switch $DownloadBranch && /usr/bin/git restore . && /usr/bin/git pull \"$DownloadUrl\" $DownloadBranch; }; exit $?'",
         "UpdateSourceConditionSetting":"DownloadType",
-        "UpdateSourceConditionValue":"GitRepo"
+        "UpdateSourceConditionValue":"GitRepo",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Application Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"powershell.exe",
+        "UpdateSourceArgs":"-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"cd node-server\\app; $DownloadSource = \\\"{{DownloadSource}}\\\"; $DownloadBranch = \\\"{{DownloadBranch}}\\\"; if ($null -ne \\\"{{DownloadUsername}}\\\") { $DownloadUrl = $DownloadSource -replace \\\"https://\\\", \\\"https://{{DownloadUsername}}:{{DownloadPassword}}@\\\" } else { $DownloadUrl = \\\"$DownloadSource\\\" }; if (!(Test-Path .\\.git -PathType Container)) { if ($DownloadBranch) { git clone -b $DownloadBranch \\\"$DownloadUrl\\\" . } else { git clone \\\"$DownloadUrl\\\" . } } else { if (-not $DownloadBranch) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git switch $DownloadBranch; if ($?) { git restore . }; if ($?) { git pull \\\"$DownloadUrl\\\" $DownloadBranch } }; exit $LASTEXITCODE\"",
+        "UpdateSourceConditionSetting":"DownloadType",
+        "UpdateSourceConditionValue":"GitRepo",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Application Download",
@@ -99,7 +110,8 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}app/{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" i {{NpmPackages}}'",
         "UpdateSourceConditionSetting":"NpmInstallType",
-        "UpdateSourceConditionValue":"specify"
+        "UpdateSourceConditionValue":"specify",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"npm Packages",
