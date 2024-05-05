@@ -1,5 +1,21 @@
 [
     {
+        "UpdateStageName":"Allowlist.json Backup",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}allowlist.json.bak",
+        "UpdateSourceArgs":"{{$FullBaseDir}}allowlist.json",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Permissions.json Backup",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}permissions.json.bak",
+        "UpdateSourceArgs":"{{$FullBaseDir}}permissions.json",
+        "OverwriteExistingFiles":true
+    },
+    {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURLFromJQ",
@@ -26,5 +42,21 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"SetExecutableFlag",
         "UpdateSourceArgs":"{{$FullBaseDir}}bedrock_server"
+    },
+    {
+        "UpdateStageName":"Allowlist.json Restore",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}allowlist.json",
+        "UpdateSourceArgs":"{{$FullBaseDir}}allowlist.json.bak",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Permissions.json Backup",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}permissions.json",
+        "UpdateSourceArgs":"{{$FullBaseDir}}permissions.json.bak",
+        "OverwriteExistingFiles":true
     }
 ]
