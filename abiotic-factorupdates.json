@@ -8,6 +8,21 @@
         "ForceDownloadPlatform":"Windows"
     },
     {
+        "UpdateStageName":"Create Config Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}AbioticFactor/Saved/Config/WindowsServer"
+    },
+    {
+        "UpdateStageName":"SandboxSettings.ini Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/DFJacob/AbioticFactorDedicatedServer/main/SandboxSettings.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}AbioticFactor/Saved/Config/WindowsServer",
+        "UpdateSourceArgs":"SandboxSettings.ini",
+        "OverwriteExistingFiles":false
+    },
+    {
         "UpdateStageName":"Initialise Wine",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
