@@ -1,0 +1,154 @@
+[
+    {
+        "UpdateStageName": "7-Zip Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip"
+    },
+    {
+        "UpdateStageName": "7-Zip Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.7-zip.org/a/7zr.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip"
+    },
+    {
+        "UpdateStageName": "7-Zip Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.7-zip.org/a/7z2301-linux-x64.tar.xz",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true
+    },
+	{
+        "UpdateStageName": "7-Zip Files Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c 'cd ./StayInTarkov/7-Zip && /usr/bin/tar -xf 7z2301-linux-x64.tar.xz >/dev/null 2>&1 && rm -f 7z2301-linux-x64.tar.xz'",
+        "SkipOnFailure": false
+    },
+	{
+        "UpdateStageName": "Download SPT AKI 3.8.0",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://dev.sp-tarkov.com/SPT-AKI/Stable-releases/releases/download/3.8.0/RELEASE-SPT-3.8.0-29197-2dd4d91.7z",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+		"UpdateSourceConditionSetting": "SPTVersion",
+		"UpdateSourceConditionValue": "3.8.0"
+    },
+	{
+        "UpdateStageName": "Download SPT AKI 3.8.1",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://spt-releases.modd.in/SPT-3.8.1-29197-d3ac83e.7z",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+		"UpdateSourceConditionSetting": "SPTVersion",
+		"UpdateSourceConditionValue": "3.8.1"
+    },
+	{
+        "UpdateStageName":"SPT Files Extract",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd .\\StayInTarkov\\sit\\ && ..\\7-Zip\\7zr.exe x -y RELEASE-SPT*.7z > NUL 2>&1 && del /Q /F RELEASE-SPT*.7z",
+		"UpdateSourceConditionSetting": "SPTVersion",
+		"UpdateSourceConditionValue": "3.8.0",
+        "SkipOnFailure": false
+    },
+	{
+        "UpdateStageName": "SPT Files Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c 'cd ./StayInTarkov/sit/ && ../7-Zip/7zzs x -y RELEASE-SPT*.7z >/dev/null 2>&1 && rm -f RELEASE-SPT*.7z'",
+		"UpdateSourceConditionSetting": "SPTVersion",
+		"UpdateSourceConditionValue": "3.8.0",
+        "SkipOnFailure": false
+    },
+	{
+        "UpdateStageName":"SPT Files Extract",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd .\\StayInTarkov\\sit\\ && ..\\7-Zip\\7zr.exe x -y SPT*.7z > NUL 2>&1 && del /Q /F SPT*.7z",
+		"UpdateSourceConditionSetting": "SPTVersion",
+		"UpdateSourceConditionValue": "3.8.1",
+        "SkipOnFailure": false
+    },
+	{
+        "UpdateStageName": "SPT Files Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c 'cd ./StayInTarkov/sit/ && ../7-Zip/7zzs x -y SPT*.7z >/dev/null 2>&1 && rm -f SPT*.7z'",
+		"UpdateSourceConditionSetting": "SPTVersion",
+		"UpdateSourceConditionValue": "3.8.1",
+        "SkipOnFailure": false
+	},
+	{
+        "UpdateStageName": "SPT Extra Files Delete",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd .\\StayInTarkov\\sit\\ && del /F /Q Aki.Launcher.exe doorstop_config.ini winhttp.dll > NUL 2>&1; rd /S /Q EscapeFromTarkov_Data BepInEx > NUL 2>&1",
+        "SkipOnFailure": true
+	},
+	{
+        "UpdateStageName": "SPT Extra Files Delete",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c 'cd ./StayInTarkov/sit/ && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll >/dev/null 2>&1'",
+        "SkipOnFailure": true
+	},
+	{
+        "UpdateStageName":"SIT Server Mod Download 1.6.4 with AKI 3.8.0",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/stayintarkov/SIT.Aki-Server-Mod/releases/download/1.6.4/SITCoop-1.6.4-WithAki3.8.0-2dd4d9-win.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+		"UpdateSourceConditionSetting": "SITVersion",
+		"UpdateSourceConditionValue": "1.6.4AKI3.8.0-2dd4d9"
+    },
+	{
+        "UpdateStageName":"SIT Server Mod Download 1.6.4 with AKI 3.8.0",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/stayintarkov/SIT.Aki-Server-Mod/releases/download/1.6.4/SITCoop-1.6.4-WithAki3.8.0-2dd4d9-linux.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+		"UpdateSourceConditionSetting": "SITVersion",
+		"UpdateSourceConditionValue": "1.6.4AKI3.8.0-2dd4d9"
+    },
+	{
+		"UpdateStageName":"Make SIT Server Executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Aki.Server.exe"
+	},
+	{
+		"UpdateStageName": "Server Startup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "StartApplication"
+	},
+	{
+		"UpdateStageName": "Wait For Server Startup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "WaitForStartupComplete"
+	},
+	{
+		"UpdateStageName": "Server Shutdown",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ShutdownApplication"
+	}
+]
