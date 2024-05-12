@@ -35,7 +35,7 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=2857200
 App.LinuxCommandLineArgs="./AbioticFactor/Binaries/Win64/AbioticFactorServer-Win64-Shipping.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} AbioticFactor -stdout -FullStdOutLogOutput {{useperfthreads}}{{NoAsyncLoadingThread}} -Port={{$ServerPort}} -QueryPort={{$QueryPort}} -SteamServerName="{{ServerName}}" -SandboxIniPath=Config/WindowsServer/SandboxSettings.ini {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} AbioticFactor -stdout -FullStdOutLogOutput {{useperfthreads}}{{NoAsyncLoadingThread}} -QueryPort={{$QueryPort}} -SteamServerName="{{ServerName}}" -SandboxIniPath=Config/WindowsServer/SandboxSettings.ini {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"SteamAppId":"427410","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
@@ -53,11 +53,11 @@ App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ForceIPBinding=False
 App.SupportsIPv6=True
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"Both","Port":7777,"Ref":"ServerPort","Name":"Server Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":27015,"Ref":"QueryPort","Name":"Query Port","Description":"Port for query traffic"}]
+App.Ports=[{"Protocol":"UDP","Port":27015,"Ref":"QueryPort","Name":"Query Port","Description":"Port for query traffic"}]
 App.AdminPortRef=0
-App.PrimaryApplicationPortRef=ServerPort
-App.UniversalSleepApplicationUDPPortRef=ServerPort
-App.UniversalSleepSteamQueryPortRef=QueryPort
+App.PrimaryApplicationPortRef=QueryPort
+App.UniversalSleepApplicationUDPPortRef=0
+App.UniversalSleepSteamQueryPortRef=0
 App.MaxUsers=32
 App.UseRandomAdminPassword=False
 App.PersistRandomPassword=False
@@ -82,7 +82,7 @@ App.SteamForceLoginPrompt=False
 App.RapidStartup=False
 App.SmartExcludeExemptions=["*.cfg","*.conf","*.config","*.ini","*.json","*.xml","*.properties","*.kvp","*.yml","*.yaml","*.toml","*.lua"]
 App.DumpFullChildProcessTree=False
-App.MonitorChildProcessName=^{{$WineBaseDir}}AbioticFactor\\Binaries\\Win64\\AbioticFactorServer-Win64-Shipping\.exe.*-Port={{$ServerPort}}.*$
+App.MonitorChildProcessName=^{{$WineBaseDir}}AbioticFactor\\Binaries\\Win64\\AbioticFactorServer-Win64-Shipping\.exe.*-Port={{$QueryPort}}.*$
 App.MonitorDirectChildOnly=False
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
