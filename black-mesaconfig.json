@@ -22,17 +22,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Server Search Key",
-        "Category":"BMS Server Settings",
-        "Description":"Sets a search key for finding the server in the lobby",
-        "Keywords":"search,key,lobby,sv_search_key",
-        "FieldName":"sv_search_key",
-        "InputType":"text",
-        "ParamFieldName":"sv_search_key",
-        "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Server Tags",
         "Category":"BMS Server Settings",
         "Description":"Comma-separated list of server tags that give additional information about the server in the server browser",
@@ -190,10 +179,12 @@
         "InputType":"enum",
         "ParamFieldName":"sv_pure",
         "IncludeInCommandLine":true,
-        "DefaultValue":"0",
+        "DefaultValue":"-1",
         "EnumValues":{
-            "0":"Client files not restricted",
-            "1":"All client files except those listed in pure_server_whitelist.txt must match the server"
+            "-1":"Do not restrict client files",
+            "0":"Apply rules in 'pure_server_minimal.txt' only",
+            "1":"Apply rules in 'pure_server_full.txt' and then 'pure_server_whitelist.txt'",
+            "2":"Apply rules in 'pure_server_full.txt'"
         }
     },
     {
@@ -205,20 +196,6 @@
         "InputType":"checkbox",
         "ParamFieldName":"sv_pure_kick_clients",
         "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Require File Consistency",
-        "Category":"BMS Server Settings",
-        "Description":"If set, the server will enforce file consistency for critical files",
-        "Keywords":"consistency,files,sv_consistency",
-        "FieldName":"sv_consistency",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_consistency",
-        "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -264,6 +241,20 @@
         "EnumValues":{
             "False":"",
             "True":"-insecure "
+        }
+    },
+    {
+        "DisplayName":"Enable IP Packet Filter",
+        "Category":"BMS Server Settings",
+        "Description":"If set, enables packet filtering by IP mode. If disabled, everyone will treated as IP-banned, but their IP won't be added to the banlist",
+        "Keywords":"ip,ban,banning,sv_filterban",
+        "FieldName":"sv_filterban",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_filterban",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
         }
     },
     {
@@ -320,6 +311,21 @@
             "False":"0",
             "True":"1"
         }
+    },
+    {
+        "DisplayName":"Maximum File Size",
+        "Category":"BMS Server Settings",
+        "Description":"Sets the maximum allowed file size for uploading to the server",
+        "Keywords":"maximum,upload,file,size,net_maxfilesize",
+        "FieldName":"net_maxfilesize",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"64",
+        "ParamFieldName":"net_maxfilesize",
+        "DefaultValue":"16",
+        "Placeholder":"16",
+        "Suffix":"MB",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Minimum Client Rate",
@@ -415,7 +421,7 @@
     {
         "DisplayName":"Additional Console Variables",
         "Category":"BMS Server Settings",
-        "Description":"Specifies additional [console variables](https://developer.valvesoftware.com/wiki/List_of_BMS_Cvars) (anything that begins with a +) that are not otherwise set by AMP. Use with care. Preferably, specify the equivalent under \"Additional Server Settings\"",
+        "Description":"Specifies additional [console variables](https://developer.valvesoftware.com/wiki/List_of_BMS_Cvars) (anything that begins with a +) that are not otherwise set by AMP. Use with care. Preferably, specify the equivalent under \"Additional Server Settings\" or modify 'config_deathmatch.cfg'",
         "Keywords":"custom,server,arguments,variables,cvars,convars,parameters",
         "FieldName":"CustomConVars",
         "InputType":"text",
@@ -507,13 +513,13 @@
         }
     },
     {
-        "DisplayName":"Allow Living Talk",
+        "DisplayName":"Allow All Talk",
         "Category":"BMS Gameplay Settings",
-        "Description":"If enabled, living players can hear all living enemy communications (voice, chat)",
-        "Keywords":"living,talk,sv_talk_enemy_living",
-        "FieldName":"sv_talk_enemy_living",
+        "Description":"If enabled, players can communicate with all other players, with no team restrictions",
+        "Keywords":"all,talk,sv_alltalk",
+        "FieldName":"sv_alltalk",
         "InputType":"checkbox",
-        "ParamFieldName":"sv_talk_enemy_living",
+        "ParamFieldName":"sv_alltalk",
         "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
@@ -521,28 +527,14 @@
         }
     },
     {
-        "DisplayName":"Allow Dead Talk",
+        "DisplayName":"Enable Fade To Black",
         "Category":"BMS Gameplay Settings",
-        "Description":"If enabled, dead players can hear all dead enemy communications (voice, chat)",
-        "Keywords":"dead,talk,sv_talk_enemy_dead",
-        "FieldName":"sv_talk_enemy_dead",
+        "Description":"If enabled, a player's screen fades to black for the remainder of the round after death (HUD and chat still works)",
+        "Keywords":"fade,black,spectator,death,mp_fadetoblack",
+        "FieldName":"mp_fadetoblack",
         "InputType":"checkbox",
-        "ParamFieldName":"sv_talk_enemy_dead",
+        "ParamFieldName":"mp_fadetoblack",
         "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Enable Automatic Team Balancing",
-        "Category":"BMS Gameplay Settings",
-        "Description":"If set, the automatic team balancing feature will be disabled",
-        "Keywords":"team,automatic,balance,balancing,mp_autoteambalance",
-        "FieldName":"mp_autoteambalance",
-        "InputType":"checkbox",
-        "ParamFieldName":"mp_autoteambalance",
-        "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -557,38 +549,37 @@
         "InputType":"number",
         "MinValue":"0",
         "ParamFieldName":"mp_timelimit",
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "Suffix":"minutes",
+        "DefaultValue":"900",
+        "Placeholder":"900",
+        "Suffix":"seconds",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Map Rotation Round Limit",
+        "DisplayName":"Round Kill Limit",
         "Category":"BMS Gameplay Settings",
-        "Description":"Sets the maximum number of rounds to play before the map rotates. 0 = disabled",
-        "Keywords":"round,limit,rotation,mp_maxrounds",
-        "FieldName":"mp_maxrounds",
+        "Description":"Sets the number of kills at which the map ends. 0 = disabled",
+        "Keywords":"kill,frag,limit,rotation,mp_fraglimit",
+        "FieldName":"mp_fraglimit",
         "InputType":"number",
         "MinValue":"0",
-        "ParamFieldName":"mp_maxrounds",
-        "DefaultValue":"0",
-        "Placeholder":"0",
-        "Suffix":"rounds",
+        "ParamFieldName":"mp_fraglimit",
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "Suffix":"kills",
         "EnumValues":{}
     },
     {
         "DisplayName":"Restrict Spectator Mode",
         "Category":"BMS Gameplay Settings",
-        "Description":"If enabled, the spectator mode for dead players will be restricted",
+        "Description":"If set, the spectator mode for dead players will be restricted",
         "Keywords":"spectator,camera,first,person,mp_forcecamera",
         "FieldName":"mp_forcecamera",
         "InputType":"checkbox",
         "ParamFieldName":"mp_forcecamera",
         "DefaultValue":"0",
         "EnumValues":{
-            "0":"Any team",
-            "1":"Only own team",
-            "2":"No one; fade to black on death"
+            "False":"0",
+            "True":"1"
         }
     },
     {
