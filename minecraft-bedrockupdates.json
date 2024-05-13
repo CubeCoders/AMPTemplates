@@ -43,7 +43,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd Minecraft && DOWNLOAD_URL=$(timeout 15s wget -qO- --user-agent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.$((1 + RANDOM % 4000)).212 Safari/537.36\" https://www.minecraft.net/en-us/download/server/bedrock | grep -o \"https://minecraft.azureedge.net/bin-linux/[^\\\"]*\") && [[ -z $DOWNLOAD_URL ]] && DOWNLOAD_URL=$(wget -qO- https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/minecraft-bedrockdownloadurl.json | jq -r \".Linux.Release\"); wget -qO bedrock_server.zip $DOWNLOAD_URL && unzip -qo bedrock_server.zip && rm -rf bedrock_server.zip'",
+        "UpdateSourceArgs":"-c 'cd Minecraft && DOWNLOAD_URL=$(timeout 15s wget -qO- --user-agent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.$((1 + RANDOM % 4000)).212 Safari/537.36\" https://www.minecraft.net/en-us/download/server/bedrock | grep -o \"https://minecraft.azureedge.net/bin-linux/[^\\\"]*\"); [[ -z $DOWNLOAD_URL ]] && DOWNLOAD_URL=$(wget -qO- https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/minecraft-bedrockdownloadurl.json | jq -r \".Linux.Release\"); wget -qO bedrock_server.zip $DOWNLOAD_URL && unzip -qo bedrock_server.zip && rm -rf bedrock_server.zip'",
         "UpdateSourceConditionSetting":"ServerStream",
         "UpdateSourceConditionValue":"release-latest",
         "SkipOnFailure":false
@@ -74,7 +74,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd Minecraft && DOWNLOAD_URL=$(timeout 15s wget -qO- --user-agent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.$((1 + RANDOM % 4000)).212 Safari/537.36\" https://www.minecraft.net/en-us/download/server/bedrock | grep -o \"https://minecraft.azureedge.net/bin-linux-preview/[^\\\"]*\") && [[ -z $DOWNLOAD_URL ]] && DOWNLOAD_URL=$(wget -qO- https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/minecraft-bedrockdownloadurl.json | jq -r \".Linux.Preview\"); wget -qO bedrock_server.zip $DOWNLOAD_URL && unzip -qo bedrock_server.zip && rm -rf bedrock_server.zip'",
+        "UpdateSourceArgs":"-c 'cd Minecraft && DOWNLOAD_URL=$(timeout 15s wget -qO- --user-agent=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.$((1 + RANDOM % 4000)).212 Safari/537.36\" https://www.minecraft.net/en-us/download/server/bedrock | grep -o \"https://minecraft.azureedge.net/bin-linux-preview/[^\\\"]*\"); [[ -z $DOWNLOAD_URL ]] && DOWNLOAD_URL=$(wget -qO- https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/minecraft-bedrockdownloadurl.json | jq -r \".Linux.Preview\"); wget -qO bedrock_server.zip $DOWNLOAD_URL && unzip -qo bedrock_server.zip && rm -rf bedrock_server.zip'",
         "UpdateSourceConditionSetting":"ServerStream",
         "UpdateSourceConditionValue":"preview-latest",
         "SkipOnFailure":false
