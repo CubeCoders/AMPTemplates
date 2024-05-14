@@ -398,6 +398,20 @@
         }
     },
     {
+        "DisplayName":"Enable CPU Stats Collection",
+        "Category":"BMS Server Settings",
+        "Description":"If set, CPU stats will be collected",
+        "Keywords":"cpu,stats,sv_stats",
+        "FieldName":"sv_stats",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_stats",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Server/RCON IPv4 IP Binding",
         "Category":"BMS Server Settings",
         "Description":"If required, you can change the IPv4 IP binding of the server and RCON by changing the 'Server IP Address' setting under Security and Privacy. NOTE: AMP requires the server to be bound to a specific IP, rather than 0.0.0.0, for the server to log to AMP's console. The IP must also be reachable by AMP",
@@ -421,7 +435,7 @@
     {
         "DisplayName":"Additional Console Variables",
         "Category":"BMS Server Settings",
-        "Description":"Specifies additional [console variables](https://developer.valvesoftware.com/wiki/List_of_BMS_Cvars) (anything that begins with a +) that are not otherwise set by AMP. Use with care. Preferably, specify the equivalent under \"Additional Server Settings\" or modify 'config_deathmatch.cfg'",
+        "Description":"Specifies additional [console variables](https://developer.valvesoftware.com/wiki/List_of_BMS_Cvars) (anything that begins with a +) that are not otherwise set by AMP. Use with care. Preferably, specify the equivalent under \"Additional Server Settings\"",
         "Keywords":"custom,server,arguments,variables,cvars,convars,parameters",
         "FieldName":"CustomConVars",
         "InputType":"text",
@@ -460,10 +474,24 @@
         "DisplayName":"Enable Footsteps",
         "Category":"BMS Gameplay Settings",
         "Description":"If set, the server will always play footstep sounds",
-        "Keywords":"footstep,sounds,mp_footsteps_serverside",
-        "FieldName":"mp_footsteps_serverside",
+        "Keywords":"footstep,sounds,mp_footsteps",
+        "FieldName":"mp_footsteps",
         "InputType":"checkbox",
-        "ParamFieldName":"mp_footsteps_serverside",
+        "ParamFieldName":"mp_footsteps",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Teamplay",
+        "Category":"BMS Gameplay Settings",
+        "Description":"If enabled, teamplay game rules will apply",
+        "Keywords":"team,play,teamplay,mp_teamplay",
+        "FieldName":"mp_teamplay",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_teamplay",
         "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
@@ -527,6 +555,20 @@
         }
     },
     {
+        "DisplayName":"Force Respawn",
+        "Category":"BMS Gameplay Settings",
+        "Description":"If enabled, players will be forced to respawn after death",
+        "Keywords":"force,respawn,death,mp_forcerespawn",
+        "FieldName":"mp_forcerespawn",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_forcerespawn",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Enable Fade To Black",
         "Category":"BMS Gameplay Settings",
         "Description":"If enabled, a player's screen fades to black for the remainder of the round after death (HUD and chat still works)",
@@ -576,7 +618,7 @@
         "FieldName":"mp_forcecamera",
         "InputType":"checkbox",
         "ParamFieldName":"mp_forcecamera",
-        "DefaultValue":"0",
+        "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -604,20 +646,6 @@
         "FieldName":"sv_alternateticks",
         "InputType":"checkbox",
         "ParamFieldName":"sv_alternateticks",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Clear Hint History",
-        "Category":"BMS Gameplay Settings",
-        "Description":"If set, memory of server side hints displayed to a player is cleared",
-        "Keywords":"clear,hint,history,sv_clearhinthistory",
-        "FieldName":"sv_clearhinthistory",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_clearhinthistory",
         "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
@@ -676,8 +704,8 @@
         "InputType":"number",
         "MinValue":"0",
         "ParamFieldName":"tv_maxrate",
-        "DefaultValue":"196608",
-        "Placeholder":"196608",
+        "DefaultValue":"8000",
+        "Placeholder":"8000",
         "EnumValues":{}
     },
     {
