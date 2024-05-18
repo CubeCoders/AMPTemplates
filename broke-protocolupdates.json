@@ -17,9 +17,12 @@
     {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd brokeprotocol/server && wget -qO game.tar.gz \"https://drive.usercontent.google.com/download?id=1iS2gE_stqMcd8eqqtwXjOmWXUc-IkFLy&export=download&authuser=0&confirm=t\" && tar -xzf game.tar.gz && rm -f game.tar.gz'",
-        "SkipOnFailure":false
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://drive.usercontent.google.com/download?id=1iS2gE_stqMcd8eqqtwXjOmWXUc-IkFLy&export=download&authuser=0&confirm=t",
+        "UpdateSourceArgs":"game.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
     }
 ]
