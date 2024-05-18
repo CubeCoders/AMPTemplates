@@ -35,10 +35,10 @@ App.ExecutableLinux=339010/RisingWorldServer.x64
 App.WorkingDir=339010
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} +Server_Port={{$ServerPort}} +Query_Port={{$QueryPort}} +RCON_Port={{$RCONPort}} +Settings_MaxPlayers={{$MaxUsers}} {$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} +Server_Port={{$ServerPort}} +RCON_Port={{$RCONPort}} +Settings_MaxPlayers={{$MaxUsers}} {$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"324080"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:{{$FullBaseDir}}:%LD_LIBRARY_PATH%","SteamAppId":"324080"}
 App.CommandLineParameterFormat=+{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=String
@@ -58,7 +58,7 @@ App.AdminPortRef=0
 App.PrimaryApplicationPortRef=ServerPort
 App.UniversalSleepApplicationUDPPortRef=0
 App.UniversalSleepSteamQueryPortRef=0
-App.MaxUsers=32
+App.MaxUsers=64
 App.UseRandomAdminPassword=False
 App.PersistRandomPassword=False
 App.RemoteAdminPassword=Password123
@@ -87,12 +87,12 @@ App.MonitorChildProcessName=
 App.MonitorDirectChildOnly=False
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
-App.ApplicationReadyMode=Immediate
+App.ApplicationReadyMode=RegexMatch
 App.TemplateMatchRegex={{(!?(?<Platform>Linux|Windows|All):)?(?<Value>\$?[\w]+)}}
 Console.FilterMatchRegex=\e\[(\d+;)*(\d+)?[ABCDHJKfmsu]|\e\[?[?\>\=\da-z]+
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^$
+Console.AppReadyRegex=^Dedicated server is ready! \(\d+\.\d+ s\)$
 Console.UserJoinRegex=^$
 Console.UserLeaveRegex=^$
 Console.UserChatRegex=^$
