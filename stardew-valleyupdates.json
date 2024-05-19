@@ -1,0 +1,42 @@
+[
+    {
+        "UpdateStageName":"Game Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"413150",
+        "UpdateSourceArgs":"413150",
+        "UpdateSourceVersion":"{{GameBranch}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}"
+    },
+    {
+        "UpdateStageName":"Create SMAPI Download Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}smapi"
+    },
+    {
+        "UpdateStageName":"SMAPI Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"Pathoschild/SMAPI",
+        "UpdateSourceVersion":"{{SMAPIReleaseVersion}}",
+        "UpdateSourceTarget":"{{$FullRootDir}}smapi",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"SMAPI Installation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd stardew-valley/server && \\cp -rf ../smapi/SMAPI*installer/internal/linux/install.dat ./install.zip && unzip -qo install.zip && rm -rf install.zip ../smapi >/dev/null 2>&1 && \\cp -rf \"Stardew Valley.deps.json\" StardewModdingAPI.deps.json'"
+    },
+    {
+        "UpdateStageName":"SMAPI Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd stardew-valley\\server && xcopy /E /Y /I ..\\smapi\\SMAPI*installer\\internal\\windows\\install.dat ./install.zip && tar -xf install.zip && del /Q /F install.zip > NUL 2>&1 && rd /S /Q ..\\smapi > NUL 2>&1 && xcopy /E /Y /I \"Stardew Valley.deps.json\" StardewModdingAPI.deps.json"
+    }
+]
