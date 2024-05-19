@@ -30,13 +30,13 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd stardew-valley/server && \\cp -rf ../smapi/SMAPI*installer/internal/linux/install.dat ./install.zip && unzip -qo install.zip && rm -rf install.zip ../smapi >/dev/null 2>&1 && \\cp -rf \"Stardew Valley.deps.json\" StardewModdingAPI.deps.json'"
+        "UpdateSourceArgs":"-c 'cd stardew-valley/smapi && internal/linux/SMAPI.Installer --install --game-path \"{{$FullBaseDir}}\" --no-prompt'"
     },
     {
         "UpdateStageName":"SMAPI Installation",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd stardew-valley\\server && xcopy /E /Y /I ..\\smapi\\SMAPI*installer\\internal\\windows\\install.dat ./install.zip && tar -xf install.zip && del /Q /F install.zip > NUL 2>&1 && rd /S /Q ..\\smapi > NUL 2>&1 && xcopy /E /Y /I \"Stardew Valley.deps.json\" StardewModdingAPI.deps.json"
+        "UpdateSourceArgs":"/C cd stardew-valley\\smapi && internal\\windows\\SMAPI.Installer.exe --install --game-path \"{{$FullBaseDir}}\" --no-prompt"
     }
 ]
