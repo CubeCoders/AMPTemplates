@@ -17,26 +17,50 @@
     {
         "UpdateStageName":"SMAPI Download",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceArgs":"Pathoschild/SMAPI",
-        "UpdateSourceVersion":"{{SMAPIReleaseVersion}}",
+        "UpdateSource":"FetchURLFromJQ",
+        "UpdateSourceData":"https://api.github.com/repos/Pathoschild/SMAPI/releases/latest",
+        "UpdateSourceArgs":"$.assets[1].browser_download_url",
         "UpdateSourceTarget":"{{$FullRootDir}}smapi",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"SMAPIRelease",
+        "UpdateSourceConditionValue":"latest"
+    },
+    {
+        "UpdateStageName":"SMAPI Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/Pathoschild/SMAPI/releases/download/{{SMAPIReleaseVersion}}/SMAPI-{{SMAPIReleaseVersion}}-installer.zip",
+        "UpdateSourceTarget":"{{$FullRootDir}}smapi",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"SMAPIRelease",
+        "UpdateSourceConditionValue":"specificversion"
     },
     {
         "UpdateStageName":"SMAPI Installation",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd stardew-valley/smapi && internal/linux/SMAPI.Installer --install --game-path \"{{$FullBaseDir}}\" --no-prompt'"
+        "UpdateSourceArgs":"-c 'cd stardew-valley/smapi/SMAPI* && chmod +x internal/linux/SMAPI.Installer && internal/linux/SMAPI.Installer --install --game-path \"{{$FullBaseDir}}\" --no-prompt; cd .. && rm -rf SMAPI*'"
     },
     {
         "UpdateStageName":"SMAPI Installation",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd stardew-valley\\smapi && internal\\windows\\SMAPI.Installer.exe --install --game-path \"{{$FullBaseDir}}\" --no-prompt"
+        "UpdateSourceArgs":"/C cd stardew-valley\\smapi\\SMAPI* && internal\\windows\\SMAPI.Installer.exe --install --game-path \"{{$FullBaseDir}}\" --no-prompt; cd .. && rd /S /Q SMAPI*"
+    },
+    {
+        "UpdateStageName":"Always on Server Mod Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"{{ModDownloadURL}}",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Mods",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
     }
 ]
