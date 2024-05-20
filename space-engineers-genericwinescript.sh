@@ -4,7 +4,7 @@ SCRIPT_NAME=$(echo \"$0\" | xargs readlink -f)
 SCRIPTDIR=$(dirname "$SCRIPT_NAME")
 
 exec 6>display.log
-/usr/bin/Xvfb -displayfd 6 &
+/usr/bin/Xvfb -nolisten tcp -nolisten unix -displayfd 6 &
 XVFB_PID=$!
 while [[ ! -s display.log ]]; do
   sleep 1
