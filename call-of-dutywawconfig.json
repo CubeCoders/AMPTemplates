@@ -206,42 +206,14 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Enable Server Voice Chat",
+        "DisplayName":"Pure Server",
         "Category":"CoD WaW Server Settings",
-        "Description":"If set, server voice chat will be enabled",
-        "Keywords":"voice,chat,sv_voice",
-        "FieldName":"sv_voice",
+        "Description":"If set, clients will be prevented from loading files not on the server",
+        "Keywords":"pure,server,cheats,sv_pure",
+        "FieldName":"sv_pure",
         "InputType":"checkbox",
-        "ParamFieldName":"sv_voice",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Server Voice Chat Quality",
-        "Category":"CoD WaW Server Settings",
-        "Description":"Sets the server voice quality level",
-        "Keywords":"voice,chat,quality,sv_voicequality",
-        "FieldName":"sv_voiceQuality",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"9",
-        "ParamFieldName":"sv_voiceQuality",
-        "DefaultValue":"3",
-        "Placeholder":"3",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Dead Chat",
-        "Category":"CoD WaW Server Settings",
-        "Description":"If enabled, dead players will be allowed to chat with living players",
-        "Keywords":"voice,dead,chat,voice_deadchat",
-        "FieldName":"voice_deadChat",
-        "InputType":"checkbox",
-        "ParamFieldName":"voice_deadChat",
-        "DefaultValue":"1",
+        "ParamFieldName":"sv_pure",
+        "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
             "True":"1"
@@ -332,8 +304,50 @@
         }
     },
     {
+        "DisplayName":"Enable Server Voice Chat",
+        "Category":"CoD WaW Gameplay Settings",
+        "Description":"If set, server voice chat will be enabled",
+        "Keywords":"voice,chat,sv_voice",
+        "FieldName":"sv_voice",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_voice",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Server Voice Chat Quality",
+        "Category":"CoD WaW Gameplay Settings",
+        "Description":"Sets the server voice quality level",
+        "Keywords":"voice,chat,quality,sv_voicequality",
+        "FieldName":"sv_voiceQuality",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"9",
+        "ParamFieldName":"sv_voiceQuality",
+        "DefaultValue":"3",
+        "Placeholder":"3",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Dead Chat",
+        "Category":"CoD WaW Gameplay Settings",
+        "Description":"If enabled, dead players will be allowed to chat with living players",
+        "Keywords":"voice,dead,chat,voice_deadchat",
+        "FieldName":"voice_deadChat",
+        "InputType":"checkbox",
+        "ParamFieldName":"voice_deadChat",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Spectating Type",
-        "Category":"CoD WaW Server Settings",
+        "Category":"CoD WaW Gameplay Settings",
         "Description":"Sets the type of spectating allowed in the game",
         "Keywords":"spectating,type,scr_game_spectatetype",
         "FieldName":"scr_game_spectatetype",
@@ -348,7 +362,7 @@
     },
     {
         "DisplayName":"Enable Killcam",
-        "Category":"CoD WaW Server Settings",
+        "Category":"CoD WaW Gameplay Settings",
         "Description":"If set, the killcam feature will be enabled, which shows how a player was killed",
         "Keywords":"killcam,scr_game_allowkillcam",
         "FieldName":"scr_game_allowkillcam",
@@ -362,7 +376,7 @@
     },
     {
         "DisplayName":"Gravity",
-        "Category":"CoD WaW Server Settings",
+        "Category":"CoD WaW Gameplay Settings",
         "Description":"Sets the gravity in the game world",
         "Keywords":"gravity,physics,g_gravity",
         "FieldName":"gravity,g_gravity",
@@ -376,9 +390,9 @@
     },
     {
         "DisplayName":"Player Speed",
-        "Category":"CoD WaW Server Settings",
+        "Category":"CoD WaW Gameplay Settings",
         "Description":"Sets the movement speed of players",
-        "Keywords":"speed,movement,players",
+        "Keywords":"speed,movement,players,g_speed",
         "FieldName":"g_speed",
         "InputType":"number",
         "MinValue":"100",
@@ -389,9 +403,23 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Team Balancing",
+        "Category":"CoD WaW Gameplay Settings",
+        "Description":"If set, team balancing will be enabled",
+        "Keywords":"team,balancing,scr_teambalance",
+        "FieldName":"scr_teambalance",
+        "InputType":"checkbox",
+        "ParamFieldName":"scr_teambalance",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Maximum Dropped Weapons",
-        "Category":"CoD WaW Server Settings",
-        "Description":"Specifies the maximum number of guns allowed to drop in the game",
+        "Category":"CoD WaW Gameplay Settings",
+        "Description":"Sets the maximum number of guns allowed to drop in the game",
         "Keywords":"maximum,dropped,weapons,guns,g_maxDroppedWeapons",
         "FieldName":"g_maxDroppedWeapons",
         "InputType":"number",
@@ -404,11 +432,11 @@
     },
     {
         "DisplayName":"Team Affects Bullet Penetration",
-        "Category":"CoD WaW Server Settings",
+        "Category":"CoD WaW Gameplay Settings",
         "Description":"If set, teammates' bodies will affect bullet penetration",
         "Keywords":"bullet,penetration,team,teammates,bodies,bullet_penetration_affected_by_team",
         "FieldName":"bullet_penetration_affected_by_team",
-        "InputType":"enum",
+        "InputType":"checkbox",
         "ParamFieldName":"bullet_penetration_affected_by_team",
         "DefaultValue":"true",
         "EnumValues":{
@@ -418,11 +446,11 @@
     },
     {
         "DisplayName":"Fix Bullet Damage Duplication",
-        "Category":"CoD WaW Server Settings",
-        "Description":"If set, prevents clipping players from receiving duplicate damage",
+        "Category":"CoD WaW Gameplay Settings",
+        "Description":"If set, clipping players won't receive duplicate damage",
         "Keywords":"bullet,damage,duplication,clipping,prevent,g_fixBulletDamageDupe",
         "FieldName":"g_fixBulletDamageDupe",
-        "InputType":"enum",
+        "InputType":"checkbox",
         "ParamFieldName":"g_fixBulletDamageDupe",
         "DefaultValue":"true",
         "EnumValues":{
@@ -432,9 +460,9 @@
     },
     {
         "DisplayName":"Allow Voting",
-        "Category":"CoD WaW Server Settings",
+        "Category":"CoD WaW Gameplay Settings",
         "Description":"If set, voting will be allowed",
-        "Keywords":"voting,allow,g_allowVote",
+        "Keywords":"voting,vote,allow,g_allowVote",
         "FieldName":"g_allowVote",
         "InputType":"checkbox",
         "ParamFieldName":"g_allowVote",
@@ -446,7 +474,7 @@
     },
     {
         "DisplayName":"Abstain Vote Weight",
-        "Category":"CoD WaW Server Settings",
+        "Category":"CoD WaW Gameplay Settings",
         "Description":"Sets the weight of abstain votes in voting",
         "Keywords":"vote,abstain,weight,g_voteAbstainWeight",
         "FieldName":"g_voteAbstainWeight",
@@ -460,7 +488,7 @@
     },
     {
         "DisplayName":"Enable Client-Side Features",
-        "Category":"CoD WaW Server Settings",
+        "Category":"CoD WaW Gameplay Settings",
         "Description":"If set, enables various client-side features",
         "Keywords":"client,side,features,sv_clientside",
         "FieldName":"sv_clientside",
@@ -474,7 +502,7 @@
     },
     {
         "DisplayName":"Enable Client Archive",
-        "Category":"CoD WaW Server Settings",
+        "Category":"CoD WaW Gameplay Settings",
         "Description":"If set, clients will archive data to save bandwidth on the server. Requires Client-Side Features to be enabled",
         "Keywords":"client,archive,sv_clientArchive",
         "FieldName":"sv_clientArchive",
@@ -488,7 +516,7 @@
     },
     {
         "DisplayName":"Enable Client-Side Bullets",
-        "Category":"CoD WaW Server Settings",
+        "Category":"CoD WaW Gameplay Settings",
         "Description":"If set, clients will handle bullet holes and tracers. Requires Client-Side Features to be enabled",
         "Keywords":"client,side,bullets,sv_clientSideBullets",
         "FieldName":"sv_clientSideBullets",
@@ -502,8 +530,8 @@
     },
     {
         "DisplayName":"Enable Client-Side Vehicles",
-        "Category":"CoD WaW Server Settings",
-        "Description":"If sets, vehicles will be predicted on the client, reducing response time. Requires Client-Side Features to be enabled",
+        "Category":"CoD WaW Gameplay Settings",
+        "Description":"If set, vehicles will be predicted on the client, reducing response time. Requires Client-Side Features to be enabled",
         "Keywords":"client,side,vehicles,sv_clientSideVehicles",
         "FieldName":"sv_clientSideVehicles",
         "InputType":"checkbox",
@@ -516,40 +544,12 @@
     },
     {
         "DisplayName":"Enable Client-Side Lights",
-        "Category":"CoD WaW Server Settings",
+        "Category":"CoD WaW Gameplay Settings",
         "Description":"If set, clients will handle lighting. Requires Client-Side Features to be enabled",
         "Keywords":"client,side,lights,g_client_side_lights",
         "FieldName":"g_client_side_lights",
         "InputType":"checkbox",
         "ParamFieldName":"g_client_side_lights",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Pure Server",
-        "Category":"CoD WaW Server Settings",
-        "Description":"If set, prevent clients from loading files not on the server",
-        "Keywords":"pure,server,cheats,sv_pure",
-        "FieldName":"sv_pure",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_pure",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Team Balancing",
-        "Category":"CoD WaW Server Settings",
-        "Description":"If set, enables team balancing",
-        "Keywords":"team,balancing,scr_teambalance",
-        "FieldName":"scr_teambalance",
-        "InputType":"checkbox",
-        "ParamFieldName":"scr_teambalance",
         "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
