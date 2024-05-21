@@ -52,8 +52,25 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd stardew-valley\\smapi\\SMAPI* && copy /Y internal\\windows\\install.dat ..\\..\\server\\install.zip && cd ..\\..\\server && tar -xf install.zip && del /Q /F install.zip > NUL 2>&1 && copy /Y \"Stardew Valley.deps.json\" StardewModdingAPI.deps.json && for /d %G in (\"..\\smapi\\SMAPI*\") do (rd /S /Q \"%~G\" > NUL 2>&1)",
+        "UpdateSourceArgs":"/C cd stardew-valley\\smapi\\SMAPI* && copy /Y internal\\windows\\install.dat ..\\..\\..\\install.zip && cd .. && for /d %G in (\"SMAPI*\") do (rd /S /Q \"%~G\" > NUL 2>&1)",
         "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"SMAPI Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"ExtractArchive",
+        "UpdateSourceData":"install.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"SMAPI Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}Stardew Valley.deps.json",
+        "UpdateSourceArgs":"{{$FullBaseDir}}StardewModdingAPI.deps.json",
+        "OverwriteExistingFiles":true
     },
     {
         "UpdateStageName":"Always on Server Mod Download",
