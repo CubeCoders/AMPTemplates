@@ -4,7 +4,8 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm {{$FullBaseDir}}bin/Win64_Shipping_Server'"
+        "UpdateSourceArgs":"-c 'rm {{$FullBaseDir}}bin/Win64_Shipping_Server >/dev/null 2>&1'",
+        "SkipOnFailure":true
     },
     {
         "UpdateStageName":"SteamCMD Download",
@@ -18,7 +19,8 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -rf {{$FullBaseDir}}bin/Win64_Shipping_Server; ln -sf {{$FullBaseDir}}bin/Linux64_Shipping_Server {{$FullBaseDir}}bin/Win64_Shipping_Server'"
+        "UpdateSourceArgs":"-c 'rm -rf {{$FullBaseDir}}bin/Win64_Shipping_Server; cd {{$FullBaseDir}}bin; ln -sf Linux64_Shipping_Server Win64_Shipping_Server'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Create MultiplayerForcedAvatars Directory",
@@ -47,6 +49,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf \"{{$FullBaseDir}}Dotnet/shared/Microsoft.AspNetCore.App/{{DotnetVersion}}/\"* \"{{$FullBaseDir}}bin/Linux64_Shipping_Server/\"'"
+        "UpdateSourceArgs":"-c '\\cp -rf \"{{$FullBaseDir}}Dotnet/shared/Microsoft.AspNetCore.App/{{DotnetVersion}}/\"* \"{{$FullBaseDir}}bin/Linux64_Shipping_Server/\"'",
+        "SkipOnFailure":false
     }
 ]

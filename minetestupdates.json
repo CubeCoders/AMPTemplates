@@ -20,7 +20,8 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I minetest\\server\\minetest-{{ServerVersion}}-win64\\* minetest\\server\\ && rmdir /Q /S minetest\\server\\minetest-{{ServerVersion}}-win64"
+        "UpdateSourceArgs":"/C xcopy /E /Y /I minetest\\server\\minetest-{{ServerVersion}}-win64\\* minetest\\server\\ && rmdir /Q /S minetest\\server\\minetest-{{ServerVersion}}-win64",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Minetest Download",
@@ -34,14 +35,16 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd ./minetest/.appimage && chmod +x Minetest-{{ServerVersion}}-x86_64.AppImage && ./Minetest-{{ServerVersion}}-x86_64.AppImage --appimage-extract && rm -f Minetest-{{ServerVersion}}-x86_64.AppImage'"
+        "UpdateSourceArgs":"-c 'cd ./minetest/.appimage && chmod +x Minetest-{{ServerVersion}}-x86_64.AppImage && ./Minetest-{{ServerVersion}}-x86_64.AppImage --appimage-extract && rm -f Minetest-{{ServerVersion}}-x86_64.AppImage'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"AppImage Directory Symlink Creation",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd ./minetest && rm -rf server ; ln -s .appimage/squashfs-root/usr server'"
+        "UpdateSourceArgs":"-c 'cd ./minetest && rm -rf server ; ln -s .appimage/squashfs-root/usr server'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Mods Directory Creation",

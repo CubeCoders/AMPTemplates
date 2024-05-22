@@ -45,6 +45,7 @@
         "DefaultValue":"TheIsland_WP",
         "EnumValues":{
             "TheIsland_WP":"The Island (default)",
+            "ScorchedEarth_WP":"Scorched Earth",
             "{{CustomMap}}":"--Custom--"
         }
     },
@@ -124,14 +125,52 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Player Whitelist",
+        "Category":"ARK Server Settings",
+        "Description":"If set, only players with EOS IDs listed under Whitelisted Players or Whitelisted Players Above Limit can join the server",
+        "Keywords":"player,whitelist,exclusivejoin",
+        "FieldName":"exclusivejoin",
+        "InputType":"checkbox",
+        "ParamFieldName":"exclusivejoin",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-exclusivejoin "
+        }
+    },
+    {
+        "DisplayName":"Whitelisted Players",
+        "Category":"ARK Server Settings",
+        "Description":"List of EOS IDs for normal whitelisted players. EOS IDs can be found by using the 'whoami' command, by viewing another player's character in spectator mode, or by inspecting the server's log files",
+        "Keywords":"player,whitelist,playersexclusivejoinlist",
+        "FieldName":"PlayerWhitelist",
+        "InputType":"list",
+        "ParamFieldName":"PlayerWhitelist",
+        "DefaultValue":"",
+        "Special":"listfile:./ark-sa/2430930/ShooterGame/Binaries/Win64/PlayersExclusiveJoinList.txt",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Whitelisted Players Above Limit",
+        "Category":"ARK Server Settings",
+        "Description":"List of EOS IDs for whitelisted players who can join the server even if the number of player slots is exhausted",
+        "Keywords":"player,whitelist,above,limit,PlayersJoinNoCheckList",
+        "FieldName":"PlayerWhitelistAboveLimit",
+        "InputType":"list",
+        "ParamFieldName":"PlayerWhitelistAboveLimit",
+        "DefaultValue":"",
+        "Special":"listfile:./ark-sa/2430930/ShooterGame/Binaries/Win64/PlayersJoinNoCheckList.txt",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Player Limit",
         "Category":"ARK Server Settings",
-        "Description":"Sets the maximum number of players allowed on the server",
+        "Description":"Sets the maximum number of players allowed on the server. May be exceeded as a result of players listed under Whitelisted Players Above Limit",
         "Keywords":"max,players,limit,maxplayers",
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "MinValue":"1",
-        "ParamFieldName":"MaxPlayers",
+        "ParamFieldName":"/Script/Engine.GameSession.MaxPlayers",
         "DefaultValue":"70",
         "Placeholder":"70",
         "Suffix":"players",
@@ -182,8 +221,8 @@
         "FieldName":"BanListURL",
         "InputType":"text",
         "ParamFieldName":"ServerSettings.BanListURL",
-        "DefaultValue":"http://arkdedicated.com/banlist.txt",
-        "Placeholder":"http://arkdedicated.com/banlist.txt",
+        "DefaultValue":"https://cdn2.arkdedicated.com/asa/BanList.txt",
+        "Placeholder":"https://cdn2.arkdedicated.com/asa/BanList.txt",
         "EnumValues":{}
     },
     {
@@ -193,8 +232,8 @@
         "Keywords":"admin,log,chat,adminlogging",
         "FieldName":"AdminLogging",
         "InputType":"checkbox",
-        "ParamFieldName":"AdminLogging",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.AdminLogging",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -223,8 +262,8 @@
         "FieldName":"KickIdlePlayersPeriod",
         "InputType":"number",
         "MinValue":"1",
-        "ParamFieldName":"KickIdlePlayersPeriod",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.KickIdlePlayersPeriod",
+        "IncludeInCommandLine":false,
         "DefaultValue":"3600",
         "Placeholder":"3600",
         "Suffix":"seconds",
@@ -239,8 +278,8 @@
         "InputType":"number",
         "MinValue":"0",
         "MaxValue":"9000000",
-        "ParamFieldName":"AutoSavePeriodMinutes",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.AutoSavePeriodMinutes",
+        "IncludeInCommandLine":false,
         "DefaultValue":"15.0",
         "Placeholder":"15.0",
         "Suffix":"minutes",
@@ -258,6 +297,20 @@
         "EnumValues":{
             "False":"",
             "True":"-NoHangDetection "
+        }
+    },
+    {
+        "DisplayName":"Filter Transfers",
+        "Category":"ARK Server Settings",
+        "Description":"If set, prevents ARK data usage between single player and servers that do not have a Cluster ID set. Even with a Cluster ID set, it is suggested to enable this option",
+        "Keywords":"filter,data,transfer,notransferfromfiltering",
+        "FieldName":"NoTransferFromFiltering",
+        "InputType":"checkbox",
+        "ParamFieldName":"NoTransferFromFiltering",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-NoTransferFromFiltering "
         }
     },
     {
@@ -327,8 +380,8 @@
         "Keywords":"pve,pvp,serverpve",
         "FieldName":"ServerPVE",
         "InputType":"checkbox",
-        "ParamFieldName":"ServerPVE",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.ServerPVE",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -342,8 +395,8 @@
         "Keywords":"offline,pvp,raiding,prevention,preventofflinepvp",
         "FieldName":"PreventOfflinePvP",
         "InputType":"checkbox",
-        "ParamFieldName":"PreventOfflinePvP",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PreventOfflinePvP",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -357,8 +410,8 @@
         "Keywords":"offline,pvp,raiding,prevention,preventofflinepvpinterval",
         "FieldName":"PreventOfflinePvPInterval",
         "InputType":"number",
-        "ParamFieldName":"PreventOfflinePvPInterval",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PreventOfflinePvPInterval",
+        "IncludeInCommandLine":false,
         "DefaultValue":"0.0",
         "Placeholder":"0.0",
         "Suffix":"seconds",
@@ -371,8 +424,8 @@
         "Keywords":"hardcore,serverhardcore",
         "FieldName":"ServerHardcore",
         "InputType":"checkbox",
-        "ParamFieldName":"ServerHardcore",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.ServerHardcore",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -415,8 +468,8 @@
         "InputType":"number",
         "MinValue":"0",
         "MaxValue":"1",
-        "ParamFieldName":"DifficultyOffset",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DifficultyOffset",
+        "IncludeInCommandLine":false,
         "DefaultValue":"0.200000",
         "Placeholder":"0.200000",
         "EnumValues":{}
@@ -428,8 +481,8 @@
         "Keywords":"crosshair,servercrosshair",
         "FieldName":"ServerCrosshair",
         "InputType":"checkbox",
-        "ParamFieldName":"ServerCrosshair",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.ServerCrosshair",
+        "IncludeInCommandLine":false,
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -443,8 +496,8 @@
         "Keywords":"hud,head-up,heads-up,display,serverforcenohud",
         "FieldName":"ServerForceNoHUD",
         "InputType":"checkbox",
-        "ParamFieldName":"ServerForceNoHUD",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.ServerForceNoHUD",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -458,8 +511,8 @@
         "Keywords":"player,position,location,map,showmapplayerlocation",
         "FieldName":"ShowMapPlayerLocation",
         "InputType":"checkbox",
-        "ParamFieldName":"ShowMapPlayerLocation",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.ShowMapPlayerLocation",
+        "IncludeInCommandLine":false,
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -473,8 +526,8 @@
         "Keywords":"third,person,3rd,view,camera,allowthirdpersonplayer",
         "FieldName":"AllowThirdPersonPlayer",
         "InputType":"checkbox",
-        "ParamFieldName":"AllowThirdPersonPlayer",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.AllowThirdPersonPlayer",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -488,8 +541,8 @@
         "Keywords":"show,floating,damage,text,showfloatingdamagetext",
         "FieldName":"ShowFloatingDamageText",
         "InputType":"checkbox",
-        "ParamFieldName":"ShowFloatingDamageText",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.ShowFloatingDamageText",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -503,8 +556,8 @@
         "Keywords":"prevent,spawn,animations,preventspawnanimations",
         "FieldName":"PreventSpawnAnimations",
         "InputType":"checkbox",
-        "ParamFieldName":"PreventSpawnAnimations",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PreventSpawnAnimations",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -518,8 +571,8 @@
         "Keywords":"prevent,mate,boost,preventmateboost",
         "FieldName":"PreventMateBoost",
         "InputType":"checkbox",
-        "ParamFieldName":"PreventMateBoost",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PreventMateBoost",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -533,8 +586,8 @@
         "Keywords":"allow,hit,markers,allowhitmarkers",
         "FieldName":"AllowHitMarkers",
         "InputType":"checkbox",
-        "ParamFieldName":"AllowHitMarkers",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.AllowHitMarkers",
+        "IncludeInCommandLine":false,
         "DefaultValue":"True",
         "EnumValues":{
             "False":"False",
@@ -548,8 +601,8 @@
         "Keywords":"maximum,tamed,creatures,limit,maxtameddinos",
         "FieldName":"MaxTamedDinos",
         "InputType":"number",
-        "ParamFieldName":"MaxTamedDinos",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.MaxTamedDinos",
+        "IncludeInCommandLine":false,
         "DefaultValue":"5000",
         "Placeholder":"5000",
         "EnumValues":{}
@@ -561,8 +614,8 @@
         "Keywords":"maximum,tamed,personal,creatures,limit,maxpersonaltameddinos",
         "FieldName":"MaxPersonalTamedDinos",
         "InputType":"number",
-        "ParamFieldName":"MaxPersonalTamedDinos",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.MaxPersonalTamedDinos",
+        "IncludeInCommandLine":false,
         "DefaultValue":"0",
         "Placeholder":"0",
         "EnumValues":{}
@@ -575,8 +628,8 @@
         "FieldName":"MaxTributeDinos",
         "InputType":"number",
         "MinValue":"20",
-        "ParamFieldName":"MaxTributeDinos",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.MaxTributeDinos",
+        "IncludeInCommandLine":false,
         "DefaultValue":"20",
         "Placeholder":"20",
         "EnumValues":{}
@@ -588,8 +641,8 @@
         "Keywords":"maximum,structures,limit,themaxstructuresinrange",
         "FieldName":"TheMaxStructuresInRange",
         "InputType":"number",
-        "ParamFieldName":"TheMaxStructuresInRange",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.TheMaxStructuresInRange",
+        "IncludeInCommandLine":false,
         "DefaultValue":"10500",
         "Placeholder":"10500",
         "EnumValues":{}
@@ -602,8 +655,8 @@
         "FieldName":"MaxTributeItems",
         "InputType":"number",
         "MinValue":"50",
-        "ParamFieldName":"MaxTributeItems",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.MaxTributeItems",
+        "IncludeInCommandLine":false,
         "DefaultValue":"50",
         "Placeholder":"50",
         "EnumValues":{}
@@ -628,8 +681,8 @@
         "Keywords":"prevent,tribe,alliances,preventtribealliances",
         "FieldName":"PreventTribeAlliances",
         "InputType":"checkbox",
-        "ParamFieldName":"PreventTribeAlliances",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PreventTribeAlliances",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -671,8 +724,8 @@
         "Keywords":"pvp,gamma,enablepvpgamma",
         "FieldName":"EnablePvPGamma",
         "InputType":"checkbox",
-        "ParamFieldName":"EnablePvPGamma",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.EnablePvPGamma",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -686,8 +739,8 @@
         "Keywords":"pve,gamma,disablepvegamma",
         "FieldName":"DisablePvEGamma",
         "InputType":"checkbox",
-        "ParamFieldName":"DisablePvEGamma",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DisablePvEGamma",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -715,8 +768,8 @@
         "Keywords":"voice,chat,globalvoicechat",
         "FieldName":"GlobalVoiceChat",
         "InputType":"checkbox",
-        "ParamFieldName":"GlobalVoiceChat",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.GlobalVoiceChat",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -730,8 +783,8 @@
         "Keywords":"proximity,chat,proximitychat",
         "FieldName":"ProximityChat",
         "InputType":"checkbox",
-        "ParamFieldName":"ProximityChat",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.ProximityChat",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -759,8 +812,8 @@
         "Keywords":"pve,flyer,carry,allowflyercarrypve",
         "FieldName":"AllowFlyerCarryPvE",
         "InputType":"checkbox",
-        "ParamFieldName":"AllowFlyerCarryPvE",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.AllowFlyerCarryPvE",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -884,8 +937,8 @@
         "Keywords":"pve,dino,decay,unclaim,disabledinodecaypve",
         "FieldName":"DisableDinoDecayPvE",
         "InputType":"checkbox",
-        "ParamFieldName":"DisableDinoDecayPvE",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DisableDinoDecayPvE",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -899,8 +952,8 @@
         "Keywords":"pvp,dino,decay,unclaim,pvpdinodecay",
         "FieldName":"PvPDinoDecay",
         "InputType":"checkbox",
-        "ParamFieldName":"PvPDinoDecay",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PvPDinoDecay",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -928,8 +981,8 @@
         "Keywords":"prevent,diseases,preventdiseases",
         "FieldName":"PreventDiseases",
         "InputType":"checkbox",
-        "ParamFieldName":"PreventDiseases",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PreventDiseases",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -943,8 +996,8 @@
         "Keywords":"non,permanent,diseases,nonpermanentdiseases",
         "FieldName":"NonPermanentDiseases",
         "InputType":"checkbox",
-        "ParamFieldName":"NonPermanentDiseases",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.NonPermanentDiseases",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -958,8 +1011,8 @@
         "Keywords":"care,baby,creature,cuddle,imprint,allowanyonebabyimprintcuddle",
         "FieldName":"AllowAnyoneBabyImprintCuddle",
         "InputType":"checkbox",
-        "ParamFieldName":"AllowAnyoneBabyImprintCuddle",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.AllowAnyoneBabyImprintCuddle",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -973,8 +1026,8 @@
         "Keywords":"buff,creature,imprint,disableimprintdinobuff",
         "FieldName":"DisableImprintDinoBuff",
         "InputType":"checkbox",
-        "ParamFieldName":"DisableImprintDinoBuff",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DisableImprintDinoBuff",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -988,8 +1041,8 @@
         "Keywords":"raid,dinosaur,titanosaur,taming,feeding,AllowRaidDinoFeeding",
         "FieldName":"AllowRaidDinoFeeding",
         "InputType":"checkbox",
-        "ParamFieldName":"AllowRaidDinoFeeding",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.AllowRaidDinoFeeding",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1003,8 +1056,8 @@
         "Keywords":"c4,multiple,attached,allowmultipleattachedc4",
         "FieldName":"AllowMultipleAttachedC4",
         "InputType":"checkbox",
-        "ParamFieldName":"AllowMultipleAttachedC4",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.AllowMultipleAttachedC4",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1018,8 +1071,8 @@
         "Keywords":"weather,fog,disableweatherfog",
         "FieldName":"DisableWeatherFog",
         "InputType":"checkbox",
-        "ParamFieldName":"DisableWeatherFog",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DisableWeatherFog",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1033,8 +1086,8 @@
         "Keywords":"random,supply,crate,points,randomsupplycratepoints",
         "FieldName":"RandomSupplyCratePoints",
         "InputType":"checkbox",
-        "ParamFieldName":"RandomSupplyCratePoints",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.RandomSupplyCratePoints",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1048,10 +1101,22 @@
         "Keywords":"day,night,cycle,speed,multiplier,daycyclespeedscale",
         "FieldName":"DayCycleSpeedScale",
         "InputType":"number",
-        "ParamFieldName":"DayCycleSpeedScale",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DayCycleSpeedScale",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Day/Night Cycle Speed Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"DayCycleSpeedScale",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"DayCycleSpeedScale",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1061,10 +1126,22 @@
         "Keywords":"day,time,speed,multiplier,daytimespeedscale",
         "FieldName":"DayTimeSpeedScale",
         "InputType":"number",
-        "ParamFieldName":"DayTimeSpeedScale",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DayTimeSpeedScale",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Day Time Speed Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"DayTimeSpeedScale",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"DayTimeSpeedScale",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1074,10 +1151,22 @@
         "Keywords":"night,time,speed,multiplier,nighttimespeedscale",
         "FieldName":"NightTimeSpeedScale",
         "InputType":"number",
-        "ParamFieldName":"NightTimeSpeedScale",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.NightTimeSpeedScale",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Night Time Speed Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"NightTimeSpeedScale",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"NightTimeSpeedScale",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1087,10 +1176,22 @@
         "Keywords":"xp,experience,multiplier,xpmultiplier",
         "FieldName":"XPMultiplier",
         "InputType":"number",
-        "ParamFieldName":"XPMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.XPMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"XP Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"XPMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"XPMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1100,10 +1201,22 @@
         "Keywords":"player,food,drain,hunger,multiplier,playercharacterfooddrainmultiplier",
         "FieldName":"PlayerCharacterFoodDrainMultiplier",
         "InputType":"number",
-        "ParamFieldName":"PlayerCharacterFoodDrainMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PlayerCharacterFoodDrainMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Food Drain Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"PlayerCharacterFoodDrainMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"PlayerCharacterFoodDrainMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1113,10 +1226,22 @@
         "Keywords":"player,water,drain,thirst,multiplier,playercharacterwaterdrainmultiplier",
         "FieldName":"PlayerCharacterWaterDrainMultiplier",
         "InputType":"number",
-        "ParamFieldName":"PlayerCharacterWaterDrainMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PlayerCharacterWaterDrainMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Water Drain Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"PlayerCharacterWaterDrainMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"PlayerCharacterWaterDrainMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1126,10 +1251,22 @@
         "Keywords":"player,health,recovery,multiplier,playercharacterhealthrecoverymultiplier",
         "FieldName":"PlayerCharacterHealthRecoveryMultiplier",
         "InputType":"number",
-        "ParamFieldName":"PlayerCharacterHealthRecoveryMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PlayerCharacterHealthRecoveryMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Health Recovery Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"PlayerCharacterHealthRecoveryMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"PlayerCharacterHealthRecoveryMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1139,10 +1276,22 @@
         "Keywords":"player,stamina,drain,multiplier,playercharacterstaminadrainmultiplier",
         "FieldName":"PlayerCharacterStaminaDrainMultiplier",
         "InputType":"number",
-        "ParamFieldName":"PlayerCharacterStaminaDrainMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PlayerCharacterStaminaDrainMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Stamina Drain Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"PlayerCharacterStaminaDrainMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"PlayerCharacterStaminaDrainMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1152,10 +1301,22 @@
         "Keywords":"player,damage,multiplier,playerdamagemultiplier",
         "FieldName":"PlayerDamageMultiplier",
         "InputType":"number",
-        "ParamFieldName":"PlayerDamageMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PlayerDamageMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Damage Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"PlayerDamageMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"PlayerDamageMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1165,10 +1326,22 @@
         "Keywords":"player,resistance,multiplier,playerresistancemultiplier",
         "FieldName":"PlayerResistanceMultiplier",
         "InputType":"number",
-        "ParamFieldName":"PlayerResistanceMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PlayerResistanceMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Resistance Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"PlayerResistanceMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"PlayerResistanceMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1178,10 +1351,22 @@
         "Keywords":"creature,food,drain,hunger,multiplier,dinocharacterfooddrainmultiplier",
         "FieldName":"DinoCharacterFoodDrainMultiplier",
         "InputType":"number",
-        "ParamFieldName":"DinoCharacterFoodDrainMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DinoCharacterFoodDrainMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Creature Food Drain Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"DinoCharacterFoodDrainMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"DinoCharacterFoodDrainMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1191,10 +1376,22 @@
         "Keywords":"creature,health,recovery,multiplier,dinocharacterhealthrecoverymultiplier",
         "FieldName":"DinoCharacterHealthRecoveryMultiplier",
         "InputType":"number",
-        "ParamFieldName":"DinoCharacterHealthRecoveryMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DinoCharacterHealthRecoveryMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Creature Health Recovery Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"DinoCharacterHealthRecoveryMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"DinoCharacterHealthRecoveryMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1204,10 +1401,22 @@
         "Keywords":"creature,stamina,drain,multiplier,dinocharacterstaminadrainmultiplier",
         "FieldName":"DinoCharacterStaminaDrainMultiplier",
         "InputType":"number",
-        "ParamFieldName":"DinoCharacterStaminaDrainMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DinoCharacterStaminaDrainMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Creature Stamina Drain Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"DinoCharacterStaminaDrainMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"DinoCharacterStaminaDrainMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1217,10 +1426,22 @@
         "Keywords":"creature,damage,multiplier,dinodamagemultiplier",
         "FieldName":"DinoDamageMultiplier",
         "InputType":"number",
-        "ParamFieldName":"DinoDamageMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DinoDamageMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Creature Damage Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"DinoDamageMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"DinoDamageMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1230,10 +1451,22 @@
         "Keywords":"creature,resistance,multiplier,dinoresistancemultiplier",
         "FieldName":"DinoResistanceMultiplier",
         "InputType":"number",
-        "ParamFieldName":"DinoResistanceMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DinoResistanceMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Creature Resistance Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"DinoResistanceMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"DinoResistanceMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1243,8 +1476,8 @@
         "Keywords":"pve,creature,decay,period,multiplier,pvedinodecayperiodmultiplier",
         "FieldName":"PvEDinoDecayPeriodMultiplier",
         "InputType":"number",
-        "ParamFieldName":"PvEDinoDecayPeriodMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PvEDinoDecayPeriodMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
         "EnumValues":{}
@@ -1256,8 +1489,8 @@
         "Keywords":"structure,prevent,resources,radius,mutiplier,StructurePreventResourceRadiusMultiplier",
         "FieldName":"StructurePreventResourceRadiusMultiplier",
         "InputType":"number",
-        "ParamFieldName":"StructurePreventResourceRadiusMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.StructurePreventResourceRadiusMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
         "EnumValues":{}
@@ -1269,10 +1502,22 @@
         "Keywords":"structure,resistance,multiplier,structureresistancemultiplier",
         "FieldName":"StructureResistanceMultiplier",
         "InputType":"number",
-        "ParamFieldName":"StructureResistanceMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.StructureResistanceMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Structure Resistance Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"StructureResistanceMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"StructureResistanceMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1282,8 +1527,8 @@
         "Keywords":"saddle,platform,raft,structure,multiplier,perplatformmaxstructuresmultiplier",
         "FieldName":"PerPlatformMaxStructuresMultiplier",
         "InputType":"number",
-        "ParamFieldName":"PerPlatformMaxStructuresMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PerPlatformMaxStructuresMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
         "EnumValues":{}
@@ -1295,10 +1540,22 @@
         "Keywords":"harvest,yield,multiplier,harvestamountmultiplier",
         "FieldName":"HarvestAmountMultiplier",
         "InputType":"number",
-        "ParamFieldName":"HarvestAmountMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.HarvestAmountMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Harvest Amount Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"HarvestAmountMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"HarvestAmountMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1308,10 +1565,22 @@
         "Keywords":"harvest,health,multiplier,harvesthealthmultiplier",
         "FieldName":"HarvestHealthMultiplier",
         "InputType":"number",
-        "ParamFieldName":"HarvestHealthMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.HarvestHealthMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Harvest Health Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"HarvestHealthMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"HarvestHealthMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1321,10 +1590,22 @@
         "Keywords":"resource,respawn,period,multiplier,resourcesrespawnperiodmultiplier",
         "FieldName":"ResourcesRespawnPeriodMultiplier",
         "InputType":"number",
-        "ParamFieldName":"ResourcesRespawnPeriodMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.ResourcesRespawnPeriodMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Resources Respawn Period Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"ResourcesRespawnPeriodMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"ResourcesRespawnPeriodMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1334,10 +1615,22 @@
         "Keywords":"taming,speed,multiplier,tamingspeedmultiplier",
         "FieldName":"TamingSpeedMultiplier",
         "InputType":"number",
-        "ParamFieldName":"TamingSpeedMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.TamingSpeedMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Creature Taming Speed Multiplier",
+        "Category":"ARK Multiplier Settings",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"TamingSpeedMultiplier",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"TamingSpeedMultiplier",
+        "IncludeInCommandLine":true,
         "EnumValues":{}
     },
     {
@@ -1347,8 +1640,8 @@
         "Keywords":"swim,speed,oxygen,oxygenswimspeedstatmultiplier",
         "FieldName":"OxygenSwimSpeedStatMultiplier",
         "InputType":"number",
-        "ParamFieldName":"OxygenSwimSpeedStatMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.OxygenSwimSpeedStatMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
         "EnumValues":{}
@@ -1360,8 +1653,8 @@
         "Keywords":"item,stack,size,ItemStackSizeMultiplier",
         "FieldName":"ItemStackSizeMultiplier",
         "InputType":"number",
-        "ParamFieldName":"ItemStackSizeMultiplier",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.ItemStackSizeMultiplier",
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
         "EnumValues":{}
@@ -1374,7 +1667,7 @@
         "FieldName":"RaidDinoCharacterFoodDrainMultiplier",
         "InputType":"number",
         "ParamFieldName":"RaidDinoCharacterFoodDrainMultiplier",
-        "IncludeInCommandLine":true,
+        "IncludeInCommandLine":false,
         "DefaultValue":"1.000000",
         "Placeholder":"1.000000",
         "EnumValues":{}
@@ -1400,8 +1693,8 @@
         "Keywords":"pve,structure,decay,disablestructuredecaypve",
         "FieldName":"DisableStructureDecayPvE",
         "InputType":"checkbox",
-        "ParamFieldName":"DisableStructureDecayPvE",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.DisableStructureDecayPvE",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1415,8 +1708,8 @@
         "Keywords":"override,structure,platform,overridestructureplatformprevention",
         "FieldName":"OverrideStructurePlatformPrevention",
         "InputType":"checkbox",
-        "ParamFieldName":"OverrideStructurePlatformPrevention",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.OverrideStructurePlatformPrevention",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1430,8 +1723,8 @@
         "Keywords":"rich,resources,block,building,extra,structure,prevention,enableextrastructurepreventionvolumes",
         "FieldName":"EnableExtraStructurePreventionVolumes",
         "InputType":"checkbox",
-        "ParamFieldName":"EnableExtraStructurePreventionVolumes",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.EnableExtraStructurePreventionVolumes",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1445,8 +1738,8 @@
         "Keywords":"pve,supply,drops,structures,pveallowstructuresatsupplydrops",
         "FieldName":"PvEAllowStructuresAtSupplyDrops",
         "InputType":"checkbox",
-        "ParamFieldName":"PvEAllowStructuresAtSupplyDrops",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.PvEAllowStructuresAtSupplyDrops",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1474,8 +1767,8 @@
         "Keywords":"quick,pickup,pick-up,timer,AlwaysAllowStructurePickup",
         "FieldName":"AlwaysAllowStructurePickup",
         "InputType":"checkbox",
-        "ParamFieldName":"AlwaysAllowStructurePickup",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.AlwaysAllowStructurePickup",
+        "IncludeInCommandLine":false,
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -1490,8 +1783,8 @@
         "FieldName":"StructurePickupHoldDuration",
         "InputType":"number",
         "MinValue":"0",
-        "ParamFieldName":"StructurePickupHoldDuration",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.StructurePickupHoldDuration",
+        "IncludeInCommandLine":false,
         "DefaultValue":"0.5",
         "Placeholder":"0.5",
         "EnumValues":{}
@@ -1503,12 +1796,191 @@
         "Keywords":"structure,pickup,pick-up,time,placement,StructurePickupTimeAfterPlacement",
         "FieldName":"StructurePickupTimeAfterPlacement",
         "InputType":"number",
-        "ParamFieldName":"StructurePickupTimeAfterPlacement",
-        "IncludeInCommandLine":true,
+        "ParamFieldName":"ServerSettings.StructurePickupTimeAfterPlacement",
+        "IncludeInCommandLine":false,
         "DefaultValue":"30.0",
         "Placeholder":"30.0",
         "Suffix":"seconds",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Cluster Directory Override",
+        "Category":"ARK Cluster Settings",
+        "Description":"Sets the path to a shared cluster directory for a server cluster. The cluster directory must be accessible to all cluster servers. If the server is in Docker, the directory must be mounted in the container",
+        "Keywords":"cluster,directory,override,clusterdiroverride",
+        "FieldName":"ClusterDirOverride",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ClusterDirOverride",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Cluster ID",
+        "Category":"ARK Cluster Settings",
+        "Description":"Sets the cluster ID for a server cluster. The cluster ID must be the same on all servers in the cluster",
+        "Keywords":"cluster,id,clusterid",
+        "FieldName":"clusterID",
+        "InputType":"text",
+        "IsFlagArgument":false,
+        "ParamFieldName":"clusterID",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Prevent Character Download",
+        "Category":"ARK Cluster Settings",
+        "Description":"If set, prevents the download of characters from a cluster to the server",
+        "Keywords":"prevent,download,tribute,characters,data,transfer,cluster,notributedownloads",
+        "FieldName":"NoTributeDownloads",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.NoTributeDownloads",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent Survivor Download",
+        "Category":"ARK Cluster Settings",
+        "Description":"If set, prevents the download of survivors from a cluster to the server",
+        "Keywords":"prevent,download,survivor,data,transfer,cluster,preventdownloadsurvivors",
+        "FieldName":"PreventDownloadSurvivors",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PreventDownloadSurvivors",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent Item Download",
+        "Category":"ARK Cluster Settings",
+        "Description":"If set, prevents the download of items from a cluster to the server",
+        "Keywords":"prevent,download,items,data,transfer,cluster,preventdownloaditems",
+        "FieldName":"PreventDownloadItems",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PreventDownloadItems",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent Creature Download",
+        "Category":"ARK Cluster Settings",
+        "Description":"If set, prevents the download of tamed creatures from a cluster to the server",
+        "Keywords":"prevent,download,creatures,data,transfer,cluster,preventdownloaddinos",
+        "FieldName":"PreventDownloadDinos",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PreventDownloadDinos",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent Survivor Upload",
+        "Category":"ARK Cluster Settings",
+        "Description":"If set, prevents the upload of survivors from the server to a cluster",
+        "Keywords":"prevent,upload,survivor,data,transfer,cluster,preventuploadsurvivors",
+        "FieldName":"PreventUploadSurvivors",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PreventUploadSurvivors",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent Item Upload",
+        "Category":"ARK Cluster Settings",
+        "Description":"If set, prevents the upload of items from the server to a cluster",
+        "Keywords":"prevent,upload,items,data,transfer,cluster,preventuploaditems",
+        "FieldName":"PreventUploadItems",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PreventUploadItems",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Prevent Creature Upload",
+        "Category":"ARK Cluster Settings",
+        "Description":"If set, prevents the upload of tamed creatures from the server to a cluster",
+        "Keywords":"prevent,upload,creatures,data,transfer,cluster,preventuploaddinos",
+        "FieldName":"PreventUploadDinos",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"ServerSettings.PreventUploadDinos",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Proton GE Release",
+        "Category":"SteamCMD and Updates",
+        "Description":"Sets the Proton GE release build to install. If \"Specific version\" is selected, the version must be set under Specific Proton GE Release Version. Update the server after changing this setting",
+        "Keywords":"proton,release,latest,specific",
+        "FieldName":"ProtonRelease",
+        "InputType":"enum",
+        "ParamFieldName":"ProtonRelease",
+        "DefaultValue":"latest",
+        "EnumValues":{
+            "latest":"Latest (default)",
+            "specificversion":"Specific version"
+        }
+    },
+    {
+        "DisplayName":"Specific Proton GE Release Version",
+        "Category":"SteamCMD and Updates",
+        "Description":"Sets the [release version](https://github.com/GloriousEggroll/proton-ge-custom/releases) for a specific Proton GE release build to install, if \"Specific version\" is selected under Proton GE Release. Example: GE-Proton9-1",
+        "Keywords":"proton,release,specific,version",
+        "FieldName":"SpecificReleaseVersion",
+        "InputType":"text",
+        "ParamFieldName":"SpecificReleaseVersion",
+        "DefaultValue":"",
+        "Placeholder":"GE-Proton9-1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Executable",
+        "Category":"SteamCMD and Updates",
+        "Description":"Sets whether to run the vanilla server or the [ServerAPI launcher](https://github.com/ArkServerApi/AsaApi). NOTE: Update the server after selecting the ServerAPI launcher",
+        "Keywords":"serverapi,api,launcher,vanilla",
+        "FieldName":"ServerExecutable",
+        "InputType":"enum",
+        "ParamFieldName":"ServerExecutable",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"ArkAscendedServer",
+        "EnumValues":{
+            "ArkAscendedServer":"Vanilla server (default)",
+            "AsaApiLoader":"ServerAPI launcher"
+        }
     },
     {
         "DisplayName":"Download Backup Exclusion Files",

@@ -89,14 +89,14 @@
         "DisplayName":"Make Community Server",
         "Category":"Palworld Server Settings",
         "Description":"If enabled, the server will appear in the list of community servers in-game",
-        "Keywords":"community,server,public,list",
+        "Keywords":"community,server,public,list,epicapp,palserver,publiclobby",
         "FieldName":"CommunityServer",
         "InputType":"checkbox",
         "ParamFieldName":"CommunityServer",
-        "DefaultValue":"EpicApp=PalServer ",
+        "DefaultValue":"-publiclobby ",
         "EnumValues":{
             "False":"",
-            "True":"EpicApp=PalServer "
+            "True":"-publiclobby "
         }
     },
     {
@@ -128,7 +128,7 @@
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "MinValue":"1",
-        "MaxValue":"32",
+        "MaxValue":"64",
         "ParamFieldName":"ServerPlayerMaxNum",
         "DefaultValue":"32",
         "Placeholder":"32",
@@ -150,10 +150,24 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Show Player List",
+        "Category":"Palworld Server Settings",
+        "Description":"If set, the player list can be shown in-game by pressing the ESC key",
+        "Keywords":"show,player,list,bShowPlayerList",
+        "FieldName":"bShowPlayerList",
+        "InputType":"checkbox",
+        "ParamFieldName":"bShowPlayerList",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
         "DisplayName":"Enable Multi-Threaded Performance Improvements",
         "Category":"Palworld Server Settings",
         "Description":"If enabled, the server's performance will be enhanced in multi-threaded CPU environments",
-        "Keywords":"multi,thread,threaded,performance,improvements",
+        "Keywords":"multi,thread,threaded,performance,improvements,useperfthreads,NoAsyncLoadingThread,UseMultithreadForDS",
         "FieldName":"MultiThread",
         "InputType":"checkbox",
         "ParamFieldName":"MultiThread",
@@ -187,6 +201,59 @@
         "ParamFieldName":"BanListURL",
         "DefaultValue":"https://api.palworldgame.com/api/banlist.txt",
         "Placeholder":"https://api.palworldgame.com/api/banlist.txt",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow Connect Platform",
+        "Category":"Palworld Server Settings",
+        "Description":"Sets the allowed connect platform",
+        "Keywords":"allow,connect,platform,AllowConnectPlatform",
+        "FieldName":"AllowConnectPlatform",
+        "InputType":"enum",
+        "ParamFieldName":"AllowConnectPlatform",
+        "DefaultValue":"Steam",
+        "EnumValues":{
+            "Steam":"Steam (default)"
+        }
+    },
+    {
+        "DisplayName":"Enable World Backup",
+        "Category":"Palworld Server Settings",
+        "Description":"If set, the server's automatic backup will be enabled. Disk load will increase",
+        "Keywords":"world,backup,bIsUseBackupSaveData",
+        "FieldName":"bIsUseBackupSaveData",
+        "InputType":"checkbox",
+        "ParamFieldName":"bIsUseBackupSaveData",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Log Format",
+        "Category":"Palworld Server Settings",
+        "Description":"Sets the server's logging format",
+        "Keywords":"log,logging,format,LogFormatType",
+        "FieldName":"LogFormatType",
+        "InputType":"enum",
+        "ParamFieldName":"LogFormatType",
+        "DefaultValue":"Text",
+        "EnumValues":{
+            "Text":"Text (default)",
+            "Json":"JSON"
+        }
+    },
+    {
+        "DisplayName":"Custom Command Line Arguments",
+        "Category":"Palworld Server Settings",
+        "Description":"Sets custom command line arguments. Don't use arguments already in AMP's settings!",
+        "Keywords":"custom,command,line,arguments",
+        "FieldName":"CustomArgs",
+        "InputType":"text",
+        "ParamFieldName":"CustomArgs",
+        "DefaultValue":"",
+        "Placeholder":"-nosteam",
         "EnumValues":{}
     },
     {
@@ -348,6 +415,7 @@
         "FieldName":"BaseCampWorkerMaxNum",
         "InputType":"number",
         "MinValue":"0",
+        "MaxValue":"100",
         "ParamFieldName":"BaseCampWorkerMaxNum",
         "DefaultValue":"15",
         "Placeholder":"15",

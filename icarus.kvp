@@ -9,13 +9,14 @@ Meta.EndpointURIFormat=steam://connect/{ip}:{GenericModule.App.Ports.$QueryPort}
 Meta.ConfigManifest=icarusconfig.json
 Meta.MetaConfigManifest=icarusmetaconfig.json
 Meta.ConfigRoot=icarus.kvp
-Meta.MinAMPVersion=2.4.3.0
+Meta.MinAMPVersion=2.5.0.4
 Meta.SpecificDockerImage=cubecoders/ampbase:wine8
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
 Meta.ContainerPolicyReason=The server requires Wine 7 (or later) to run on Linux. Using a container avoids the need to install this dependency on the host.
 Meta.ExtraSetupStepsURI=
 Meta.Prerequsites=[]
 Meta.ConfigReleaseState=NotSpecified
+Meta.AppConfigId=630a4794-6466-4de6-956d-91393d6f48e1
 App.DisplayName=Icarus
 App.RootDir=./icarus/
 App.BaseDirectory=./icarus/2089300/
@@ -55,16 +56,15 @@ App.RCONConnectRetrySeconds=5
 App.RCONHeartbeatMinutes=0
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat={0}
-App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"2089300","UpdateSourceVersion":"{{ServerBranch}}","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Create Config Directory","UpdateSourcePlatform":"All","UpdateSource":"CreateDirectory","UpdateSourceArgs":"{{$FullBaseDir}}Icarus/Saved/Config/WindowsServer","OverwriteExistingFiles":false},{"UpdateStageName":"Config File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/icarusserversettings.ini","UpdateSourceArgs":"ServerSettings.ini","UpdateSourceTarget":"{{$FullBaseDir}}Icarus/Saved/Config/WindowsServer/","OverwriteExistingFiles":false},{"UpdateStageName":"Initialise Wine","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 /usr/bin/wineboot --init --update'"}]
+App.UpdateSources=[{"UpdateStageName":"SteamCMD Download","UpdateSourcePlatform":"All","UpdateSource":"SteamCMD","UpdateSourceData":"2089300","UpdateSourceVersion":"{{ServerBranch}}","ForceDownloadPlatform":"Windows"},{"UpdateStageName":"Create Config Directory","UpdateSourcePlatform":"All","UpdateSource":"CreateDirectory","UpdateSourceArgs":"{{$FullBaseDir}}Icarus/Saved/Config/WindowsServer","OverwriteExistingFiles":false},{"UpdateStageName":"Config File Download","UpdateSourcePlatform":"All","UpdateSource":"FetchURL","UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/icarusserversettings.ini","UpdateSourceArgs":"ServerSettings.ini","UpdateSourceTarget":"{{$FullBaseDir}}Icarus/Saved/Config/WindowsServer/","OverwriteExistingFiles":false},{"UpdateStageName":"Initialise Wine","UpdateSourcePlatform":"Linux","UpdateSource":"Executable","UpdateSourceData":"/bin/bash","UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update'","SkipOnFailure":false}]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
 App.RapidStartup=False
-App.MonitorChildProcessName=Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe
+App.MonitorChildProcessName=^.*IcarusServer-Win64-Shipping\.exe.*-Port={{$GamePort}}.*$
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RegexMatch
-App.TemplateMatchRegex={{(\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|Could not find Wine Gecko.*)$

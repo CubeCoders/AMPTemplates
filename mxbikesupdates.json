@@ -1,0 +1,62 @@
+[
+    {
+        "UpdateStageName":"Game Files Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"655500",
+        "UpdateSourceArgs":"655500",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "ForceDownloadPlatform":"Windows"
+    },
+    {
+        "UpdateStageName":"Standalone Patch Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"http://www.mx-bikes.com/downloads/mxbikes.exe",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Results Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}results"
+    },
+    {
+        "UpdateStageName":"Replays Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}replays"
+    },
+    {
+        "UpdateStageName":"Config File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/mxbikesdedicated.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceArgs":"dedicated.ini",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Whitelist.txt Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"",
+        "UpdateSourceArgs":"{{$FullBaseDir}}whitelist.txt"
+    },
+    {
+        "UpdateStageName":"Blacklist.txt Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"",
+        "UpdateSourceArgs":"{{$FullBaseDir}}blacklist.txt"
+    },
+    {
+        "UpdateStageName":"Initialise Wine",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update'",
+        "SkipOnFailure":false
+    }
+]

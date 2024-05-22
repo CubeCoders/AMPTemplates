@@ -2,7 +2,7 @@
     {
         "DisplayName":"App Download Type",
         "Category":"App Runner Settings",
-        "Description":"Sets how to download the app. Specify the App Download Source, GitHub Release Filename, GitHub Release Version and/or PyPI Package Installation Arguments accordingly. Update the server after changing this setting",
+        "Description":"Sets how to download the app. Specify the App Download Source and the relevant Git repo, GitHub release or PyPI package settings accordingly. Update the app after changing this setting",
         "Keywords":"download,type,DownloadType",
         "FieldName":"DownloadType",
         "InputType":"enum",
@@ -11,7 +11,7 @@
         "EnumValues":{
             "DownloadURL":"Download URL",
             "GithubRelease":"GitHub release",
-            "GitRepo":"GitHub repo (default)",
+            "GitRepo":"Git repo (default)",
             "PyPIPackage":"PyPI package",
             "None":"None"
         }
@@ -19,11 +19,44 @@
     {
         "DisplayName":"App Download Source",
         "Category":"App Runner Settings",
-        "Description":"Sets the source for the App Download Type. GitHub repo = URL that ends in .git. GitHub release = User/Repo. Download URL = URL to a zip file. PyPI package = package name (and version if needed). Update the app after changing this setting",
+        "Description":"Sets the source for the App Download Type. Git repo = URL that ends in .git. GitHub release = User/Repo. Download URL = URL to a zip file. PyPI package = package name (and version if needed). Update the app after changing this setting",
         "Keywords":"download,source,DownloadSource",
         "FieldName":"DownloadSource",
         "InputType":"text",
         "ParamFieldName":"DownloadSource",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Git Repo Branch",
+        "Category":"App Runner Settings",
+        "Description":"If \"Git repo\" is selected under App Download Type, sets the branch if required. Blank = default branch",
+        "Keywords":"git,repo,branch,DownloadBranch",
+        "FieldName":"DownloadBranch",
+        "InputType":"text",
+        "ParamFieldName":"DownloadBranch",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Git Repo Username",
+        "Category":"App Runner Settings",
+        "Description":"If \"Git repo\" is selected under App Download Type, sets the username if login is required",
+        "Keywords":"git,repo,username,DownloadUsername",
+        "FieldName":"DownloadUsername",
+        "InputType":"text",
+        "ParamFieldName":"DownloadUsername",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Git Repo Password/Token",
+        "Category":"App Runner Settings",
+        "Description":"If \"Git repo\" is selected under App Download Type, sets the password/token if login is required",
+        "Keywords":"git,repo,password,token,DownloadPassword",
+        "FieldName":"DownloadPassword",
+        "InputType":"password",
+        "ParamFieldName":"DownloadPassword",
         "DefaultValue":"",
         "EnumValues":{}
     },
@@ -142,9 +175,9 @@
         "FieldName":"AppRunMode",
         "InputType":"enum",
         "ParamFieldName":"AppRunMode",
-        "DefaultValue":"./{{AppDir}}/{{AppScriptName}}",
+        "DefaultValue":"{{AppScriptName}}",
         "EnumValues":{
-            "./{{AppDir}}/{{AppScriptName}}":"Python script (default)",
+            "{{AppScriptName}}":"Python script (default)",
             "-m {{AppModuleName}}":"Python module"
         }
     },
@@ -175,7 +208,7 @@
     {
         "DisplayName":"App Subdirectory",
         "Category":"App Runner Settings",
-        "Description":"Sets any applicable subdirectory path under the root directory that the app is installed in, for the purpose of running a script selected under App Script Filename or installing packages with a 'requirements.txt' file under Python Packages Install Method",
+        "Description":"Sets any applicable subdirectory path under the root directory that the app is installed in, for the purpose of running a script selected under App Script Filename or installing packages with a 'requirements.txt' file under Python Packages Install Method. This will set the working directory for running the app accordingly",
         "Keywords":"app,directory,subdirectory,path,AppScriptName",
         "FieldName":"AppDir",
         "InputType":"text",
@@ -186,13 +219,11 @@
     {
         "DisplayName":"App Environment Variables",
         "Category":"App Runner Settings",
-        "Description":"Sets a list of environment variables to run the app with, if applicable. For example, this may include a [Discord bot token](https://discord.com/developers/applications/). Consult any example '.env' file included with the app for relevant variables to specify. This may not work if an App Subdirectory is used",
+        "Description":"To set a list of environment variables to run the app with, create a '.env' file in the working directory. For example, this may include a [Discord bot token](https://discord.com/developers/applications/). Consult any example '.env' file included with the app for relevant variables to specify",
         "Keywords":"environment,variables,EnvVars",
         "FieldName":"EnvVars",
-        "InputType":"list",
+        "InputType":"hidden",
         "ParamFieldName":"EnvVars",
-        "DefaultValue":"",
-        "Special":"listfile:./python-app-runner/.env",
         "EnumValues":{}
     },
     {

@@ -4,7 +4,8 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm {{$FullBaseDir}}ShooterGame/Binaries/Win64'"
+        "UpdateSourceArgs":"-c 'rm {{$FullBaseDir}}ShooterGame/Binaries/Win64 >/dev/null 2>&1'",
+        "SkipOnFailure":true
     },
     {
         "UpdateStageName":"SteamCMD Server Download",
@@ -24,14 +25,16 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'ln -sf {{$FullRootDir}}steamcmd.sh {{$FullRootDir}}linux32 ~/Steam/steamapps {{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux/'"
+        "UpdateSourceArgs":"-c 'ln -sf {{$FullRootDir}}steamcmd.sh {{$FullRootDir}}linux32 ~/Steam/steamapps {{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux/'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Working Directory Replacement",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -rf {{$FullBaseDir}}ShooterGame/Binaries/Win64; ln -sf {{$FullBaseDir}}ShooterGame/Binaries/Linux {{$FullBaseDir}}ShooterGame/Binaries/Win64'"
+        "UpdateSourceArgs":"-c 'rm -rf {{$FullBaseDir}}ShooterGame/Binaries/Win64 >/dev/null 2>&1; ln -sf {{$FullBaseDir}}ShooterGame/Binaries/Linux {{$FullBaseDir}}ShooterGame/Binaries/Win64'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Config Directory Creation",

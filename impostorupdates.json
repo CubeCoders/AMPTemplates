@@ -138,12 +138,34 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}Impostor.Server"
     },
     {
+        "UpdateStageName":"Impostor.Http Plugin Removal",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd impostor && rm -rf config_http.json plugins/Impostor.Http.dll >/dev/null 2>&1'",
+        "UpdateSourceConditionSetting":"InstallHttpPlugin",
+        "UpdateSourceConditionValue":"false",
+        "SkipOnFailure":true
+    },
+    {
+        "UpdateStageName":"Impostor.Http Plugin Removal",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd impostor && del /Q /F config_http.json plugins\\Impostor.Http.dll > NUL 2>&1",
+        "UpdateSourceConditionSetting":"InstallHttpPlugin",
+        "UpdateSourceConditionValue":"false",
+        "SkipOnFailure":true
+    },
+    {
         "UpdateStageName":"Impostor.Http Plugin Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://github.com/Impostor/Impostor.Http/releases/download/v{{HttpPluginVersion}}/Impostor.Http.dll",
         "UpdateSourceTarget":"{{$FullBaseDir}}plugins",
-        "OverwriteExistingFiles":true
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"InstallHttpPlugin",
+        "UpdateSourceConditionValue":"true"
     },
     {
         "UpdateStageName":"Impostor.Http Plugin Config File Download",
@@ -151,6 +173,8 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://raw.githubusercontent.com/Impostor/Impostor.Http/main/config_http.json",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "OverwriteExistingFiles":false
+        "OverwriteExistingFiles":false,
+        "UpdateSourceConditionSetting":"InstallHttpPlugin",
+        "UpdateSourceConditionValue":"true"
     }
 ]

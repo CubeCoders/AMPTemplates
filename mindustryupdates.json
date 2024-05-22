@@ -24,7 +24,8 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C rd /S /Q .\\mindustry\\java"
+        "UpdateSourceArgs":"/C rd /S /Q .\\mindustry\\java > NUL 2>&1",
+        "SkipOnFailure":true
     },
     {
         "UpdateStageName":"Java Download",
@@ -59,14 +60,16 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C move .\\mindustry\\jdk* .\\mindustry\\java"
+        "UpdateSourceArgs":"/C move .\\mindustry\\jdk* .\\mindustry\\java",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Replace Java Directory",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -rf ./mindustry/java ; mv ./mindustry/jdk* ./mindustry/java ; chmod +x ./mindustry/java/bin/java'"
+        "UpdateSourceArgs":"-c 'rm -rf ./mindustry/java >/dev/null 2>&1; mv ./mindustry/jdk* ./mindustry/java ; chmod +x ./mindustry/java/bin/java'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Create Maps Directory",
