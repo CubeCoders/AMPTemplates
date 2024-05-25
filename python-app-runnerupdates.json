@@ -50,7 +50,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"/usr/bin/python{{PythonVersion}} -m venv --clear --upgrade-deps '{{$FullBaseDir}}venv'\"",
+        "UpdateSourceArgs":"-c \"/usr/bin/python{{PythonVersion}} -u -m venv --clear --upgrade-deps '{{$FullBaseDir}}venv'\"",
         "SkipOnFailure":false
     },
     {
@@ -58,7 +58,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C py -{{PythonVersion}} -m venv --clear --upgrade-deps \"{{$FullBaseDir}}venv\"",
+        "UpdateSourceArgs":"/C py -{{PythonVersion}} -u -m venv --clear --upgrade-deps \"{{$FullBaseDir}}venv\"",
         "SkipOnFailure":false
     },
     {
@@ -66,7 +66,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U setuptools wheel discord.py python-dotenv\"",
+        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -u -m pip install -U setuptools wheel discord.py python-dotenv\"",
         "SkipOnFailure":false
     },
     {
@@ -74,7 +74,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U setuptools wheel discord.py python-dotenv",
+        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -u -m pip install -U setuptools wheel discord.py python-dotenv",
         "SkipOnFailure":false
     },
     {
@@ -82,7 +82,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}}\"",
+        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -u -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}}\"",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"PyPIPackage",
         "SkipOnFailure":false
@@ -92,7 +92,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}}",
+        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -u -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}}",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"PyPIPackage",
         "SkipOnFailure":false
@@ -102,7 +102,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd '{{$FullBaseDir}}' && source ./venv/bin/activate && python3 -m pip install -U -r ./{{AppDir}}/requirements.txt\"",
+        "UpdateSourceArgs":"-c \"cd '{{$FullBaseDir}}' && source ./venv/bin/activate && python3 -u -m pip install -U -r ./{{AppDir}}/requirements.txt\"",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"file",
         "SkipOnFailure":false
@@ -112,7 +112,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}\" && venv\\Scripts\\activate.bat && python.exe -m pip install -U -r .\\{{AppDir}}\\requirements.txt",
+        "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}\" && venv\\Scripts\\activate.bat && python.exe -u -m pip install -U -r .\\{{AppDir}}\\requirements.txt",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"file",
         "SkipOnFailure":false
@@ -122,7 +122,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -m pip install -U {{PythonPackages}}\"",
+        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -u -m pip install -U {{PythonPackages}}\"",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"specifier",
         "SkipOnFailure":false
@@ -132,7 +132,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -m pip install -U {{PythonPackages}}",
+        "UpdateSourceArgs":"/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -u -m pip install -U {{PythonPackages}}",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"specifier",
         "SkipOnFailure":false

@@ -71,12 +71,12 @@ App.MonitorChildProcessName=
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RegexMatch
-Console.FilterMatchRegex=(\[0m|\[33m)
+Console.FilterMatchRegex=\e\[(\d+;)*(\d+)?[ABCDHJKfmsu]|\e\[?[?\>\=\da-z]+
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|Unknown command)$
 Console.AppReadyRegex=^[\d:\s]*ENGINE\s+: Game successfully created\.$
-Console.UserJoinRegex=^[\d:\s]*NETWORK\s+: ### Connecting player: connectionID=(?<userid>.+), Name=(?<username>.*)$
-Console.UserLeaveRegex=^[\d:\s]*NETWORK\s+: Player disconnected: connectionID=(?<userid>.+)$
+Console.UserJoinRegex=^[\d:\.]+\s+DEFAULT\s+: BattlEye Server: 'Player #(?<sessionid>.+?) (?<username>.+?) \((?<endpoint>.*?):\d+\) connected'$
+Console.UserLeaveRegex=^[\d:\.]+\s+DEFAULT\s+: BattlEye Server: 'Player #(?<sessionid>.+?) (?<username>.+?) disconnected'$
 Console.UserChatRegex=^$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
 Console.MetricsRegex=
