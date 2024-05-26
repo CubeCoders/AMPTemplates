@@ -88,7 +88,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C robocopy call-of-dutybo2\\configs\\T6ServerConfigs-master\\localappdata\\Plutonium\\storage\\t6 call-of-dutybo2\\server\\storage\\t6 /E /XC /XN /XO > NUL 2>&1 & if ($LastExitCode -gt 7) { exit $LastExitCode } else { rd /S /Q call-of-dutybo2\\configs }",
+        "UpdateSourceArgs":"/C robocopy call-of-dutybo2\\configs\\T6ServerConfigs-master\\localappdata\\Plutonium\\storage\\t6 call-of-dutybo2\\server\\storage\\t6 /E /XC /XN /XO > NUL 2>&1 & @if %ERRORLEVEL% GTR 7 (exit /b %ERRORLEVEL%) else (rd /S /Q call-of-dutybo2\\configs)",
         "SkipOnFailure":false
     },
     {
