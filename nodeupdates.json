@@ -57,7 +57,9 @@
         "UpdateSourceArch":"x86_64",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-linux-x64.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}"
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceConditionSetting":"DisableNodeDownload",
+        "UpdateSourceConditionValue":"false"
     },
     {
         "UpdateStageName":"Node.js Extract",
@@ -66,6 +68,8 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-x64.tar.gz > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && mv -v node-{{NodeVersion}}-linux-x64 node >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && rm node-{{NodeVersion}}-linux-x64.tar.gz'",
+        "UpdateSourceConditionSetting":"DisableNodeDownload",
+        "UpdateSourceConditionValue":"false",
         "SkipOnFailure":false
     },
     {
@@ -74,7 +78,9 @@
         "UpdateSourceArch":"aarch64",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-linux-arm64.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}"
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceConditionSetting":"DisableNodeDownload",
+        "UpdateSourceConditionValue":"false"
     },
     {
         "UpdateStageName":"Node.js Extract",
@@ -83,6 +89,8 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz && mv -v node-{{NodeVersion}}-linux-arm64 node && rm node-{{NodeVersion}}-linux-arm64.tar.gz'",
+        "UpdateSourceConditionSetting":"DisableNodeDownload",
+        "UpdateSourceConditionValue":"false",
         "SkipOnFailure":false
     },
     {
@@ -93,7 +101,9 @@
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"DisableNodeDownload",
+        "UpdateSourceConditionValue":"false"
     },
     {
         "UpdateStageName":"Node.js Extract",
@@ -101,6 +111,8 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}\" & rmdir /S /Q \"{{$FullBaseDir}}node/\" > NUL 2>&1 & rename node-{{NodeVersion}}-win-x64 node > {{$FullBaseDir}}AMPSetupLog.txt 2>&1",
+        "UpdateSourceConditionSetting":"DisableNodeDownload",
+        "UpdateSourceConditionValue":"false",
         "SkipOnFailure":false
     },
     {
