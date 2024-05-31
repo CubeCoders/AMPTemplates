@@ -19,7 +19,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'mkdir -p ~/.config/Epic/FactoryGame/Saved/SaveGames ; mkdir -p \"{{$FullBaseDir}}FactoryGame/Saved\" ; ln -sf ~/.config/Epic/FactoryGame/Saved/SaveGames \"{{$FullBaseDir}}FactoryGame/Saved/\"'",
+        "UpdateSourceArgs":"-c 'mkdir -p ~/.config/Epic/FactoryGame/Saved/SaveGames >/dev/null 2>&1; mkdir -p \"{{$FullBaseDir}}FactoryGame/Saved\" >/dev/null 2>&1; ln -sf ~/.config/Epic/FactoryGame/Saved/SaveGames \"{{$FullBaseDir}}FactoryGame/Saved/\" >/dev/null 2>&1'",
         "SkipOnFailure":false
     },
     {
@@ -27,7 +27,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C mkdir \"%LocalAppData%\\FactoryGame\\Saved\\SaveGames\" & mkdir \"{{$FullBaseDir}}FactoryGame\\Saved\" & mklink /J \"{{$FullBaseDir}}FactoryGame\\Saved\\SaveGames\" \"%LocalAppData%\\FactoryGame\\Saved\\SaveGames\"",
+        "UpdateSourceArgs":"/C mkdir \"%LocalAppData%\\FactoryGame\\Saved\\SaveGames\" > NUL 2>&1 & mkdir \"{{$FullBaseDir}}FactoryGame\\Saved\" > NUL 2>&1 & rd /S /Q \"{{$FullBaseDir}}FactoryGame\\Saved\\SaveGames\" > NUL 2>&1 & mklink /J \"{{$FullBaseDir}}FactoryGame\\Saved\\SaveGames\" \"%LocalAppData%\\FactoryGame\\Saved\\SaveGames\" > NUL 2>&1",
         "SkipOnFailure":false
     },
     {
