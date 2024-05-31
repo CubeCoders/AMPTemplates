@@ -13,21 +13,24 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C mkdir \"%UserProfile%\\InterstellarRift\\Roaming\\InterstellarRift\" & mklink /J \"{{$FullBaseDir}}InterstellarRift\" \"%UserProfile%\\AppData\\Roaming\\InterstellarRift\""
+        "UpdateSourceArgs":"/C mkdir \"%UserProfile%\\InterstellarRift\\Roaming\\InterstellarRift\" > NUL 2>&1 & rd /S /Q \"{{$FullBaseDir}}InterstellarRift\" & mklink /J \"{{$FullBaseDir}}InterstellarRift\" \"%UserProfile%\\AppData\\Roaming\\InterstellarRift\"",
+		"SkipOnFailure":false
     },
     {
         "UpdateStageName":"Initialise Wine",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDLLOVERRIDES=\"mscoree=d\" WINEDEBUG=-all /usr/bin/wineboot --init --update'"
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDLLOVERRIDES=\"mscoree=d\" WINEDEBUG=-all /usr/bin/wineboot --init --update'",
+		"SkipOnFailure":false
     },
     {
         "UpdateStageName":"AppData Directory Creation",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.wine/drive_c/users/amp/AppData/Roaming/InterstellarRift\" ; cd interstellar-rift/server && ln -sf \"../.wine/drive_c/users/amp/AppData/Roaming/InterstellarRift\" ./'"
+        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.wine/drive_c/users/amp/AppData/Roaming/InterstellarRift\" ; cd interstellar-rift/server && ln -sf \"../.wine/drive_c/users/amp/AppData/Roaming/InterstellarRift\" ./'",
+		"SkipOnFailure":false
     },
     {
         "UpdateStageName":"Winescript Download",
