@@ -39,30 +39,6 @@
         "SkipOnFailure":true
     },
     {
-        "UpdateStageName":"Fika Server Mod Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/project-fika/Fika-Server/releases/download/v2.0/fika-server.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
-        "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.8.1-29197-d3ac83e"
-    },
-    {
-        "UpdateStageName":"Fika Server Mod Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceArgs":"project-fika/Fika-Server",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
-        "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.8.3-29197-01783e2"
-    },
-    {
         "UpdateStageName":"Node.js Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSourceArch":"x86_64",
@@ -143,24 +119,28 @@
         "SkipOnFailure":false
     },
     {
-        "UpdateStageName":"Fika Server Mod Installation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch v2.0 https://github.com/project-fika/Fika-Server.git fika >/dev/null 2>&1 && cd fika && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && mkdir -p \"{{$FullBaseDir}}user/mods/fika-server\" >/dev/null 2>&1 && \\cp -rf * \"{{$FullBaseDir}}user/mods/fika-server\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf \"{{$FullRootDir}}fika\" >/dev/null 2>&1'",
+        "UpdateStageName":"Fika Server Mod Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/project-fika/Fika-Server/releases/download/v2.0/fika-server.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
         "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.8.1-29197-d3ac83e",
-        "SkipOnFailure":false
+        "UpdateSourceConditionValue":"3.8.1-29197-d3ac83e"
     },
     {
-        "UpdateStageName":"Fika Server Mod Installation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch v2.1.1 https://github.com/project-fika/Fika-Server.git fika >/dev/null 2>&1 && cd fika && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && mkdir -p \"{{$FullBaseDir}}user/mods/fika-server\" >/dev/null 2>&1 && \\cp -rf * \"{{$FullBaseDir}}user/mods/fika-server\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf \"{{$FullRootDir}}fika\" >/dev/null 2>&1'",
+        "UpdateStageName":"Fika Server Mod Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"project-fika/Fika-Server",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
         "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.8.3-29197-01783e2",
-        "SkipOnFailure":false
+        "UpdateSourceConditionValue":"3.8.3-29197-01783e2"
     },
     {
         "UpdateStageName":"Server Startup",
