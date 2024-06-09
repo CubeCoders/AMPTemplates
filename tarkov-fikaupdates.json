@@ -72,12 +72,30 @@
         "OverwriteExistingFiles":true
     },
     {
+        "UpdateStageName":"Node.js Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-arm64.tar.gz",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
         "UpdateStageName":"Node.js Extract",
         "UpdateSourcePlatform":"Linux",
         "UpdateSourceArch":"x86_64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd \"{{$FullRootDir}}\" && rm -rf node/ >/dev/null 2>&1 && tar xfv node-v20.11.1-linux-x64.tar.gz >/dev/null 2>&1 && mv node-v20.11.1-linux-x64 node >/dev/null 2>&1 && rm node-v20.11.1-linux-x64.tar.gz'",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Node.js Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd \"{{$FullRootDir}}\" && rm -rf node/ >/dev/null 2>&1 && tar xfv node-v20.11.1-linux-arm64.tar.gz >/dev/null 2>&1 && mv node-v20.11.1-linux-arm64 node >/dev/null 2>&1 && rm node-v20.11.1-linux-arm64.tar.gz'",
         "SkipOnFailure":false
     },
     {
@@ -94,6 +112,17 @@
     {
         "UpdateStageName":"SPT AKI Installation",
         "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.8.1 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x Aki.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"3.8.1-29197-d3ac83e",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Linux",
         "UpdateSourceArch":"x86_64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
@@ -103,9 +132,19 @@
         "SkipOnFailure":false
     },
     {
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.8.3 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x Aki.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"3.8.3-29197-01783e2",
+        "SkipOnFailure":false
+    },
+    {
         "UpdateStageName":"Fika Server Mod Installation",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSourceArch":"x86_64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch v2.0 https://github.com/project-fika/Fika-Server.git fika >/dev/null 2>&1 && cd fika && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && mkdir -p \"{{$FullBaseDir}}user/mods/fika-server\" >/dev/null 2>&1 && \\cp -rf * \"{{$FullBaseDir}}user/mods/fika-server\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf \"{{$FullRootDir}}fika\" >/dev/null 2>&1'",
@@ -116,7 +155,6 @@
     {
         "UpdateStageName":"Fika Server Mod Installation",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSourceArch":"x86_64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch v2.1.1 https://github.com/project-fika/Fika-Server.git fika >/dev/null 2>&1 && cd fika && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && mkdir -p \"{{$FullBaseDir}}user/mods/fika-server\" >/dev/null 2>&1 && \\cp -rf * \"{{$FullBaseDir}}user/mods/fika-server\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf \"{{$FullRootDir}}fika\" >/dev/null 2>&1'",
