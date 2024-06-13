@@ -1,43 +1,43 @@
 [
     {
-        "UpdateStageName":  "SteamCMD Download",
-        "UpdateSourcePlatform":  "All",
-        "UpdateSource":  "SteamCMD",
-        "UpdateSourceData":  "374040",
-        "UpdateSourceArgs":  "374040",
-        "ForceDownloadPlatform":  "Windows"
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "374040",
+        "UpdateSourceArgs": "374040",
+        "ForceDownloadPlatform": "Windows"
     },
     {
-        "UpdateStageName":  "Server Extract",
-        "UpdateSourcePlatform":  "Windows",
-        "UpdateSource":  "Executable",
-        "UpdateSourceData":  "cmd.exe",
-        "UpdateSourceArgs":  "/C cd portal-knights\\374040 \u0026\u0026 tar -xf dedicated_server.zip",
-        "SkipOnFailure":  false
+        "UpdateStageName": "Server Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd portal-knights\\374040 \u0026\u0026 tar -xf dedicated_server.zip",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":  "Server Extract",
-        "UpdateSourcePlatform":  "Linux",
-        "UpdateSource":  "Executable",
-        "UpdateSourceData":  "/bin/bash",
-        "UpdateSourceArgs":  "-c \u0027cd portal-knights/374040 \u0026\u0026 unzip -u dedicated_server.zip\u0027",
-        "SkipOnFailure":  false
+        "UpdateStageName": "Server Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \u0027cd portal-knights/374040 \u0026\u0026 unzip -u dedicated_server.zip\u0027",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":  "Config File Download",
-        "UpdateSourcePlatform":  "All",
-        "UpdateSource":  "FetchURL",
-        "UpdateSourceData":  "https://github.com/CubeCoders/AMPTemplates/raw/main/portal-knightsserver_config.json",
-        "UpdateSourceTarget":  "{{$FullBaseDir}}",
-        "UpdateSourceArgs":  "server_config.json",
-        "OverwriteExistingFiles":  false
+        "UpdateStageName": "Config File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/portal-knightsserver_config.json",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "server_config.json",
+        "OverwriteExistingFiles": false
     },
     {
-        "UpdateStageName":  "Initialise Wine",
-        "UpdateSourcePlatform":  "Linux",
-        "UpdateSource":  "Executable",
-        "UpdateSourceData":  "/bin/bash",
-        "UpdateSourceArgs":  "-c \u0027WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\u0027",
-        "SkipOnFailure":  false
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \u0027WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\u0027",
+        "SkipOnFailure": false
     }
 ]
