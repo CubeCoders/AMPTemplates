@@ -1,6 +1,4 @@
 App.AdminMethod=SourceRCON
-App.ApplicationPort1=27102
-App.ApplicationPort2=27131
 App.ApplicationReadyMode=RegexMatch
 App.BaseDirectory=./insurgencysandstorm/581330/
 App.CommandLineArgs={{Map}}?Scenario="{{Scenario}}"?Lighting="{{Lighting}}"?Game="{{Game}}"?Hostname="{{Hostname}}"?MaxPlayers="{{$MaxUsers}}"?password="{{password}}" -Port={{$ApplicationPort1}} -QueryPort={{$ApplicationPort2}} -Rcon -RconPassword={{$RemoteAdminPassword}} -RconListenPort={{$RemoteAdminPort}} -log -GameStats -GameStatsToken={{GameStatsToken}} -GSLTToken={{GSLTToken}} {{Mods_enabled}} {{$FormattedArgs}}
@@ -17,12 +15,16 @@ App.RCONConnectRetrySeconds=45
 App.HasReadableConsole=true
 App.HasWritableConsole=true
 App.RapidStartup=false
-App.RemoteAdminPort=27015
 App.RootDir=./insurgencysandstorm/
 App.UpdateSource=Multi
 App.UpdateSources=@IncludeJson[insurgencysandstormupdates.json]
 App.WorkingDir=581330
 App.UseRandomAdminPassword=True
+App.Ports=@IncludeJson[insurgencysandstormports.json]
+App.AdminPortRef=RemoteAdminPort
+App.PrimaryApplicationPortRef=ApplicationPort1
+App.UniversalSleepApplicationUDPPortRef=ApplicationPort1
+App.UniversalSleepSteamQueryPortRef=ApplicationPort2
 App.MaxUsers=32
 Console.AppReadyRegex=^.*LogSession\: Display\: OnCreateSessionComplete\:.*Result: \(1\)$
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
