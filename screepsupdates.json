@@ -4,7 +4,8 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://nodejs.org/download/release/v12.22.12/node-v12.22.12-linux-x64.tar.gz",
-        "UpdateSourceTarget":"{{$FullRootDir}}"
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "OneShot":true
     },
     {
         "UpdateStageName":"Node.js Extract",
@@ -13,7 +14,8 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd screeps && rm -rf node/ >/dev/null 2>&1 && tar xfv node-v12.22.12-linux-x64.tar.gz >/dev/null 2>&1 && mv -v node-v12.22.12-linux-x64 node >/dev/null 2>&1 && rm node-v12.22.12-linux-x64.tar.gz'",
-        "SkipOnFailure":false
+        "SkipOnFailure":false,
+        "OneShot":true
     },
     {
         "UpdateStageName":"Node.js Download",
@@ -23,7 +25,8 @@
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "DeleteAfterExtract":true,
+        "OneShot":true
     },
     {
         "UpdateStageName":"Node.js Extract",
@@ -31,7 +34,8 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C cd screeps & rmdir /S /Q node > NUL 2>&1 & rename node-v12.22.12-win-x64 node > NUL 2>&1 2>&1",
-        "SkipOnFailure":false
+        "SkipOnFailure":false,
+        "OneShot":true
     },
     {
         "UpdateStageName":"Install Screeps",
