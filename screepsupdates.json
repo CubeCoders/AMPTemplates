@@ -1,0 +1,52 @@
+[
+    {
+        "UpdateStageName":"Node.js Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://nodejs.org/download/release/v12.22.12/node-v12.22.12-linux-x64.tar.gz",
+        "UpdateSourceTarget":"{{$FullRootDir}}"
+    },
+    {
+        "UpdateStageName":"Node.js Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"x86_64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd screeps && rm -rf node/ >/dev/null 2>&1 && tar xfv node-v12.22.12-linux-x64.tar.gz >/dev/null 2>&1 && mv -v node-v12.22.12-linux-x64 node >/dev/null 2>&1 && rm node-v12.22.12-linux-x64.tar.gz'",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Node.js Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://nodejs.org/download/release/v12.22.12/node-v12.22.12-win-x64.zip",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Node.js Extract",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd screeps & rmdir /S /Q node > NUL 2>&1 & rename node-v12.22.12-win-x64 node > NUL 2>&1 2>&1",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Install Screeps",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd screeps/server && npm install screeps && npx screeps init'",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Install Screeps",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd screeps/server && npm install screeps && npx screeps init",
+        "SkipOnFailure":false
+    }
+]
