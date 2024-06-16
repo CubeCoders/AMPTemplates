@@ -16,19 +16,12 @@
         "UpdateSourceTarget":"{{$FullBaseDir}}"
     },
     {
-        "UpdateStageName":"Install Screeps",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd screeps/server && chmod +x screeps-launcher && ./screeps-launcher upgrade'",
-        "SkipOnFailure":false
-    },
-    {
-        "UpdateStageName":"Install Screeps",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd screeps/server && .\\screeps-launcher.exe upgrade",
-        "SkipOnFailure":false
+        "UpdateStageName":"Config.yml File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/screepsconfig.yml",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceArgs":"config.yml",
+		"OverwriteExistingFiles":false
     }
 ]
