@@ -20,7 +20,7 @@ Meta.Prerequsites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=1.0
+Meta.ConfigVersion=1.1
 Meta.AppConfigId=d9cf5fcb-d4b3-4157-8b18-016b58cdbefe
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
@@ -33,7 +33,7 @@ App.ExecutableLinux=server/WS/Binaries/Linux/WSServer-Linux-Shipping
 App.WorkingDir=server
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=-stdout -FullStdOutLogOutput
-App.CommandLineArgs=WS {{Map}} -server -SteamServerName="{{ServerName}}" -Port={{$ServerPort}} -QueryPort={{$QueryPort}} -EchoPort={{$EchoPort}} -UTF8Output -MultiHome={{$ApplicationIPBinding}} -forcepassthrough {{PvEPvPMode}}{{initbackup}}{{$FormattedArgs}} {{CustomParameters}} {{$PlatformArgs}}
+App.CommandLineArgs=WS {{Map}} -server -SteamServerName="{{ServerName}}" -Port={{$ServerPort}} -QueryPort={{$QueryPort}} -EchoPort={{$EchoPort}} -RconPort={{$RCONPort}} -RconAddr={{$ApplicationIPBinding}} -UTF8Output -MultiHome={{$ApplicationIPBinding}} -forcepassthrough {{PvEPvPMode}}{{initbackup}}{{$FormattedArgs}} {{CustomParameters}} {{$PlatformArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"2646460"}
@@ -41,7 +41,7 @@ App.CommandLineParameterFormat=-{0}="{1}"
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
 App.ExitTimeout=30
-App.ExitString=stop
+App.ExitString=quit 5
 App.ExitFile=app_exit.lck
 App.HasWriteableConsole=True
 App.HasReadableConsole=True
