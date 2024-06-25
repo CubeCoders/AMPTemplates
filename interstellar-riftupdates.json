@@ -17,35 +17,31 @@
 		"SkipOnFailure":false
     },
     {
-        "UpdateStageName":"Initialise Wine",
+        "UpdateStageName":"Proton GE Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDLLOVERRIDES=\"mscoree=d\" WINEDEBUG=-all /usr/bin/wineboot --init --update'",
-		"SkipOnFailure":false
+        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.proton/compatdata\" \"{{$FullBaseDir}}.steam/steam\" \"{{$FullBaseDir}}.steam/sdk32\" \"{{$FullBaseDir}}.steam/sdk64\" && \\cp -f \"{{$FullRootDir}}linux32/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk32/\" && \\cp -f \"{{$FullRootDir}}linux64/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk64/\" && rm -rf \"{{$FullRootDir}}.proton/compatdata/\"* >/dev/null 2>&1 && wget -q \"$(wget -qO- https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest | grep browser_download_url | cut -d\\\" -f4 | grep .tar.gz)\" && tar -xzf GE-Proton*.tar.gz -C \"{{$FullRootDir}}.proton\" --strip-components=1 ; rm GE-Proton*.* && { STEAM_COMPAT_DATA_PATH=\"{{$FullRootDir}}.proton/compatdata\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\"{{$FullBaseDir}}.steam/steam\" {{$FullRootDir}}.proton/proton PROTON_LOG=1 >/dev/null 2>&1; exit 0; }'",
+        "UpdateSourceConditionSetting":"ProtonRelease",
+        "UpdateSourceConditionValue":"latest",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Proton GE Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.proton/compatdata\" \"{{$FullBaseDir}}.steam/steam\" \"{{$FullBaseDir}}.steam/sdk32\" \"{{$FullBaseDir}}.steam/sdk64\" && \\cp -f \"{{$FullRootDir}}linux32/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk32/\" && \\cp -f \"{{$FullRootDir}}linux64/steamclient.so\" \"{{$FullBaseDir}}.steam/sdk64/\" && rm -rf \"{{$FullRootDir}}.proton/compatdata/\"* >/dev/null 2>&1 && wget -q \"https://github.com/GloriousEggroll/proton-ge-custom/releases/download/{{SpecificReleaseVersion}}/{{SpecificReleaseVersion}}.tar.gz\" && tar -xzf GE-Proton*.tar.gz -C \"{{$FullRootDir}}.proton\" --strip-components=1 ; rm GE-Proton*.* && { STEAM_COMPAT_DATA_PATH=\"{{$FullRootDir}}.proton/compatdata\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\"{{$FullBaseDir}}.steam/steam\" {{$FullRootDir}}.proton/proton PROTON_LOG=1 >/dev/null 2>&1; exit 0; }'",
+        "UpdateSourceConditionSetting":"ProtonRelease",
+        "UpdateSourceConditionValue":"specificversion",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"AppData Directory Creation",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.wine/drive_c/users/amp/AppData/Roaming/InterstellarRift\" ; cd interstellar-rift/server && ln -sf \"../.wine/drive_c/users/amp/AppData/Roaming/InterstellarRift\" ./'",
+        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.proton/compatdata/pfx/drive_c/users/amp/AppData/Roaming/InterstellarRift\" ; cd interstellar-rift/server && ln -sf \"../.proton/compatdata/pfx/drive_c/users/amp/AppData/Roaming/InterstellarRift\" ./'",
 		"SkipOnFailure":false
-    },
-    {
-        "UpdateStageName":"Winescript Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/interstellar-riftwinescript.sh",
-        "UpdateSourceArgs":"winescript.sh",
-        "UpdateSourceTarget":"{{$FullInstanceDir}}",
-        "OverwriteExistingFiles":true
-    },
-    {
-        "UpdateStageName":"Install Windows Components",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"./winescript.sh"
     }
 ]
