@@ -1,0 +1,44 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "655780",
+        "UpdateSourceArgs": "655780"
+    },
+    {
+        "UpdateStageName": "Create ServerConfig Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}ServerConfig",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Create Ban File",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}ServerConfig/ban.txt",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Pause Update Stages",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "Pause",
+        "UpdateSourceArgs": "10"
+    },
+    {
+        "UpdateStageName": "Start Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "StartApplication"
+    },
+    {
+        "UpdateStageName": "Wait For Server Start",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "WaitForStartupComplete"
+    },
+    {
+        "UpdateStageName": "Stop Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ShutdownApplication"
+    }
+]
