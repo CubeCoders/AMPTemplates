@@ -256,18 +256,30 @@
         }
     },
     {
-        "DisplayName":"Disable Navmesh Streaming",
+        "DisplayName":"Navmesh Streaming Mode",
         "Category":"Server Settings",
-        "Description":"If set, the server will disable navmesh streaming on all navmesh components and load the entire navmesh into memory. This increases server performance but also increases memory consumption",
+        "Description":"Sets the navmesh streamimg mode. Navmesh streaming will be enabled or disabled on relevant navmesh components and disabled components will be loaded into memory. If \"Disable specific components\" is selected, specify them under Disabled Navmesh Components",
         "Keywords":"disable,navmesh,streaming,disableNavmeshStreaming",
-        "FieldName":"disableNavmeshStreaming",
-        "InputType":"checkbox",
+        "FieldName":"disableNavmeshStreaming12",
+        "InputType":"enum",
         "ParamFieldName":"operating.disableNavmeshStreaming",
-        "DefaultValue":"false",
+        "DefaultValue":"",
         "EnumValues":{
-            "False":"false",
-            "True":"true"
+            "":"Enable all components",
+            "\"disableNavmeshStreaming\":[ ],":"Disable all components",
+            "\"disableNavmeshStreaming\":[ {{DisabledNavmeshComponents}} ],":"Disable specific components"
         }
+    },
+    {
+        "DisplayName":"Disabled Navmesh Components",
+        "Category":"Server Settings",
+        "Description":"Sets a list of navmesh components to disable, if \"Disable specific components\" is selected under Navmesh Streaming Mode. Format is \"Component\",\"Component\"",
+        "Keywords":"disable,navmesh,streaming,components,specific",
+        "FieldName":"DisabledNavmeshComponents",
+        "InputType":"text",
+        "ParamFieldName":"DisabledNavmeshComponents",
+        "DefaultValue":"",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Load Mods",
