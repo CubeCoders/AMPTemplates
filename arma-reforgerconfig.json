@@ -52,19 +52,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Public IP Binding",
-        "Category":"Server Settings",
-        "Description":"",
-        "Keywords":"",
-        "FieldName":"$ExternalIP",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "Hidden":true,
-        "ParamFieldName":"publicAddress",
-        "IncludeInCommandLine":false,
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Enable BattlEye",
         "Category":"Server Settings",
         "Description":"",
@@ -157,6 +144,31 @@
             "False":"false",
             "True":"true"
         }
+    },
+    {
+        "DisplayName":"Public IP Selection Mode",
+        "Category":"Server Settings",
+        "Description":"Sets whether AMP should automatically select the public IP advertised for the server, or whether it should use the IP set under Server Public IP",
+        "Keywords":"public,ip,address,publicAddress",
+        "FieldName":"publicAddress",
+        "InputType":"enum",
+        "ParamFieldName":"publicAddress",
+        "DefaultValue":"{{$ExternalIP}}",
+        "EnumValues":{
+            "{{$ExternalIP}}":"Automatic (default)",
+            "{{ManualPublicIP}}":"Manual"
+        }
+    },
+    {
+        "DisplayName":"Server Public IP",
+        "Category":"Server Settings",
+        "Description":"Sets the public IP advertised for the server, if \"Manual\" is selected as the Public IP Selection Mode. Useful if the host network has multiple public IPs, or the server is behind a public proxy",
+        "Keywords":"manual,public,ip,publicAddress",
+        "FieldName":"ManualPublicIP",
+        "InputType":"text",
+        "ParamFieldName":"ManualPublicIP",
+        "DefaultValue":"",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Enable Crossplay",
