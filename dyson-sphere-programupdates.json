@@ -201,24 +201,6 @@
         "SkipOnFailure":false
     },
     {
-        "UpdateStageName":"Achievement Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Dyson Sphere Program/Achievement"
-    },
-    {
-        "UpdateStageName":"Blueprint Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Dyson Sphere Program/Blueprint"
-    },
-    {
-        "UpdateStageName":"Save Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Dyson Sphere Program/Save"
-    },
-    {
         "UpdateStageName":"Initialise Wine",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
@@ -242,5 +224,21 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"./winescript.sh",
         "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Data Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C mkdir \"%UserProfile%\\Documents\\Dyson Sphere Program\" > NUL 2>&1 & rd /S /Q \"{{$FullBaseDir}}Dyson Sphere Program\" & mklink /J \"{{$FullBaseDir}}Dyson Sphere Program\" \"%UserProfile%\\Documents\\Dyson Sphere Program\"",
+		"SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Data Directory Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'mkdir -p \"{{$FullRootDir}}.wine/drive_c/users/amp/Documents/Dyson Sphere Program\" ; cd dsp/1366540 && ln -sf \"../.wine/drive_c/users/amp/Documents/Dyson Sphere Program\" ./'",
+		"SkipOnFailure":false
     }
 ]
