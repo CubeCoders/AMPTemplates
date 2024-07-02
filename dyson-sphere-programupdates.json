@@ -1,0 +1,175 @@
+[
+    {
+        "UpdateStageName":"SteamCMD Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"1366540",
+        "UpdateSourceArgs":"1366540",
+        "ForceDownloadPlatform":"Windows"
+    },
+    {
+        "UpdateStageName":"Steam Emu Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://gitlab.com/Mr_Goldberg/goldberg_emulator/-/jobs/2987292049/artifacts/raw/steam_api64.dll",
+        "UpdateSourceTarget":"{{$FullBaseDir}}DSPAGAME_Data/Plugins",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"disable_networking.txt File Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"",
+        "UpdateSourceArgs":"{{$FullBaseDir}}DSPGAME_Data/Plugins/steam_settings/disable_networking.txt",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"steam_appid.txt File Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"1366540",
+        "UpdateSourceArgs":"{{$FullBaseDir}}DSPGAME_Data/Plugins/steam_appid.txt",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"BepInEx Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.2/BepInEx_win_x64_5.4.23.2.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"BepInEx Copy",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C xcopy /E /Y /I dsp\\1366540\\BepInEx_win_x64_5.4.23.2\\* dsp\\1366540\\ && rmdir /Q /S dsp\\1366540\\BepInEx_win_x64_5.4.23.2",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"BepInEx Copy",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c '\\cp -rf ./dsp/1366540/BepInEx_win_x64_5.4.23.2/* ./dsp/1366540/ && rm -rf ./dsp/1366540/BepInEx_win_x64_5.4.23.2/'",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Nebula Mods Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"NebulaModTeam/nebula",
+        "UpdateSourceTarget":"{{$FullBaseDir}}BepInEx/plugins",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Mods Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}BepInEx/plugins/IlLine"
+    },
+    {
+        "UpdateStageName":"Mods Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}BepInEx/plugins/CommonAPI"
+    },
+    {
+        "UpdateStageName":"Mods Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}BepInEx/plugins/BulletTime"
+    },
+    {
+        "UpdateStageName":"Mods Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}BepInEx/plugins/LDBTool"
+    },
+    {
+        "UpdateStageName":"Mods Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}BepInEx/plugins/DSPModSave"
+    },
+    {
+        "UpdateStageName":"Required Mods Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://gcdn.thunderstore.io/live/repository/packages/PhantomGamers-IlLine-1.0.0.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}BepInEx/plugins/IlLine",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Required Mods Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://gcdn.thunderstore.io/live/repository/packages/CommonAPI-CommonAPI-1.6.5.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}BepInEx/plugins/CommonAPI",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Required Mods Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://gcdn.thunderstore.io/live/repository/packages/starfi5h-BulletTime-1.4.7.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}BepInEx/plugins/BulletTime",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Required Mods Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://gcdn.thunderstore.io/live/repository/packages/xiaoye97-LDBTool-3.0.1.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}BepInEx/plugins/LDBTool",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Required Mods Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://gcdn.thunderstore.io/live/repository/packages/CommonAPI-DSPModSave-1.2.1.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}BepInEx/plugins/DSPModSave",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Initialise Wine",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDLLOVERRIDES=\"mscoree,mshtml=\" WINEDEBUG=-all /usr/bin/wineboot --init --update'",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Winescript Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/dyson-sphere-programwinescript.sh",
+        "UpdateSourceArgs":"winescript.sh",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true,
+    },
+    {
+        "UpdateStageName":"Install Windows Components",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"./winescript.sh",
+        "SkipOnFailure":false
+    }
+]
