@@ -13,7 +13,8 @@
         "UpdateStageName":"Java Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://download.oracle.com/java/17/latest/jdk-17_windows-x64_bin.zip",
+        "UpdateSourceData":"https://api.adoptium.net/v3/binary/latest/17/ga/windows/x64/jdk/hotspot/normal/eclipse",
+        "UpdateSourceArgs":"java.zip",
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
@@ -31,7 +32,8 @@
         "UpdateStageName":"Java Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz",
+        "UpdateSourceData":"https://api.adoptium.net/v3/binary/latest/17/ga/linux/x64/jdk/hotspot/normal/eclipse",
+        "UpdateSourceArgs":"java.tar.gz",
         "UpdateSourceArch":"x86_64",
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
@@ -42,7 +44,8 @@
         "UpdateStageName":"Java Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://download.oracle.com/java/17/latest/jdk-17_linux-aarch64_bin.tar.gz",
+        "UpdateSourceData":"https://api.adoptium.net/v3/binary/latest/17/ga/linux/aarch64/jdk/hotspot/normal/eclipse",
+        "UpdateSourceArgs":"java.tar.gz",
         "UpdateSourceArch":"aarch64",
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
@@ -60,7 +63,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C move .\\mindustry\\jdk* .\\mindustry\\java",
+        "UpdateSourceArgs":"/C move .\\mindustry\\jdk* .\\mindustry\\java > NUL 2>&1",
         "SkipOnFailure":false
     },
     {
@@ -68,7 +71,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -rf ./mindustry/java >/dev/null 2>&1; mv ./mindustry/jdk* ./mindustry/java ; chmod +x ./mindustry/java/bin/java'",
+        "UpdateSourceArgs":"-c 'rm -rf ./mindustry/java >/dev/null 2>&1; mv ./mindustry/jdk* ./mindustry/java >/dev/null 2>&1; chmod +x ./mindustry/java/bin/java'",
         "SkipOnFailure":false
     },
     {
