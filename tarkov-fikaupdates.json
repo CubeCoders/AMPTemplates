@@ -1,42 +1,13 @@
 [
     {
-        "UpdateStageName":"7-Zip Directory Creation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip"
-    },
-    {
-        "UpdateStageName":"7-Zip Download",
+        "UpdateStageName":"Node.js Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.7-zip.org/a/7zr.exe",
-        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip"
-    },
-    {
-        "UpdateStageName":"SPT AKI Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://spt-releases.modd.in/SPT-{{SPTVersion}}.7z",
+        "UpdateSourceData":"https://nodejs.org/download/release/v20.11.1/node-v20.11.1-win-x64.zip",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":false,
+        "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "SkipOnFailure":false
-    },
-    {
-        "UpdateStageName":"SPT Files Extract",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd .\\tarkov\\server && ..\\7-Zip\\7zr.exe x -y SPT*.7z > NUL 2>&1 && del /Q /F SPT*.7z",
-        "SkipOnFailure":false
-    },
-    {
-        "UpdateStageName":"SPT Extra Files Delete",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd .\\tarkov\\server && del /F /Q Aki.Launcher.exe SPT.Launcher.exe doorstop_config.ini winhttp.dll > NUL 2>&1 & rd /S /Q EscapeFromTarkov_Data BepInEx > NUL 2>&1",
-        "SkipOnFailure":true
+        "DeleteAfterExtract":true
     },
     {
         "UpdateStageName":"Node.js Download",
@@ -58,11 +29,19 @@
     },
     {
         "UpdateStageName":"Node.js Extract",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd tarkov && rmdir /S /Q node > NUL 2>&1 & rename node-v20.11.1-win-x64 node",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Node.js Extract",
         "UpdateSourcePlatform":"Linux",
         "UpdateSourceArch":"x86_64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd \"{{$FullRootDir}}\" && rm -rf node/ >/dev/null 2>&1 && tar xfv node-v20.11.1-linux-x64.tar.gz >/dev/null 2>&1 && mv node-v20.11.1-linux-x64 node >/dev/null 2>&1 && rm node-v20.11.1-linux-x64.tar.gz'",
+        "UpdateSourceArgs":"-c 'cd tarkov && rm -rf node >/dev/null 2>&1 && tar xfv node-v20.11.1-linux-x64.tar.gz >/dev/null 2>&1 && mv node-v20.11.1-linux-x64 node >/dev/null 2>&1 && rm node-v20.11.1-linux-x64.tar.gz'",
         "SkipOnFailure":false
     },
     {
@@ -71,7 +50,17 @@
         "UpdateSourceArch":"aarch64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd \"{{$FullRootDir}}\" && rm -rf node/ >/dev/null 2>&1 && tar xfv node-v20.11.1-linux-arm64.tar.gz >/dev/null 2>&1 && mv node-v20.11.1-linux-arm64 node >/dev/null 2>&1 && rm node-v20.11.1-linux-arm64.tar.gz'",
+        "UpdateSourceArgs":"-c 'cd tarkov && rm -rf node >/dev/null 2>&1 && tar xfv node-v20.11.1-linux-arm64.tar.gz >/dev/null 2>&1 && mv node-v20.11.1-linux-arm64 node >/dev/null 2>&1 && rm node-v20.11.1-linux-arm64.tar.gz'",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd tarkov && git clone --branch 3.8.1 https://dev.sp-tarkov.com/SPT/Server.git srv > NUL 2>&1 && cd srv/project && git lfs pull > NUL 2>&1 && set PATH={{$FullBaseDir}}node;%PATH% && npm install > NUL 2>&1 && cd \"{{$FullBaseDir}}\" && del /F /Q Aki.Launcher.exe doorstop_config.ini winhttp.dll SPT.Server.exe > NUL 2>&1 & rd /S /Q EscapeFromTarkov_Data BepInEx \"{{$FullRootDir}}srv\" > NUL 2>&1 && rename Aki.Server.exe SPT.Server.exe > NUL 2>&1",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"3.8.1",
         "SkipOnFailure":false
     },
     {
@@ -80,9 +69,9 @@
         "UpdateSourceArch":"x86_64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.8.1 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x Aki.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.8.1 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x Aki.Server.exe >/dev/null 2>&1 && mv -f Aki.Server.exe SPT.Server.exe >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.8.1-29197-d3ac83e",
+        "UpdateSourceConditionValue":"3.8.1",
         "SkipOnFailure":false
     },
     {
@@ -91,9 +80,19 @@
         "UpdateSourceArch":"aarch64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.8.1 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x Aki.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.8.1 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x Aki.Server.exe >/dev/null 2>&1 && mv -f Aki.Server.exe SPT.Server.exe >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.8.1-29197-d3ac83e",
+        "UpdateSourceConditionValue":"3.8.1",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd tarkov && git clone --branch 3.8.3 https://dev.sp-tarkov.com/SPT/Server.git srv > NUL 2>&1 && cd srv/project && git lfs pull > NUL 2>&1 && set PATH={{$FullBaseDir}}node;%PATH% && npm install > NUL 2>&1 && cd \"{{$FullBaseDir}}\" && del /F /Q Aki.Launcher.exe doorstop_config.ini winhttp.dll SPT.Server.exe > NUL 2>&1 & rd /S /Q EscapeFromTarkov_Data BepInEx \"{{$FullRootDir}}srv\" > NUL 2>&1 && rename Aki.Server.exe SPT.Server.exe > NUL 2>&1",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"3.8.3",
         "SkipOnFailure":false
     },
     {
@@ -102,9 +101,9 @@
         "UpdateSourceArch":"x86_64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.8.3 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x Aki.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.8.3 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x Aki.Server.exe >/dev/null 2>&1 && mv -f Aki.Server.exe SPT.Server.exe >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.8.3-29197-01783e2",
+        "UpdateSourceConditionValue":"3.8.3",
         "SkipOnFailure":false
     },
     {
@@ -113,20 +112,30 @@
         "UpdateSourceArch":"aarch64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.8.3 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x Aki.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.8.3 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x Aki.Server.exe >/dev/null 2>&1 && mv -f Aki.Server.exe SPT.Server.exe >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.8.3-29197-01783e2",
+        "UpdateSourceConditionValue":"3.8.3",
         "SkipOnFailure":false
     },
-        {
+    {
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd tarkov && git clone --branch 3.9.0 https://dev.sp-tarkov.com/SPT/Server.git srv > NUL 2>&1 && cd srv/project && git lfs pull > NUL 2>&1 && set PATH={{$FullBaseDir}}node;%PATH% && npm install > NUL 2>&1 && cd \"{{$FullBaseDir}}\" && del /F /Q SPT.Launcher.exe doorstop_config.ini winhttp.dll > NUL 2>&1 & rd /S /Q BepInEx \"{{$FullRootDir}}srv\" > NUL 2>&1",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"3.9.0",
+        "SkipOnFailure":false
+    },
+    {
         "UpdateStageName":"SPT AKI Installation",
         "UpdateSourcePlatform":"Linux",
         "UpdateSourceArch":"x86_64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.9.0 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf SPT.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.9.0 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf SPT.Launcher.exe BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.9.0-30626-002209a",
+        "UpdateSourceConditionValue":"3.9.0",
         "SkipOnFailure":false
     },
     {
@@ -135,9 +144,9 @@
         "UpdateSourceArch":"aarch64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.9.0 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf SPT.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.9.0 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf SPT.Launcher.exe BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.9.0-30626-002209a",
+        "UpdateSourceConditionValue":"3.9.0",
         "SkipOnFailure":false
     },
     {
@@ -150,7 +159,7 @@
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true,
         "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.8.1-29197-d3ac83e"
+        "UpdateSourceConditionValue":"3.8.1"
     },
         {
         "UpdateStageName":"Fika Server Mod Download",
@@ -162,7 +171,7 @@
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true,
         "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.8.3-29197-01783e2"
+        "UpdateSourceConditionValue":"3.8.3"
     },
     {
         "UpdateStageName":"Fika Server Mod Download",
@@ -174,7 +183,7 @@
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true,
         "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.9.0-30626-002209a"
+        "UpdateSourceConditionValue":"3.9.0"
     },
     {
         "UpdateStageName":"Server Startup",
