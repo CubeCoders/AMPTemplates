@@ -118,6 +118,28 @@
         "UpdateSourceConditionValue":"3.8.3-29197-01783e2",
         "SkipOnFailure":false
     },
+        {
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"x86_64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.9.0 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x Aki.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"3.9.0-30626-002209a",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.9.0 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf Aki.Launcher.exe EscapeFromTarkov_Data BepInEx doorstop_config.ini winhttp.dll \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x Aki.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"3.9.0-30626-002209a",
+        "SkipOnFailure":false
+    },
     {
         "UpdateStageName":"Fika Server Mod Download",
         "UpdateSourcePlatform":"All",
@@ -130,6 +152,18 @@
         "UpdateSourceConditionSetting":"SPTVersion",
         "UpdateSourceConditionValue":"3.8.1-29197-d3ac83e"
     },
+        {
+        "UpdateStageName":"Fika Server Mod Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://github.com/project-fika/Fika-Server/releases/download/v2.1.1/fika-server.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"3.8.3-29197-01783e2"
+    },
     {
         "UpdateStageName":"Fika Server Mod Download",
         "UpdateSourcePlatform":"All",
@@ -140,7 +174,7 @@
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true,
         "UpdateSourceConditionSetting":"SPTVersion",
-        "UpdateSourceConditionValue":"3.8.3-29197-01783e2"
+        "UpdateSourceConditionValue":"3.9.0-30626-002209a"
     },
     {
         "UpdateStageName":"Server Startup",
