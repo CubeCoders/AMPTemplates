@@ -37,9 +37,15 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://cdn.rage.mp/updater/prerelease/server-files/linux_x64.tar.gz",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"RAGE:MP Installation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ragemp/server && tar -xzf linux_x64.tar.gz --strip-components=1 && rm -f linux_x64.tar.gz >/dev/null 2>&1'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Config File Download",
