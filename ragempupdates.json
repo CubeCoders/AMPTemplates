@@ -6,15 +6,33 @@
         "UpdateSourceArgs":"{{$FullRootDir}}setup"
     },
     {
+        "UpdateStageName":"7-Zip Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip"
+    },
+    {
+        "UpdateStageName":"7-Zip Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://www.7-zip.org/a/7zr.exe",
+        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip"
+    },
+    {
         "UpdateStageName":"RAGE:MP Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://cdn.rage.mp/public/files/RAGEMultiplayer_Setup.exe",
         "UpdateSourceTarget":"{{$FullRootDir}}setup",
-        "UpdateSourceArgs":"RAGEMultiplayer_Setup.zip",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"RAGE:MP Files Extract",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd ragemp\\setup && ..\\7-Zip\\7zr.exe x -y RAGEMultiplayer_Setup.exe > NUL 2>&1 && del /Q /F RAGEMultiplayer_Setup.exe",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Modify config.xml",
