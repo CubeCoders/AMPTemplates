@@ -1,0 +1,53 @@
+[
+    {
+        "UpdateStageName":"Setup Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}setup"
+    },
+    {
+        "UpdateStageName":"RAGE:MP Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://cdn.rage.mp/public/files/RAGEMultiplayer_Setup.exe",
+        "UpdateSourceTarget":"{{$FullRootDir}}setup",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Modify config.xml",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<channel>prerelease_server</channel>",
+        "UpdateSourceArgs":"{{$FullRootDir}}config.xml",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"RAGE:MP Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd ragemp/setup && updater.exe && xcopy /E /Y /I server_files\\* ..\\server\\ && cd .. && rd /S /Q setup",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"RAGE:MP Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://cdn.rage.mp/updater/prerelease/server-files/linux_x64.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Config File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/ragempconf.json",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceArgs":"conf.json",
+        "OverwriteExistingFiles":false
+    }
+]
