@@ -6,17 +6,20 @@
         "UpdateSourceArgs":"{{$FullRootDir}}setup"
     },
     {
-        "UpdateStageName":"7-Zip Directory Creation",
+        "UpdateStageName":"UniExtract Directory Creation",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip"
+        "UpdateSourceArgs":"{{$FullRootDir}}UniExtract"
     },
     {
-        "UpdateStageName":"7-Zip Download",
+        "UpdateStageName":"UniExtract Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.7-zip.org/a/7zr.exe",
-        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip"
+        "UpdateSourceData":"https://github.com/Bioruebe/UniExtract2/releases/download/v2.0.0-rc.3/UniExtractRC3.zip",
+        "UpdateSourceTarget":"{{$FullRootDir}}UniExtract",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
     },
     {
         "UpdateStageName":"RAGE:MP Download",
@@ -31,7 +34,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd ragemp\\setup && ..\\7-Zip\\7zr.exe x -y RAGEMultiplayer_Setup.exe > NUL 2>&1 && del /Q /F RAGEMultiplayer_Setup.exe",
+        "UpdateSourceArgs":"/C cd ragemp\\setup && ..\\UniExtract\\UniExtract.exe RAGEMultiplayer_Setup.exe && del /Q /F RAGEMultiplayer_Setup.exe",
         "SkipOnFailure":false
     },
     {
