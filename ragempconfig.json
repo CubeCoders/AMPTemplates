@@ -342,6 +342,21 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Create FastDL Snapshot",
+        "Category":"RAGE MP:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If enabled, client packages files will be generated to a folder to be downloadable and used with the FastDL Host URL",
+        "Keywords":"create,fastdl,snapshot,create-fastdl-snapshot",
+        "FieldName":"create-fastdl-snapshot",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.create-fastdl-snapshot",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Allow Server Side Weapons Only",
         "Category":"RAGE MP:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
@@ -438,11 +453,11 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Trigger Compression Logging",
+        "DisplayName":"Enable Trigger Compression Logging",
         "Category":"RAGE MP:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Enable trigger compression logging.",
-        "Keywords":"trigger,compression,logging",
+        "Description":"If set, the compression rates of all outgoing client event triggers with the dictionary the server has been initialized with will be logged",
+        "Keywords":"trigger,compression,logging,trigger-compression-logging",
         "FieldName":"trigger-compression-logging",
         "InputType":"checkbox",
         "ParamFieldName":"$.trigger-compression-logging",
@@ -453,11 +468,11 @@
         }
     },
     {
-        "DisplayName":"Trigger Compression Training",
+        "DisplayName":"Enable Trigger Compression Training",
         "Category":"RAGE MP:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Enable trigger compression training.",
-        "Keywords":"trigger,compression,training",
+        "Description":"If set, dictionary training will be enabled. The server will take data from all of your triggers and flush them to the file specified under Trigger Compression Dictionary",
+        "Keywords":"trigger,compression,training,trigger-compression-training",
         "FieldName":"trigger-compression-training",
         "InputType":"checkbox",
         "ParamFieldName":"$.trigger-compression-training",
@@ -471,36 +486,20 @@
         "DisplayName":"Trigger Compression Dictionary",
         "Category":"RAGE MP:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Trigger compression dictionary.",
-        "Keywords":"trigger,compression,dictionary",
+        "Description":"Sets the name of the file to load/save the compression dictionary",
+        "Keywords":"trigger,compression,dictionary,file,trigger-compression-dictionary",
         "FieldName":"trigger-compression-dictionary",
         "InputType":"text",
         "ParamFieldName":"$.trigger-compression-dictionary",
         "DefaultValue":"",
-        "Placeholder":"",
         "EnumValues":{}
-    },
-    {
-        "DisplayName":"Create FastDL Snapshot",
-        "Category":"RAGE MP:stadia_controller",
-        "Subcategory":"Server Settings:settings:1",
-        "Description":"Create FastDL snapshot.",
-        "Keywords":"fastdl,snapshot",
-        "FieldName":"create-fastdl-snapshot",
-        "InputType":"checkbox",
-        "ParamFieldName":"$.create-fastdl-snapshot",
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
     },
     {
         "DisplayName":"Disable Client Packages RAM Cache",
         "Category":"RAGE MP:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Disable client packages RAM cache.",
-        "Keywords":"client,packages,ram,cache",
+        "Description":"If set, resources will not be cached in memory and instead will be streamed from storage",
+        "Keywords":"client,packages,ram,cache,disable-client-packages-ram-cache",
         "FieldName":"disable-client-packages-ram-cache",
         "InputType":"checkbox",
         "ParamFieldName":"$.disable-client-packages-ram-cache",
@@ -514,13 +513,13 @@
         "DisplayName":"Client Packages Shared Folder",
         "Category":"RAGE MP:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Client packages shared folder.",
-        "Keywords":"client,packages,shared,folder",
+        "Description":"Sets a shared folder name so that the same client resources can be used across different servers. The Server FQDN must be a subdomain of the shared folder name, such as foo.domain.com, bar.domain.com => domain.com",
+        "Keywords":"client,packages,shared,folder,client-packages-shared-folder",
         "FieldName":"client-packages-shared-folder",
         "InputType":"text",
         "ParamFieldName":"$.client-packages-shared-folder",
         "DefaultValue":"",
-        "Placeholder":"",
+        "Placeholder":"domain.com",
         "EnumValues":{}
     }
 ]
