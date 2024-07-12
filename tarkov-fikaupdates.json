@@ -199,5 +199,49 @@
         "UpdateStageName":"Server Shutdown",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"ShutdownApplication"
+    },
+    {
+        "UpdateStageName":"Fika Server Tools Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"project-fika/Fika-ServerTools",
+        "UpdateSourceTarget":"{{$FullBaseDir}}user/mods/fika-server",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"natPunchServer_enable",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Create Dotnet Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}dotnet",
+        "UpdateSourceConditionSetting":"natPunchServer_enable",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-win-x64.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"natPunchServer_enable",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-linux-x64.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"natPunchServer_enable",
+        "UpdateSourceConditionValue":"true"
     }
 ]
