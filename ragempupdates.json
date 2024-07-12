@@ -7,55 +7,12 @@
         "OneShot":true
     },
     {
-        "UpdateStageName":"7-Zip Directory Creation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip",
-        "OneShot":true
-    },
-    {
-        "UpdateStageName":"7-Zip Installer Download",
+        "UpdateStageName":"RAGE:MP Updater Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://7-zip.org/a/7z2407-x64.exe",
-        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles":true,
-        "OneShot":true
-    },
-    {
-        "UpdateStageName":"7-Zip Console Tool Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.7-zip.org/a/7zr.exe",
-        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles":true,
-        "OneShot":true
-    },
-     {
-        "UpdateStageName":"7-Zip Installation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd ragemp\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
-        "SkipOnFailure":true,
-        "OneShot":true
-    },
-    {
-        "UpdateStageName":"RAGE:MP Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://cdn.rage.mp/public/files/RAGEMultiplayer_Setup.exe",
+        "UpdateSourceData":"https://cdn.rage.mp/updater/prerelease/updater.exe",
         "UpdateSourceTarget":"{{$FullRootDir}}setup",
         "OverwriteExistingFiles":true,
-        "OneShot":true
-    },
-    {
-        "UpdateStageName":"RAGE:MP Files Extract",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd ragemp\\setup && ..\\7-Zip\\7z.exe x -y -aoa RAGEMultiplayer_Setup.exe > NUL 2>&1 & del /Q /F RAGEMultiplayer_Setup.exe > NUL 2>&1",
-        "SkipOnFailure":true,
         "OneShot":true
     },
     {
