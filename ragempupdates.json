@@ -3,13 +3,15 @@
         "UpdateStageName":"Setup Directory Creation",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullRootDir}}setup"
+        "UpdateSourceArgs":"{{$FullRootDir}}setup",
+        "OneShot":true
     },
     {
         "UpdateStageName":"7-Zip Directory Creation",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip"
+        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip",
+        "OneShot":true
     },
     {
         "UpdateStageName":"7-Zip Installer Download",
@@ -17,7 +19,8 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://7-zip.org/a/7z2407-x64.exe",
         "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles":true
+        "OverwriteExistingFiles":true,
+        "OneShot":true
     },
     {
         "UpdateStageName":"7-Zip Console Tool Download",
@@ -25,7 +28,17 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://www.7-zip.org/a/7zr.exe",
         "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles":true
+        "OverwriteExistingFiles":true,
+        "OneShot":true
+    },
+     {
+        "UpdateStageName":"7-Zip Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd ragemp\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
+        "SkipOnFailure":true,
+        "OneShot":true
     },
     {
         "UpdateStageName":"RAGE:MP Download",
@@ -33,15 +46,17 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://cdn.rage.mp/public/files/RAGEMultiplayer_Setup.exe",
         "UpdateSourceTarget":"{{$FullRootDir}}setup",
-        "OverwriteExistingFiles":true
+        "OverwriteExistingFiles":true,
+        "OneShot":true
     },
     {
         "UpdateStageName":"RAGE:MP Files Extract",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd ragemp\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe && cd ..\\setup && ..\\7-Zip\\7z.exe x -y -aoa RAGEMultiplayer_Setup.exe & del /Q /F RAGEMultiplayer_Setup.exe",
-        "SkipOnFailure":true
+        "UpdateSourceArgs":"/C cd ragemp\\setup && ..\\7-Zip\\7z.exe x -y -aoa RAGEMultiplayer_Setup.exe > NUL 2>&1 & del /Q /F RAGEMultiplayer_Setup.exe > NUL 2>&1",
+        "SkipOnFailure":true,
+        "OneShot":true
     },
     {
         "UpdateStageName":"Modify config.xml",
@@ -49,14 +64,15 @@
         "UpdateSource":"CreateFile",
         "UpdateSourceData":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<channel>prerelease_server</channel>",
         "UpdateSourceArgs":"{{$FullRootDir}}setup/config.xml",
-        "OverwriteExistingFiles":true
+        "OverwriteExistingFiles":true,
+        "OneShot":true
     },
     {
         "UpdateStageName":"RAGE:MP Installation",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd ragemp/setup && .\\updater.exe && taskkill /f /im ragemp_v.exe && xcopy /E /Y /I server-files\\* ..\\server\\",
+        "UpdateSourceArgs":"/C cd ragemp/setup && .\\updater.exe & xcopy /E /Y /I server-files\\* ..\\server\\",
         "SkipOnFailure":false
     },
     {
