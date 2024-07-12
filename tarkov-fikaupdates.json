@@ -7,7 +7,8 @@
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "DeleteAfterExtract":true,
+        "OneShot":true
     },
     {
         "UpdateStageName":"Node.js Download",
@@ -16,7 +17,8 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-x64.tar.gz",
         "UpdateSourceTarget":"{{$FullRootDir}}",
-        "OverwriteExistingFiles":true
+        "OverwriteExistingFiles":true,
+        "OneShot":true
     },
     {
         "UpdateStageName":"Node.js Download",
@@ -25,7 +27,8 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-arm64.tar.gz",
         "UpdateSourceTarget":"{{$FullRootDir}}",
-        "OverwriteExistingFiles":true
+        "OverwriteExistingFiles":true,
+        "OneShot":true
     },
     {
         "UpdateStageName":"Node.js Extract",
@@ -33,7 +36,8 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C cd tarkov && rmdir /S /Q node > NUL 2>&1 & rename node-v20.11.1-win-x64 node",
-        "SkipOnFailure":false
+        "SkipOnFailure":false,
+        "OneShot":true
     },
     {
         "UpdateStageName":"Node.js Extract",
@@ -42,7 +46,8 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd tarkov && rm -rf node >/dev/null 2>&1 && tar xfv node-v20.11.1-linux-x64.tar.gz >/dev/null 2>&1 && mv node-v20.11.1-linux-x64 node >/dev/null 2>&1 && rm node-v20.11.1-linux-x64.tar.gz'",
-        "SkipOnFailure":false
+        "SkipOnFailure":false,
+        "OneShot":true
     },
     {
         "UpdateStageName":"Node.js Extract",
@@ -51,7 +56,8 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd tarkov && rm -rf node >/dev/null 2>&1 && tar xfv node-v20.11.1-linux-arm64.tar.gz >/dev/null 2>&1 && mv node-v20.11.1-linux-arm64 node >/dev/null 2>&1 && rm node-v20.11.1-linux-arm64.tar.gz'",
-        "SkipOnFailure":false
+        "SkipOnFailure":false,
+        "OneShot":true
     },
     {
         "UpdateStageName":"SPT AKI Installation",
