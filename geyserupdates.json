@@ -12,7 +12,8 @@
         "UpdateStageName":"Java Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://download.oracle.com/java/{{JavaVersion}}/latest/jdk-{{JavaVersion}}_windows-x64_bin.zip",
+        "UpdateSourceData":"https://api.adoptium.net/v3/binary/latest/{{JavaVersion}}/ga/windows/x64/jdk/hotspot/normal/eclipse",
+        "UpdateSourceArgs":"java.zip",
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
@@ -30,7 +31,8 @@
         "UpdateStageName":"Java Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://download.oracle.com/java/{{JavaVersion}}/latest/jdk-{{JavaVersion}}_linux-x64_bin.tar.gz",
+        "UpdateSourceData":"https://api.adoptium.net/v3/binary/latest/{{JavaVersion}}/ga/linux/x64/jdk/hotspot/normal/eclipse",
+        "UpdateSourceArgs":"java.tar.gz",
         "UpdateSourceArch":"x86_64",
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
@@ -41,7 +43,8 @@
         "UpdateStageName":"Java Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://download.oracle.com/java/{{JavaVersion}}/latest/jdk-{{JavaVersion}}_linux-aarch64_bin.tar.gz",
+        "UpdateSourceData":"https://api.adoptium.net/v3/binary/latest/{{JavaVersion}}/ga/linux/aarch64/jdk/hotspot/normal/eclipse",
+        "UpdateSourceArgs":"java.tar.gz",
         "UpdateSourceArch":"aarch64",
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
@@ -59,7 +62,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C move .\\geyser\\jdk* .\\geyser\\java",
+        "UpdateSourceArgs":"/C move .\\geyser\\jdk* .\\geyser\\java > NUL 2>&1",
         "SkipOnFailure":false
     },
     {
@@ -67,7 +70,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -rf ./geyser/java >/dev/null 2>&1; mv ./geyser/jdk* ./geyser/java ; chmod +x ./geyser/java/bin/java'",
+        "UpdateSourceArgs":"-c 'rm -rf ./geyser/java >/dev/null 2>&1; mv ./geyser/jdk* ./geyser/java >/dev/null 2>&1; chmod +x ./geyser/java/bin/java'",
         "SkipOnFailure":false
     },
     {
