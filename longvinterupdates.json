@@ -8,26 +8,21 @@
         "UpdateSourceVersion":"{{ServerBranch}}"
     },
     {
-        "UpdateStageName":"SteamCMD Component Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"1007",
-        "UpdateSourceTarget":"{{$FullBaseDir}}"
-    },
-    {
-        "UpdateStageName":"Server Config File Copy",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"CopyFilePath",
-        "UpdateSourceData":"{{$FullBaseDir}}Longvinter/Saved/Config/WindowsServer/Game.ini",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Longvinter/Saved/Config/WindowsServer/Game.ini.default",
-        "OverwriteExistingFiles":true
-    },
-    {
-        "UpdateStageName":"Server Config File Copy",
+        "UpdateStageName":"Game.ini Download",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"CopyFilePath",
-        "UpdateSourceData":"{{$FullBaseDir}}Longvinter/Saved/Config/LinuxServer/Game.ini",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Longvinter/Saved/Config/LinuxServer/Game.ini.default",
-        "OverwriteExistingFiles":true
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/longvintergame.ini",
+        "UpdateSourceArgs":"Game.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Longvinter/Saved/Config/WindowsServer",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Game.ini Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/longvintergame.ini",
+        "UpdateSourceArgs":"Game.ini",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Longvinter/Saved/Config/LinuxServer",
+        "OverwriteExistingFiles":false
     }
 ]
