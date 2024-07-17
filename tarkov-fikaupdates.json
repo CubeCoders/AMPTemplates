@@ -187,6 +187,70 @@
         "UpdateSourceConditionValue":"3.9.1",
         "SkipOnFailure":false
     },
+	{
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd tarkov && git clone --branch 3.9.2 https://dev.sp-tarkov.com/SPT/Server.git srv > NUL 2>&1 && cd srv/project && git lfs pull > NUL 2>&1 && set PATH={{$FullRootDir}}node;%PATH% && npm install > NUL 2>&1 && npm run build:release -- --arch=x64 --platform=win32 > NUL 2>&1 && xcopy /E /Y /I build\\* \"{{$FullBaseDir}}\" > NUL 2>&1 && cd \"{{$FullBaseDir}}\" && rd /S /Q \"{{$FullRootDir}}srv\" > NUL 2>&1",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"3.9.2",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"x86_64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.9.2 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"3.9.2",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone --branch 3.9.2 https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"3.9.2",
+        "SkipOnFailure":false
+    },
+	{
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd tarkov && git clone https://dev.sp-tarkov.com/SPT/Server.git srv > NUL 2>&1 && cd srv/project && git lfs pull > NUL 2>&1 && set PATH={{$FullRootDir}}node;%PATH% && npm install > NUL 2>&1 && npm run build:release -- --arch=x64 --platform=win32 > NUL 2>&1 && xcopy /E /Y /I build\\* \"{{$FullBaseDir}}\" > NUL 2>&1 && cd \"{{$FullBaseDir}}\" && rd /S /Q \"{{$FullRootDir}}srv\" > NUL 2>&1",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"latest",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"x86_64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"latest",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"SPT AKI Installation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd tarkov && git clone https://dev.sp-tarkov.com/SPT/Server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \"{{$FullBaseDir}}\" >/dev/null 2>&1 && cd \"{{$FullBaseDir}}\" && rm -rf \"{{$FullRootDir}}srv\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1'",
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"latest",
+        "SkipOnFailure":false
+    },
     {
         "UpdateStageName":"Fika Server Mod Download",
         "UpdateSourcePlatform":"All",
@@ -234,6 +298,30 @@
         "DeleteAfterExtract":true,
         "UpdateSourceConditionSetting":"SPTVersion",
         "UpdateSourceConditionValue":"3.9.1"
+    },
+	{
+        "UpdateStageName":"Fika Server Mod Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"project-fika/Fika-Server",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"3.9.2"
+    },
+	{
+        "UpdateStageName":"Fika Server Mod Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"project-fika/Fika-Server",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"SPTVersion",
+        "UpdateSourceConditionValue":"latest"
     },
     {
         "UpdateStageName":"Fika Server Tools Download",
