@@ -42,7 +42,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd bdsx/server && git init && (git remote add origin https://github.com/bdsx/bdsx.git || true) && git fetch origin && git checkout -t origin/master && set PATH={{$FullRootDir}}node;%PATH% && npm install --unsafe-perm & npm run -s shellprepare",
+        "UpdateSourceArgs":"/C cd bdsx/server && git init 2>nul & git remote get-url origin > NUL 2>&1 || git remote add origin https://github.com/bdsx/bdsx.git & git fetch origin & git checkout master 2>nul || git checkout -t origin/master && set PATH={{$FullRootDir}}node;%PATH% && npm install --unsafe-perm & npm run -s shellprepare || (if %ERRORLEVEL% equ 1 exit /b 0)",
         "SkipOnFailure":false
     },
     {
