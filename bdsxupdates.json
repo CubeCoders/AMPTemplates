@@ -50,7 +50,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd bdsx/server && git init 2>/dev/null; git remote get-url origin &>/dev/null || git remote add origin https://github.com/bdsx/bdsx.git; git fetch origin; git checkout master 2>/dev/null || git checkout -t origin/master && export PATH={{$FullRootDir}}node/bin:$PATH && npm install --unsafe-perm; npm run -s shellprepare'",
+        "UpdateSourceArgs":"-c 'cd bdsx/server && git init 2>/dev/null; git remote get-url origin &>/dev/null || git remote add origin https://github.com/bdsx/bdsx.git; git fetch origin; git checkout master 2>/dev/null || git checkout -t origin/master && export PATH={{$FullRootDir}}node/bin:$PATH && npm install --unsafe-perm; npm run -s shellprepare; [ $? -eq 1 ] && exit 0'",
         "SkipOnFailure":false
     },
     {
