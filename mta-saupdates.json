@@ -1,0 +1,55 @@
+[
+    {
+        "UpdateStageName":"Installer Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://mirror-cdn.multitheftauto.com/mtasa/main/mtasa-1.6.exe",
+        "UpdateSourceArgs":"mtasa.exe",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://linux.multitheftauto.com/dl/multitheftauto_linux_x64.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Default Config Files Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://linux.multitheftauto.com/dl/baseconfig.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}mods/deathmatch",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":false,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Default Resources Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://mirror.multitheftauto.com/mtasa/resources/mtasa-resources-latest.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}mods/deathmatch/resources",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"InstallResources",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Default Resources Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://mirror.multitheftauto.com/mtasa/resources/mtasa-resources-latest.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}mods/deathmatch/resources",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"InstallResources",
+        "UpdateSourceConditionValue":"true"
+    }
+]
