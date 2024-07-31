@@ -14,9 +14,16 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://linux.multitheftauto.com/dl/multitheftauto_linux_x64.tar.gz",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UnzipUpdateSource":false,
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Server Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd mta-sa && /usr/bin/tar -xJf multitheftauto_linux_x64.tar.gz --strip-components=1 >/dev/null 2>&1 && rm -f multitheftauto_linux_x64.tar.gz'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Default Config Files Download",
