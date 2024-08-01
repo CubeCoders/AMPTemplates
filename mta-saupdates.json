@@ -54,7 +54,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'mtasa'; & 7-Zip\\7z.exe x -y -aoa setup\\mtasa.exe -osetup server\\* | Out-Null; Remove-Item -Path 'setup/mtasa.exe' -Force -ErrorAction SilentlyContinue | Out-Null; @('acl.xml', 'banlist.xml', 'mtaserver.conf', 'vehiclecolors.conf') | ForEach-Object { if (Test-Path \\\"server/mods/deathmatch/$_\\\") { Remove-Item -Path \\\"setup/mods/deathmatch/$_\\\" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null } }; Copy-Item -Path 'setup/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'setup' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'mtasa'; & 7-Zip\\7z.exe x -y -aoa setup\\mtasa.exe -osetup server\\* | Out-Null; @('acl.xml', 'banlist.xml', 'mtaserver.conf', 'vehiclecolors.conf') | ForEach-Object { if (Test-Path \\\"server/mods/deathmatch/$_\\\") { Remove-Item -Path \\\"setup/server/mods/deathmatch/$_\\\" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null } }; Copy-Item -Path 'setup/server/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'setup' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure":true
     },
     {
