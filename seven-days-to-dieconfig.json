@@ -1211,7 +1211,7 @@
     },{
         "DisplayName":"Save Data Limit",
         "Category":"7d2d - Server Settings",
-        "Description":"The maximum disk space allowance for each saved game in megabytes (MB). Saved chunks may be forceably reset to their original states to free up space when this limit is reached. Negative values disable the limit.",
+        "Description":"The maximum disk space allowance for each saved game in megabytes (MB). Saved chunks may be forceably reset to their original states to free up space when this limit is reached. Negative values disable the limit. Only applicable for versions <1.0",
         "Keywords":"Save,Data,Limit,SaveDataLimit",
         "FieldName":"SaveDataLimit",
         "InputType":"number",
@@ -1246,13 +1246,14 @@
         "IsFlagArgument":false,
         "ParamFieldName":"ConfigFile",
         "IncludeInCommandLine":false,
-        "DefaultValue":"seven-days-settings212",
+        "DefaultValue":"seven-days-settingsv1-0",
         "EnumValues":{
             "seven-days-settings184": "18.4",
             "seven-days-settings196": "19.6",
             "seven-days-settings204": "20.4 to 20.7",
             "seven-days-settings210": "21.0 to 21.1",
-            "seven-days-settings212": "21.2 and Higher",
+            "seven-days-settings212": "21.2 and higher",
+            "seven-days-settingsv1-0": "1.0 and higher",
             "seven-days-settings-undead-legacy-stable": "Undead Legacy Stable",
             "seven-days-settings-undead-legacy-experimental": "Undead Legacy Experimental"
         }
@@ -1285,7 +1286,7 @@
         "EnumValues":{
             "none": "Do not install (default)",
             "A20": "Install 20.4 to 20.7 version",
-            "A21": "Install 21.2 version",
+            "A21": "Install 21.2 version"
         }
     },{
         "DisplayName":"Download Backup Exclude File",
@@ -1405,5 +1406,17 @@
         "DefaultValue":"0",
         "EnumValues":{},
         "Suffix": "%"
+    },{
+        "DisplayName":"Quest Progression Daily Limit",
+        "Category":"7d2d - Server Settings",
+        "Description":"Limits the number of quests that contribute to quest tier progression a player can complete each day. Quests after the limit can still be completed for rewards.",
+        "Keywords":"Quest,Quests,Progression,Limit,Daily",
+        "FieldName":"QuestProgressionDailyLimit",
+        "InputType":"number",
+        "IsFlagArgument":false,
+        "ParamFieldName":"/ServerSettings/property[@name='QuestProgressionDailyLimit']/@value",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"4",
+        "MinValue":"0"
     }
 ]
