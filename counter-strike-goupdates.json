@@ -44,27 +44,49 @@
         "DeleteAfterExtract":true
     },
     {
-        "UpdateStageName":"Sourcemod Download",
+        "UpdateStageName":"SourceMod Download Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}sm"
+    },
+    {
+        "UpdateStageName":"SourceMod Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://sm.alliedmods.net/smdrop/{{ModBranch}}/sourcemod-{{ModBranch}}.0-git{{SourcemodBuild}}-windows.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}csgo",
+        "UpdateSourceTarget":"{{$FullBaseDir}}sm",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
     },
     {
-        "UpdateStageName":"Sourcemod Download",
+        "UpdateStageName":"SourceMod Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://sm.alliedmods.net/smdrop/{{ModBranch}}/sourcemod-{{ModBranch}}.0-git{{SourcemodBuild}}-linux.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}csgo",
+        "UpdateSourceTarget":"{{$FullBaseDir}}sm",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
     },
     {
-        "UpdateStageName":"Activate Metamod and Sourcemod",
+        "UpdateStageName":"SourceMod Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"powershell.exe",
+        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'csgo/740'; if (Test-Path 'csgo/cfg/sourcemod') { Remove-Item -Path 'sm/cfg/sourcemod' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'csgo/addons/sourcemod/configs') { Remove-Item -Path 'sm/addons/sourcemod/configs' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'csgo/addons/sourcemod/plugins') { Remove-Item -Path 'sm/addons/sourcemod/plugins' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; Copy-Item -Path 'sm/*' -Destination 'csgo' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'sm' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure":true
+    },
+    {
+        "UpdateStageName":"SourceMod Installation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd csgo/740 && [ -d csgo/cfg/sourcemod ] && rm -rf sm/cfg/sourcemod >/dev/null 2>&1; [ -d csgo/addons/sourcemod/configs ] && rm -rf sm/addons/sourcemod/configs >/dev/null 2>&1; [ -d csgo/addons/sourcemod/plugins ] && rm -rf sm/addons/sourcemod/plugins >/dev/null 2>&1; \\cp -rf sm/* csgo/ >/dev/null 2>&1; rm -rf sm >/dev/null 2>&1'",
+        "SkipOnFailure":true
+    },
+    {
+        "UpdateStageName":"Activate Metamod and SourceMod",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"CreateFile",
         "UpdateSourceData":"\"Plugin\"\n{\n\t\"file\"\t\"../csgo/addons/metamod/bin/server\"\n}",
