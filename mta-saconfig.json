@@ -191,6 +191,28 @@
         }
     },
     {
+        "DisplayName":"Load Modules",
+        "Category":"Multi Theft Auto:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Specify the modules to load with the server in the <module> setting in mtaserver.conf. One module per line",
+        "Keywords":"modules",
+        "FieldName":"modules",
+        "InputType":"hidden",
+        "ParamFieldName":"modules",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Load Resources",
+        "Category":"Multi Theft Auto:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Specify the resources to load with the server in the <resource> setting in mtaserver.conf. One resource per line",
+        "Keywords":"resource",
+        "FieldName":"resource",
+        "InputType":"hidden",
+        "ParamFieldName":"resource",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Player Limit",
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
@@ -336,7 +358,7 @@
         "InputType":"text",
         "ParamFieldName":"/config/minclientversion",
         "DefaultValue":"",
-		"Placeholder":"1.1.0-9.03100.0",
+		"Placeholder":"1.6.0-9.22628.0",
         "EnumValues":{}
     },
     {
@@ -368,6 +390,19 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server ID File",
+        "Category":"Multi Theft Auto:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the location and file name of the server's unique private key. Used to prevent private files saved on the client from being read by other servers. [More information](http://wiki.multitheftauto.com/wiki/Filepath)",
+        "Keywords":"idfile,server,private,key",
+        "FieldName":"idfile",
+        "InputType":"text",
+        "ParamFieldName":"/config/idfile",
+        "DefaultValue":"server-id.keys",
+        "Placeholder":"server-id.keys",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Bandwidth Reduction Mode",
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
@@ -387,7 +422,7 @@
         "DisplayName":"Thread Network Sync",
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Specifies whether or not to run the network synchronization on another thread",
+        "Description":"If set, the network synchronization will be run on another thread",
         "Keywords":"thread,network,sync,threadnet",
         "FieldName":"threadnet",
         "InputType":"checkbox",
@@ -399,16 +434,48 @@
         }
     },
     {
-        "DisplayName":"Server ID File",
+        "DisplayName":"Backup Path",
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Sets the location and file name of the server's unique private key",
-        "Keywords":"idfile,server,private,key",
-        "FieldName":"idfile",
+        "Description":"Sets the path to use for a basic backup of some server files. Basic backups are only made during server startup",
+        "Keywords":"backup,path,backup_path",
+        "FieldName":"backup_path",
         "InputType":"text",
-        "ParamFieldName":"/config/idfile",
-        "DefaultValue":"server-id.keys",
-        "Placeholder":"server-id.keys",
+        "ParamFieldName":"/config/backup_path",
+        "DefaultValue":"backups",
+        "Placeholder":"backups",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Backup Interval",
+        "Category":"Multi Theft Auto:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the period between each basic backup. Backups are only made during server startup, so the actual interval may be much longer. 0 = backups disabled",
+        "Keywords":"backup,interval,backup_interval",
+        "FieldName":"backup_interval",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"30",
+        "ParamFieldName":"/config/backup_interval",
+        "DefaultValue":"3",
+        "Placeholder":"3",
+		"Suffix":"days",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Backup Copies",
+        "Category":"Multi Theft Auto:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the maximum number of backup copies to keep. 0 = backups disabled",
+        "Keywords":"backup,copies,backup_copies",
+        "FieldName":"backup_copies",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"100",
+        "ParamFieldName":"/config/backup_copies",
+        "DefaultValue":"5",
+        "Placeholder":"5",
+		"Suffix":"backups",
         "EnumValues":{}
     },
     {
@@ -461,51 +528,6 @@
         }
     },
     {
-        "DisplayName":"Backup Path",
-        "Category":"Multi Theft Auto:stadia_controller",
-        "Subcategory":"Server Settings:settings:1",
-        "Description":"Sets the path to use for a basic backup of some server files. Basic backups are only made during server startup",
-        "Keywords":"backup,path,backup_path",
-        "FieldName":"backup_path",
-        "InputType":"text",
-        "ParamFieldName":"/config/backup_path",
-        "DefaultValue":"backups",
-        "Placeholder":"backups",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Backup Interval",
-        "Category":"Multi Theft Auto:stadia_controller",
-        "Subcategory":"Server Settings:settings:1",
-        "Description":"Sets the period between each basic backup. Backups are only made during server startup, so the actual interval may be much longer. 0 = backups disabled",
-        "Keywords":"backup,interval,backup_interval",
-        "FieldName":"backup_interval",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"30",
-        "ParamFieldName":"/config/backup_interval",
-        "DefaultValue":"3",
-        "Placeholder":"3",
-		"Suffix":"days",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Backup Copies",
-        "Category":"Multi Theft Auto:stadia_controller",
-        "Subcategory":"Server Settings:settings:1",
-        "Description":"Sets the maximum number of backup copies to keep. 0 = backups disabled",
-        "Keywords":"backup,copies,backup_copies",
-        "FieldName":"backup_copies",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"100",
-        "ParamFieldName":"/config/backup_copies",
-        "DefaultValue":"10",
-        "Placeholder":"10",
-		"Suffix":"backups",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Compact Internal Databases",
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
@@ -555,7 +577,7 @@
         "DisplayName":"Auth Serial Groups",
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Lists the ACL groups that are protected by serial authorization. Login attempts to a protected account from a second serial are blocked until the serial is manually authorized via the authserial command",
+        "Description":"Comma-separated list of ACL groups that are protected by serial authorization. Login attempts to a protected account from a second serial are blocked until the serial is manually authorized via the authserial command. [More information](https://mtasa.com/authserial)",
         "Keywords":"auth,serial,groups,auth_serial_groups",
         "FieldName":"auth_serial_groups",
         "InputType":"text",
@@ -568,7 +590,7 @@
         "DisplayName":"Enable Auth Serial On HTTP",
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Specifies if the authorized serial login checks should also apply to the HTTP interface. Protected account login attempts to the HTTP interface will only succeed if the IP address matches one recently used by the account holder in-game",
+        "Description":"Specifies if the authorized serial login checks should also apply to the HTTP interface. Protected account login attempts to the HTTP interface will only succeed if the IP address matches one recently used by the account holder in-game. [More information](https://mtasa.com/authserialhttp)",
         "Keywords":"auth,serial,http,auth_serial_http",
         "FieldName":"auth_serial_http",
         "InputType":"checkbox",
@@ -597,7 +619,7 @@
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
         "Description":"If set, extra security measures will be applied to resources which use dbConnect with MySQL",
-        "Keywords":"database,credentials,protection",
+        "Keywords":"database,credentials,protection,database_credentials_protection",
         "FieldName":"database_credentials_protection",
         "InputType":"checkbox",
         "ParamFieldName":"/config/database_credentials_protection",
@@ -611,7 +633,7 @@
         "DisplayName":"Player Triggered Event Interval",
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Specifies the time interval for counting max triggered events (via triggerServerEvent). Exceeding this will call onPlayerTriggerEventThreshold",
+        "Description":"Sets the time interval for counting max triggered events (via triggerServerEvent). Exceeding this will call onPlayerTriggerEventThreshold",
         "Keywords":"player,triggered,event,interval,player_triggered_event_interval",
         "FieldName":"player_triggered_event_interval",
         "InputType":"number",
@@ -620,13 +642,14 @@
         "ParamFieldName":"/config/player_triggered_event_interval",
         "DefaultValue":"1000",
         "Placeholder":"1000",
+        "Suffix":"milliseconds",
         "EnumValues":{}
     },
     {
         "DisplayName":"Maximum Player Triggered Events Per Interval",
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Specifies the maximum triggered amount of events (via triggerServerEvent) within the specified interval. Exceeding this will call onPlayerTriggerEventThreshold",
+        "Description":"Sets the maximum triggered amount of events (via triggerServerEvent) within the specified interval. Exceeding this will call onPlayerTriggerEventThreshold",
         "Keywords":"max,player,triggered,events,max_player_triggered_events_per_interval",
         "FieldName":"max_player_triggered_events_per_interval",
         "InputType":"number",
@@ -635,51 +658,6 @@
         "ParamFieldName":"/config/max_player_triggered_events_per_interval",
         "DefaultValue":"100",
         "Placeholder":"100",
-        "EnumValues":{}
-    },
-	{
-        "DisplayName":"Enable Latency Reduction",
-        "Category":"Multi Theft Auto:stadia_controller",
-        "Subcategory":"Gameplay Settings:joystick:2",
-        "Description":"If set, reduces the delay of player actions appearing on remote clients by 2 frames (approx 50ms)",
-        "Keywords":"latency,reduction,latency_reduction",
-        "FieldName":"latency_reduction",
-        "InputType":"checkbox",
-        "ParamFieldName":"/config/latency_reduction",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-	{
-        "DisplayName":"Unoccupied Vehicle Syncer Distance",
-        "Category":"Multi Theft Auto:stadia_controller",
-        "Subcategory":"Gameplay Settings:joystick:2",
-        "Description":"Sets the distance limit for remote synced unoccupied vehicles",
-        "Keywords":"vehicle,syncer,distance,unoccupied_vehicle_syncer_distance",
-        "FieldName":"unoccupied_vehicle_syncer_distance",
-        "InputType":"number",
-        "MinValue":"50",
-        "MaxValue":"400",
-        "ParamFieldName":"/config/unoccupied_vehicle_syncer_distance",
-        "DefaultValue":"130",
-		"Placeholder":"130",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Ped Syncer Distance",
-        "Category":"Multi Theft Auto:stadia_controller",
-        "Subcategory":"Gameplay Settings:joystick:2",
-        "Description":"Sets the distance limit for remote synced peds",
-        "Keywords":"ped,syncer,distance,ped_syncer_distance",
-        "FieldName":"ped_syncer_distance",
-        "InputType":"number",
-        "MinValue":"50",
-        "MaxValue":"400",
-        "ParamFieldName":"/config/ped_syncer_distance",
-        "DefaultValue":"100",
-		"Placeholder":"100",
         "EnumValues":{}
     },
     {
@@ -702,8 +680,8 @@
         "DisplayName":"Lightweight Sync Interval",
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Gameplay Settings:joystick:2",
-        "Description":"Determines the time between lightweight (player) sync packets. [More information](https://wiki.multitheftauto.com/wiki/Sync_interval_settings)",
-        "Keywords":"sync,interval,lightweight_sync_interval",
+        "Description":"Determines the time between lightweight (player) sync packets. Used when players are far apart. [More information](https://wiki.multitheftauto.com/wiki/Sync_interval_settings)",
+        "Keywords":"lightweight,sync,interval,lightweight_sync_interval",
         "FieldName":"lightweight_sync_interval",
         "InputType":"number",
         "MinValue":"200",
@@ -741,8 +719,8 @@
         "MinValue":"50",
         "MaxValue":"4000",
         "ParamFieldName":"/config/ped_sync_interval",
-        "DefaultValue":"500",
-        "Placeholder":"500",
+        "DefaultValue":"400",
+        "Placeholder":"400",
 		"Suffix":"milliseconds",
         "EnumValues":{}
     },
@@ -779,7 +757,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Key Sync Mouse Sync Interval",
+        "DisplayName":"Keysync Mouse Rotation Sync Interval",
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Gameplay Settings:joystick:2",
         "Description":"Sets the minimum time between key sync packets due to mouse movement. [More information](https://wiki.multitheftauto.com/wiki/Sync_interval_settings)",
@@ -795,7 +773,7 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Key Sync Analog Sync Interval",
+        "DisplayName":"Keysync Analog Movement Sync Interval",
         "Category":"Multi Theft Auto:stadia_controller",
         "Subcategory":"Gameplay Settings:joystick:2",
         "Description":"Sets the minimum time between key sync packets due to joystick movement. [More information](https://wiki.multitheftauto.com/wiki/Sync_interval_settings)",
@@ -871,6 +849,21 @@
 		"Suffix":"milliseconds",
         "EnumValues":{}
     },
+    {
+        "DisplayName":"Enable Latency Reduction",
+        "Category":"Multi Theft Auto:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If set, reduces the delay of player actions appearing on remote clients by 2 frames (approx 50ms). Experimental",
+        "Keywords":"latency,reduction,latency_reduction",
+        "FieldName":"latency_reduction",
+        "InputType":"checkbox",
+        "ParamFieldName":"/config/latency_reduction",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
 	{
         "DisplayName":"Frame Rate Limit",
         "Category":"Multi Theft Auto:stadia_controller",
@@ -937,15 +930,11 @@
         "DisplayName":"Voice Bitrate",
         "Subcategory":"Gameplay Settings:joystick:2",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Sets the voice bitrate. Overrides the previous two settings. If not set, MTA handles this automatically. Use with care",
+        "Description":"The voice bitrate can be set by configuring the <voice_bitrate> setting in mtaserver.conf. This will override the previous two settings. If not set, MTA handles this automatically. Use with care",
         "Keywords":"voice,bitrate,voice_bitrate",
         "FieldName":"voice_bitrate",
-        "InputType":"number",
-        "MinValue":"0",
-        "MaxValue":"1000000",
-        "ParamFieldName":"/config/voice_bitrate",
-        "DefaultValue":"",
-		"Suffix":"bps",
+        "InputType":"hidden",
+        "ParamFieldName":"voice_bitrate",
         "EnumValues":{}
     }
 ]
