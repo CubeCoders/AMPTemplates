@@ -33,7 +33,8 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd et-legacy/server && tar -xzf et-legacy.tar.gz --strip-components=1 && rm -rf et-legacy.tar.gz'"
+        "UpdateSourceArgs":"-c 'cd et-legacy/server && tar -xzf et-legacy.tar.gz --strip-components=1 >/dev/null 2>&1 && rm -rf et-legacy.tar.gz >/dev/null 2>&1'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"SteamCMD Client Files Download",
@@ -52,7 +53,8 @@
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C xcopy /E /Y /I et-legacy\\client\\etmain\\pak*.pk3 et-legacy\\server\\etmain\\ > NUL 2>&1 && rd /S /Q et-legacy\\client\\ > NUL 2>&1",
         "UpdateSourceConditionSetting":"DisableWETDownload",
-        "UpdateSourceConditionValue":"false"
+        "UpdateSourceConditionValue":"false",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Client File Copy",
@@ -61,6 +63,7 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c '\\cp -rf ./et-legacy/client/etmain/pak*.pk3 ./et-legacy/server/etmain/ >/dev/null 2>&1 && rm -rf ./et-legacy/client/ >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"DisableWETDownload",
-        "UpdateSourceConditionValue":"false"
+        "UpdateSourceConditionValue":"false",
+        "SkipOnFailure":false
     }
 ]
