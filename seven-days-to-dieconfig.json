@@ -426,6 +426,54 @@
     "Suffix": "chunks"
   },
   {
+    "DisplayName": "Max Chunk Age",
+    "Category": "7d2d - Server Settings",
+    "Description": "The number of in-game days which must pass since visiting a chunk before it will reset to its original state if not revisited or protected (e.g. by a land claim or bedroll being in close proximity). Only applicable <v1.0.",
+    "Keywords": "Max,Chunk,Age,MaxChunkAge",
+    "FieldName": "MaxChunkAge",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/ServerSettings/property[@name='MaxChunkAge']/@value",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "-1",
+    "Placeholder": "-1",
+    "MinValue": "-1",
+    "EnumValues": {},
+    "Suffix": "days"
+  },
+  {
+    "DisplayName": "Save Data Limit",
+    "Category": "7d2d - Server Settings",
+    "Description": "The maximum disk space allowance for each saved game in megabytes (MB). Saved chunks may be forceably reset to their original states to free up space when this limit is reached. Negative values disable the limit. Only applicable for versions <1.0",
+    "Keywords": "Save,Data,Limit,SaveDataLimit",
+    "FieldName": "SaveDataLimit",
+    "InputType": "number",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/ServerSettings/property[@name='SaveDataLimit']/@value",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "-1",
+    "Placeholder": "-1",
+    "MinValue": "-1",
+    "EnumValues": {},
+    "Suffix": "mb"
+  },
+  {
+    "DisplayName": "Ignore EOS Sanctions",
+    "Category": "7d2d - Server Settings",
+    "Description": "Ignore EOS sanctions when allowing players to join. Only for v1.0 and higher.",
+    "Keywords": "EOS, Sanction",
+    "FieldName": "IgnoreEOSSanctions",
+    "InputType": "checkbox",
+    "IsFlagArgument": false,
+    "ParamFieldName": "/ServerSettings/property[@name='IgnoreEOSSanctions']/@value",
+    "IncludeInCommandLine": false,
+    "DefaultValue": "false",
+    "EnumValues": {
+      "False": "false",
+      "True": "true"
+    }
+  },
+  {
     "DisplayName": "Game World",
     "Category": "7d2d - Gameplay Settings",
     "Description": "\"RWG\" (see WorldGenSeed and WorldGenSize options below) or any already existing world name in the Worlds folder (currently shipping with: \"Navezgane\", \"PREGEN6k\", \"PREGEN8k\", \"PREGEN10k\").",
@@ -1279,36 +1327,17 @@
     }
   },
   {
-    "DisplayName": "Max Chunk Age",
-    "Category": "7d2d - Server Settings",
-    "Description": "The number of in-game days which must pass since visiting a chunk before it will reset to its original state if not revisited or protected (e.g. by a land claim or bedroll being in close proximity). Only applicable <v1.0.",
-    "Keywords": "Max,Chunk,Age,MaxChunkAge",
-    "FieldName": "MaxChunkAge",
+    "DisplayName": "Quest Progression Daily Limit",
+    "Category": "7d2d - Gameplay Settings",
+    "Description": "Limits the number of quests that contribute to quest tier progression a player can complete each day. Quests after the limit can still be completed for rewards. Only for v1.0 and higher.",
+    "Keywords": "Quest,Quests,Progression,Limit,Daily",
+    "FieldName": "QuestProgressionDailyLimit",
     "InputType": "number",
     "IsFlagArgument": false,
-    "ParamFieldName": "/ServerSettings/property[@name='MaxChunkAge']/@value",
+    "ParamFieldName": "/ServerSettings/property[@name='QuestProgressionDailyLimit']/@value",
     "IncludeInCommandLine": false,
-    "DefaultValue": "-1",
-    "Placeholder": "-1",
-    "MinValue": "-1",
-    "EnumValues": {},
-    "Suffix": "days"
-  },
-  {
-    "DisplayName": "Save Data Limit",
-    "Category": "7d2d - Server Settings",
-    "Description": "The maximum disk space allowance for each saved game in megabytes (MB). Saved chunks may be forceably reset to their original states to free up space when this limit is reached. Negative values disable the limit. Only applicable for versions <1.0",
-    "Keywords": "Save,Data,Limit,SaveDataLimit",
-    "FieldName": "SaveDataLimit",
-    "InputType": "number",
-    "IsFlagArgument": false,
-    "ParamFieldName": "/ServerSettings/property[@name='SaveDataLimit']/@value",
-    "IncludeInCommandLine": false,
-    "DefaultValue": "-1",
-    "Placeholder": "-1",
-    "MinValue": "-1",
-    "EnumValues": {},
-    "Suffix": "mb"
+    "DefaultValue": "4",
+    "MinValue": "0"
   },
   {
     "DisplayName": "Release Stream",
@@ -1336,12 +1365,12 @@
     "IncludeInCommandLine": false,
     "DefaultValue": "seven-days-settingsv100",
     "EnumValues": {
-      "seven-days-settings184": "18.4",
-      "seven-days-settings196": "19.6",
-      "seven-days-settings204": "20.4 to 20.7",
-      "seven-days-settings210": "21.0 to 21.1",
-      "seven-days-settings212": "21.2 and higher",
-      "seven-days-settingsv100": "1.0 and higher",
+      "seven-days-settings184": "Alpha 18.4",
+      "seven-days-settings196": "Alpha 19.6",
+      "seven-days-settings204": "Alpha 20.4 to Alpha 20.7",
+      "seven-days-settings210": "Alpha 21.0 to Alpha 21.1",
+      "seven-days-settings212": "Alpha 21.2",
+      "seven-days-settingsv100": "Version 1.0 and higher",
       "seven-days-settings-undead-legacy-stable": "Undead Legacy Stable",
       "seven-days-settings-undead-legacy-experimental": "Undead Legacy Experimental"
     }
@@ -1505,34 +1534,5 @@
     "DefaultValue": "0",
     "EnumValues": {},
     "Suffix": "%"
-  },
-  {
-    "DisplayName": "Quest Progression Daily Limit",
-    "Category": "7d2d - Gameplay Settings",
-    "Description": "Limits the number of quests that contribute to quest tier progression a player can complete each day. Quests after the limit can still be completed for rewards. Only for v1.0 and higher.",
-    "Keywords": "Quest,Quests,Progression,Limit,Daily",
-    "FieldName": "QuestProgressionDailyLimit",
-    "InputType": "number",
-    "IsFlagArgument": false,
-    "ParamFieldName": "/ServerSettings/property[@name='QuestProgressionDailyLimit']/@value",
-    "IncludeInCommandLine": false,
-    "DefaultValue": "4",
-    "MinValue": "0"
-  },
-  {
-    "DisplayName": "Ignore EOS Sanctions",
-    "Category": "7d2d - Server Settings",
-    "Description": "Ignore EOS sanctions when allowing players to join. Only for v1.0 and higher.",
-    "Keywords": "EOS, Sanction",
-    "FieldName": "IgnoreEOSSanctions",
-    "InputType": "checkbox",
-    "IsFlagArgument": false,
-    "ParamFieldName": "/ServerSettings/property[@name='IgnoreEOSSanctions']/@value",
-    "IncludeInCommandLine": false,
-    "DefaultValue": "false",
-    "EnumValues": {
-      "False": "false",
-      "True": "true"
-    }
   }
 ]
