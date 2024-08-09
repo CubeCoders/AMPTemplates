@@ -3,7 +3,7 @@
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.etlegacy.com/download/file/559",
+        "UpdateSourceData":"https://www.etlegacy.com/download/file/597",
         "UpdateSourceArgs":"et-legacy.zip",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "UnzipUpdateSource":true,
@@ -14,19 +14,18 @@
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.etlegacy.com/download/file/554",
+        "UpdateSourceData":"https://www.etlegacy.com/download/file/590",
         "UpdateSourceArgs":"et-legacy.tar.gz",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":false,
+        "OverwriteExistingFiles":true
     },
     {
         "UpdateStageName":"Move Server Files",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./et-legacy/etlegacy-*/* ./et-legacy/server/ && rm -rf ./et-legacy/etlegacy-*/ && cd ./et-legacy/server && ln -sf ./etlded.* ./etlded'"
+        "UpdateSourceArgs":"-c 'cd et-legacy && tar -xzf et-legacy.tar.gz --strip-components=1 && rm -rf et-legacy.tar.gz'"
     },
     {
         "UpdateStageName":"SteamCMD Game Download",
