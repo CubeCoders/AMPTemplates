@@ -35,7 +35,7 @@ App.ExecutableLinux=server/etlded.x86_64
 App.WorkingDir=server
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} +set fs_basepath "{{$FullBaseDir}}" +set fs_homepath "{{$FullBaseDir}}data" +set net_port {{$ServerPort}} +set net_port6 {{$ServerPort}} +set net_ip {{$ApplicationIPBinding}} +set net_ip6 {{net_ip6}} +set rconpassword "{{$RemoteAdminPassword}}" {{$FormattedArgs}} +exec etl_server.cfg +set omnibot_enable 1 +set omnibot_path "./legacy/omni-bot"
+App.CommandLineArgs={{$PlatformArgs}} +set fs_basepath "{{$FullBaseDir}}" +set fs_homepath "{{$FullBaseDir}}data" +set net_port {{$ServerPort}} +set net_port6 {{$ServerPort}} +set net_ip {{$ApplicationIPBinding}} +set net_ip6 "{{net_ip6}}" +set rconpassword "{{$RemoteAdminPassword}}" {{$FormattedArgs}} +exec etl_server.cfg +set omnibot_enable 1 +set omnibot_path "./legacy/omni-bot"
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1873030"}
@@ -93,7 +93,7 @@ App.ApplicationReadyMode=RegexMatch
 Console.FilterMatchRegex=\e\[(\d+;)*(\d+)?[ABCDHJKfmsu]|\e\[?[?\>\=\da-z]+
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^\d+ Game Initialization completed in \d+\.\d+ seconds$
+Console.AppReadyRegex=^.*\d+ Game Initialization completed in \d+\.\d+ seconds$
 Console.UserJoinRegex=^$
 Console.UserLeaveRegex=^$
 Console.UserChatRegex=^$
