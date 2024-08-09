@@ -48,13 +48,13 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I et-legacy\\client\\etmain\\pak*.pk3 et-legacy\\server\\etmain\\ && rd /S /Q et-legacy\\client\\"
+        "UpdateSourceArgs":"/C xcopy /E /Y /I et-legacy\\client\\etmain\\pak*.pk3 et-legacy\\server\\etmain\\ > NUL 2>&1 && rd /S /Q et-legacy\\client\\ > NUL 2>&1"
     },
     {
         "UpdateStageName":"Client File Copy",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./et-legacy/client/etmain/pak*.pk3 ./et-legacy/server/etmain/ && rm -rf ./et-legacy/client/'"
+        "UpdateSourceArgs":"-c '\\cp -rf ./et-legacy/client/etmain/pak*.pk3 ./et-legacy/server/etmain/ >/dev/null 2>&1 && rm -rf ./et-legacy/client/ >/dev/null 2>&1'"
     }
 ]
