@@ -1,5 +1,45 @@
 [
     {
+        "UpdateStageName":"Client Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}client"
+    },
+	{
+        "UpdateStageName":"7-Zip Directory Creation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip",
+        "OneShot":true
+    },
+    {
+        "UpdateStageName":"7-Zip Installer Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://7-zip.org/a/7z2407-x64.exe",
+        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles":true,
+        "OneShot":true
+    },
+    {
+        "UpdateStageName":"7-Zip Console Tool Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://www.7-zip.org/a/7zr.exe",
+        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles":true,
+        "OneShot":true
+    },
+    {
+        "UpdateStageName":"7-Zip Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd et-legacy\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
+        "SkipOnFailure":true,
+        "OneShot":true
+    },
+    {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
@@ -8,7 +48,22 @@
         "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"64-bit"
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://www.etlegacy.com/download/file/596",
+        "UpdateSourceArgs":"et-legacy.zip",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"32-bit"
     },
     {
         "UpdateStageName":"Server Installation",
@@ -25,8 +80,20 @@
         "UpdateSourceData":"https://www.etlegacy.com/download/file/590",
         "UpdateSourceArgs":"et-legacy.tar.gz",
         "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":false,
-        "OverwriteExistingFiles":true
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"64-bit"
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://www.etlegacy.com/download/file/592",
+        "UpdateSourceArgs":"et-legacy.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"32-bit"
     },
     {
         "UpdateStageName":"Server Installation",
@@ -37,33 +104,45 @@
         "SkipOnFailure":false
     },
     {
-        "UpdateStageName":"SteamCMD Client Files Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"1873030",
+        "UpdateStageName":"Client Files Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://cdn.splashdamage.com/downloads/games/wet/WolfET_2_60b_custom.exe",
         "UpdateSourceTarget":"{{$FullRootDir}}client",
-        "ForceDownloadPlatform":"Windows",
+        "OverwriteExistingFiles":true,
         "UpdateSourceConditionSetting":"DisableWETDownload",
         "UpdateSourceConditionValue":"false"
     },
     {
-        "UpdateStageName":"Client File Copy",
+        "UpdateStageName":"Client Files Installation",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I et-legacy\\client\\etmain\\pak*.pk3 et-legacy\\server\\etmain\\ > NUL 2>&1 && rd /S /Q et-legacy\\client\\ > NUL 2>&1",
+        "UpdateSourceData":"powershell.exe",
+        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'et-legacy'; & 7-Zip\\7z.exe x -y -aoa client\\WolfET_2_60b_custom.exe -oclient etmain\\* | Out-Null; Copy-Item -Path 'client/etmain/pak*.pk3' -Destination 'server/etmain/' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'client' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure":false,
         "UpdateSourceConditionSetting":"DisableWETDownload",
-        "UpdateSourceConditionValue":"false",
-        "SkipOnFailure":false
+        "UpdateSourceConditionValue":"false"
     },
     {
-        "UpdateStageName":"Client File Copy",
+        "UpdateStageName":"Client Files Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://cdn.splashdamage.com/downloads/games/wet/et260b.x86_full.zip",
+        "UpdateSourceTarget":"{{$FullRootDir}}client",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"DisableWETDownload",
+        "UpdateSourceConditionValue":"false"
+    },
+    {
+        "UpdateStageName":"Client Files Installation",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./et-legacy/client/etmain/pak*.pk3 ./et-legacy/server/etmain/ >/dev/null 2>&1 && rm -rf ./et-legacy/client/ >/dev/null 2>&1'",
+        "UpdateSourceArgs":"-c 'cd et-legacy/client && ./*.x86_keygen_V03.run --tar xvf ./etmain/ >/dev/null 2>&1 && cd .. && \\cp -rf client/etmain/pak*.pk3 server/etmain/ >/dev/null 2>&1 && rm -rf client >/dev/null 2>&1'",
+        "SkipOnFailure":false,
         "UpdateSourceConditionSetting":"DisableWETDownload",
-        "UpdateSourceConditionValue":"false",
-        "SkipOnFailure":false
+        "UpdateSourceConditionValue":"false"
     }
 ]
