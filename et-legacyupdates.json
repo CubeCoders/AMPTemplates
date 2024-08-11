@@ -50,7 +50,7 @@
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true,
         "UpdateSourceConditionSetting":"ServerVersion",
-        "UpdateSourceConditionValue":"64-bit"
+        "UpdateSourceConditionValue":"x86_64"
     },
     {
         "UpdateStageName":"Server Download",
@@ -63,7 +63,7 @@
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true,
         "UpdateSourceConditionSetting":"ServerVersion",
-        "UpdateSourceConditionValue":"32-bit"
+        "UpdateSourceConditionValue":"i386"
     },
     {
         "UpdateStageName":"Server Installation",
@@ -82,7 +82,7 @@
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "OverwriteExistingFiles":true,
         "UpdateSourceConditionSetting":"ServerVersion",
-        "UpdateSourceConditionValue":"64-bit"
+        "UpdateSourceConditionValue":"x86_64"
     },
     {
         "UpdateStageName":"Server Download",
@@ -93,7 +93,7 @@
         "UpdateSourceTarget":"{{$FullBaseDir}}",
         "OverwriteExistingFiles":true,
         "UpdateSourceConditionSetting":"ServerVersion",
-        "UpdateSourceConditionValue":"32-bit"
+        "UpdateSourceConditionValue":"i386"
     },
     {
         "UpdateStageName":"Server Installation",
@@ -119,9 +119,9 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"powershell.exe",
         "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'et-legacy'; & 7-Zip\\7z.exe x -y -aoa client\\WolfET_2_60b_custom.exe -oclient etmain\\* | Out-Null; Copy-Item -Path 'client/etmain/pak*.pk3' -Destination 'server/etmain/' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'client' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
-        "SkipOnFailure":false,
         "UpdateSourceConditionSetting":"DisableWETDownload",
-        "UpdateSourceConditionValue":"false"
+        "UpdateSourceConditionValue":"false",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Client Files Download",
@@ -140,9 +140,9 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd et-legacy/client && chmod +x ./*.x86_keygen_V03.run && ./*.x86_keygen_V03.run --tar xvf ./etmain/ && cd .. && \\cp -rf client/etmain/pak*.pk3 server/etmain/ >/dev/null 2>&1 && rm -rf client >/dev/null 2>&1'",
-        "SkipOnFailure":false,
+        "UpdateSourceArgs":"-c 'cd et-legacy/client && chmod +x ./*.x86_keygen_V03.run && ./*.x86_keygen_V03.run --tar xvf ./etmain/ >/dev/null 2>&1 && cd .. && \\cp -rf client/etmain/pak*.pk3 server/etmain/ >/dev/null 2>&1 && rm -rf client >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"DisableWETDownload",
-        "UpdateSourceConditionValue":"false"
+        "UpdateSourceConditionValue":"false",
+        "SkipOnFailure":false
     }
 ]
