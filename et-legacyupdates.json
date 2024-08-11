@@ -55,6 +55,14 @@
     {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"powershell.exe",
+        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'et-legacy'; (Invoke-WebRequest -Uri \\\"https://www.etlegacy.com/download\\\" -UseBasicParsing).Content | Select-String -Pattern 'data-href=\\\"([^\\\"]+)\\\"[^>]+>Win32 archive' | ForEach-Object { $_.Matches.Groups[1].Value }\"",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Windows",
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://www.etlegacy.com/download/file/596",
         "UpdateSourceArgs":"et-legacy.zip",
