@@ -42,22 +42,9 @@
     {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.etlegacy.com/download/file/597",
-        "UpdateSourceArgs":"et-legacy.zip",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
-        "UpdateSourceConditionSetting":"ServerVersion",
-        "UpdateSourceConditionValue":"x86_64"
-    },
-    {
-        "UpdateStageName":"Server Download",
-        "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; (Invoke-WebRequest -Uri \\\"https://www.etlegacy.com/download\\\" -UseBasicParsing).Content -match 'data-href=\\\"([^\\\"]+)\\\"[^>]*>Win64 archive' | Out-Null; $DOWNLOAD_URL=$matches[1]; Invoke-WebRequest -UseBasicParsing -Uri $DOWNLOAD_URL -OutFile 'et-legacy.zip'\"",
+        "UpdateSourceArgs":"-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; (Invoke-WebRequest -Uri \\\"https://www.etlegacy.com/download\\\" -UseBasicParsing).Content -match 'data-href=\\\"([^\\\"]+)\\\"[^>]*>Win64 archive' | Out-Null; $DOWNLOAD_URL = $matches[1]; Invoke-WebRequest -UseBasicParsing -Uri $DOWNLOAD_URL -OutFile 'et-legacy.zip'\"",
         "UpdateSourceConditionSetting":"ServerVersion",
         "UpdateSourceConditionValue":"x86_64",
         "SkipOnFailure":false
@@ -67,7 +54,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; (Invoke-WebRequest -Uri \\\"https://www.etlegacy.com/download\\\" -UseBasicParsing).Content -match 'data-href=\\\"([^\\\"]+)\\\"[^>]*>Win32 archive' | Out-Null; $DOWNLOAD_URL=$matches[1]; Invoke-WebRequest -UseBasicParsing -Uri $DOWNLOAD_URL -OutFile 'et-legacy.zip'\"",
+        "UpdateSourceArgs":"-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; (Invoke-WebRequest -Uri \\\"https://www.etlegacy.com/download\\\" -UseBasicParsing).Content -match 'data-href=\\\"([^\\\"]+)\\\"[^>]*>Win32 archive' | Out-Null; $DOWNLOAD_URL = $matches[1]; Invoke-WebRequest -UseBasicParsing -Uri $DOWNLOAD_URL -OutFile 'et-legacy.zip'\"",
         "UpdateSourceConditionSetting":"ServerVersion",
         "UpdateSourceConditionValue":"i386",
         "SkipOnFailure":false
