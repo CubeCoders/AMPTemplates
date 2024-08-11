@@ -64,9 +64,17 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"ExtractArchive",
         "UpdateSourceData":"et-legacy.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Server Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"powershell.exe",
+        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'et-legacy'; Copy-Item -Path 'etlegacy-*/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'etlegacy-*' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Server Download",
