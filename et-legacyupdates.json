@@ -79,31 +79,21 @@
     {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.etlegacy.com/download/file/590",
-        "UpdateSourceArgs":"et-legacy.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "OverwriteExistingFiles":true,
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c \"cd et-legacy/server && DOWNLOAD_URL=$(wget -qO- \\\"https://www.etlegacy.com/download\\\" | sed -n 's/.*data-href=\\\"\([^\\\"]*\)\\\"[^>]*>x86_64 archive.*/\1/p'); wget -qO et-legacy.tar.gz $DOWNLOAD_URL && tar -xzf et-legacy.tar.gz --strip-components=1 >/dev/null 2>&1 && rm -rf et-legacy.tar.gz >/dev/null 2>&1\"",
         "UpdateSourceConditionSetting":"ServerVersion",
-        "UpdateSourceConditionValue":"x86_64"
+        "UpdateSourceConditionValue":"x86_64",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.etlegacy.com/download/file/592",
-        "UpdateSourceArgs":"et-legacy.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "OverwriteExistingFiles":true,
-        "UpdateSourceConditionSetting":"ServerVersion",
-        "UpdateSourceConditionValue":"i386"
-    },
-    {
-        "UpdateStageName":"Server Installation",
-        "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd et-legacy/server && tar -xzf et-legacy.tar.gz --strip-components=1 >/dev/null 2>&1 && rm -rf et-legacy.tar.gz >/dev/null 2>&1'",
+        "UpdateSourceArgs":"-c \"cd et-legacy/server && DOWNLOAD_URL=$(wget -qO- \\\"https://www.etlegacy.com/download\\\" | sed -n 's/.*data-href=\\\"\([^\\\"]*\)\\\"[^>]*>i386 archive.*/\1/p'); wget -qO et-legacy.tar.gz $DOWNLOAD_URL && tar -xzf et-legacy.tar.gz --strip-components=1 >/dev/null 2>&1 && rm -rf et-legacy.tar.gz >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"i386",
         "SkipOnFailure":false
     },
     {
