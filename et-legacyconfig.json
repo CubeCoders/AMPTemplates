@@ -51,6 +51,19 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"DDoS Protection Log",
+        "Category":"ET Legacy:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"sv_protectLog",
+        "InputType":"text",
+        "Hidden":true,
+        "ParamFieldName":"sv_protectLog",
+        "DefaultValue":"sv_protect.log",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Name",
         "Category":"ET Legacy:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
@@ -66,7 +79,7 @@
         "DisplayName":"Message Of The Day",
         "Category":"ET Legacy:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Sets the first line of the message of the day (MOTD) displayed when players join. Additional lines can be specified in etl_server.cfg",
+        "Description":"Sets the first line of the message of the day (MOTD) displayed when players join. Additional lines can be specified in 'etmain/etl_server.cfg'",
         "Keywords":"message,motd,server_motd0",
         "FieldName":"server_motd0",
         "InputType":"text",
@@ -197,7 +210,7 @@
         "DisplayName":"Map Rotation Mode",
         "Category":"ET Legacy:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Specify the map rotation mode in etmain/etl_server.cfg, and configure the relevant script for that rotation mode accordingly",
+        "Description":"Specify the map rotation mode in 'etmain/etl_server.cfg', and configure the relevant script for that rotation mode accordingly",
         "Keywords":"map,rotation,mode",
         "FieldName":"MapRotation",
         "InputType":"hidden",
@@ -220,21 +233,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Minimum Players",
-        "Category":"ET Legacy:stadia_controller",
-        "Subcategory":"Server Settings:settings:1",
-        "Description":"Sets the minimum number of players that must join the server before it enters restricted mode",
-        "Keywords":"min,minimum,players,clients,g_minGameClients",
-        "FieldName":"g_minGameClients",
-        "InputType":"number",
-        "MinValue":"1",
-        "ParamFieldName":"g_minGameClients",
-        "DefaultValue":"4",
-        "Placeholder":"4",
-        "Suffix":"players",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Private Client Number",
         "Category":"ET Legacy:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
@@ -247,6 +245,21 @@
         "DefaultValue":"4",
         "Placeholder":"4",
         "Suffix":"private players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Timeout For Connected Clients",
+        "Category":"ET Legacy:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the time without any message from connected clients before a timeout occurs",
+        "Keywords":"timeout,connected,clients,sv_timeout",
+        "FieldName":"sv_timeout",
+        "InputType":"number",
+        "MinValue":"1",
+        "ParamFieldName":"sv_timeout",
+        "DefaultValue":"40",
+        "Placeholder":"40",
+        "Suffix":"seconds",
         "EnumValues":{}
     },
     {
@@ -304,6 +317,20 @@
         }
     },
     {
+        "DisplayName":"Maximum Download Rate",
+        "Category":"ET Legacy:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the maximum download rate from the server. Increase or decrease depending on available bandwidth",
+        "Keywords":"download,rate,bandwidth,sv_dlRate",
+        "FieldName":"sv_dlRate",
+        "InputType":"number",
+        "MinValue":"1",
+        "ParamFieldName":"sv_dlRate",
+        "DefaultValue":"100",
+        "Placeholder":"100",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Allow Download From Web",
         "Category":"ET Legacy:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
@@ -341,6 +368,36 @@
         "ParamFieldName":"sv_wwwFallbackURL",
         "DefaultValue":"",
         "EnumValues":{}
+    },
+    {
+        "DisplayName":"Timeout For Downloading Clients",
+        "Category":"ET Legacy:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the time without any message from downloading or preparing clients before a timeout occurs",
+        "Keywords":"timeout,downloading,clients,sv_dl_timeout",
+        "FieldName":"sv_dl_timeout",
+        "InputType":"number",
+        "MinValue":"1",
+        "ParamFieldName":"sv_dl_timeout",
+        "DefaultValue":"240",
+        "Placeholder":"240",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Force Client Download While Disconnected",
+        "Category":"ET Legacy:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, clients will perform their downloads while disconnected from the server",
+        "Keywords":"www,web,download,disconnected,sv_wwwDlDisconnected",
+        "FieldName":"sv_wwwDlDisconnected",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_wwwDlDisconnected",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
     },
     {
         "DisplayName":"Server Memory Allocation",
@@ -418,111 +475,39 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Additional Console Variables",
+        "DisplayName":"DDoS Protection Mode",
         "Category":"ET Legacy:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Additional console variables that are not otherwise set by AMP can be specified in etmain/server.cfg",
-        "Keywords":"custom,server,variables,cvars,convars,parameters",
-        "FieldName":"CustomConVars",
-        "InputType":"hidden",
-        "ParamFieldName":"CustomConVars",
-        "IncludeInCommandLine":false,
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Player Warmup Time",
-        "Category":"ET Legacy:stadia_controller",
-        "Subcategory":"Gameplay Settings:joystick:2",
-        "Description":"Sets the amount of warmup time allotted to connected clients",
-        "Keywords":"warmup,time,g_warmup",
-        "FieldName":"g_warmup",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"g_warmup",
-        "DefaultValue":"30",
-        "Placeholder":"30",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Enable Friendly Fire",
-        "Category":"ET Legacy:stadia_controller",
-        "Subcategory":"Gameplay Settings:joystick:2",
-        "Description":"If enabled, friendly fire will be allowed, so players can damage their own teammates",
-        "Keywords":"friendly,fire,g_friendlyfire",
-        "FieldName":"g_friendlyFire",
-        "InputType":"checkbox",
-        "ParamFieldName":"g_friendlyFire",
+        "Description":"Sets the level of DDoS protection",
+        "Keywords":"ddos,protection,security,sv_protect",
+        "FieldName":"sv_protect",
+        "InputType":"enum",
+        "ParamFieldName":"sv_protect",
         "DefaultValue":"1",
         "EnumValues":{
-            "False":"0",
-            "True":"1"
+            "1":"Use ioquake3 getstatus, getchallenge protection (default)",
+            "2":"Use OpenWolf getstatus, getinfo, getchallenge protection"
         }
     },
     {
-        "DisplayName":"Enable Forced Team Balancing",
+        "DisplayName":"Max Clients Per IP",
         "Category":"ET Legacy:stadia_controller",
-        "Subcategory":"Gameplay Settings:joystick:2",
-        "Description":"If set, forces a new player onto the smallest or losing team. Otherwise, the player can select freely which team to join",
-        "Keywords":"team,force,balance,balancing,selection,g_teamforcebalance",
-        "FieldName":"g_teamforcebalance",
-        "InputType":"checkbox",
-        "ParamFieldName":"g_teamforcebalance",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Disable Team Switching",
-        "Category":"ET Legacy:stadia_controller",
-        "Subcategory":"Gameplay Settings:joystick:2",
-        "Description":"If set, team switching will be disabled",
-        "Keywords":"team,switching,g_noTeamSwitching",
-        "FieldName":"g_noTeamSwitching",
-        "InputType":"checkbox",
-        "ParamFieldName":"g_noTeamSwitching",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Maximum Player Lives",
-        "Category":"ET Legacy:stadia_controller",
-        "Subcategory":"Gameplay Settings:joystick:2",
-        "Description":"Sets the maximum number of lives that players can have. 0 = unlimited",
-        "Keywords":"max,maximum,lives,g_maxlives",
-        "FieldName":"g_maxlives",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the limit on the number of client connections per IP. 0 = no limit",
+        "Keywords":"max,maximum,clients,ip,limit,sv_ipMaxClients",
+        "FieldName":"sv_ipMaxClients",
         "InputType":"number",
         "MinValue":"0",
-        "ParamFieldName":"g_maxlives",
+        "ParamFieldName":"sv_ipMaxClients",
         "DefaultValue":"0",
         "Placeholder":"0",
-        "Suffix":"lives",
+        "Suffix":"clients",
         "EnumValues":{}
-    },
-    {
-        "DisplayName":"Allow Voting",
-        "Category":"ET Legacy:stadia_controller",
-        "Subcategory":"Gameplay Settings:joystick:2",
-        "Description":"If set, connected players can call for and vote on changes as set in etmain/server.cfg",
-        "Keywords":"vote,voting,g_allowvote",
-        "FieldName":"g_allowVote",
-        "InputType":"checkbox",
-        "ParamFieldName":"g_allowVote",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
     },
     {
         "DisplayName":"Enable Flood Protection",
         "Category":"ET Legacy:stadia_controller",
-        "Subcategory":"Gameplay Settings:joystick:2",
+        "Subcategory":"Server Settings:settings:1",
         "Description":"If set, the server will be protected from being flooded by players via chat",
         "Keywords":"flood,protect,protection,sv_floodprotect",
         "FieldName":"sv_floodProtect",
@@ -533,6 +518,33 @@
             "False":"0",
             "True":"1"
         }
+    },
+    {
+        "DisplayName":"Enable User Info Flood Protection",
+        "Category":"ET Legacy:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, the server will be protected against userinfo flooding",
+        "Keywords":"flood,protect,protection,userinfo,security,sv_userInfofloodProtect",
+        "FieldName":"sv_userInfofloodProtect",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_userInfofloodProtect",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Additional Console Variables",
+        "Category":"ET Legacy:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Additional console variables that are not otherwise set by AMP can be specified in 'etmain/etl_server.cfg'",
+        "Keywords":"custom,server,variables,cvars,convars,parameters",
+        "FieldName":"CustomConVars",
+        "InputType":"hidden",
+        "ParamFieldName":"CustomConVars",
+        "IncludeInCommandLine":false,
+        "EnumValues":{}
     },
     {
         "DisplayName":"Server Version",
