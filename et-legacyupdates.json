@@ -73,7 +73,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'et-legacy'; Copy-Item -Path 'etlegacy-*/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'etlegacy-*' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'et-legacy'; $directory = Get-ChildItem -Directory -Filter \\\"etlegacy-*\\\"; Rename-Item $directory.FullName -NewName \\\"etl\\\"; @('etl_server.cfg', 'legacy.cfg') | ForEach-Object { if (Test-Path \\\"server/etmain/$_\\\") { Remove-Item -Path \\\"etl/etmain/$_\\\" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null } }; Copy-Item -Path 'etlegacy-*/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'etl' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure":false
     },
     {
@@ -81,7 +81,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd et-legacy/server && DOWNLOAD_URL=$(wget -qO- \\\"https://www.etlegacy.com/download\\\" | sed -n 's/.*data-href=\\\"\\([^\\\"]*\\)\\\"[^>]*>x86_64 archive.*/\\1/p'); wget -qO et-legacy.tar.gz $DOWNLOAD_URL && tar -xzf et-legacy.tar.gz --strip-components=1 >/dev/null 2>&1 && rm -rf et-legacy.tar.gz >/dev/null 2>&1\"",
+        "UpdateSourceArgs":"-c \"cd et-legacy && DOWNLOAD_URL=$(wget -qO- \\\"https://www.etlegacy.com/download\\\" | sed -n 's/.*data-href=\\\"\\([^\\\"]*\\)\\\"[^>]*>x86_64 archive.*/\\1/p'); wget -qO et-legacy.tar.gz $DOWNLOAD_URL && tar -xzf et-legacy.tar.gz >/dev/null 2>&1 && mv etlegacy-* etl && for file in etl_server.cfg legacy.cfg; do [ -e \\\"server/etmain/$file\\\" ] && rm -f \\\"etl/etmain/$file\\\"; done; \\cp -rf etl/* server/ && rm -rf etl >/dev/null 2>&1\"",
         "UpdateSourceConditionSetting":"ServerVersion",
         "UpdateSourceConditionValue":"x86_64",
         "SkipOnFailure":false
@@ -91,7 +91,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd et-legacy/server && DOWNLOAD_URL=$(wget -qO- \\\"https://www.etlegacy.com/download\\\" | sed -n 's/.*data-href=\\\"\\([^\\\"]*\\)\\\"[^>]*>i386 archive.*/\\1/p'); wget -qO et-legacy.tar.gz $DOWNLOAD_URL && tar -xzf et-legacy.tar.gz --strip-components=1 >/dev/null 2>&1 && rm -rf et-legacy.tar.gz >/dev/null 2>&1\"",
+        "UpdateSourceArgs":"-c \"cd et-legacy && DOWNLOAD_URL=$(wget -qO- \\\"https://www.etlegacy.com/download\\\" | sed -n 's/.*data-href=\\\"\\([^\\\"]*\\)\\\"[^>]*>i386 archive.*/\\1/p'); wget -qO et-legacy.tar.gz $DOWNLOAD_URL && tar -xzf et-legacy.tar.gz >/dev/null 2>&1 && mv etlegacy-* etl && for file in etl_server.cfg legacy.cfg; do [ -e \\\"server/etmain/$file\\\" ] && rm -f \\\"etl/etmain/$file\\\"; done; \\cp -rf etl/* server/ && rm -rf etl >/dev/null 2>&1\"",
         "UpdateSourceConditionSetting":"ServerVersion",
         "UpdateSourceConditionValue":"i386",
         "SkipOnFailure":false
