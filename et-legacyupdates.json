@@ -73,7 +73,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'et-legacy'; $directory = Get-ChildItem -Directory -Filter \\\"etlegacy-*\\\"; Rename-Item $directory.FullName -NewName \\\"etl\\\"; @('etl_server.cfg', 'legacy.cfg') | ForEach-Object { if (Test-Path \\\"server/etmain/$_\\\") { Remove-Item -Path \\\"etl/etmain/$_\\\" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null } }; Copy-Item -Path 'etlegacy-*/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'etl' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'et-legacy'; $directory = Get-ChildItem -Directory -Filter \\\"etlegacy-*\\\"; Rename-Item $directory.FullName -NewName \\\"etl\\\"; @('etl_server.cfg', 'legacy.cfg') | ForEach-Object { if (Test-Path \\\"server/etmain/$_\\\") { Remove-Item -Path \\\"etl/etmain/$_\\\" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null } }; Copy-Item -Path 'etl/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'etl' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure":false
     },
     {
