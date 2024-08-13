@@ -3,14 +3,14 @@
         "UpdateStageName":"Spellmasons Folder Creation",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Spellmasons",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Spellmasons"
     },
     {
         "UpdateStageName":"Downloading Server",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}}Spellmasons && rm -rf * .* && git clone https://github.com/jdoleary/Spellmasons.git .'",
+        "UpdateSourceArgs":"-c 'git -C {{$FullBaseDir}}Spellmasons pull https://github.com/jdoleary/Spellmasons.git || git clone https://github.com/jdoleary/Spellmasons.git {{$FullBaseDir}}Spellmasons'",
         "UpdateSourceConditionSetting":"ServerVersion",
         "UpdateSourceConditionValue":"Latest",
         "SkipOnFailure":false
@@ -20,7 +20,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}}Spellmasons && rm -rf * .* && git clone https://github.com/jdoleary/Spellmasons.git . -b {{CustomVersion}}'",
+        "UpdateSourceArgs":"-c 'git -C {{$FullBaseDir}}Spellmasons reset --hard {{CustomVersion}} || git clone https://github.com/jdoleary/Spellmasons.git {{$FullBaseDir}}Spellmasons -b {{CustomVersion}}'",
         "UpdateSourceConditionSetting":"ServerVersion",
         "UpdateSourceConditionValue":"Manual",
         "SkipOnFailure":false
@@ -29,8 +29,8 @@
         "UpdateStageName":"Downloading Server",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
-        "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"cd {{$FullBaseDir}}Spellmasons; Remove-Item {{$FullBaseDir}}Spellmasons\\* -Recurse -Force; git clone https://github.com/jdoleary/Spellmasons.git .",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C git -C {{$FullBaseDir}}Spellmasons pull https://github.com/jdoleary/Spellmasons.git || git clone https://github.com/jdoleary/Spellmasons.git {{$FullBaseDir}}Spellmasons",
         "UpdateSourceConditionSetting":"ServerVersion",
         "UpdateSourceConditionValue":"Latest",
         "SkipOnFailure":false
@@ -39,8 +39,8 @@
         "UpdateStageName":"Downloading Server",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
-        "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"cd {{$FullBaseDir}}Spellmasons; Remove-Item {{$FullBaseDir}}Spellmasons\\* -Recurse -Force; git clone https://github.com/jdoleary/Spellmasons.git . -b {{CustomVersion}}",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C git -C {{$FullBaseDir}}Spellmasons reset --hard {{CustomVersion}} || git clone https://github.com/jdoleary/Spellmasons.git {{$FullBaseDir}}Spellmasons -b {{CustomVersion}}",
         "UpdateSourceConditionSetting":"ServerVersion",
         "UpdateSourceConditionValue":"Manual",
         "SkipOnFailure":false
@@ -114,7 +114,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}Spellmasons/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" i'",
+        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}Spellmasons/\" && npm i'",
         "UpdateSourceConditionSetting":"",
         "UpdateSourceConditionValue":"",
         "SkipOnFailure":false
@@ -124,7 +124,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}Spellmasons\\\" && \"{{$FullBaseDir}}node\\node\" \"{{$FullBaseDir}}node\\node_modules\\npm\\bin\\npm-cli.js\" i",
+        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}Spellmasons\\\" && npm i",
         "UpdateSourceConditionSetting":"",
         "UpdateSourceConditionValue":"",
         "SkipOnFailure":false
@@ -134,7 +134,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd {{$FullBaseDir}}Spellmasons && \"node_modules/.bin/tsc\" --project tsconfig.headless.json --outDir {{$FullBaseDir}}Spellmasons/headless-server-build/ && cp package-lock.json headless-server-build/ && cp public/spellmasons-mods/build/SpellmasonsMods.cjs.js headless-server-build/src/SpellmasonsMods.cjs.js && cd headless-server-build/ && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" i --omit=dev'",
+        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd {{$FullBaseDir}}Spellmasons && \"node_modules/.bin/tsc\" --project tsconfig.headless.json --outDir {{$FullBaseDir}}spellmasons-server/ && cp package-lock.json {{$FullBaseDir}}spellmasons-server/ && cp public/spellmasons-mods/build/SpellmasonsMods.cjs.js {{$FullBaseDir}}spellmasons-server/src/SpellmasonsMods.cjs.js && cd {{$FullBaseDir}}spellmasons-server/ && npm i --omit=dev'",
         "UpdateSourceConditionSetting":"",
         "UpdateSourceConditionValue":"",
         "SkipOnFailure":false
@@ -144,7 +144,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}Spellmasons\\\" && \"node_modules\\.bin\\tsc\" --project tsconfig.headless.json --outDir {{$FullBaseDir}}Spellmasons\\headless-server-build\\ && cp package-lock.json headless-server-build\\ && cp public\\spellmasons-mods\\build\\SpellmasonsMods.cjs.js headless-server-build\\src\\SpellmasonsMods.cjs.js && cd headless-server-build\\ && \"{{$FullBaseDir}}node\\npm\" i --omit=dev",
+        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}Spellmasons\\\" && \"node_modules\\.bin\\tsc\" --project tsconfig.headless.json --outDir {{$FullBaseDir}}spellmasons-server\\ && copy package-lock.json {{$FullBaseDir}}spellmasons-server\\ && copy public\\spellmasons-mods\\build\\SpellmasonsMods.cjs.js {{$FullBaseDir}}spellmasons-server\\src\\SpellmasonsMods.cjs.js && cd {{$FullBaseDir}}spellmasons-server\\ && npm i --omit=dev",
         "UpdateSourceConditionSetting":"",
         "UpdateSourceConditionValue":"",
         "SkipOnFailure":false
