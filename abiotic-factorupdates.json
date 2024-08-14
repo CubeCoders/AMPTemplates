@@ -1,33 +1,27 @@
 [
     {
-        "UpdateStageName":"Abiotic Factor Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"2857200",
-        "UpdateSourceArgs":"427410",
-        "ForceDownloadPlatform":"Windows"
+        "UpdateStageName": "Download TES3MP",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/TES3MP/TES3MP/releases/download/tes3mp-0.8.1/tes3mp.Win64.release.0.8.1.zip",
+        "UpdateSourceTarget": "serverfiles",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "",
+        "UpdateSourceConditionValue": "true",
+        "DeleteAfterExtract": true,
+        "OneShot": true
     },
     {
-        "UpdateStageName":"Create Config Directory",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}AbioticFactor/Saved/Config/WindowsServer"
-    },
-    {
-        "UpdateStageName":"SandboxSettings.ini Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/DFJacob/AbioticFactorDedicatedServer/main/SandboxSettings.ini",
-        "UpdateSourceTarget":"{{$FullBaseDir}}AbioticFactor/Saved/Config/WindowsServer",
-        "UpdateSourceArgs":"SandboxSettings.ini",
-        "OverwriteExistingFiles":false
-    },
-    {
-        "UpdateStageName":"Initialise Wine",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update'",
-        "SkipOnFailure":false
+        "UpdateStageName": "Launch TES3MP",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "./tes3mp/serverfiles/tes3mp-server",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "UpdateSourceConditionSetting": "Download TES3MP",
+        "UpdateSourceConditionValue": "true",
+        "DeleteAfterExtract": true,
+        "OneShot": false
     }
 ]
