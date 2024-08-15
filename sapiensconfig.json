@@ -8,23 +8,48 @@
         "FieldName":"StartupMode",
         "InputType":"enum",
         "ParamFieldName":"StartupMode",
-        "DefaultValue":"--new \"{{WorldName}}\"",
+        "DefaultValue":"--new \"{{WorldName}}\" --seed \"{{WorldSeed}}\"",
         "EnumValues":{
-            "--new \"{{WorldName}}\"":"Create new world (default)",
-            "--load \"{{WorldName}}\"":"Load existing world"
+            "--new \"{{WorldName}}\" --seed \"{{WorldSeed}}\"":"Create new world (default)",
+            "--load \"{{WorldName}}\"":"Load existing world by World Name",
+            "--load \"{{WorldID}}\"":"Load existing world by World ID"
         }
+    },
+    {
+        "DisplayName":"World Seed",
+        "Category":"Sapiens:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the seed to create a new world with. Blank = random seed",
+        "Keywords":"world,seed",
+        "FieldName":"WorldSeed",
+        "InputType":"text",
+        "ParamFieldName":"WorldSeed",
+        "DefaultValue":"",
+        "EnumValues":{}
     },
     {
         "DisplayName":"World Name",
         "Category":"Sapiens:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"Sets the name of the world to create or load, as specified under Startup Mode",
+        "Description":"Sets the name of the world to create or load, as specified under Startup Mode. This will also be the name displayed in the server list, unless set otherwise in 'advertiseName' in config.lua for the world",
         "Keywords":"world,name",
         "FieldName":"WorldName",
         "InputType":"text",
         "ParamFieldName":"WorldName",
         "DefaultValue":"World",
         "Required":true,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"World ID",
+        "Category":"Sapiens:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the ID of the world to load, as specified under Startup Mode. Find the world ID in 'sapiens/players/AMPServer/worlds'",
+        "Keywords":"world,id",
+        "FieldName":"WorldID",
+        "InputType":"text",
+        "ParamFieldName":"WorldID",
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
@@ -43,18 +68,19 @@
         }
     },
     {
-        "DisplayName":"Send Crash Logs",
+        "DisplayName":"Send Bug Reports",
         "Category":"Sapiens:stadia_controller",
         "Subcategory":"Server Settings:settings:1",
-        "Description":"If enabled, crash logs will be sent to the Sapiens developers",
-        "Keywords":"crash,logs,developers",
+        "Description":"Sets whether to automatically send bug reports (and optionally a world save, if requested by a developer) to the Sapiens developers",
+        "Keywords":"crash,logs,bug,reports,world,save,developers",
         "FieldName":"ProvideLogs",
-        "InputType":"checkbox",
+        "InputType":"enum",
         "ParamFieldName":"ProvideLogs",
         "DefaultValue":"",
         "EnumValues":{
-            "False":"",
-            "True":"--yes "
+            "":"Do not send",
+            "--yes ":"Send bug reports",
+            "--yes-upload-world ":"Send bug reports and world save"
         }
     }
 ]
