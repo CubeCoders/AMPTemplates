@@ -1,26 +1,25 @@
 [
     {
-        "DisplayName": "Server Name",
-        "Description": "Server name as it appears in the server list",
-        "FieldName": "servername",
-        "InputType": "text",
         "Category": "Server",
-        "ParamFieldName": "servername",
+        "DefaultValue": "My Kaboom! Server",
+        "Description": "Server name as it appears in the server list",
+        "DisplayName": "Server Name",
+        "FieldName": "servername",
         "IncludeInCommandLine": true,
-        "DefaultValue": "My Kaboom! Server"
+        "InputType": "text",
+        "ParamFieldName": "servername"
     },
     {
-        "DisplayName": "Server Region",
-        "Description": "Where in the world the server is located",
-        "FieldName": "region",
         "Category": "Server",
-        "ParamFieldName": "region",
-        "IncludeInCommandLine": true,
-        "InputType": "enum",
+        "DefaultValue": "0",
+        "Description": "Where in the world the server is located",
+        "DisplayName": "Server Region",
         "EnumValues": {
             "0": "EU West",
             "10": "EU Central",
             "20": "EU Eastern",
+            "210": "China",
+            "220": "Russia",
             "30": "US West",
             "40": "US Central",
             "50": "US Eastern",
@@ -28,177 +27,178 @@
             "70": "South America",
             "80": "South East Asia",
             "90": "Australia",
-            "210": "China",
-            "220": "Russia",
             "999": "Other"
         },
-        "DefaultValue": "0"
-    },
-    {
-        "DisplayName": "Bot Fill Mode",
-        "Description": "How should bots be used to manage server population",
-        "FieldName": "botmode",
-        "Category": "Server",
-        "ParamFieldName": "botmode",
+        "FieldName": "region",
         "IncludeInCommandLine": true,
         "InputType": "enum",
+        "ParamFieldName": "region"
+    },
+    {
+        "Category": "Server",
+        "DefaultValue": "NoBots",
+        "Description": "How should bots be used to manage server population",
+        "DisplayName": "Bot Fill Mode",
         "EnumValues": {
-            "NoBots": "No Bots",
-            "MaintainMinimum": "Fill to minimum lobby size",
             "FillRemainingSpaces": "Fill all remaining spaces",
+            "MaintainMinimum": "Fill to minimum lobby size",
+            "NoBots": "No Bots",
             "ReplaceLeaversOnly": "Only replace match leavers"
         },
-        "DefaultValue": "NoBots"
+        "FieldName": "botmode",
+        "IncludeInCommandLine": true,
+        "InputType": "enum",
+        "ParamFieldName": "botmode"
     },
     {
-        "DisplayName": "Respawn Delay",
+        "Category": "Server",
+        "DefaultValue": "5",
         "Description": "How long the server should wait after a player is eliminated before respawning them.",
+        "DisplayName": "Respawn Delay",
         "FieldName": "respawndelay",
-        "Category": "Server",
-        "ParamFieldName": "respawndelay",
         "IncludeInCommandLine": true,
         "InputType": "number",
-        "DefaultValue": "5"
+        "ParamFieldName": "respawndelay"
     },
     {
-        "DisplayName": "Invulnerability Time",
+        "Category": "Server",
+        "DefaultValue": "2",
         "Description": "How long a player is invulnerable for after respawning.",
+        "DisplayName": "Invulnerability Time",
         "FieldName": "saferespawntime",
-        "Category": "Server",
-        "ParamFieldName": "saferespawntime",
         "IncludeInCommandLine": true,
         "InputType": "number",
-        "DefaultValue": "2"
+        "ParamFieldName": "saferespawntime"
     },
     {
-        "DisplayName": "Auto Lobby",
+        "Category": "Server",
+        "DefaultValue": "False",
         "Description": "Automatic lobbies do not have a lobby leader, and will start automatically once the player requirements are met.",
+        "DisplayName": "Auto Lobby",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        },
         "FieldName": "autolobby",
-        "Category": "Server",
-        "ParamFieldName": "autolobby",
         "IncludeInCommandLine": true,
         "InputType": "checkbox",
-        "EnumValues": {
-            "True": "True",
-            "False": "False"
-        },
-        "DefaultValue": "False"
+        "ParamFieldName": "autolobby"
     },
     {
-        "DisplayName": "Allow joining mid-match",
+        "Category": "Server",
+        "DefaultValue": "False",
         "Description": "If enabled, players will be able to join a match that it is in progress. Otherwise they will spectate until the match is over.",
+        "DisplayName": "Allow joining mid-match",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        },
         "FieldName": "joinmidmatch",
-        "Category": "Server",
-        "ParamFieldName": "joinmidmatch",
         "IncludeInCommandLine": true,
         "InputType": "checkbox",
-        "EnumValues": {
-            "True": "True",
-            "False": "False"
-        },
-        "DefaultValue": "False"
+        "ParamFieldName": "joinmidmatch"
     },
     {
-        "DisplayName": "Start on first join",
+        "Category": "Server",
+        "DefaultValue": "False",
         "Description": "If enabled, the match will start automatically once the first player connects. Recommend that bots are enabled.",
+        "DisplayName": "Start on first join",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        },
         "FieldName": "startonfirstjoin",
-        "Category": "Server",
-        "ParamFieldName": "startonfirstjoin",
         "IncludeInCommandLine": true,
         "InputType": "checkbox",
-        "EnumValues": {
-            "True": "True",
-            "False": "False"
-        },
-        "DefaultValue": "False"
+        "ParamFieldName": "startonfirstjoin"
     },
     {
-        "DisplayName": "Minimum lobby players",
-        "Description": "How many players must be present in an auto lobby before a match can be started automatically. Minimum of 2.",
-        "FieldName": "lobbyminplayers",
         "Category": "Server",
-        "ParamFieldName": "lobbyminplayers",
-        "IncludeInCommandLine": true,
-        "InputType": "number",
         "DefaultValue": "4",
-        "MinValue": 2
+        "Description": "How many players must be present in an auto lobby before a match can be started automatically. Minimum of 2.",
+        "DisplayName": "Minimum lobby players",
+        "FieldName": "lobbyminplayers",
+        "IncludeInCommandLine": true,
+        "InputType": "number",
+        "MinValue": 2,
+        "ParamFieldName": "lobbyminplayers"
     },
     {
-        "DisplayName": "Lobby hold time",
+        "Category": "Server",
+        "DefaultValue": "20",
         "Description": "How long the auto lobby should wait for more players to join once the minimum is reached. This timer restarts whenever a player joins or leaves.",
+        "DisplayName": "Lobby hold time",
         "FieldName": "lobbyholdtime",
-        "Category": "Server",
-        "ParamFieldName": "lobbyholdtime",
         "IncludeInCommandLine": true,
         "InputType": "number",
-        "DefaultValue": "20"
+        "ParamFieldName": "lobbyholdtime"
     },
     {
-        "DisplayName": "Lobby full delay",
+        "Category": "Server",
+        "DefaultValue": "20",
         "Description": "After an auto lobby fills up, how long should it wait before starting the game?",
+        "DisplayName": "Lobby full delay",
         "FieldName": "lobbyfulltime",
-        "Category": "Server",
-        "ParamFieldName": "lobbyfulltime",
         "IncludeInCommandLine": true,
         "InputType": "number",
-        "DefaultValue": "20"
+        "ParamFieldName": "lobbyfulltime"
     },
     {
-        "DisplayName": "Lobby overtime timeout",
+        "Category": "Server",
+        "DefaultValue": "120",
         "Description": "The maximum amount of a time an auto lobby that has the minimum number of players can remain in the 'ready' state. If this time is exceeded, players joining/leaving will not reset the lobby timer. This prevents the lobby from remaining in limbo indefinitely due to the countdown timer resetting from players leaving/joining.",
+        "DisplayName": "Lobby overtime timeout",
         "FieldName": "lobbyfulltime",
-        "Category": "Server",
-        "ParamFieldName": "lobbyovertime",
         "IncludeInCommandLine": true,
         "InputType": "number",
-        "DefaultValue": "120"
+        "ParamFieldName": "lobbyovertime"
     },
     {
-        "DisplayName": "Match length (seconds)",
+        "Category": "Server",
+        "DefaultValue": "300",
         "Description": "The maximum length of a match in seconds. After this time the match will end regardless of win condition",
+        "DisplayName": "Match length (seconds)",
         "FieldName": "matchlength",
-        "Category": "Server",
-        "ParamFieldName": "matchlength",
         "IncludeInCommandLine": true,
         "InputType": "number",
-        "DefaultValue": "300"
+        "ParamFieldName": "matchlength"
     },
     {
-        "DisplayName": "Match time low trigger (seconds)",
+        "Category": "Server",
+        "DefaultValue": "60",
         "Description": "When the match has this many seconds left, the 'out of time' trigger will fire and the map will change to speed up the match.",
+        "DisplayName": "Match time low trigger (seconds)",
         "FieldName": "lowmatchtime",
-        "Category": "Server",
-        "ParamFieldName": "lowmatchtime",
         "IncludeInCommandLine": true,
         "InputType": "number",
-        "DefaultValue": "60"
+        "ParamFieldName": "lowmatchtime"
     },
     {
-        "DisplayName": "Allow Special Skins",
+        "Category": "Server",
+        "DefaultValue": "True",
         "Description": "If enabled, special players such as developers may be given special skins that make them stand out from other players.",
+        "DisplayName": "Allow Special Skins",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        },
         "FieldName": "specialskins",
-        "Category": "Server",
-        "ParamFieldName": "specialskins",
         "IncludeInCommandLine": true,
         "InputType": "checkbox",
-        "EnumValues": {
-            "True": "True",
-            "False": "False"
-        },
-        "DefaultValue": "True"
+        "ParamFieldName": "specialskins"
     },
     {
-        "DisplayName": "Enable GPU accelerated AI",
-        "Description": "If enabled, the server will accelerate AI for bots using any available nVidia GPU (CUDA support required). Will automatically fall back to CPU driven AI when not available.",
-        "FieldName": "aigpuacceleration",
         "Category": "Server",
-        "ParamFieldName": "aigpuacceleration",
+        "DefaultValue": "False",
+        "Description": "If enabled, the server will accelerate AI for bots using any available nVidia GPU (CUDA support required). Will automatically fall back to CPU driven AI when not available.",
+        "DisplayName": "Enable GPU accelerated AI",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        },
+        "FieldName": "aigpuacceleration",
         "IncludeInCommandLine": true,
         "InputType": "checkbox",
-        "EnumValues": {
-            "True": "True",
-            "False": "False"
-        },
-        "DefaultValue": "False"
+        "ParamFieldName": "aigpuacceleration"
     }
 ]
