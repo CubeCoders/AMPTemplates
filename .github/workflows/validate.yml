@@ -5,7 +5,7 @@
     workflow_dispatch:
     pull_request:
     push:
-      branches: [ "dev" ]
+      branches: [ "main" ]
   
   permissions: read-all
   
@@ -51,18 +51,12 @@
             fixSchemas: true
   
         - name: "Validate *.generator.json"
-          uses: cardinalby/schema-validator-action@v3 # walbo/validate-json@v1.1.0
+          uses: cardinalby/schema-validator-action@v3
           with:
-            # files: "*.generator.json"
             file: '*.generator.json'
             schema: schemas/generator.schema.json
             mode: spec
             fixSchemas: true
-            # schema-version: draft-06
-            # strict: false
-            # allow-matching-properties: true
-            # allow-union-types: true
-            # print-valid-files: false
               
               
               
