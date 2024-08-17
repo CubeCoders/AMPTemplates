@@ -1,0 +1,63 @@
+[
+    {
+        "UpdateStageName":"Resonite Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"2519830",
+        "UpdateSourceArgs":"2519830",
+        "UpdateSourceVersion":"headless",
+        "ForceDownloadPlatform":"Windows"
+    },
+    {
+        "UpdateStageName":"Data Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Data"
+    },
+    {
+        "UpdateStageName":"Cache Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Cache"
+    },
+    {
+        "UpdateStageName":"Logs Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Logs"
+    },
+    {
+        "UpdateStageName":"DefaultConfig.json Copy",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}Config/Config.json",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Config/DefaultConfig.json",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Dotnet Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Dotnet"
+    },
+    {
+        "UpdateStageName":"ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-win-x64.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-linux-x64.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Dotnet",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    }
+]
