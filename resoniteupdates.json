@@ -27,11 +27,18 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}Logs"
     },
     {
-        "UpdateStageName":"DefaultConfig.json Copy",
+        "UpdateStageName":"Config Directory Creation",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"CopyFilePath",
-        "UpdateSourceData":"{{$FullBaseDir}}Config/Config.json",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Config/DefaultConfig.json",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Config"
+    },
+    {
+        "UpdateStageName":"DefaultConfig.json Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/resonitedefaultconfig.json",
+        "UpdateSourceArgs":"Config.json",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Config",
         "OverwriteExistingFiles":false
     },
     {
