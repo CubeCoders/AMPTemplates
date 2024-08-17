@@ -1,0 +1,33 @@
+---
+name: Lint
+
+on:  # yamllint disable-line rule:truthy
+  workflow_dispatch:
+  pull_request:
+  # push:
+
+permissions: read-all
+
+jobs:
+  build:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # super-linter needs the full git history to get the
+          # list of files that changed across commits
+          fetch-depth: 0
+
+      - name: Super-linter
+        uses: super-linter/super-linter@v6.2.0  # x-release-please-version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # To report GitHub Actions status checks

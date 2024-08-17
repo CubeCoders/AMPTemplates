@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/PortElement"
+  },
+  "definitions": {
+    "PortElement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Protocol": {
+          "$ref": "#/definitions/ProtocolEnum"
+        },
+        "Port": {
+          "type": "integer"
+        },
+        "Ref": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Offset": {
+          "type": "integer"
+        },
+        "Range": {
+          "type": "integer"
+        },
+        "ChildPorts": {
+          "type": "object"
+        }
+      },
+      "required": [],
+      "title": "PortElement"
+    },
+    "ProtocolEnum": {
+      "type": "string",
+      "enum": [
+        "UDP",
+        "Both",
+        "TCP"
+      ],
+      "title": "ProtocolEnum"
+    }
+  }
+}

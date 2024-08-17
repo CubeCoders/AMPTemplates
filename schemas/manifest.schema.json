@@ -1,0 +1,83 @@
+{
+  
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$ref": "#/definitions/Manifest",
+  "definitions": {
+    "Manifest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "examples": [
+            "ec280171-c67b-4cf8-923f-dc27fea91ee1"
+          ],
+          "description": "A unique identifier for this template repository. Can be generated with [uuidgenerator.net](https://www.uuidgenerator.net)"
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of unformatted authors for the templates in this repository",
+          "examples": [
+            [
+              "CubeCoders Limited",
+              "AMP Community"
+            ]
+          ]
+        },
+        "origin": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https:\/\/.+\\.[gG][iI][tT]$",
+          "description": "The cloneable git repo this template repository can be pulled from",
+          "examples": [
+            "https://github.com/CubeCoders/AMPTemplates.git"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^(https:\/\/[^\\s]+)$",
+          "description": "A url containing informations about this template repository",
+          "examples": [
+            "https://github.com/CubeCoders/AMPTemplates"
+          ]
+        },
+        "imagefile": {
+          "type": "string",
+          "description": "⚠️ Undocumented item"
+        },
+        "prefix": {
+          "type": "string",
+          "description": "Prefix shown when creating a new instance through the AMP webinterface. Do not include the forward slash",
+          "examples": [
+            "CubeCoders"
+          ]
+        },
+        "repotype": {
+          "$ref": "#/definitions/RepoType"
+        }
+      },
+      "required": [
+        "authors",
+        "id",
+        "imagefile",
+        "origin",
+        "prefix",
+        "repotype",
+        "url"
+      ],
+      "title": "Repository Manifest"
+    },
+    "RepoType": {
+      "type": "string",
+      "enum": [
+        "AppTemplates"
+      ],
+      "title": "Repository Type",
+      "description": "The type of repository"
+    }
+  }
+}

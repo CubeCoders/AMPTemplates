@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "$ref": "#/definitions/MetaConfigElement"
+  },
+  "definitions": {
+    "MetaConfigElement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ConfigFile": {
+          "type": "string",
+          "description": "Relative or absolute path to the config file"
+        },
+        "ConfigFileTemplate": {
+          "type": "string",
+          "description": "Requires ConfigType `template`"
+        },
+        "AutoMap": {
+          "type": "boolean",
+          "default": true,
+          "description": "If AutoMap is enabled, it is required that the file alreaady exists for AMP to use as a template. AMP will then automatically map the field values based on the ParamFieldName. You can use The JPath syntax (foo.bar.baz) to use if you need to access a nested structure"
+        },
+        "Importable": {
+          "type": "boolean",
+          "default": false,
+          "description": "If AutoMap and Importable are enabled this will allow users to import settings from an existing config file into AMP. This setting is experimental and supports INI, KVP, JSON, and XML"
+        },
+        "Subsections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Subsection"
+          }
+        },
+        "ConfigType": {
+          "$ref": "#/definitions/ConfigType"
+        },
+        "ConfigFormat": {
+          "type": "string",
+          "default": "{0}={1}",
+          "description": "{0} is replaced with the setting key and {1} with the value"
+        },
+        "ConfigFormatRegex": {
+          "type": "string",
+          "description": "set\\w+(?<key>.+?)\\w+\"?(?<value>.*?)\"?$"
+        }
+      },
+      "required": [
+        "ConfigFile"
+      ],
+      "title": "MetaConfigElement"
+    },
+    "Subsection": {
+      "type": "object",
+      "properties": {
+        "Heading": {
+          "type": "string"
+        },
+        "SettingMappings": {
+          "$ref": "#/definitions/SettingMappings"
+        }
+      },
+      "required": [
+        "Heading",
+        "SettingMappings"
+      ],
+      "title": "Subsection"
+    },
+    "SettingMappings": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [],
+      "title": "SettingMappings"
+    },
+    "ConfigType": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "ini",
+        "kvp",
+        "json",
+        "template"
+      ],
+      "title": "Config Type",
+      "description": "The type of config",
+      "default": "auto"
+    }
+  }
+}

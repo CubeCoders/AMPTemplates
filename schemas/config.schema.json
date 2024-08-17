@@ -1,0 +1,180 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "type": "array",
+    "minItems": 1,
+    "items": {
+        "$ref": "#/definitions/ConfigElement"
+    },
+    "definitions": {
+        "ConfigElement": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "DisplayName": {
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "Config Element"
+                    ],
+                    "description": "The title displayed for the input"
+                },
+                "Category": {
+                    "type": "string",
+                    "pattern": "^[\\w\\-_ ]+(:[\\w_]+)?$",
+                    "default": "",
+                    "examples": [
+                        "Server Settings",
+                        "Server Settings:material_icon"
+                    ],
+                    "description": "This determines what tab the setting will appear under in the left side menu. Settings are automatically grouped together based on their category. Colon seperated string denoting the <actual name as shown to the user>:<the [material icon](https://fonts.google.com/icons) to use>"
+                },
+                "Subcategory": {
+                    "type": "string",
+                    "pattern": "^[\\w\\-_ ]+(:[\\w_]+)?(:-?\\d+)?$",
+                    "default": "",
+                    "examples": [
+                        "Server Settings",
+                        "Server Settings:material_icon",
+                        "Server Settings:material_icon:1"
+                    ],
+                    "description": "⚠️ Undocumented Key | Colon seperated string denoting the <actual name as shown to the user>:<the [material icon](https://fonts.google.com/icons) to use>:<the order in the menu as number>"
+                },
+                "Description": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Details of what the input is for"
+                },
+                "Keywords": {
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "key,words"
+                    ]
+                },
+                "FieldName": {
+                    "type": "string",
+                    "default": "",
+                    "description": "This maps the setting to the matching key in the `App.AppSettings` dictionary. If the key doesn't exist, then it'll be created automatically using the value supplied as the `DefaultValue`"
+                },
+                "InputType": {
+                    "$ref": "#/definitions/InputType"
+                },
+                "ParamFieldName": {
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "field",
+                        "category.field"
+                    ],
+                    "description": "If this setting is included in the formatted command line flags, what the name of the field is. This links to the value in the config file defined in the metaconfig.json file. XPath (XML) and JPath (JSON) may be used for nested values. For INI files you can use category.field."
+                },
+                "DefaultValue": {
+                    "type": "string",
+                    "default": "",
+                    "description": "The initial value set for the variable when the server is first created"
+                },
+                "EnumValues": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "default": {},
+                    "description": "Values to be applied for the `enum` and `checkbox` InputTypes"
+                },
+                "IncludeInCommandLine": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, then it'll be included automatically by `{{$FormattedArgs}}`"
+                },
+                "SkipIfEmpty": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": " If true, and `IncludeInCommandLine` is true, the key/pair will not be included if the input has a blank value entered"
+                },
+                "Placeholder": {
+                    "type": "string",
+                    "default": ""
+                },
+                "Required": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, the field must be supplied for the server to start"
+                },
+                "MinValue": {
+                    "type": "number",
+                    "minimum": -2147483648,
+                    "maximum": 2147483647,
+                    "default": -2147483648,
+                    "description": "The lowest value allowed for a number `InputType`. Must be a whole number"
+                },
+                "MaxValue": {
+                    "type": "number",
+                    "minimum": -2147483648,
+                    "maximum": 2147483647,
+                    "default": 2147483647,
+                    "description": "The highest value allowed for a number `InputType`. Must be a whole number"
+                },
+                "IsFlagArgument": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, for checkbox based settings, the checkbox being on will add the DefaultValue into `{{$FormattedArgs}}` as-is"
+                },
+                "Hidden": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, the input is not visible to the user and not accessible through the API. Useful for mapping AMP variables to config files"
+                },
+                "Special": {
+                    "type": "string"
+                },
+                "ExcludeFromImport": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "Suffix": {
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "ms",
+                        "min",
+                        "hr"
+                    ],
+                    "description": "This is listed inside the input box on the right side. Should be used for measurements"
+                }
+            },
+            "required": [
+                "DisplayName",
+                "FieldName"
+            ],
+            "title": "Config Element"
+        },
+        "ConfigType": {
+            "type": "string",
+            "enum": [
+                "ini",
+                "template",
+                "kvp",
+                "json",
+                "xml"
+            ],
+            "title": "Config Type"
+        },
+        "InputType": {
+            "type": "string",
+            "enum": [
+                "text",
+                "password",
+                "randompassword",
+                "number",
+                "checkbox",
+                "enum",
+                "hidden",
+                "textarea",
+                "list",
+                "url"
+            ],
+            "title": "Input Type",
+            "description": "The type of input depends on what values need entered"
+        }
+    }
+}

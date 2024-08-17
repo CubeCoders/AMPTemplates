@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/UpdateItem"
+  },
+  "definitions": {
+    "UpdateItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "UpdateStageName": {
+          "type": "string"
+        },
+        "UpdateSourcePlatform": {
+          "$ref": "#/definitions/Platform"
+        },
+        "UpdateSource": {
+          "$ref": "#/definitions/UpdateSource"
+        },
+        "UpdateSourceData": {
+          "type": "string"
+        },
+        "UpdateSourceArgs": {
+          "type": "string"
+        },
+        "ForceDownloadPlatform": {
+          "$ref": "#/definitions/Platform"
+        },
+        "UpdateSourceTarget": {
+          "type": "string"
+        },
+        "OverwriteExistingFiles": {
+          "type": "boolean"
+        },
+        "SkipOnFailure": {
+          "type": "boolean"
+        },
+        "UpdateSourceConditionSetting": {
+          "type": "string"
+        },
+        "UpdateSourceConditionValue": {
+          "type": "string"
+        },
+        "UnzipUpdateSource": {
+          "type": "boolean"
+        },
+        "DeleteAfterExtract": {
+          "type": "boolean"
+        },
+        "UpdateSourceVersion": {
+          "type": "string"
+        },
+        "UpdateSourceArch": {
+          "$ref": "#/definitions/UpdateSourceArch"
+        },
+        "UpdateSourceExtra": {
+          "type": "string"
+        },
+        "OneShot": {
+          "type": "boolean"
+        }
+      },
+      "required": [],
+      "title": "Update"
+    },
+    "BoolString": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string",
+          "format": "boolean"
+        }
+      ],
+      "title": "BoolString"
+    },
+    "Platform": {
+      "type": "string",
+      "enum": [
+        "All",
+        "Linux",
+        "Windows"
+      ],
+      "title": "Platform"
+    },
+    "UpdateSource": {
+      "type": "string",
+      "enum": [
+        "SteamCMD",
+        "CreateDirectory",
+        "FetchURL",
+        "Executable",
+        "CopyFilePath",
+        "GithubRelease",
+        "CreateFile",
+        "SetExecutableFlag",
+        "Pause",
+        "StartApplication",
+        "WaitForStartupComplete",
+        "ShutdownApplication",
+        "FetchURLFromJQ",
+        "ExtractArchive",
+        "GitRepo"
+      ],
+      "title": "UpdateSource"
+    },
+    "UpdateSourceArch": {
+      "type": "string",
+      "enum": [
+        "x86_64",
+        "aarch64"
+      ],
+      "title": "UpdateSourceArch"
+    }
+  }
+}
