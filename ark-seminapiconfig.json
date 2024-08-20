@@ -1,0 +1,574 @@
+[
+    {
+        "DisplayName":"Map",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the map for the server. If Custom is selected, Custom Map Name must also be set",
+        "Keywords":"map",
+        "FieldName":"Map",
+        "InputType":"enum",
+        "ParamFieldName":"Map",
+        "DefaultValue":"TheIsland",
+        "EnumValues":{
+            "Aberration_P":"Aberration",
+            "CrystalIsles":"Crystal Isles",
+            "Extinction":"Extinction",
+            "Fjordur":"Fjordur",
+            "Genesis":"Genesis: Part 1",
+            "Gen2":"Genesis: Part 2",
+            "LostIsland":"Lost Island",
+            "Ragnarok":"Ragnarok",
+            "ScorchedEarth_P":"Scorched Earth",
+            "TheCenter":"The Center",
+            "TheIsland":"The Island (default)",
+            "Valguero_P":"Valguero",
+            "{{CustomMap}}":"Custom"
+        }
+    },
+    {
+        "DisplayName":"Custom Map Name",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets a custom map for the server. \"Custom\" type must be selected under Map, and the map files included in ShooterGame/Content/Mods. Automatically Manage Mods can be used for this purpose",
+        "Keywords":"custom,map",
+        "FieldName":"CustomMap",
+        "InputType":"text",
+        "ParamFieldName":"CustomMap",
+        "DefaultValue":"",
+        "Placeholder":"Caballus_P",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Automatically Manage Mods",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, enables automatic mod download and updating (on server start). Specify the relevant mods under Mods List. Alternatively, specify them in Game.ini under the heading [ModInstaller] and with one mod per line in the format: ModIDS=<value>",
+        "Keywords":"auto,managed,mods,automanagedmods",
+        "FieldName":"automanagedmods",
+        "InputType":"checkbox",
+        "ParamFieldName":"automanagedmods",
+        "DefaultValue":"-automanagedmods ",
+        "EnumValues":{
+            "False":"",
+            "True":"-automanagedmods "
+        }
+    },
+    {
+        "DisplayName":"Mods List",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Comma-separated and ordered list of IDs of mods to load (map mods will not load unless named as a \"Custom\" map under Custom Map Name). ONE LINE ONLY! Mod files must be in ShooterGame/Content/Mods. If \"Automatically Manage Mods\" is enabled, the mods listed will be installed by the server",
+        "Keywords":"load,mods,gamemodids,activemods",
+        "FieldName":"GameModIds",
+        "InputType":"Textarea",
+        "ParamFieldName":"GameModIds",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"",
+        "Placeholder":"1984936918,1785880078",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Active Event",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the server's active event, if any. Some events may only work partially or not at all. Most special event assets are removed after the event. Use Custom and set Custom Event Name for an event not listed",
+        "Keywords":"active,event,activeevent",
+        "FieldName":"ActiveEvent",
+        "InputType":"enum",
+        "ParamFieldName":"ActiveEvent",
+        "DefaultValue":"None",
+        "EnumValues":{
+            "None":"None",
+            "birthday":"ARK: 5th Anniversary",
+            "ark7th":"ARK: 7th Anniversary",
+            "FearEvolved":"ARK: Fear Evolved",
+            "TurkeyTrial":"ARK: Turkey Trial",
+            "Arkaeology":"ARK: ARKaeology",
+            "Easter":"ARK: Eggcellent Adventure (Easter)",
+            "ExtinctionChronicles":"Extinction Chronicles",
+            "vday":"ARK: Love Evolved (vday)",
+            "PAX":"ARK: PAX Party",
+            "Summer":"ARK: Summer Bash (Summer)",
+            "WinterWonderland":"ARK: Winter Wonderland",
+            "{{CustomEvent}}":"Custom"
+        }
+    },
+    {
+        "DisplayName":"Custom Event Name",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets a custom active event name for the server. \"Custom\" type must be selected under Active Event",
+        "Keywords":"custom,active,event,activeevent",
+        "FieldName":"CustomEvent",
+        "InputType":"text",
+        "ParamFieldName":"CustomEvent",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Whitelisted Server Admins",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"List of [Steam64 IDs](https://steamidfinder.com/) for whitelisted server admins. These admins do not need to use the server admin password",
+        "Keywords":"admin,whitelist,allowedcheatersteamids",
+        "FieldName":"AdminWhitelist",
+        "InputType":"list",
+        "ParamFieldName":"AdminWhitelist",
+        "DefaultValue":"",
+        "Special":"listfile:./arkse/376030/ShooterGame/Saved/AllowedCheaterSteamIDs.txt",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"RCON/Server Admin Password",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"See the Security and Privacy menu for configurable options for the server's RCON password. The RCON password is also used in the in-game console for players to access administrator commands (unless they are whitelisted)",
+        "Keywords":"rcon,password,serveradminpassword",
+        "FieldName":"RCONPassword",
+        "InputType":"hidden",
+        "ParamFieldName":"RCONPassword",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Player Whitelist",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, only players with Steam64 IDs listed under Whitelisted Players or Whitelisted Players Above Limit can join the server",
+        "Keywords":"player,whitelist,exclusivejoin",
+        "FieldName":"exclusivejoin",
+        "InputType":"checkbox",
+        "ParamFieldName":"exclusivejoin",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-exclusivejoin "
+        }
+    },
+    {
+        "DisplayName":"Whitelisted Players",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"List of [Steam64 IDs](https://steamidfinder.com/) for normal whitelisted players",
+        "Keywords":"player,whitelist,playersexclusivejoinlist",
+        "FieldName":"PlayerWhitelist",
+        "InputType":"list",
+        "ParamFieldName":"PlayerWhitelist",
+        "DefaultValue":"",
+        "Special":"listfile:./arkse/376030/ShooterGame/Binaries/Win64/PlayersExclusiveJoinList.txt",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Whitelisted Players Above Limit",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"List of [Steam64 IDs](https://steamidfinder.com/) for whitelisted players who can join the server even if the number of player slots is exhausted",
+        "Keywords":"player,whitelist,above,limit,PlayersJoinNoCheckList",
+        "FieldName":"PlayerWhitelistAboveLimit",
+        "InputType":"list",
+        "ParamFieldName":"PlayerWhitelistAboveLimit",
+        "DefaultValue":"",
+        "Special":"listfile:./arkse/376030/ShooterGame/Binaries/Win64/PlayersJoinNoCheckList.txt",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Limit",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the maximum number of players allowed on the server",
+        "Keywords":"max,players,limit,maxplayers",
+        "FieldName":"$MaxUsers",
+        "InputType":"number",
+        "MinValue":"1",
+        "ParamFieldName":"MaxPlayers",
+        "IncludeInCommandLine":true,
+        "DefaultValue":"70",
+        "Placeholder":"70",
+        "Suffix":"players",
+        "EnumValues":{}  
+    },
+    {
+        "DisplayName":"MultiHome IP Binding",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If required, you can change the binding of the server and RCON by changing the 'Server IP Address' setting under Security and Privacy. NOTE: The IP must be reachable by AMP, otherwise AMP's console won't work",
+        "Keywords":"ip,binding,address,multihome",
+        "FieldName":"MultiHome",
+        "InputType":"hidden",
+        "ParamFieldName":"MultiHome",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Disable BattlEye",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, BattlEye will be disabled on the server",
+        "Keywords":"battleye,disable,nobattleye",
+        "FieldName":"BattlEye",
+        "InputType":"checkbox",
+        "ParamFieldName":"BattlEye",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-NoBattlEye "
+        }
+    },
+    {
+        "DisplayName":"Enable Crossplay",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, enables crossplay between Epic Game Store players and Steam players. Do not enable Epic Only at the same time",
+        "Keywords":"crossplay",
+        "FieldName":"crossplay",
+        "InputType":"checkbox",
+        "ParamFieldName":"crossplay",
+        "DefaultValue":"-crossplay ",
+        "EnumValues":{
+            "False":"",
+            "True":"-crossplay "
+        }
+    },
+    {
+        "DisplayName":"Enable Epic Only",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, only Epic Game Store players will be able to connect to the server. Do not enable Crossplay at the same time",
+        "Keywords":"epic,only,epiconly",
+        "FieldName":"epiconly",
+        "InputType":"checkbox",
+        "ParamFieldName":"epiconly",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-epiconly "
+        }
+    },
+    {
+        "DisplayName":"Public IP For Epic",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the public IP for Epic Game Store players to connect to. If not set, and MultiHome IP Binding is specified but is not a public IP, then Epic Game Store players will not be able to connect",
+        "Keywords":"epic,public,ip,publicipforepic",
+        "FieldName":"PublicIPForEpic",
+        "InputType":"text",
+        "ParamFieldName":"PublicIPForEpic",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Vivox",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, enables Vivox on Steam only servers (Vivox is the default for Epic Game Store enabled servers)",
+        "Keywords":"vivox,usevivox",
+        "FieldName":"UseVivox",
+        "InputType":"checkbox",
+        "ParamFieldName":"UseVivox",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-UseVivox "
+        }
+    },
+    {
+        "DisplayName":"Use Dynamic Config",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, the server will use a dynamic config. The default dynamic config for the platform will be used if 'CustomDynamicConfigUrl' is not set in GameUserSettings.ini",
+        "Keywords":"use,dynamic,config,UseDynamicConfig",
+        "FieldName":"UseDynamicConfig",
+        "InputType":"checkbox",
+        "ParamFieldName":"UseDynamicConfig",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-UseDynamicConfig "
+        }
+    },
+    {
+        "DisplayName":"Disable Valve Anti-Cheat",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, disables Valve Anti-Cheat (VAC). Only works on PC",
+        "Keywords":"valve,anti,cheat,anticheat,insecure",
+        "FieldName":"insecure",
+        "InputType":"checkbox",
+        "ParamFieldName":"insecure",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-insecure "
+        }
+    },
+    {
+        "DisplayName":"Kick Idle Players",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, characters that have not moved or interacted within the Kick Idle Players Period will be kicked from the server",
+        "Keywords":"kick,idle,players,enableidleplayerkick",
+        "FieldName":"EnableIdlePlayerKick",
+        "InputType":"checkbox",
+        "IsFlagArgument":false,
+        "ParamFieldName":"EnableIdlePlayerKick",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-EnableIdlePlayerKick "
+        }
+    },
+    {
+        "DisplayName":"Disable Hang Detection",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, prevents the server from shutdown if its start-time takes more than 2700 seconds (45 minutes). Useful for servers with big saves or very slow machines",
+        "Keywords":"hang,detection,disabled,NoHangDetection",
+        "FieldName":"NoHangDetection",
+        "InputType":"checkbox",
+        "ParamFieldName":"NoHangDetection",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-NoHangDetection "
+        }
+    },
+    {
+        "DisplayName":"Filter Transfers",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"If set, prevents ARK data usage between single player and servers that do not have a Cluster ID set. Even with a Cluster ID set, it is suggested to enable this option",
+        "Keywords":"filter,data,transfer,notransferfromfiltering",
+        "FieldName":"NoTransferFromFiltering",
+        "InputType":"checkbox",
+        "ParamFieldName":"NoTransferFromFiltering",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-NoTransferFromFiltering "
+        }
+    },
+    {
+        "DisplayName":"Language",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets the language of the server",
+        "Keywords":"language,culture",
+        "FieldName":"culture",
+        "InputType":"enum",
+        "IsFlagArgument":false,
+        "ParamFieldName":"culture",
+        "IncludeInCommandLine":false,
+        "DefaultValue":"en",
+        "EnumValues":{
+            "ca":"Català",
+            "cs":"čeština",
+            "da":"dansk",
+            "de":"Deutsch",
+            "en":"English (default)",
+            "es":"Español",
+            "eu":"euskara",
+            "fi":"suomi",
+            "fr":"Français",
+            "hu":"magyar",
+            "it":"Italiano",
+            "ja":"日本語",
+            "ka":"ქართული",
+            "ko":"한국어",
+            "nl":"Nederlands",
+            "pl":"Polski",
+            "pt_BR":"Português brasileiro",
+            "ru":"Русский",
+            "sv":"Svenska",
+            "th":"ไทย",
+            "tr":"Türkçe",
+            "zh":"中文",
+            "zh-Hans-CN":"使用者",
+            "zh-TW":"国语"
+        }
+    },
+    {
+        "DisplayName":"Custom Command Line Flags",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets custom [command line flags](https://ark.wiki.gg/wiki/Server_configuration#Command_Line) for the server (those that start with a - (dash)). Include the dash and separate with a space. Don't use flags already in AMP's settings!",
+        "Keywords":"custom,command,line,flags",
+        "FieldName":"CustomFlags",
+        "InputType":"text",
+        "ParamFieldName":"CustomFlags",
+        "DefaultValue":"",
+        "Placeholder":"-allcores -d3d10",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Custom Command Line Options",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"Sets custom [command line options](https://ark.wiki.gg/wiki/Server_configuration#Command_Line) for the server (those that start with a ? (question mark)). Include the question mark but do not separate with a space. Don't use options already in AMP's settings!",
+        "Keywords":"custom,command,line,options",
+        "FieldName":"CustomOptions",
+        "InputType":"text",
+        "ParamFieldName":"CustomOptions",
+        "DefaultValue":"",
+        "Placeholder":"?ClampItemStats=True?NewYear1UTC=1672592400",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow Flyer Speed Levelling",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If set, flyers can have their movement speed levelled up",
+        "Keywords":"flyer,movement,speed,level,up,allowflyerspeedleveling",
+        "FieldName":"AllowFlyerSpeedLeveling",
+        "InputType":"checkbox",
+        "ParamFieldName":"AllowFlyerSpeedLeveling",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-AllowFlyerSpeedLeveling "
+        }
+    },
+    {
+        "DisplayName":"Allow Cave Flyers",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If set, flyers will always be allowed into caves (flyers are able to go into caves by default on custom maps)",
+        "Keywords":"allow,cave,flyers,forceallowcaveflyers",
+        "FieldName":"ForceAllowCaveFlyers",
+        "InputType":"checkbox",
+        "ParamFieldName":"ForceAllowCaveFlyers",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-ForceAllowCaveFlyers "
+        }
+    },
+    {
+        "DisplayName":"Disable Wild Creature Spawn",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If set, wild creatures will not be spawned in the server. For an existing server, existing creatures need to be wiped with the admin command \"destroywilddinos\"",
+        "Keywords":"no,creatures,spawn,nodinos",
+        "FieldName":"nodinos",
+        "InputType":"checkbox",
+        "ParamFieldName":"nodinos",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-nodinos "
+        }
+    },
+    {
+        "DisplayName":"Prevent Hibernation",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If set, creatures in inactive zones will not hibernate, at the cost of performance and memory usage",
+        "Keywords":"prevent,hibernation,preventhibernation",
+        "FieldName":"PreventHibernation",
+        "InputType":"checkbox",
+        "ParamFieldName":"PreventHibernation",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-PreventHibernation "
+        }
+    },
+    {
+        "DisplayName":"Force Wild Creature Respawn On Start",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If set, all wild creatures that are not currently being tamed will be destroyed on server start",
+        "Keywords":"force,creature,respawn,forcerespawndinos",
+        "FieldName":"ForceRespawnDinos",
+        "InputType":"checkbox",
+        "ParamFieldName":"ForceRespawnDinos",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-ForceRespawnDinos "
+        }
+    },
+    {
+        "DisplayName":"Disable Tek Railgun",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If set, the Tek Railgun will be disabled in PvP mode",
+        "Keywords":"disable,tek,railgun,disablerailgunpvp",
+        "FieldName":"DisableRailgunPVP",
+        "InputType":"checkbox",
+        "ParamFieldName":"DisableRailgunPVP",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-DisableRailgunPVP "
+        }
+    },
+    {
+        "DisplayName":"Enable Structure Stasis Grid",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If set, enables the structure stasis grid to improve server performance on large bases with lots of players. Structures are loaded based on grids with players. Not recommended for modded servers",
+        "Keywords":"structure,stasis,grid,usestructurestasisgrid",
+        "FieldName":"UseStructureStasisGrid",
+        "InputType":"checkbox",
+        "ParamFieldName":"UseStructureStasisGrid",
+        "DefaultValue":"",
+        "EnumValues":{
+            "False":"",
+            "True":"-UseStructureStasisGrid "
+        }
+    },
+    {
+        "DisplayName":"Auto Destroy Structures",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If set, auto destruction of old structures will be enabled. The destruction timer can be adjusted with Auto Structure Destruction Multiplier",
+        "Keywords":"auto,destroy,structures,autodestroystructures",
+        "FieldName":"AutoDestroyStructures",
+        "InputType":"checkbox",
+        "ParamFieldName":"AutoDestroyStructures",
+        "DefaultValue":"-AutoDestroyStructures ",
+        "EnumValues":{
+            "False":"",
+            "True":"-AutoDestroyStructures "
+        }
+    },
+    {
+        "DisplayName":"Cluster Directory Override",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Cluster Settings:share:3",
+        "Description":"Sets the path to a shared cluster directory for a server cluster. The cluster directory must be accessible to all cluster servers. If the server is in Docker, the directory must be mounted in the container",
+        "Keywords":"cluster,directory,override,clusterdiroverride",
+        "FieldName":"ClusterDirOverride",
+        "InputType":"text",
+        "ParamFieldName":"ClusterDirOverride",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Cluster ID",
+        "Category":"ARK SE:stadia_controller",
+        "Subcategory":"Cluster Settings:share:3",
+        "Description":"Sets the cluster ID for a server cluster. The cluster ID must be the same on all servers in the cluster",
+        "Keywords":"cluster,id,clusterid",
+        "FieldName":"clusterid",
+        "InputType":"text",
+        "ParamFieldName":"clusterid",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Download Backup Exclusion Files",
+        "Category":"Backups",
+        "Subcategory":"Storage Limits:storage",
+        "Description":"If enabled, default backup exclusion configuration files are downloaded when the server is updated, to save space on AMP backups. If disabled, manually delete any .backupExclude files in the server base directory and in the ShooterGame directory to prevent backup exclusions",
+        "Keywords":"backup,exclude,exclusion,file",
+        "FieldName":"backupExclude",
+        "InputType":"checkbox",
+        "ParamFieldName":"backupExclude",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    }
+]
