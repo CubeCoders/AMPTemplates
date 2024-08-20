@@ -8,8 +8,7 @@
         "FieldName":"$ApplicationPort1",
         "InputType":"number",
         "Hidden":true,
-        "ParamFieldName":"PublicPort",
-        "EnumValues":{}
+        "ParamFieldName":"Port"
     },
     {
         "DisplayName":"Player Limit",
@@ -17,15 +16,13 @@
         "Subcategory":"Server Settings:settings:1",
         "Description":"Sets the maximum number of players allowed on the server at one time",
         "Keywords":"max,players,slots,limit,ServerMaxPlayers",
-        "FieldName":"$MaxUsers",
+        "FieldName":"SlotCount",
         "InputType":"number",
         "MinValue":"1",
         "MaxValue":"8",
-        "ParamFieldName":"ServerMaxPlayers",
+        "ParamFieldName":"SlotCount",
         "DefaultValue":"8",
-        "Placeholder":"8",
-        "Suffix":"players",
-        "EnumValues":{}
+        "Suffix":"players"
     },
     {
         "DisplayName":"Server Password",
@@ -33,11 +30,10 @@
         "Subcategory":"Server Settings:settings:1",
         "Description":"Sets the password required for players to join the server. Default is no password",
         "Keywords":"password,server,serverpassword",
-        "FieldName":"ServerPassword",
+        "FieldName":"Password",
         "InputType":"password",
-        "ParamFieldName":"ServerPassword",
-        "DefaultValue":"",
-        "EnumValues":{}
+        "ParamFieldName":"Password",
+        "DefaultValue":""
     },
     {
         "DisplayName":"Backup Count",
@@ -45,13 +41,12 @@
         "Subcategory":"Server Settings:settings:1",
         "Description":"Sets how many backups you want",
         "Keywords":"backup",
-        "FieldName":"BackupCount",
+        "FieldName":"MaxBackupCount",
         "InputType":"number",
         "MinValue":"0",
-        "ParamFieldName":"BackupCount",
+        "ParamFieldName":"MaxBackupCount",
         "DefaultValue":"25",
-        "Placeholder":"25",
-        "EnumValues":{}
+        "Placeholder":"25"
     },
     {
         "DisplayName":"Backup Interval",
@@ -64,8 +59,37 @@
         "MinValue":"0",
         "ParamFieldName":"BackupInterval",
         "DefaultValue":"3600",
-        "Placeholder":"3600",
-        "EnumValues":{}
+        "Placeholder":"3600"
+    },
+    {
+        "DisplayName":"Replace Planet Settings",
+        "Category":"Terratech Worlds",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"",
+        "FieldName":"ReplacePlanetSettings",
+        "InputType":"checkbox",
+        "Hidden":true,
+        "ParamFieldName":"ReplacePlanetSettings",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Is Customised",
+        "Category":"Terratech Worlds",
+        "Subcategory":"Server Settings:settings:1",
+        "Description":"",
+        "FieldName":"PlanetSettings.IsCustomised",
+        "InputType":"checkbox",
+        "Hidden":true,
+        "ParamFieldName":"$.PlanetSettings.IsCustomised",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
     },
     {
         "DisplayName":"Day Length",
@@ -73,9 +97,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"Sets how long day cycle is in seconds",
         "Keywords":"day,time",
-        "FieldName":"DayLength",
+        "FieldName":"PlanetSettings.Details.DayLength",
         "InputType":"enum",
-        "ParamFieldName":"DayLength",
+        "ParamFieldName":"$.PlanetSettings.Details.DayLength",
         "DefaultValue":"1200",
         "EnumValues":{
             "1200":"20 Mins",
@@ -92,9 +116,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"Sets the frequency of inhospitable weather.",
         "Keywords":"weather",
-        "FieldName":"WeatherEvents",
+        "FieldName":"PlanetSettings.Details.WeatherEvents",
         "InputType":"enum",
-        "ParamFieldName":"WeatherEvents",
+        "ParamFieldName":"$.PlanetSettings.Details.WeatherEvents",
         "DefaultValue":"2",
         "EnumValues":{
             "0.5":"Low",
@@ -103,29 +127,14 @@
         }
     },
     {
-        "DisplayName":"Tech Yard Storage",
-        "Category":"Terratech Worlds",
-        "Subcategory":"Modifier:tune:2",
-        "Description":"Modifies the storage capacity of tech yards.",
-        "Keywords":"tech yard,storage",
-        "FieldName":"TechYardStorage",
-        "InputType":"enum",
-        "ParamFieldName":"TechYardStorage",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "1":"Normal",
-            "2":"Double"
-        }
-    },
-    {
         "DisplayName":"Natural Hazards Targeting",
         "Category":"Terratech Worlds",
         "Subcategory":"Modifier:tune:2",
         "Description":"Modifies the storage capacity of tech yards.",
         "Keywords":"hazards",
-        "FieldName":"NaturalHazardsTargeting",
+        "FieldName":"PlanetSettings.Details.HazardTargetingMode",
         "InputType":"enum",
-        "ParamFieldName":"NaturalHazardsTargeting",
+        "ParamFieldName":"$.PlanetSettings.Details.HazardTargetingMode",
         "DefaultValue":"1",
         "EnumValues":{
             "0":"No Techs",
@@ -139,9 +148,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"The amount health flora and mineral deposits have",
         "Keywords":"resource,toughness",
-        "FieldName":"ResourceToughness",
+        "FieldName":"PlanetSettings.Details.ResourceToughness",
         "InputType":"enum",
-        "ParamFieldName":"ResourceToughness",
+        "ParamFieldName":"$.PlanetSettings.Details.ResourceToughness",
         "DefaultValue":"1",
         "EnumValues":{
             "0.7":"low",
@@ -155,9 +164,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"The amount of resources that can be obtained from flora and mineral deposits",
         "Keywords":"resource,yield",
-        "FieldName":"ResourceYield",
+        "FieldName":"PlanetSettings.Details.ResourceYield",
         "InputType":"enum",
-        "ParamFieldName":"ResourceYield",
+        "ParamFieldName":"$.PlanetSettings.Details.ResourceYield",
         "DefaultValue":"1",
         "EnumValues":{
             "0.5":"Less",
@@ -172,9 +181,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"How difficult enemy techs are. Affects toughness, damage, and accuracy",
         "Keywords":"enemy,danger,level",
-        "FieldName":"EnemyDangerLevel",
+        "FieldName":"PlanetSettings.Details.EnemyDangerLevel",
         "InputType":"enum",
-        "ParamFieldName":"EnemyDangerLevel",
+        "ParamFieldName":"$.PlanetSettings.Details.EnemyDangerLevel",
         "DefaultValue":"1",
         "EnumValues":{
             "0":"Tame",
@@ -189,9 +198,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"How quickly enemys will respawn after being destroyed.",
         "Keywords":"enemy,respawn",
-        "FieldName":"EnemyRespawnRate",
+        "FieldName":"PlanetSettings.Details.EnemyRespawnRate",
         "InputType":"enum",
-        "ParamFieldName":"EnemyRespawnRate",
+        "ParamFieldName":"$.PlanetSettings.Details.EnemyRespawnRate",
         "DefaultValue":"1",
         "EnumValues":{
             "0":"Never",
@@ -207,9 +216,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"Likelihood of blocks falling from enemys rather then being destroyed.",
         "Keywords":"enemy,droprate",
-        "FieldName":"EnemyBlockDropRate",
+        "FieldName":"PlanetSettings.Details.EnemyBlockDropRate",
         "InputType":"enum",
-        "ParamFieldName":"EnemyBlockDropRate",
+        "ParamFieldName":"$.PlanetSettings.Details.EnemyBlockDropRate",
         "DefaultValue":"1",
         "EnumValues":{
             "0":"None",
@@ -225,9 +234,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"How much power generators, solar panels, and other power producing structures generate.",
         "Keywords":"structure,power,generation",
-        "FieldName":"StructurePowerGeneration",
+        "FieldName":"PlanetSettings.Details.StructurePowerGeneration",
         "InputType":"enum",
-        "ParamFieldName":"StructurePowerGeneration",
+        "ParamFieldName":"$.PlanetSettings.Details.StructurePowerGeneration",
         "DefaultValue":"1",
         "EnumValues":{
             "1":"Normal",
@@ -241,9 +250,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"Rate at which players tech regenerates power.",
         "Keywords":"tech,power,regen",
-        "FieldName":"TechPowerRegen",
+        "FieldName":"PlanetSettings.Details.PlayerTechPowerRegen",
         "InputType":"enum",
-        "ParamFieldName":"TechPowerRegen",
+        "ParamFieldName":"$.PlanetSettings.Details.PlayerTechPowerRegen",
         "DefaultValue":"1",
         "EnumValues":{
             "1":"Normal",
@@ -256,9 +265,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"Rate at which players tech repairs minor damage.",
         "Keywords":"tech,repair",
-        "FieldName":"TechAutoRepair",
+        "FieldName":"PlanetSettings.Details.PlayerTechAutoRepair",
         "InputType":"enum",
-        "ParamFieldName":"TechAutoRepair",
+        "ParamFieldName":"$.PlanetSettings.Details.PlayerTechAutoRepair",
         "DefaultValue":"1",
         "EnumValues":{
             "0":"Off",
@@ -273,11 +282,11 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"Sets the base number of cab repairs.",
         "Keywords":"repair",
-        "FieldName":"CabRepairCharges",
+        "FieldName":"PlanetSettings.Details.PlayerTechRepairCharges",
         "InputType":"number",
         "MinValue":"0",
         "MaxValue":"6",
-        "ParamFieldName":"CabRepairCharges",
+        "ParamFieldName":"$.PlanetSettings.Details.PlayerTechRepairCharges",
         "DefaultValue":"3",
         "Placeholder":"3",
         "EnumValues":{}
@@ -288,9 +297,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"Modifies the reactor capacity of cabs.",
         "Keywords":"reactor,capacity,tech",
-        "FieldName":"TechReactorCapacity",
+        "FieldName":"PlanetSettings.Details.PlayerTechLimit",
         "InputType":"enum",
-        "ParamFieldName":"TechReactorCapacity",
+        "ParamFieldName":"$.PlanetSettings.Details.PlayerTechLimit",
         "DefaultValue":"1",
         "EnumValues":{
             "1":"Normal",
@@ -306,9 +315,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"If set, enables Unlimited Ammo",
         "Keywords":"unlimited,ammo",
-        "FieldName":"UnlimitedAmmo",
+        "FieldName":"PlanetSettings.Details.PlayerUnlimitedAmmo",
         "InputType":"checkbox",
-        "ParamFieldName":"UnlimitedAmmo",
+        "ParamFieldName":"$.PlanetSettings.Details.PlayerUnlimitedAmmo",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -321,9 +330,9 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"If set, enables Unlimited Booster Fuel",
         "Keywords":"unlimited,booster,fuel",
-        "FieldName":"UnlimitedBoosterFuel",
+        "FieldName":"PlanetSettings.Details.PlayerUnlimitedBoosterFuel",
         "InputType":"checkbox",
-        "ParamFieldName":"UnlimitedBoosterFuel",
+        "ParamFieldName":"$.PlanetSettings.Details.PlayerUnlimitedBoosterFuel",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
@@ -336,13 +345,28 @@
         "Subcategory":"Modifier:tune:2",
         "Description":"If set, enables Unlimited Other Consumables",
         "Keywords":"unlimited,consumables",
-        "FieldName":"UnlimitedOtherConsumables",
+        "FieldName":"PlanetSettings.Details.PlayerUnlimitedOtherConsumables",
         "InputType":"checkbox",
-        "ParamFieldName":"UnlimitedOtherConsumables",
+        "ParamFieldName":"$.PlanetSettings.Details.PlayerUnlimitedOtherConsumables",
         "DefaultValue":"False",
         "EnumValues":{
             "False":"False",
             "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Tech Yard Storage",
+        "Category":"Terratech Worlds",
+        "Subcategory":"Modifier:tune:2",
+        "Description":"Modifies the storage capacity of tech yards.",
+        "Keywords":"tech yard,storage",
+        "FieldName":"PlanetSettings.Details.PlayerTechyardStorage",
+        "InputType":"enum",
+        "ParamFieldName":"$.PlanetSettings.Details.PlayerTechyardStorage",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "1":"Normal",
+            "2":"Double"
         }
     }
 ]
