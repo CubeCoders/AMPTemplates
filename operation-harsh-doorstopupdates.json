@@ -4,14 +4,46 @@
         "UpdateSourcePlatform":"All",
         "UpdateSource":"SteamCMD",
         "UpdateSourceData":"950900",
-        "UpdateSourceArgs":"736590"
+        "UpdateSourceArgs":"736590",
+        "UpdateSourceConditionSetting":"ServerBuild",
+        "UpdateSourceConditionValue":"736590"
+    },
+    {
+        "UpdateStageName":"SteamCMD Server Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"SteamCMD",
+        "UpdateSourceData":"1316480",
+        "UpdateSourceArgs":"1307180",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceConditionSetting":"ServerBuild",
+        "UpdateSourceConditionValue":"1307180"
+    },
+    {
+        "UpdateStageName":"Development Binary Symlink Creation",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./operation-harsh-doorstop/950900/HarshDoorstop/Binaries/Linux && rm -f HarshDoorstopServer-Linux-Shipping >/dev/null 2>&1; ln -s HarshDoorstopServer HarshDoorstopServer-Linux-Shipping >/dev/null 2>&1'",
+        "UpdateSourceConditionSetting":"ServerBuild",
+        "UpdateSourceConditionValue":"1307180",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Development Binary Copy",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}HarshDoorstop/Binaries/Win64/HarshDoorstopServer-Win64-Shipping.exe",
+        "UpdateSourceArgs":"{{$FullBaseDir}}HarshDoorstop/Binaries/Win64/HarshDoorstopServer.exe",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"ServerBuild",
+        "UpdateSourceConditionValue":"1307180"
     },
     {
         "UpdateStageName":"Config Directory Symlink",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'mkdir -p ./operation-harsh-doorstop/950900/HarshDoorstop/Saved/Config/WindowsServer ; cd ./operation-harsh-doorstop/950900/HarshDoorstop/Saved/Config && rm LinuxServer ; ln -s WindowsServer LinuxServer'",
+        "UpdateSourceArgs":"-c 'mkdir -p ./operation-harsh-doorstop/950900/HarshDoorstop/Saved/Config/WindowsServer >/dev/null 2>&1; cd ./operation-harsh-doorstop/950900/HarshDoorstop/Saved/Config && rm LinuxServer >/dev/null 2>&1; ln -s WindowsServer LinuxServer >/dev/null 2>&1'",
         "SkipOnFailure":false
     },
     {
