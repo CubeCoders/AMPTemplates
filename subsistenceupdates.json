@@ -9,24 +9,6 @@
         "UpdateSourceVersion":"{{ServerBranch}}"
     },
     {
-        "UpdateStageName":"UDKDedServerSettings.ini Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/subsistenceudkdedserversettings.ini",
-        "UpdateSourceArgs":"UDKDedServerSettings.ini",
-        "UpdateSourceTarget":"{{$FullBaseDir}}UDKGame/Config",
-        "OverwriteExistingFiles":false
-    },
-    {
-        "UpdateStageName":"UDKWeb.ini Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/subsistenceudkweb.ini",
-        "UpdateSourceArgs":"UDKWeb.ini",
-        "UpdateSourceTarget":"{{$FullBaseDir}}UDKGame/Config",
-        "OverwriteExistingFiles":false
-    },
-    {
         "UpdateStageName":"Initialise Wine",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
@@ -48,5 +30,21 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"./winescript.sh"
+    },
+    {
+        "UpdateStageName":"Start Server",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"StartApplication"
+    },
+    {
+        "UpdateStageName":"Pause Update Stages",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"Pause",
+        "UpdateSourceArgs":"1"
+    },
+    {
+        "UpdateStageName":"Stop Server",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"StopApplication"
     }
 ]
