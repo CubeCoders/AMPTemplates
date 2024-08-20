@@ -21,7 +21,7 @@ export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
 ./winetricks -q vcrun2022 >> winescript_log.txt 2>&1
-rm -rf ~/.cache/winetricks ~/.cache/fontconfig
+rm -rf ~/.cache/winetricks
 
 exec 6>&-
 kill $XVFB_PID
