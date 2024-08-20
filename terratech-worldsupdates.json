@@ -1,0 +1,48 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "2533070",
+        "UpdateSourceArgs": "2533070",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "ForceDownloadPlatform": "Windows",
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName":"Config Template Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Airfirewall/AMPTemplates/main/terratech-worldstemplatesettings.json",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UpdateSourceArgs":"AMP_Terratech_Worlds_Settings.json",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Winescript Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Airfirewall/AMPTemplates/main/terratech-worldswinescript.sh",
+        "UpdateSourceArgs":"winescript.sh",
+        "UpdateSourceTarget":"{{$FullInstanceDir}}",
+        "OverwriteExistingFiles":true
+    },
+    {
+        "UpdateStageName":"Initialise Wine",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\"mscoree,mshtml=\" /usr/bin/wineboot --init --update'",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Install Windows Components",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"./winescript.sh",
+        "SkipOnFailure":false
+    }
+]
