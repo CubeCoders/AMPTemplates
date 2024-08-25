@@ -6,28 +6,28 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}server"
     },
     {
-        "UpdateStageName":"MySQL Download",
+        "UpdateStageName":"MySQL Installation",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://dev.mysql.com/get/Downloads/MySQL-8.4/mysql-8.4.2-linux-glibc2.28-x86_64.tar.xz",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd mysql && wget -qO mysql.tar.xz https://dev.mysql.com/get/Downloads/MySQL-8.4/mysql-8.4.2-linux-glibc2.28-x86_64.tar.xz && tar -xf mysql.tar.xz -C server --strip-components=1 >/dev/null 2>&1 && rm -rf mysql.tar.xz >/dev/null 2>&1'",
         "UpdateSourceArch":"x86_64",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
         "SkipOnFailure":false
     },
     {
-        "UpdateStageName":"MySQL Download",
+        "UpdateStageName":"MySQL Installation",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://dev.mysql.com/get/Downloads/MySQL-8.4/mysql-8.4.2-linux-glibc2.28-aarch64.tar.xz",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd mysql && wget -qO mysql.tar.xz https://dev.mysql.com/get/Downloads/MySQL-8.4/mysql-8.4.2-linux-glibc2.28-aarch64.tar.xz && tar -xf mysql.tar.xz -C server --strip-components=1 >/dev/null 2>&1 && rm -rf mysql.tar.xz >/dev/null 2>&1'",
         "UpdateSourceArch":"aarch64",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
         "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Make Server Executable",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"SetExecutableFlag",
+        "UpdateSourceArgs":"{{$FullBaseDir}}server/bin/mysqld"
     },
     {
         "UpdateStageName":"MySQL Download",
@@ -39,20 +39,6 @@
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true,
         "SkipOnFailure":false
-    },
-    {
-        "UpdateStageName":"MySQL Installation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd mysql && mv mysql-* mysql && \\cp -rf mysql/* server/ >/dev/null 2>&1 && rm -rf mysql >/dev/null 2>&1\"",
-        "SkipOnFailure":false
-    },
-    {
-        "UpdateStageName":"Make Server Executable",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"SetExecutableFlag",
-        "UpdateSourceArgs":"{{$FullBaseDir}}server/bin/mysqld"
     },
     {
         "UpdateStageName":"MySQL Installation",
