@@ -1,0 +1,95 @@
+[
+    {
+        "UpdateStageName":"MySQL Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dev.mysql.com/get/Downloads/MySQL-8.4/mysql-8.4.2-linux-glibc2.28-x86_64.tar.xz",
+        "UpdateSourceArch":"x86_64",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"MySQL Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dev.mysql.com/get/Downloads/MySQL-8.4/mysql-8.4.2-linux-glibc2.28-aarch64.tar.xz",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"MySQL Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://dev.mysql.com/get/Downloads/MySQL-8.4/mysql-8.4.2-winx64.zip",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c \"cd mysql && mv mysql-* mysql && \\cp -rf mysql/* server/ >/dev/null 2>&1 && rm -rf mysql >/dev/null 2>&1\"",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Make Server Executable",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"SetExecutableFlag",
+        "UpdateSourceArgs":"{{$FullBaseDir}}server/bin/mysqld"
+    },
+    {
+        "UpdateStageName":"MySQL Installation",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"powershell.exe",
+        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'mysql'; $directory = Get-ChildItem -Directory -Filter \\\"mysql-*\\\"; Rename-Item $directory.FullName -NewName \\\"mysql\\\"; Copy-Item -Path 'mysql/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'mysql' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Create Data Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}data"
+    },
+    {
+        "UpdateStageName":"Create Logs Directory",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}logs"
+    },
+    {
+        "UpdateStageName":"Create Options File",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceArgs":"{{$FullBaseDir}}server/my.cnf",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Initialize MySQL",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c cd mysql/server && bin/mysqld --initialize --basedir=. --datadir=../data --tmpdir=../logs --console'",
+        "SkipOnFailure":false,
+        "OneShot":true
+    },
+    {
+        "UpdateStageName":"Initialize MySQL",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"powershell.exe",
+        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'mysql/server'; & bin\\mysqld --initialize --basedir=. --datadir=../data --tmpdir=../logs --console",
+        "SkipOnFailure":false
+    }
+]
