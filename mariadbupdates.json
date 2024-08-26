@@ -43,7 +43,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd mariadb/server && scripts/mariadb-install-db --port={{$ServerPort}} --basedir=. --datadir=../data --console; bin/mariadb-upgrade --port={{$ServerPort}} --datadir=../data'",
+        "UpdateSourceArgs":"-c 'cd mariadb/server && scripts/mariadb-install-db --port={{$ServerPort}} --basedir=. --datadir=../data --console; bin/mariadb-upgrade --port={{$ServerPort}}'",
         "SkipOnFailure":false
     },
     {
@@ -51,7 +51,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'mariadb/server'; & bin\\mysql_install_db.exe --port={{$ServerPort}} --datadir=../data; & bin\\mariadb-upgrade --port={{$ServerPort}} --datadir=../data",
+        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'mariadb/server'; & bin\\mysql_install_db.exe --port={{$ServerPort}} --datadir=../data; & bin\\mariadb-upgrade.exe --port={{$ServerPort}}",
         "SkipOnFailure":false
     }
 ]
