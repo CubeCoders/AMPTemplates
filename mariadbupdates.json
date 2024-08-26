@@ -43,17 +43,15 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd mariadb/server && (scripts/mariadb-install-db --port={{$ServerPort}} --basedir=. --datadir=../data --console || bin/mariadb-upgrade --port={{$ServerPort}} --basedir=. --datadir=../data --console)'",
-        "SkipOnFailure":false,
-        "OneShot":true
+        "UpdateSourceArgs":"-c 'cd mariadb/server && scripts/mariadb-install-db --port={{$ServerPort}} --basedir=. --datadir=../data --console; bin/mariadb-upgrade --port={{$ServerPort}} --basedir=. --datadir=../data --console'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Initialize MariaDB",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'mariadb/server'; & bin\\mysql_install_db.exe --port={{$ServerPort}} --basedir=. --datadir=../data --console",
-        "SkipOnFailure":false,
-        "OneShot":true
+        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'mariadb/server'; & bin\\mysql_install_db.exe --port={{$ServerPort}} --basedir=. --datadir=../data --console; & bin\\mariadb-upgrade --port={{$ServerPort}} --basedir=. --datadir=../data --console",
+        "SkipOnFailure":false
     }
 ]
