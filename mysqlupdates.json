@@ -59,9 +59,8 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd mysql/server && bin/mysqld --initialize --basedir=. --datadir=../data --console'",
-        "SkipOnFailure":false,
-        "OneShot":true
+        "UpdateSourceArgs":"-c 'cd mysql/server && [ -e ../data/mysql_upgrade_history ] && bin/mysqld --initialize --basedir=. --datadir=../data --console'",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Initialize MySQL",
