@@ -33,6 +33,24 @@
         "UpdateSourceArgs":"{{$FullBaseDir}}Config"
     },
     {
+        "UpdateStageName":"Libraries Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Libraries"
+    },
+    {
+        "UpdateStageName":"rml_libs Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}rml_libs"
+    },
+    {
+        "UpdateStageName":"rml_mods Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}rml_mods"
+    },
+    {
         "UpdateStageName":"DefaultConfig.json Download",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"FetchURL",
@@ -40,6 +58,28 @@
         "UpdateSourceArgs":"Config.json",
         "UpdateSourceTarget":"{{$FullBaseDir}}Config",
         "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"ResoniteModLoader.dll Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"resonite-modding-group/ResoniteModLoader",
+        "UpdateSourceData":"ResoniteModLoader.dll",
+        "UpdateSourceTarget":"{{$FullBaseDir}}Libraries",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"ModLoader",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"0Harmony-Net8.dll Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"resonite-modding-group/ResoniteModLoader",
+        "UpdateSourceData":"0Harmony-Net8.dll",
+        "UpdateSourceTarget":"{{$FullBaseDir}}rml_libs",
+        "OverwriteExistingFiles":true,
+        "UpdateSourceConditionSetting":"ModLoader",
+        "UpdateSourceConditionValue":"true"
     },
     {
         "UpdateStageName":"Dotnet Directory Creation",
