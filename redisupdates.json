@@ -1,5 +1,11 @@
 [
     {
+        "UpdateStageName":"AppImage Directory Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullRootDir}}.appimage"
+    },
+    {
         "UpdateStageName":"Data Directory Creation",
         "UpdateSourcePlatform":"All",
         "UpdateSource":"CreateDirectory",
@@ -11,14 +17,24 @@
         "UpdateSource":"FetchURL",
         "UpdateSourceData":"https://packages.redis.io/redis-stack/redis-stack-server-7.4.0-v0-x86_64.AppImage",
         "UpdateSourceArgs":"Redis.AppImage",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullRootDir}}.appimage",
         "OverwriteExistingFiles":true,
         "SkipOnFailure":false
     },
     {
-        "UpdateStageName":"Make AppImage Executable",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"SetExecutableFlag",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Redis.AppImage"
+        "UpdateStageName":"Redis Extract",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./redis/.appimage && chmod +x Redis.AppImage && ./Redis.AppImage --appimage-extract && rm -f Redis.AppImage'",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"AppImage Directory Symlink Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd ./redis && rm -f server; ln -s .appimage/squashfs-root/usr server'",
+        "SkipOnFailure":false
     }
 ]
