@@ -36,5 +36,14 @@
         "UpdateSourceData":"/bin/bash",
         "UpdateSourceArgs":"-c 'cd ./redis && rm -f server; ln -s .appimage/squashfs-root/usr server'",
         "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Redis.conf Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/redis/redis/unstable/redis.conf",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "OverwriteExistingFiles":false,
+        "SkipOnFailure":false
     }
 ]
