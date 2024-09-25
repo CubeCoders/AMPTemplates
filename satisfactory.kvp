@@ -33,7 +33,7 @@ App.ExecutableLinux=1690800/Engine/Binaries/Linux/FactoryServer-Linux-Shipping
 App.WorkingDir=1690800
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} FactoryGame -MultiHome={{$ApplicationIPBinding}} -Port={{$ApplicationPort1}} -ini:Engine:[HTTPServer.Listeners]:DefaultBindAddress={{$ApplicationIPBinding}} {{DisableSeasonalEvents}} {{$FormattedArgs}} -log -unattended
+App.CommandLineArgs={{$PlatformArgs}} FactoryGame -MultiHome={{$ApplicationIPBinding}} -Port={{$ApplicationPort1}} -ini:Engine:[HTTPServer.Listeners]:DefaultBindAddress={{$ApplicationIPBinding}} {{DisableSeasonalEvents}} {{$FormattedArgs}} -stdout -FullStdOutLogOutput -unattended
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"526870"}
@@ -84,8 +84,8 @@ Console.FilterMatchRegex=^\[.+?\]\[.+?\]
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
 Console.AppReadyRegex=^LogInit: Display: Game Engine Initialized\.$
-Console.UserJoinRegex=^User (?<username>.+?) \((?<userid>-?d+)\) connected from \[::ffff:(?<endpoint>.+?)\]$
-Console.UserLeaveRegex=^User (?<username>.+?) \((?<userid>-?d+)\) disconnected\. Reason: (.+?)$
+Console.UserJoinRegex=^LogNet: Login request: \?ClientIdentity=.+\?EntryTicket=.+?EncryptionToken=.+\?Name=(?<username>.+?) userId: .+\(ForeignId=\[Type=.+ Handle=.+ RepData=\[(?<userid>.+)\]\) platform: .+$
+Console.UserLeaveRegex=^LogNet: UChannel\:\:Close\: Sending CloseBunch\. ChIndex == .+\. Name: \[UChannel\] ChIndex: .+\, Closing: .+ \[UNetConnection\] RemoteAddr: .+\, Name: .+, Driver: .+\, IsServer: YES\, PC: .+\, Owner: .+\, UniqueId: .+ \(ForeignId=\[Type=.+ Handle=.+ RepData=\[(?<userid>.+)\]\)
 Console.UserChatRegex=^$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
 Console.MetricsRegex=
