@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Arguments: [number_clients] [server_binding] [server_port] "<server_password>" "<mod_list>" "<hc_parameters_file>"
+# Arguments: [number_clients] [server_binding] [server_port] "<server_password>" "<mod_list>" "<hc_parameters_file>" [start_limit]
 
 netcommand="$(command -v "ss" >/dev/null 2>&1 && echo "ss" || echo "netstat")"
 
@@ -8,10 +8,11 @@ netcommand="$(command -v "ss" >/dev/null 2>&1 && echo "ss" || echo "netstat")"
 # If none, immediately exit
 [[ $1 -eq 0 ]] && exit 0
 
-# Check if server starts successfully within 3 minutes
+# Check if server starts successfully within <start_limit> seconds
 # If not, exit
 server_started=false
-for i in $(seq 1 180); do
+startlimit=${7:-180}
+for i in $(seq 1 $startlimit); do
   if $netcommand -uln | grep -q ":$3 "; then
     server_started=true
     break

@@ -21,7 +21,7 @@ Meta.Prerequsites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=1.2
+Meta.ConfigVersion=1.4
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
 Meta.AppConfigId=2cd58de5-88a4-49f8-a71a-b09d08d1fd5e
@@ -35,7 +35,7 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=2857200
 App.LinuxCommandLineArgs="./AbioticFactor/Binaries/Win64/AbioticFactorServer-Win64-Shipping.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} AbioticFactor -stdout -FullStdOutLogOutput {{useperfthreads}}{{NoAsyncLoadingThread}} -QueryPort={{$QueryPort}} -SteamServerName="{{ServerName}}" -SandboxIniPath=Config/WindowsServer/SandboxSettings.ini {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} AbioticFactor -stdout -FullStdOutLogOutput {{useperfthreads}}{{NoAsyncLoadingThread}}{{useallavailablecores}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -SteamServerName="{{ServerName}}" -SandboxIniPath=Config/WindowsServer/SandboxSettings.ini {{$FormattedArgs}} {{CustomArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"SteamAppId":"427410","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
@@ -55,7 +55,7 @@ App.SupportsIPv6=True
 App.ApplicationIPBinding=0.0.0.0
 App.Ports=@IncludeJson[abiotic-factorports.json]
 App.AdminPortRef=0
-App.PrimaryApplicationPortRef=QueryPort
+App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPortRef=0
 App.UniversalSleepSteamQueryPortRef=0
 App.MaxUsers=32
