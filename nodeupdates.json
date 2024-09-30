@@ -10,7 +10,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd node-server/app && DownloadSource=\"{{DownloadSource}}\"; DownloadBranch=\"{{DownloadBranch}}\"; { [[ -n \"{{DownloadUsername}}\" ]] && DownloadUrl=\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\" || DownloadUrl=\"$DownloadSource\"; }; [ ! -d \".git\" ] && /usr/bin/git clone ${DownloadBranch:+-b $DownloadBranch} \"$DownloadUrl\" . || { [[ -z \"$DownloadBranch\" ]] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \"s|.*/||\"); /usr/bin/git switch $DownloadBranch && /usr/bin/git restore . && /usr/bin/git pull \"$DownloadUrl\" $DownloadBranch; }; exit $?'",
+        "UpdateSourceArgs":"-c \"cd node-server/app && DownloadSource='{{DownloadSource}}'; DownloadBranch='{{DownloadBranch}}'; { [[ -n '{{DownloadUsername}}' ]] && DownloadUrl='${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}' || DownloadUrl='$DownloadSource'; }; [ ! -d '.git' ] && /usr/bin/git clone ${DownloadBranch:+-b $DownloadBranch} '$DownloadUrl' . || { [[ -z '$DownloadBranch' ]] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed 's|.*/||'); /usr/bin/git switch $DownloadBranch && /usr/bin/git restore . && /usr/bin/git pull '$DownloadUrl' $DownloadBranch; }; exit $?\"",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"GitRepo",
         "SkipOnFailure":false
@@ -67,7 +67,7 @@
         "UpdateSourceArch":"x86_64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-x64.tar.gz > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && mv -v node-{{NodeVersion}}-linux-x64 node >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && rm node-{{NodeVersion}}-linux-x64.tar.gz'",
+        "UpdateSourceArgs":"-c \"cd '{{$FullBaseDir}}' && rm -Rf '{{$FullBaseDir}}node/' >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-x64.tar.gz > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && mv -v node-{{NodeVersion}}-linux-x64 node >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && rm node-{{NodeVersion}}-linux-x64.tar.gz\"",
         "UpdateSourceConditionSetting":"DisableNodeDownload",
         "UpdateSourceConditionValue":"false",
         "SkipOnFailure":false
@@ -88,7 +88,7 @@
         "UpdateSourceArch":"aarch64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz && mv -v node-{{NodeVersion}}-linux-arm64 node && rm node-{{NodeVersion}}-linux-arm64.tar.gz'",
+        "UpdateSourceArgs":"-c \"cd '{{$FullBaseDir}}' && rm -Rf '{{$FullBaseDir}}node/' >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz && mv -v node-{{NodeVersion}}-linux-arm64 node && rm node-{{NodeVersion}}-linux-arm64.tar.gz\"",
         "UpdateSourceConditionSetting":"DisableNodeDownload",
         "UpdateSourceConditionValue":"false",
         "SkipOnFailure":false
@@ -120,7 +120,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}app/{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" i {{NpmPackages}}'",
+        "UpdateSourceArgs":"-c \"export PATH=$PATH:{{$FullBaseDir}}node/bin && cd '{{$FullBaseDir}}app/{{ApplicationLocation}}/' && '{{$FullBaseDir}}node/bin/node' '{{$FullBaseDir}}node/bin/npm' i {{NpmPackages}}\"",
         "UpdateSourceConditionSetting":"NpmInstallType",
         "UpdateSourceConditionValue":"specify",
         "SkipOnFailure":false
@@ -140,7 +140,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}app/{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" i'",
+        "UpdateSourceArgs":"-c \"export PATH=$PATH:{{$FullBaseDir}}node/bin && cd '{{$FullBaseDir}}app/{{ApplicationLocation}}/' && '{{$FullBaseDir}}node/bin/node' '{{$FullBaseDir}}node/bin/npm' i\"",
         "UpdateSourceConditionSetting":"NpmInstallType",
         "UpdateSourceConditionValue":"npmi",
         "SkipOnFailure":false
@@ -160,7 +160,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}app/{{ApplicationLocation}}/\" && \"{{$FullBaseDir}}node/bin/node\" \"{{$FullBaseDir}}node/bin/npm\" ci'",
+        "UpdateSourceArgs":"-c \"export PATH=$PATH:{{$FullBaseDir}}node/bin && cd '{{$FullBaseDir}}app/{{ApplicationLocation}}/' && '{{$FullBaseDir}}node/bin/node' '{{$FullBaseDir}}node/bin/npm' ci\"",
         "UpdateSourceConditionSetting":"NpmInstallType",
         "UpdateSourceConditionValue":"npmci",
         "SkipOnFailure":false

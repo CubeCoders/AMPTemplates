@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -f {{$FullBaseDir}}battleye/beserver_x64_active_*.cfg >/dev/null 2>&1'",
+        "UpdateSourceArgs":"-c \"rm -f {{$FullBaseDir}}battleye/beserver_x64_active_*.cfg >/dev/null 2>&1\"",
         "SkipOnFailure":true
     },
     {
@@ -20,7 +20,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd dayz/1042420; find keys/ -name \"*.bikey\" ! -name \"dayz.bikey\" -exec rm {} +; IFS=\";\" read -ra subdirs_array <<< \"{{mod}};{{clientmod}}\" && for subdir in \"${subdirs_array[@]}\"; do find \"$subdir/keys\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t keys/ {} + >/dev/null 2>&1; find \"$subdir/key\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t keys/ {} + >/dev/null 2>&1; done; exit 0'",
+        "UpdateSourceArgs":"-c \"cd dayz/1042420; find keys/ -name '*.bikey' ! -name 'dayz.bikey' -exec rm {} +; IFS=';' read -ra subdirs_array <<< '{{mod}};{{clientmod}}' && for subdir in '${subdirs_array[@]}'; do find '$subdir/keys' -maxdepth 1 -mindepth 1 -type f -name '*.bikey' -exec \\cp -t keys/ {} + >/dev/null 2>&1; find '$subdir/key' -maxdepth 1 -mindepth 1 -type f -name '*.bikey' -exec \\cp -t keys/ {} + >/dev/null 2>&1; done; exit 0\"",
         "UpdateSourceConditionSetting":"ManageBikeys",
         "UpdateSourceConditionValue":"true",
         "SkipOnFailure":true
