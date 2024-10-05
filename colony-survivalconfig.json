@@ -38,9 +38,8 @@
         "IncludeInCommandLine":true,
         "DefaultValue":"SteamOnline",
         "EnumValues":{
-            "LAN":"LAN (allows connecting from localhost via the in-game button)",
-            "SteamLAN":"Steam LAN (Steam networking without port forwarding or authentication)",
-            "SteamOnline":"Steam Online (Steam networking with port forwarding and authentication)"
+            "SteamNonPublic":"Non-public server",
+            "SteamOnline":"Online server (default)"
         }
     },
     {
@@ -52,6 +51,20 @@
         "FieldName":"server.password",
         "InputType":"password",
         "ParamFieldName":"server.password",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"RCON Password",
+        "Category":"Colony Survival:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Sets the password required to connect to the server's RCON. Default is no password (RCON not enabled)",
+        "Keywords":"password,rcon,server.rconpassword",
+        "FieldName":"server.rconpassword",
+        "InputType":"password",
+        "ParamFieldName":"server.rconpassword",
         "IncludeInCommandLine":true,
         "SkipIfEmpty":true,
         "DefaultValue":"",
@@ -97,76 +110,49 @@
         "Keywords":"world,seed,generation,server.seed",
         "FieldName":"server.seed",
         "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"2147483648",  
         "ParamFieldName":"server.seed",
         "IncludeInCommandLine":true,
         "DefaultValue":"{{randomdigits(8)}}",
         "EnumValues":{}
     },
     {
-        "DisplayName":"Spawn Monsters",
+        "DisplayName":"Monsters Day Difficulty Level",
         "Category":"Colony Survival:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"If set, monsters will be spawned when generating a new world",
-        "Keywords":"monsters,spawn,server.monsterson",
-        "FieldName":"server.monsterson",
-        "InputType":"checkbox",
-        "ParamFieldName":"server.monsterson",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Initial Settings File",
-        "Category":"Colony Survival:stadia_controller",
-        "Subcategory":"Server:dns:1",
-        "Description":"Sets the initial settings file to use when generating a new world",
-        "Keywords":"initial,settings,world,server.initialsettings",
-        "FieldName":"server.initialsettings",
+        "Description":"Sets the day difficulty level for monsters when generating a new world",
+        "Keywords":"monsters,spawn,day,difficulty,server.daydifficulty",
+        "FieldName":"server.daydifficulty",
         "InputType":"enum",
-        "ParamFieldName":"server.initialsettings",
+        "ParamFieldName":"server.daydifficulty",
         "IncludeInCommandLine":true,
-        "DefaultValue":"normal",
+        "DefaultValue":"0",
         "EnumValues":{
-            "peaceful":"Peaceful",
-            "low":"Low",
-            "normal":"Normal",
-            "high":"High",
-            "veryhigh":"Very High"
+            "0":"None (default)",
+            "1":"Minimum",
+            "2":"Low",
+            "3":"High",
+            "4":"Maximum"
         }
     },
     {
-        "DisplayName":"Spawn Monsters During Day",
+        "DisplayName":"Monsters Night Difficulty Level",
         "Category":"Colony Survival:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"If set, monsters will spawn during the day when generating a new world",
-        "Keywords":"monsters,spawn,day,server.monstersday",
-        "FieldName":"server.monstersday",
-        "InputType":"checkbox",
-        "ParamFieldName":"server.monstersday",
+        "Description":"Sets the night difficulty level for monsters when generating a new world",
+        "Keywords":"monsters,spawn,night,difficulty,server.nightdifficulty",
+        "FieldName":"server.nightdifficulty",
+        "InputType":"enum",
+        "ParamFieldName":"server.nightdifficulty",
         "IncludeInCommandLine":true,
-        "DefaultValue":"false",
+        "DefaultValue":"2",
         "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
-    },
-    {
-        "DisplayName":"Spawn Double Monsters",
-        "Category":"Colony Survival:stadia_controller",
-        "Subcategory":"Server:dns:1",
-        "Description":"If set, double the amount of monsters will be spawned when generating a new world",
-        "Keywords":"monsters,spawn,double,server.monstersdouble",
-        "FieldName":"server.monstersdouble",
-        "InputType":"checkbox",
-        "ParamFieldName":"server.monstersdouble",
-        "IncludeInCommandLine":true,
-        "DefaultValue":"false",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
+            "0":"None",
+            "1":"Minimum",
+            "2":"Low (default)",
+            "3":"High",
+            "4":"Maximum"
         }
     }
 ]
