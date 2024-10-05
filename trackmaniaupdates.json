@@ -1,0 +1,31 @@
+[
+    {
+        "UpdateStageName":"Server Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"http://files.v04.maniaplanet.com/server/TrackmaniaServer_Latest.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true
+    },
+    {
+        "UpdateStageName":"Pause Update Stages",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"Pause",
+        "UpdateSourceArgs":"2"
+    },
+    {
+        "UpdateStageName":"Set Executable Flag",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"SetExecutableFlag",
+        "UpdateSourceArgs":"{{$FullBaseDir}}TrackmaniaServer"
+    },
+    {
+        "UpdateStageName":"Config File Copy",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}UserData/Config/dedicated_cfg.txt",
+        "UpdateSourceArgs":"{{$FullBaseDir}}UserData/Config/dedicated_cfg.default.txt"
+    }
+]
