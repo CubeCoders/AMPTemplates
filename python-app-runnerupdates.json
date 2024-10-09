@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd python-app-runner && DownloadSource=\"{{DownloadSource}}\"; DownloadBranch=\"{{DownloadBranch}}\"; { [[ -n \"{{DownloadUsername}}\" ]] && DownloadUrl=\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\" || DownloadUrl=\"$DownloadSource\"; }; [ ! -d \".git\" ] && /usr/bin/git clone ${DownloadBranch:+-b $DownloadBranch} \"$DownloadUrl\" . || { [[ -z \"$DownloadBranch\" ]] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \"s|.*/||\"); /usr/bin/git switch $DownloadBranch && /usr/bin/git restore . && /usr/bin/git pull \"$DownloadUrl\" $DownloadBranch; }; exit $?'",
+        "UpdateSourceArgs":"-c \"cd python-app-runner && DownloadSource=\\\"{{DownloadSource}}\\\"; DownloadBranch=\\\"{{DownloadBranch}}\\\"; { [[ -n \\\"{{DownloadUsername}}\\\" ]] && DownloadUrl=\\\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\\\" || DownloadUrl=\\\"$DownloadSource\\\"; }; [ ! -d \\\".git\\\" ] && /usr/bin/git clone ${DownloadBranch:+-b $DownloadBranch} \\\"$DownloadUrl\\\" . || { [[ -z \\\"$DownloadBranch\\\" ]] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); /usr/bin/git switch $DownloadBranch && /usr/bin/git restore . && /usr/bin/git pull \\\"$DownloadUrl\\\" $DownloadBranch; }; exit $?\"",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"GitRepo",
         "SkipOnFailure":false
@@ -66,7 +66,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -u -m pip install -U setuptools wheel discord.py python-dotenv\"",
+        "UpdateSourceArgs":"-c \"source \\\"{{$FullBaseDir}}venv/bin/activate\\\" && python3 -u -m pip install -U setuptools wheel discord.py python-dotenv\"",
         "SkipOnFailure":false
     },
     {
@@ -82,7 +82,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -u -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}}\"",
+        "UpdateSourceArgs":"-c \"source \\\"{{$FullBaseDir}}venv/bin/activate\\\" && python3 -u -m pip install -U {{DownloadPackageArgs}} {{DownloadSource}}\"",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"PyPIPackage",
         "SkipOnFailure":false
@@ -102,7 +102,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd '{{$FullBaseDir}}' && source ./venv/bin/activate && python3 -u -m pip install -U -r ./{{AppDir}}/requirements.txt\"",
+        "UpdateSourceArgs":"-c \"cd \\\"{{$FullBaseDir}}\\\" && source ./venv/bin/activate && python3 -u -m pip install -U -r ./{{AppDir}}/requirements.txt\"",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"file",
         "SkipOnFailure":false
@@ -122,7 +122,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"source '{{$FullBaseDir}}venv/bin/activate' && python3 -u -m pip install -U {{PythonPackages}}\"",
+        "UpdateSourceArgs":"-c \"source \\\"{{$FullBaseDir}}venv/bin/activate\\\" && python3 -u -m pip install -U {{PythonPackages}}\"",
         "UpdateSourceConditionSetting":"PackagesInstallType",
         "UpdateSourceConditionValue":"specifier",
         "SkipOnFailure":false
@@ -142,7 +142,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd '{{$FullBaseDir}}' && source ./venv/bin/activate && {{AppSetupCommand}}\"",
+        "UpdateSourceArgs":"-c \"cd \\\"{{$FullBaseDir}}\\\" && source ./venv/bin/activate && {{AppSetupCommand}}\"",
         "UpdateSourceConditionSetting":"RunAppSetupCommand",
         "UpdateSourceConditionValue":"true",
         "SkipOnFailure":false
