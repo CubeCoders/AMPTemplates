@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd java-app-runner && DownloadSource='{{DownloadSource}}'; DownloadBranch='{{DownloadBranch}}'; { [[ -n '{{DownloadUsername}}' ]] && DownloadUrl='${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}' || DownloadUrl='$DownloadSource'; }; [ ! -d '.git' ] && /usr/bin/git clone ${DownloadBranch:+-b $DownloadBranch} '$DownloadUrl' . || { [[ -z '$DownloadBranch' ]] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed 's|.*/||'); /usr/bin/git switch $DownloadBranch && /usr/bin/git restore . && /usr/bin/git pull '$DownloadUrl' $DownloadBranch; }; exit $?\"",
+        "UpdateSourceArgs":"-c \"cd java-app-runner && DownloadSource=\\\"{{DownloadSource}}\\\"; DownloadBranch=\\\"{{DownloadBranch}}\\\"; { [[ -n \\\"{{DownloadUsername}}\\\" ]] && DownloadUrl=\\\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\\\" || DownloadUrl=\\\"$DownloadSource\\\"; }; [ ! -d \\\".git\\\" ] && /usr/bin/git clone ${DownloadBranch:+-b $DownloadBranch} \\\"$DownloadUrl\\\" . || { [[ -z \\\"$DownloadBranch\\\" ]] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); /usr/bin/git switch $DownloadBranch && /usr/bin/git restore . && /usr/bin/git pull \\\"$DownloadUrl\\\" $DownloadBranch; }; exit $?\"",
         "UpdateSourceConditionSetting":"DownloadType",
         "UpdateSourceConditionValue":"GitRepo",
         "SkipOnFailure":false
