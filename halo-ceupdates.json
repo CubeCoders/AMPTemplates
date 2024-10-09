@@ -55,7 +55,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'halo-ce'; Invoke-WebRequest -UseBasicParsing -Uri 'https://halomaps.org/hce/detail.cfm#top' -Method Post -Body @{ fid = '410'; action = 'dl'; hash = '8178E4C9BD0CC5600F28F76160E1F4C2' } -OutFile 'haloce.exe'; & 7-Zip\\7z.exe x -y -aoa haloce.exe -oserver maps\\* | Out-Null; Remove-Item -Path 'haloce.exe'-Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs":"-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'halo-ce'; (Invoke-RestMethod -UseBasicParsing -Uri 'https://halomaps.org/hce/detail.cfm?fid=410') -match 'name=\\\"hash\\\" value=\\\"(?<Hash>[A-Fa-f0-9]+)\\\"' | Out-Null; $CURRENT_HASH = $matches['Hash']; Invoke-WebRequest -UseBasicParsing -Uri 'https://halomaps.org/hce/detail.cfm#top' -Method Post -Body @{ fid = \\\"410\\\"; action = \\\"dl\\\"; hash = \\\"$CURRENT_HASH\\\" } -OutFile 'haloce.exe'; & 7-Zip\\7z.exe x -y -aoa haloce.exe -oserver maps\\* | Out-Null; Remove-Item -Path 'haloce.exe'-Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure":false
     },
     {
@@ -63,7 +63,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd halo-ce && wget -qO haloce.exe --post-data='fid=410&action=dl&hash=8178E4C9BD0CC5600F28F76160E1F4C2' https://halomaps.org/hce/detail.cfm#top && 7-Zip/7zzs x -y -aoa haloce.exe -oserver maps/* >/dev/null 2>&1 && rm -f halo-ce.exe >/dev/null 2>&1\"",
+        "UpdateSourceArgs":"-c \"cd halo-ce && CURRENT_HASH=$(wget -qO- 'https://halomaps.org/hce/detail.cfm?fid=410' | sed -n 's/.*name=\\\"hash\\\" value=\\\"\\([A-Fa-f0-9]\\+\\)\\\".*/\\1/p') && wget -qO haloce.exe --post-data=\\\"fid=410&action=dl&hash=$CURRENT_HASH\\\" https://halomaps.org/hce/detail.cfm#top && 7-Zip/7zzs x -y -aoa haloce.exe -oserver maps/* >/dev/null 2>&1 && rm -f halo-ce.exe >/dev/null 2>&1\"",
         "SkipOnFailure":false
     },
     {
