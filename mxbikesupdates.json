@@ -55,7 +55,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd mxbikes/server && CURRENT_VERSION=$(wget -qO- \\\"https://betas.mxb-mods.com/\\\" | grep \\\"Current\\s*version:\\s*beta\\\" | sed 's/.*Current\\s*version:\\s*beta\\([0-9a-zA-Z]\\+\\).*/\\1/') && wget -qO mxbikes-beta.exe \\\"https://betas.mxb-mods.com/files/mxbikes-beta${CURRENT_VERSION}.exe\\\"\"",
+        "UpdateSourceArgs":"-c \"cd mxbikes/server && CURRENT_VERSION=$(wget -qO- \\\"https://betas.mxb-mods.com/\\\" | grep \\\"Current\\s*version:\\s*beta\\\" | sed \\\"s/.*Current\\s*version:\\s*beta\\([0-9a-zA-Z]\\+\\).*/\\1/\\\") && wget -qO mxbikes-beta.exe \\\"https://betas.mxb-mods.com/files/mxbikes-beta${CURRENT_VERSION}.exe\\\"\"",
         "SkipOnFailure":false
     },
     {
@@ -122,7 +122,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"WINEPREFIX='{{$FullRootDir}}.wine' WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "UpdateSourceArgs":"-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
         "SkipOnFailure":false
     }
 ]
