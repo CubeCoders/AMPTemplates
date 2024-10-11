@@ -4,7 +4,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"rm -f '{{$FullBaseDir}}BattlEye/'BEServer_active_*.cfg >/dev/null 2>&1\"",
+        "UpdateSourceArgs":"-c \"rm -f \\\"{{$FullBaseDir}}BattlEye/\\\"BEServer_active_*.cfg >/dev/null 2>&1\"",
         "SkipOnFailure":true
     },
     {
@@ -12,7 +12,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}BattlEye\\BEServer_active_*.cfg > NUL 2>&1",
+        "UpdateSourceArgs":"/C del /Q /F \"{{$FullBaseDir}}BattlEye\\\"BEServer_active_*.cfg > NUL 2>&1",
         "SkipOnFailure":true
     },
     {
@@ -20,7 +20,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd arma2oa/33935; find Keys/ -name \"*.bikey\" ! -name \"bi.bikey\" ! -name \"bi2.bikey\" -exec rm {} +; IFS=\";\" read -ra subdirs_array <<< \"{{mod}}\" && for subdir in \"${subdirs_array[@]}\"; do find \"$subdir/keys\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t Keys/ {} + >/dev/null 2>&1; find \"$subdir/key\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t Keys/ {} + >/dev/null 2>&1; find \"$subdir/Keys\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t Keys/ {} + >/dev/null 2>&1; find \"$subdir/Key\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t Keys/ {} + >/dev/null 2>&1; done; exit 0'",
+        "UpdateSourceArgs":"-c \"cd arma2oa/33935; find Keys -name \\\"*.bikey\\\" ! -name \\\"bi.bikey\\\" ! -name \\\"bi2.bikey\\\" -delete; IFS=\\\";\\\" read -ra subdirs_array <<< \\\"{{mod}}\\\"; for subdir in \\\"${subdirs_array[@]}\\\"; do [ -d \\\"$subdir/keys\\\" ] && \\cp \\\"$subdir/keys/\\\"*.bikey Keys/ >/dev/null 2>&1; [ -d \\\"$subdir/key\\\" ] && \\cp \\\"$subdir/key/\\\"*.bikey Keys/ >/dev/null 2>&1; done\"",
         "UpdateSourceConditionSetting":"ManageBikeys",
         "UpdateSourceConditionValue":"true",
         "SkipOnFailure":true
@@ -29,8 +29,8 @@
         "UpdateStageName":"Manage Bikeys",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"$mods = '{{mod}}' -split ';'; Set-Location arma2oa\\33935; Get-ChildItem -Path 'Keys' -Filter '*.bikey' | ForEach-Object { if ($_.Name -ne 'bi.bikey' -and -not ($_.Name -like '*bi.bikey*') -and $_.Name -ne 'bi2.bikey' -and -not ($_.Name -like '*bi2.bikey*')) { Remove-Item -LiteralPath $_.FullName -Force } }; foreach ($a in $mods) { Get-ChildItem -Path ('{0}\\keys' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'Keys' -Force ; Get-ChildItem -Path ('{0}\\key' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'Keys' -Force }\"",
+        "UpdateSourceData":"powershell.exe",
+        "UpdateSourceArgs":"-NoProfile -Command \"$mods = '{{mod}}' -split ';'; Set-Location arma2oa\\33935; Remove-Item '.\\keys\\*.bikey' -Exclude 'bi.bikey', 'bi2.bikey' -Force -ErrorAction SilentlyContinue; $mods | ForEach-Object { if (Test-Path \\\".\\$_\\keys\\\") { Copy-Item -Path \\\".\\$_\\keys\\*.bikey\\\" -Destination '.\\Keys' -Force -ErrorAction SilentlyContinue }; if (Test-Path \\\".\\$_\\key\\\") { Copy-Item -Path \\\".\\$_\\key\\*.bikey\\\" -Destination '.\\Keys' -Force -ErrorAction SilentlyContinue } }\"",
         "UpdateSourceConditionSetting":"ManageBikeys",
         "UpdateSourceConditionValue":"true",
         "SkipOnFailure":true
@@ -58,7 +58,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"chmod +x ./runhc.sh; ./runhc.sh {{HeadlessClientsNum}} {{$ApplicationIPBinding}} {{$GamePort}} '{{password}}' '{{mod}}' '{{hc_parfile}}' &\"",
+        "UpdateSourceArgs":"-c \"chmod +x ./runhc.sh; ./runhc.sh {{HeadlessClientsNum}} {{$ApplicationIPBinding}} {{$GamePort}} \\\"{{password}}\\\" \\\"{{mod}}\\\" \\\"{{hc_parfile}}\\\" &\"",
         "RunInBackground":true,
         "SkipOnFailure":true
     },
