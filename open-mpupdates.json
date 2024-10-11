@@ -26,7 +26,7 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
         "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'openmp/server'; @('config.json') | ForEach-Object { if (Test-Path \\\"$_\\\") { Remove-Item -Path \\\"Server/$_\\\" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null } }; Copy-Item -Path 'Server/*' -Destination '.' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'Server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'openmp/server'; @('config.json', 'bans.json') | ForEach-Object { if (Test-Path \\\"$_\\\") { Remove-Item -Path \\\"Server/$_\\\" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null } }; Copy-Item -Path 'Server/*' -Destination '.' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'Server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure":false
     },
     {
@@ -34,7 +34,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd openmp/server && for file in config.json; do [ -e \\\"$file\\\" ] && rm -f \\\"Server/$file\\\" >/dev/null 2>&1; done; \\cp -rf Server/* ./ >/dev/null 2>&1 && rm -rf Server >/dev/null 2>&1\"",
+        "UpdateSourceArgs":"-c \"cd openmp/server && for file in config.json bans.json; do [ -e \\\"$file\\\" ] && rm -f \\\"Server/$file\\\" >/dev/null 2>&1; done; \\cp -rf Server/* ./ >/dev/null 2>&1 && rm -rf Server >/dev/null 2>&1\"",
         "SkipOnFailure":false
     }
 ]
