@@ -26,5 +26,29 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"SetExecutableFlag",
         "UpdateSourceArgs":"{{$FullBaseDir}}Refresh.GameServer"
+    },
+    {
+        "UpdateStageName":"bunkum.json File Download",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/refreshbunkum.json",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceArgs":"bunkum.json",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Start Server",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"StartApplication"
+    },
+    {
+        "UpdateStageName":"Wait For Server Start",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"WaitForStartupComplete"
+    },
+    {
+        "UpdateStageName":"Stop Server",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"ShutdownApplication"
     }
 ]
