@@ -27,6 +27,18 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server Welcome Message",
+        "Category":"Turbo Sliders Unlimited:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Sets the player welcome message (MOTD)",
+        "Keywords":"motd,welcome,message,server.motd",
+        "FieldName":"host.welcomeMessage",
+        "InputType":"Textarea",
+        "ParamFieldName":"$.host.welcomeMessage",
+        "DefaultValue":"Welcome to TSU!",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Make Server Public",
         "Category":"Turbo Sliders Unlimited:stadia_controller",
         "Subcategory":"Server:dns:1",
@@ -40,6 +52,33 @@
             "False":"-hidden",
             "True":"-public"
         }
+    },
+    {
+        "DisplayName":"Require Server Password",
+        "Category":"Turbo Sliders Unlimited:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"If enabled, the server will notify clients that it requires a password to connect. The password must be set under Server Password",
+        "Keywords":"server,password,passwordRequired",
+        "FieldName":"host.passwordRequired",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.host.passwordRequired",
+        "DefaultValue":"fale",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Server Password",
+        "Category":"Turbo Sliders Unlimited:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Sets the password required to connect to the server. Default is no password. Require Server Password must also be enabled",
+        "Keywords":"server,password,g_password",
+        "FieldName":"host.password",
+        "InputType":"password",
+        "ParamFieldName":"$.host.password",
+        "DefaultValue":"",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Use Steam Relay",
@@ -65,10 +104,25 @@
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "MinValue":"1",
-        "ParamFieldName":"maxplayers",
-        "DefaultValue":"10",
-        "Placeholder":"10",
+        "ParamFieldName":"$.host.maxPlayers",
+        "DefaultValue":"20",
+        "Placeholder":"20",
         "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Spectator Limit",
+        "Category":"Turbo Sliders Unlimited:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Sets the maximum number of spectators at one time",
+        "Keywords":"maximum,spectators,allowed,spectatorsAllowed",
+        "FieldName":"host.spectatorsAllowed",
+        "InputType":"number",
+        "MinValue":"1",
+        "ParamFieldName":"$.host.spectatorsAllowed",
+        "DefaultValue":"5",
+        "Placeholder":"5",
+        "Suffix":"spectators",
         "EnumValues":{}
     },
     {
