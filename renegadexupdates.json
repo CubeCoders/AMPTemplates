@@ -5,7 +5,7 @@
         "UpdateSource":"GithubRelease",
         "UpdateSourceArgs":"pminten/totemarts-patcher-cli",
         "UpdateSourceData":"tapatcher.exe",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
         "OverwriteExistingFiles":true
     },
     {
@@ -14,7 +14,7 @@
         "UpdateSource":"GithubRelease",
         "UpdateSourceArgs":"pminten/totemarts-patcher-cli",
         "UpdateSourceData":"tapatcher",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
         "OverwriteExistingFiles":true
     },
     {
@@ -23,7 +23,7 @@
         "UpdateSource":"GithubRelease",
         "UpdateSourceArgs":"jmacd/xdelta-gpl",
         "UpdateSourceData":"xdelta3-3.1.0-x86_64.exe.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -34,7 +34,7 @@
         "UpdateSource":"GithubRelease",
         "UpdateSourceArgs":"jmacd/xdelta-gpl",
         "UpdateSourceData":"xdelta3-3.1.0.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceTarget":"{{$FullRootDir}}",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
         "DeleteAfterExtract":true
@@ -43,8 +43,8 @@
         "UpdateStageName":"Server Download",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
-        "UpdateSourceData":"{{$FullBaseDir}}tapatcher.exe",
-        "UpdateSourceArgs":"update renegade_x .\\ -X .\\xdelta3-3.1.0-x86_64.exe",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd renegadex && tapatcher.exe update renegade_x .\\server -X .\\xdelta3-3.1.0-x86_64.exe --progress-mode=\"plain\"",
         "SkipOnFailure":false
     },
     {
@@ -52,7 +52,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd renegadex/server && ./tapatcher update renegade_x ./ -X ./xdelta3-3.1.0-x86_64\"",
+        "UpdateSourceArgs":"-c \"cd renegadex && ./tapatcher update renegade_x ./server -X ./xdelta3-3.1.0-x86_64 --progress-mode=\\\"plain\\\"\"",
         "SkipOnFailure":false
     },
     {
