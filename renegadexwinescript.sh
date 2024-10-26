@@ -26,7 +26,7 @@ echo "" > winescript_log.txt 2>&1
 for PACKAGE in $PACKAGES; do
   ./winetricks -q $PACKAGE >> winescript_log.txt 2>&1
 done
-PACKAGES="win7 dotnet45 win7"
+PACKAGES="win7 dotnet452 win7"
 for PACKAGE in $PACKAGES; do
   ./winetricks -q $PACKAGE >> winescript_log.txt 2>&1
 done
