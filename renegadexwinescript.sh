@@ -21,12 +21,8 @@ export DISPLAY=:$DPY_NUM
 wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
 
-PACKAGES="corefonts vcrun2008 vcrun2010 xact d3dx9_43 d3dx9"
+PACKAGES="win7 corefonts xact xact_x64 d3dx9_43 d3dx9 msxml3 win7"
 echo "" > winescript_log.txt 2>&1
-for PACKAGE in $PACKAGES; do
-  ./winetricks -q $PACKAGE >> winescript_log.txt 2>&1
-done
-PACKAGES="win7 dotnet452"
 for PACKAGE in $PACKAGES; do
   ./winetricks -q $PACKAGE >> winescript_log.txt 2>&1
 done
