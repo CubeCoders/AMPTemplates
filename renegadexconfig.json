@@ -22,7 +22,18 @@
         "InputType":"text",
         "ParamFieldName":"Engine.GameReplicationInfo.ServerName",
         "DefaultValue":"AMP Powered Renegade X Server",
-        "Placeholder":"AMP Powered Renegade X Server",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Message of the Day",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Sets the message (MOTD) the server sends as host in game when a player joins",
+        "Keywords":"server,message,day,motd,MessageOfTheDay",
+        "FieldName":"MessageOfTheDay",
+        "InputType":"text",
+        "ParamFieldName":"Engine.GameReplicationInfo.MessageOfTheDay",
+        "DefaultValue":"Play Nice, Play Hard!",
         "EnumValues":{}
     },
     {
@@ -56,11 +67,23 @@
         "DisplayName":"RCON/Admin Password",
         "Category":"Renegade X:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"Sets the RCON/admin password. Default is no password",
+        "Description":"Sets the RCON/admin password. Default is a strong random password",
         "Keywords":"server,password,AdminPassword",
         "FieldName":"AdminPassword",
         "InputType":"password",
         "ParamFieldName":"Engine.AccessControl.AdminPassword",
+        "DefaultValue":"{{newguid}}",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Moderator Password",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Sets the password for in-game moderators. Default is no password",
+        "Keywords":"server,moderator,password,ModPassword",
+        "FieldName":"ModPassword",
+        "InputType":"text",
+        "ParamFieldName":"RenX_Game.Rx_AccessControl.ModPassword",
         "DefaultValue":"",
         "EnumValues":{}
     },
@@ -126,6 +149,684 @@
         "DefaultValue":"40",
         "Placeholder":"40",
         "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Admins Steam Auto Login",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Automatic granting of administration privileges based on the user's Steam ID",
+        "Keywords":"server,admin,steam",
+        "FieldName":"bSteamAuthAdmins",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_AccessControl.bSteamAuthAdmins",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"RCON Max Clients",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"How many connections to the server RCON can handle",
+        "Keywords":"server,rcon,max,clients",
+        "FieldName":"SubscriberLimit",
+        "InputType":"number",
+        "ParamFieldName":"RenX_Game.Rx_Rcon.SubscriberLimit",
+        "DefaultValue":"5",
+        "Placeholder":"5",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"In-game Admin IPs",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"The IP's that are allowed for admins to login to the game. Supports wildcards",
+        "Keywords":"server,admin,ip,IPPolicies",
+        "FieldName":"IPPolicies",
+        "InputType":"text",
+        "ParamFieldName":"Engine.AccessControl.IPPolicies",
+        "DefaultValue":"ACCEPT;*",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"List Server On Launcher",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Should the server show on the launcher?",
+        "Keywords":"server,launcher,list,bListed",
+        "FieldName":"bListed",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.bListed",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Log RCON",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Should RCON events be logged",
+        "Keywords":"server,rcon,log,bLogRcon",
+        "FieldName":"bLogRcon",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.bLogRcon",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Disable Bots",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, bots will be disabled on the server",
+        "Keywords":"bots,disable,bBotsDisabled",
+        "FieldName":"bBotsDisabled",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.bBotsDisabled",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow PowerUp Drops",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, then when a player dies, there will be a random drop such as Health, Armour, and Ammo",
+        "Keywords":"powerup,drops,death,drop,bAllowPowerUpDrop",
+        "FieldName":"bAllowPowerUpDrop",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.bAllowPowerUpDrop",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Private Messaging",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, players will be able to private message each other",
+        "Keywords":"private,messaging,bAllowPrivateMessaging",
+        "FieldName":"bAllowPrivateMessaging",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.bAllowPrivateMessaging",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Private Messaging With Team Only",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, players will be able to private message only their teammates. Requires Allow Private Messaging to be enabled",
+        "Keywords":"private,messaging,team,bPrivateMessageTeamOnly",
+        "FieldName":"bPrivateMessageTeamOnly",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.bPrivateMessageTeamOnly",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Balance Teams",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, the server will balance teams at match start",
+        "Keywords":"teams,balance,bPlayersBalanceTeams",
+        "FieldName":"bPlayersBalanceTeams",
+        "InputType":"checkbox",
+        "ParamFieldName":"UTGame.UTTeamGame.bPlayersBalanceTeams",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Bot Attack Percentage",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets how much bots will try to attack, vs defend",
+        "Keywords":"bots,attack,attacking,value,percentage,AttackingValue",
+        "FieldName":"AttackingValue",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"100",
+        "ParamFieldName":"RenX_Game.Rx_Game.AttackingValue",
+        "DefaultValue":"",
+        "Suffix":"%",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Nod Bot Count",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets how many Nod bots to put into the server",
+        "Keywords":"bots,count,NODBotCount",
+        "FieldName":"BotCount",
+        "InputType":"number",
+        "ParamFieldName":"NODBotCount",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"GDI Bot Count",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets how many GDI bots to put into the server",
+        "Keywords":"bots,count,GDIBotCount",
+        "FieldName":"BotCount",
+        "InputType":"number",
+        "ParamFieldName":"GDIBotCount",
+        "IncludeInCommandLine":true,
+        "SkipIfEmpty":true,
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Bot Skill Level",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets the skill level of bots",
+        "Keywords":"bots,skill,Difficulty",
+        "FieldName":"Difficulty",
+        "InputType":"number",
+        "ParamFieldName":"RenX_Game.Rx_Game.Difficulty",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Broadcast Admins",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, the server will announce when admins log in",
+        "Keywords":"server,admin,broadcast,announce,bBroadcastAdminIdentity",
+        "FieldName":"bBroadcastAdminIdentity",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_AccessControl.bBroadcastAdminIdentity",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Admins To Pause Game",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, server admins will be able to pause the game",
+        "Keywords":"server,admin,pause,bAdminCanPause",
+        "FieldName":"bAdminCanPause",
+        "InputType":"checkbox",
+        "ParamFieldName":"Engine.GameInfo.bAdminCanPause",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Allow Mods To Change Map",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, mods will be able change the map",
+        "Keywords":"server,change,levels,map,bChangeLevels",
+        "FieldName":"bChangeLevels",
+        "InputType":"checkbox",
+        "ParamFieldName":"Engine.GameInfo.bChangeLevels",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Crate Respawn Time",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets how long after being picked up the crate will respawn",
+        "Keywords":"crate,respawn,period,time,CrateRespawnAfterPickup",
+        "FieldName":"CrateRespawnAfterPickup",
+        "InputType":"number",
+        "ParamFieldName":"RenX_Game.Rx_Game.CrateRespawnAfterPickup",
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Disable Demo Requests",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Should players be able to start a demo recording on the server",
+        "Keywords":"demo,requests",
+        "FieldName":"bDisableDemoRequests",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.bDisableDemoRequests",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Donations Disable Time",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets the time period until donations can be made",
+        "Keywords":"donations,disable,time,DonationsDisabledTime",
+        "FieldName":"DonationsDisabledTime",
+        "InputType":"number",
+        "ParamFieldName":"RenX_Game.Rx_Game.DonationsDisabledTime",
+        "DefaultValue":"180",
+        "Placeholder":"180",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Fixed Match Rotation",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Should the map list rotation be enforced. No vote for map selection, etc",
+        "Keywords":"fixed,map,rotation,bFixedMapRotation",
+        "FieldName":"bFixedMapRotation",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.bFixedMapRotation",
+        "DefaultValue":"false",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Force Player Ready",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Should the game wait for the players to mark themselves ready before starting the match",
+        "Keywords":"force,player,ready,bPlayersMustBeReady",
+        "FieldName":"bPlayersMustBeReady",
+        "InputType":"checkbox",
+        "ParamFieldName":"UTGame.UTGame.bPlayersMustBeReady",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Force Respawn",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Force player to respawn after spawn timer, or allow player to sit on class selection after spawn timer",
+        "Keywords":"force,respawn,bForceRespawn",
+        "FieldName":"bForceRespawn",
+        "InputType":"checkbox",
+        "ParamFieldName":"UTGame.UTGame.bForceRespawn",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Gore Level",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"How gory the deaths are",
+        "Keywords":"gore,level,GoreLevel",
+        "FieldName":"GoreLevel",
+        "InputType":"number",
+        "ParamFieldName":"Engine.GameInfo.GoreLevel",
+        "DefaultValue":"6",
+        "Placeholder":"6",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Map List",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"List of maps to have in the server rotation. Doesn’t need the extension on the map name",
+        "Keywords":"map,list",
+        "FieldName":"GameSpecificMapCycles",
+        "InputType":"text",
+        "ParamFieldName":"UTGame.UTGame.GameSpecificMapCycles",
+        "DefaultValue":"(GameClassName=\"Rx_Game\",Maps=(\"CNC-Field\",\"CNC-Walls_Flying\",\"CNC-GoldRush\",\"CNC-Whiteout\",\"CNC-Islands\",\"CNC-LakeSide\",\"CNC-Mesa\",\"CNC-Volcano\",\"CNC-Xmountain\",\"CNC-Canyon\",\"CNC-Complex\",\"CNC-Under\"))",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Match Time Limit",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets how long a match lasts",
+        "Keywords":"match,time,limit,CnCModeTimeLimit",
+        "FieldName":"CnCModeTimeLimit",
+        "InputType":"number",
+        "ParamFieldName":"RenX_Game.Rx_Game.CnCModeTimeLimit",
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Max Idle Time",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"How long in seconds a player can be idle before being kicked",
+        "Keywords":"max,idle,time",
+        "FieldName":"MaxIdleTime",
+        "InputType":"number",
+        "ParamFieldName":"Engine.GameInfo.MaxIdleTime",
+        "DefaultValue":"300",
+        "Placeholder":"300",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Max map voting size",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"How many maps should be in the vote list",
+        "Keywords":"max,map,vote,size",
+        "FieldName":"MaxMapVoteSize",
+        "InputType":"number",
+        "ParamFieldName":"RenX_Game.Rx_Game.MaxMapVoteSize",
+        "DefaultValue":"5",
+        "Placeholder":"5",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"How many recent maps to exclude",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"How many of the most recent maps should be removed from the voting options at the end of match",
+        "Keywords":"recent,maps,exclude",
+        "FieldName":"RecentMapsToExclude",
+        "InputType":"number",
+        "ParamFieldName":"RenX_Game.Rx_Game.RecentMapsToExclude",
+        "DefaultValue":"3",
+        "Placeholder":"3",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Require Steam",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Do players need to have Steam running",
+        "Keywords":"server,require,steam",
+        "FieldName":"bRequireSteam",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_AccessControl.bRequireSteam",
+        "DefaultValue":"False",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Reserve Vehicles",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Should a vehicle be locked to the player when they buy it, for a limited time?",
+        "Keywords":"reserve,vehicles",
+        "FieldName":"bReserveVehiclesToBuyer",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.bReserveVehiclesToBuyer",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Restart Wait",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"How long the server should wait before moving onto the new map (after map voting has finished)",
+        "Keywords":"restart,wait",
+        "FieldName":"RestartWait",
+        "InputType":"number",
+        "ParamFieldName":"UTGame.UTGame.RestartWait",
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Wait For Player Load",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, the server will wait some time for players to load the map",
+        "Keywords":"wait,player,load,bWaitForNetPlayers",
+        "FieldName":"bWaitForNetPlayers",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.bWaitForNetPlayers",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"Spawn Crates",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Should there be crates on the maps",
+        "Keywords":"spawn,crates,SpawnCrates",
+        "FieldName":"SpawnCrates",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.SpawnCrates",
+        "DefaultValue":"true",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Initial Spawn Credits",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets how much money a player gets when they enter the match",
+        "Keywords":"spawn,credits,InitialCredits",
+        "FieldName":"InitialCredits",
+        "InputType":"number",
+        "ParamFieldName":"RenX_Game.Rx_Game.InitialCredits",
+        "DefaultValue":"150",
+        "Placeholder":"150",
+        "EnumValues":{}
+    },
+    {
+		"DisplayName":"Time Limit",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets a time limit for the map. 0 = no time limit",
+        "Keywords":"time,limit,map,TimeLimit",
+        "FieldName":"TimeLimit",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"RenX_Game.Rx_Game.TimeLimit",
+        "DefaultValue":"50",
+        "Placeholder":"50",
+        "Suffix":"minutes",
+        "EnumValues":{}
+	},
+	{
+		"DisplayName":"Vehicle Limit",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets a vehicle limit",
+        "Keywords":"vehicles,vehicle,limit,VehicleLimit",
+        "FieldName":"VehicleLimit",
+        "InputType":"number",
+        "MinValue":"1",
+        "ParamFieldName":"RenX_Game.Rx_Game.VehicleLimit",
+        "DefaultValue":"20",
+        "Placeholder":"20",
+        "EnumValues":{}
+	},
+    {
+        "DisplayName":"Allow Pedestal Victory",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, victory can be enabled by a successful beacon on pedestal",
+        "Keywords":"allow,pedestal,victori,bUsePedestal",
+        "FieldName":"bUsePedestal",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.bUsePedestal",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+		}
+    },
+	{
+        "DisplayName":"Allow Airdrops",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, supplies can be airdropped",
+        "Keywords":"airdrop,bEnableAirdrops",
+        "FieldName":"bEnableAirdrops",
+        "InputType":"checkbox",
+        "ParamFieldName":"RenX_Game.Rx_Game.bEnableAirdrops",
+        "DefaultValue":"True",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+		}
+    },
+    {
+        "DisplayName":"HTTP Download Compressed",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Network:lan:3",
+        "Description":"Are the files in the HTTP download location compressed?",
+        "Keywords":"network,http,download,compressed",
+        "FieldName":"UseCompression",
+        "InputType":"checkbox",
+        "ParamFieldName":"IpDrv.HTTPDownload.UseCompression",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"False",
+            "True":"True"
+        }
+    },
+    {
+        "DisplayName":"HTTP Download URL",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Network:lan:3",
+        "Description":"The URL location of the files for players to download. All files must be in the root. Must include ending slash. Cannot be an alternate port (Must be port 80)",
+        "Keywords":"network,http,download,url",
+        "FieldName":"RedirectToURL",
+        "InputType":"url",
+        "ParamFieldName":"IpDrv.HTTPDownload.RedirectToURL",
+        "DefaultValue":"https://community-content.totemarts.services/",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Client Rate",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Network:lan:3",
+        "Description":"How much bandwidth is sent to each player",
+        "Keywords":"network,max,client,rate",
+        "FieldName":"MaxClientRate",
+        "InputType":"number",
+        "ParamFieldName":"IpDrv.TcpNetDriver.MaxClientRate",
+        "DefaultValue":"15000",
+        "Placeholder":"15000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Internet Client Rate",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Network:lan:3",
+        "Description":"How much bandwidth is sent to each player",
+        "Keywords":"network,max,client,rate,MaxInternetClientRate",
+        "FieldName":"MaxInternetClientRate",
+        "InputType":"number",
+        "ParamFieldName":"IpDrv.TcpNetDriver.MaxInternetClientRate",
+        "DefaultValue":"15000",
+        "Placeholder":"15000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Client Processing Time",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Network:lan:3",
+        "Description":"How long player’s computers have to load a map before being dropped",
+        "Keywords":"network,client,processing,time",
+        "FieldName":"ClientProcessingTimeout",
+        "InputType":"number",
+        "ParamFieldName":"RenX_Game.Rx_Game.ClientProcessingTimeout",
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Load Wait Time",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Network:lan:3",
+        "Description":"How long to wait for other players to load at the start of a match",
+        "Keywords":"network,player,load,wait,time",
+        "FieldName":"NetWait",
+        "InputType":"number",
+        "ParamFieldName":"RenX_Game.Rx_Game.NetWait",
+        "DefaultValue":"15",
+        "Placeholder":"15",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Tick Rate",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Network:lan:3",
+        "Description":"Sets the server tick/refresh rate. Increasing this settings with increase bandwidth",
+        "Keywords":"network,server,tick,rate,NetServerMaxTickRate",
+        "FieldName":"NetServerMaxTickRate",
+        "InputType":"number",
+        "ParamFieldName":"IpDrv.TcpNetDriver.NetServerMaxTickRate",
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Total Net Bandwidth",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Network:lan:3",
+        "Description":"Sets the total amount of bandwidth allowed to be sent by the server",
+        "Keywords":"network,total,net,bandwidth,TotalNetBandwidth",
+        "FieldName":"TotalNetBandwidth",
+        "InputType":"number",
+        "ParamFieldName":"Engine.GameInfo.TotalNetBandwidth",
+        "DefaultValue":"32000",
+        "Placeholder":"32000",
+        "EnumValues":{}
+    },
+    {	
+        "DisplayName":"Maximum Rewind Points",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Advanced:engine:4",
+        "Description":"Sets the maximum number of rewind points that can be stored",
+        "Keywords":"maximum,rewind,points,MaxRewindPoints",
+        "FieldName":"MaxRewindPoints",
+        "InputType":"number",
+        "ParamFieldName":"Engine.DemoRecDriver.MaxRewindPoints",
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "EnumValues":{}
+    },
+	{	
+        "DisplayName":"Configured Internet Speed",
+        "Category":"Renegade X:stadia_controller",
+        "Subcategory":"Advanced:engine:4",
+        "Description":"Sets the configured internet speed",
+        "Keywords":"configured,internet,speed,ConfiguredInternetSpeed",
+        "FieldName":"ConfiguredInternetSpeed",
+        "InputType":"number",
+        "ParamFieldName":"Engine.Player.ConfiguredInternetSpeed",
+        "DefaultValue":"60000",
+        "Placeholder":"60000",
         "EnumValues":{}
     }
 ]

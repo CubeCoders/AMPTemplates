@@ -24,6 +24,18 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Custom Models Port",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"$ServerPort",
+        "InputType":"number",
+        "Hidden":true,
+        "ParamFieldName":"$.artwork.port",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Enable Logging",
         "Category":"open.mp:stadia_controller",
         "Subcategory":"Server:dns:1",
@@ -34,6 +46,19 @@
         "Hidden":true,
         "ParamFieldName":"$.logging.enable",
         "DefaultValue":"true",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Log File",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"",
+        "Keywords":"",
+        "FieldName":"logging.file",
+        "InputType":"text",
+        "Hidden":true,
+        "ParamFieldName":"$.logging.file",
+        "DefaultValue":"log.txt",
         "EnumValues":{}
     },
     {
@@ -115,6 +140,1052 @@
         "DefaultValue":"50",
         "Placeholder":"50",
         "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Announce",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Toggles if the server should be announced to open.mp masterlist. Set to 'true' to enable or 'false' to disable",
+        "Keywords":"announce,masterlist",
+        "FieldName":"announce",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.announce",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Custom Models CDN",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Artwork",
+        "Description":"An http address for a remote model server",
+        "Keywords":"artwork,cdn",
+        "FieldName":"artwork.cdn",
+        "InputType":"text",
+        "ParamFieldName":"$.artwork.cdn",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Custom Models",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Artwork",
+        "Description":"Toggles if the server uses custom models from the /models folder. Set to 'true' to enable or 'false' to disable",
+        "Keywords":"artwork,enable,models",
+        "FieldName":"artwork.enable",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.artwork.enable",
+        "DefaultValue":"true",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Custom Models Path",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Artwork",
+        "Description":"The path where the custom models are located",
+        "Keywords":"artwork,models,path",
+        "FieldName":"artwork.models_path",
+        "InputType":"text",
+        "ParamFieldName":"$.artwork.models_path",
+        "DefaultValue":"models",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Custom Models Web Server Bind",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Artwork",
+        "Description":"",
+        "Keywords":"artwork,web,server,bind",
+        "FieldName":"artwork.web_server_bind",
+        "InputType":"text",
+        "ParamFieldName":"$.artwork.web_server_bind",
+        "DefaultValue":"",
+        "ReadOnly": true,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Chat Input Filter",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Toggles the chat input filter. Disable it to use of chars like % in the chat. You can also use the ToggleChatTextReplacement function",
+        "Keywords":"chat,input,filter",
+        "FieldName":"chat_input_filter",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.chat_input_filter",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Query",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Toggles if the server information should be displayed in the server browser. Set to 'true' to enable or 'false' to disable. Players can still join a server that has disabled querying, but the server browser will not display any information",
+        "Keywords":"query,server,information",
+        "FieldName":"enable_query",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.enable_query",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Interior Weapons",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Toggles whether the usage of weapons in interiors is allowed or not. 'true' to enable weapons in interiors, 'false' to disable",
+        "Keywords":"game,allow,interior,weapons",
+        "FieldName":"game.allow_interior_weapons",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.allow_interior_weapons",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Chat Radius",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Set a radius limitation for the chat. Only players at a certain distance from the player will see their message in the chat. Also changes the distance at which a player can see other players on the map at the same distance",
+        "Keywords":"game,chat,radius,chat_radius",
+        "FieldName":"game.chat_radius",
+        "InputType":"number",
+        "ParamFieldName":"$.game.chat_radius",
+        "DefaultValue":"200.0",
+        "Placeholder":"200.0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Death Drop Amount",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"",
+        "Keywords":"game,death,drop,amount",
+        "FieldName":"game.death_drop_amount",
+        "InputType":"number",
+        "ParamFieldName":"$.game.death_drop_amount",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Gravity",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"The global gravity that the server uses",
+        "Keywords":"game,gravity",
+        "FieldName":"game.gravity",
+        "InputType":"number",
+        "ParamFieldName":"$.game.gravity",
+        "DefaultValue":"0.008",
+        "Placeholder":"0.008",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Group Player Objects",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Per-player and global objects share an ID pool in SA:MP. If an ID was 'assigned' to players each player could have a unique object with that ID, but if you created the maximum global objects you couldn't then create any per-player objects. If player objects grouping is enabled the server will try to find an already used player object slot by another player",
+        "Keywords":"game,group,player,objects",
+        "FieldName":"game.group_player_objects",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.group_player_objects",
+        "DefaultValue":"false",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Lag Compensation Mode",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"0: Fully disable lag compensation. 1: Fully enable lag compensation. 2: Enable position-only lag compensation. This means player rotation won't be lag compensated for",
+        "Keywords":"game,lag,compensation,mode",
+        "FieldName":"game.lag_compensation_mode",
+        "InputType":"number",
+        "ParamFieldName":"$.game.lag_compensation_mode",
+        "DefaultValue":"1",
+        "Placeholder":"1",
+        "ReadOnly": true,
+        "Rule": true,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Map",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"The mapname that appears in the server browser. This can be anything, e.g. My Stunt Map",
+        "Keywords":"game,map",
+        "FieldName":"game.map",
+        "InputType":"text",
+        "ParamFieldName":"$.game.map",
+        "DefaultValue":"",
+        "ReadOnly": true,
+        "Rule": true,
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Mode",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"The mode that will be shown in the server browser. Using SetGameModeText has the same effect and overrides the value used in config.json. If you have multiple gamemodes that require different gamemode texts, use that function",
+        "Keywords":"game,mode",
+        "FieldName":"game.mode",
+        "InputType":"text",
+        "ParamFieldName":"$.game.mode",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Nametag Draw Radius",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Set the maximum distance to display the names of players",
+        "Keywords":"game,nametag,draw,radius",
+        "FieldName":"game.nametag_draw_radius",
+        "InputType":"number",
+        "ParamFieldName":"$.game.nametag_draw_radius",
+        "DefaultValue":"70.0",
+        "Placeholder":"70.0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Marker Draw Radius",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Set the marker radius for all players",
+        "Keywords":"game,player,marker,draw,radius",
+        "FieldName":"game.player_marker_draw_radius",
+        "InputType":"number",
+        "ParamFieldName":"$.game.player_marker_draw_radius",
+        "DefaultValue":"250.0",
+        "Placeholder":"250.0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Player Marker Mode",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"0: Marker mode off. 1: Marker mode global. 2: Marker mode streamed",
+        "Keywords":"game,player,marker,mode",
+        "FieldName":"game.player_marker_mode",
+        "InputType":"number",
+        "ParamFieldName":"$.game.player_marker_mode",
+        "DefaultValue":"1",
+        "Placeholder":"1",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Time",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"The global time that the server uses and will be shown in the server browser",
+        "Keywords":"game,time",
+        "FieldName":"game.time",
+        "InputType":"number",
+        "ParamFieldName":"$.game.time",
+        "DefaultValue":"12",
+        "Placeholder":"12",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Use All Animations",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Allow use of the animations missing from some versions. 'true' to enable all animations, 'false' to disable",
+        "Keywords":"game,use,all,animations",
+        "FieldName":"game.use_all_animations",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.use_all_animations",
+        "DefaultValue":"false",
+        "ReadOnly": true,
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Use Chat Radius",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Enable/Disable chat radius",
+        "Keywords":"game,use,chat,radius",
+        "FieldName":"game.use_chat_radius",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.use_chat_radius",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Use Entry Exit Markers",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Enable/Disable all the interior entrances and exits in the game (the yellow arrows at doors)",
+        "Keywords":"game,use,entry,exit,markers",
+        "FieldName":"game.use_entry_exit_markers",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.use_entry_exit_markers",
+        "DefaultValue":"true",
+        "ReadOnly": true,
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Use Instagib",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Instagib is an old configurable variable that is not available in SA-MP client anymore. Instagib is basically instakill or instant kill, enables one shot one kill feature in game (it's not available at the moment because SA-MP removed this on client side)",
+        "Keywords":"game,use,instagib",
+        "FieldName":"game.use_instagib",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.use_instagib",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Use Manual Engine and Lights",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Control vehicle engines and lights. 'false' prevents the game automatically turning the engine on/off when players enter/exit vehicles and headlights automatically coming on when it is dark",
+        "Keywords":"game,use,manual,engine,lights",
+        "FieldName":"game.use_manual_engine_and_lights",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.use_manual_engine_and_lights",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Use Nametag LOS",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Toggles the Line-Of-Sight of nametags, health bars and armor bars above players",
+        "Keywords":"game,use,nametag,los",
+        "FieldName":"game.use_nametag_los",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.use_nametag_los",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Use Nametags",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Toggles the drawing of nametags, health bars and armor bars above players",
+        "Keywords":"game,use,nametags",
+        "FieldName":"game.use_nametags",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.use_nametags",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Use Player Marker Draw Radius",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Toggles player markers (blips on the radar)",
+        "Keywords":"game,use,player,marker,draw,radius",
+        "FieldName":"game.use_player_marker_draw_radius",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.use_player_marker_draw_radius",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Use Player Ped Anims",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Uses standard player walking animation (animation of the CJ skin) instead of custom animations for every skin (e.g. skating for skater skins)",
+        "Keywords":"game,use,player,ped,anims",
+        "FieldName":"game.use_player_ped_anims",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.use_player_ped_anims",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Use Stunt Bonuses",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Enables or disables stunt bonuses for all players. If enabled, players will receive monetary rewards when performing a stunt in a vehicle (e.g. a wheelie)",
+        "Keywords":"game,use,stunt,bonuses,use_stunt_bonuses",
+        "FieldName":"game.use_stunt_bonuses",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.use_stunt_bonuses",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Use Vehicle Friendly Fire",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Enable friendly fire for team vehicles. Players will be unable to damage teammates' vehicles",
+        "Keywords":"game,use,vehicle,friendly,fire,use_vehicle_friendly_fire",
+        "FieldName":"game.use_vehicle_friendly_fire",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.use_vehicle_friendly_fire",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Use Zone Names",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Allows to turn on zone / area names such as the 'Vinewood' or 'Doherty' text at the bottom-right of the screen as they enter the area",
+        "Keywords":"game,use,zone,names,use_zone_names",
+        "FieldName":"game.use_zone_names",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.use_zone_names",
+        "DefaultValue":"false",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Validate Animations",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Validate animations for the players",
+        "Keywords":"game,validate,animations,validate_animations",
+        "FieldName":"game.validate_animations",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.game.validate_animations",
+        "DefaultValue":"true",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Vehicle Respawn Time",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Set vehicles respawn time in milliseconds. (Default 10 seconds)",
+        "Keywords":"game,vehicle,respawn,time,vehicle_respawn_time",
+        "FieldName":"game.vehicle_respawn_time",
+        "InputType":"number",
+        "ParamFieldName":"$.game.vehicle_respawn_time",
+        "DefaultValue":"10000",
+        "Placeholder":"10000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Weather",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"The global weather that the server uses and will be shown in the server browser",
+        "Keywords":"game,weather",
+        "FieldName":"game.weather",
+        "InputType":"number",
+        "ParamFieldName":"$.game.weather",
+        "DefaultValue":"10",
+        "Placeholder":"10",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Language",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"The language that appears in the server browser. Players can use this to filter servers by language in the server browser",
+        "Keywords":"language,server,browser",
+        "FieldName":"language",
+        "InputType":"text",
+        "ParamFieldName":"$.language",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Log Chat",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Logging:assignment:3",
+        "Description":"Toggles if player chat should be shown in the server console. Useful to stop the log from becoming bloated, or if you have another scripted chat logging solution. Set to 'true' to enable or 'false' to disable",
+        "Keywords":"logging,chat",
+        "FieldName":"logging.log_chat",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.logging.log_chat",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Log Connection Messages",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Logging:assignment:3",
+        "Description":"Enable/Disable player and NPC join messages",
+        "Keywords":"logging,connection,messages",
+        "FieldName":"logging.log_connection_messages",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.logging.log_connection_messages",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Log Cookies",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Logging:assignment:3",
+        "Description":"Toggles logging of connection cookies requested by newly connecting players. Set to 'true' to enable or 'false' to disable",
+        "Keywords":"logging,cookies",
+        "FieldName":"logging.log_cookies",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.logging.log_cookies",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Log Deaths",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Logging:assignment:3",
+        "Description":"Toggles if player death should be shown in the server console. Set to 'true' to enable or 'false' to disable",
+        "Keywords":"logging,deaths",
+        "FieldName":"logging.log_deaths",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.logging.log_deaths",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Log Queries",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Logging:assignment:3",
+        "Description":"Toggles if all queries sent to the server by players should be logged. Set to 'true' to enable or 'false' to disable. It is considerably useful during a DDoS attack",
+        "Keywords":"logging,queries",
+        "FieldName":"logging.log_queries",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.logging.log_queries",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Log SQLite",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Logging:assignment:3",
+        "Description":"Logs sqlite DB_* function errors in the server console",
+        "Keywords":"logging,sqlite,log_sqlite",
+        "FieldName":"logging.log_sqlite",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.logging.log_sqlite",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Log SQLite Queries",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Logging:assignment:3",
+        "Description":"Logs all sqlite DB_Query calls, including the query string",
+        "Keywords":"logging,sqlite,queries,log_sqlite_queries",
+        "FieldName":"logging.log_sqlite_queries",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.logging.log_sqlite_queries",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Timestamp Format",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Logging:assignment:3",
+        "Description":"The timestamp format that should be used. The format is based on the strftime format from C/C++. Here are some examples: [%H:%M:%S] This displays only the time. [%d/%m/%Y %H:%M:%S] This would display the date in dd/mm/yyyy format followed by the time in hour:minute:second format",
+        "Keywords":"logging,timestamp,format,timestamp_format",
+        "FieldName":"logging.timestamp_format",
+        "InputType":"text",
+        "ParamFieldName":"$.logging.timestamp_format",
+        "DefaultValue":"[%Y-%m-%dT%H:%M:%S%z]",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Use Prefix",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Logging:assignment:3",
+        "Description":"Toggles if prefixes such as [Info] should be printed with every console message. Set to 'true' to enable or 'false' to disable",
+        "Keywords":"logging,use,prefix,use_prefix",
+        "FieldName":"logging.use_prefix",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.logging.use_prefix",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Use Timestamp",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Logging:assignment:3",
+        "Description":"Toggles if a timestamp should be printed with every console message. Set to 'true' to enable or 'false' to disable",
+        "Keywords":"logging,use,timestamp,use_timestamp",
+        "FieldName":"logging.use_timestamp",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.logging.use_timestamp",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Maximum Bots",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"The maximum amount of NPCs your server can hold. By changing this number you can alter how many of the player slots can be used by NPCs",
+        "Keywords":"npcs,players,max,bots,max_bots",
+        "FieldName":"max_bots",
+        "InputType":"number",
+        "ParamFieldName":"$.max_bots",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network ACKs Limit",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"",
+        "Keywords":"network,acks,limit",
+        "FieldName":"network.acks_limit",
+        "InputType":"number",
+        "ParamFieldName":"$.network.acks_limit",
+        "DefaultValue":"3000",
+        "Placeholder":"3000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Aiming Sync Rate",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"The time in milliseconds a client should update the server with new data while firing a weapon",
+        "Keywords":"network,aiming,sync,rate",
+        "FieldName":"network.aiming_sync_rate",
+        "InputType":"number",
+        "ParamFieldName":"$.network.aiming_sync_rate",
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow 0.3.7 Clients",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"Toggles if players with 0.3.7 client allowed to join the server",
+        "Keywords":"network,allow,037,clients",
+        "FieldName":"network.allow_037_clients",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.network.allow_037_clients",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Network Cookie Reseed Time",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"The time in milliseconds the connection cookie seed value updates",
+        "Keywords":"network,cookie,reseed,time",
+        "FieldName":"network.cookie_reseed_time",
+        "InputType":"number",
+        "ParamFieldName":"$.network.cookie_reseed_time",
+        "DefaultValue":"300000",
+        "Placeholder":"300000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Grace Period",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"This is a grace period to allow unlimited connections from the same IP after starting the server, mainly used for NPCs. By default: 5 Seconds",
+        "Keywords":"network,grace,period",
+        "FieldName":"network.grace_period",
+        "InputType":"number",
+        "ParamFieldName":"$.network.grace_period",
+        "DefaultValue":"5000",
+        "Placeholder":"5000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network HTTP Threads",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"",
+        "Keywords":"network,http,threads",
+        "FieldName":"network.http_threads",
+        "InputType":"number",
+        "ParamFieldName":"$.network.http_threads",
+        "DefaultValue":"50",
+        "Placeholder":"50",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network In Vehicle Sync Rate",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"The time in milliseconds a client should update the server with new data while in a vehicle",
+        "Keywords":"network,in,vehicle,sync,rate",
+        "FieldName":"network.in_vehicle_sync_rate",
+        "InputType":"number",
+        "ParamFieldName":"$.network.in_vehicle_sync_rate",
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Limits Ban Time",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"Sets the raknet ban time for bad connect packets in milliseconds. (When acks/message limit is reached.)",
+        "Keywords":"network,limits,ban,time",
+        "FieldName":"network.limits_ban_time",
+        "InputType":"number",
+        "ParamFieldName":"$.network.limits_ban_time",
+        "DefaultValue":"60000",
+        "Placeholder":"60000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Message Hole Limit",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"A network level setting to deal with DoS attacks",
+        "Keywords":"network,message,hole,limit",
+        "FieldName":"network.message_hole_limit",
+        "InputType":"number",
+        "ParamFieldName":"$.network.message_hole_limit",
+        "DefaultValue":"3000",
+        "Placeholder":"3000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Messages Limit",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"The maximum number of messages a user can send per second",
+        "Keywords":"network,messages,limit,messages_limit",
+        "FieldName":"network.messages_limit",
+        "InputType":"number",
+        "ParamFieldName":"$.network.messages_limit",
+        "DefaultValue":"500",
+        "Placeholder":"500",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Minimum Connection Time",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"The time in milliseconds the server will wait before accepting another incoming connection. It is not recommended that you use this variable unless your server is under a connection flood attack",
+        "Keywords":"network,minimum,connection,time,minimum_connection_time",
+        "FieldName":"network.minimum_connection_time",
+        "InputType":"number",
+        "ParamFieldName":"$.network.minimum_connection_time",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network MTU",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"Keep it the default value, you don't really need or should change this if you have no idea what this is, because if you don't know, then you don't have anything on your server requiring higher MTU, but if you are still interested: https://en.wikipedia.org/wiki/Maximum_transmission_unit",
+        "Keywords":"network,mtu",
+        "FieldName":"network.mtu",
+        "InputType":"number",
+        "ParamFieldName":"$.network.mtu",
+        "DefaultValue":"576",
+        "Placeholder":"576",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Multiplier",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"",
+        "Keywords":"network,multiplier",
+        "FieldName":"network.multiplier",
+        "InputType":"number",
+        "ParamFieldName":"$.network.multiplier",
+        "DefaultValue":"10",
+        "Placeholder":"10",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network On Foot Sync Rate",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"The time in milliseconds a client should update the server with new data while on foot",
+        "Keywords":"network,on,foot,sync,rate,on_foot_sync_rate",
+        "FieldName":"network.on_foot_sync_rate",
+        "InputType":"number",
+        "ParamFieldName":"$.network.on_foot_sync_rate",
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Player Marker Sync Rate",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"The time in milliseconds a client should update the server with new data while moving",
+        "Keywords":"network,player,marker,sync,rate,player_marker_sync_rate",
+        "FieldName":"network.player_marker_sync_rate",
+        "InputType":"number",
+        "ParamFieldName":"$.network.player_marker_sync_rate",
+        "DefaultValue":"2500",
+        "Placeholder":"2500",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Player Timeout",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"The time in milliseconds after which a player will timeout when not sending any data to the server",
+        "Keywords":"network,player,timeout,player_timeout",
+        "FieldName":"network.player_timeout",
+        "InputType":"number",
+        "ParamFieldName":"$.network.player_timeout",
+        "DefaultValue":"10000",
+        "Placeholder":"10000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Public Address",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"Some machines you run your server on can have different IPs, this is used so if the address you set in bind config is different, you set a new one. This config variable is only used for DL servers, because in open.mp, it will host a webserver for downloading models",
+        "Keywords":"network,public,address,public_addr",
+        "FieldName":"network.public_addr",
+        "InputType":"text",
+        "ParamFieldName":"$.network.public_addr",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Stream Radius",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"The distance on the X,Y plane players will stream in server entities. The maximum is 400.0 and the minimum is 50.0. Higher values makes players see server entities at a greater distance, but requires more client processing and potentially more bandwidth",
+        "Keywords":"network,stream,radius,stream_radius",
+        "FieldName":"network.stream_radius",
+        "InputType":"number",
+        "ParamFieldName":"$.network.stream_radius",
+        "DefaultValue":"200.0",
+        "Placeholder":"200.0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Stream Rate",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"The time in milliseconds before the streaming in of server entities is retested for each player. The maximum is 5000 and the minimum is 500. Lower values increases server processing as it has to recheck streaming conditions more frequently for each player",
+        "Keywords":"network,stream,rate,stream_rate",
+        "FieldName":"network.stream_rate",
+        "InputType":"number",
+        "ParamFieldName":"$.network.stream_rate",
+        "DefaultValue":"1000",
+        "Placeholder":"1000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Network Time Sync Rate",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Network:lan:4",
+        "Description":"The rate at which a player's game time is updated in milliseconds",
+        "Keywords":"network,time,sync,rate,time_sync_rate",
+        "FieldName":"network.time_sync_rate",
+        "InputType":"number",
+        "ParamFieldName":"$.network.time_sync_rate",
+        "DefaultValue":"30000",
+        "Placeholder":"30000",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Pawn Legacy Plugins",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Pawn",
+        "Description":"The .dll or .so file in the /plugins folder, the server should use to run as a plugin. Plugins are scripts which are designed to enhance gamemodes and filterscripts",
+        "Keywords":"pawn,legacy,plugins",
+        "FieldName":"pawn.legacy_plugins",
+        "InputType":"list",
+        "ParamFieldName":"$.pawn.legacy_plugins",
+        "DefaultValue":"[]",
+        "Special":"array:text",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Pawn Main Scripts",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Pawn",
+        "Description":"The .amx file in the /gamemodes folder, the server should use to run as a gamemode",
+        "Keywords":"pawn,main,scripts",
+        "FieldName":"pawn.main_scripts",
+        "InputType":"list",
+        "ParamFieldName":"$.pawn.main_scripts",
+        "DefaultValue":"[\"test 1\"]",
+        "Special":"array:text",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Pawn Side Scripts",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Pawn",
+        "Description":"The .amx file in the /filterscripts folder, the server should use to run as a filterscript. Filterscripts are scripts that run in the background of your gamemode. They are there to add extras to the server without editing the gamemode. It is very useful if you want to carry a specific property to more than one gamemode",
+        "Keywords":"pawn,side,scripts",
+        "FieldName":"pawn.side_scripts",
+        "InputType":"list",
+        "ParamFieldName":"$.pawn.side_scripts",
+        "DefaultValue":"[]",
+        "Special":"array:text",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"RCON Allow Teleport",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"RCON",
+        "Description":"Determine whether RCON admins will be teleported to their waypoint when they set one",
+        "Keywords":"rcon,allow,teleport,allow_teleport",
+        "FieldName":"rcon.allow_teleport",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.rcon.allow_teleport",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Sleep",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"The time in milliseconds the main open.mp and raknet networking thread will 'sleep' idly during each sync cycle. Higher values decrease server processing, but reduce sync quality. Lower values increase server processing, but improve sync quality. It is not advisable to change this value unless your player count is very high and you have server fps stability issues",
+        "Keywords":"sleep,networking,thread",
+        "FieldName":"sleep",
+        "InputType":"number",
+        "ParamFieldName":"$.sleep",
+        "DefaultValue":"5.0",
+        "Placeholder":"5.0",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Use Dynamic Ticks",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"dynticks config is basically for keeping your server's tickrate at a constant count by using CPU more to cover the gap if there's any drop. It is calculated using provided sleep value so if sleep is 5, constant tick count would be 1000 / 5 = 200 ticks per second. open.mp modifies internal sleep value on the fly based on each tick's code execution time, just to keep it steady at 200 ticks, and lower sleep means more CPU usage (which is not a massive difference if server code is written well)",
+        "Keywords":"dynamic,ticks,use_dyn_ticks",
+        "FieldName":"use_dyn_ticks",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.use_dyn_ticks",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Website",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"The website people can visit to gain more information about the server",
+        "Keywords":"website,server,info",
+        "FieldName":"website",
+        "InputType":"text",
+        "ParamFieldName":"$.website",
+        "DefaultValue":"open.mp",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Discord Invite",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"The address of your server discord that appears in the omp launcher",
+        "Keywords":"discord,invite",
+        "FieldName":"discord.invite",
+        "InputType":"text",
+        "ParamFieldName":"$.discord.invite",
+        "DefaultValue":"https://discord.gg/samp",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Light Banner URL",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Your server's light banner URL address that appears in the omp launcher",
+        "Keywords":"banners,light,url",
+        "FieldName":"banners.light",
+        "InputType":"text",
+        "ParamFieldName":"$.banners.light",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Dark Banner URL",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Your server's dark banner URL address that appears in the omp launcher",
+        "Keywords":"banners,dark,url",
+        "FieldName":"banners.dark",
+        "InputType":"text",
+        "ParamFieldName":"$.banners.dark",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server Logo URL",
+        "Category":"open.mp:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Your server's logo URL address that appears in the omp launcher and discord status",
+        "Keywords":"logo,server,url",
+        "FieldName":"logo",
+        "InputType":"text",
+        "ParamFieldName":"$.logo",
+        "DefaultValue":"",
         "EnumValues":{}
     }
 ]
