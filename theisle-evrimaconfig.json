@@ -69,14 +69,14 @@
         "DisplayName":"Player Limit",
         "Category":"The Isle:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"Sets the maximum number of players that may connect to the server at one time",
+        "Description":"Sets the maximum number of players that may connect to the server at one time. More than 100 not recommended",
         "Keywords":"players,limit,maxplayers,maxplayercount",
         "FieldName":"$MaxUsers",
         "InputType":"number",
         "MinValue":"1",
         "ParamFieldName":"MaxPlayerCount",
-        "DefaultValue":"50",
-        "Placeholder":"50",
+        "DefaultValue":"100",
+        "Placeholder":"100",
         "Suffix":"players",
         "EnumValues":{}
     },
@@ -148,6 +148,18 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server VIPs",
+        "Category":"The Isle:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Specifies the [Steam64 IDs](https://steamidfinder.com/) of server VIPs. VIPs can skip the queue if the server is full. One line per VIP. Format: VIPs=71231XXXXXXXXXXXX",
+        "Keywords":"VIPs,vip",
+        "FieldName":"VIPs",
+        "InputType":"Textarea",
+        "ParamFieldName":"VIPs",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Enable RCON",
         "Category":"The Isle:stadia_controller",
         "Subcategory":"Server:dns:1",
@@ -190,9 +202,22 @@
         }
     },
     {
-        "DisplayName":"Allowed Classes",
+        "DisplayName":"Discord Invite URL",
         "Category":"The Isle:stadia_controller",
         "Subcategory":"Server:dns:1",
+        "Description":"Sets the invite URL for a Discord server to which players will be taken when clicking on the Discord button in the server",
+        "Keywords":"invite,url,Discord",
+        "FieldName":"Discord",
+        "InputType":"url",
+        "ParamFieldName":"Discord",
+        "DefaultValue":"",
+        "Placeholder":"https://discord.gg/yourdiscord",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allowed Classes",
+        "Category":"The Isle:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"Specifies the names of enabled classes. One line per class. Format: AllowedClasses=Dryosaurus",
         "Keywords":"allowed,classes,AllowedClasses",
         "FieldName":"AllowedClasses",
@@ -204,7 +229,7 @@
     {
         "DisplayName":"Enable Humans",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"If set, human characters will be enabled on the server",
         "Keywords":"human,characters,bEnableHumans",
         "FieldName":"bEnableHumans",
@@ -219,9 +244,9 @@
     {
         "DisplayName":"Enable Dynamic Weather",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"If set, dynamic weather will be enabled on the server",
-        "Keywords":"dynamic,weather,bServerDynamicWeather",
+        "Keywords":"dynamic,weather,bRandomWeatherEnabled",
         "FieldName":"bServerDynamicWeather",
         "InputType":"checkbox",
         "ParamFieldName":"bServerDynamicWeather",
@@ -232,24 +257,39 @@
         }
     },
     {
-        "DisplayName":"Allow Replay",
+        "DisplayName":"Minimum Weather Variation Interval",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
-        "Description":"If set, the server's replay system will be enabled. Recording can be started and stopped in-game via the F2 key. Replays must be a minimum of 5 seconds and cannot be viewed until 30 minutes has passed",
-        "Keywords":"replay,system,recording,bAllowReplay",
-        "FieldName":"bAllowReplay",
-        "InputType":"checkbox",
-        "ParamFieldName":"bAllowReplay",
-        "DefaultValue":"true",
-        "EnumValues":{
-            "False":"false",
-            "True":"true"
-        }
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets the minimum interval for how often weather is switched. Dynamic Weather must be enabled",
+        "Keywords":"min,minimum,weather,variation,interval,MinWeatherVariationInterval",
+        "FieldName":"MinWeatherVariationInterval",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"MinWeatherVariationInterval",
+        "DefaultValue":"600",
+        "Placeholder":"600",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Maximum Weather Variation Interval",
+        "Category":"The Isle:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets the maximum interval for how often weather is switched. Dynamic Weather must be enabled",
+        "Keywords":"max,maximum,weather,variation,interval",
+        "FieldName":"MaxWeatherVariationInterval",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"MaxWeatherVariationInterval",
+        "DefaultValue":"900",
+        "Placeholder":"900",
+        "Suffix":"seconds",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Enable Fall Damage",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"If enabled, falls cause damage",
         "Keywords":"fall,damage,bServerFallDamage",
         "FieldName":"bServerFallDamage",
@@ -264,7 +304,7 @@
     {
         "DisplayName":"Day Length",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"Sets the length of a day",
         "Keywords":"day,length,ServerDayLengthMinutes",
         "FieldName":"ServerDayLengthMinutes",
@@ -278,7 +318,7 @@
     {
         "DisplayName":"Night Length",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"Sets the length of a night",
         "Keywords":"night,length,ServerNightLengthMinutes",
         "FieldName":"ServerNightLengthMinutes",
@@ -292,7 +332,7 @@
     {
         "DisplayName":"Enable Plant Spawning",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"If enabled, plants will be spawned",
         "Keywords":"plant,spawn,bSpawnPlants",
         "FieldName":"bSpawnPlants",
@@ -305,9 +345,22 @@
         }
     },
     {
+        "DisplayName":"Plant Spawn Multiplier",
+        "Category":"The Isle:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets the multiplier for how many plants to spawn. Higher values = increased plant spawn amount",
+        "Keywords":"plant,spawn,multiplier,PlantSpawnMultiplier",
+        "FieldName":"PlantSpawnMultiplier",
+        "InputType":"number",
+        "ParamFieldName":"PlantSpawnMultiplier",
+        "DefaultValue":"1.0",
+        "Placeholder":"1.0",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Enable Global Chat",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"If set, global chat will be enabled on the server",
         "Keywords":"global,chat,bEnableGlobalChat",
         "FieldName":"bEnableGlobalChat",
@@ -322,7 +375,7 @@
     {
         "DisplayName":"Spawn AI",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"If set, AI will be spawned on the server",
         "Keywords":"spawn,ai,bSpawnAI",
         "FieldName":"bSpawnAI",
@@ -337,7 +390,7 @@
     {
         "DisplayName":"AI Spawn Interval",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"Sets how frequently the server checks to spawn new AI. Spawn AI must be enabled",
         "Keywords":"spawn,ai,interval,AISpawnInterval",
         "FieldName":"AISpawnInterval",
@@ -350,9 +403,21 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Disabled AI Classes",
+        "Category":"The Isle:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Specifies the names of AI classes that should be disabled. One line per class. Format: DisallowedAIClasses=Compsognathus",
+        "Keywords":"disabled,disallowed,classes,DisallowedAIClasses",
+        "FieldName":"DisallowedAIClasses",
+        "InputType":"Textarea",
+        "ParamFieldName":"DisallowedAIClasses",
+        "DefaultValue":"",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"AI Density",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"Sets the multiplier for AI density. Spawn AI must be enabled",
         "Keywords":"ai,density,AIDensity",
         "FieldName":"AIDensity",
@@ -364,22 +429,10 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Disabled AI Classes",
-        "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
-        "Description":"Specifies the names of AI classes that should be disabled. One line per class. Format: DisallowedAIClasses=Compsognathus",
-        "Keywords":"disabled,disallowed,classes,DisallowedAIClasses",
-        "FieldName":"DisallowedAIClasses",
-        "InputType":"Textarea",
-        "ParamFieldName":"DisallowedAIClasses",
-        "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Enable Migration",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
-        "Description":"If set, migration will be enabled",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, migration will be enabled, including patrols and mass migrations",
         "Keywords":"migration,bEnableMigration",
         "FieldName":"bEnableMigration",
         "InputType":"checkbox",
@@ -391,25 +444,100 @@
         }
     },
     {
-        "DisplayName":"Migration Zone Interval",
+        "DisplayName":"Species Migration Zone Length",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
-        "Description":"Sets how frequently migration zones will change. Enable Migration must be set",
-        "Keywords":"migration,zones,interval,MaxMigrationTime",
-        "FieldName":"MaxMigrationTime",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets how long a species migration zone will last. Enable Migration must be set",
+        "Keywords":"migration,zones,species,period,SpeciesMigrationTime",
+        "FieldName":"SpeciesMigrationTime",
         "InputType":"number",
         "MinValue":"0",
-        "ParamFieldName":"MaxMigrationTime",
-        "DefaultValue":"5400",
-        "Placeholder":"5400",
+        "ParamFieldName":"SpeciesMigrationTime",
+        "DefaultValue":"10800",
+        "Placeholder":"10800",
         "Suffix":"seconds",
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Mass Migration",
+        "Category":"The Isle:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, mass migrations will be enabled",
+        "Keywords":"mass,migration,bEnableMassMigration",
+        "FieldName":"bEnableMassMigration",
+        "InputType":"checkbox",
+        "ParamFieldName":"bEnableMassMigration",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Mass Migration Interval",
+        "Category":"The Isle:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets how often a new mass migration is set",
+        "Keywords":"mass,migration,time",
+        "FieldName":"MassMigrationTime",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"MassMigrationTime",
+        "DefaultValue":"43200",
+        "Placeholder":"43200",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Mass Migration Length",
+        "Category":"The Isle:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets how long a mass migration lasts once set",
+        "Keywords":"mass,migration,disable,time",
+        "FieldName":"MassMigrationDisableTime",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"MassMigrationDisableTime",
+        "DefaultValue":"7200",
+        "Placeholder":"7200",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Patrol Zones",
+        "Category":"The Isle:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, the PatrolZone system will be enabled",
+        "Keywords":"patrol,zones,zone,system,bEnablePatrolZones",
+        "FieldName":"bEnablePatrolZones",
+        "InputType":"checkbox",
+        "ParamFieldName":"bEnablePatrolZones",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Diets",
+        "Category":"The Isle:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, diets will be enabled",
+        "Keywords":"diets,bEnableDiets",
+        "FieldName":"bEnableDiets",
+        "InputType":"checkbox",
+        "ParamFieldName":"bEnableDiets",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Growth Multiplier",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
-        "Description":"Sets the universal multiplier for growth. Setting this too high will stop it working - stay below ~40",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets the universal multiplier for growth. Setting this too high will stop it working - recommendation is no higher than 20",
         "Keywords":"universal,growth,multiplier,GrowthMultiplier",
         "FieldName":"GrowthMultiplier",
         "InputType":"number",
@@ -422,7 +550,7 @@
     {
         "DisplayName":"Enable Mutations",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"If set, mutations will be enabled on the server. Set Enabled Mutations List as required",
         "Keywords":"mutations,bEnableMutations",
         "FieldName":"bEnableMutations",
@@ -437,7 +565,7 @@
     {
         "DisplayName":"Enabled Mutations List",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"Specifies the list of all enabled mutations and values. Keep fully commented out to have all mutations enabled. Enabling any mutations means you must include all mutations you would like available on the server (one line per mutation). Note that changing default values may produce unstable gameplay",
         "Keywords":"enabled,mutations,EnabledMutations",
         "FieldName":"EnabledMutations",
@@ -447,9 +575,24 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Allow Replay",
+        "Category":"The Isle:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, the server's replay system will be enabled. Recording can be started and stopped in-game via the F2 key. Replays must be a minimum of 5 seconds and cannot be viewed until 30 minutes has passed",
+        "Keywords":"replay,system,recording,bAllowRecordingReplay",
+        "FieldName":"bAllowReplay",
+        "InputType":"checkbox",
+        "ParamFieldName":"bAllowReplay",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Use Region Spawning",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Subcategory":"Gameplay:joystick:2",
         "Description":"If set, the region menu will be enabled when selecting a character",
         "Keywords":"region,spawning,spawn,character,bUseRegionSpawning",
         "FieldName":"bUseRegionSpawning",
@@ -462,10 +605,25 @@
         }
     },
     {
+        "DisplayName":"Use Region Spawn Cooldown",
+        "Category":"The Isle:stadia_controller",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"If set, region cooldown will be enabled",
+        "Keywords":"region,spawning,spawn,character,cooldown,bUseRegionSpawnCooldown",
+        "FieldName":"bUseRegionSpawnCooldown",
+        "InputType":"checkbox",
+        "ParamFieldName":"bUseRegionSpawnCooldown",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Region Spawn Cooldown Time",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
-        "Description":"Sets the cooldown time period that must pass before a player is able to select the relevant region again",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets the cooldown time period that must pass before a player is able to select the relevant region again. Use Region Spawning and Use Region Spawn Cooldown must be enabled",
         "Keywords":"region,spawn,spawning,character,cooldown,time,RegionSpawnCooldownTimeSeconds",
         "FieldName":"RegionSpawnCooldownTimeSeconds",
         "InputType":"number",
@@ -477,16 +635,17 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Discord Invite URL",
+        "DisplayName":"Corpse Decay Multiplier",
         "Category":"The Isle:stadia_controller",
-        "Subcategory":"Server:dns:1",
-        "Description":"Sets the invite URL for a Discord server to which players will be taken when clicking on the Discord button in the server",
-        "Keywords":"invite,url,Discord",
-        "FieldName":"Discord",
-        "InputType":"url",
-        "ParamFieldName":"Discord",
-        "DefaultValue":"",
-        "Placeholder":"https://discord.gg/yourdiscord",
+        "Subcategory":"Gameplay:joystick:2",
+        "Description":"Sets the multiplier for how fast corpses decay to despawn. Lower = faster",
+        "Keywords":"corpse,decay,multiplier,CorpseDecayMultiplier",
+        "FieldName":"CorpseDecayMultiplier",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"CorpseDecayMultiplier",
+        "DefaultValue":"1.0",
+        "Placeholder":"1.0",
         "EnumValues":{}
     }
 ]
