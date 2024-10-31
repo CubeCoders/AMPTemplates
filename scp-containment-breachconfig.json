@@ -45,6 +45,19 @@
         "InputType":"text",
         "ParamFieldName":"gamestate",
         "DefaultValue":"",
+        "Placeholder":"Started",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Server URL",
+        "Category":"SCP Containment Breach:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Sets a URL for the server",
+        "Keywords":"url,web,weburl",
+        "FieldName":"weburl",
+        "InputType":"url",
+        "ParamFieldName":"weburl",
+        "DefaultValue":"",
         "EnumValues":{}
     },
     {
@@ -78,12 +91,13 @@
         "DisplayName":"Custom Map",
         "Category":"SCP Containment Breach:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"Sets the name of a custom map file to load (.cbmap2 file)",
+        "Description":"Sets the name of a custom map file to load, instead of the server using a random map",
         "Keywords":"custom,map,custommap",
         "FieldName":"custommap",
         "InputType":"text",
         "ParamFieldName":"custommap",
         "DefaultValue":"",
+        "Placeholder":"big.cbmap2",
         "EnumValues":{}
     },
     {
@@ -157,10 +171,10 @@
         }
     },
     {
-        "DisplayName":"Timeout",
+        "DisplayName":"Timeout Period",
         "Category":"SCP Containment Breach:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"Sets the timeout time",
+        "Description":"Sets the time required to timeout",
         "Keywords":"timeout",
         "FieldName":"timeout",
         "InputType":"number",
@@ -190,7 +204,7 @@
         "DisplayName":"Enable Voice",
         "Category":"SCP Containment Breach:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"If set, voice will be enabled on the server",
+        "Description":"If set, voice chat will be enabled on the server",
         "Keywords":"voice,enabled",
         "FieldName":"voice",
         "InputType":"checkbox",
@@ -219,7 +233,7 @@
         "DisplayName":"Allow Jumping",
         "Category":"SCP Containment Breach:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"If set, jumping will be allowed on the server",
+        "Description":"If set, jumping will be allowed on the server, so players can jump into unplayable zones",
         "Keywords":"jump,mode,allow,jumpmode",
         "FieldName":"jumpmode",
         "InputType":"checkbox",
@@ -234,7 +248,7 @@
         "DisplayName":"Gravity Level",
         "Category":"SCP Containment Breach:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"Sets the gravity level",
+        "Description":"Sets the gravity level. Avoid using high values",
         "Keywords":"gravity,level",
         "FieldName":"gravity",
         "InputType":"number",
@@ -245,11 +259,28 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Enable Breach Mode",
+        "DisplayName":"Difficulty Level",
         "Category":"SCP Containment Breach:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"If set, breach mode will be enabled",
-        "Keywords":"breach,mode",
+        "Description":"Sets the difficulty level",
+        "Keywords":"difficulty,level",
+        "FieldName":"difficulty",
+        "InputType":"enum",
+        "ParamFieldName":"difficulty",
+        "DefaultValue":"safe",
+        "EnumValues":{
+            "safe":"Safe (default)",
+            "euclid":"Euclid",
+            "keter":"Keter",
+            "custom":"Custom"
+        }
+    },
+    {
+        "DisplayName":"Enable Breach Gamemode",
+        "Category":"SCP Containment Breach:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"If set, the Breach gamemode will be enabled",
+        "Keywords":"breach,game,mode,gamemode",
         "FieldName":"breach",
         "InputType":"checkbox",
         "ParamFieldName":"breach",
@@ -263,7 +294,7 @@
         "DisplayName":"Enable Breach Light",
         "Category":"SCP Containment Breach:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"If set, turn on light in the facility. Breach Mode must be enabled. Not recommended",
+        "Description":"If set, the facility will be lighter in the Breach gamemode. Breach Gamemode must be enabled. Not recommended",
         "Keywords":"breach,light,breachlight",
         "FieldName":"breachlight",
         "InputType":"checkbox",
@@ -275,10 +306,25 @@
         }
     },
     {
-        "DisplayName":"Breach Time",
+        "DisplayName":"Enable Breach Chat",
         "Category":"SCP Containment Breach:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"Sets time to breach mode. Breach Mode must be enabled",
+        "Description":"If set, chat will be enabled in the Breach gamemode. Breach Gamemode must be enabled",
+        "Keywords":"breach,chat,breachchat",
+        "FieldName":"breachchat",
+        "InputType":"checkbox",
+        "ParamFieldName":"breachchat",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Breach Round Length",
+        "Category":"SCP Containment Breach:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Sets the length of a round in the Breach gamemode. Breach Gamemode must be enabled",
         "Keywords":"breach,time,breachtime",
         "FieldName":"breachtime",
         "InputType":"number",
@@ -292,7 +338,7 @@
         "DisplayName":"Enable Deathmatch Only For Breach Mode",
         "Category":"SCP Containment Breach:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"If set, only deathmatch round will be enabled for breach mode. Breach Mode must be enabled",
+        "Description":"If set, only the deathmatch round will be enabled for the Breach gamemode. Breach Gamemode must be enabled",
         "Keywords":"breach,only,deathmatch,breach_onlydeathmatch",
         "FieldName":"breach_onlydeathmatch",
         "InputType":"checkbox",
@@ -369,15 +415,16 @@
         }
     },
     {
-        "DisplayName":"Script",
+        "DisplayName":"Script File",
         "Category":"SCP Containment Breach:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"Sets the name of a script file to use (GSC compiled file)",
+        "Description":"Sets the name of a script file to load (GSC compiled file)",
         "Keywords":"script",
         "FieldName":"script",
         "InputType":"text",
         "ParamFieldName":"script",
         "DefaultValue":"",
+        "Placeholder":"myscript.gsc",
         "EnumValues":{}
     },
     {
@@ -391,6 +438,18 @@
         "ParamFieldName":"stacksize",
         "DefaultValue":"1024",
         "Placeholder":"1024",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Custom Settings",
+        "Category":"SCP Containment Breach:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"Sets custom settings to include in 'server.cfg' that are not otherwise set by AMP. Use with car",
+        "Keywords":"custom,settings",
+        "FieldName":"CustomSettings",
+        "InputType":"text",
+        "ParamFieldName":"CustomSettings",
+        "DefaultValue":"",
         "EnumValues":{}
     }
 ]
