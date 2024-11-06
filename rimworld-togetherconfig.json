@@ -56,7 +56,7 @@
         "DisplayName":"Enable Whitelist",
         "Category":"Rimworld Together:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"If enabled, allows only the usernames listed under \"Whitelisted Players\" to join the server",
+        "Description":"If set, allows only the usernames listed under \"Whitelisted Players\" to join the server",
         "Keywords":"whitelist,players,UseWhitelist",
         "FieldName":"UseWhitelist",
         "InputType":"checkbox",
@@ -84,7 +84,7 @@
         "DisplayName":"Allow Custom Scenarios",
         "Category":"Rimworld Together:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"If enabled, players will be allowed to create custom scenarios when creating their save on the server",
+        "Description":"If set, players will be allowed to create custom scenarios when creating their save on the server",
         "Keywords":"custom,scenarios,AllowCustomScenarios",
         "FieldName":"AllowCustomScenarios",
         "InputType":"checkbox",
@@ -99,7 +99,7 @@
         "DisplayName":"Enable Verbose Logging",
         "Category":"Rimworld Together:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"If enabled, the server console will include additional logging output for developer or debugging purposes. Not recommended for normal use",
+        "Description":"If set, the server console will include additional logging output for developer or debugging purposes. Not recommended for normal use",
         "Keywords":"verbose,logs,logging,VerboseLogs",
         "FieldName":"verboseLogs",
         "InputType":"checkbox",
@@ -111,10 +111,25 @@
         }
     },
     {
+        "DisplayName":"Enable Extreme Verbose Logging",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"If set, the server console will include much more verbose logging",
+        "Keywords":"extreme,verbose,logs,logging,ExtremeVerboseLogs",
+        "FieldName":"ExtremeVerboseLogs",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.ExtremeVerboseLogs",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Display Chat In Console",
         "Category":"Rimworld Together:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"If enabled, player chat will be displayed in the server console",
+        "Description":"If set, player chat will be displayed in the server console",
         "Keywords":"chat,console,display,DisplayChatInConsole",
         "FieldName":"DisplayChatInConsole",
         "InputType":"checkbox",
@@ -126,153 +141,304 @@
         }
     },
     {
-        "DisplayName":"Server Release Version",
+        "DisplayName":"Use UPnP",
         "Category":"Rimworld Together:stadia_controller",
         "Subcategory":"Server:dns:1",
-        "Description":"Sets the [server release version](https://github.com/RimworldTogether/Rimworld-Together/releases) to install. Blank = latest. Minimum version 1.4.0. Update the server after changing this setting",
+        "Description":"If set, UPnP will be used to automatically configure port forwarding on compatible routers",
+        "Keywords":"upnp,UseUPnP",
+        "FieldName":"UseUPnP",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.UseUPnP",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Sync Local Save",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"If set, local save syncing will be enabled",
+        "Keywords":"sync,local,save,SyncLocalSave",
+        "FieldName":"SyncLocalSave",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.SyncLocalSave",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Temporal Activity Protection",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"If set, temporal activity protection will be enabled",
+        "Keywords":"temporal,activity,protection,TemporalActivityProtection",
+        "FieldName":"TemporalActivityProtection",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.TemporalActivityProtection",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Temporal Event Protection",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"If set, temporal event protection will be enabled",
+        "Keywords":"temporal,event,protection,TemporalEventProtection",
+        "FieldName":"TemporalEventProtection",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.TemporalEventProtection",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Temporal Aid Protection",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"If set, temporal aid protection will be enabled",
+        "Keywords":"temporal,aid,protection,TemporalAidProtection",
+        "FieldName":"TemporalAidProtection",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.TemporalAidProtection",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Server Release Version",
+        "Category":"Updates",
+        "Subcategory":"Server Updates:build:-1",
+        "Description":"Sets the [server release version](https://github.com/RimworldTogether/Rimworld-Together/releases) to install. Blank = latest. Update the server after changing this setting",
         "Keywords":"server,release,version",
         "FieldName":"ReleaseVersion",
         "InputType":"text",
         "ParamFieldName":"ReleaseVersion",
         "DefaultValue":"",
-        "Placeholder":"1.4.0",
+        "Placeholder":"24.11.5.1",
         "EnumValues":{}
     },
     {
         "DisplayName":"Dotnet Version",
-        "Category":"Rimworld Together:stadia_controller",
-        "Subcategory":"Server:dns:1",
+        "Category":"Updates",
+        "Subcategory":"Server Updates:build:-1",
         "Description":"Sets the [ASP.NET Core 7.0 version](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) to install. Update the server after changing this setting",
         "Keywords":"dotnet,version",
         "FieldName":"DotnetVersion",
         "InputType":"text",
         "ParamFieldName":"DotnetVersion",
-        "DefaultValue":"7.0.14",
-        "Placeholder":"7.0.14",
+        "DefaultValue":"7.0.20",
+        "Placeholder":"7.0.20",
         "Required":true,
         "EnumValues":{}
     },
     {
-        "DisplayName":"Raid Cost",
+        "DisplayName":"Enable Online Activities",
         "Category":"Rimworld Together:stadia_controller",
-        "Subcategory":"Event and Action:payments:2",
-        "Description":"Sets the cost of initiating a raid event. Blank = server default",
-        "Keywords":"raid,cost,raidcost",
-        "FieldName":"RaidCost",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"$.RaidCost",
-        "DefaultValue":"",
-        "Suffix":"silver"
+        "Subcategory":"Actions",
+        "Description":"If set, online activities will be enabled",
+        "Keywords":"enable,online,activities,EnableOnlineActivities",
+        "FieldName":"EnableOnlineActivities",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.EnableOnlineActivities",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
-        "DisplayName":"Infestation Cost",
+        "DisplayName":"Enable Offline Activities",
         "Category":"Rimworld Together:stadia_controller",
-        "Subcategory":"Event and Action:payments:2",
-        "Description":"Sets the cost of triggering an infestation event. Blank = server default",
-        "Keywords":"infestation,cost,infestationcost",
-        "FieldName":"InfestationCost",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"$.InfestationCost",
-        "DefaultValue":"",
-        "Suffix":"silver"
+        "Subcategory":"Actions",
+        "Description":"If set, offline activities will be enabled",
+        "Keywords":"enable,offline,activities,EnableOfflineActivities",
+        "FieldName":"EnableOfflineActivities",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.EnableOfflineActivities",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
-        "DisplayName":"Mech Cluster Cost",
+        "DisplayName":"Enable Events",
         "Category":"Rimworld Together:stadia_controller",
-        "Subcategory":"Event and Action:payments:2",
-        "Description":"Sets the cost of spawning a mech cluster. Blank = server default",
-        "Keywords":"mech,cluster,cost,mechclustercost",
-        "FieldName":"MechClusterCost",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"$.MechClusterCost",
-        "DefaultValue":"",
-        "Suffix":"silver"
+        "Subcategory":"Actions",
+        "Description":"If set, events will be enabled",
+        "Keywords":"enable,events,EnableEvents",
+        "FieldName":"EnableEvents",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.EnableEvents",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
-        "DisplayName":"Toxic Fallout Cost",
+        "DisplayName":"Enable Sites",
         "Category":"Rimworld Together:stadia_controller",
-        "Subcategory":"Event and Action:payments:2",
-        "Description":"Sets the cost of initiating a toxic fallout event. Blank = server default",
-        "Keywords":"toxic,fallout,cost,toxicfalloutcost",
-        "FieldName":"ToxicFalloutCost",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"$.ToxicFalloutCost",
-        "DefaultValue":"",
-        "Suffix":"silver"
+        "Subcategory":"Actions",
+        "Description":"If set, sites will be enabled",
+        "Keywords":"enable,sites,EnableSites",
+        "FieldName":"EnableSites",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.EnableSites",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
-        "DisplayName":"Manhunter Cost",
+        "DisplayName":"Enable Roads",
         "Category":"Rimworld Together:stadia_controller",
-        "Subcategory":"Event and Action:payments:2",
-        "Description":"Sets the cost of triggering a manhunter pack event. Blank = server default",
-        "Keywords":"manhunter,cost,manhuntercost",
-        "FieldName":"ManhunterCost",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"$.ManhunterCost",
-        "DefaultValue":"",
-        "Suffix":"silver"
+        "Subcategory":"Actions",
+        "Description":"If set, roads will be enabled",
+        "Keywords":"enable,roads,EnableRoads",
+        "FieldName":"EnableRoads",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.EnableRoads",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
-        "DisplayName":"Wanderer Cost",
+        "DisplayName":"Enable Factions",
         "Category":"Rimworld Together:stadia_controller",
-        "Subcategory":"Event and Action:payments:2",
-        "Description":"Sets the cost of welcoming a wanderer. Blank = server default",
-        "Keywords":"wanderer,cost,wanderercost",
-        "FieldName":"WandererCost",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"$.WandererCost",
-        "DefaultValue":"",
-        "Suffix":"silver"
+        "Subcategory":"Actions",
+        "Description":"If set, factions will be enabled",
+        "Keywords":"enable,factions,EnableFactions",
+        "FieldName":"EnableFactions",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.EnableFactions",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
-        "DisplayName":"Farm Animals Cost",
+        "DisplayName":"Enable Aids",
         "Category":"Rimworld Together:stadia_controller",
-        "Subcategory":"Event and Action:payments:2",
-        "Description":"Sets the cost of receiving farm animals. Blank = server default",
-        "Keywords":"farm,animals,cost,farmanimalscost",
-        "FieldName":"FarmAnimalsCost",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"$.FarmAnimalsCost",
-        "DefaultValue":"",
-        "Suffix":"silver"
+        "Subcategory":"Actions",
+        "Description":"If set, aids will be enabled",
+        "Keywords":"enable,aids,EnableAids",
+        "FieldName":"EnableAids",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.EnableAids",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
-        "DisplayName":"Ship Chunk Cost",
+        "DisplayName":"Enable Trading",
         "Category":"Rimworld Together:stadia_controller",
-        "Subcategory":"Event and Action:payments:2",
-        "Description":"Sets the cost of sending a ship chunk. Blank = server default",
-        "Keywords":"ship,chunk,cost,shipchunkcost",
-        "FieldName":"ShipChunkCost",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"$.ShipChunkCost",
-        "DefaultValue":"",
-        "Suffix":"silver"
+        "Subcategory":"Actions",
+        "Description":"If set, trading will be enabled",
+        "Keywords":"enable,trading,EnableTrading",
+        "FieldName":"EnableTrading",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.EnableTrading",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
     },
     {
-        "DisplayName":"Trader Caravan Cost",
+        "DisplayName":"Enable Custom Scenarios",
         "Category":"Rimworld Together:stadia_controller",
-        "Subcategory":"Event and Action:payments:2",
-        "Description":"Sets the cost of sending a trader caravan. Blank = server default",
-        "Keywords":"trader,caravan,cost,tradercaravancost",
-        "FieldName":"TraderCaravanCost",
+        "Subcategory":"Actions",
+        "Description":"If set, custom scenarios will be enabled",
+        "Keywords":"enable,custom,scenarios,EnableCustomScenarios",
+        "FieldName":"EnableCustomScenarios",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.EnableCustomScenarios",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable NPC Destruction",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Server:dns:1",
+        "Description":"If set, NPC destruction will be enabled",
+        "Keywords":"enable,npc,destruction,EnableNPCDestruction",
+        "FieldName":"EnableNPCDestruction",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.EnableNPCDestruction",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Pollution Spread",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Actions:payments:2",
+        "Description":"If set, pollution spread will be enabled.",
+        "Keywords":"enable,pollution,spread",
+        "FieldName":"EnablePollutionSpread",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.EnablePollutionSpread",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enforced Game Speed",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Actions:payments:2",
+        "Description":"Sets the enforced game speed",
+        "Keywords":"enforced,game,speed,EnforcedGameSpeed",
+        "FieldName":"EnforcedGameSpeed",
+        "InputType":"number",
+        "ParamFieldName":"$.EnforcedGameSpeed",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Online Activity Tick Interval",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Actions:payments:2",
+        "Description":"Sets the tick interval for online activities",
+        "Keywords":"online,activity,tick,OnlineActivityTickMS",
+        "FieldName":"OnlineActivityTickMS",
         "InputType":"number",
         "MinValue":"0",
-        "ParamFieldName":"$.TraderCaravanCost",
-        "DefaultValue":"",
-        "Suffix":"silver"
+        "ParamFieldName":"$.OnlineActivityTickMS",
+        "DefaultValue":"500",
+        "Placeholder":"500",
+        "Suffix":"milliseconds",
+        "EnumValues":{}
     },
     {
         "DisplayName":"Spy Cost",
         "Category":"Rimworld Together:stadia_controller",
-        "Subcategory":"Event and Action:payments:2",
+        "Subcategory":"Actions:payments:2",
         "Description":"Sets the cost of sending a spy. Blank = server default",
         "Keywords":"spy,cost,spycost",
         "FieldName":"SpyCost",
@@ -964,6 +1130,21 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enemy Reproduction Rate Factor",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Difficulty:tune:4",
+        "Description":"Adjust the time it takes for hives to reproduce",
+        "Keywords":"enemy,reproduction,rate,hive,EnemyReproductionRateFactor",
+        "FieldName":"EnemyReproductionRateFactor",
+        "InputType":"number",
+        "MinValue":"0",
+        "MaxValue":"1",
+        "ParamFieldName":"$.EnemyReproductionRateFactor",
+        "DefaultValue":"1.0",
+        "Placeholder":"1.0",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Deep Drill Infestation Chance Factor",
         "Category":"Rimworld Together:stadia_controller",
         "Subcategory":"Difficulty:tune:4",
@@ -1009,6 +1190,51 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Enable Peaceful Temples",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Difficulty:tune:4",
+        "Description":"If set, temples will be peaceful",
+        "Keywords":"peaceful,temples,PeacefulTemples",
+        "FieldName":"PeacefulTemples",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.PeacefulTemples",
+        "DefaultValue":"false",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Cave Hives",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Difficulty:tune:4",
+        "Description":"If set, cave hives will be allowed",
+        "Keywords":"allow,cave,hives,AllowCaveHives",
+        "FieldName":"AllowCaveHives",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.AllowCaveHives",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Unwavering Prisoners",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Difficulty:tune:4",
+        "Description":"If set, prisoners will be unwavering",
+        "Keywords":"unwavering,prisoners,UnwaveringPrisoners",
+        "FieldName":"UnwaveringPrisoners",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.UnwaveringPrisoners",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
         "DisplayName":"Allow Traps",
         "Category":"Rimworld Together:stadia_controller",
         "Subcategory":"Difficulty:tune:4",
@@ -1048,6 +1274,21 @@
         "InputType":"checkbox",
         "ParamFieldName":"$.AllowMortars",
         "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Enable Classic Mortars",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Difficulty:tune:4",
+        "Description":"If set to true, classic mortars will be used",
+        "Keywords":"classic,mortars,ClassicMortars",
+        "FieldName":"ClassicMortars",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.ClassicMortars",
+        "DefaultValue":"false",
         "EnumValues":{
             "False":"false",
             "True":"true"
@@ -1201,6 +1442,146 @@
         "ParamFieldName":"$.WastepackInfestationChanceFactor",
         "DefaultValue":"1.0",
         "Placeholder":"1.0",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Allow Dirt Path",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Roads",
+        "Description":"If set, dirt paths will be allowed.",
+        "Keywords":"allow,dirt,path",
+        "FieldName":"AllowDirtPath",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.AllowDirtPath",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Dirt Road",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Roads",
+        "Description":"If set, dirt roads will be allowed.",
+        "Keywords":"allow,dirt,road",
+        "FieldName":"AllowDirtRoad",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.AllowDirtRoad",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Stone Road",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Roads",
+        "Description":"If set, stone roads will be allowed.",
+        "Keywords":"allow,stone,road",
+        "FieldName":"AllowStoneRoad",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.AllowStoneRoad",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Asphalt Path",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Roads",
+        "Description":"If set, asphalt paths will be allowed.",
+        "Keywords":"allow,asphalt,path",
+        "FieldName":"AllowAsphaltPath",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.AllowAsphaltPath",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Allow Asphalt Highway",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Roads",
+        "Description":"If set, asphalt highways will be allowed.",
+        "Keywords":"allow,asphalt,highway",
+        "FieldName":"AllowAsphaltHighway",
+        "InputType":"checkbox",
+        "ParamFieldName":"$.AllowAsphaltHighway",
+        "DefaultValue":"true",
+        "EnumValues":{
+            "False":"false",
+            "True":"true"
+        }
+    },
+    {
+        "DisplayName":"Dirt Path Cost",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Roads",
+        "Description":"The cost of building a dirt path.",
+        "Keywords":"dirt,path,cost",
+        "FieldName":"DirtPathCost",
+        "InputType":"number",
+        "ParamFieldName":"$.DirtPathCost",
+        "DefaultValue":"10",
+        "Placeholder":"10",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Dirt Road Cost",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Roads",
+        "Description":"The cost of building a dirt road.",
+        "Keywords":"dirt,road,cost",
+        "FieldName":"DirtRoadCost",
+        "InputType":"number",
+        "ParamFieldName":"$.DirtRoadCost",
+        "DefaultValue":"20",
+        "Placeholder":"20",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Stone Road Cost",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Roads",
+        "Description":"The cost of building a stone road.",
+        "Keywords":"stone,road,cost",
+        "FieldName":"StoneRoadCost",
+        "InputType":"number",
+        "ParamFieldName":"$.StoneRoadCost",
+        "DefaultValue":"25",
+        "Placeholder":"25",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Asphalt Path Cost",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Roads",
+        "Description":"The cost of building an asphalt path.",
+        "Keywords":"asphalt,path,cost",
+        "FieldName":"AsphaltPathCost",
+        "InputType":"number",
+        "ParamFieldName":"$.AsphaltPathCost",
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Asphalt Highway Cost",
+        "Category":"Rimworld Together:stadia_controller",
+        "Subcategory":"Roads",
+        "Description":"The cost of building an asphalt highway.",
+        "Keywords":"asphalt,highway,cost",
+        "FieldName":"AsphaltHighwayCost",
+        "InputType":"number",
+        "ParamFieldName":"$.AsphaltHighwayCost",
+        "DefaultValue":"50",
+        "Placeholder":"50",
         "EnumValues":{}
     }
 ]
