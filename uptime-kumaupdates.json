@@ -55,7 +55,7 @@
         "UpdateSourceArch":"aarch64",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd uptime-kuma && rm -rf node >/dev/null 2>&1 && tar xfv node-v20.4.0-linux-arm64.tar.gz >/dev/null 2>&1 && mv node-v20.4.0-linux-arm64 node >/dev/null 2>&1 && rm node-v20.4.0-linux-arm64.tar.gz\"",
+        "UpdateSourceArgs":"-c \"cd uptime-kuma && rm -rf node >/dev/null 2>&1 && tar xfv node-v20.4.0-linux-arm64.tar.gz >/dev/null 2>&1 && mv node-v20.4.0-linux-arm64 node >/dev/null 2>&1 && rm node-v20.4.0-linux-arm64.tar.gz && echo \\\"Node.js v20.4.0 installed.\\\"\"",
         "SkipOnFailure":false,
         "OneShot":true
     },
@@ -72,7 +72,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd uptime-kuma && rm -rf srv >/dev/null 2>&1; [ ! -d server/.git ] && { git clone https://github.com/louislam/uptime-kuma.git srv >/dev/null 2>&1 && \\cp -r srv/. server/ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && cd server && ReleaseVersion=\\\"{{ReleaseVersion}}\\\" && [ -z \\\"$ReleaseVersion\\\" ] && ReleaseVersion=$(wget -qO- https://api.github.com/repos/louislam/uptime-kuma/releases/latest | jq -r .tag_name); git checkout $ReleaseVersion --force >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm run setup >/dev/null 2>&1; } || { cd server && git fetch --all >/dev/null 2>&1 && ReleaseVersion=\\\"{{ReleaseVersion}}\\\" && [ -z \\\"$ReleaseVersion\\\" ] && ReleaseVersion=$(wget -qO- https://api.github.com/repos/louislam/uptime-kuma/releases/latest | jq -r .tag_name); git checkout $ReleaseVersion --force >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install --production >/dev/null 2>&1 && npm run download-dist >/dev/null 2>&1; }\"",
+        "UpdateSourceArgs":"-c \"cd uptime-kuma && rm -rf srv >/dev/null 2>&1; [ ! -d server/.git ] && { echo \\\"Installing Uptime Kuma.\\\" && git clone https://github.com/louislam/uptime-kuma.git srv >/dev/null 2>&1 && \\cp -r srv/. server/ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && cd server && ReleaseVersion=\\\"{{ReleaseVersion}}\\\" && [ -z \\\"$ReleaseVersion\\\" ] && ReleaseVersion=$(wget -qO- https://api.github.com/repos/louislam/uptime-kuma/releases/latest | jq -r .tag_name); git checkout $ReleaseVersion --force >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm run setup >/dev/null 2>&1 && echo \\\"Uptime Kuma v${ReleaseVersion} installed.\\\"; } || { echo \\\"Updating Uptime Kuma.\\\" && cd server && git fetch --all >/dev/null 2>&1 && ReleaseVersion=\\\"{{ReleaseVersion}}\\\" && [ -z \\\"$ReleaseVersion\\\" ] && ReleaseVersion=$(wget -qO- https://api.github.com/repos/louislam/uptime-kuma/releases/latest | jq -r .tag_name); git checkout $ReleaseVersion --force >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install --production >/dev/null 2>&1 && npm run download-dist >/dev/null 2>&1 && echo \\\"Uptime Kuma updated to v${Release Version}.\\\"; }\"",
         "SkipOnFailure":false
     }
 ]
