@@ -34,8 +34,8 @@
         "UpdateStageName":"Node.js Extract",
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd uptime-kuma && rmdir /S /Q node > NUL 2>&1 & rename node-v20.4.0-win-x64 node",
+        "UpdateSourceData":"powershell.exe",
+        "UpdateSourceArgs":"-NoProfile -Command \"cd uptime-kuma; Remove-Item node -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Rename-Item -Path node-v20.4.0-win-x64 -NewName node\"",
         "SkipOnFailure":false,
         "OneShot":true
     },
