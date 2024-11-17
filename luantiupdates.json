@@ -35,7 +35,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd ./luanti/.appimage && chmod +x Luanti-{{ServerVersion}}-x86_64.AppImage && ./Luanti-{{ServerVersion}}-x86_64.AppImage --appimage-extract && rm -f Luanti-{{ServerVersion}}-x86_64.AppImage\"",
+        "UpdateSourceArgs":"-c \"cd ./luanti/.appimage && chmod +x Luanti-{{ServerVersion}}-x86_64.AppImage && ./Luanti-{{ServerVersion}}-x86_64.AppImage --appimage-extract >/dev/null 2>&1 && rm -f Luanti-{{ServerVersion}}-x86_64.AppImage\"",
         "SkipOnFailure":false
     },
     {
@@ -43,7 +43,7 @@
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
         "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd ./luanti && rm -rf server ; ln -s .appimage/squashfs-root/usr server\"",
+        "UpdateSourceArgs":"-c \"cd ./luanti && rm -rf server >/dev/null 2>&1; ln -s .appimage/squashfs-root/usr server\"",
         "SkipOnFailure":false
     },
     {
