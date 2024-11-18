@@ -20,12 +20,10 @@
     {
         "UpdateStageName":"Luanti Download",
         "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/rollerozxa/luantiserver/releases/download/{{ServerVersion}}/luantiserver-{{ServerVersion}}.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c \"cd luanti && wget -qO luantiserver.tar.gz https://github.com/rollerozxa/luantiserver/releases/download/{{ServerVersion}}/luantiserver-{{ServerVersion}}.tar.gz && tar -xzf luantiserver.tar.gz -C server --strip-components=1 >/dev/null 2>&1 && rm -rf luantiserver.tar.gz >/dev/null 2>&1 && echo \\\"Luanti server v{{ServerVersion}} installed.\\\"\"",
+        "SkipOnFailure":false
     },
     {
         "UpdateStageName":"Games Directory Creation",
