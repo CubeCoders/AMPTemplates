@@ -1,5 +1,17 @@
 [
     {
+        "DisplayName":"RCON Password",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"See the Security and Privacy menu for configurable options for the server's RCON",
+        "Keywords":"rcon,password,rcon_password",
+        "FieldName":"$RemoteAdminPassword",
+        "InputType":"hidden",
+        "IsFlagArgument":false,
+        "ParamFieldName":"rcon_password",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Server Name",
         "Category":"Half Life 2 Deathmatch:stadia_controller",
         "Subcategory":"Server Settings:dns:1",
@@ -9,18 +21,6 @@
         "InputType":"text",
         "ParamFieldName":"hostname",
         "DefaultValue":"AMP Powered Half Life 2 Deathmatch Server",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"Server MOTD",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"Sets the message of the day (MOTD) that is shown to joining players",
-        "Keywords":"message,welcome,motd",
-        "FieldName":"motd",
-        "InputType":"Textarea",
-        "ParamFieldName":"motd",
-        "DefaultValue":"Welcome to Half Life 2 Deathmatch!",
         "EnumValues":{}
     },
     {
@@ -39,36 +39,6 @@
         }
     },
     {
-        "DisplayName":"Gather Statistics",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"If enabled, the server will gather Statistics",
-        "Keywords":"stats,sv_stats",
-        "FieldName":"sv_stats",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_stats",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Player Timeout",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"Sets the time before a client is dropped after loss of communication",
-        "Keywords":"time,timeout,sv_timeout",
-        "FieldName":"sv_timeout",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"sv_timeout",
-        "DefaultValue":"65",
-        "Placeholder":"65",
-        "Suffix":"seconds",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Server Password",
         "Category":"Half Life 2 Deathmatch:stadia_controller",
         "Subcategory":"Server Settings:dns:1",
@@ -78,18 +48,6 @@
         "InputType":"password",
         "ParamFieldName":"sv_password",
         "DefaultValue":"",
-        "EnumValues":{}
-    },
-    {
-        "DisplayName":"RCON Password",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"See the Security and Privacy menu for configurable options for the server's RCON",
-        "Keywords":"rcon,password,rcon_password",
-        "FieldName":"$RemoteAdminPassword",
-        "InputType":"hidden",
-        "IsFlagArgument":false,
-        "ParamFieldName":"rcon_password",
         "EnumValues":{}
     },
     {
@@ -128,21 +86,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Map Rotation Time Limit",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"Sets the time period between map rotations. 0 = disabled",
-        "Keywords":"time,limit,rotation,mp_timelimit",
-        "FieldName":"mp_timelimit",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"mp_timelimit",
-        "DefaultValue":"30",
-        "Placeholder":"30",
-        "Suffix":"minutes",
-        "EnumValues":{}
-    },
-    {
         "DisplayName":"Server Region",
         "Category":"Half Life 2 Deathmatch:stadia_controller",
         "Subcategory":"Server Settings:dns:1",
@@ -166,6 +109,21 @@
         }
     },
     {
+        "DisplayName":"Gather Statistics",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"If enabled, the server will gather Statistics",
+        "Keywords":"stats,sv_stats",
+        "FieldName":"sv_stats",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_stats",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Player Limit",
         "Category":"Half Life 2 Deathmatch:stadia_controller",
         "Subcategory":"Server Settings:dns:1",
@@ -183,6 +141,82 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Visible Player Limit",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"Sets the maximum players reported to prospective clients, regardless of the Player Limit. -1 = disabled",
+        "Keywords":"visible,max,players,sv_visiblemaxplayers",
+        "FieldName":"sv_visiblemaxplayers",
+        "InputType":"number",
+        "MinValue":"-1",
+        "MaxValue":"100",
+        "ParamFieldName":"sv_visiblemaxplayers",
+        "DefaultValue":"-1",
+        "Placeholder":"-1",
+        "Suffix":"players",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Pure Server Mode",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"If enabled, forces the client to match the content on the server",
+        "Keywords":"enable,pure,sv_pure",
+        "FieldName":"sv_pure",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_pure",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Kick Clients On Pure Server",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"If enabled, the server will kick clients with mismatching files. Otherwise, it will issue a warning to the clients",
+        "Keywords":"pure,server,cheat,hack,integrity,sv_pure_kick_clients",
+        "FieldName":"sv_pure_kick_clients",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_pure_kick_clients",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Require File Consistency",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"If set, the server will enforce file consistency for critical files",
+        "Keywords":"consistency,files,sv_consistency",
+        "FieldName":"sv_consistency",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_consistency",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Force Preload",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"If set, server side preloading will be forced",
+        "Keywords":"force,preload,sv_forcepreload",
+        "FieldName":"sv_forcepreload",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_forcepreload",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
         "DisplayName":"Enable Cheats",
         "Category":"Half Life 2 Deathmatch:stadia_controller",
         "Subcategory":"Server Settings:dns:1",
@@ -198,48 +232,18 @@
         }
     },
     {
-        "DisplayName":"Enable Coop",
+        "DisplayName":"Disable Valve Anti-Cheat",
         "Category":"Half Life 2 Deathmatch:stadia_controller",
         "Subcategory":"Server Settings:dns:1",
-        "Description":"If set, Coop will be enabled (By Default this is 0)",
-        "Keywords":"Enable,coop",
-        "FieldName":"coop",
+        "Description":"If set, Valve Anti-Cheat (VAC) will be disabled",
+        "Keywords":"valve,anti,cheat,vac,insecure",
+        "FieldName":"insecure",
         "InputType":"checkbox",
-        "ParamFieldName":"coop",
-        "DefaultValue":"0",
+        "ParamFieldName":"insecure",
+        "DefaultValue":"",
         "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Enable Deathmatch",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"If set, Deathmatch will be enabled (By Default this is 1)",
-        "Keywords":"Enable,deathmatch",
-        "FieldName":"deathmatch",
-        "InputType":"checkbox",
-        "ParamFieldName":"deathmatch",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Enable IP Packet Filter",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"If set, enables packet filtering by IP mode. If disabled, everyone will treated as IP-banned, but their IP won't be added to the banlist",
-        "Keywords":"ip,ban,banning,sv_filterban",
-        "FieldName":"sv_filterban",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_filterban",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
+            "False":"",
+            "True":"-insecure "
         }
     },
     {
@@ -247,7 +251,7 @@
         "Category":"Half Life 2 Deathmatch:stadia_controller",
         "Subcategory":"Server Settings:dns:1",
         "Description":"If set, clients will be allowed to download content from the server (maps, sprays and related)",
-        "Keywords":"allow,download,content,maps,svallow_download",
+        "Keywords":"allow,download,content,maps,sv_allowdownload",
         "FieldName":"sv_allowdownload",
         "InputType":"checkbox",
         "ParamFieldName":"sv_allowdownload",
@@ -258,7 +262,7 @@
         }
     },
     {
-        "DisplayName":"Fast Download URLs",
+        "DisplayName":"Fast Download URL",
         "Category":"Half Life 2 Deathmatch:stadia_controller",
         "Subcategory":"Server Settings:dns:1",
         "Description":"Sets the URL(s) for clients to download custom content from, instead of sourcing the content from the server. This allows for faster downloads",
@@ -284,21 +288,6 @@
             "False":"0",
             "True":"1"
         }
-    },
-    {
-        "DisplayName":"Decal Frequency",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"Sets the time before players can spray their decal again",
-        "Keywords":"time,frequency,decal,decalfrequency",
-        "FieldName":"decalfrequency",
-        "InputType":"number",
-        "MinValue":"0",
-        "ParamFieldName":"decalfrequency",
-        "DefaultValue":"20",
-        "Placeholder":"20",
-        "Suffix":"Seconds",
-        "EnumValues":{}
     },
     {
         "DisplayName":"Minimum Client Rate",
@@ -359,6 +348,92 @@
         "EnumValues":{}
     },
     {
+        "DisplayName":"Server/RCON IPv4 IP Binding",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"If required, you can change the IPv4 IP binding of the server and RCON by changing the 'Server IP Address' setting under Security and Privacy. NOTE: AMP requires the server to be bound to a specific IP, rather than 0.0.0.0, for the server to log to AMP's console. The IP must also be reachable by AMP",
+        "Keywords":"ip,binding",
+        "FieldName":"ip",
+        "InputType":"hidden",
+        "ParamFieldName":"ip",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Coop",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"If set, Coop will be enabled (By Default this is 0)",
+        "Keywords":"Enable,coop",
+        "FieldName":"coop",
+        "InputType":"checkbox",
+        "ParamFieldName":"coop",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Deathmatch",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"If set, Deathmatch will be enabled (By Default this is 1)",
+        "Keywords":"Enable,deathmatch",
+        "FieldName":"deathmatch",
+        "InputType":"checkbox",
+        "ParamFieldName":"deathmatch",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable IP Packet Filter",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"If set, enables packet filtering by IP mode. If disabled, everyone will treated as IP-banned, but their IP won't be added to the banlist",
+        "Keywords":"ip,ban,banning,sv_filterban",
+        "FieldName":"sv_filterban",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_filterban",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Player Timeout",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"Sets the time before a client is dropped after loss of communication",
+        "Keywords":"time,timeout,sv_timeout",
+        "FieldName":"sv_timeout",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"sv_timeout",
+        "DefaultValue":"65",
+        "Placeholder":"65",
+        "Suffix":"seconds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Decal Frequency",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Server Settings:dns:1",
+        "Description":"Sets the time before players can spray their decal again",
+        "Keywords":"time,frequency,decal,decalfrequency",
+        "FieldName":"decalfrequency",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"decalfrequency",
+        "DefaultValue":"20",
+        "Placeholder":"20",
+        "Suffix":"Seconds",
+        "EnumValues":{}
+    },
+    {
         "DisplayName":"Maximum Velocity",
         "Category":"Half Life 2 Deathmatch:stadia_controller",
         "Subcategory":"Server Settings:dns:1",
@@ -371,21 +446,6 @@
         "DefaultValue":"3500",
         "Placeholder":"3500",
         "EnumValues":{}
-    },
-    {
-        "DisplayName":"Disable Valve Anti-Cheat",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"If set, Valve Anti-Cheat (VAC) will be disabled",
-        "Keywords":"valve,anti,cheat,vac,insecure",
-        "FieldName":"insecure",
-        "InputType":"checkbox",
-        "ParamFieldName":"insecure",
-        "DefaultValue":"",
-        "EnumValues":{
-            "False":"",
-            "True":"-insecure "
-        }
     },
     {
         "DisplayName":"Player Gravity",
@@ -486,114 +546,6 @@
         "EnumValues":{}
     },
     {
-        "DisplayName":"Allow Players To Pause Server",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"If set, players will be able to pause the server. Enabling this is not recommended",
-        "Keywords":"pause,pausable,sv_pausable",
-        "FieldName":"sv_pausable",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_pausable",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Enable Voice",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"If enabled, voice communication for the server will be allowed",
-        "Keywords":"enable,voice,sv_voiceenable",
-        "FieldName":"sv_voiceenable",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_voiceenable",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Allow All Talk",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"If enabled, players can communicate with all other players, with no team restrictions",
-        "Keywords":"all,talk,sv_alltalk",
-        "FieldName":"sv_alltalk",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_alltalk",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Voice Codec",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"Sets the voice codec used for in game voice communication",
-        "Keywords":"voice,codec,sv_voicecodec",
-        "FieldName":"sv_voicecodec",
-        "InputType":"enum",
-        "ParamFieldName":"sv_voicecodec",
-        "DefaultValue":"vaudio_miles",
-		"Placeholder":"vaudio_miles",
-        "EnumValues":{
-			"vaudio_celt":"vaudio_celt",
-            "vaudio_miles":"vaudio_miles",
-            "vaudio_minimp3":"vaudio_minimp3",
-			"vaudio_speex":"vaudio_speex"
-        }
-    },
-    {
-        "DisplayName":"Enable sv_pure",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"If enabled, forces the client to match the content on the server",
-        "Keywords":"enable,pure,sv_pure",
-        "FieldName":"sv_pure",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_pure",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Require File Consistency",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"If set, the server will enforce file consistency for critical files",
-        "Keywords":"consistency,files,sv_consistency",
-        "FieldName":"sv_consistency",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_consistency",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Force Preload",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"If set, server side preloading will be forced",
-        "Keywords":"force,preload,sv_forcepreload",
-        "FieldName":"sv_forcepreload",
-        "InputType":"checkbox",
-        "ParamFieldName":"sv_forcepreload",
-        "DefaultValue":"0",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
         "DisplayName":"Log Bans",
         "Category":"Half Life 2 Deathmatch:stadia_controller",
         "Subcategory":"Server Settings:dns:1",
@@ -622,22 +574,6 @@
             "False":"0",
             "True":"1"
         }
-    },
-    {
-        "DisplayName":"Visible Player Limit",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Server Settings:dns:1",
-        "Description":"Sets the maximum players reported to prospective clients, regardless of the Player Limit. -1 = disabled",
-        "Keywords":"visible,max,players,sv_visiblemaxplayers",
-        "FieldName":"sv_visiblemaxplayers",
-        "InputType":"number",
-        "MinValue":"-1",
-        "MaxValue":"100",
-        "ParamFieldName":"sv_visiblemaxplayers",
-        "DefaultValue":"-1",
-        "Placeholder":"-1",
-        "Suffix":"players",
-        "EnumValues":{}
     },
     {
         "DisplayName":"Additional Command Line Parameters",
@@ -798,18 +734,81 @@
         }
     },
     {
-        "DisplayName":"Enable Teamplay",
+        "DisplayName":"Enable Footsteps",
         "Category":"Half Life 2 Deathmatch:stadia_controller",
         "Subcategory":"Gameplay Settings:joystick:2",
-        "Description":"If set, Teamplay will be enabled",
-        "Keywords":"team,teamplay,mp_teamplay",
-        "FieldName":"mp_teamplay",
+        "Description":"If set, footstep sounds will be enabled",
+        "Keywords":"footstep,sounds,mp_footsteps",
+        "FieldName":"mp_footsteps",
         "InputType":"checkbox",
-        "ParamFieldName":"mp_teamplay",
+        "ParamFieldName":"mp_footsteps",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow Players To Pause Server",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If set, players will be able to pause the server. Enabling this is not recommended",
+        "Keywords":"pause,pausable,sv_pausable",
+        "FieldName":"sv_pausable",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_pausable",
         "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
             "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Enable Voice",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If enabled, voice communication for the server will be allowed",
+        "Keywords":"enable,voice,sv_voiceenable",
+        "FieldName":"sv_voiceenable",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_voiceenable",
+        "DefaultValue":"1",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Allow All Talk",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If enabled, players can communicate with all other players, with no team restrictions",
+        "Keywords":"all,talk,sv_alltalk",
+        "FieldName":"sv_alltalk",
+        "InputType":"checkbox",
+        "ParamFieldName":"sv_alltalk",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Voice Codec",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"Sets the voice codec used for in game voice communication",
+        "Keywords":"voice,codec,sv_voicecodec",
+        "FieldName":"sv_voicecodec",
+        "InputType":"enum",
+        "ParamFieldName":"sv_voicecodec",
+        "DefaultValue":"vaudio_miles",
+		"Placeholder":"vaudio_miles",
+        "EnumValues":{
+			"vaudio_celt":"vaudio_celt",
+            "vaudio_miles":"vaudio_miles",
+            "vaudio_minimp3":"vaudio_minimp3",
+			"vaudio_speex":"vaudio_speex"
         }
     },
     {
@@ -821,6 +820,51 @@
         "FieldName":"mp_autoteambalance",
         "InputType":"checkbox",
         "ParamFieldName":"mp_autoteambalance",
+        "DefaultValue":"0",
+        "EnumValues":{
+            "False":"0",
+            "True":"1"
+        }
+    },
+    {
+        "DisplayName":"Map Rotation Time Limit",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"Sets the time period between map rotations. 0 = disabled",
+        "Keywords":"time,limit,rotation,mp_timelimit",
+        "FieldName":"mp_timelimit",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_timelimit",
+        "DefaultValue":"30",
+        "Placeholder":"30",
+        "Suffix":"minutes",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Map Rotation Round Limit",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"Sets the maximum number of rounds to play before the map rotates. 0 = disabled",
+        "Keywords":"round,limit,rotation,mp_maxrounds",
+        "FieldName":"mp_maxrounds",
+        "InputType":"number",
+        "MinValue":"0",
+        "ParamFieldName":"mp_maxrounds",
+        "DefaultValue":"0",
+        "Placeholder":"0",
+        "Suffix":"rounds",
+        "EnumValues":{}
+    },
+    {
+        "DisplayName":"Enable Teamplay",
+        "Category":"Half Life 2 Deathmatch:stadia_controller",
+        "Subcategory":"Gameplay Settings:joystick:2",
+        "Description":"If set, Teamplay will be enabled",
+        "Keywords":"team,teamplay,mp_teamplay",
+        "FieldName":"mp_teamplay",
+        "InputType":"checkbox",
+        "ParamFieldName":"mp_teamplay",
         "DefaultValue":"0",
         "EnumValues":{
             "False":"0",
@@ -866,21 +910,6 @@
         "FieldName":"mp_autocrosshair",
         "InputType":"checkbox",
         "ParamFieldName":"mp_autocrosshair",
-        "DefaultValue":"1",
-        "EnumValues":{
-            "False":"0",
-            "True":"1"
-        }
-    },
-    {
-        "DisplayName":"Enable Footsteps",
-        "Category":"Half Life 2 Deathmatch:stadia_controller",
-        "Subcategory":"Gameplay Settings:joystick:2",
-        "Description":"If set, footstep sounds will be enabled",
-        "Keywords":"footstep,sounds,mp_footsteps",
-        "FieldName":"mp_footsteps",
-        "InputType":"checkbox",
-        "ParamFieldName":"mp_footsteps",
         "DefaultValue":"1",
         "EnumValues":{
             "False":"0",
