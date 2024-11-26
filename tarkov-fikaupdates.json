@@ -152,6 +152,20 @@
         "UpdateSourcePlatform":"Windows",
         "UpdateSource":"GithubRelease",
         "UpdateSourceArgs":"project-fika/Fika-ServerTools",
+        "UpdateSourceData":"FikaServerTools_main-windows64.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}user/mods/fika-server",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"natPunchServer_enable",
+        "UpdateSourceConditionValue":"true"
+    },
+    {
+        "UpdateStageName":"Fika Server Tools Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"GithubRelease",
+        "UpdateSourceArgs":"project-fika/Fika-ServerTools",
+        "UpdateSourceData":"FikaServerTools_main-linux64.zip",
         "UpdateSourceTarget":"{{$FullBaseDir}}user/mods/fika-server",
         "UnzipUpdateSource":true,
         "OverwriteExistingFiles":true,
@@ -165,6 +179,16 @@
         "UpdateSource":"Executable",
         "UpdateSourceData":"cmd.exe",
         "UpdateSourceArgs":"/C del /Q /F tarkov\\server\\user\\mods\\fika-server\\FikaServerTools.exe > NUL 2>&1",
+        "UpdateSourceConditionSetting":"natPunchServer_enable",
+        "UpdateSourceConditionValue":"false",
+        "SkipOnFailure":true
+    },
+    {
+        "UpdateStageName":"Remove Fika Server Tools",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'rm -f tarkov/server/user/mods/fika-server/FikaServerTools >/dev/null 2>&1'",
         "UpdateSourceConditionSetting":"natPunchServer_enable",
         "UpdateSourceConditionValue":"false",
         "SkipOnFailure":true
