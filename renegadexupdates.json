@@ -1,87 +1,87 @@
 [
     {
-        "UpdateStageName":"Patcher Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceArgs":"pminten/totemarts-patcher-cli",
-        "UpdateSourceData":"tapatcher.exe",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "Patcher Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "pminten/totemarts-patcher-cli",
+        "UpdateSourceData": "tapatcher.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName":"Patcher Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceArgs":"pminten/totemarts-patcher-cli",
-        "UpdateSourceData":"tapatcher",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "Patcher Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "pminten/totemarts-patcher-cli",
+        "UpdateSourceData": "tapatcher",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName":"Xdelta Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceArgs":"jmacd/xdelta-gpl",
-        "UpdateSourceData":"xdelta3-3.1.0-x86_64.exe.zip",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
-        "OneShot":true
+        "UpdateStageName": "Xdelta Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "jmacd/xdelta-gpl",
+        "UpdateSourceData": "xdelta3-3.1.0-x86_64.exe.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "OneShot": true
     },
     {
-        "UpdateStageName":"Renegade X Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd renegadex && tapatcher.exe update renegade_x .\\server -X .\\xdelta3-3.1.0-x86_64.exe --progress-mode=plain",
-        "SkipOnFailure":false
+        "UpdateStageName": "Renegade X Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd renegadex && tapatcher.exe update renegade_x .\\server -X .\\xdelta3-3.1.0-x86_64.exe --progress-mode=plain",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Renegade X Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd renegadex && chmod +x tapatcher && ./tapatcher update renegade_x ./server --progress-mode=plain\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "Renegade X Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd renegadex && chmod +x tapatcher && ./tapatcher update renegade_x ./server --progress-mode=plain\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Initialise Wine",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\""
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\""
     },
     {
-        "UpdateStageName":"Winescript Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/renegadexwinescript.sh",
-        "UpdateSourceArgs":"winescript.sh",
-        "UpdateSourceTarget":"{{$FullInstanceDir}}",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "Winescript Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/renegadexwinescript.sh",
+        "UpdateSourceArgs": "winescript.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName":"Install Windows Components",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"./winescript.sh"
+        "UpdateStageName": "Install Windows Components",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "./winescript.sh"
     },
     {
-        "UpdateStageName":"Start Server",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"StartApplication"
+        "UpdateStageName": "Start Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "StartApplication"
     },
     {
-        "UpdateStageName":"Pause Update Stages",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"Pause",
-        "UpdateSourceArgs":"7"
+        "UpdateStageName": "Pause Update Stages",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "Pause",
+        "UpdateSourceArgs": "7"
     },
     {
-        "UpdateStageName":"Stop Server",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"ShutdownApplication"
+        "UpdateStageName": "Stop Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ShutdownApplication"
     }
 ]

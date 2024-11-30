@@ -1,95 +1,95 @@
 [
     {
-        "UpdateStageName":"Game Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"413150",
-        "UpdateSourceArgs":"413150",
-        "UpdateSourceVersion":"{{GameBranch}}",
-        "UpdateSourceTarget":"{{$FullBaseDir}}"
+        "UpdateStageName": "Game Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "413150",
+        "UpdateSourceArgs": "413150",
+        "UpdateSourceVersion": "{{GameBranch}}",
+        "UpdateSourceTarget": "{{$FullBaseDir}}"
     },
     {
-        "UpdateStageName":"Create SMAPI Download Directory",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullRootDir}}smapi"
+        "UpdateStageName": "Create SMAPI Download Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}smapi"
     },
     {
-        "UpdateStageName":"SMAPI Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURLFromJQ",
-        "UpdateSourceData":"https://api.github.com/repos/Pathoschild/SMAPI/releases/latest",
-        "UpdateSourceArgs":"$.assets[1].browser_download_url",
-        "UpdateSourceTarget":"{{$FullRootDir}}smapi",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
-        "UpdateSourceConditionSetting":"SMAPIRelease",
-        "UpdateSourceConditionValue":"latest"
+        "UpdateStageName": "SMAPI Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/Pathoschild/SMAPI/releases/latest",
+        "UpdateSourceArgs": "$.assets[1].browser_download_url",
+        "UpdateSourceTarget": "{{$FullRootDir}}smapi",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "SMAPIRelease",
+        "UpdateSourceConditionValue": "latest"
     },
     {
-        "UpdateStageName":"SMAPI Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://github.com/Pathoschild/SMAPI/releases/download/{{SMAPIReleaseVersion}}/SMAPI-{{SMAPIReleaseVersion}}-installer.zip",
-        "UpdateSourceTarget":"{{$FullRootDir}}smapi",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
-        "UpdateSourceConditionSetting":"SMAPIRelease",
-        "UpdateSourceConditionValue":"specificversion"
+        "UpdateStageName": "SMAPI Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/Pathoschild/SMAPI/releases/download/{{SMAPIReleaseVersion}}/SMAPI-{{SMAPIReleaseVersion}}-installer.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}smapi",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "SMAPIRelease",
+        "UpdateSourceConditionValue": "specificversion"
     },
     {
-        "UpdateStageName":"SMAPI Installation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd stardew-valley/smapi/SMAPI* && chmod +x internal/linux/SMAPI.Installer && internal/linux/SMAPI.Installer --install --game-path \\\"{{$FullBaseDir}}\\\" --no-prompt; cd .. && rm -rf SMAPI*\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "SMAPI Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd stardew-valley/smapi/SMAPI* && chmod +x internal/linux/SMAPI.Installer && internal/linux/SMAPI.Installer --install --game-path \\\"{{$FullBaseDir}}\\\" --no-prompt; cd .. && rm -rf SMAPI*\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"SMAPI Installation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd stardew-valley\\smapi\\SMAPI* && copy /Y internal\\windows\\install.dat ..\\..\\..\\install.zip > NUL 2>&1 && cd .. && for /d %G in (\"SMAPI*\") do @rd /S /Q \"%~G\" > NUL 2>&1",
-        "SkipOnFailure":false
+        "UpdateStageName": "SMAPI Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd stardew-valley\\smapi\\SMAPI* && copy /Y internal\\windows\\install.dat ..\\..\\..\\install.zip > NUL 2>&1 && cd .. && for /d %G in (\"SMAPI*\") do @rd /S /Q \"%~G\" > NUL 2>&1",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"SMAPI Installation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"ExtractArchive",
-        "UpdateSourceData":"install.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "SMAPI Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "install.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
     },
     {
-        "UpdateStageName":"SMAPI Installation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"CopyFilePath",
-        "UpdateSourceData":"{{$FullBaseDir}}StardewModdingAPI.deps.json",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Stardew Valley.deps.json",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "SMAPI Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}StardewModdingAPI.deps.json",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Stardew Valley.deps.json",
+        "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName":"Always On Server Mod Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceArgs":"perkmi/Always-On-Server-for-Multiplayer",
-        "UpdateSourceTarget":"{{$FullBaseDir}}Mods",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "Always On Server Mod Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "perkmi/Always-On-Server-for-Multiplayer",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Mods",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
     },
     {
-        "UpdateStageName":"Stardew Port Changer Mod Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceArgs":"PhantomGamers/StardewPortChanger",
-        "UpdateSourceTarget":"{{$FullBaseDir}}Mods",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "Stardew Port Changer Mod Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "PhantomGamers/StardewPortChanger",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Mods",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
     }
 ]

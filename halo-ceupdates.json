@@ -1,102 +1,102 @@
 [
-	{
-        "UpdateStageName":"7-Zip Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip",
-        "OneShot":true
+    {
+        "UpdateStageName": "7-Zip Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
+        "OneShot": true
     },
     {
-        "UpdateStageName":"7-Zip Installer Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://7-zip.org/a/7z2407-x64.exe",
-        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles":true,
-        "OneShot":true
+        "UpdateStageName": "7-Zip Installer Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://7-zip.org/a/7z2407-x64.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
     },
     {
-        "UpdateStageName":"7-Zip Console Tool Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.7-zip.org/a/7zr.exe",
-        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles":true,
-        "OneShot":true
-    },
-     {
-        "UpdateStageName":"7-Zip Installation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd halo-ce\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
-        "SkipOnFailure":true,
-        "OneShot":true
+        "UpdateStageName": "7-Zip Console Tool Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.7-zip.org/a/7zr.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
     },
     {
-        "UpdateStageName":"7-Zip Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.7-zip.org/a/7z2407-linux-x64.tar.xz",
-        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles":true,
-        "OneShot":true
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd halo-ce\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
+        "SkipOnFailure": true,
+        "OneShot": true
     },
     {
-        "UpdateStageName":"7-Zip Files Extract",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd halo-ce/7-Zip && /usr/bin/tar -xf 7z2407-linux-x64.tar.xz && rm -f 7z2407-linux-x64.tar.xz\"",
-        "OneShot":true
+        "UpdateStageName": "7-Zip Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.7-zip.org/a/7z2407-linux-x64.tar.xz",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
     },
     {
-        "UpdateStageName":"Halo CE Maps Installation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"powershell.exe",
-	    "UpdateSourceArgs":"-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'halo-ce'; (Invoke-RestMethod -UseBasicParsing -Uri 'https://halomaps.org/hce/detail.cfm?fid=410') -match 'name=\\\"hash\\\" value=\\\"(?<Hash>[A-Fa-f0-9]+)\\\"' | Out-Null; $CURRENT_HASH = $matches['Hash']; Invoke-WebRequest -UseBasicParsing -Uri 'https://halomaps.org/hce/detail.cfm#top' -Method Post -Body @{ fid = \\\"410\\\"; action = \\\"dl\\\"; hash = \\\"$CURRENT_HASH\\\" } -OutFile 'haloce.exe'; & 7-Zip\\7z.exe x -y -aoa haloce.exe -oserver maps\\* | Out-Null; Remove-Item -Path 'haloce.exe' -Force -ErrorAction SilentlyContinue | Out-Null\"",
-	    "SkipOnFailure":false
+        "UpdateStageName": "7-Zip Files Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd halo-ce/7-Zip && /usr/bin/tar -xf 7z2407-linux-x64.tar.xz && rm -f 7z2407-linux-x64.tar.xz\"",
+        "OneShot": true
     },
     {
-        "UpdateStageName":"Halo CE Maps Installation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd halo-ce && CURRENT_HASH=$(wget -qO- \\\"https://halomaps.org/hce/detail.cfm?fid=410\\\" | sed -n \\\"s/.*name=\\\\\\\"hash\\\\\\\" value=\\\\\\\"\\([A-Fa-f0-9]\\+\\)\\\\\\\".*/\\1/p\\\") && wget -qO haloce.exe --post-data=\\\"fid=410&action=dl&hash=$CURRENT_HASH\\\" https://halomaps.org/hce/detail.cfm#top && 7-Zip/7zzs x -y -aoa haloce.exe -oserver maps/* >/dev/null 2>&1 && rm -f halo-ce.exe >/dev/null 2>&1\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "Halo CE Maps Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'halo-ce'; (Invoke-RestMethod -UseBasicParsing -Uri 'https://halomaps.org/hce/detail.cfm?fid=410') -match 'name=\\\"hash\\\" value=\\\"(?<Hash>[A-Fa-f0-9]+)\\\"' | Out-Null; $CURRENT_HASH = $matches['Hash']; Invoke-WebRequest -UseBasicParsing -Uri 'https://halomaps.org/hce/detail.cfm#top' -Method Post -Body @{ fid = \\\"410\\\"; action = \\\"dl\\\"; hash = \\\"$CURRENT_HASH\\\" } -OutFile 'haloce.exe'; & 7-Zip\\7z.exe x -y -aoa haloce.exe -oserver maps\\* | Out-Null; Remove-Item -Path 'haloce.exe' -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"SAPP CE Installation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'halo-ce'; Invoke-WebRequest -UseBasicParsing -Uri 'http://halo.isimaginary.com/sapp_ce.7z' -OutFile 'sapp_ce.7z'; & 7-Zip\\7z.exe x -y -aoa sapp_ce.7z | Out-Null; Remove-Item -Path 'sapp_ce.7z' -Force -ErrorAction SilentlyContinue | Out-Null; Copy-Item -Path 'sapp_ce/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'sapp_ce' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "Halo CE Maps Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd halo-ce && CURRENT_HASH=$(wget -qO- \\\"https://halomaps.org/hce/detail.cfm?fid=410\\\" | sed -n \\\"s/.*name=\\\\\\\"hash\\\\\\\" value=\\\\\\\"\\([A-Fa-f0-9]\\+\\)\\\\\\\".*/\\1/p\\\") && wget -qO haloce.exe --post-data=\\\"fid=410&action=dl&hash=$CURRENT_HASH\\\" https://halomaps.org/hce/detail.cfm#top && 7-Zip/7zzs x -y -aoa haloce.exe -oserver maps/* >/dev/null 2>&1 && rm -f halo-ce.exe >/dev/null 2>&1\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"SAPP CE Installation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd halo-ce && wget -q http://halo.isimaginary.com/sapp_ce.7z && 7-Zip/7zzs x -y -aoa sapp_ce.7z >/dev/null 2>&1 && rm -f sapp_ce.7z >/dev/null 2>&1 && \\cp -f sapp_ce/* server >/dev/null 2>&1 && rm -rf sapp_ce\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "SAPP CE Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'halo-ce'; Invoke-WebRequest -UseBasicParsing -Uri 'http://halo.isimaginary.com/sapp_ce.7z' -OutFile 'sapp_ce.7z'; & 7-Zip\\7z.exe x -y -aoa sapp_ce.7z | Out-Null; Remove-Item -Path 'sapp_ce.7z' -Force -ErrorAction SilentlyContinue | Out-Null; Copy-Item -Path 'sapp_ce/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'sapp_ce' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Init.txt Template File Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/halo-ceinit.txt",
-        "UpdateSourceArgs":"AMP_init.txt",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "SAPP CE Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd halo-ce && wget -q http://halo.isimaginary.com/sapp_ce.7z && 7-Zip/7zzs x -y -aoa sapp_ce.7z >/dev/null 2>&1 && rm -f sapp_ce.7z >/dev/null 2>&1 && \\cp -f sapp_ce/* server >/dev/null 2>&1 && rm -rf sapp_ce\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Initialise Wine",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "Init.txt Template File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/halo-ceinit.txt",
+        "UpdateSourceArgs": "AMP_init.txt",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
     }
 ]
