@@ -16,19 +16,35 @@
         "UpdateSourceArgs":"860020"
     },
     {
-        "UpdateStageName":"Config Directory Creation",
+        "UpdateStageName":"DedicatedSettings.JSON.sample Copy",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Exfil/Saved/ServerSettings",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}Exfil/Saved/ServerSettings/DedicatedSettings.JSON",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Exfil/Saved/ServerSettings/DedicatedSettings.JSON.sample",
         "OverwriteExistingFiles":false
     },
     {
-        "UpdateStageName":"DedicatedSettings.JSON File Download",
+        "UpdateStageName":"ServerSettings.JSON.sample Copy",
         "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/exfildedicatedsettings.json",
-        "UpdateSourceTarget":"{{$FullBaseDir}}Exfil/Saved/ServerSettings",
-        "UpdateSourceArgs":"DedicatedSettings.JSON",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}Exfil/Saved/ServerSettings/ServerSettings.JSON",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Exfil/Saved/ServerSettings/ServerSettings.JSON.sample",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"Community.JSON.sample Copy",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CopyFilePath",
+        "UpdateSourceData":"{{$FullBaseDir}}Exfil/Saved/ServerSettings/Community.JSON",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Exfil/Saved/ServerSettings/Community.JSON.sample",
+        "OverwriteExistingFiles":false
+    },
+    {
+        "UpdateStageName":"AdminSettings.JSON Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateFile",
+        "UpdateSourceData":"{\n\\s\\s\\s\"AdminList\":\\s[],\n\\s\\s\\s\"BanList\":\\s[]\n}",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Exfil/Saved/ServerSettings/AdminSettings.JSON",
         "OverwriteExistingFiles":false
     }
 ]
