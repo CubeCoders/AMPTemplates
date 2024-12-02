@@ -4,7 +4,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd node-server; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $DownloadSource = \\\"{{DownloadSource}}\\\"; $DownloadBranch = \\\"{{DownloadBranch}}\\\"; if ($null -ne \\\"{{DownloadUsername}}\\\") { $DownloadUrl = $DownloadSource -replace \\\"https://\\\", \\\"https://{{DownloadUsername}}:{{DownloadPassword}}@\\\" } else { $DownloadUrl = \\\"$DownloadSource\\\" }; if (-Not (Test-Path app/.git)) { Write-Output \\\"Installing the app.\\\"; git clone \\\"$DownloadUrl\\\" srv *> $null; Copy-Item srv/* app/ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; cd app; if ([string]::IsNullOrEmpty($DownloadBranch)) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git checkout --force $DownloadBranch *> $null; if ($?) { Write-Output \\\"App installed.\\\" } } else { Write-Output \\\"Updating the app.\\\"; cd app; git fetch --all *> $null; if ([string]::IsNullOrEmpty($DownloadBranch)) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git checkout --force $DownloadBranch *> $null; if ($?) { Write-Output \\\"App updated.\\\" } }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd node-server; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $DownloadSource = \\\"{{DownloadSource}}\\\"; $DownloadBranch = \\\"{{DownloadBranch}}\\\"; if (![string]::IsNullOrEmpty({{DownloadUsername}})) { $DownloadUrl = $DownloadSource -replace \\\"https://\\\", \\\"https://{{DownloadUsername}}:{{DownloadPassword}}@\\\" } else { $DownloadUrl = \\\"$DownloadSource\\\" }; if (-Not (Test-Path app/.git)) { Write-Output \\\"Installing the app.\\\"; git clone \\\"$DownloadUrl\\\" srv 1> $null; Copy-Item srv/* app/ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; cd app; if ([string]::IsNullOrEmpty($DownloadBranch)) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git checkout --force $DownloadBranch 1> $null; if ($?) { Write-Output \\\"App installed.\\\" } } else { Write-Output \\\"Updating the app.\\\"; cd app; git fetch --all 1> $null; if ([string]::IsNullOrEmpty($DownloadBranch)) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git checkout --force $DownloadBranch 1> $null; if ($?) { Write-Output \\\"App updated.\\\" } }\"",
         "SkipOnFailure": false
     },
     {
@@ -12,7 +12,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd node-server && rm -rf srv >/dev/null 2>&1; DownloadSource=\\\"{{DownloadSource}}\\\"; DownloadBranch=\\\"{{DownloadBranch}}\\\"; [[ -n \\\"{{DownloadUsername}}\\\" ]] && DownloadUrl=\\\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\\\" || DownloadUrl=\\\"$DownloadSource\\\"; [ ! -d app/.git ] && { echo \\\"Installing the app.\\\" && git clone \\\"$DownloadUrl\\\" srv >/dev/null 2>&1 && \\cp -r srv/. app/ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && cd app && git fetch --all >/dev/null 2>&1 && [ -z \\\"$DownloadBranch\\\" ] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); git checkout $DownloadBranch --force >/dev/null 2>&1 && echo \\\"App installed.\\\"; } || { echo \\\"Updating the app.\\\" && cd app && git fetch --all >/dev/null 2>&1 && [ -z \\\"$DownloadBranch\\\" ] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); git checkout $DownloadBranch --force >/dev/null 2>&1 && echo \\\"App updated.\\\"; }\"",
+        "UpdateSourceArgs": "-c \"cd node-server && rm -rf srv >/dev/null 2>&1; DownloadSource=\\\"{{DownloadSource}}\\\"; DownloadBranch=\\\"{{DownloadBranch}}\\\"; [[ -n \\\"{{DownloadUsername}}\\\" ]] && DownloadUrl=\\\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\\\" || DownloadUrl=\\\"$DownloadSource\\\"; [ ! -d app/.git ] && { echo \\\"Installing the app.\\\" && git clone \\\"$DownloadUrl\\\" srv >/dev/null && \\cp -r srv/. app/ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && cd app && git fetch --all >/dev/null && [ -z \\\"$DownloadBranch\\\" ] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); git checkout $DownloadBranch --force >/dev/null && echo \\\"App installed.\\\"; } || { echo \\\"Updating the app.\\\" && cd app && git fetch --all >/dev/null && [ -z \\\"$DownloadBranch\\\" ] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); git checkout $DownloadBranch --force >/dev/null && echo \\\"App updated.\\\"; }\"",
         "UpdateSourceConditionSetting": "DownloadType",
         "UpdateSourceConditionValue": "GitRepo",
         "SkipOnFailure": false
@@ -60,7 +60,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd node-server && rm -Rf node/ >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-x64.tar.gz  >/dev/null 2>&1 && mv -v node-{{NodeVersion}}-linux-x64 node && rm node-{{NodeVersion}}-linux-x64.tar.gz && echo \\\"Node.js {{NodeVersion}} installed.\\\"\"",
+        "UpdateSourceArgs": "-c \"cd node-server && rm -Rf node/ >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-x64.tar.gz >/dev/null && mv -v node-{{NodeVersion}}-linux-x64 node && rm node-{{NodeVersion}}-linux-x64.tar.gz && echo \\\"Node.js {{NodeVersion}} installed.\\\"\"",
         "UpdateSourceConditionSetting": "DisableNodeDownload",
         "UpdateSourceConditionValue": "false",
         "SkipOnFailure": false
@@ -82,7 +82,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd node-server && rm -Rf node/ >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz && mv -v node-{{NodeVersion}}-linux-arm64 node && rm node-{{NodeVersion}}-linux-arm64.tar.gz && echo \\\"Node.js {{NodeVersion}} installed.\\\"\"",
+        "UpdateSourceArgs": "-c \"cd node-server && rm -Rf node/ >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz >/dev/null && mv -v node-{{NodeVersion}}-linux-arm64 node && rm node-{{NodeVersion}}-linux-arm64.tar.gz && echo \\\"Node.js {{NodeVersion}} installed.\\\"\"",
         "UpdateSourceConditionSetting": "DisableNodeDownload",
         "UpdateSourceConditionValue": "false",
         "SkipOnFailure": false
@@ -104,7 +104,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd node-server && rmdir /S /Q node/ > NUL 2>&1 & rename node-{{NodeVersion}}-win-x64 node 2>&1 && echo Node.js {{NodeVersion}} installed.",
+        "UpdateSourceArgs": "/C cd node-server && rmdir /S /Q node > NUL 2>&1 & rename node-{{NodeVersion}}-win-x64 node 2>&1 && echo Node.js {{NodeVersion}} installed.",
         "UpdateSourceConditionSetting": "DisableNodeDownload",
         "UpdateSourceConditionValue": "false",
         "SkipOnFailure": false
