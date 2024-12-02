@@ -1,24 +1,24 @@
 [
     {
-        "UpdateStageName": "Application Download",
+        "UpdateStageName": "App Download",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd npm-runner; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $DownloadSource = \\\"{{DownloadSource}}\\\"; $DownloadBranch = \\\"{{DownloadBranch}}\\\"; if ($null -ne \\\"{{DownloadUsername}}\\\") { $DownloadUrl = $DownloadSource -replace \\\"https://\\\", \\\"https://{{DownloadUsername}}:{{DownloadPassword}}@\\\" } else { $DownloadUrl = \\\"$DownloadSource\\\" }; if (-Not (Test-Path app/.git)) { Write-Output \\\"Installing the app.\\\"; git clone \\\"$DownloadUrl\\\" srv *> $null; Copy-Item srv/* app/ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; cd app; if ([string]::IsNullOrEmpty($DownloadBranch)) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git checkout --force $DownloadBranch *> $null; if ($?) { Write-Output \\\"App installed.\\\" } } else { Write-Output \\\"Updating the app.\\\"; cd app; git fetch --all *> $null; if ([string]::IsNullOrEmpty($DownloadBranch)) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git checkout --force $DownloadBranch *> $null; if ($?) { Write-Output \\\"App updated.\\\" } }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd node-server; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $DownloadSource = \\\"{{DownloadSource}}\\\"; $DownloadBranch = \\\"{{DownloadBranch}}\\\"; if ($null -ne \\\"{{DownloadUsername}}\\\") { $DownloadUrl = $DownloadSource -replace \\\"https://\\\", \\\"https://{{DownloadUsername}}:{{DownloadPassword}}@\\\" } else { $DownloadUrl = \\\"$DownloadSource\\\" }; if (-Not (Test-Path app/.git)) { Write-Output \\\"Installing the app.\\\"; git clone \\\"$DownloadUrl\\\" srv *> $null; Copy-Item srv/* app/ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; cd app; if ([string]::IsNullOrEmpty($DownloadBranch)) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git checkout --force $DownloadBranch *> $null; if ($?) { Write-Output \\\"App installed.\\\" } } else { Write-Output \\\"Updating the app.\\\"; cd app; git fetch --all *> $null; if ([string]::IsNullOrEmpty($DownloadBranch)) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git checkout --force $DownloadBranch *> $null; if ($?) { Write-Output \\\"App updated.\\\" } }\"",
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Application Download",
+        "UpdateStageName": "App Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd npm-runner && rm -rf srv >/dev/null 2>&1; DownloadSource=\\\"{{DownloadSource}}\\\"; DownloadBranch=\\\"{{DownloadBranch}}\\\"; [[ -n \\\"{{DownloadUsername}}\\\" ]] && DownloadUrl=\\\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\\\" || DownloadUrl=\\\"$DownloadSource\\\"; [ ! -d app/.git ] && { echo \\\"Installing the app.\\\" && git clone \\\"$DownloadUrl\\\" srv >/dev/null 2>&1 && \\cp -r srv/. app/ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && cd app && git fetch --all >/dev/null 2>&1 && [ -z \\\"$DownloadBranch\\\" ] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); git checkout $DownloadBranch --force >/dev/null 2>&1 && echo \\\"App installed.\\\"; } || { echo \\\"Updating the app.\\\" && cd app && git fetch --all >/dev/null 2>&1 && [ -z \\\"$DownloadBranch\\\" ] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); git checkout $DownloadBranch --force >/dev/null 2>&1 && echo \\\"App updated.\\\"; }\"",
+        "UpdateSourceArgs": "-c \"cd node-server && rm -rf srv >/dev/null 2>&1; DownloadSource=\\\"{{DownloadSource}}\\\"; DownloadBranch=\\\"{{DownloadBranch}}\\\"; [[ -n \\\"{{DownloadUsername}}\\\" ]] && DownloadUrl=\\\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\\\" || DownloadUrl=\\\"$DownloadSource\\\"; [ ! -d app/.git ] && { echo \\\"Installing the app.\\\" && git clone \\\"$DownloadUrl\\\" srv >/dev/null 2>&1 && \\cp -r srv/. app/ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && cd app && git fetch --all >/dev/null 2>&1 && [ -z \\\"$DownloadBranch\\\" ] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); git checkout $DownloadBranch --force >/dev/null 2>&1 && echo \\\"App installed.\\\"; } || { echo \\\"Updating the app.\\\" && cd app && git fetch --all >/dev/null 2>&1 && [ -z \\\"$DownloadBranch\\\" ] && DownloadBranch=$(/usr/bin/git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); git checkout $DownloadBranch --force >/dev/null 2>&1 && echo \\\"App updated.\\\"; }\"",
         "UpdateSourceConditionSetting": "DownloadType",
         "UpdateSourceConditionValue": "GitRepo",
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Application Download",
+        "UpdateStageName": "App Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "GithubRelease",
         "UpdateSourceArgs": "{{DownloadSource}}",
@@ -32,7 +32,7 @@
         "UpdateSourceConditionValue": "GithubRelease"
     },
     {
-        "UpdateStageName": "Application Download",
+        "UpdateStageName": "App Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "{{DownloadSource}}",
@@ -60,7 +60,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd npm-runner && rm -Rf node/ >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-x64.tar.gz  >/dev/null 2>&1 && mv -v node-{{NodeVersion}}-linux-x64 node && rm node-{{NodeVersion}}-linux-x64.tar.gz&& echo \\\"Node.js {{NodeVersion}} installed.\\\"\"",
+        "UpdateSourceArgs": "-c \"cd node-server && rm -Rf node/ >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-x64.tar.gz  >/dev/null 2>&1 && mv -v node-{{NodeVersion}}-linux-x64 node && rm node-{{NodeVersion}}-linux-x64.tar.gz && echo \\\"Node.js {{NodeVersion}} installed.\\\"\"",
         "UpdateSourceConditionSetting": "DisableNodeDownload",
         "UpdateSourceConditionValue": "false",
         "SkipOnFailure": false
@@ -82,7 +82,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd npm-runner && rm -Rf node/ >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz && mv -v node-{{NodeVersion}}-linux-arm64 node && rm node-{{NodeVersion}}-linux-arm64.tar.gz && echo \\\"Node.js {{NodeVersion}} installed.\\\"\"",
+        "UpdateSourceArgs": "-c \"cd node-server && rm -Rf node/ >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz && mv -v node-{{NodeVersion}}-linux-arm64 node && rm node-{{NodeVersion}}-linux-arm64.tar.gz && echo \\\"Node.js {{NodeVersion}} installed.\\\"\"",
         "UpdateSourceConditionSetting": "DisableNodeDownload",
         "UpdateSourceConditionValue": "false",
         "SkipOnFailure": false
@@ -104,7 +104,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd npm-runner && rmdir /S /Q node/ > NUL 2>&1 & rename node-{{NodeVersion}}-win-x64 node 2>&1 && echo \"Node.js {{NodeVersion}} installed.\"",
+        "UpdateSourceArgs": "/C cd node-server && rmdir /S /Q node/ > NUL 2>&1 & rename node-{{NodeVersion}}-win-x64 node 2>&1 && echo Node.js {{NodeVersion}} installed.",
         "UpdateSourceConditionSetting": "DisableNodeDownload",
         "UpdateSourceConditionValue": "false",
         "SkipOnFailure": false
@@ -114,7 +114,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd npm-runner/app/{{AppDir}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm install {{NpmPackages}}\"",
+        "UpdateSourceArgs": "-c \"cd node-server/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm install {{NpmPackages}}\"",
         "UpdateSourceConditionSetting": "NpmInstallType",
         "UpdateSourceConditionValue": "specify",
         "SkipOnFailure": false
@@ -124,7 +124,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd npm-runner\\app\\{{AppDir}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && npm install {{NpmPackages}}",
+        "UpdateSourceArgs": "/C cd node-server\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && npm install {{NpmPackages}}",
         "UpdateSourceConditionSetting": "NpmInstallType",
         "UpdateSourceConditionValue": "specify",
         "SkipOnFailure": false
@@ -134,7 +134,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd npm-runner/app/{{AppDir}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm install\"",
+        "UpdateSourceArgs": "-c \"cd node-server/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm install\"",
         "UpdateSourceConditionSetting": "NpmInstallType",
         "UpdateSourceConditionValue": "npmi",
         "SkipOnFailure": false
@@ -144,7 +144,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd npm-runner\\app\\{{AppDir}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && npm install",
+        "UpdateSourceArgs": "/C cd node-server\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && npm install",
         "UpdateSourceConditionSetting": "NpmInstallType",
         "UpdateSourceConditionValue": "npmi",
         "SkipOnFailure": false
@@ -154,7 +154,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd npm-runner/app/{{AppDir}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm ci\"",
+        "UpdateSourceArgs": "-c \"cd node-server/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm ci\"",
         "UpdateSourceConditionSetting": "NpmInstallType",
         "UpdateSourceConditionValue": "npmci",
         "SkipOnFailure": false
@@ -164,7 +164,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd npm-runner\\app\\{{AppDir}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && npm ci",
+        "UpdateSourceArgs": "/C cd node-server\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && npm ci",
         "UpdateSourceConditionSetting": "NpmInstallType",
         "UpdateSourceConditionValue": "npmci",
         "SkipOnFailure": false
@@ -174,8 +174,8 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd npm-runner/app/{{AppDir}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && {{AppSetupCommand}}\"",
-        "UpdateSourceConditionSetting": "RunAppSetupCommand",
+        "UpdateSourceArgs": "-c \"cd node-server/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && {{AppSetupCommands}}\"",
+        "UpdateSourceConditionSetting": "RunAppSetupCommands",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
     },
@@ -184,8 +184,8 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd npm-runner\\app\\{{AppDir}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && {{AppSetupCommand}}",
-        "UpdateSourceConditionSetting": "RunAppSetupCommand",
+        "UpdateSourceArgs": "/C cd node-server\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && {{AppSetupCommands}}",
+        "UpdateSourceConditionSetting": "RunAppSetupCommands",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
     }
