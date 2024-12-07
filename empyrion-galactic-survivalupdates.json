@@ -1,37 +1,37 @@
 [
-  {
-    "UpdateStageName": "SteamCMD Download",
-    "UpdateSourcePlatform": "All",
-    "UpdateSource": "SteamCMD",
-    "UpdateSourceData": "530870",
-    "UpdateSourceArgs":"383120",
-    "ForceDownloadPlatform": "Windows",
-    "UpdateSourceVersion": "{{Stream}}"
-  },
-  {
-    "UpdateStageName": "Base Config Download",
-    "UpdateSourcePlatform": "All",
-    "UpdateSource": "FetchURL",
-    "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/empyriondedicated.yaml",
-    "UpdateSourceTarget": "./530870/"
-  },
-  {
-    "UpdateStageName":"Backup Exclusions Download 1",
-    "UpdateSourcePlatform":"All",
-    "UpdateSource":"FetchURL",
-    "UpdateSourceData":"https://github.com/CubeCoders/AMPTemplates/raw/main/exclusions/.backupExclusionsEmpyrion1",
-    "UpdateSourceArgs":".backupExclude",
-    "UpdateSourceTarget":"{{$FullBaseDir}}",
-    "UpdateSourceConditionSetting": "backupExclude",
-    "UpdateSourceConditionValue": "true",
-    "OverwriteExistingFiles":false
-  },
-  {
-    "UpdateStageName":"Initialise Wine",
-    "UpdateSourcePlatform":"Linux",
-    "UpdateSource":"Executable",
-    "UpdateSourceData":"/bin/bash",
-    "UpdateSourceArgs":"-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
-    "SkipOnFailure":false
-  }
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "530870",
+        "UpdateSourceArgs": "383120",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceVersion": "{{Stream}}"
+    },
+    {
+        "UpdateStageName": "Base Config Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/empyriondedicated.yaml",
+        "UpdateSourceTarget": "./530870/"
+    },
+    {
+        "UpdateStageName": "Backup Exclusions Download 1",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/exclusions/.backupExclusionsEmpyrion1",
+        "UpdateSourceArgs": ".backupExclude",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceConditionSetting": "backupExclude",
+        "UpdateSourceConditionValue": "true",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
+    }
 ]
