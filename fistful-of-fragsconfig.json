@@ -49,6 +49,22 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "MOTD Countdown",
+        "Category": "Fistful of Frags:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets how long the MOTD panel lasts before it can be closed by clients",
+        "Keywords": "motd,fof_sv_motd_countdown",
+        "FieldName": "fof_sv_motd_countdown",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "10",
+        "ParamFieldName": "fof_sv_motd_countdown",
+        "DefaultValue": "1",
+        "Placeholder": "1",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "LAN Server",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -147,6 +163,25 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Initial Game Mode",
+        "Category": "Fistful of Frags:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Set the initial game mode for the server",
+        "Keywords": "currentmode,game,mode,fof_sv_currentmode",
+        "FieldName": "fof_sv_currentmode",
+        "InputType": "enum",
+        "ParamFieldName": "fof_sv_currentmode",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "1": "Shootout",
+            "2": "Teamplay/Objectives",
+            "3": "Break Bad",
+            "4": "Elimination",
+            "5": "Versus",
+            "6": "Co-op"
+        }
+    },
+    {
         "DisplayName": "Server Region",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -173,12 +208,12 @@
         "DisplayName": "Player Limit",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the maximum number of players allowed on the server at one time. By default the server does not support more than 8 players",
+        "Description": "Sets the maximum number of players allowed on the server at one time",
         "Keywords": "max,players,limit,maxplayers",
         "FieldName": "$MaxUsers",
         "InputType": "number",
         "MinValue": "1",
-        "MaxValue": "64",
+        "MaxValue": "25",
         "ParamFieldName": "sv_maxplayers",
         "DefaultValue": "8",
         "Placeholder": "8",
@@ -204,7 +239,7 @@
         "DisplayName": "Visible Player Limit",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the maximum players reported to prospective clients, regardless of the Player Limit. -1 = disabled",
+        "Description": "Sets the maximum players reported to prospective clients, regardless of the Player Limit. -1 = do not override",
         "Keywords": "visible,max,players,sv_visiblemaxplayers",
         "FieldName": "sv_visiblemaxplayers",
         "InputType": "number",
@@ -457,6 +492,21 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Decal Frequency",
+        "Category": "Fistful of Frags:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the time between decal sprays",
+        "Keywords": "decalfrequency",
+        "FieldName": "decalfrequency",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "decalfrequency",
+        "DefaultValue": "10",
+        "Placeholder": "10",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Ping Boost",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -504,7 +554,7 @@
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Server:dns:1",
         "Description": "Specifies additional [command line parameters](https://developer.valvesoftware.com/wiki/Command_line_options#Source_Dedicated_Server) (anything that begins with a -) that are not otherwise set by AMP. Use with care",
-        "Keywords": "custom,server,arguments,variables,cvars,convars,parameters",
+        "Keywords": "custom,server,arguments,parameters",
         "FieldName": "CustomParameters",
         "InputType": "text",
         "ParamFieldName": "CustomParameters",
@@ -553,6 +603,21 @@
         }
     },
     {
+        "DisplayName": "Enable Flashlight",
+        "Category": "Fistful of Frags:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If sets, allows the use of the flashlight by pressing the F button",
+        "Keywords": "flashlight,mp_flashlight",
+        "FieldName": "mp_flashlight",
+        "InputType": "checkbox",
+        "ParamFieldName": "mp_flashlight",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
         "DisplayName": "Enable Footsteps",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -561,6 +626,21 @@
         "FieldName": "mp_footsteps",
         "InputType": "checkbox",
         "ParamFieldName": "mp_footsteps",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Enable Auto Crosshair",
+        "Category": "Fistful of Frags:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, the auto crosshair will be enabled",
+        "Keywords": "auto,crosshair,mp_autocrosshair",
+        "FieldName": "mp_autocrosshair",
+        "InputType": "checkbox",
+        "ParamFieldName": "mp_autocrosshair",
         "DefaultValue": "1",
         "EnumValues": {
             "False": "0",
@@ -643,6 +723,21 @@
         }
     },
     {
+        "DisplayName": "Enable Fade To Black",
+        "Category": "Fistful of Frags:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, a player's screen fades to black for the remainder of the round after death (HUD and chat still works)",
+        "Keywords": "fade,black,spectator,death,mp_fadetoblack",
+        "FieldName": "mp_fadetoblack",
+        "InputType": "checkbox",
+        "ParamFieldName": "mp_fadetoblack",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
         "DisplayName": "Force Respawn",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -658,6 +753,66 @@
         }
     },
     {
+        "DisplayName": "Automatic Team Balancing",
+        "Category": "Fistful of Frags:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets whether to automatically balance teams based on the Teams Unbalance Limit",
+        "Keywords": "team,automatic,balance,balancing,mp_autoteambalance",
+        "FieldName": "mp_autoteambalance",
+        "InputType": "enum",
+        "ParamFieldName": "mp_autoteambalance",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "0": "Off",
+            "1": "Forcibly switch (default)",
+            "2": "Ask for volunteers"
+        }
+    },
+    {
+        "DisplayName": "Teams Unbalance Limit",
+        "Category": "Fistful of Frags:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Teams will be considered unbalanced for the purpose of Automatic Team Balancing when one team has this many more players than the other team. 0 = check disabled",
+        "Keywords": "team,automatic,balance,balancing,limit,mp_teams_unbalance_limit",
+        "FieldName": "mp_teams_unbalance_limit",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "mp_teams_unbalance_limit",
+        "DefaultValue": "1",
+        "Placeholder": "1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Stalemate Mode",
+        "Category": "Fistful of Frags:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, the stalemate mode will be enabled",
+        "Keywords": "stalemate,mode,mp_stalemate_enable",
+        "FieldName": "mp_stalemate_enable",
+        "InputType": "checkbox",
+        "ParamFieldName": "mp_stalemate_enable",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Stalemate Mode Time Limit",
+        "Category": "Fistful of Frags:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the time limit of the stalemate round",
+        "Keywords": "stalemate,round,time,limit,mp_stalemate_timelimit",
+        "FieldName": "mp_stalemate_timelimit",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "mp_stalemate_timelimit",
+        "DefaultValue": "240",
+        "Placeholder": "240",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Map Rotation Time Limit",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -669,7 +824,7 @@
         "ParamFieldName": "mp_timelimit",
         "DefaultValue": "0",
         "Placeholder": "0",
-        "Suffix": "seconds",
+        "Suffix": "minutes",
         "EnumValues": {}
     },
     {
@@ -688,6 +843,35 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Map Rotation Round Limit",
+        "Category": "Fistful of Frags:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the maximum number of rounds to play before the map rotates. 0 = disabled",
+        "Keywords": "round,limit,rotation,mp_maxrounds",
+        "FieldName": "mp_maxrounds",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "mp_maxrounds",
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "Suffix": "rounds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Map Rotation Win Limit",
+        "Category": "Fistful of Frags:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the maximum score one team can reach before the map rotates. 0 = disabled",
+        "Keywords": "win,limit,rotation,mp_winlimit",
+        "FieldName": "mp_winlimit",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "mp_winlimit",
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Restrict Spectator Mode",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -696,41 +880,22 @@
         "FieldName": "mp_forcecamera",
         "InputType": "checkbox",
         "ParamFieldName": "mp_forcecamera",
-        "DefaultValue": "1",
+        "DefaultValue": "0",
         "EnumValues": {
             "False": "0",
             "True": "1"
         }
     },
     {
-        "DisplayName": "Game Mode",
+        "DisplayName": "Maximum Teams",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Set the gamemode for this server",
-        "Keywords": "currentmode,gamemode,fof_sv_currentmode",
-        "FieldName": "fof_sv_currentmode",
-        "InputType": "enum",
-        "ParamFieldName": "fof_sv_currentmode",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "1": "Shootout",
-            "2": "Teamplay/Objectives",
-            "3": "Break Bad",
-            "4": "Elimination",
-            "5": "Versus",
-            "6": "Co-op"
-        }
-    },
-    {
-        "DisplayName": "Max Teams",
-        "Category": "Fistful of Frags:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "Set the maximum amount of teams for this server",
-        "Keywords": "maxteams,teams,fof_sv_maxteams",
+        "Description": "Sets the maximum number of teams for the server",
+        "Keywords": "maxteams,max,maximum,teams,fof_sv_maxteams",
         "FieldName": "fof_sv_maxteams",
         "InputType": "enum",
         "ParamFieldName": "fof_sv_maxteams",
-        "DefaultValue": "2",
+        "DefaultValue": "4",
         "EnumValues": {
             "2": "2",
             "3": "3",
@@ -738,7 +903,7 @@
         }
     },
     {
-        "DisplayName": "Bots: Dynamic Join",
+        "DisplayName": "Bots Dynamic Join",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
         "Description": "If set, the server will have bots join or leave automatically to fill slots",
@@ -746,120 +911,108 @@
         "FieldName": "fof_sv_bot_dynamicjoin",
         "InputType": "checkbox",
         "ParamFieldName": "fof_sv_bot_dynamicjoin",
-        "DefaultValue": "1",
+        "DefaultValue": "0",
         "EnumValues": {
             "False": "0",
             "True": "1"
         }
     },
     {
-        "DisplayName": "Bots: Slot Fill Percentage",
+        "DisplayName": "Bots Slot Fill Percentage",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Slots percentage filled by bots",
+        "Description": "Sets the slots percentage (expressed as a number between 0 and 1) filled by bots",
         "Keywords": "bots,slot,fof_sv_bot_slotpct",
         "FieldName": "fof_sv_bot_slotpct",
-        "InputType": "enum",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "1",
         "ParamFieldName": "fof_sv_bot_slotpct",
-        "DefaultValue": "0.2",
-        "EnumValues": {
-            "0": "0%",
-            "0.2": "20%",
-            "0.4": "40%",
-            "0.6": "60%",
-            "0.8": "80%",
-            "1": "100%"
-        }
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "EnumValues": {}
     },
     {
-        "DisplayName": "Bots: Skill Level",
+        "DisplayName": "Bots Skill Level",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Set skill level of bots",
-        "Keywords": "bots,skill,fof_bot_skill",
+        "Description": "Sets the skill level of bots",
+        "Keywords": "bots,skill,level,fof_bot_skill",
         "FieldName": "fof_bot_skill",
         "InputType": "enum",
         "ParamFieldName": "fof_bot_skill",
-        "DefaultValue": "5",
+        "DefaultValue": "2",
         "EnumValues": {
             "0": "Easy",
             "1": "Medium",
             "2": "Hard",
             "3": "Expert",
             "4": "Veteran",
-            "5": "Randomized"
+            "5": "Dynamic",
+            "6": "Defined in script"
         }
     },
     {
-        "DisplayName": "MOTD Countdown",
+        "DisplayName": "AFK To Spectator Timer",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "How many seconds last the MOTD screen before it can be closed by clients",
-        "Keywords": "motd,fof_sv_motd_countdown",
-        "FieldName": "fof_sv_motd_countdown",
-        "InputType": "number",
-        "MinValue": "0",
-        "MaxValue": "20",
-        "ParamFieldName": "fof_sv_motd_countdown",
-        "DefaultValue": "5",
-        "Placeholder": "5"
-    },
-    {
-        "DisplayName": "AFK to Spectator Timer",
-        "Category": "Fistful of Frags:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "How long in seconds players can be inactive before they are sent to spectator",
+        "Description": "Sets how long players can be inactive before they are sent to spectator",
         "Keywords": "afk,idle,spectator,fof_sv_maxidle_secs",
         "FieldName": "fof_sv_maxidle_secs",
         "InputType": "number",
-        "MinValue": "15",
+        "MinValue": "35",
         "MaxValue": "120",
         "ParamFieldName": "fof_sv_maxidle_secs",
-        "DefaultValue": "45",
-        "Placeholder": "45"
+        "DefaultValue": "90",
+        "Placeholder": "90",
+        "Suffix": "seconds",
+        "EnumValues": {}
     },
     {
-        "DisplayName": "Warmup Timer",
+        "DisplayName": "Warmup Duration",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Warm-up duration",
-        "Keywords": "warmup,fof_sv_obj_warmuptime",
+        "Description": "Sets the warm-up duration",
+        "Keywords": "warmup,timer,duration,fof_sv_obj_warmuptime",
         "FieldName": "fof_sv_obj_warmuptime",
         "InputType": "number",
         "MinValue": "0",
         "MaxValue": "60",
         "ParamFieldName": "fof_sv_obj_warmuptime",
-        "DefaultValue": "30",
-        "Placeholder": "30"
+        "DefaultValue": "25",
+        "Placeholder": "25",
+        "Suffix": "seconds",
+        "EnumValues": {}
     },
     {
-        "DisplayName": "Competitive: Enable/Disable",
+        "DisplayName": "Enable Competitive Mode",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Match ends when a players reaches an specified amount of notoriety points",
+        "Description": "If set, the competitive variant mode will be enabled: there is no time limit and the first player reaching the specified Notoriety Points To Win wins the game. The leader loses notoriety points when killed (same amount that their killer gets)",
         "Keywords": "competitive,notoriety,fof_sv_dm_comp",
         "FieldName": "fof_sv_dm_comp",
         "InputType": "checkbox",
         "ParamFieldName": "fof_sv_dm_comp",
         "DefaultValue": "0",
         "EnumValues": {
-            "True": "1",
-            "False": "0"
+            "False": "0",
+            "True": "1"
         }
     },
     {
-        "DisplayName": "Competitive: Notoriety Points to Win",
+        "DisplayName": "Competitive Mode Notoriety Points To Win",
         "Category": "Fistful of Frags:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "How much notoriety a player must have to win",
+        "Description": "Sets the number of notoriety points required to win the game in competitive mode",
         "Keywords": "competitive,notoriety,fof_sv_dm_comp_points",
         "FieldName": "fof_sv_dm_comp_points",
         "InputType": "number",
-        "MinValue": "100",
-        "MaxValue": "2000",
+        "MinValue": "500",
+        "MaxValue": "1000",
         "ParamFieldName": "fof_sv_dm_comp_points",
-        "DefaultValue": "1000",
-        "Placeholder": "1000"
+        "DefaultValue": "500",
+        "Placeholder": "500",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Alternate Ticks",
