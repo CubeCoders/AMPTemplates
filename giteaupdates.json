@@ -1,0 +1,62 @@
+[
+    {
+        "UpdateStageName": "Create Config Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}custom/conf"
+    },
+    {
+        "UpdateStageName": "Create Data Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}data"
+    },
+    {
+        "UpdateStageName": "Create Logs Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}logs"
+    },
+    {
+        "UpdateStageName": "Gitea Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://dl.gitea.com/gitea/1.22.4/gitea-1.22.4-windows-4.0-amd64.exe",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Gitea Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://dl.gitea.com/gitea/1.22.4/gitea-1.22.4-linux-amd64",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArch": "x86_64",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Gitea Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://dl.gitea.com/gitea/1.22.4/gitea-1.22.4-linux-arm64",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArch": "aarch64",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Make Server Executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}gitea"
+    },
+    {
+        "UpdateStageName": "Create App.ini File",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}custom/conf/app.ini",
+        "OverwriteExistingFiles": false
+    }
+]
