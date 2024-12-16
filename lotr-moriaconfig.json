@@ -13,19 +13,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Listen Address",
-        "Category": "LOTR Return to Moria:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "",
-        "FieldName": "$ApplicationIPBinding",
-        "InputType": "text",
-        "Hidden": true,
-        "ParamFieldName": "Host.ListenAddress",
-        "DefaultValue": "true",
-        "ExcludeFromImport": true,
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "Server Name",
         "Category": "LOTR Return to Moria:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -269,23 +256,49 @@
         }
     },
     {
+        "DisplayName": "Listen Address",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the local IP address to bind the server to. Normally keep this setting empty, which will result in the server binding to all network interfaces. Otherwise, specify an IPv4 or IPv6 address that is configured on the host to bind to",
+        "FieldName": "Host.ListenAddress",
+        "InputType": "text",
+        "ParamFieldName": "Host.ListenAddress",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Advertise Address",
         "Category": "LOTR Return to Moria:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the advertise address",
+        "Description": "Sets the server IP address reported to clients. Normally keep this set as 'Auto', however if there is an issue with automatic detection of your public IP address, then select 'Specific address' and configure Specific Advertise Address accordingly",
         "Keywords": "advertise,address,AdvertiseAddress",
         "FieldName": "Host.AdvertiseAddress",
-        "InputType": "text",
+        "InputType": "enum",
         "ParamFieldName": "Host.AdvertiseAddress",
         "DefaultValue": "auto",
-        "Placeholder": "auto",
+        "EnumValues": {
+            "auto": "Auto (default)",
+            "local": "Local (LAN only)",
+            "{{SpecificAdvertiseAddress}}": "Specific address"
+        }
+    },
+    {
+        "DisplayName": "Specific Advertise Address",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets a specific public IPv4 or IPv6 address to report to clients, if 'Specific address' is selected under Advertise Address",
+        "Keywords": "advertise,address,specific,SpecificAdvertiseAddress,AdvertiseAddress",
+        "FieldName": "SpecificAdvertiseAddress",
+        "InputType": "text",
+        "ParamFieldName": "SpecificAdvertiseAddress",
+        "DefaultValue": "",
         "EnumValues": {}
     },
     {
         "DisplayName": "Advertise Port",
         "Category": "LOTR Return to Moria:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the advertise port",
+        "Description": "Sets the server port reported to clients. Normally keep this set as '-1', which equates to the Listen Port. Only change this if the public port needs to be different to the Listen Port",
         "Keywords": "advertise,port,AdvertisePort",
         "FieldName": "Host.AdvertisePort",
         "InputType": "number",
