@@ -31,7 +31,7 @@
         "Subcategory": "Server:dns:1",
         "Description": "Sets the name of the world to load, or to create if it does not exist. This will also be the server name that is displayed publicly",
         "Keywords": "server,name",
-        "FieldName": "Name",
+        "FieldName": "World.Name",
         "InputType": "text",
         "ParamFieldName": "World.Name",
         "DefaultValue": "AMP Powered LOTR: Return to Moria Server",
@@ -43,10 +43,282 @@
         "Subcategory": "Server:dns:1",
         "Description": "Sets the password required for players to join the server. Default is no password",
         "Keywords": "password,server",
-        "FieldName": "Password",
+        "FieldName": "Main.Password",
         "InputType": "password",
         "ParamFieldName": "Main.OptionalPassword",
         "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Tickrate",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the tickrate for the server. Typically leave this at 60 - higher values are unlikely to improve the server",
+        "Keywords": "performance,fps,ticks,tickrate,serverfps",
+        "FieldName": "Performance.ServerFPS",
+        "InputType": "number",
+        "ParamFieldName": "Performance.ServerFPS",
+        "DefaultValue": "60",
+        "Placeholder": "60",
+        "Suffix": "fps"
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Console Enabled",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Enables or disables the console",
+        "Keywords": "console,enabled",
+        "FieldName": "Console.Enabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "Console.Enabled",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "World Creation Type",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the type for world creation",
+        "Keywords": "type,world,create,creation,campaign,sandbox",
+        "FieldName": "World.Create.Type",
+        "InputType": "enum",
+        "ParamFieldName": "World.Create.Type",
+        "DefaultValue": "campaign",
+        "EnumValues": {
+            "campaign": "Campaign (default)",
+            "sandbox": "Sandbox"
+        }
+    },
+    {
+        "DisplayName": "World Creation Seed",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the seed for world creation. Specify 'random' to generate a random seed, or otherwise use a specific integer",
+        "Keywords": "seed,world,create,creation",
+        "FieldName": "World.Create.Seed",
+        "InputType": "text",
+        "ParamFieldName": "World.Create.Seed",
+        "DefaultValue": "random",
+        "Placeholder": "random",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Difficulty Level",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the difficulty level. If 'Custom' is selected, set the difficulty settings accordingly",
+        "Keywords": "difficulty,level,preset",
+        "FieldName": "Difficulty.Preset",
+        "InputType": "enum",
+        "ParamFieldName": "Difficulty.Preset",
+        "DefaultValue": "normal",
+        "EnumValues": {
+            "solo": "Solo",
+            "normal": "Normal (default)",
+            "hard": "Hard",
+            "custom": "Custom"
+        }
+    },
+    {
+        "DisplayName": "Custom Combat Difficulty",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the combat difficulty. Only applicable to the 'Custom' Difficulty Level",
+        "Keywords": "difficulty,combat",
+        "FieldName": "Difficulty.Custom.CombatDifficulty",
+        "InputType": "enum",
+        "ParamFieldName": "Difficulty.Custom.CombatDifficulty",
+        "DefaultValue": "default",
+        "EnumValues": {
+            "verylow": "Very low",
+            "low": "Low",
+            "default": "Default",
+            "high": "High",
+            "veryhigh": "Very high"
+        }
+    },
+    {
+        "DisplayName": "Custom Enemy Aggression",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the enemy aggression. Only applicable to the 'Custom' Difficulty Level",
+        "Keywords": "difficulty,enemy,aggression",
+        "FieldName": "Difficulty.Custom.EnemyAggression",
+        "InputType": "enum",
+        "ParamFieldName": "Difficulty.Custom.EnemyAggression",
+        "DefaultValue": "high",
+        "EnumValues": {
+            "verylow": "Very low",
+            "low": "Low",
+            "default": "Default",
+            "high": "High",
+            "veryhigh": "Very high"
+        }
+    },
+    {
+        "DisplayName": "Custom Survival Difficulty",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the survival difficulty. Only applicable to the 'Custom' Difficulty Level",
+        "Keywords": "difficulty,survival",
+        "FieldName": "Difficulty.Custom.SurvivalDifficulty",
+        "InputType": "enum",
+        "ParamFieldName": "Difficulty.Custom.SurvivalDifficulty",
+        "DefaultValue": "default",
+        "EnumValues": {
+            "verylow": "Very low",
+            "low": "Low",
+            "default": "Default",
+            "high": "High",
+            "veryhigh": "Very high"
+        }
+    },
+    {
+        "DisplayName": "Custom Mining Drops",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the mining drops. Only applicable to the 'Custom' Difficulty Level",
+        "Keywords": "difficulty,mining,drops",
+        "FieldName": "Difficulty.Custom.MiningDrops",
+        "InputType": "enum",
+        "ParamFieldName": "Difficulty.Custom.MiningDrops",
+        "DefaultValue": "default",
+        "EnumValues": {
+            "verylow": "Very low",
+            "low": "Low",
+            "default": "Default",
+            "high": "High",
+            "veryhigh": "Very high"
+        }
+    },
+    {
+        "DisplayName": "Custom World Drops",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the world drops. Only applicable to the 'Custom' Difficulty Level",
+        "Keywords": "difficulty,world,drops",
+        "FieldName": "Difficulty.Custom.WorldDrops",
+        "InputType": "enum",
+        "ParamFieldName": "Difficulty.Custom.WorldDrops",
+        "DefaultValue": "default",
+        "EnumValues": {
+            "verylow": "Very low",
+            "low": "Low",
+            "default": "Default",
+            "high": "High",
+            "veryhigh": "Very high"
+        }
+    },
+    {
+        "DisplayName": "Custom Horde Frequency",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the horde frequency. Only applicable to the 'Custom' Difficulty Level",
+        "Keywords": "difficulty,horde,frequency",
+        "FieldName": "Difficulty.Custom.HordeFrequency",
+        "InputType": "enum",
+        "ParamFieldName": "Difficulty.Custom.HordeFrequency",
+        "DefaultValue": "default",
+        "EnumValues": {
+            "verylow": "Very low",
+            "low": "Low",
+            "default": "Default",
+            "high": "High",
+            "veryhigh": "Very high"
+        }
+    },
+    {
+        "DisplayName": "Custom Siege Frequency",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the siege frequency. Only applicable to the 'Custom' Difficulty Level",
+        "Keywords": "difficulty,siege,frequency",
+        "FieldName": "Difficulty.Custom.SiegeFrequency",
+        "InputType": "enum",
+        "ParamFieldName": "Difficulty.Custom.SiegeFrequency",
+        "DefaultValue": "default",
+        "EnumValues": {
+            "verylow": "Very low",
+            "low": "Low",
+            "default": "Default",
+            "high": "High",
+            "veryhigh": "Very high"
+        }
+    },
+    {
+        "DisplayName": "Custom Patrol Frequency",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the patrol frequency. Only applicable to the 'Custom' Difficulty Level",
+        "Keywords": "difficulty,patrol,frequency",
+        "FieldName": "Difficulty.Custom.PatrolFrequency",
+        "InputType": "enum",
+        "ParamFieldName": "Difficulty.Custom.PatrolFrequency",
+        "DefaultValue": "default",
+        "EnumValues": {
+            "verylow": "Very low",
+            "low": "Low",
+            "default": "Default",
+            "high": "High",
+            "veryhigh": "Very high"
+        }
+    },
+    {
+        "DisplayName": "Advertise Address",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the advertise address",
+        "Keywords": "advertise,address",
+        "FieldName": "Host.AdvertiseAddress",
+        "InputType": "text",
+        "ParamFieldName": "Host.AdvertiseAddress",
+        "DefaultValue": "auto",
+        "Placeholder": "auto",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Advertise Port",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the advertise port",
+        "Keywords": "advertise,port",
+        "FieldName": "Host.AdvertisePort",
+        "InputType": "number",
+        "ParamFieldName": "Host.AdvertisePort",
+        "DefaultValue": "-1",
+        "Placeholder": "-1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Initial Connection Retry Time",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the initial connection retry time",
+        "Keywords": "connection,retry,time",
+        "FieldName": "Host.InitialConnectionRetryTime",
+        "InputType": "number",
+        "ParamFieldName": "Host.InitialConnectionRetryTime",
+        "DefaultValue": "60",
+        "Placeholder": "60",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "After Disconnection Retry Time",
+        "Category": "LOTR Return to Moria:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the after disconnection retry time",
+        "Keywords": "disconnection,retry,time",
+        "FieldName": "Host.AfterDisconnectionRetryTime",
+        "InputType": "number",
+        "ParamFieldName": "Host.AfterDisconnectionRetryTime",
+        "DefaultValue": "600",
+        "Placeholder": "600",
+        "Suffix": "seconds",
         "EnumValues": {}
     }
 ]
