@@ -22,7 +22,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd openra/appimage && CURRENT_VERSION=$(wget -qO- \\\"https://www.openra.net/download/\\\" | grep \\\"The\\s*latest\\s*stable\\s*release\\s*is\\\" | sed \\\"s;.*The\\s*latest\\s*stable\\s*release\\s*is\\s*<code>release-\\([0-9]\\+\\)</code>.*;\\1;\\\") && wget -qO OpenRA.AppImage \\\"https://github.com/OpenRA/OpenRA/releases/download/release-${CURRENT_VERSION}/OpenRA-Red-Alert-x86_64.AppImage\\\"\"",
+        "UpdateSourceArgs": "-c \"cd openra/appimage && CURRENT_VERSION=$(wget -qO- https://www.openra.net/versions.json | jq -r \\\".release\\\") && wget -qO OpenRA.AppImage \\\"https://github.com/OpenRA/OpenRA/releases/download/${CURRENT_VERSION}/OpenRA-Red-Alert-x86_64.AppImage\\\" && echo \\\"OpenRA version $CURRENT_VERSION downloaded\\\"\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "release",
         "SkipOnFailure": false
@@ -32,7 +32,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; (Invoke-RestMethod -UseBasicParsing -Uri 'https://www.openra.net/download/') -match 'The\\s*latest\\s*stable\\s*release\\s*is\\s*<code>release-(?<Version>[0-9]+)' | Out-Null; $CURRENT_VERSION=$matches['Version']; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://github.com/OpenRA/OpenRA/releases/download/release-${CURRENT_VERSION}/OpenRA-release-${CURRENT_VERSION}-x64-winportable.zip\\\" -OutFile 'OpenRA.zip'\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $CURRENT_VERSION=(Invoke-RestMethod -UseBasicParsing -Uri 'https://www.openra.net/versions.json').release; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://github.com/OpenRA/OpenRA/releases/download/${CURRENT_VERSION}/OpenRA-${CURRENT_VERSION}-x64-winportable.zip\\\" -OutFile 'OpenRA.zip'; if ($?) { Write-Output \\\"OpenRA version $CURRENT_VERSION downloaded\\\" }\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "release",
         "SkipOnFailure": false
@@ -42,7 +42,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd openra/appimage && CURRENT_VERSION=$(wget -qO- \\\"https://www.openra.net/download/\\\" | grep \\\"The\\s*latest\\s*stable\\s*release\\s*is\\\" | sed \\\"s;.*the\\s*latest\\s*playtest\\s*is\\s*<code>playtest-\\([0-9]\\+\\)</code>.*;\\1;\\\") && wget -qO OpenRA.AppImage \\\"https://github.com/OpenRA/OpenRA/releases/download/playtest-${CURRENT_VERSION}/OpenRA-Red-Alert-playtest-x86_64.AppImage\\\"\"",
+        "UpdateSourceArgs": "-c \"cd openra/appimage && CURRENT_VERSION=$(wget -qO- https://www.openra.net/versions.json | jq -r \\\".playtest\\\") && wget -qO OpenRA.AppImage \\\"https://github.com/OpenRA/OpenRA/releases/download/${CURRENT_VERSION}/OpenRA-Red-Alert-playtest-x86_64.AppImage\\\" && echo \\\"OpenRA version $CURRENT_VERSION downloaded\\\"\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "playtest",
         "SkipOnFailure": false
@@ -52,7 +52,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; (Invoke-RestMethod -UseBasicParsing -Uri 'https://www.openra.net/download/') -match 'the\\s*latest\\s*playtest\\s*is\\s*<code>playtest-(?<Version>[0-9]+)' | Out-Null; $CURRENT_VERSION=$matches['Version']; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://github.com/OpenRA/OpenRA/releases/download/playtest-${CURRENT_VERSION}/OpenRA-playtest-${CURRENT_VERSION}-x64-winportable.zip\\\" -OutFile 'OpenRA.zip'\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $CURRENT_VERSION=(Invoke-RestMethod -UseBasicParsing -Uri 'https://www.openra.net/versions.json').playtest; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://github.com/OpenRA/OpenRA/releases/download/${CURRENT_VERSION}/OpenRA-${CURRENT_VERSION}-x64-winportable.zip\\\" -OutFile 'OpenRA.zip'; if ($?) { Write-Output \\\"OpenRA version $CURRENT_VERSION downloaded\\\" }\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "playtest",
         "SkipOnFailure": false
