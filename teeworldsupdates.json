@@ -20,12 +20,42 @@
         "DeleteAfterExtract": true
     },
     {
+        "UpdateStageName": "Server Files Copy",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd teeworlds && del /Q /F teeworlds-0.7.5-win64\\storage.cfg && xcopy /E /Y /I teeworlds-0.7.5-win64\\* .\\ && rmdir /Q /S teeworlds-0.7.5-win64",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Files Copy",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd teeworlds && rm -f teeworlds-0.7.5-linux_x86_64/storage.cfg && \\cp -rf teeworlds-0.7.5-linux_x86_64/storage.cfg/* ./ && rm -rf teeworlds-0.7.5-linux_x86_64\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create User Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}user"
+    },
+    {
         "UpdateStageName": "Serverconfig.cfg File Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/teeworldsserverconfig.cfg",
         "UpdateSourceArgs": "serverconfig.cfg",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceTarget": "{{$FullBaseDir}}user",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Create Storage.cfg File",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "add_path user\nadd_path $DATADIR\nadd_path $CURRENTDIR",
+        "UpdateSourceArgs": "{{$FullBaseDir}}storage.cfg",
         "OverwriteExistingFiles": false
     }
 ]
