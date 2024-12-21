@@ -231,6 +231,8 @@
         "MaxValue": "100",
         "ParamFieldName": "sv_max_clients",
         "DefaultValue": "12",
+        "Placeholder": "12",
+        "Suffix": "clients",
         "EnumValues": {}
     },
     {
@@ -245,6 +247,8 @@
         "MaxValue": "100",
         "ParamFieldName": "sv_max_clients_per_ip",
         "DefaultValue": "12",
+        "Placeholder": "12",
+        "Suffix": "clients",
         "EnumValues": {}
     },
     {
@@ -268,7 +272,7 @@
         "FieldName": "sv_name",
         "InputType": "text",
         "ParamFieldName": "sv_name",
-        "DefaultValue": "unnamed server",
+        "DefaultValue": "AMP Powered Teeworlds Server",
         "EnumValues": {}
     },
     {
@@ -283,6 +287,8 @@
         "MaxValue": "1440",
         "ParamFieldName": "sv_rcon_bantime",
         "DefaultValue": "5",
+        "Placeholder": "5",
+        "Suffix": "minutes",
         "EnumValues": {}
     },
     {
@@ -297,6 +303,7 @@
         "MaxValue": "10",
         "ParamFieldName": "sv_rcon_max_tries",
         "DefaultValue": "3",
+        "Placeholder": "3",
         "EnumValues": {}
     },
     {
@@ -387,7 +394,7 @@
     {
         "DisplayName": "Countdown",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "Number of seconds to freeze the game in a countdown before match starts (0 enables only for survival gamemodes, -1 disables)",
         "Keywords": "countdown,sv_countdown",
         "FieldName": "sv_countdown",
@@ -396,13 +403,15 @@
         "MaxValue": "60",
         "ParamFieldName": "sv_countdown",
         "DefaultValue": "0",
+        "Placeholder": "0",
+        "Suffix": "seconds",
         "EnumValues": {}
     },
     {
         "DisplayName": "Game Type",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
-        "Description": "Game type (dm, tdm, ctf, lms, lts) (This setting needs the map to be reloaded in order to take effect)",
+        "Subcategory": "Gameplay:settings:2",
+        "Description": "Game type. This setting needs the map to be reloaded in order to take effect",
         "Keywords": "game,type,sv_gametype",
         "FieldName": "sv_gametype",
         "InputType": "enum",
@@ -419,7 +428,7 @@
     {
         "DisplayName": "Map",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "Map to use on the server",
         "Keywords": "map,sv_map",
         "FieldName": "sv_map",
@@ -448,7 +457,7 @@
     {
         "DisplayName": "Map Rotation",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "Maps to rotate between",
         "Keywords": "map,rotation,sv_maprotation",
         "FieldName": "sv_maprotation",
@@ -460,217 +469,257 @@
     {
         "DisplayName": "Swap Teams Between Matches",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "Swap teams between matches",
         "Keywords": "swap,teams,sv_match_swap",
         "FieldName": "sv_match_swap",
-        "InputType": "number",
+        "InputType": "checkbox",
         "ParamFieldName": "sv_match_swap",
         "DefaultValue": "1",
-        "EnumValues": {}
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
     },
     {
         "DisplayName": "Matches Per Map",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "Number of matches on each map before rotating",
         "Keywords": "matches,map,sv_matches_per_map",
         "FieldName": "sv_matches_per_map",
         "InputType": "number",
         "ParamFieldName": "sv_matches_per_map",
         "DefaultValue": "1",
+        "Placeholder": "1",
         "EnumValues": {}
     },
     {
         "DisplayName": "Player Ready Mode",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "When enabled, players can pause/unpause the game and start the game on warmup via their ready state",
         "Keywords": "player,ready,mode,sv_player_ready_mode",
         "FieldName": "sv_player_ready_mode",
-        "InputType": "number",
+        "InputType": "checkbox",
         "ParamFieldName": "sv_player_ready_mode",
         "DefaultValue": "0",
-        "EnumValues": {}
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
     },
     {
         "DisplayName": "Player Slots",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "Number of slots to reserve for players. Replaces sv_spectator_slots",
         "Keywords": "player,slots,sv_player_slots",
         "FieldName": "sv_player_slots",
         "InputType": "number",
         "ParamFieldName": "sv_player_slots",
         "DefaultValue": "8",
+        "Placeholder": "8",
+        "Suffix": "slots",
         "EnumValues": {}
     },
     {
         "DisplayName": "Allow Powerups",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "Allow powerups like ninja",
         "Keywords": "powerups,sv_powerups",
         "FieldName": "sv_powerups",
-        "InputType": "number",
+        "InputType": "checkbox",
         "ParamFieldName": "sv_powerups",
         "DefaultValue": "1",
-        "EnumValues": {}
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
     },
     {
         "DisplayName": "Respawn Delay TDM",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
-        "Description": "Time needed to respawn after death in tdm gametype",
+        "Subcategory": "Gameplay:settings:2",
+        "Description": "Time needed to respawn after death in Team Deathmatch gametype",
         "Keywords": "respawn,delay,tdm,sv_respawn_delay_tdm",
         "FieldName": "sv_respawn_delay_tdm",
         "InputType": "number",
         "ParamFieldName": "sv_respawn_delay_tdm",
         "DefaultValue": "3",
+        "Placeholder": "3",
         "EnumValues": {}
     },
     {
         "DisplayName": "Score Limit",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
-        "Description": "Score limit of the game (0 disables it)",
+        "Subcategory": "Gameplay:settings:2",
+        "Description": "Score limit of the game. 0 = disabled",
         "Keywords": "score,limit,sv_scorelimit",
         "FieldName": "sv_scorelimit",
         "InputType": "number",
         "ParamFieldName": "sv_scorelimit",
         "DefaultValue": "20",
+        "Placeholder": "20",
         "EnumValues": {}
     },
     {
         "DisplayName": "Strict Spectate Mode",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "Restricts information like health, ammo and armour in spectator mode",
         "Keywords": "strict,spectate,mode,sv_strict_spectate_mode",
         "FieldName": "sv_strict_spectate_mode",
-        "InputType": "number",
+        "InputType": "checkbox",
         "ParamFieldName": "sv_strict_spectate_mode",
         "DefaultValue": "0",
-        "EnumValues": {}
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
     },
     {
         "DisplayName": "Team Balance Time",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "How many minutes to wait before autobalancing teams",
         "Keywords": "team,balance,time,sv_teambalance_time",
         "FieldName": "sv_teambalance_time",
         "InputType": "number",
         "ParamFieldName": "sv_teambalance_time",
         "DefaultValue": "1",
+        "Placeholder": "1",
+        "Suffix": "minutes",
         "EnumValues": {}
     },
     {
         "DisplayName": "Team Damage",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "Team damage",
         "Keywords": "team,damage,sv_teamdamage",
         "FieldName": "sv_teamdamage",
-        "InputType": "number",
+        "InputType": "checkbox",
         "ParamFieldName": "sv_teamdamage",
         "DefaultValue": "0",
-        "EnumValues": {}
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
     },
     {
         "DisplayName": "Time Limit",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
-        "Description": "Time limit of the game (in case of equal points there will be sudden death) (0 disables)",
+        "Subcategory": "Gameplay:settings:2",
+        "Description": "Time limit of the game (in case of equal points there will be sudden death). 0 = disabled",
         "Keywords": "time,limit,sv_timelimit",
         "FieldName": "sv_timelimit",
         "InputType": "number",
         "ParamFieldName": "sv_timelimit",
         "DefaultValue": "0",
+        "Placeholder": "0",
+        "Suffix": "minutes",
         "EnumValues": {}
     },
     {
         "DisplayName": "Tournament Mode",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
-        "Description": "Tournament mode. When enabled, players joins the server as spectator (2=additional restricted spectator chat)",
+        "Subcategory": "Gameplay:settings:2",
+        "Description": "Tournament mode. When enabled, players joins the server as spectator",
         "Keywords": "tournament,mode,sv_tournament_mode",
         "FieldName": "sv_tournament_mode",
-        "InputType": "number",
+        "InputType": "enum",
         "ParamFieldName": "sv_tournament_mode",
         "DefaultValue": "0",
-        "EnumValues": {}
+        "EnumValues": {
+            "0": "Disabled",
+            "1": "Enabled",
+            "2": "Enabled with restricted spectator chat"
+        }
     },
     {
         "DisplayName": "Allow Vote Kick",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "Allow voting to kick players",
         "Keywords": "vote,kick,sv_vote_kick",
         "FieldName": "sv_vote_kick",
-        "InputType": "number",
+        "InputType": "checkbox",
         "ParamFieldName": "sv_vote_kick",
         "DefaultValue": "1",
-        "EnumValues": {}
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
     },
     {
         "DisplayName": "Vote Kick Ban Time",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "The time to ban a player if kicked by vote. 0 makes it just use kick",
         "Keywords": "vote,kick,ban,time,sv_vote_kick_bantime",
         "FieldName": "sv_vote_kick_bantime",
         "InputType": "number",
         "ParamFieldName": "sv_vote_kick_bantime",
         "DefaultValue": "5",
+        "Placeholder": "5",
         "EnumValues": {}
     },
     {
         "DisplayName": "Vote Kick Min",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "Minimum number of players required to start a kick vote",
         "Keywords": "vote,kick,min,sv_vote_kick_min",
         "FieldName": "sv_vote_kick_min",
         "InputType": "number",
         "ParamFieldName": "sv_vote_kick_min",
         "DefaultValue": "0",
+        "Placeholder": "0",
         "EnumValues": {}
     },
     {
         "DisplayName": "Allow Vote Spectate",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "Allow voting to move players to spectators",
         "Keywords": "vote,spectate,sv_vote_spectate",
         "FieldName": "sv_vote_spectate",
-        "InputType": "number",
+        "InputType": "checkbox",
         "ParamFieldName": "sv_vote_spectate",
         "DefaultValue": "1",
-        "EnumValues": {}
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
     },
     {
         "DisplayName": "Vote Spectate Rejoin Delay",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
+        "Subcategory": "Gameplay:settings:2",
         "Description": "How many minutes to wait before a player can rejoin after being moved to spectators by vote",
         "Keywords": "vote,spectate,rejoin,delay,sv_vote_spectate_rejoindelay",
         "FieldName": "sv_vote_spectate_rejoindelay",
         "InputType": "number",
         "ParamFieldName": "sv_vote_spectate_rejoindelay",
         "DefaultValue": "3",
+        "Placeholder": "3",
+        "Suffix": "minutes",
         "EnumValues": {}
     },
     {
         "DisplayName": "Warmup",
         "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Game:settings",
-        "Description": "Number of seconds to do warmup before match starts (0 disables, -1 all players ready)",
+        "Subcategory": "Gameplay:settings:2",
+        "Description": "Number of seconds to do warmup before match starts. 0 = disabled. -1 = all players ready",
         "Keywords": "warmup,sv_warmup",
         "FieldName": "sv_warmup",
         "InputType": "number",
         "ParamFieldName": "sv_warmup",
         "DefaultValue": "0",
+        "Placeholder": "0",
+        "Suffix": "seconds",
         "EnumValues": {}
     },
     {
@@ -683,6 +732,7 @@
         "InputType": "text",
         "ParamFieldName": "ec_bindaddr",
         "DefaultValue": "localhost",
+        "Placeholder": "localhost",
         "EnumValues": {}
     },
     {
@@ -701,12 +751,13 @@
         "DisplayName": "External Console Ban Time",
         "Category": "Teeworlds:stadia_controller",
         "Subcategory": "External console:settings",
-        "Description": "The time a client gets banned if econ authentication fails. 0 just closes the connection",
+        "Description": "The time a client gets banned if external console authentication fails. 0 = connection just closed",
         "Keywords": "external,console,ban,time,ec_bantime",
         "FieldName": "ec_bantime",
         "InputType": "number",
         "ParamFieldName": "ec_bantime",
         "DefaultValue": "0",
+        "Placeholder": "0",
         "EnumValues": {}
     },
     {
@@ -719,6 +770,8 @@
         "InputType": "number",
         "ParamFieldName": "ec_auth_timeout",
         "DefaultValue": "30",
+        "Placeholder": "30",
+        "Suffix": "seconds",
         "EnumValues": {}
     },
     {
@@ -731,6 +784,7 @@
         "InputType": "number",
         "ParamFieldName": "ec_output_level",
         "DefaultValue": "1",
+        "Placeholder": "1",
         "EnumValues": {}
     }
 ]
