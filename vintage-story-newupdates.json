@@ -65,23 +65,39 @@
     },
     {
         "UpdateStageName": "Server Download",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://{{ServerDownloadSource}}/{{ServerReleaseStream}}/vs_server_win-x64_{{ServerVersion}}.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}server",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"ServerVersion=\\\"{{ServerVersion}}\\\" && ServerReleaseStream=\\\"{{ServerReleaseStream}}\\\" && if [[ -z \\\"$ServerVersion\\\" ]]; then if [[ \\\"$ServerReleaseStream\\\" == \\\"pre\\\" ]]; then echo \\\"No Vintage Story preview version specified\\\" && exit 1; else ServerVersion=$(wget -qO- https://api.vintagestory.at/latest${ServerReleaseStream}.txt); fi; fi; if [[ ! \\\"$ServerVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+(-rc\\.[0-9]+|-pre\\.[0-9]+)?$ ]]; then echo \\\"Invalid Vintage Story version format specified\\\" && exit 1; fi && wget -qO vs_server.tar.gz https://{{ServerDownloadSource}}/$ServerReleaseStream/vs_server_linux-x64_$ServerVersion.tar.gz && echo \\\"Vintage Story v$ServerVersion downloaded\\\"\"",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $ServerVersion='{{ServerVersion}}'; $ServerReleaseStream='{{ServerReleaseStream}}'; if ([string]::IsNullOrWhiteSpace($ServerVersion)) { if ($ServerReleaseStream -eq 'pre') { Write-Output \\\"No Vintage Story preview version specified\\\"; exit 1 } else { $ServerVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://api.vintagestory.at/latest${ServerReleaseStream}.txt) } }; if ($ServerVersion -notmatch '^\\d+\\.\\d+\\.\\d+(-rc\\.\\d+|-pre\\.\\d+)?$') { Write-Output \\\"Invalid Vintage Story version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://{{ServerDownloadSource}}/$ServerReleaseStream/vs_server_win-x64_$ServerVersion.zip -OutFile 'vs_server.zip'; if ($?) { Write-Output \\\"Vintage Story v$ServerVersion downloaded\\\" }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Extract",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://{{ServerDownloadSource}}/{{ServerReleaseStream}}/vs_server_linux-x64_{{ServerVersion}}.tar.gz",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "vs_server.tar.gz",
         "UpdateSourceTarget": "{{$FullBaseDir}}server",
-        "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "vs_server.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}server",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Start Server",
