@@ -1,0 +1,131 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "237410",
+        "UpdateSourceArgs": "222880",
+        "ForceDownloadPlatform": "Windows"
+    },
+    {
+        "UpdateStageName": "SteamCMD Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "237410",
+        "UpdateSourceArgs": "222880",
+        "ForceDownloadPlatform": "Linux"
+    },
+    {
+        "UpdateStageName": "Server.cfg Template File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/insurgencyserver.cfg",
+        "UpdateSourceArgs": "AMP_server.cfg",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Metamod Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://mms.alliedmods.net/mmsdrop/{{MetamodBranch}}/mmsource-{{MetamodBranch}}.0-git{{MetamodBuild}}-windows.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}insurgency",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Metamod Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://mms.alliedmods.net/mmsdrop/{{MetamodBranch}}/mmsource-{{MetamodBranch}}.0-git{{MetamodBuild}}-linux.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}insurgency",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "SourceMod Download Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}sm",
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "SourceMod Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://sm.alliedmods.net/smdrop/{{SourceModBranch}}/sourcemod-{{SourceModBranch}}.0-git{{SourcemodBuild}}-windows.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}sm",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "SourceMod Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://sm.alliedmods.net/smdrop/{{SourceModBranch}}/sourcemod-{{SourceModBranch}}.0-git{{SourcemodBuild}}-linux.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}sm",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "SourceMod Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'insurgency/237410'; if (Test-Path 'insurgency/cfg/sourcemod') { Remove-Item -Path 'sm/cfg/sourcemod' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'insurgency/addons/sourcemod/configs') { Remove-Item -Path 'sm/addons/sourcemod/configs' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'insurgency/addons/sourcemod/plugins') { Remove-Item -Path 'sm/addons/sourcemod/plugins' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; Copy-Item -Path 'sm/*' -Destination 'insurgency' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'sm' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "SourceMod Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd insurgency/237410 && [ -d insurgency/cfg/sourcemod ] && rm -rf sm/cfg/sourcemod >/dev/null 2>&1; [ -d insurgency/addons/sourcemod/configs ] && rm -rf sm/addons/sourcemod/configs >/dev/null 2>&1; [ -d insurgency/addons/sourcemod/plugins ] && rm -rf sm/addons/sourcemod/plugins >/dev/null 2>&1; \\cp -rf sm/* insurgency/ >/dev/null 2>&1; rm -rf sm >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Activate Metamod and SourceMod",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "\"Plugin\"\n{\n\t\"file\"\t\"../insurgency/addons/metamod/bin/server\"\n}",
+        "UpdateSourceArgs": "{{$FullBaseDir}}insurgency/addons/metamod.vdf",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Disable Metamod and SourceMod",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd insurgency\\237410\\insurgency\\addons > NUL 2>&1 && del /Q /F metamod.vdf > NUL 2>&1 & exit /b 0",
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "false"
+    },
+    {
+        "UpdateStageName": "Disable Metamod and SourceMod",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd insurgency/237410/insurgency/addons >/dev/null 2>&1 && rm -rf metamod.vdf >/dev/null 2>&1; exit 0\"",
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "false"
+    }
+]
