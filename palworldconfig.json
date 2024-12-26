@@ -24,18 +24,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Public IP",
-        "Category": "Palworld:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "$ExternalIP",
-        "InputType": "text",
-        "Hidden": true,
-        "ParamFieldName": "PublicIP",
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "Enable RCON",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -73,6 +61,34 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Randomizer Type",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the type of randomizer to use",
+        "Keywords": "randomizer,type,RandomizerType",
+        "FieldName": "RandomizerType",
+        "InputType": "enum",
+        "ParamFieldName": "RandomizerType",
+        "DefaultValue": "None",
+        "EnumValues": {
+            "None": "None (default)",
+            "Region": "Region",
+            "All": "All"
+        }
+    },
+    {
+        "DisplayName": "Randomizer Seed",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the seed for the randomizer",
+        "Keywords": "randomizer,seed,RandomizerSeed",
+        "FieldName": "RandomizerSeed",
+        "InputType": "text",
+        "ParamFieldName": "RandomizerSeed",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Server Region",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -106,6 +122,33 @@
             "False": "",
             "True": "-publiclobby "
         }
+    },
+    {
+        "DisplayName": "Public IP Selection Mode",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets whether AMP should automatically select the public IP advertised for the server, or whether it should use the IP set under Server Public IP",
+        "Keywords": "public,ip,publicip",
+        "FieldName": "PublicIP",
+        "InputType": "enum",
+        "ParamFieldName": "PublicIP",
+        "DefaultValue": "{{$ExternalIP}}",
+        "EnumValues": {
+            "{{$ExternalIP}}": "Automatic (default)",
+            "{{ManualPublicIP}}": "Manual"
+        }
+    },
+    {
+        "DisplayName": "Server Public IP",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the public IP advertised for the server, if \"Manual\" is selected as the Public IP Selection Mode. Useful if the host network has multiple public IPs, or the server is behind a public proxy",
+        "Keywords": "manual,public,ip,publicip",
+        "FieldName": "ManualPublicIP",
+        "InputType": "text",
+        "ParamFieldName": "ManualPublicIP",
+        "DefaultValue": "",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Server Password",
@@ -192,6 +235,20 @@
         }
     },
     {
+        "DisplayName": "Process Thread Number",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the number of process threads that the server will use. Multi-Threaded Performance Improvements must be enabled. Maximum = CPU thread count - 1. Leave blank to disable",
+        "Keywords": "process,thread,number,NumberOfWorkerThreadsServer",
+        "FieldName": "NumberOfWorkerThreadsServer",
+        "InputType": "number",
+        "ParamFieldName": "NumberOfWorkerThreadsServer",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable Authentication",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -224,14 +281,15 @@
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
         "Description": "Sets the allowed connect platform",
-        "Keywords": "allow,connect,platform,steam,xbox,AllowConnectPlatform",
+        "Keywords": "allow,connect,platform,steam,xbox,mac,AllowConnectPlatform",
         "FieldName": "AllowConnectPlatform",
         "InputType": "enum",
         "ParamFieldName": "AllowConnectPlatform",
         "DefaultValue": "Steam",
         "EnumValues": {
             "Steam": "Steam (default)",
-            "Xbox": "Xbox"
+            "Xbox": "Xbox",
+            "Mac": "Mac"
         }
     },
     {
@@ -603,6 +661,36 @@
         }
     },
     {
+        "DisplayName": "Enable Hardcore Mode",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, hardcore mode will be enabled",
+        "Keywords": "hardcore,mode,bHardcore",
+        "FieldName": "bHardcore",
+        "InputType": "checkbox",
+        "ParamFieldName": "bHardcore",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Pal Loss On Death",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, Pals will be permanently lost on death",
+        "Keywords": "pal,lost,death,permanent,bPalLost",
+        "FieldName": "bPalLost",
+        "InputType": "checkbox",
+        "ParamFieldName": "bPalLost",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Enable Death Penalty Pickup",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -708,6 +796,21 @@
         }
     },
     {
+        "DisplayName": "Set Build Area Limit",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, building near structures such as fast travel will be prohibited",
+        "Keywords": "build,area,limit,bBuildAreaLimit",
+        "FieldName": "bBuildAreaLimit",
+        "InputType": "checkbox",
+        "ParamFieldName": "bBuildAreaLimit",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Meteorite and Supply Drop Interval",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -720,6 +823,65 @@
         "DefaultValue": "180",
         "Placeholder": "180",
         "Suffix": "minutes",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Chat Post Limit Per Minute",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the limit for the number of chat posts per minute",
+        "Keywords": "chat,post,limit,ChatPostLimitPerMinute",
+        "FieldName": "ChatPostLimitPerMinute",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "ChatPostLimitPerMinute",
+        "DefaultValue": "10",
+        "Placeholder": "10",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Predator Boss Pal",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, the predator boss pal will be enabled",
+        "Keywords": "predator,boss,pal,EnablePredatorBossPal",
+        "FieldName": "EnablePredatorBossPal",
+        "InputType": "checkbox",
+        "ParamFieldName": "EnablePredatorBossPal",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Building Limit Per Player",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the maximum number of buildings allowed per player. 0 = unlimited",
+        "Keywords": "max,maximum,building,limit,MaxBuildingLimitNum",
+        "FieldName": "MaxBuildingLimitNum",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "MaxBuildingLimitNum",
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Pal Sync Distance",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the pal sync distance from a player",
+        "Keywords": "server,replicate,pawn,cull,sync,distance,ServerReplicatePawnCullDistance",
+        "FieldName": "ServerReplicatePawnCullDistance",
+        "InputType": "number",
+        "MinValue": "5000",
+        "MaxValue": "15000",
+        "ParamFieldName": "ServerReplicatePawnCullDistance",
+        "DefaultValue": "15000.000000",
+        "Placeholder": "15000.000000",
+        "Suffix": "cm",
         "EnumValues": {}
     },
     {
@@ -872,6 +1034,20 @@
         "InputType": "number",
         "MinValue": "0",
         "ParamFieldName": "PalAutoHpRegeneRateInSleep",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Build Object HP Rate",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the rate of HP for build objects",
+        "Keywords": "build,object,hp,rate,multiplier,BuildObjectHpRate",
+        "FieldName": "BuildObjectHpRate",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "BuildObjectHpRate",
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
         "EnumValues": {}
@@ -1054,6 +1230,20 @@
         "InputType": "number",
         "MinValue": "0",
         "ParamFieldName": "WorkSpeedRate",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Item Weight Ratio",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the item weight ratio",
+        "Keywords": "item,weight,rate,ratio,multiplier,ItemWeightRate",
+        "FieldName": "ItemWeightRate",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "ItemWeightRate",
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
         "EnumValues": {}
