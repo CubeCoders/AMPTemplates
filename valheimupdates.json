@@ -8,23 +8,23 @@
         "UpdateSourceVersion": "{{Stream}}"
     },
     {
-        "UpdateStageName": "Update Saves Directory - Windows",
+        "UpdateStageName": "Update Saves Directory",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C move {{$FullBaseDir}}\\Data {{$FullBaseDir}}\\Saves > NUL 2>&1",
+        "UpdateSourceArgs": "/C move \"{{$FullBaseDir}}Data\" \"{{$FullBaseDir}}Saves\" > NUL 2>&1",
         "SkipOnFailure": true
     },
     {
-        "UpdateStageName": "Update Saves Directory - Linux",
+        "UpdateStageName": "Update Saves Directory",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"mv {{$FullBaseDir}}/Data/ {{$FullBaseDir}}/Saves/ >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"mv \\\"{{$FullBaseDir}}Data/\\\" \\\"{{$FullBaseDir}}Saves/\\\" >/dev/null 2>&1\"",
         "SkipOnFailure": true
     },
     {
-        "UpdateStageName": "Fetch ValheimPlus from Github - Windows",
+        "UpdateStageName": "ValheimPlus Download",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "GithubRelease",
         "UpdateSourceArgs": "Grantapher/ValheimPlus",
@@ -35,7 +35,7 @@
         "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName": "Fetch ValheimPlus from Github - Linux",
+        "UpdateStageName": "ValheimPlus Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "GithubRelease",
         "UpdateSourceArgs": "Grantapher/ValheimPlus",
@@ -51,21 +51,42 @@
         "UpdateSource": "GithubRelease",
         "UpdateSourceArgs": "Grantapher/ValheimPlus",
         "UpdateSourceData": "valheim_plus.cfg",
-        "UpdateSourceTarget": "{{$FullBaseDir}}/BepInEx/config",
+        "UpdateSourceTarget": "{{$FullBaseDir}}BepInEx/config",
         "OverwriteExistingFiles": false,
         "UpdateSourceConditionSetting": "valheim_plus_install",
         "UpdateSourceConditionValue": "true"
     },
     {
-        "UpdateStageName": "Fetch BepInEx from Thunderstore",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://gcdn.thunderstore.io/live/repository/packages/denikson-BepInExPack_Valheim-{{bepinex_version}}.zip",
+        "UpdateStageName": "BepInEx Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"BepInExVersion=\\\"{{bepinex_version}}\\\" && if [[ -z \\\"$BepInExVersion\\\" ]]; then BepInExVersion=$(wget -qO- https://thunderstore.io/api/v1/package-metrics/denikson/BepInExPack_Valheim | jq -r \\\".latest_version\\\"); fi && if [[ ! \\\"$BepInExVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid BepInEx version format specified\\\" && exit 1; fi && wget -qO BepInEx.zip https://gcdn.thunderstore.io/live/repository/packages/denikson-BepInExPack_Valheim-$BepInExVersion.zip && echo \\\"BepInEx v$BepInExVersion downloaded\\\"\"",
         "UpdateSourceConditionSetting": "bepinex_install",
         "UpdateSourceConditionValue": "true",
-        "UnzipUpdateSource": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "BepInEx Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $BepInExVersion='{{bepinex_version}}'; if ([string]::IsNullOrWhiteSpace($BepInExVersion)) { $BepInExVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://thunderstore.io/api/v1/package-metrics/denikson/BepInExPack_Valheim).latest_version }; if ($BepInExVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid BepInEx version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://gcdn.thunderstore.io/live/repository/packages/denikson-BepInExPack_Valheim-$BepInExVersion.zip -OutFile 'BepInEx.zip'; if ($?) { Write-Output \\\"BepInEx v$BepInExVersion downloaded\\\" }\"",
+        "UpdateSourceConditionSetting": "bepinex_install",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "BepInEx Extract",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "BepInEx.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "bepinex_install",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "BepInEx Copy",
