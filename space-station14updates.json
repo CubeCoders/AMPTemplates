@@ -54,60 +54,82 @@
     {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd space-station14/server && download_url=$(wget -qO- https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json | jq -r \\\".builds | to_entries | last | .value.server.\\\\\\\"linux-x64\\\\\\\".url\\\") && wget -q $download_url && unzip -qo SS14.Server_linux-x64.zip && rm -rf SS14.Server_linux-x64.zip && chmod +x Robust.Server\"",
-        "UpdateSourceArch": "x86_64",
+        "UpdateSourceArgs": "-c \"DownloadURL=$(wget -qO- https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json | jq -r \\\".builds | to_entries | last | .value.server.\\\\\\\"linux-x64\\\\\\\".url\\\") && wget -qO SS14.Server.zip $DownloadURL\"",
         "UpdateSourceConditionSetting": "ServerBuild",
-        "UpdateSourceConditionValue": "latest"
+        "UpdateSourceConditionValue": "latest",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd space-station14/server && download_url=$(wget -qO- https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json | jq -r \\\".builds | to_entries | last | .value.server.\\\\\\\"linux-arm64\\\\\\\".url\\\") && wget -q $download_url && unzip -qo SS14.Server_linux-arm64.zip && rm -rf SS14.Server_linux-arm64.zip && chmod +x Robust.Server\"",
-        "UpdateSourceArch": "aarch64",
+        "UpdateSourceArgs": "-c \"DownloadURL=$(wget -qO- https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json | jq -r \\\".builds | to_entries | last | .value.server.\\\\\\\"linux-arm64\\\\\\\".url\\\") && wget -qO SS14.Server.zip $DownloadURL\"",
         "UpdateSourceConditionSetting": "ServerBuild",
-        "UpdateSourceConditionValue": "latest"
+        "UpdateSourceConditionValue": "latest",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C start /wait powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"cd space-station14/server ; $Manifest = Invoke-WebRequest -UseBasicParsing -Uri 'https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json' | ConvertFrom-Json ; $LastBuildKey = $Manifest.builds.PSObject.Properties.Name | Select-Object -Last 1 ; $DownloadUrl = $Manifest.builds.$LastBuildKey.server.'win-x64'.url ; Invoke-WebRequest -UseBasicParsing -Uri $DownloadUrl -OutFile 'SS14.Server_win-x64.zip' ; Expand-Archive -Path 'SS14.Server_win-x64.zip' -DestinationPath '.' -Force ; Remove-Item 'SS14.Server_win-x64.zip'\"",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$Manifest=Invoke-RestMethod -UseBasicParsing -Uri https://cdn.centcomm.spacestation14.com/builds/wizards/manifest.json; $LastBuildKey = $Manifest.builds.PSObject.Properties.Name | Select-Object -Last 1; $DownloadURL=$Manifest.builds.$LastBuildKey.server.'win-x64'.url; Invoke-WebRequest -UseBasicParsing -Uri $DownloadURL -OutFile 'SS14.Server.zip'\"",
         "UpdateSourceConditionSetting": "ServerBuild",
-        "UpdateSourceConditionValue": "latest"
+        "UpdateSourceConditionValue": "latest",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd space-station14/server && wget -q \\\"https://cdn.centcomm.spacestation14.com/builds/wizards/builds/{{SpecificBuildVersion}}/SS14.Server_linux-x64.zip\\\" && unzip -qo SS14.Server_linux-x64.zip && rm -rf SS14.Server_linux-x64.zip && chmod +x Robust.Server\"",
         "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"wget -qO SS14.Server.zip https://cdn.centcomm.spacestation14.com/builds/wizards/builds/{{SpecificBuildVersion}}/SS14.Server_linux-x64.zip\"",
         "UpdateSourceConditionSetting": "ServerBuild",
-        "UpdateSourceConditionValue": "specificversion"
+        "UpdateSourceConditionValue": "specificversion",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd space-station14/server && wget -q \\\"https://cdn.centcomm.spacestation14.com/builds/wizards/builds/{{SpecificBuildVersion}}/SS14.Server_linux-arm64.zip\\\" && unzip -qo SS14.Server_linux-arm64.zip && rm -rf SS14.Server_linux-arm64.zip && chmod +x Robust.Server\"",
-        "UpdateSourceArch": "aarch64",
+        "UpdateSourceArgs": "-c \"wget -qO SS14.Server.zip https://cdn.centcomm.spacestation14.com/builds/wizards/builds/{{SpecificBuildVersion}}/SS14.Server_linux-arm64.zip\"",
         "UpdateSourceConditionSetting": "ServerBuild",
-        "UpdateSourceConditionValue": "specificversion"
+        "UpdateSourceConditionValue": "specificversion",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd space-station14\\server && curl -sLOJ \"https://cdn.centcomm.spacestation14.com/builds/wizards/builds/{{SpecificBuildVersion}}/SS14.Server_win-x64.zip\" && tar -xf SS14.Server_win-x64.zip && del /Q /F SS14.Server_win-x64.zip",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Invoke-WebRequest -UseBasicParsing -Uri https://cdn.centcomm.spacestation14.com/builds/wizards/builds/{{SpecificBuildVersion}}/SS14.Server_win-x64.zip -OutFile 'SS14.Server.zip'\"",
         "UpdateSourceConditionSetting": "ServerBuild",
-        "UpdateSourceConditionValue": "specificversion"
+        "UpdateSourceConditionValue": "specificversion",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Extract",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "SS14.Server.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Make Server Executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Robust.Server"
     },
     {
         "UpdateStageName": "Config File Download",
