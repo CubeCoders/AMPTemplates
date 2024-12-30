@@ -57,7 +57,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"DownloadURL=$(wget -qO- https://wizards.cdn.spacestation14.com/fork/wizards/manifest | jq -r \\\".builds | to_entries | sort_by(.value.time) | last | .value.server.\\\\\\\"linux-x64\\\\\\\".url\\\") && wget -qO SS14.Server.zip $DownloadURL && echo \\\"Latest Space Station 14 version downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"DownloadURL=$(wget -qO- https://wizards.cdn.spacestation14.com/fork/wizards/manifest | jq -r \\\".builds | to_entries | sort_by(.value.time) | last | .value.server.\\\\\\\"linux-x64\\\\\\\".url\\\") && wget -qO SS14.Server.zip $DownloadURL && echo \\\"Latest Space Station 14 build downloaded\\\"\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "latest",
         "SkipOnFailure": false
@@ -68,7 +68,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"DownloadURL=$(wget -qO- https://wizards.cdn.spacestation14.com/fork/wizards/manifest | jq -r \\\".builds | to_entries | sort_by(.value.time) | last | .value.server.\\\\\\\"linux-arm64\\\\\\\".url\\\") && wget -qO SS14.Server.zip $DownloadURL && echo \\\"Latest Space Station 14 version downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"DownloadURL=$(wget -qO- https://wizards.cdn.spacestation14.com/fork/wizards/manifest | jq -r \\\".builds | to_entries | sort_by(.value.time) | last | .value.server.\\\\\\\"linux-arm64\\\\\\\".url\\\") && wget -qO SS14.Server.zip $DownloadURL && echo \\\"Latest Space Station 14 build downloaded\\\"\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "latest",
         "SkipOnFailure": false
@@ -78,7 +78,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $Manifest=Invoke-RestMethod -UseBasicParsing -Uri https://wizards.cdn.spacestation14.com/fork/wizards/manifest; $DownloadURL=($Manifest.builds.PSObject.Properties | ForEach-Object { [pscustomobject]@{ Time = [datetime]$_.Value.time; Url = $_.Value.server.'win-x64'.url } } | Sort-Object Time | Select-Object -Last 1).Url; Invoke-WebRequest -UseBasicParsing -Uri $DownloadURL -OutFile 'SS14.Server.zip'; if ($?) { Write-Output \\\"Latest Space Station 14 version downloaded\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $Manifest=Invoke-RestMethod -UseBasicParsing -Uri https://wizards.cdn.spacestation14.com/fork/wizards/manifest; $DownloadURL=($Manifest.builds.PSObject.Properties | ForEach-Object { [pscustomobject]@{ Time = [datetime]$_.Value.time; Url = $_.Value.server.'win-x64'.url } } | Sort-Object Time | Select-Object -Last 1).Url; Invoke-WebRequest -UseBasicParsing -Uri $DownloadURL -OutFile 'SS14.Server.zip'; if ($?) { Write-Output \\\"Latest Space Station 14 build downloaded\\\" }\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "latest",
         "SkipOnFailure": false
@@ -89,7 +89,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"wget -qO SS14.Server.zip https://wizards.cdn.spacestation14.com/fork/wizards/version/{{SpecificBuildVersion}}/file/SS14.Server_linux-x64.zip && echo \\\"Space Station 14 v{{SpecificBuildVersion}} downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"wget -qO SS14.Server.zip https://wizards.cdn.spacestation14.com/fork/wizards/version/{{SpecificBuildVersion}}/file/SS14.Server_linux-x64.zip && echo \\\"Space Station 14 build {{SpecificBuildVersion}} downloaded\\\"\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "specificversion",
         "SkipOnFailure": false
@@ -100,7 +100,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"wget -qO SS14.Server.zip https://wizards.cdn.spacestation14.com/fork/wizards/version/{{SpecificBuildVersion}}/SS14.Server_linux-arm64.zip && echo \\\"Space Station 14 v{{SpecificBuildVersion}} downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"wget -qO SS14.Server.zip https://wizards.cdn.spacestation14.com/fork/wizards/version/{{SpecificBuildVersion}}/SS14.Server_linux-arm64.zip && echo \\\"Space Station 14 build {{SpecificBuildVersion}} downloaded\\\"\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "specificversion",
         "SkipOnFailure": false
@@ -110,7 +110,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Invoke-WebRequest -UseBasicParsing -Uri https://wizards.cdn.spacestation14.com/fork/wizards/version/{{SpecificBuildVersion}}/SS14.Server_win-x64.zip -OutFile 'SS14.Server.zip'; if ($?) { Write-Output \\\"Space Station 14 v{{SpecificBuildVersion}} downloaded\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Invoke-WebRequest -UseBasicParsing -Uri https://wizards.cdn.spacestation14.com/fork/wizards/version/{{SpecificBuildVersion}}/SS14.Server_win-x64.zip -OutFile 'SS14.Server.zip'; if ($?) { Write-Output \\\"Space Station 14 build {{SpecificBuildVersion}} downloaded\\\" }\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "specificversion",
         "SkipOnFailure": false
