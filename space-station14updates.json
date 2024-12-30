@@ -57,7 +57,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"DownloadURL=$(wget -qO- https://wizards.cdn.spacestation14.com/fork/wizards/manifest | jq -r \\\".builds | to_entries[] | {time: .value.time, url: .value.server[\\\\\\\"linux-x64\\\\\\\"].url} | select(.url != null) | sort_by(.time) | last | .url\\\") && wget -qO SS14.Server.zip $DownloadURL && echo \\\"Latest Space Station 14 version downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"DownloadURL=$(wget -qO- https://wizards.cdn.spacestation14.com/fork/wizards/manifest | jq -r \\\".builds | to_entries[] | select(.value.server[\\\\\\\"linux-x64\\\\\\\"]?.url) | {time: .value.time, url: .value.server[\\\\\\\"linux-x64\\\\\\\"].url} | sort_by(.time) | last | .url\\\") && wget -qO SS14.Server.zip $DownloadURL && echo \\\"Latest Space Station 14 version downloaded\\\"\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "latest",
         "SkipOnFailure": false
@@ -68,7 +68,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"DownloadURL=$(wget -qO- https://wizards.cdn.spacestation14.com/fork/wizards/manifest | jq -r \\\".builds | to_entries[] | {time: .value.time, url: .value.server[\\\\\\\"linux-arm64\\\\\\\"].url} | select(.url != null) | sort_by(.time) | last | .url\\\") && wget -qO SS14.Server.zip $DownloadURL && echo \\\"Latest Space Station 14 version downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"DownloadURL=$(wget -qO- https://wizards.cdn.spacestation14.com/fork/wizards/manifest | jq -r \\\".builds | to_entries[] | select(.value.server[\\\\\\\"linux-arm64\\\\\\\"]?.url) | {time: .value.time, url: .value.server[\\\\\\\"linux-arm64\\\\\\\"].url} | sort_by(.time) | last | .url\\\") && wget -qO SS14.Server.zip $DownloadURL && echo \\\"Latest Space Station 14 version downloaded\\\"\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "latest",
         "SkipOnFailure": false
