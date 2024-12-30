@@ -78,7 +78,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $Manifest=Invoke-RestMethod -UseBasicParsing -Uri https://wizards.cdn.spacestation14.com/fork/wizards/manifest; $DownloadURL=($Manifest.builds.PSObject.Properties | ForEach-Object { if ($_.Value.server.'win-x64'.url) { [psobject]@{ Time = [datetime]$_.Value.time; Url = $_.Value.server.'win-x64'.url } } } | Sort-Object Time -Descending | Select-Object -First 1).Url; Invoke-WebRequest -UseBasicParsing -Uri $DownloadURL -OutFile 'SS14.Server.zip'; if ($?) { Write-Output \\\"Latest Space Station 14 version downloaded\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $Manifest=Invoke-RestMethod -UseBasicParsing -Uri https://wizards.cdn.spacestation14.com/fork/wizards/manifest; $DownloadURL=($Manifest.builds.PSObject.Properties | ForEach-Object { if ($_.Value.server.'win-x64'.url) { [pscustomobject]@{ Time = [datetime]$_.Value.time; Url = $_.Value.server.'win-x64'.url } } } | Sort-Object Time -Descending | Select-Object -First 1).Url; Invoke-WebRequest -UseBasicParsing -Uri $DownloadURL -OutFile 'SS14.Server.zip'; if ($?) { Write-Output \\\"Latest Space Station 14 version downloaded\\\" }\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "latest",
         "SkipOnFailure": false
