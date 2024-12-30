@@ -38,18 +38,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Advertise Address",
-        "Category": "OpenRCT2:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "$ExternalIP",
-        "InputType": "text",
-        "Hidden": true,
-        "ParamFieldName": "network.advertise_address",
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "Host Mode",
         "Category": "OpenRCT2:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -312,6 +300,33 @@
             "False": "false",
             "True": "true"
         }
+    },
+    {
+        "DisplayName": "Advertise Address Selection Mode",
+        "Category": "OpenRCT2:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets whether AMP should automatically select the public IP advertised for the server, or whether it should use the IP set under Server Public IP",
+        "Keywords": "public,ip,advertise,advertise_address",
+        "FieldName": "advertise_address",
+        "InputType": "enum",
+        "ParamFieldName": "network.advertise_address",
+        "DefaultValue": "{{$ExternalIP}}",
+        "EnumValues": {
+            "{{$ExternalIP}}": "Automatic (default)",
+            "{{ManualPublicIP}}": "Manual"
+        }
+    },
+    {
+        "DisplayName": "Server Public IP",
+        "Category": "OpenRCT2:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the public IP advertised for the server, if \"Manual\" is selected as the Advertise Address Selection Mode. Useful if the host network has multiple public IPs, or the server is behind a public proxy",
+        "Keywords": "manual,public,ip,advertise,advertise_address",
+        "FieldName": "ManualPublicIP",
+        "InputType": "text",
+        "ParamFieldName": "ManualPublicIP",
+        "DefaultValue": "",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Master Server URL",

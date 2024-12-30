@@ -1,19 +1,5 @@
 [
     {
-        "DisplayName": "Public IP",
-        "Category": "Astroneer:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "$ExternalIP",
-        "InputType": "text",
-        "Hidden": true,
-        "IsFlagArgument": false,
-        "ParamFieldName": "/Script/Astro.AstroServerSettings.PublicIP",
-        "IncludeInCommandLine": false,
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "Server Port",
         "Category": "Astroneer:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -208,6 +194,33 @@
         "DefaultValue": "3.000000",
         "Placeholder": "3.000000",
         "Suffix": "fps",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Public IP Selection Mode",
+        "Category": "Astroneer:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets whether AMP should automatically select the public IP advertised for the server, or whether it should use the IP set under Server Public IP",
+        "Keywords": "public,ip,publicip",
+        "FieldName": "PublicIP",
+        "InputType": "enum",
+        "ParamFieldName": "/Script/Astro.AstroServerSettings.PublicIP",
+        "DefaultValue": "{{$ExternalIP}}",
+        "EnumValues": {
+            "{{$ExternalIP}}": "Automatic (default)",
+            "{{ManualPublicIP}}": "Manual"
+        }
+    },
+    {
+        "DisplayName": "Server Public IP",
+        "Category": "Astroneer:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the public IP advertised for the server, if \"Manual\" is selected as the Public IP Selection Mode. Useful if the host network has multiple public IPs, or the server is behind a public proxy",
+        "Keywords": "manual,public,ip,publicip",
+        "FieldName": "ManualPublicIP",
+        "InputType": "text",
+        "ParamFieldName": "ManualPublicIP",
+        "DefaultValue": "",
         "EnumValues": {}
     }
 ]
