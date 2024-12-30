@@ -1,0 +1,219 @@
+[
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://nodejs.org/download/release/v20.11.1/node-v20.11.1-win-x64.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-x64.tar.gz",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-arm64.tar.gz",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd tarkov && rmdir /S /Q node > NUL 2>&1 & rename node-v20.11.1-win-x64 node",
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf node >/dev/null 2>&1 && tar xfv node-v20.11.1-linux-x64.tar.gz >/dev/null 2>&1 && mv node-v20.11.1-linux-x64 node >/dev/null 2>&1 && rm node-v20.11.1-linux-x64.tar.gz\"",
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf node >/dev/null 2>&1 && tar xfv node-v20.11.1-linux-arm64.tar.gz >/dev/null 2>&1 && mv node-v20.11.1-linux-arm64 node >/dev/null 2>&1 && rm node-v20.11.1-linux-arm64.tar.gz\"",
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "SPT-AKI Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd tarkov && rd /S /Q srv > NUL 2>&1 & git clone https://github.com/sp-tarkov/server.git srv > NUL 2>&1 && cd srv/project && git lfs pull > NUL 2>&1 && set PATH={{$FullRootDir}}node;%PATH% && npm install > NUL 2>&1 && npm run build:release -- --arch=x64 --platform=win32 > NUL 2>&1 && xcopy /E /Y /I build\\* \"{{$FullBaseDir}}\" > NUL 2>&1 && cd \"{{$FullBaseDir}}\" && rd /S /Q \"{{$FullRootDir}}srv\" > NUL 2>&1",
+        "UpdateSourceConditionSetting": "SPTSelector",
+        "UpdateSourceConditionValue": "latest",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SPT-AKI Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf srv; git clone https://github.com/sp-tarkov/server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \\\"{{$FullBaseDir}}\\\" >/dev/null 2>&1 && cd \\\"{{$FullBaseDir}}\\\" && rm -rf \\\"{{$FullRootDir}}srv\\\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "SPTSelector",
+        "UpdateSourceConditionValue": "latest",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SPT-AKI Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf srv; git clone https://github.com/sp-tarkov/server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \\\"{{$FullBaseDir}}\\\" >/dev/null 2>&1 && cd \\\"{{$FullBaseDir}}\\\" && rm -rf \\\"{{$FullRootDir}}srv\\\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "SPTSelector",
+        "UpdateSourceConditionValue": "latest",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SPT-AKI Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd tarkov && rd /S /Q srv > NUL 2>&1 & git clone --branch {{SPTAKIVersion}} https://github.com/sp-tarkov/server.git srv > NUL 2>&1 && cd srv/project && git lfs pull > NUL 2>&1 && set PATH={{$FullRootDir}}node;%PATH% && npm install > NUL 2>&1 && npm run build:release -- --arch=x64 --platform=win32 > NUL 2>&1 && xcopy /E /Y /I build\\* \"{{$FullBaseDir}}\" > NUL 2>&1 && cd \"{{$FullBaseDir}}\" && rd /S /Q \"{{$FullRootDir}}srv\" > NUL 2>&1 && if exist Aki.Server.exe ( move /Y Aki.Server.exe SPT.Server.exe > NUL 2>&1 )",
+        "UpdateSourceConditionSetting": "SPTSelector",
+        "UpdateSourceConditionValue": "specific",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SPT-AKI Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf srv; git clone --branch {{SPTAKIVersion}} https://github.com/sp-tarkov/server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \\\"{{$FullBaseDir}}\\\" >/dev/null 2>&1 && cd \\\"{{$FullBaseDir}}\\\" && rm -rf \\\"{{$FullRootDir}}srv\\\" >/dev/null 2>&1 && [[ -f Aki.Server.exe ]] && mv -f Aki.Server.exe SPT.Server.exe >/dev/null 2>&1; chmod +x SPT.Server.exe >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "SPTSelector",
+        "UpdateSourceConditionValue": "specific",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SPT-AKI Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf srv; git clone --branch {{SPTAKIVersion}} https://github.com/sp-tarkov/server.git srv >/dev/null 2>&1 && cd srv/project && git-lfs pull >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \\\"{{$FullBaseDir}}\\\" >/dev/null 2>&1 && cd \\\"{{$FullBaseDir}}\\\" && rm -rf \\\"{{$FullRootDir}}srv\\\" >/dev/null 2>&1 && [[ -f Aki.Server.exe ]] && mv -f Aki.Server.exe SPT.Server.exe >/dev/null 2>&1; chmod +x SPT.Server.exe >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "SPTSelector",
+        "UpdateSourceConditionValue": "specific",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Fika Server Mod Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "project-fika/Fika-Server",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "SPTSelector",
+        "UpdateSourceConditionValue": "latest"
+    },
+    {
+        "UpdateStageName": "Fika Server Mod Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/project-fika/Fika-Server/releases/download/v{{FikaVersion}}/fika-server.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "SPTSelector",
+        "UpdateSourceConditionValue": "specific"
+    },
+    {
+        "UpdateStageName": "Fika Server Tools Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "project-fika/Fika-ServerTools",
+        "UpdateSourceData": "FikaServerTools_main-windows64.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}user/mods/fika-server",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "natPunchServer_enable",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Fika Server Tools Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "project-fika/Fika-ServerTools",
+        "UpdateSourceData": "FikaServerTools_main-linux64.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}user/mods/fika-server",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "natPunchServer_enable",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Make Fika Server Tools Executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}user/mods/fika-server/FikaServerTools",
+        "UpdateSourceConditionSetting": "natPunchServer_enable",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Remove Fika Server Tools",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C del /Q /F tarkov\\server\\user\\mods\\fika-server\\FikaServerTools* > NUL 2>&1",
+        "UpdateSourceConditionSetting": "natPunchServer_enable",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Remove Fika Server Tools",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -f tarkov/server/user/mods/fika-server/FikaServerTools* >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "natPunchServer_enable",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Server Startup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "StartApplication"
+    },
+    {
+        "UpdateStageName": "Wait For Server Startup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "WaitForStartupComplete"
+    },
+    {
+        "UpdateStageName": "Server Shutdown",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ShutdownApplication"
+    }
+]

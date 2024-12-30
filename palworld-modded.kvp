@@ -1,7 +1,7 @@
 Meta.DisplayName=Palworld (Modded)
 Meta.Description=Palworld Dedicated Server with Unreal Engine 4/5 Scripting System modding support
 Meta.OS=Windows, Linux
-Meta.AarchSupport=Unknown
+Meta.AarchSupport=Emulated
 Meta.Arch=x86_64
 Meta.Author=Greelan
 Meta.URL=https://www.pocketpair.jp/palworld
@@ -17,12 +17,12 @@ Meta.DockerBaseReadOnly=False
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
 Meta.ContainerPolicyReason=The server requires Wine to run on Linux. Using a container avoids the need to install this dependency on the host.
 Meta.ExtraSetupStepsURI=
-Meta.Prerequsites=[]
+Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
 Meta.AppConfigId=aa4a646a-f7bd-49ce-9042-ddb0573f0087
-Meta.ConfigVersion=1.5
+Meta.ConfigVersion=1.11
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
 Meta.ImportableExtensions=[]
@@ -35,7 +35,7 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=2394010
 App.LinuxCommandLineArgs="./Pal/Binaries/Win64/PalServer-Win64-Shipping-Cmd.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} Pal {{CommunityServer}}-Port={{$GamePort}} -QueryPort={{$QueryPort}} -RCONPort={{$RCONPort}} -MultiHome={{$ApplicationIPBinding}} -publicport={{$GamePort}} -publicip={{$ExternalIP}} -players={{$MaxUsers}} {{MultiThread}}{{$FormattedArgs}} {{CustomArgs}} -stdout -FullStdOutLogOutput
+App.CommandLineArgs={{$PlatformArgs}} Pal {{CommunityServer}}-Port={{$GamePort}} -QueryPort={{$QueryPort}} -RCONPort={{$RCONPort}} -MultiHome={{$ApplicationIPBinding}} -publicport={{$GamePort}} -publicip={{PublicIP}} -players={{$MaxUsers}} {{MultiThread}}{{$FormattedArgs}} {{CustomArgs}} -stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1623730","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"dwmapi.dll=n,b"}
@@ -53,7 +53,7 @@ App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ForceIPBinding=False
 App.SupportsIPv6=False
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"UDP","Port":8211,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":27015,"Ref":"QueryPort","Name":"Query Port","Description":"Port for query traffic"},{"Protocol":"TCP","Port":25575,"Ref":"RCONPort","Name":"RCON Port","Description":"Port for RCON traffic"}]
+App.Ports=@IncludeJson[palworld-moddedports.json]
 App.AdminPortRef=RCONPort
 App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPortRef=GamePort
@@ -88,8 +88,8 @@ Console.FilterMatchRegex=(Setting breakpad minidump AppID = 1623730|\[S_API FAIL
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
 Console.AppReadyRegex=^$
-Console.UserJoinRegex=^(?:\[[\d-]+ [\d:]+\] \[LOG\] )?(?<username>.+?) joined the server\. \(User id: (?<userid>.+?)\)$
-Console.UserLeaveRegex=^(?:\[[\d-]+ [\d:]+\] \[LOG\] )?(?<username>.+?) left the server\. \(User id: (?<userid>.+?)\)$
+Console.UserJoinRegex=^(?:\[[\d-]+ [\d:]+\] \[LOG\] )?(?<username>.+) joined the server\. \(User id: (?<userid>.+?)\)$
+Console.UserLeaveRegex=^(?:\[[\d-]+ [\d:]+\] \[LOG\] )?(?<username>.+) left the server\. \(User id: (?<userid>.+?)\)$
 Console.UserChatRegex=^$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
 Console.MetricsRegex=

@@ -1,0 +1,49 @@
+[
+    {
+        "UpdateStageName": "Delete Server Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf {{$FullBaseDir}}server >/dev/null 2>&1\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Delete Server Directory",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C del /Q /F {{$FullBaseDir}}server > NUL 2>&1",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Server Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}server"
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn.vintagestory.at/gamefiles/stable/vs_server_{{ServerVersion}}.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}server",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "Start Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "StartApplication"
+    },
+    {
+        "UpdateStageName": "Wait For Server Start",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "WaitForStartupComplete"
+    },
+    {
+        "UpdateStageName": "Stop Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ShutdownApplication"
+    }
+]

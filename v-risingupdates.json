@@ -1,102 +1,122 @@
 [
     {
-      "UpdateStageName": "SteamCMD Download",
-      "UpdateSourcePlatform": "All",
-      "UpdateSource": "SteamCMD",
-      "UpdateSourceData": "1829350",
-      "UpdateSourceArgs": "1604030",
-      "UpdateSourceVersion": "{{ReleaseStream}}",
-      "ForceDownloadPlatform": "Windows"
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1829350",
+        "UpdateSourceArgs": "1604030",
+        "UpdateSourceVersion": "{{ReleaseStream}}",
+        "ForceDownloadPlatform": "Windows"
     },
     {
-        "UpdateStageName":"Data Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}save-data/Settings"
+        "UpdateStageName": "Data Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}save-data/Settings"
     },
     {
-        "UpdateStageName":"Game Config File Copy",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CopyFilePath",
-        "UpdateSourceData":"{{$FullBaseDir}}save-data/Settings/ServerHostSettings.json",
-        "UpdateSourceArgs":"{{$FullBaseDir}}VRisingServer_Data/StreamingAssets/Settings/ServerHostSettings.json",
-        "OverwriteExistingFiles":false
+        "UpdateStageName": "Game Config File Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}save-data/Settings/ServerHostSettings.json",
+        "UpdateSourceArgs": "{{$FullBaseDir}}VRisingServer_Data/StreamingAssets/Settings/ServerHostSettings.json",
+        "OverwriteExistingFiles": false
     },
     {
-        "UpdateStageName":"Game Config File Copy",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CopyFilePath",
-        "UpdateSourceData":"{{$FullBaseDir}}save-data/Settings/ServerGameSettings.json",
-        "UpdateSourceArgs":"{{$FullBaseDir}}VRisingServer_Data/StreamingAssets/Settings/ServerGameSettings.json",
-        "OverwriteExistingFiles":false
+        "UpdateStageName": "Game Config File Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}save-data/Settings/ServerGameSettings.json",
+        "UpdateSourceArgs": "{{$FullBaseDir}}VRisingServer_Data/StreamingAssets/Settings/ServerGameSettings.json",
+        "OverwriteExistingFiles": false
     },
     {
-        "UpdateStageName":"Download BepInEx From Thunderstore",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://gcdn.thunderstore.io/live/repository/packages/BepInEx-BepInExPack_V_Rising-1.691.3.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
-        "UpdateSourceConditionSetting":"BepInExEnabled",
-        "UpdateSourceConditionValue":"true"
+        "UpdateStageName": "BepInEx Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"BepInExVersion=\\\"{{BepInExVersion}}\\\" && if [[ -z \\\"$BepInExVersion\\\" ]]; then BepInExVersion=$(wget -qO- https://thunderstore.io/api/v1/package-metrics/BepInEx/BepInExPack_V_Rising | jq -r \\\".latest_version\\\"); fi && if [[ ! \\\"$BepInExVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid BepInEx version format specified\\\" && exit 1; fi && wget -qO BepInEx.zip https://gcdn.thunderstore.io/live/repository/packages/BepInEx-BepInExPack_V_Rising-$BepInExVersion.zip && echo \\\"BepInEx v$BepInExVersion downloaded\\\"\"",
+        "UpdateSourceConditionSetting": "BepInExEnabled",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"BepInEx Copy",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I v-rising\\1829350\\BepInExPack_V_Rising\\* v-rising\\1829350\\ && rmdir /Q /S v-rising\\1829350\\BepInExPack_V_Rising",
-        "UpdateSourceConditionSetting":"BepInExEnabled",
-        "UpdateSourceConditionValue":"true",
-        "SkipOnFailure":false
+        "UpdateStageName": "BepInEx Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $BepInExVersion='{{BepInExVersion}}'; if ([string]::IsNullOrWhiteSpace($BepInExVersion)) { $BepInExVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://thunderstore.io/api/v1/package-metrics/BepInEx/BepInExPack_V_Rising).latest_version }; if ($BepInExVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid BepInEx version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://gcdn.thunderstore.io/live/repository/packages/BepInEx-BepInExPack_V_Rising-$BepInExVersion.zip -OutFile 'BepInEx.zip'; if ($?) { Write-Output \\\"BepInEx v$BepInExVersion downloaded\\\" }\"",
+        "UpdateSourceConditionSetting": "BepInExEnabled",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"BepInEx Copy",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./v-rising/1829350/BepInExPack_V_Rising/* ./v-rising/1829350/ && rm -rf ./v-rising/1829350/BepInExPack_V_Rising/'",
-        "UpdateSourceConditionSetting":"BepInExEnabled",
-        "UpdateSourceConditionValue":"true",
-        "SkipOnFailure":false
+        "UpdateStageName": "BepInEx Extract",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "BepInEx.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "BepInExEnabled",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Initialise Wine",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDLLOVERRIDES=\"mscoree,mshtml=\" WINEDEBUG=-all /usr/bin/wineboot --init --update'",
-        "SkipOnFailure":false
+        "UpdateStageName": "BepInEx Copy",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C xcopy /E /Y /I v-rising\\1829350\\BepInExPack_V_Rising\\* v-rising\\1829350\\ && rmdir /Q /S v-rising\\1829350\\BepInExPack_V_Rising",
+        "UpdateSourceConditionSetting": "BepInExEnabled",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Disable Prefix Sound",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd v-rising && wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && chmod +x winetricks; export WINEPREFIX=\"{{$FullRootDir}}.wine\"; export WINEARCH=win64; ./winetricks sound=disabled > winescript_log.txt 2>&1'",
-        "SkipOnFailure":true
+        "UpdateStageName": "BepInEx Copy",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"\\cp -rf ./v-rising/1829350/BepInExPack_V_Rising/* ./v-rising/1829350/ && rm -rf ./v-rising/1829350/BepInExPack_V_Rising/\"",
+        "UpdateSourceConditionSetting": "BepInExEnabled",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Winescript Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/v-risingwinescript.sh",
-        "UpdateSourceArgs":"winescript.sh",
-        "UpdateSourceTarget":"{{$FullInstanceDir}}",
-        "OverwriteExistingFiles":true,
-        "UpdateSourceConditionSetting":"BepInExEnabled",
-        "UpdateSourceConditionValue":"true"
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDLLOVERRIDES=\\\"mscoree,mshtml=\\\" WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Install Windows Components",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"./winescript.sh",
-        "UpdateSourceConditionSetting":"BepInExEnabled",
-        "UpdateSourceConditionValue":"true",
-        "SkipOnFailure":false
+        "UpdateStageName": "Disable Prefix Sound",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd v-rising && wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && chmod +x winetricks; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; export WINEARCH=win64; ./winetricks sound=disabled > winescript_log.txt 2>&1\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Winescript Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/v-risingwinescript.sh",
+        "UpdateSourceArgs": "winescript.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "BepInExEnabled",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Install Windows Components",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "./winescript.sh",
+        "UpdateSourceConditionSetting": "BepInExEnabled",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     }
 ]

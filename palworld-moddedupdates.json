@@ -1,87 +1,97 @@
 [
     {
-        "UpdateStageName":"Remove UE4SS",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd palworld\\2394010\\Pal\\Binaries\\Win64 && del /Q /F Changelog.md xinput1_3.dll dwmapi.dll UE4SS.dll UE4SS-settings.ini Readme.md README.md > NUL 2>&1 && rd /S /Q Mods E4SS_Signatures > NUL 2>&1",
-        "UpdateSourceConditionSetting":"InstallUE4SS",
-        "UpdateSourceConditionValue":"false",
-        "SkipOnFailure":true
+        "UpdateStageName": "Remove UE4SS",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd palworld\\2394010\\Pal\\Binaries\\Win64 && del /Q /F Changelog.md xinput1_3.dll dwmapi.dll UE4SS.dll UE4SS-settings.ini Readme.md README.md > NUL 2>&1 && rd /S /Q Mods E4SS_Signatures ue4ss > NUL 2>&1",
+        "UpdateSourceConditionSetting": "InstallUE4SS",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"Remove UE4SS",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd ./palworld/2394010/Pal/Binaries/Win64 && rm -rf Changelog.md xinput1_3.dll dwmapi.dll UE4SS.dll UE4SS-settings.ini Mods Readme.md README.md E4SS_Signatures >/dev/null 2>&1'",
-        "UpdateSourceConditionSetting":"InstallUE4SS",
-        "UpdateSourceConditionValue":"false",
-        "SkipOnFailure":true
+        "UpdateStageName": "Remove UE4SS",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ./palworld/2394010/Pal/Binaries/Win64 && rm -rf Changelog.md xinput1_3.dll dwmapi.dll UE4SS.dll UE4SS-settings.ini Mods Readme.md README.md E4SS_Signatures ue4ss >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "InstallUE4SS",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"SteamCMD Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"2394010",
-        "UpdateSourceArgs":"1623730",
-        "ForceDownloadPlatform":"Windows"
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "2394010",
+        "UpdateSourceArgs": "1623730",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceVersion": "public"
     },
     {
-        "UpdateStageName":"SteamCMD Component Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"1007",
-        "UpdateSourceTarget":"2394010/Pal/Binaries/Win64",
-        "ForceDownloadPlatform":"Windows"
+        "UpdateStageName": "SteamCMD Component Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1007",
+        "UpdateSourceTarget": "2394010/Pal/Binaries/Win64",
+        "ForceDownloadPlatform": "Windows"
     },
     {
-        "UpdateStageName":"Config Template Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/palworld1-5templatesettings.ini",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "UpdateSourceArgs":"AMP_PalWorldSettings.ini",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "Config Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/palworld1-9templatesettings.ini",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UpdateSourceArgs": "AMP_PalWorldSettings.ini",
+        "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName":"Initialise Wine",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update'",
-        "SkipOnFailure":false
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"UE4SS Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURLFromJQ",
-        "UpdateSourceData":"https://api.github.com/repos/UE4SS-RE/RE-UE4SS/releases/latest",
-        "UpdateSourceArgs":"$.assets.[0].browser_download_url",
-        "UpdateSourceTarget":"{{$FullBaseDir}}Pal/Binaries/Win64",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
-        "UpdateSourceConditionSetting":"InstallUE4SS",
-        "UpdateSourceConditionValue":"true"
+        "UpdateStageName": "UE4SS Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/UE4SS-RE/RE-UE4SS/releases/latest",
+        "UpdateSourceArgs": "$.assets.[0].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Pal/Binaries/Win64",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallUE4SS",
+        "UpdateSourceConditionValue": "true"
     },
     {
-        "UpdateStageName":"Create E4SS_Signatures Directory",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Pal/Binaries/Win64/E4SS_Signatures",
-        "UpdateSourceConditionSetting":"InstallUE4SS",
-        "UpdateSourceConditionValue":"true"
+        "UpdateStageName": "Create E4SS_Signatures Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Pal/Binaries/Win64/E4SS_Signatures",
+        "UpdateSourceConditionSetting": "InstallUE4SS",
+        "UpdateSourceConditionValue": "true"
     },
     {
-        "UpdateStageName":"FName_Constructor.lua Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://gist.githubusercontent.com/DRayX/2079b1398a4c0bd4271dea544f23043a/raw/f28cc0938beb7182ed1976a2e4da83191ced5a5b/FName_Constructor.lua",
-        "UpdateSourceArgs":"FName_Constructor.lua",
-        "UpdateSourceTarget":"{{$FullBaseDir}}Pal/Binaries/Win64/E4SS_Signatures",
-        "OverwriteExistingFiles":true,
-        "UpdateSourceConditionSetting":"InstallUE4SS",
-        "UpdateSourceConditionValue":"true"
+        "UpdateStageName": "UE4SS Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/UE4SS-RE/RE-UE4SS/releases/download/experimental/UE4SS_{{UE4SSExperimentalVersion}}.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Pal/Binaries/Win64",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallUE4SS",
+        "UpdateSourceConditionValue": "experimental"
+    },
+    {
+        "UpdateStageName": "Create E4SS_Signatures Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Pal/Binaries/Win64/E4SS_Signatures",
+        "UpdateSourceConditionSetting": "InstallUE4SS",
+        "UpdateSourceConditionValue": "experimental"
     }
 ]

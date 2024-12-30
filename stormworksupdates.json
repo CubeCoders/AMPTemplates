@@ -1,28 +1,28 @@
 [
-  {
-    "UpdateStageName": "Update",
-    "UpdateSourcePlatform": "All",
-    "UpdateSource": "SteamCMD",
-    "UpdateSourceData": "573090",
-    "UpdateSourceArgs": "573090",
-    "UpdateSourceTarget": "{{$FullBaseDir}}",
-    "ForceDownloadPlatform": "Windows"
-  },
-  {
-    "UpdateStageName": "Config Template Download",
-    "UpdateSourcePlatform": "All",
-    "UpdateSource": "FetchURL",
-    "OverwriteExistingFiles": false,
-    "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/stormworksserver_config.xml",
-    "UpdateSourceTarget": "{{$FullBaseDir}}",
-    "UpdateSourceArgs": "server_config.xml"
-  },
-  {
-    "UpdateStageName": "Initialise Wine",
-    "UpdateSourcePlatform": "Linux",
-    "UpdateSource": "Executable",
-    "UpdateSourceData": "/bin/bash",
-    "UpdateSourceArgs": "-c 'WINEPREFIX=\"{{$FullRootDir}}.wine\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update'",
-    "SkipOnFailure":false
-  }
+    {
+        "UpdateStageName": "Update",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "573090",
+        "UpdateSourceArgs": "573090",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "ForceDownloadPlatform": "Windows"
+    },
+    {
+        "UpdateStageName": "Config Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "OverwriteExistingFiles": false,
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/stormworksserver_config.xml",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "server_config.xml"
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
+    }
 ]

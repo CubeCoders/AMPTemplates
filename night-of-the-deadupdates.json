@@ -1,0 +1,41 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1420710",
+        "UpdateSourceArgs": "1377380",
+        "ForceDownloadPlatform": "Windows"
+    },
+    {
+        "UpdateStageName": "SteamCMD Component Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1007",
+        "UpdateSourceTarget": "{{$FullBaseDir}}LF/Binaries/Win64",
+        "ForceDownloadPlatform": "Windows"
+    },
+    {
+        "UpdateStageName": "Config Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}LF/Saved/Config"
+    },
+    {
+        "UpdateStageName": "ServerSettings.ini Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}LF/Saved/Config/ServerSettings.ini",
+        "UpdateSourceArgs": "{{$FullBaseDir}}ServerSettings.ini",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
+    }
+]

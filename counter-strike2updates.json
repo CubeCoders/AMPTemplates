@@ -1,60 +1,86 @@
 [
     {
-        "UpdateStageName":"SteamCMD Server Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"730",
-        "UpdateSourceArgs":"730"
+        "UpdateStageName": "SteamCMD Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "730",
+        "UpdateSourceArgs": "730"
     },
     {
-        "UpdateStageName":"SteamCMD Component Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"1007",
-        "UpdateSourceTarget":"{{$FullBaseDir}}game/bin/win64"
+        "UpdateStageName": "SteamCMD Component Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1007",
+        "UpdateSourceTarget": "{{$FullBaseDir}}game/bin/win64"
     },
     {
-        "UpdateStageName":"Metamod Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://mms.alliedmods.net/mmsdrop/{{MetamodBranch}}/mmsource-{{MetamodBranch}}.0-git{{MetamodBuild}}-windows.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}game/csgo",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "UpdateSourceConditionSetting":"InstallMetamod",
-        "UpdateSourceConditionValue":"true",
-        "DeleteAfterExtract":true
+        "UpdateStageName": "Metamod Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://mms.alliedmods.net/mmsdrop/{{MetamodBranch}}/mmsource-{{MetamodBranch}}.0-git{{MetamodBuild}}-windows.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}game/csgo",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "InstallMetamod",
+        "UpdateSourceConditionValue": "true",
+        "DeleteAfterExtract": true
     },
     {
-        "UpdateStageName":"Metamod Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://mms.alliedmods.net/mmsdrop/{{MetamodBranch}}/mmsource-{{MetamodBranch}}.0-git{{MetamodBuild}}-linux.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}game/csgo",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "UpdateSourceConditionSetting":"InstallMetamod",
-        "UpdateSourceConditionValue":"true",
-        "DeleteAfterExtract":true
+        "UpdateStageName": "Metamod Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://mms.alliedmods.net/mmsdrop/{{MetamodBranch}}/mmsource-{{MetamodBranch}}.0-git{{MetamodBuild}}-linux.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}game/csgo",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "InstallMetamod",
+        "UpdateSourceConditionValue": "true",
+        "DeleteAfterExtract": true
     },
     {
-        "UpdateStageName":"Activate Metamod",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"sed -i '/^\\s*Game\\s*csgo\\s*$/ { s//\\t\\t\\tGame\\tcsgo\\/addons\\/metamod\\n&/ }' counter-strike2/730/game/csgo/gameinfo.gi\"",
-        "UpdateSourceConditionSetting":"InstallMetamod",
-        "UpdateSourceConditionValue":"true",
-        "SkipOnFailure":false
+        "UpdateStageName": "Activate Metamod",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"sed -i \\\"/^\\s*Game\\s*csgo\\s*$/ { s//\\t\\t\\tGame\\tcsgo\\/addons\\/metamod\\n&/ }\\\" counter-strike2/730/game/csgo/gameinfo.gi\"",
+        "UpdateSourceConditionSetting": "InstallMetamod",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Activate Metamod",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"(Get-Content 'counter-strike2\\730\\game\\csgo\\gameinfo.gi') -replace '^\\s*Game\\s*csgo\\s*$', \\\"`t`t`tGame`tcsgo/addons/metamod`n`t`t`tGame`tcsgo\\\" | Set-Content 'counter-strike2\\730\\game\\csgo\\gameinfo.gi'\"",
-        "UpdateSourceConditionSetting":"InstallMetamod",
-        "UpdateSourceConditionValue":"true",
-        "SkipOnFailure":false
+        "UpdateStageName": "Activate Metamod",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"(Get-Content 'counter-strike2\\730\\game\\csgo\\gameinfo.gi') -replace '^\\s*Game\\s*csgo\\s*$', \\\"`t`t`tGame`tcsgo/addons/metamod`n`t`t`tGame`tcsgo\\\" | Set-Content 'counter-strike2\\730\\game\\csgo\\gameinfo.gi'\"",
+        "UpdateSourceConditionSetting": "InstallMetamod",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "CounterStrikeSharp Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/roflmuffin/CounterStrikeSharp/releases/latest",
+        "UpdateSourceArgs": "$.assets[3].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}game/csgo",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "InstallCSSharp",
+        "UpdateSourceConditionValue": "true",
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "CounterStrikeSharp Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/roflmuffin/CounterStrikeSharp/releases/latest",
+        "UpdateSourceArgs": "$.assets[2].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}game/csgo",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "InstallCSSharp",
+        "UpdateSourceConditionValue": "true",
+        "DeleteAfterExtract": true
     }
 ]

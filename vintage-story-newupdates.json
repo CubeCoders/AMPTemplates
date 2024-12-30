@@ -1,85 +1,117 @@
 [
     {
-        "UpdateStageName":"Delete Server Directory",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -rf {{$FullBaseDir}}server >/dev/null 2>&1'",
-        "SkipOnFailure":true
+        "UpdateStageName": "Delete Server Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf {{$FullBaseDir}}server >/dev/null 2>&1\"",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"Delete Server Directory",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}server > NUL 2>&1",
-        "SkipOnFailure":true
+        "UpdateStageName": "Delete Server Directory",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C del /Q /F {{$FullBaseDir}}server > NUL 2>&1",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"Dotnet Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}dotnet"
+        "UpdateStageName": "Dotnet Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}dotnet"
     },
     {
-        "UpdateStageName":"Server Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}server"
+        "UpdateStageName": "Server Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}server"
     },
     {
-        "UpdateStageName":"ASP.NET Core Runtime Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-win-x64.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": ".NET SDK Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetSDKVersion}}\\\" && if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/7.0/releases.json | jq -r \\\".[\\\\\\\"latest-sdk\\\\\\\"]\\\"); fi && if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid .NET SDK version format specified\\\" && exit 1; fi && wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/$DotnetVersion/dotnet-sdk-$DotnetVersion-linux-x64.tar.gz && echo \\\".NET SDK v$DotnetVersion downloaded\\\"\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"ASP.NET Core Runtime Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-linux-x64.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": ".NET SDK Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $DotnetVersion='{{DotnetSDKVersion}}'; if ([string]::IsNullOrWhiteSpace($DotnetVersion)) { $DotnetVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/release-metadata/7.0/releases.json).\\\"latest-sdk\\\" }; if ($DotnetVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid .NET SDK version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/Sdk/$DotnetVersion/dotnet-sdk-$DotnetVersion-win-x64.zip -OutFile 'dotnet.zip'; if ($?) { Write-Output \\\".NET SDK v$DotnetVersion downloaded\\\" }\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Server Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://cdn.vintagestory.at/gamefiles/{{ServerReleaseStream}}/vs_server_win-x64_{{ServerVersion}}.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}server",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": ".NET SDK Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "dotnet.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}dotnet",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Server Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://cdn.vintagestory.at/gamefiles/{{ServerReleaseStream}}/vs_server_linux-x64_{{ServerVersion}}.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}server",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": ".NET SDK Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "dotnet.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}dotnet",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Start Server",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"StartApplication"
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"ServerVersion=\\\"{{ServerVersion}}\\\" && ServerReleaseStream=\\\"{{ServerReleaseStream}}\\\" && if [[ -z \\\"$ServerVersion\\\" ]]; then if [[ \\\"$ServerReleaseStream\\\" == \\\"pre\\\" ]]; then echo \\\"No Vintage Story preview version specified\\\" && exit 1; else ServerVersion=$(wget -qO- https://api.vintagestory.at/latest${ServerReleaseStream}.txt); fi; fi; if [[ ! \\\"$ServerVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+(-rc\\.[0-9]+|-pre\\.[0-9]+)?$ ]]; then echo \\\"Invalid Vintage Story version format specified\\\" && exit 1; fi && wget -qO vs_server.tar.gz https://{{ServerDownloadSource}}/$ServerReleaseStream/vs_server_linux-x64_$ServerVersion.tar.gz && echo \\\"Vintage Story v$ServerVersion downloaded\\\"\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Wait For Server Start",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"WaitForStartupComplete"
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $ServerVersion='{{ServerVersion}}'; $ServerReleaseStream='{{ServerReleaseStream}}'; if ([string]::IsNullOrWhiteSpace($ServerVersion)) { if ($ServerReleaseStream -eq 'pre') { Write-Output \\\"No Vintage Story preview version specified\\\"; exit 1 } else { $ServerVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://api.vintagestory.at/latest${ServerReleaseStream}.txt) } }; if ($ServerVersion -notmatch '^\\d+\\.\\d+\\.\\d+(-rc\\.\\d+|-pre\\.\\d+)?$') { Write-Output \\\"Invalid Vintage Story version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://{{ServerDownloadSource}}/$ServerReleaseStream/vs_server_win-x64_$ServerVersion.zip -OutFile 'vs_server.zip'; if ($?) { Write-Output \\\"Vintage Story v$ServerVersion downloaded\\\" }\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Stop Server",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"ShutdownApplication"
+        "UpdateStageName": "Server Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "vs_server.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}server",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "vs_server.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}server",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Start Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "StartApplication"
+    },
+    {
+        "UpdateStageName": "Wait For Server Start",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "WaitForStartupComplete"
+    },
+    {
+        "UpdateStageName": "Stop Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ShutdownApplication"
     }
 ]

@@ -1,0 +1,34 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "2089300",
+        "UpdateSourceVersion": "{{ServerBranch}}",
+        "ForceDownloadPlatform": "Windows"
+    },
+    {
+        "UpdateStageName": "Create Config Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Icarus/Saved/Config/WindowsServer",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Config File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/icarusserversettings.ini",
+        "UpdateSourceArgs": "ServerSettings.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Icarus/Saved/Config/WindowsServer/",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
+    }
+]

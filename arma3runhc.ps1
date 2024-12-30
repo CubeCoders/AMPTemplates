@@ -1,13 +1,18 @@
-# Arguments: [number_clients] [server_binding] [server_port] "<server_password>" "<mod_list>" "<hc_parameters_file>"
+# Arguments: [number_clients] [server_binding] [server_port] "<server_password>" "<mod_list>" "<hc_parameters_file>" [start_limit]
 
 # Check if any headless clients are to be run
 # If none, immediately exit
 if ($args[0] -eq "0") { exit }
 
-# Check if server starts successfully within 3 minutes
+# Check if server starts successfully within <start_limit> seconds
 # If not, exit
 $serverStarted = $false
-for ($i = 1; $i -le 180; $i++) {
+if ($args.Length -lt 7) { 
+    $startlimit = 180
+} else {
+    $startlimit = $args[6]
+}
+for ($i = 1; $i -le [int]$startlimit; $i++) {
   if (Get-NetUDPEndpoint -LocalPort $args[2] -ErrorAction SilentlyContinue) {
     $serverStarted = $true
     break
@@ -22,7 +27,7 @@ $basePort = [int]$args[2] + 498
 if ($args.Length -lt 6) { 
     $parfile = ""
 } else {
-    $parfile = $args[6]
+    $parfile = $args[5]
 }
 cd "$PSScriptRoot\arma3\233780"
 for ($i = 1; $i -le [int]$args[0]; $i++) {

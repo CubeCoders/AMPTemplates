@@ -1,6 +1,7 @@
 Meta.DisplayName=Seven Days To Die
 Meta.Description=Seven Days to Die Dedicated Server
 Meta.OS=Windows, Linux
+Meta.AarchSupport=Emulated
 Meta.Arch=x86_64
 Meta.Author=IceOfWraith, Shinynecrid, GKuba
 Meta.URL=https://steamdb.info/app/251570/
@@ -13,8 +14,9 @@ Meta.MinAMPVersion=2.4.6.8
 Meta.SpecificDockerImage=
 Meta.DockerRequired=False
 Meta.ContainerPolicy=Supported
-Meta.Prerequsites=[]
+Meta.Prerequisites=[]
 Meta.ConfigReleaseState=NotSpecified
+Meta.ConfigVersion=1.3
 Meta.AppConfigId=d2bef27b-ca22-4528-bc94-29fe3825b4a1
 App.DisplayName=Seven Days To Die
 App.RootDir=./seven-days-to-die/
@@ -24,7 +26,7 @@ App.ExecutableLinux=294420/7DaysToDieServer.x86_64
 App.WorkingDir=294420
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs=-quit -batchmode -nographics -configfile={{ConfigFile}}.xml {{$FormattedArgs}} -dedicated
+App.CommandLineArgs=-quit -batchmode -nographics -configfile=serverconfig.xml -UserDataFolder=User {{ModMode}}{{$FormattedArgs}} -dedicated
 App.AppSettings={}
 App.EnvironmentVariables={"DOORSTOP_ENABLE":"TRUE","DOORSTOP_INVOKE_DLL_PATH":"./BepInEx/core/BepInEx.Preloader.dll","DOORSTOP_CORLIB_OVERRIDE_PATH":"./BepInEx/core","LD_LIBRARY_PATH":"./doorstop_libs:{{$FullBaseDir}}linux64:{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%","LD_PRELOAD":"libdoorstop_x64.so","SteamAppId":"251570"}
 App.CommandLineParameterFormat=-{0} "{1}"
@@ -63,11 +65,15 @@ App.ApplicationReadyMode=RegexMatch
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^.*Logon successful.$|^.*INF StartGame done$
-Console.UserJoinRegex=^.*INF PlayerSpawnedInWorld \(reason: JoinMultiplayer.*OwnerID='(?<userid>-?.*)'.*PlayerName='(?<username>.+?)'.*$|^.*INF PlayerSpawnedInWorld \(reason: EnterMultiplayer.*OwnerID='(?<userid>-?.*)'.*PlayerName='(?<username>.+?)'.*$
-Console.UserLeaveRegex=^.*INF Player (?<username>.+?) disconnected after.*$
-Console.UserChatRegex=^.*INF Chat \(from '(?<userid>-?.*)', entity id '.*', to '.*'\): .*'(?<username>.+?)': (?<message>.+)$
+Console.AppReadyRegex=^.*Logon successful.$|^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2} [\d.]+ INF StartGame done$
+Console.UserJoinRegex=^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2} [\d.]+ INF PlayerSpawnedInWorld \(reason: JoinMultiplayer.*OwnerID='(?<userid>-?.*)'.*PlayerName='(?<username>.+?)'.*$|^.*INF PlayerSpawnedInWorld \(reason: EnterMultiplayer.*OwnerID='(?<userid>-?.*)'.*PlayerName='(?<username>.+?)'.*$
+Console.UserLeaveRegex=^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2} [\d.]+ INF Player (?<username>.+?) disconnected after.*$
+Console.UserChatRegex=^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2} [\d.]+ INF Chat \(from '(?<userid>-?.*)', entity id '.*', to '.*'\): .*'(?<username>.+?)': (?<message>.+)$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
+Console.PreConnectRegex=^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2} [\d.]+ INF PlayerLogin: (?<id>.+?)\/V [\d\.]+$
+Console.ConnectIPRegex=^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2} [\d.]+ INF Client IP: (?<ip>[\d\.]+)$
+Console.MetricsRegex=^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2} [\d.]+ INF Time: [\d\.]+m FPS: (?<FPS>[\d\.]+).+$
+Console.HideFromConsoleRegex=
 Console.SuppressLogAtStart=False
 Console.ActivateLogRegex=
 Console.UserActions={}

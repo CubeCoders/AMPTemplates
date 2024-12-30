@@ -1,55 +1,63 @@
 [
     {
-        "UpdateStageName":"Working Directory Symlink Removal",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm {{$FullBaseDir}}bin/Win64_Shipping_Server >/dev/null 2>&1'",
-        "SkipOnFailure":true
+        "UpdateStageName": "Working Directory Symlink Removal",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm {{$FullBaseDir}}bin/Win64_Shipping_Server >/dev/null 2>&1\"",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"SteamCMD Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"1863440",
-        "UpdateSourceArgs":"261550"
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1863440",
+        "UpdateSourceArgs": "261550"
     },
     {
-        "UpdateStageName":"Working Directory Replacement",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -rf {{$FullBaseDir}}bin/Win64_Shipping_Server; cd {{$FullBaseDir}}bin; ln -sf Linux64_Shipping_Server Win64_Shipping_Server'",
-        "SkipOnFailure":false
+        "UpdateStageName": "Working Directory Replacement",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullBaseDir}}bin/Win64_Shipping_Server\\\"; cd \\\"{{$FullBaseDir}}bin\\\"; ln -sf Linux64_Shipping_Server Win64_Shipping_Server\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Create MultiplayerForcedAvatars Directory",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Modules/Native/MultiplayerForcedAvatars"
+        "UpdateStageName": "Create MultiplayerForcedAvatars Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Modules/Native/MultiplayerForcedAvatars"
     },
     {
-        "UpdateStageName":"Create Dotnet Directory",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Dotnet"
+        "UpdateStageName": "Create Dotnet Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Dotnet"
     },
     {
-        "UpdateStageName":"ASP.NET Core Runtime Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-linux-x64.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}Dotnet",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\" && if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/6.0/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi && if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid ASP.NET Core Runtime version format specified\\\" && exit 1; fi && wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-linux-x64.tar.gz && echo \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\"\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Copy Dotnet Libraries",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf \"{{$FullBaseDir}}Dotnet/shared/Microsoft.AspNetCore.App/{{DotnetVersion}}/\"* \"{{$FullBaseDir}}bin/Linux64_Shipping_Server/\"'",
-        "SkipOnFailure":false
+        "UpdateStageName": "ASP.NET Core Runtime Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "dotnet.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Dotnet",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Copy Dotnet Libraries",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\" && if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/6.0/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi && \\cp -rf \\\"{{$FullBaseDir}}Dotnet/shared/Microsoft.AspNetCore.App/$DotnetVersion/\\\"* \\\"{{$FullBaseDir}}bin/Linux64_Shipping_Server/\\\"\"",
+        "SkipOnFailure": false
     }
 ]

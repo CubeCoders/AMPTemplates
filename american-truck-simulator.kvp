@@ -16,10 +16,11 @@ Meta.DockerRequired=False
 Meta.ContainerPolicy=SupportedOnLinux, RequiredOnWindows
 Meta.ContainerPolicyReason=The game server does not run properly as NETWORK SERVICE, so it must be run within Docker on Windows.
 Meta.ExtraSetupStepsURI=https://discourse.cubecoders.com/docs?topic=3790?utm_source=ampcreate&utm_content=ats-ets2
-Meta.Prerequsites=[]
+Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
+Meta.ConfigVersion=1.2
 Meta.AppConfigId=00732a94-88f5-43b8-b211-458ccb83062e
 App.DisplayName=American Truck Simulator
 App.RootDir=./american-truck-simulator/
@@ -79,8 +80,8 @@ Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=(WARNING|ERROR): Shader.+
 Console.AppReadyRegex=^$
-Console.UserJoinRegex=^$
-Console.UserLeaveRegex=^$
+Console.UserJoinRegex=^\[MP\] (?<username>.+?) connected, client_id = (?<sessionid>\d+).*$
+Console.UserLeaveRegex=^\[MP\] (?<username>.+?) disconnected, client_id = (?<sessionid>\d+).*$
 Console.UserChatRegex=^$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
 Console.MetricsRegex=

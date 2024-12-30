@@ -1,0 +1,129 @@
+[
+    {
+        "UpdateStageName": "Setup Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}setup"
+    },
+    {
+        "UpdateStageName": "7-Zip Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "7-Zip Installer Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://7-zip.org/a/7z2407-x64.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "7-Zip Console Tool Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.7-zip.org/a/7zr.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd mtasa\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
+        "SkipOnFailure": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://mirror-cdn.multitheftauto.com/mtasa/main/mtasa-1.6.exe",
+        "UpdateSourceArgs": "mtasa.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}setup",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'mtasa'; & 7-Zip\\7z.exe x -y -aoa setup\\mtasa.exe -osetup server\\* | Out-Null; @('acl.xml', 'banlist.xml', 'mtaserver.conf', 'vehiclecolors.conf') | ForEach-Object { if (Test-Path \\\"server/mods/deathmatch/$_\\\") { Remove-Item -Path \\\"setup/server/mods/deathmatch/$_\\\" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null } }; Copy-Item -Path 'setup/server/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'setup' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceData": "https://linux.multitheftauto.com/dl/multitheftauto_linux_x64.tar.gz",
+        "UpdateSourceArgs": "mtasa.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSourceData": "https://linux.multitheftauto.com/dl/multitheftauto_linux_arm64.tar.gz",
+        "UpdateSourceArgs": "mtasa.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Server Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd mtasa/server && tar -xf mtasa.tar.gz --strip-components=1 >/dev/null 2>&1 && rm -f mtasa.tar.gz\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd mtasa/server && tar -xf mtasa.tar.gz --strip-components=1 >/dev/null 2>&1 && rm -f mtasa.tar.gz && ln -sf mta-server-arm64 mta-server64 >/dev/null 2>&1\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Default Config Files Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://linux.multitheftauto.com/dl/baseconfig.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}mods/deathmatch",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Default Config Files Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd mtasa/server/mods/deathmatch && tar -xf baseconfig.tar.gz --skip-old-files --strip-components=1 >/dev/null 2>&1 && rm -f baseconfig.tar.gz\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Resources Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}mods/deathmatch/resources"
+    },
+    {
+        "UpdateStageName": "Default Resources Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://mirror-cdn.multitheftauto.com/mtasa/resources/mtasa-resources-latest.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}mods/deathmatch/resources",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    }
+]

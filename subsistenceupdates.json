@@ -1,0 +1,50 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1362640",
+        "UpdateSourceArgs": "418030",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceVersion": "{{ServerBranch}}"
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\""
+    },
+    {
+        "UpdateStageName": "Winescript Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/subsistencewinescript.sh",
+        "UpdateSourceArgs": "winescript.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Install Windows Components",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "./winescript.sh"
+    },
+    {
+        "UpdateStageName": "Start Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "StartApplication"
+    },
+    {
+        "UpdateStageName": "Pause Update Stages",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "Pause",
+        "UpdateSourceArgs": "7"
+    },
+    {
+        "UpdateStageName": "Stop Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ShutdownApplication"
+    }
+]

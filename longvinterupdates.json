@@ -1,53 +1,40 @@
 [
-    {    
-        "UpdateStageName":"SteamCMD Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"1639880",
-        "UpdateSourceArgs":"1635450"
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1639880",
+        "UpdateSourceArgs": "1635450",
+        "UpdateSourceVersion": "{{ServerBranch}}"
     },
     {
-        "UpdateStageName":"Clone GitHub Repo",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"GitRepo",
-        "UpdateSourceData":"https://github.com/Uuvana-Studios/longvinter-linux-server.git",
-        "UpdateSourceTarget":"{{$FullBaseDir}}"
+        "UpdateStageName": "Config Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Longvinter/Saved/Config/WindowsServer"
     },
     {
-        "UpdateStageName":"Update GitHub Repo",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd {{$FullBaseDir}} && git restore . && git pull https://github.com/Uuvana-Studios/longvinter-linux-server.git\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "Config Directory Creation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Longvinter/Saved/Config/LinuxServer"
     },
     {
-        "UpdateStageName":"Set Binary Executable Flag",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"SetExecutableFlag",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Longvinter/Binaries/Linux/LongvinterServer-Linux-Shipping"
+        "UpdateStageName": "Game.ini Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/longvintergame.ini",
+        "UpdateSourceArgs": "Game.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Longvinter/Saved/Config/WindowsServer",
+        "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName":"SteamCMD Component Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"1007",
-        "UpdateSourceTarget":"{{$FullBaseDir}}"
-    },
-    {
-        "UpdateStageName":"Server Config File Copy",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"CopyFilePath",
-        "UpdateSourceData":"{{$FullBaseDir}}Longvinter/Saved/Config/WindowsServer/Game.ini",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Longvinter/Saved/Config/WindowsServer/Game.ini.default",
-        "OverwriteExistingFiles":true
-    },
-    {
-        "UpdateStageName":"Server Config File Copy",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"CopyFilePath",
-        "UpdateSourceData":"{{$FullBaseDir}}Longvinter/Saved/Config/LinuxServer/Game.ini",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Longvinter/Saved/Config/LinuxServer/Game.ini.default",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "Game.ini Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/longvintergame.ini",
+        "UpdateSourceArgs": "Game.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Longvinter/Saved/Config/LinuxServer",
+        "OverwriteExistingFiles": true
     }
 ]

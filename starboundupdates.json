@@ -1,0 +1,32 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "211820",
+        "UpdateSourceArgs": "533830"
+    },
+    {
+        "UpdateStageName": "Create Logs Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "./starbound/211820/storage",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Config File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/starbound_server.config",
+        "UpdateSourceTarget": "{{$FullBaseDir}}storage/",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Create Symlink",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/ln",
+        "UpdateSourceArgs": "-s \"{{$FullBaseDir}}linux\" \"{{$FullBaseDir}}win64\"",
+        "SkipOnFailure": false
+    }
+]

@@ -1,139 +1,153 @@
 [
     {
-        "UpdateStageName":"Create Dotnet Directory",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}dotnet"
+        "UpdateStageName": "Create Dotnet Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}dotnet"
     },
     {
-        "UpdateStageName":"Create Data Directory",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Data"
+        "UpdateStageName": "Create Data Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Data"
     },
     {
-        "UpdateStageName":"ASP.NET Core Runtime Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-win-x64.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\" && if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/3.1/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi && if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid ASP.NET Core Runtime version format specified\\\" && exit 1; fi && wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-linux-x64.tar.gz && echo \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\"\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"ASP.NET Core Runtime Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-linux-x64.tar.gz",
-        "UpdateSourceArch":"x86_64",
-        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\" && if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/3.1/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi && if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid ASP.NET Core Runtime version format specified\\\" && exit 1; fi && wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-linux-arm64.tar.gz && echo \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\"\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"ASP.NET Core Runtime Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/{{DotnetVersion}}/aspnetcore-runtime-{{DotnetVersion}}-linux-arm64.tar.gz",
-        "UpdateSourceArch":"aarch64",
-        "UpdateSourceTarget":"{{$FullBaseDir}}dotnet",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "ASP.NET Core Runtime Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $DotnetVersion='{{DotnetVersion}}'; if ([string]::IsNullOrWhiteSpace($DotnetVersion)) { $DotnetVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/release-metadata/3.1/releases.json).\\\"latest-runtime\\\" }; if ($DotnetVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid ASP.NET Core Runtime version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-win-x64.zip -OutFile 'dotnet.zip'; if ($?) { Write-Output \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\" }\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Open World Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceData":"win-x64.zip",
-        "UpdateSourceArgs":"D12-Dev/OpenWorld",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "UpdateSourceVersion":"{{ReleaseVersion}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "ASP.NET Core Runtime Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "dotnet.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}dotnet",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Open World Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceData":"linux-x64.zip",
-        "UpdateSourceArgs":"D12-Dev/OpenWorld",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "UpdateSourceVersion":"{{ReleaseVersion}}",
-        "UpdateSourceArch":"x86_64",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "ASP.NET Core Runtime Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "dotnet.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}dotnet",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Open World Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceData":"linux-arm64.zip",
-        "UpdateSourceArgs":"D12-Dev/OpenWorld",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "UpdateSourceVersion":"{{ReleaseVersion}}",
-        "UpdateSourceArch":"aarch64",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "Open World Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceData": "win-x64.zip",
+        "UpdateSourceArgs": "D12-Dev/OpenWorld",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UpdateSourceVersion": "{{ReleaseVersion}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
     },
     {
-        "UpdateStageName":"Pause Update Stages",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Pause",
-        "UpdateSourceArgs":"2"
+        "UpdateStageName": "Open World Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceData": "linux-x64.zip",
+        "UpdateSourceArgs": "D12-Dev/OpenWorld",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UpdateSourceVersion": "{{ReleaseVersion}}",
+        "UpdateSourceArch": "x86_64",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
     },
     {
-        "UpdateStageName":"Move Server Files",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C xcopy /E /Y /I open-world\\win-x64\\* open-world\\server\\ && rmdir /Q /S open-world\\win-x64\\"
+        "UpdateStageName": "Open World Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceData": "linux-arm64.zip",
+        "UpdateSourceArgs": "D12-Dev/OpenWorld",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UpdateSourceVersion": "{{ReleaseVersion}}",
+        "UpdateSourceArch": "aarch64",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
     },
     {
-        "UpdateStageName":"Move Server Files",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./open-world/linux-x64/* ./open-world/server/ && chmod +x ./open-world/server/OpenWorldServer ; rm -rf ./open-world/linux-x64/'",
-        "UpdateSourceArch":"x86_64",
-        "SkipOnFailure":false
+        "UpdateStageName": "Pause Update Stages",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Pause",
+        "UpdateSourceArgs": "2"
     },
     {
-        "UpdateStageName":"Move Server Files",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c '\\cp -rf ./open-world/linux-arm64/* ./open-world/server/ && chmod +x ./open-world/server/OpenWorldServer ; rm -rf ./open-world/linux-arm64/'",
-        "UpdateSourceArch":"aarch64",
-        "SkipOnFailure":false
+        "UpdateStageName": "Move Server Files",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C xcopy /E /Y /I open-world\\win-x64\\* open-world\\server\\ && rmdir /Q /S open-world\\win-x64\\"
     },
     {
-        "UpdateStageName":"Config.json File Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/open-worldserverconfig.json",
-        "UpdateSourceArgs":"Config.json",
-        "UpdateSourceTarget":"{{$FullBaseDir}}Data",
-        "OverwriteExistingFiles":false
+        "UpdateStageName": "Move Server Files",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"\\cp -rf ./open-world/linux-x64/* ./open-world/server/ && chmod +x ./open-world/server/OpenWorldServer ; rm -rf ./open-world/linux-x64/\"",
+        "UpdateSourceArch": "x86_64",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Start Server",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"StartApplication"
+        "UpdateStageName": "Move Server Files",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"\\cp -rf ./open-world/linux-arm64/* ./open-world/server/ && chmod +x ./open-world/server/OpenWorldServer ; rm -rf ./open-world/linux-arm64/\"",
+        "UpdateSourceArch": "aarch64",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Wait For Server Start",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"WaitForStartupComplete"
+        "UpdateStageName": "Config.json File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/open-worldserverconfig.json",
+        "UpdateSourceArgs": "Config.json",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Data",
+        "OverwriteExistingFiles": false
     },
     {
-        "UpdateStageName":"Stop Server",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"ShutdownApplication"
+        "UpdateStageName": "Start Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "StartApplication"
+    },
+    {
+        "UpdateStageName": "Wait For Server Start",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "WaitForStartupComplete"
+    },
+    {
+        "UpdateStageName": "Stop Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ShutdownApplication"
     }
 ]

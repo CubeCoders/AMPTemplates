@@ -12,8 +12,9 @@ Meta.ConfigRoot=frozen-flame.kvp
 Meta.MinAMPVersion=2.4.0.10
 Meta.SpecificDockerImage=
 Meta.ContainerPolicy=Supported
-Meta.Prerequsites=[]
+Meta.Prerequisites=[]
 Meta.ConfigReleaseState=NotSpecified
+Meta.ConfigVersion=1.2
 Meta.AppConfigId=4e7c416b-858c-4dc5-a329-5bdb57779e42
 App.DisplayName=Frozen Flame
 App.RootDir=./frozen-flame/
@@ -23,7 +24,7 @@ App.ExecutableLinux=1348640/FrozenFlame/Binaries/Linux/FrozenFlameServer-Linux-S
 App.WorkingDir=1348640
 App.LinuxCommandLineArgs=FrozenFlame -stdout
 App.WindowsCommandLineArgs=FrozenFlame -stdout -FullStdOutLogOutput
-App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -RconPort={{$RCONPort}} -RconPassword={{$RemoteAdminPassword}} -ip={{$ExternalIP}} {{noeac}}{{PublicServer}}{{$FormattedArgs}} -LOCALLOGTIMES 
+App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -RconPort={{$RCONPort}} -RconPassword={{$RemoteAdminPassword}} -ip={{PublicIP}} {{noeac}}{{PublicServer}}{{$FormattedArgs}} -LOCALLOGTIMES 
 App.AppSettings={}
 App.EnvironmentVariables={}
 App.CommandLineParameterFormat=-{0}="{1}"
@@ -37,7 +38,7 @@ App.HasReadableConsole=True
 App.SupportsLiveSettingsChanges=False
 App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.ApplicationIPBinding=0.0.0.0
-App.Ports=[{"Protocol":"Both","Port":7777,"Ref":"GamePort","Name":"Game Port","Description":"Port for game traffic"},{"Protocol":"UDP","Port":27015,"Ref":"QueryPort","Name":"Query Port","Description":"Port for query traffic"},{"Protocol":"TCP","Port":25575,"Ref":"RCONPort","Name":"RCON Port","Description":"Port for RCON traffic"}]
+App.Ports=@IncludeJson[frozen-flameports.json]
 App.AdminPortRef=RCONPort
 App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPort=GamePort

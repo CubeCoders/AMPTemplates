@@ -1,38 +1,38 @@
 [
     {
-        "UpdateStageName":"Delete Active File",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'rm -f {{$FullBaseDir}}battleye/beserver_x64_active_*.cfg >/dev/null 2>&1'",
-        "SkipOnFailure":true
+        "UpdateStageName": "Delete Active File",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -f \\\"{{$FullBaseDir}}battleye/\\\"beserver_x64_active_*.cfg >/dev/null 2>&1\"",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"Delete Active File",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C del /Q /F {{$FullBaseDir}}battleye\\beserver_x64_active_*.cfg > NUL 2>&1",
-        "SkipOnFailure":true
+        "UpdateStageName": "Delete Active File",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C del /Q /F \"{{$FullBaseDir}}battleye\\\"beserver_x64_active_*.cfg > NUL 2>&1",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"Manage Bikeys",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c 'cd dayz/1042420; find keys/ -name \"*.bikey\" ! -name \"dayz.bikey\" -exec rm {} +; IFS=\";\" read -ra subdirs_array <<< \"{{mod}};{{clientmod}}\" && for subdir in \"${subdirs_array[@]}\"; do find \"$subdir/keys\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t keys/ {} + >/dev/null 2>&1; find \"$subdir/key\" -maxdepth 1 -mindepth 1 -type f -name \"*.bikey\" -exec \\cp -t keys/ {} + >/dev/null 2>&1; done; exit 0'",
-        "UpdateSourceConditionSetting":"ManageBikeys",
-        "UpdateSourceConditionValue":"true",
-        "SkipOnFailure":true
+        "UpdateStageName": "Manage Bikeys",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd dayz/1042420; find keys -name \\\"*.bikey\\\" ! -name \\\"dayz.bikey\\\" -delete; IFS=\\\";\\\" read -ra subdirs_array <<< \\\"{{mod}};{{clientmod}}\\\"; for subdir in \\\"${subdirs_array[@]}\\\"; do [ -d \\\"$subdir/keys\\\" ] && \\cp \\\"$subdir/keys/\\\"*.bikey keys/ >/dev/null 2>&1; [ -d \\\"$subdir/key\\\" ] && \\cp \\\"$subdir/key/\\\"*.bikey keys/ >/dev/null 2>&1; done\"",
+        "UpdateSourceConditionSetting": "ManageBikeys",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"Manage Bikeys",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command \"$mods = '{{mod}};{{clientmod}}' -split ';'; Set-Location dayz\\1042420; Get-ChildItem -Path 'keys' -Filter '*.bikey' | ForEach-Object { if ($_.Name -ne 'dayz.bikey' -and -not ($_.Name -like '*dayz.bikey*')) { Remove-Item -LiteralPath $_.FullName -Force } }; foreach ($a in $mods) { Get-ChildItem -Path ('{0}\\keys' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'keys' -Force ; Get-ChildItem -Path ('{0}\\key' -f $a) -Filter '*.bikey' | Copy-Item -Destination 'keys' -Force }\"",
-        "UpdateSourceConditionSetting":"ManageBikeys",
-        "UpdateSourceConditionValue":"true",
-        "SkipOnFailure":true
+        "UpdateStageName": "Manage Bikeys",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$mods = '{{mod}};{{clientmod}}' -split ';'; Set-Location dayz\\1042420; Remove-Item '.\\keys\\*.bikey' -Exclude 'dayz.bikey' -Force -ErrorAction SilentlyContinue; $mods | ForEach-Object { if (Test-Path \\\".\\$_\\keys\\\") { Copy-Item -Path \\\".\\$_\\keys\\*.bikey\\\" -Destination '.\\keys' -Force -ErrorAction SilentlyContinue }; if (Test-Path \\\".\\$_\\key\\\") { Copy-Item -Path \\\".\\$_\\key\\*.bikey\\\" -Destination '.\\keys' -Force -ErrorAction SilentlyContinue } }\"",
+        "UpdateSourceConditionSetting": "ManageBikeys",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
     }
 ]
