@@ -24,7 +24,7 @@ wget -q -O $WINEPREFIX/mono.msi https://dl.winehq.org/wine/wine-mono/9.1.0/wine-
 
 /usr/bin/wine msiexec /i $WINEPREFIX/mono.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log
 
-PACKAGES="win11 vcrun2022 corefonts"
+PACKAGES="win11 vcrun2017 vcrun2022 corefonts"
 echo "" > winescript_log.txt 2>&1
 for PACKAGE in $PACKAGES; do
   ./winetricks -q $PACKAGE >> winescript_log.txt 2>&1
