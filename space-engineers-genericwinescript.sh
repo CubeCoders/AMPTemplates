@@ -20,11 +20,11 @@ export DISPLAY=:$DPY_NUM
 
 wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
-wget -q -O $WINEPREFIX/mono.msi https://dl.winehq.org/wine/wine-mono/9.1.0/wine-mono-9.1.0-x86.msi
+#wget -q -O $WINEPREFIX/mono.msi https://dl.winehq.org/wine/wine-mono/9.1.0/wine-mono-9.1.0-x86.msi
 
-/usr/bin/wine msiexec /i $WINEPREFIX/mono.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log
+#/usr/bin/wine msiexec /i $WINEPREFIX/mono.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log
 
-PACKAGES="vcrun2013 vcrun2015 vcrun2017 vcrun2019 corefonts"
+PACKAGES="vcrun2013 vcrun2015 vcrun2017 vcrun2019 dotnet48 corefonts"
 echo "" > winescript_log.txt 2>&1
 for PACKAGE in $PACKAGES; do
   ./winetricks -q $PACKAGE >> winescript_log.txt 2>&1
