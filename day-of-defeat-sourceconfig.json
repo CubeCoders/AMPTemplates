@@ -152,7 +152,7 @@
         "DisplayName": "Player Limit",
         "Category": "Day of Defeat Source:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the maximum number of players allowed on the server at one time. For more than 4 players, a suitable SourceMod plugin is required",
+        "Description": "Sets the maximum number of players allowed on the server at one time. For more than 32 players, a suitable SourceMod plugin is required",
         "Keywords": "max,players,limit,maxplayers",
         "FieldName": "$MaxUsers",
         "InputType": "number",
@@ -202,12 +202,12 @@
         "FieldName": "sv_pure",
         "InputType": "enum",
         "ParamFieldName": "sv_pure",
-        "IncludeInCommandLine": true,
-        "DefaultValue": "0",
+        "DefaultValue": "-1",
         "EnumValues": {
-            "0": "Client files not restricted",
-            "1": "All client files except those listed in pure_server_whitelist.txt must match the server",
-            "2": "All client files must come from Steam"
+            "-1": "Do not restrict client files",
+            "0": "Apply rules in 'pure_server_minimal.txt' only",
+            "1": "Apply rules in 'pure_server_full.txt' and then 'pure_server_whitelist.txt'",
+            "2": "Apply rules in 'pure_server_full.txt'"
         }
     },
     {
@@ -220,21 +220,6 @@
         "InputType": "checkbox",
         "ParamFieldName": "sv_pure_kick_clients",
         "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Require File Consistency",
-        "Category": "Day of Defeat Source:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "If set, the server will enforce file consistency for critical files",
-        "Keywords": "consistency,files,sv_consistency",
-        "FieldName": "sv_consistency",
-        "InputType": "checkbox",
-        "ParamFieldName": "sv_consistency",
-        "DefaultValue": "1",
         "EnumValues": {
             "False": "0",
             "True": "1"
