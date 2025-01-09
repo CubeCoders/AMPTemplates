@@ -29,11 +29,11 @@ App.RootDir=./space-engineers-generic/
 App.BaseDirectory=./space-engineers-generic/298740/
 App.SteamWorkshopDownloadLocation=
 App.ExecutableWin=298740\DedicatedServer64\SpaceEngineersDedicated.exe
-App.ExecutableLinux=/usr/bin/wine
+App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=298740/DedicatedServer64
-App.LinuxCommandLineArgs="{{$FullBaseDir}}DedicatedServer64/SpaceEngineersDedicated.exe" -path ../servers
+App.LinuxCommandLineArgs=-a wine "{{$FullBaseDir}}DedicatedServer64/SpaceEngineersDedicated.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -console -noconsole -ignorelastsession {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} -console -ignorelastsession -path ../servers {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"./linux64:%LD_LIBRARY_PATH%","SteamAppId":"244850","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"mscoree=n,b;mshtml=n,b","XDG_RUNTIME_DIR":"/tmp"}
