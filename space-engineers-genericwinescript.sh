@@ -12,20 +12,23 @@ done
 read -r DPY_NUM < display.log
 rm display.log
 
-wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
-chmod +x winetricks
-
 export WINEPREFIX="$SCRIPTDIR/space-engineers-generic/.wine"
 export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
-./winetricks corefonts > winescript_log.txt 2>&1
-./winetricks sound=disabled >> winescript_log.txt 2>&1
-./winetricks -q vcrun2013 >> winescript_log.txt 2>&1
-./winetricks -q vcrun2017 >> winescript_log.txt 2>&1
-./winetricks -q vcrun2019 >> winescript_log.txt 2>&1
-./winetricks -q dotnet48 >> winescript_log.txt 2>&1
+
+wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+chmod +x winetricks
+wget -q -O $WINEPREFIX/mono.msi https://dl.winehq.org/wine/wine-mono/9.1.0/wine-mono-9.1.0-x86.msi
+
+/usr/bin/wine msiexec /i $WINEPREFIX/mono.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log
+
+PACKAGES="win11 vcrun2022 corefonts"
+echo "" > winescript_log.txt 2>&1
+for PACKAGE in $PACKAGES; do
+  ./winetricks -q $PACKAGE >> winescript_log.txt 2>&1
+done
 rm -rf ~/.cache/winetricks ~/.cache/fontconfig
 
 exec 6>&-
