@@ -1,0 +1,25 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1660080",
+        "UpdateSourceArgs": "1660080",
+        "ForceDownloadPlatform": "Windows"
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\""
+    },
+    {
+        "UpdateStageName": "DedicatedServerExample.cfg Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}DedicatedServer.cfg",
+        "UpdateSourceArgs": "{{$FullBaseDir}}DedicatedServerExample.cfg",
+        "OverwriteExistingFiles": false
+    }
+]
