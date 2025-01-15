@@ -1,86 +1,92 @@
 [
     {
-        "DisplayName": "Port",
+        "DisplayName": "Map Name",
         "Category": "Aloft:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "$ServerPort",
-        "InputType": "number",
-        "Hidden": true,
-        "ParamFieldName": "Port",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Connection Protocol",
-        "Category": "Aloft:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Protocol to use for hosting. Make sure you're signed into Steam if using the Steam backend, otherwise it'll default to IP.",
-        "Keywords": "protocol,connection",
-        "FieldName": "Protocol",
-        "InputType": "enum",
-        "ParamFieldName": "Protocol",
-        "DefaultValue": "ip",
-        "EnumValues": {
-            "ip": "IP",
-            "steam": "Steam"
-        }
-    },
-    {
-        "DisplayName": "Admin Password",
-        "Category": "Aloft:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Enter a password to allow connected clients to run commands with the svrexec command",
-        "Keywords": "admin,password,security",
-        "FieldName": "AdminPassword",
-        "InputType": "password",
-        "ParamFieldName": "AdminPassword",
-        "DefaultValue": "",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Steam Type",
-        "Category": "Aloft:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Type of Steam listing",
-        "Keywords": "steam,type,listing",
-        "FieldName": "SteamType",
-        "InputType": "enum",
-        "ParamFieldName": "SteamType",
-        "DefaultValue": "friends",
-        "EnumValues": {
-            "private": "Private",
-            "friends": "Friends (default)",
-            "public": "Public",
-            "invisible": "Invisible"
-        }
-    },
-    {
-        "DisplayName": "Steam Listing",
-        "Category": "Aloft:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "The name of the server on the Steam server browser",
-        "Keywords": "steam,listing,name",
-        "FieldName": "SteamListing",
+        "Description": "The name of the map to load (no spaces).",
+        "Keywords": "mapname,gameplay,settings",
+        "FieldName": "MapName",
         "InputType": "text",
-        "ParamFieldName": "SteamListing",
-        "DefaultValue": "AMP Powered Aloft Server",
+        "ParamFieldName": "MapName",
+        "DefaultValue": "",
+        "Placeholder": "Enter the map name",
         "EnumValues": {}
     },
     {
-        "DisplayName": "Enable UPnP",
+        "DisplayName": "Server Name",
         "Category": "Aloft:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Set to false if you want to manually port forward or UPNP is not working",
-        "Keywords": "upnp,connection",
-        "FieldName": "UPNP",
+        "Description": "The name of the server visible in-game (no spaces).",
+        "Keywords": "servername,server,name",
+        "FieldName": "servername",
+        "InputType": "text",
+        "ParamFieldName": "servername",
+        "DefaultValue": "",
+        "Placeholder": "Enter the server name",
+        "EnumValues": null
+    },
+    {
+        "DisplayName": "Log Level",
+        "Category": "Aloft:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "The level of logging to use.",
+        "Keywords": "log,server,settings",
+        "FieldName": "log",
+        "InputType": "enum",
+        "ParamFieldName": "log",
+        "DefaultValue": "ERROR",
+        "Placeholder": "Select log level",
+        "EnumValues": {
+            "Error": "ERROR",
+            "Warning": "WARNING",
+            "Info": "INFO",
+            "Debug": "DEBUG"
+        }
+    },
+    {
+        "DisplayName": "Is Visible",
+        "Category": "Aloft:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Determines if the server is visible through the lobby browser.",
+        "Keywords": "isvisible,server,lobby",
+        "FieldName": "isvisible",
         "InputType": "checkbox",
-        "ParamFieldName": "UPNP",
+        "ParamFieldName": "$.IsVisible",
         "DefaultValue": "true",
+        "Placeholder": null,
         "EnumValues": {
             "False": "false",
             "True": "true"
         }
+    },
+    {
+        "DisplayName": "Private Islands",
+        "Category": "Aloft:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Enables or disables protection for home island spawning.",
+        "Keywords": "privateislands,islands,protection",
+        "FieldName": "privateislands",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.PrivateIslands",
+        "DefaultValue": "false",
+        "Placeholder": null,
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Admins",
+        "Category": "Aloft:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "A list of Steam IDs for server admins.",
+        "Keywords": "admin,admins,steamid",
+        "FieldName": "admins",
+        "InputType": "text",
+        "ParamFieldName": "$.Admin",
+        "DefaultValue": "",
+        "Placeholder": "Enter comma-separated Steam IDs",
+        "EnumValues": null
     },
     {
         "DisplayName": "Player Limit",
@@ -88,11 +94,11 @@
         "Subcategory": "Server:dns:1",
         "Description": "Sets the maximum number of players allowed on the server at one time",
         "Keywords": "max,players,connection",
-        "FieldName": "MaxPlayers",
+        "FieldName": "PlayerCount",
         "InputType": "number",
         "MinValue": "1",
         "MaxValue": "8",
-        "ParamFieldName": "MaxPlayers",
+        "ParamFieldName": "PlayerCount",
         "DefaultValue": "8",
         "EnumValues": {}
     },
