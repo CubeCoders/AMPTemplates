@@ -1,1 +1,42 @@
-[]
+[
+    {
+        "UpdateStageName": "Load Map",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd factorio/server && [ -e \\\"saves/{{SaveFile}}\\\" ] || { .proton/proton runinprefix  --create saves/{{SaveFile}} && wait; }\"",
+        "UpdateSourceConditionSetting": "StartMode",
+        "UpdateSourceConditionValue": "LoadMap",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Load Map",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd factorio\\server & if not exist \"saves\\{{SaveFile}}\" ( .\\bin\\x64\\factorio.exe --create saves\\{{SaveFile}})",
+        "UpdateSourceConditionSetting": "StartMode",
+        "UpdateSourceConditionValue": "LoadMap",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Map",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd factorio/server && ./bin/x64/factorio --create saves/{{SaveFile}} && wait\"",
+        "UpdateSourceConditionSetting": "StartMode",
+        "UpdateSourceConditionValue": "CreateMap",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Map",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd factorio\\server & .\\bin\\x64\\factorio.exe --create saves\\{{SaveFile}}",
+        "UpdateSourceConditionSetting": "StartMode",
+        "UpdateSourceConditionValue": "CreateMap",
+        "SkipOnFailure": false
+    }
+]
