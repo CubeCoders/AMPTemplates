@@ -8,11 +8,35 @@
         "ForceDownloadPlatform": "Windows"
     },
     {
+        "UpdateStageName": "Saves Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C mkdir \"%UserProfile%\\AppData\\LocalLow\\Astrolabe Interactive\\Aloft\\Data01\" > NUL 2>&1 & rd /S /Q \"{{$FullBaseDir}}Data01\" > NUL 2>&1 & mklink /J \"{{$FullBaseDir}}Data01\" \"%UserProfile%\\AppData\\LocalLow\\Astrolabe Interactive\\Aloft\\Data01\" > NUL 2>&1",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Saves Directory Creation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullRootDir}}.proton/compatdata/pfx/drive_c/users/amp/AppData/LocalLow/Astrolabe Interactive/Aloft/Data01\\\" >/dev/null 2>&1; cd aloft/1660080 && ln -sf \\\"../.proton/compatdata/pfx/drive_c/users/amp/AppData/Astrolabe Interactive/Aloft/Data01\\\" ./ >/dev/null 2>&1\"",
+        "SkipOnFailure": false
+    },
+    {
         "UpdateStageName": "Proton GE Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullRootDir}}.proton/compatdata\\\" \\\"{{$FullBaseDir}}.steam/steam\\\" \\\"{{$FullBaseDir}}.steam/sdk32\\\" \\\"{{$FullBaseDir}}.steam/sdk64\\\" && \\cp -f \\\"{{$FullRootDir}}linux32/steamclient.so\\\" \\\"{{$FullBaseDir}}.steam/sdk32/\\\" && \\cp -f \\\"{{$FullRootDir}}linux64/steamclient.so\\\" \\\"{{$FullBaseDir}}.steam/sdk64/\\\" && ProtonVersion=\\\"{{ProtonVersion}}\\\" && if [[ -z \\\"$ProtonVersion\\\" ]]; then DownloadURL=$(wget -qO- https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest | grep browser_download_url | cut -d\\\\\\\" -f4 | grep .tar.gz) && wget -qO GE-Proton.tar.gz $DownloadURL && echo \\\"Latest Proton GE version downloaded\\\"; elif [[ ! \\\"$ProtonVersion\\\" =~ ^GE-Proton[0-9]+-[0-9]+$ ]]; then echo \\\"Invalid Proton GE release version format specified\\\" && exit 1; else wget -qO GE-Proton.tar.gz https://github.com/GloriousEggroll/proton-ge-custom/releases/download/$ProtonVersion/$ProtonVersion.tar.gz && echo \\\"Proton GE version $ProtonVersion downloaded\\\"; fi && tar -xzf GE-Proton.tar.gz -C \\\"{{$FullRootDir}}.proton\\\" --strip-components=1; rm GE-Proton.tar.gz && { STEAM_COMPAT_DATA_PATH=\\\"{{$FullRootDir}}.proton/compatdata\\\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\\\"{{$FullBaseDir}}.steam/steam\\\" {{$FullRootDir}}.proton/proton PROTON_LOG=1 >/dev/null 2>&1; exit 0; }\"",
         "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Readme File",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Data01/README.txt",
+        "UpdateSourceData": "WARNING: This directory will include the save data of multiple Aloft servers\nrun on this system.\n\nTake care when managing files in this directory or its subdirectory!",
+        "OverwriteExistingFiles": true
     }
 ]
