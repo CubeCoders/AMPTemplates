@@ -12,7 +12,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"Set-Location -Path 'aloft/1660080'; if (-Not (Test-Path 'Aloft/Data01/Saves/w_{{MapName}}')) { & ./Aloft.exe -batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}# }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'aloft/1660080'; if (-Not (Test-Path 'Aloft/Data01/Saves/w_{{MapName}}')) { Start-Process -FilePath './Aloft.exe' -ArgumentList '-batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}#' -Wait }\"",
         "SkipOnFailure": false
     }
 ]
