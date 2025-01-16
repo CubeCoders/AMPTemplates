@@ -4,7 +4,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd aloft/1660080 && [ -e \\\"saves/{{MapName}}\\\" ] || { ../.proton/proton runinprefix  && wait; }\"",
+        "UpdateSourceArgs": "-c \"cd aloft/1660080 && [ -e \\\"saves/{{MapName}}\\\" ] || { STEAM_COMPAT_DATA_PATH=\\\"{{$FullRootDir}}.proton/compatdata\\\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\\\"{{$FullBaseDir}}.steam/steam\\\" {{$FullRootDir}}.proton/proton runinprefix \\\"{{$FullBaseDir}}Aloft.exe\\\" -batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}# && wait; }\"",
         "UpdateSourceConditionSetting": "StartMode",
         "UpdateSourceConditionValue": "LoadMap",
         "SkipOnFailure": false
@@ -24,7 +24,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd aloft/1660080 && ./bin/x64/factorio --create saves/{{SaveFile}} && wait\"",
+        "UpdateSourceArgs": "-c \"cd aloft/1660080 && STEAM_COMPAT_DATA_PATH=\\\"{{$FullRootDir}}.proton/compatdata\\\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\\\"{{$FullBaseDir}}.steam/steam\\\" {{$FullRootDir}}.proton/proton runinprefix \\\"{{$FullBaseDir}}Aloft.exe\\\" -batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}# && wait\"",
         "UpdateSourceConditionSetting": "StartMode",
         "UpdateSourceConditionValue": "CreateMap",
         "SkipOnFailure": false
@@ -34,7 +34,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd aloft\\1660080 & Aloft.exe ",
+        "UpdateSourceArgs": "/C cd aloft\\1660080 & Aloft.exe -batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}#",
         "UpdateSourceConditionSetting": "StartMode",
         "UpdateSourceConditionValue": "CreateMap",
         "SkipOnFailure": false
