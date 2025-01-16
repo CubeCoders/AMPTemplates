@@ -1,42 +1,18 @@
 [
     {
-        "UpdateStageName": "Load Map",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd aloft/1660080 && [ -e \\\"Data01/{{MapName}}\\\" ] || { STEAM_COMPAT_DATA_PATH=\\\"{{$FullRootDir}}.proton/compatdata\\\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\\\"{{$FullBaseDir}}.steam/steam\\\" {{$FullRootDir}}.proton/proton runinprefix \\\"{{$FullBaseDir}}Aloft.exe\\\" -batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}# && wait; }\"",
-        "UpdateSourceConditionSetting": "StartMode",
-        "UpdateSourceConditionValue": "LoadMap",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Load Map",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd aloft\\1660080 & if not exist \"Data01\\{{MapName}}\" ( Aloft.exe -batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}# )",
-        "UpdateSourceConditionSetting": "StartMode",
-        "UpdateSourceConditionValue": "LoadMap",
-        "SkipOnFailure": false
-    },
-    {
         "UpdateStageName": "Create Map",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd aloft/1660080 && STEAM_COMPAT_DATA_PATH=\\\"{{$FullRootDir}}.proton/compatdata\\\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\\\"{{$FullBaseDir}}.steam/steam\\\" {{$FullRootDir}}.proton/proton runinprefix \\\"{{$FullBaseDir}}Aloft.exe\\\" -batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}# && wait\"",
-        "UpdateSourceConditionSetting": "StartMode",
-        "UpdateSourceConditionValue": "CreateMap",
+        "UpdateSourceArgs": "-c \"cd aloft/1660080 && [ -e \\\"Aloft/Data01/Saves/w_{{MapName}}\\\" ] || { STEAM_COMPAT_DATA_PATH=\\\"{{$FullRootDir}}.proton/compatdata\\\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\\\"{{$FullBaseDir}}.steam/steam\\\" {{$FullRootDir}}.proton/proton runinprefix \\\"{{$FullBaseDir}}Aloft.exe\\\" -batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}# && wait; }\"",
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Map",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd aloft\\1660080 & Aloft.exe -batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}#",
-        "UpdateSourceConditionSetting": "StartMode",
-        "UpdateSourceConditionValue": "CreateMap",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"Set-Location -Path 'aloft/1660080'; if (-Not (Test-Path 'Aloft/Data01/Saves/w_{{MapName}}')) { & ./Aloft.exe -batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}# }\"",
         "SkipOnFailure": false
     }
 ]
