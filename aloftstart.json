@@ -4,7 +4,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd aloft/1660080 && [ -e \\\"Aloft/Data01/Saves/w_{{MapName}}\\\" ] || { STEAM_COMPAT_DATA_PATH=\\\"{{$FullRootDir}}.proton/compatdata\\\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\\\"{{$FullBaseDir}}.steam/steam\\\" {{$FullRootDir}}.proton/proton runinprefix \\\"{{$FullBaseDir}}Aloft.exe\\\" -batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}# && wait; }\"",
+        "UpdateSourceArgs": "-c \"cd aloft/1660080 && [ -e \\\"Aloft/Data01/Saves/w_{{MapName}}\\\" ] || { WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/xvfb-run -a wine Aloft.exe -batchmode -nographics -server create#{{MapName}}#{{IslandNumber}}#{{CreativeMode}}# log#{{log}}# && wait; }\"",
         "SkipOnFailure": false
     },
     {
