@@ -24,7 +24,7 @@ wget -q -O $WINEPREFIX/mono.msi https://dl.winehq.org/wine/wine-mono/9.1.0/wine-
 
 /usr/bin/wine msiexec /i $WINEPREFIX/mono.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log
 
-PACKAGES="vcrun2022 wmp11"
+PACKAGES="vcrun2022 wmp11 sound=disabled"
 echo "" > winescript_log.txt 2>&1
 for PACKAGE in $PACKAGES; do
   ./winetricks -q $PACKAGE >> winescript_log.txt 2>&1
