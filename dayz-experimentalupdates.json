@@ -1,0 +1,35 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1042420",
+        "UpdateSourceArgs": "221100"
+    },
+    {
+        "UpdateStageName": "Config Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-experimental1-6server.cfg",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UpdateSourceArgs": "AMP_serverDZ.cfg"
+    },
+    {
+        "UpdateStageName": "Modscript Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/dayz-experimentalmanagemods.sh",
+        "UpdateSourceArgs": "managemods.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Manage Mods",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "./managemods.sh {{ModDirFormat}}",
+        "SkipOnFailure": true
+    }
+]
