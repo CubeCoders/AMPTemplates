@@ -1,6 +1,4 @@
-param(
-    [string]$ModDirFormat
-)
+$ModDirFormat = $args[0]
 
 # Change directory to the mod directory
 Set-Location -Path ".\dayz\1042420"
