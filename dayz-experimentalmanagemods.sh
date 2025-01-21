@@ -7,6 +7,7 @@ cd ./dayz/1042420
 workshopDir="./steamapps/workshop/content/221100"
 
 if [ -d $workshopDir ]; then
+    echo "Managing mods"
     # Convert uppercase filenames to lowercase
     find $workshopDir/ -depth -name "*[A-Z]*" -print0 | \
         xargs -0 -I {} bash -c "mv \"{}\" \"\$(echo \"{}\" | sed 's,\(.*\)\/\(.*\),\1\/\L\2,')\"" >/dev/null 2>&1
@@ -27,6 +28,8 @@ if [ -d $workshopDir ]; then
             [[ -n "$modName" ]] && ln -sfT "$modDir" "@$modName"
         fi
     done
+else
+    echo "No mods to manage"
 fi
 
 exit 0
