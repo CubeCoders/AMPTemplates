@@ -10,12 +10,12 @@ if [ -d ./steamapps/workshop/content/221100 ]; then
 
   if [ "$ModDirFormat" = "false" ]; then
     find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d | while read -r mod_dir; do
-      mod_name=$(grep -oP '^\s*name\s*=\s*"\K[^"]+' "$mod_dir/mod.cpp")
+      mod_name=$(grep -oP '^\s*name\s*=\s*"\K[^"]+' "$mod_dir/meta.cpp")
       rm -f "./@$mod_name" >/dev/null 2>&1
     done
   else
     find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d | while read -r mod_dir; do
-      mod_name=$(grep -oP '^\s*name\s*=\s*"\K[^"]+' "$mod_dir/mod.cpp")
+      mod_name=$(grep -oP '^\s*name\s*=\s*"\K[^"]+' "$mod_dir/meta.cpp")
       rm -f "./$(basename "$mod_dir")" >/dev/null 2>&1
       ln -sf "$mod_dir" "./@$mod_name"
     done
