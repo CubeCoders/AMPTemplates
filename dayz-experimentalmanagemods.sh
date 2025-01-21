@@ -13,7 +13,6 @@ if [ -d ./steamapps/workshop/content/221100 ]; then
       mod_name=$(grep -oP '^\s*name\s*=\s*"\K[^"]+' "$mod_dir/mod.cpp")
       rm -f "./@$mod_name" >/dev/null 2>&1
     done
-    find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d -exec ln -sf {} ./ \;
   else
     find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d | while read -r mod_dir; do
       mod_name=$(grep -oP '^\s*name\s*=\s*"\K[^"]+' "$mod_dir/mod.cpp")
