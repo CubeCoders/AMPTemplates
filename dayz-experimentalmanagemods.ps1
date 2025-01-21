@@ -30,7 +30,6 @@ if (Test-Path $workshopDir) {
             if (Test-Path $_.Name) {
                 Remove-Item -Path $_.Name -Force -Recurse
             }
-
             # Create @name junction links for the mod directories based on meta.cpp
             $modDir = Join-Path -Path $workshopDir -ChildPath $_.Name
             $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"(.*)"' -AllMatches).Matches.Groups[1].Value
