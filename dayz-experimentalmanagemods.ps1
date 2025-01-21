@@ -49,7 +49,7 @@ if (Test-Path $workshopDir) {
             if ($modName) {
                 $symlinkName = "@$modName"
                 Write-Host "Creating junction link: $symlinkName -> $modDir"
-                if (Test-Path $symlinkPath) {
+                if (Test-Path $symlinkName) {
                     Write-Host "Removing existing symlink: $symlinkPath"
                     Remove-Item -Path $symlinkPath -Force -Recurse
                 }
