@@ -51,7 +51,7 @@ if (Test-Path $workshopDir) {
                 Write-Host "Creating junction link: $symlinkName -> $modDir"
                 if (Test-Path $symlinkName) {
                     Write-Host "Removing existing symlink: $symlinkPath"
-                    Remove-Item -Path $symlinkPath -Force -Recurse
+                    Remove-Item -Path $symlinkName -Force -Recurse
                 }
                 New-Item -ItemType Junction -Name $symlinkName -Target $modDir -Force | Out-Null
             }
