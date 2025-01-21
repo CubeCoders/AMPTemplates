@@ -13,7 +13,7 @@ if [ -d ./steamapps/workshop/content/221100 ]; then
     # Remove symlinks corresponding to actual directories
     find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d | while read -r mod_dir; do
       mod_name=$(grep -oP '^\s*name\s*=\s*"\K[^"]+' "$mod_dir/meta.cpp")
-      rm -f "./@$mod_name" >/dev/null 2>&1  # Remove the symlink corresponding to the directory
+      [[ -n "$mod_name" ]] && rm -f "./@$mod_name" >/dev/null 2>&1  # Remove the symlink corresponding to the directory
     done
     # Create traditional symlinks for numbered directories
     find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d -exec ln -sf {} ./ \;
@@ -22,10 +22,10 @@ if [ -d ./steamapps/workshop/content/221100 ]; then
     find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d | while read -r mod_dir; do
       rm -f "./$(basename "$mod_dir")" >/dev/null 2>&1  # Remove the symlink corresponding to the directory
     done
-    # Create @name symlinks for directories based on mod.cpp
+    # Create @name symlinks for directories based on meta.cpp
     find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d | while read -r mod_dir; do
       mod_name=$(grep -oP '^\s*name\s*=\s*"\K[^"]+' "$mod_dir/meta.cpp")
-      ln -sfT "$mod_dir" "@$mod_name"
+      [[ -n "$mod_name" ]] && ln -sfT "$mod_dir" "@$mod_name"
     done
   fi
 fi
