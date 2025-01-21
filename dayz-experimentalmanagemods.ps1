@@ -9,7 +9,6 @@ if (Test-Path $workshopDir) {
         # Remove @name symlinks corresponding to the mod directories based on meta.cpp
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             $modDir = $_.FullName
-            # Capture mod name from meta.cpp file
             $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"(.*)"' -AllMatches).Matches.Groups[1].Value
             if ($modName) {
                 $symlinkName = "@$modName"
