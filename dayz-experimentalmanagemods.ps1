@@ -6,7 +6,7 @@ $workshopDir = ".\steamapps\workshop\content\221100"
 
 if (Test-Path $workshopDir) {
     if ($ModDirFormat -eq "false") {
-        # Remove @name symlinks corresponding to the mod directories based on meta.cpp
+        # Remove @name junction links corresponding to the mod directories based on meta.cpp
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             $modDir = $_.FullName
             $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"(.*)"' -AllMatches).Matches.Groups[1].Value
@@ -17,7 +17,7 @@ if (Test-Path $workshopDir) {
                 }
             }
         }
-        # Create numbered symlinks for the mod directories
+        # Create numbered junction links for the mod directories
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             if (Test-Path $_.Name) {
                 Remove-Item -Path $_.Name -Force -Recurse
@@ -26,13 +26,13 @@ if (Test-Path $workshopDir) {
         }
     }
     else {
-        # Remove numbered symlinks for the mod directories
+        # Remove numbered junction links for the mod directories
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             if (Test-Path $_.Name) {
                 Remove-Item -Path $_.Name -Force -Recurse
             }
         }
-        # Create @name symlinks for the mod directories based on meta.cpp
+        # Create @name junction links for the mod directories based on meta.cpp
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             $modDir = $_.FullName
             $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"(.*)"' -AllMatches).Matches.Groups[1].Value
