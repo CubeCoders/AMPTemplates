@@ -12,7 +12,8 @@ if (Test-Path $workshopDir) {
         # Remove symlinks corresponding to the mod directories
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             $modDir = $_.FullName
-            $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"\K[^"]+' -AllMatches).Matches.Value
+            # Capture mod name from meta.cpp file (updated regex)
+            $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"(.*)"' -AllMatches).Matches.Groups[1].Value
             if ($modName) {
                 $symlinkPath = ".\@$modName"
                 if (Test-Path $symlinkPath) {
@@ -36,7 +37,8 @@ if (Test-Path $workshopDir) {
         # Create @name symlinks for directories based on mod.cpp (no output)
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             $modDir = $_.FullName
-            $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"\K[^"]+' -AllMatches).Matches.Value
+            # Capture mod name from meta.cpp file (updated regex)
+            $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"(.*)"' -AllMatches).Matches.Groups[1].Value
             if ($modName) {
                 $symlinkName = "@$modName"
                 New-Item -ItemType Junction -Name $symlinkName -Target $modDir -Force | Out-Null
