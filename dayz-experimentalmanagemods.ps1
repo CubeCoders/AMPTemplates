@@ -25,6 +25,10 @@ if (Test-Path $workshopDir) {
         # Create traditional symlinks for numbered directories
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             Write-Host "Creating junction link: $($_.Name) -> $($_.FullName)"
+            if (Test-Path $_.Name) {
+                Write-Host "Removing existing symlink: $_.Name"
+                Remove-Item -Path $_.Name -Force -Recurse
+            }
             New-Item -ItemType Junction -Name $_.Name -Target $_.FullName -Force | Out-Null
         }
     }
@@ -45,6 +49,10 @@ if (Test-Path $workshopDir) {
             if ($modName) {
                 $symlinkName = "@$modName"
                 Write-Host "Creating junction link: $symlinkName -> $modDir"
+                if (Test-Path $symlinkPath) {
+                    Write-Host "Removing existing symlink: $symlinkPath"
+                    Remove-Item -Path $symlinkPath -Force -Recurse
+                }
                 New-Item -ItemType Junction -Name $symlinkName -Target $modDir -Force | Out-Null
             }
         }
