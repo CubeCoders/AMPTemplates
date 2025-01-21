@@ -1,15 +1,12 @@
 $ModDirFormat = $args[0]
 
-# Change directory to the mod directory
 Set-Location -Path ".\dayz\1042420"
 
-# Define the workshop directory
 $workshopDir = ".\steamapps\workshop\content\221100"
 
-# Check if the workshop directory exists
 if (Test-Path $workshopDir) {
     if ($ModDirFormat -eq "false") {
-        # Remove symlinks corresponding to the mod directories
+        # Remove @name symlinks corresponding to the mod directories based on meta.cpp
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             $modDir = $_.FullName
             # Capture mod name from meta.cpp file
@@ -21,7 +18,7 @@ if (Test-Path $workshopDir) {
                 }
             }
         }
-        # Create traditional symlinks for numbered directories
+        # Create numbered symlinks for the mod directories
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             Write-Host "Creating junction link: $($_.Name) -> $($_.FullName)"
             if (Test-Path $_.Name) {
@@ -31,13 +28,13 @@ if (Test-Path $workshopDir) {
         }
     }
     else {
-        # Remove numbered symlinks corresponding to the mod directories
+        # Remove numbered symlinks for the mod directories
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             if (Test-Path $_.Name) {
                 Remove-Item -Path $_.Name -Force -Recurse
             }
         }
-        # Create @name symlinks for directories based on meta.cpp
+        # Create @name symlinks for the mod directories based on meta.cpp
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             $modDir = $_.FullName
             # Capture mod name from meta.cpp file
