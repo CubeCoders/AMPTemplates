@@ -19,7 +19,6 @@ if (Test-Path $workshopDir) {
         }
         # Create numbered symlinks for the mod directories
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
-            Write-Host "Creating junction link: $($_.Name) -> $($_.FullName)"
             if (Test-Path $_.Name) {
                 Remove-Item -Path $_.Name -Force -Recurse
             }
@@ -36,7 +35,6 @@ if (Test-Path $workshopDir) {
         # Create @name symlinks for the mod directories based on meta.cpp
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             $modDir = $_.FullName
-            # Capture mod name from meta.cpp file
             $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"(.*)"' -AllMatches).Matches.Groups[1].Value
             if ($modName) {
                 $symlinkName = "@$modName"
