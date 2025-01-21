@@ -5,6 +5,7 @@ Set-Location -Path ".\dayz\1042420"
 $workshopDir = ".\steamapps\workshop\content\221100"
 
 if (Test-Path $workshopDir) {
+    Write-Output "Managing mods"
     Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
         # Extract modName from meta.cpp
         $modDir = Join-Path -Path $workshopDir -ChildPath $_.Name
@@ -40,3 +41,9 @@ if (Test-Path $workshopDir) {
         }
     }
 }
+else {
+    Write-Output "No mods to manage"
+}
+
+Exit 0
+
