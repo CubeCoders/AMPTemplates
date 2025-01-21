@@ -17,7 +17,6 @@ if (Test-Path $workshopDir) {
             if ($modName) {
                 $symlinkName = "@$modName"
                 if (Test-Path $symlinkName) {
-                    Write-Host "Removing existing symlink: $symlinkName"
                     Remove-Item -Path $symlinkName -Force -Recurse
                 }
             }
@@ -26,7 +25,6 @@ if (Test-Path $workshopDir) {
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             Write-Host "Creating junction link: $($_.Name) -> $($_.FullName)"
             if (Test-Path $_.Name) {
-                Write-Host "Removing existing symlink: $_.Name"
                 Remove-Item -Path $_.Name -Force -Recurse
             }
             New-Item -ItemType Junction -Name $_.Name -Target $_.FullName -Force | Out-Null
@@ -36,7 +34,6 @@ if (Test-Path $workshopDir) {
         # Remove numbered symlinks corresponding to the mod directories
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
             if (Test-Path $_.Name) {
-                Write-Host "Removing existing symlink: $_.Name"
                 Remove-Item -Path $_.Name -Force -Recurse
             }
         }
@@ -47,9 +44,7 @@ if (Test-Path $workshopDir) {
             $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"(.*)"' -AllMatches).Matches.Groups[1].Value
             if ($modName) {
                 $symlinkName = "@$modName"
-                Write-Host "Creating junction link: $symlinkName -> $modDir"
                 if (Test-Path $symlinkName) {
-                    Write-Host "Removing existing symlink: $symlinkName"
                     Remove-Item -Path $symlinkName -Force -Recurse
                 }
                 New-Item -ItemType Junction -Name $symlinkName -Target $modDir -Force | Out-Null
