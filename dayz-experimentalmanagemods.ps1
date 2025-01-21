@@ -1,29 +1,46 @@
-$ModDirFormat = $args[0]
+param(
+    [string]$ModDirFormat
+)
 
-Set-Location -Path "./dayz/1042420"
+# Change directory to the mod directory
+Set-Location -Path ".\dayz\1042420"
 
-if (Test-Path -Path "./steamapps/workshop/content/221100") {
+# Check if the steamapps directory exists
+$workshopDir = ".\steamapps\workshop\content\221100"
+if (Test-Path $workshopDir) {
     if ($ModDirFormat -eq "false") {
-        # Remove junctions corresponding to actual directories
-        Get-ChildItem -Path "./steamapps/workshop/content/221100" -Directory | ForEach-Object {
-            $modName = (Select-String -Path "$($_.FullName)/meta.cpp" -Pattern '^\s*name\s*=\s*"(.*)"' | ForEach-Object { $_.Matches.Groups[1].Value })[0]
-            Remove-Item -Path "./@$modName" -Force -ErrorAction SilentlyContinue
+        # Remove symlinks corresponding to the mod directories
+        Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
+            $modDir = $_.FullName
+            $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"\K[^"]+' -AllMatches).Matches.Value
+            if ($modName) {
+                $symlinkPath = ".\@$modName"
+                if (Test-Path $symlinkPath) {
+                    Remove-Item -Path $symlinkPath -Force
+                }
+            }
         }
-        # Create junction links for numbered directories
-        Get-ChildItem -Path "./steamapps/workshop/content/221100" -Directory | ForEach-Object {
-            New-Item -ItemType Junction -Name "$($_.Name)" -Target $_.FullName -Force
+        # Create traditional symlinks for numbered directories (no output)
+        Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
+            New-Item -ItemType Junction -Name $_.Name -Target $_.FullName -Force | Out-Null
         }
-    } else {
-        # Remove numbered junctions corresponding to the directories
-        Get-ChildItem -Path "./steamapps/workshop/content/221100" -Directory | ForEach-Object {
-            Remove-Item -Path "./$($_.Name)" -Force -ErrorAction SilentlyContinue
+    }
+    else {
+        # Remove numbered symlinks corresponding to the mod directories
+        Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
+            $symlinkPath = ".\$($_.Name)"
+            if (Test-Path $symlinkPath) {
+                Remove-Item -Path $symlinkPath -Force
+            }
         }
-        # Create @name junctions for directories based on mod.cpp
-        Get-ChildItem -Path "./steamapps/workshop/content/221100" -Directory | ForEach-Object {
-            $modName = (Select-String -Path "$($_.FullName)/meta.cpp" -Pattern '^\s*name\s*=\s*"(.*)"' | ForEach-Object { $_.Matches.Groups[1].Value })[0]
-            New-Item -ItemType Junction -Name "@$modName" -Target $_.FullName -Force
+        # Create @name symlinks for directories based on mod.cpp (no output)
+        Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
+            $modDir = $_.FullName
+            $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"\K[^"]+' -AllMatches).Matches.Value
+            if ($modName) {
+                $symlinkName = "@$modName"
+                New-Item -ItemType Junction -Name $symlinkName -Target $modDir -Force | Out-Null
+            }
         }
     }
 }
-
-Exit 0
