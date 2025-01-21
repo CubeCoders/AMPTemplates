@@ -12,7 +12,8 @@ done
 read -r DPY_NUM < display.log
 rm display.log
 
-wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+[[ -f winetricks ]] && rm -f winetricks
+wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20250102/src/winetricks
 chmod +x winetricks
 
 export WINEPREFIX="$SCRIPTDIR/terratech-worlds/.wine"
