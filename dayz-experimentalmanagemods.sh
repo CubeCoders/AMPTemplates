@@ -10,19 +10,19 @@ if [ -d ./steamapps/workshop/content/221100 ]; then
   xargs -0 -I {} bash -c "mv \"{}\" \"\$(echo \"{}\" | sed 's,\(.*\)\/\(.*\),\1\/\L\2,')\"" >/dev/null 2>&1
 
   if [ "$ModDirFormat" = "false" ]; then
-    # Remove @name symlinks corresponding to mod directories based on meta.cpp
+    # Remove @name symlinks corresponding to the mod directories based on meta.cpp
     find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d | while read -r mod_dir; do
       mod_name=$(sed -n 's/^[[:space:]]*name[[:space:]]*=[[:space:]]*"\([^"]\+\)".*/\1/p' "$mod_dir/meta.cpp")
       [[ -n "$mod_name" ]] && rm -f "./@$mod_name" >/dev/null 2>&1
     done
-    # Create numbered symlinks for mod directories
+    # Create numbered symlinks for the mod directories
     find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d -exec ln -sf {} ./ \;
   else
-    # Remove numbered symlinks for mod directories
+    # Remove numbered symlinks for the mod directories
     find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d | while read -r mod_dir; do
       rm -f "./$(basename "$mod_dir")" >/dev/null 2>&1
     done
-    # Create @name symlinks corresponding to mod directories based on meta.cpp
+    # Create @name symlinks corresponding to the mod directories based on meta.cpp
     find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d | while read -r mod_dir; do
       mod_name=$(sed -n 's/^[[:space:]]*name[[:space:]]*=[[:space:]]*"\([^"]\+\)".*/\1/p' "$mod_dir/meta.cpp")
       [[ -n "$mod_name" ]] && ln -sfT "$mod_dir" "@$mod_name"
