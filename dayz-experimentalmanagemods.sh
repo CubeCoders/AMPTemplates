@@ -25,7 +25,7 @@ if [ -d ./steamapps/workshop/content/221100 ]; then
     # Create @name symlinks for directories based on mod.cpp
     find ./steamapps/workshop/content/221100 -maxdepth 1 -mindepth 1 -type d | while read -r mod_dir; do
       mod_name=$(grep -oP '^\s*name\s*=\s*"\K[^"]+' "$mod_dir/meta.cpp")
-      ln -sf "$mod_dir" "./@$mod_name"
+      ln -sfT "$mod_dir" "@$mod_name"
     done
   fi
 fi
