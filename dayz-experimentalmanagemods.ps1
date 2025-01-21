@@ -18,7 +18,7 @@ if (Test-Path $workshopDir) {
                 $symlinkPath = ".\@$modName"
                 if (Test-Path $symlinkPath) {
                     Write-Host "Removing existing symlink: $symlinkPath"
-                    Remove-Item -Path $symlinkPath -Force
+                    Remove-Item -Path $symlinkPath -Force -Recurse
                 }
             }
         }
@@ -34,7 +34,7 @@ if (Test-Path $workshopDir) {
             $symlinkPath = ".\$($_.Name)"
             if (Test-Path $symlinkPath) {
                 Write-Host "Removing existing symlink: $symlinkPath"
-                Remove-Item -Path $symlinkPath -Force
+                Remove-Item -Path $symlinkPath -Force -Recurse
             }
         }
         # Create @name symlinks for directories based on meta.cpp
