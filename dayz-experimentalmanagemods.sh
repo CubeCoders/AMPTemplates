@@ -11,23 +11,22 @@ if [ -d $workshopDir ]; then
   find $workshopDir/ -depth -name "*[A-Z]*" -print0 |\
   xargs -0 -I {} bash -c "mv \"{}\" \"\$(echo \"{}\" | sed 's,\(.*\)\/\(.*\),\1\/\L\2,')\"" >/dev/null 2>&1
 
+find $workshopDir -maxdepth 1 -mindepth 1 -type d | while read -r modDir; do
+  # Extract modName from meta.cpp
+  modName=$(sed -n 's/^[[:space:]]*name[[:space:]]*=[[:space:]]*"\([^"]\+\)".*/\1/p' "$modDir/meta.cpp")
+
   if [ "$ModDirFormat" = "false" ]; then
     # Remove @name symlinks corresponding to the mod directories based on meta.cpp
-    find $workshopDir -maxdepth 1 -mindepth 1 -type d | while read -r modDir; do
-      modName=$(sed -n 's/^[[:space:]]*name[[:space:]]*=[[:space:]]*"\([^"]\+\)".*/\1/p' "$modDir/meta.cpp")
-      [[ -n "$modName" ]] && rm -f "./@$modName" >/dev/null 2>&1
-      # Create numbered symlinks for the mod directories
-      ln -sf $modDir ./
-    done
+    [[ -n "$modName" ]] && rm -f "./@$modName" >/dev/null 2>&1
+    # Create numbered symlinks for the mod directories
+    ln -sf "$modDir" ./
   else
     # Remove numbered symlinks for the mod directories
-    find $workshopDir -maxdepth 1 -mindepth 1 -type d | while read -r modDir; do
-      rm -f "./$(basename "$modDir")" >/dev/null 2>&1
-      # Create @name symlinks corresponding to the mod directories based on meta.cpp
-      modName=$(sed -n 's/^[[:space:]]*name[[:space:]]*=[[:space:]]*"\([^"]\+\)".*/\1/p' "$modDir/meta.cpp")
-      [[ -n "$modName" ]] && ln -sfT $modDir "@$modName"
-    done
+    rm -f "./$(basename "$modDir")" >/dev/null 2>&1
+    # Create @name symlinks corresponding to the mod directories based on meta.cpp
+    [[ -n "$modName" ]] && ln -sfT "$modDir" "@$modName"
   fi
+done
 fi
 
 exit 0
