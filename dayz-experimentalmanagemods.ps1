@@ -15,10 +15,10 @@ if (Test-Path $workshopDir) {
             # Capture mod name from meta.cpp file
             $modName = (Select-String -Path "$modDir\meta.cpp" -Pattern '^\s*name\s*=\s*"(.*)"' -AllMatches).Matches.Groups[1].Value
             if ($modName) {
-                $symlinkPath = ".\@$modName"
-                if (Test-Path $symlinkPath) {
-                    Write-Host "Removing existing symlink: $symlinkPath"
-                    Remove-Item -Path $symlinkPath -Force -Recurse
+                $symlinkName = "@$modName"
+                if (Test-Path $symlinkName) {
+                    Write-Host "Removing existing symlink: $symlinkName"
+                    Remove-Item -Path $symlinkName -Force -Recurse
                 }
             }
         }
@@ -35,10 +35,9 @@ if (Test-Path $workshopDir) {
     else {
         # Remove numbered symlinks corresponding to the mod directories
         Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
-            $symlinkPath = ".\$($_.Name)"
-            if (Test-Path $symlinkPath) {
-                Write-Host "Removing existing symlink: $symlinkPath"
-                Remove-Item -Path $symlinkPath -Force -Recurse
+            if (Test-Path $_.Name) {
+                Write-Host "Removing existing symlink: $_.Name"
+                Remove-Item -Path $_.Name -Force -Recurse
             }
         }
         # Create @name symlinks for directories based on meta.cpp
