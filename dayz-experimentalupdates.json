@@ -19,17 +19,34 @@
         "UpdateStageName": "Modscript Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-experimentalconvertmods.sh",
-        "UpdateSourceArgs": "convertmods.sh",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-experimentalmanagemods.sh",
+        "UpdateSourceArgs": "managemods.sh",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
         "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName": "Convert Mods",
+        "UpdateStageName": "Manage Mods",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "./convertmods.sh",
+        "UpdateSourceArgs": "./managemods.sh {{ModDirFormat}}",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Modscript Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-experimentalmanagemods.ps1",
+        "UpdateSourceArgs": "managemods.ps1",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Manage Mods",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -File \"managemods.ps1\" \"{{ModDirFormat}}\"",
         "SkipOnFailure": true
     }
 ]
