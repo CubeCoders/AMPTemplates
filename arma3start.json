@@ -50,7 +50,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$subdirs = '{{mod}};{{clientmod}}' -split ';'; Set-Location arma3\\233780; Remove-Item '.\\keys\\*.bikey' -Exclude 'a3.bikey' -Force -ErrorAction SilentlyContinue; foreach ($subdir in $subdirs) { Get-ChildItem -Path \\\"$subdir\\*.bikey\\\" -File -ErrorAction SilentlyContinue | ForEach-Object { Copy-Item $_ -Destination '.\\keys' }; if (Test-Path \\\"$subdir\\keys\\\") { Copy-Item \\\"$subdir\\keys\\*.bikey\\\" -Destination '.\\keys' -Force -ErrorAction SilentlyContinue }; if (Test-Path \\\"$subdir\\key\\\") { Copy-Item \\\"$subdir\\key\\*.bikey\\\" -Destination '.\\keys' -Force -ErrorAction SilentlyContinue }; }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$subdirs = \\\"{{mod}};{{clientmod}}\\\" -split ';'; Set-Location arma3\\233780; Remove-Item '.\\keys\\*.bikey' -Exclude 'a3.bikey' -Force -ErrorAction SilentlyContinue; foreach ($subdir in $subdirs) { Get-ChildItem -Path \\\"$subdir\\*.bikey\\\" -File -ErrorAction SilentlyContinue | ForEach-Object { Copy-Item $_ -Destination '.\\keys' }; if (Test-Path \\\"$subdir\\keys\\\") { Copy-Item \\\"$subdir\\keys\\*.bikey\\\" -Destination '.\\keys' -Force -ErrorAction SilentlyContinue }; if (Test-Path \\\"$subdir\\key\\\") { Copy-Item \\\"$subdir\\key\\*.bikey\\\" -Destination '.\\keys' -Force -ErrorAction SilentlyContinue }; }\"",
         "UpdateSourceConditionSetting": "ManageBikeys",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": true
