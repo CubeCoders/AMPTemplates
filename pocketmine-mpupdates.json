@@ -12,7 +12,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $PHPVersion='{{PHPVersion}}'; if ([string]::IsNullOrWhiteSpace($PHPVersion)) { Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/pmmp/PHP-Binaries/releases/latest').assets | Where-Object { $_.browser_download_url -like '*/PHP*Windows-x64*.zip' }).browser_download_url -OutFile 'PHP.zip'; if ($?) { Write-Output \\\"Latest PHP Binary release version downloaded\\\"; } } elseif ($PHPVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid PHP Binary version format specified\\\"; exit 1; } else { Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri \"https://api.github.com/repos/pmmp/PHP-Binaries/releases/tags/$PHPVersion\").assets | Where-Object { $_.browser_download_url -like '*/PHP*Windows-x64*.zip' }).browser_download_url -OutFile 'PHP.zip'; if ($?) { Write-Output \\\"PHP Binary release version $PHPVersion downloaded\\\"; } }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $PHPVersion='{{PHPVersion}}'; if ([string]::IsNullOrWhiteSpace($PHPVersion)) { Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/pmmp/PHP-Binaries/releases/latest').assets | Where-Object { $_.browser_download_url -like '*/PHP*Windows-x64*.zip' })[0].browser_download_url -OutFile 'PHP.zip'; if ($?) { Write-Output \\\"Latest PHP Binary release version downloaded\\\"; } } elseif ($PHPVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid PHP Binary version format specified\\\"; exit 1; } else { Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri \"https://api.github.com/repos/pmmp/PHP-Binaries/releases/tags/$PHPVersion\").assets | Where-Object { $_.browser_download_url -like '*/PHP*Windows-x64*.zip' })[0].browser_download_url -OutFile 'PHP.zip'; if ($?) { Write-Output \\\"PHP Binary release version $PHPVersion downloaded\\\"; } }\"",
         "SkipOnFailure": false
     },
     {
@@ -20,7 +20,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "ExtractArchive",
         "UpdateSourceData": "PHP.zip",
-        "UpdateSourceTarget": "{{$FullBasetDir}}",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "SkipOnFailure": false
