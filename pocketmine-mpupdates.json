@@ -4,7 +4,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'pocketmine-mp'; Write-Output 'Removing old server files'; Remove-Item -Path 'PocketMine-MP.phar', './bin' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'pocketmine-mp'; Write-Output 'Removing old server files'; @('PocketMine-MP.phar', './bin') | ForEach-Object { if (Test-Path \\\"$_\\\") { Remove-Item -Path \\\"$_\\\" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null } }\"",
         "SkipOnFailure": false
     },
     {
