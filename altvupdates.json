@@ -8,7 +8,9 @@
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
-        "OneShot": true
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "DisableNodeDownload",
+        "UpdateSourceConditionValue": "false"
     },
     {
         "UpdateStageName": "Node.js Download",
@@ -17,7 +19,9 @@
         "UpdateSourceData": "https://nodejs.org/download/release/v22.13.1/node-v22.13.1-linux-x64.tar.gz",
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "OverwriteExistingFiles": true,
-        "OneShot": true
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "DisableNodeDownload",
+        "UpdateSourceConditionValue": "false"
     },
     {
         "UpdateStageName": "Node.js Extract",
@@ -26,7 +30,8 @@
         "UpdateSourceData": "cmd.exe",
         "UpdateSourceArgs": "/C cd altv && rmdir /S /Q node > NUL 2>&1 & rename node-v22.13.1-win-x64 node",
         "SkipOnFailure": false,
-        "OneShot": true
+        "UpdateSourceConditionSetting": "DisableNodeDownload",
+        "UpdateSourceConditionValue": "false"
     },
     {
         "UpdateStageName": "Node.js Extract",
@@ -35,7 +40,8 @@
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cd altv && rm -rf node >/dev/null 2>&1 && tar xfv node-v22.13.1-linux-x64.tar.gz >/dev/null 2>&1 && mv node-v22.13.1-linux-x64 node >/dev/null 2>&1 && rm node-v22.13.1-linux-x64.tar.gz\"",
         "SkipOnFailure": false,
-        "OneShot": true
+        "UpdateSourceConditionSetting": "DisableNodeDownload",
+        "UpdateSourceConditionValue": "false"
     },
     {
         "UpdateStageName": "altvpkgrc.json Download",
