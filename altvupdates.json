@@ -1,0 +1,75 @@
+[
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://nodejs.org/download/release/v22.13.1/node-v22.13.1-win-x64.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://nodejs.org/download/release/v22.13.1/node-v22.13.1-linux-x64.tar.gz",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd altv && rmdir /S /Q node > NUL 2>&1 & rename node-v22.13.1-win-x64 node",
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd altv && rm -rf node >/dev/null 2>&1 && tar xfv node-v22.13.1-linux-x64.tar.gz >/dev/null 2>&1 && mv node-v22.13.1-linux-x64 node >/dev/null 2>&1 && rm node-v22.13.1-linux-x64.tar.gz\"",
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "altvpkgrc.json Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/Greelan/AMPTemplates/raw/dev/altvpkgrc.json",
+        "UpdateSourceArgs": ".altvpkgrc.json",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "alt:V Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd altv && rm -rf srv >/dev/null 2>&1; [ ! -d server/.git ] && { git clone https://github.com/sp-altv/server.git srv >/dev/null 2>&1 \\cp -r srv/. server/ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && cd server && git fetch --all >/dev/null && git checkout master --force >/dev/null; } || { cd server && git fetch --all >/dev/null && git checkout master --force >/dev/null; } && export PATH={{$FullRootDir}}node/bin:$PATH && npm install --save-dev altv-pkg >/dev/null 2>&1 && npx altv-pkg {{AltVBuild}}\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "alt:V Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd altv && rd /S /Q srv > NUL 2>&1 & if not exist server\\.git ( git clone https://github.com/sp-altv/server.git srv > NUL 2>&1 && xcopy /E /Y /I srv\\* server\\ > NUL 2>&1 && rd /S /Q srv > NUL 2>&1 && cd server && git fetch --all > NUL 2>&1 && git checkout --force master > NUL 2>&1 ) else ( cd server && git fetch --all > NUL 2>&1 && git checkout --force master > NUL 2>&1 ) && set \\\"PATH={{$FullBaseDir}}node;%PATH%\\\" && npm install --save-dev altv-pkg > NUL 2>&1 && npx altv-pkg {{AltVBuild}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server.toml Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/Greelan/AMPTemplates/raw/dev/altvserver.toml",
+        "UpdateSourceArgs": "AMP_server.toml",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true
+    }
+]
