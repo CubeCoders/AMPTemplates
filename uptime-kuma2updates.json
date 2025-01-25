@@ -1,0 +1,78 @@
+[
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://nodejs.org/download/release/v20.18.2/node-v20.18.2-win-x64.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://nodejs.org/download/release/v20.18.2/node-v20.18.2-linux-x64.tar.gz",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://nodejs.org/download/release/v20.18.2/node-v20.18.2-linux-arm64.tar.gz",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"cd uptime-kuma; Remove-Item node -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Rename-Item -Path node-v20.18.2-win-x64 -NewName node; if ($?) { Write-Output \\\"Node.js v20.18.2 installed.\\\" }\"",
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd uptime-kuma && rm -rf node >/dev/null 2>&1 && tar xfv node-v20.18.2-linux-x64.tar.gz >/dev/null 2>&1 && mv node-v20.18.2-linux-x64 node >/dev/null 2>&1 && rm node-v20.18.2-linux-x64.tar.gz && echo \\\"Node.js v20.18.2 installed.\\\"\"",
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Node.js Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd uptime-kuma && rm -rf node >/dev/null 2>&1 && tar xfv node-v20.18.2-linux-arm64.tar.gz >/dev/null 2>&1 && mv node-v20.18.2-linux-arm64 node >/dev/null 2>&1 && rm node-v20.18.2-linux-arm64.tar.gz && echo \\\"Node.js v20.18.2 installed.\\\"\"",
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Uptime Kuma Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd uptime-kuma; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; if (-Not (Test-Path server/.git)) { Write-Output \\\"Installing Uptime Kuma.\\\"; git clone https://github.com/louislam/uptime-kuma.git srv *> $null; Copy-Item srv/* server/ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; } cd server; $ReleaseVersion='{{ReleaseVersion}}'; if ($ReleaseVersion -notmatch '^\\d+\\.\\d+\\.\\d+(-beta\\.\\d+)?$') { Write-Output \\\"Invalid Uptime Kuma 2 release version format specified\\\"; exit 1; } else { Write-Output \\\"Updating Uptime Kuma.\\\"; cd server; git fetch --all *> $null; git checkout --force $ReleaseVersion *> $null; $env:PATH='{{$FullRootDir}}node;' + $env:PATH; cmd /c 'npm install --production > NUL 2>&1'; cmd /c 'npm run download-dist > NUL 2>&1'; if ($?) { Write-Output \\\"Uptime Kuma updated to v${ReleaseVersion}.\\\" } }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Uptime Kuma Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd uptime-kuma && rm -rf srv >/dev/null 2>&1; [ ! -d server/.git ] && { echo \\\"Installing Uptime Kuma.\\\" && git clone https://github.com/louislam/uptime-kuma.git srv >/dev/null 2>&1 && \\cp -r srv/. server/ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1; }; cd server && ReleaseVersion=\\\"{{ReleaseVersion}}\\\" && if [[ ! \\\"$ReleaseVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+(-beta\\.[0-9]+)?$ ]]; then echo \\\"Invalid .Uptime Kuma 2 release version format specified\\\" && exit 1; else echo \\\"Updating Uptime Kuma.\\\" && cd server && git fetch --all >/dev/null 2>&1; git checkout $ReleaseVersion --force >/dev/null 2>&1 && export PATH={{$FullRootDir}}node/bin:$PATH && npm install --production >/dev/null 2>&1 && npm run download-dist >/dev/null 2>&1 && echo \\\"Uptime Kuma updated to v${ReleaseVersion}.\\\"; }\"",
+        "SkipOnFailure": false
+    }
+]

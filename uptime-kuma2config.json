@@ -1,0 +1,158 @@
+[
+    {
+        "DisplayName": "SSL Key",
+        "Category": "Uptime Kuma:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the path to the Uptime Kuma webserver's SSL key, if used",
+        "Keywords": "ssl,key,UPTIME_KUMA_SSL_KEY,SSL_KEY,ssl-key",
+        "FieldName": "ssl-key",
+        "InputType": "text",
+        "ParamFieldName": "ssl-key",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "SSL Certificate",
+        "Category": "Uptime Kuma:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the path to the Uptime Kuma webserver's SSL certificate, if used",
+        "Keywords": "ssl,cert,UPTIME_KUMA_SSL_CERT,SSL_CERT,ssl-cert",
+        "FieldName": "ssl-cert",
+        "InputType": "text",
+        "ParamFieldName": "ssl-cert",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "SSL Key Passphrase",
+        "Category": "Uptime Kuma:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the Uptime Kuma webserver's SSL Key passphrase, if used. Requires v1.21.1+",
+        "Keywords": "ssl,key,passphrase,UPTIME_KUMA_SSL_KEY_PASSPHRASE,SSL_KEY_PASSPHRASE,ssl-key-passphrase",
+        "FieldName": "ssl-key-passphrase",
+        "InputType": "text",
+        "ParamFieldName": "ssl-key-passphrase",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Cloudflare Tunnel Token",
+        "Category": "Uptime Kuma:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the server's Cloudflare tunnel token, if used. Requires v1.14.0+. [Cloudflared](https://pkg.cloudflare.com/index.html) must be installed on the system, and AMP's Docker mode cannot be used",
+        "Keywords": "cloudflare,cloudflared,tunnel,token,UPTIME_KUMA_CLOUDFLARED_TOKEN,cloudflared-token",
+        "FieldName": "cloudflared-token",
+        "InputType": "text",
+        "ParamFieldName": "cloudflared-token",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Disable Iframe Protection",
+        "Category": "Uptime Kuma:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "By default, Uptime Kuma is not allowed in an iframe if the domain name is not the same as the parent, for phishing protection. Turn this setting on if that protection is not required",
+        "Keywords": "security,iframe,frame,phishing,UPTIME_KUMA_DISABLE_FRAME_SAMEORIGIN,disable-frame-sameorigin",
+        "FieldName": "disable-frame-sameorigin",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-frame-sameorigin",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "WebSocket Origin Check",
+        "Category": "Uptime Kuma:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "By default, Uptime Kuma verifies that the websocket's ORIGIN-Header matches the server's hostname. Set to 'Bypass' if this protection is not required. [Read more](https://github.com/louislam/uptime-kuma/security/advisories/GHSA-mj22-23ff-2hrr)",
+        "Keywords": "security,websocket,origin,check,UPTIME_KUMA_WS_ORIGIN_CHECK",
+        "FieldName": "UPTIME_KUMA_WS_ORIGIN_CHECK",
+        "InputType": "enum",
+        "ParamFieldName": "UPTIME_KUMA_WS_ORIGIN_CHECK",
+        "DefaultValue": "cors-like",
+        "EnumValues": {
+            "cors-like": "CORS-like (default)",
+            "bypass": "Bypass"
+        }
+    },
+    {
+        "DisplayName": "Allow All Chrome Executables",
+        "Category": "Uptime Kuma:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, any executables will be allowed to be specified as Chromium. Requires v1.23.0+",
+        "Keywords": "chrome,exec,executables,UPTIME_KUMA_ALLOW_ALL_CHROME_EXEC,allow-all-chrome-exec",
+        "FieldName": "allow-all-chrome-exec",
+        "InputType": "checkbox",
+        "ParamFieldName": "allow-all-chrome-exec",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Extra CA Certificates",
+        "Category": "Uptime Kuma:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the path to self-signed CA certificates for the Uptime Kuma webserver, if needed. [Read more](https://github.com/louislam/uptime-kuma/issues/1380)",
+        "Keywords": "ssl,certificates,NODE_EXTRA_CA_CERTS",
+        "FieldName": "NODE_EXTRA_CA_CERTS",
+        "InputType": "text",
+        "ParamFieldName": "NODE_EXTRA_CA_CERTS",
+        "DefaultValue": "",
+        "Placeholder": "/cert/path/CAcert.pem"
+    },
+    {
+        "DisplayName": "Ignore TLS Errors",
+        "Category": "Uptime Kuma:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, all TLS errors will be ignored",
+        "Keywords": "ssl,tls,errors,ignore,NODE_TLS_REJECT_UNAUTHORIZED",
+        "FieldName": "NODE_TLS_REJECT_UNAUTHORIZED",
+        "InputType": "checkbox",
+        "ParamFieldName": "NODE_TLS_REJECT_UNAUTHORIZED",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Node.js Options",
+        "Category": "Uptime Kuma:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets additional Node.js options. Set to --insecure-http-parser if you encounter the error \"Invalid header value char\" when your website is using WAF",
+        "Keywords": "node,options,NODE_OPTIONS",
+        "FieldName": "NODE_OPTIONS",
+        "InputType": "text",
+        "ParamFieldName": "NODE_OPTIONS",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Uptime Kuma Version",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Sets the [Uptime Kuma 2 release version](https://github.com/louislam/uptime-kuma/releases) to install",
+        "Keywords": "uptime,kuma,version,release",
+        "FieldName": "ReleaseVersion",
+        "InputType": "text",
+        "ParamFieldName": "ReleaseVersion",
+        "DefaultValue": "",
+        "Placeholder": "2.0.0-beta.1",
+        "Required": true,
+        "EnumValues": {}
+    }
+]
