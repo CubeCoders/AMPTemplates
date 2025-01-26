@@ -35,7 +35,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"cd uptime-kuma; Remove-Item node -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Rename-Item -Path node-v20.18.2-win-x64 -NewName node; if ($?) { Write-Output \\\"Node.js v20.18.2 installed.\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'uptime-kuma'; Remove-Item node -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Rename-Item -Path node-v20.18.2-win-x64 -NewName node; if ($?) { Write-Output \\\"Node.js v20.18.2 installed.\\\" }\"",
         "SkipOnFailure": false,
         "OneShot": true
     },
@@ -64,7 +64,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd uptime-kuma; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; if ($ReleaseVersion -notmatch '^\\d+\\.\\d+\\.\\d+(-beta\\.\\d+)?$') { Write-Output \\\"Invalid Uptime Kuma 2 release version format specified\\\"; exit 1; } elseif (-Not (Test-Path server/.git)) { Write-Output \\\"Installing Uptime Kuma.\\\"; git clone https://github.com/louislam/uptime-kuma.git srv *> $null; Copy-Item srv/* server/ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; cd server; git checkout --force $ReleaseVersion *> $null; $env:PATH='{{$FullRootDir}}node;' + $env:PATH; cmd /c 'npm run setup > NUL 2>&1'; if ($?) { Write-Output \\\"Uptime Kuma v${ReleaseVersion} installed.\\\" } } else { Write-Output \\\"Updating Uptime Kuma.\\\"; cd server; git fetch --all *> $null; git checkout --force $ReleaseVersion *> $null; $env:PATH='{{$FullRootDir}}node;' + $env:PATH; cmd /c 'npm install --production > NUL 2>&1'; cmd /c 'npm run download-dist > NUL 2>&1'; if ($?) { Write-Output \\\"Uptime Kuma updated to v${ReleaseVersion}.\\\" } }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'uptime-kuma'; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; if ($ReleaseVersion -notmatch '^\\d+\\.\\d+\\.\\d+(-beta\\.\\d+)?$') { Write-Output \\\"Invalid Uptime Kuma 2 release version format specified\\\"; exit 1; } elseif (-Not (Test-Path server/.git)) { Write-Output \\\"Installing Uptime Kuma.\\\"; git clone https://github.com/louislam/uptime-kuma.git srv *> $null; Copy-Item srv/* server/ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Set-Location -Path 'server'; git checkout --force $ReleaseVersion *> $null; $env:PATH='{{$FullRootDir}}node;' + $env:PATH; cmd /c 'npm run setup > NUL 2>&1'; if ($?) { Write-Output \\\"Uptime Kuma v${ReleaseVersion} installed.\\\" } } else { Write-Output \\\"Updating Uptime Kuma.\\\"; cd server; git fetch --all *> $null; git checkout --force $ReleaseVersion *> $null; $env:PATH='{{$FullRootDir}}node;' + $env:PATH; cmd /c 'npm install --production > NUL 2>&1'; cmd /c 'npm run download-dist > NUL 2>&1'; if ($?) { Write-Output \\\"Uptime Kuma updated to v${ReleaseVersion}.\\\" } }\"",
         "SkipOnFailure": false
     },
     {
