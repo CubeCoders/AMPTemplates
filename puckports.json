@@ -2,15 +2,18 @@
     {
         "Protocol": "UDP",
         "Port": "7777",
+        "Ref": "GamePort",
         "Name": "Game Port",
         "Description": "Port used for main game traffic",
-        "Ref": "GamePort"
-    },
-    {
-        "Protocol": "UDP",
-        "Port": "7778",
-        "Name": "Query Port",
-        "Description": "Port used for server query traffic",
-        "Ref": "QueryPort"
+        "ChildPorts": [
+            {
+                "Protocol": "UDP",
+                "Port": "7778",
+                "Ref": "QueryPort",
+                "Offset": 1,
+                "Name": "Query Port",
+                "Description": "Port used for server query traffic"
+            }
+        ]
     }
 ]
