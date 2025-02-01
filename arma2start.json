@@ -1,0 +1,74 @@
+[
+    {
+        "UpdateStageName": "Delete Active File",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -f \\\"{{$FullBaseDir}}BattlEye/\\\"BEServer_active_*.cfg >/dev/null 2>&1\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Delete Active File",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C del /Q /F \"{{$FullBaseDir}}BattlEye\\\"BEServer_active_*.cfg > NUL 2>&1",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Manage Bikeys",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd arma2/33905; find Keys -name \\\"*.bikey\\\" ! -name \\\"bi.bikey\\\" ! -name \\\"bi2.bikey\\\" -delete; IFS=\\\";\\\" read -ra subdirs_array <<< \\\"{{mod}}\\\"; for subdir in \\\"${subdirs_array[@]}\\\"; do [ -d \\\"$subdir/keys\\\" ] && \\cp \\\"$subdir/keys/\\\"*.bikey Keys/ >/dev/null 2>&1; [ -d \\\"$subdir/key\\\" ] && \\cp \\\"$subdir/key/\\\"*.bikey Keys/ >/dev/null 2>&1; done\"",
+        "UpdateSourceConditionSetting": "ManageBikeys",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Manage Bikeys",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$mods = \\\"{{mod}}\\\" -split ';'; Set-Location arma2\\33905; Remove-Item '.\\keys\\*.bikey' -Exclude 'bi.bikey', 'bi2.bikey' -Force -ErrorAction SilentlyContinue; $mods | ForEach-Object { if (Test-Path \\\".\\$_\\keys\\\") { Copy-Item -Path \\\".\\$_\\keys\\*.bikey\\\" -Destination '.\\Keys' -Force -ErrorAction SilentlyContinue }; if (Test-Path \\\".\\$_\\key\\\") { Copy-Item -Path \\\".\\$_\\key\\*.bikey\\\" -Destination '.\\Keys' -Force -ErrorAction SilentlyContinue } }\"",
+        "UpdateSourceConditionSetting": "ManageBikeys",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Headless Client Script Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/Greelan/AMPTemplates/raw/dev/arma2runhc.sh",
+        "UpdateSourceArgs": "runhc.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Headless Client Script Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/Greelan/AMPTemplates/raw/dev/arma2runhc.ps1",
+        "UpdateSourceArgs": "runhc.ps1",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Start Headless Clients",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"chmod +x ./runhc.sh; ./runhc.sh {{HeadlessClientsNum}} {{$ApplicationIPBinding}} {{$GamePort}} \\\"{{password}}\\\" \\\"{{mod}}\\\" \\\"{{hc_parfile}}\\\" &\"",
+        "RunInBackground": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Start Headless Clients",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C start powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"runhc.ps1\" {{HeadlessClientsNum}} {{$ApplicationIPBinding}} {{$GamePort}} \"{{password}}\" \"{{mod}}\" \"{{hc_parfile}}\"",
+        "RunInBackground": true,
+        "SkipOnFailure": true
+    }
+]
