@@ -1,5 +1,23 @@
 [
     {
+        "UpdateStageName": "Allowlist.json Backup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}allowlist.json.bak",
+        "UpdateSourceArgs": "{{$FullBaseDir}}allowlist.json",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Permissions.json Backup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}permissions.json.bak",
+        "UpdateSourceArgs": "{{$FullBaseDir}}permissions.json",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
         "UpdateStageName": "Create Lip Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
@@ -48,5 +66,23 @@
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cd levilamina/server; ../lip/lip install -y --upgrade github.com/LiteLDev/LeviLamina\"",
         "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Allowlist.json Restore",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}allowlist.json",
+        "UpdateSourceArgs": "{{$FullBaseDir}}allowlist.json.bak",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Permissions.json Restore",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}permissions.json",
+        "UpdateSourceArgs": "{{$FullBaseDir}}permissions.json.bak",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
     }
 ]
