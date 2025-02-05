@@ -25,7 +25,7 @@
     },
     {
         "UpdateStageName": "Lip Download",
-        "UpdateSourcePlatform": "Windows",
+        "UpdateSourcePlatform": "All",
         "UpdateSource": "GithubRelease",
         "UpdateSourceArgs": "futrime/lip",
         "UpdateSourceData": "lip-windows-amd64.zip",
@@ -33,23 +33,6 @@
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true
-    },
-    {
-        "UpdateStageName": "Lip Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "GithubRelease",
-        "UpdateSourceArgs": "futrime/lip",
-        "UpdateSourceData": "lip-linux-amd64.tar.gz",
-        "UpdateSourceTarget": "{{$FullRootDir}}lip",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
-    },
-    {
-        "UpdateStageName": "Make Lip Executable",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullRootDir}}lip/lip"
     },
     {
         "UpdateStageName": "Server Installation",
@@ -60,11 +43,18 @@
         "SkipOnFailure": false
     },
     {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\""
+    },
+    {
         "UpdateStageName": "Server Installation",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd levilamina/server; ../lip/lip install -y --upgrade github.com/LiteLDev/LeviLamina\"",
+        "UpdateSourceArgs": "-c \"cd levilamina/server; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wine ../lip/lip install -y --upgrade github.com/LiteLDev/LeviLamina\"",
         "SkipOnFailure": false
     },
     {
