@@ -1,0 +1,94 @@
+[
+    {
+        "UpdateStageName": "Nukkit Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://ci.opencollab.dev/job/NukkitX/job/Nukkit/job/master/lastStableBuild/artifact/target/nukkit-1.0-SNAPSHOT.jar",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "nukkit.jar",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Remove Old Java Directory",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C RD /S /Q .\\nukkit\\java > NUL 2>&1",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Remove Old Java Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf ./nukkit/java >/dev/null 2>&1\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://api.adoptium.net/v3/binary/latest/{{SpecificInstanceJavaVersion}}/ga/windows/x64/jdk/hotspot/normal/eclipse",
+        "UpdateSourceArgs": "java.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "JavaVersionWindows",
+        "UpdateSourceConditionValue": "java\\bin\\java.exe"
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://api.adoptium.net/v3/binary/latest/{{SpecificInstanceJavaVersion}}/ga/linux/x64/jdk/hotspot/normal/eclipse",
+        "UpdateSourceArgs": "java.tar.gz",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "JavaVersionLinux",
+        "UpdateSourceConditionValue": "java/bin/java"
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://api.adoptium.net/v3/binary/latest/{{SpecificInstanceJavaVersion}}/ga/linux/aarch64/jdk/hotspot/normal/eclipse",
+        "UpdateSourceArgs": "java.tar.gz",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "JavaVersionLinux",
+        "UpdateSourceConditionValue": "java/bin/java"
+    },
+    {
+        "UpdateStageName": "Pause Update Stages",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "Pause",
+        "UpdateSourceArgs": "1"
+    },
+    {
+        "UpdateStageName": "Rename New Java Directory",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C move .\\nukkit\\jdk* .\\nukkit\\java > NUL 2>&1",
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "JavaVersionWindows",
+        "UpdateSourceConditionValue": "java\\bin\\java.exe"
+    },
+    {
+        "UpdateStageName": "Rename New Java Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"mv ./nukkit/jdk* ./nukkit/java >/dev/null 2>&1 && chmod +x ./nukkit/java/bin/java\"",
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "JavaVersionLinux",
+        "UpdateSourceConditionValue": "java/bin/java"
+    }
+]
