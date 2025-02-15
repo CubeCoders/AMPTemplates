@@ -104,6 +104,7 @@
         "InputType": "text",
         "Hidden": true,
         "ParamFieldName": "Server_WebserverEnabled",
+        "IncludeInCommandLine": true,
         "DefaultValue": "True",
         "ExcludeFromImport": true,
         "EnumValues": {}
@@ -162,7 +163,7 @@
         "DisplayName": "Server Contact",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets an optional contact email address or website (where players may contact you)",
+        "Description": "Sets an optional contact email address or website (where players may contact the server owner)",
         "Keywords": "server,contact,Server_Contact",
         "FieldName": "Server_Contact",
         "InputType": "text",
@@ -175,7 +176,7 @@
         "Category": "Rising World:stadia_controller",
         "Subcategory": "Server:dns:1",
         "Description": "If set, the server will be visible in the server list",
-        "Keywords": "visible,public,Server_Visible",
+        "Keywords": "visible,public,list,Server_Visible",
         "FieldName": "Server_Visible",
         "InputType": "checkbox",
         "ParamFieldName": "Server_Visible",
@@ -201,7 +202,7 @@
         "DisplayName": "Server Admins",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Semi-colon separated list of UIDs of server admins",
+        "Description": "Sets a semicolon-separated list of UIDs of server admins",
         "Keywords": "server,admins,Server_Admins",
         "FieldName": "Server_Admins",
         "InputType": "text",
@@ -213,7 +214,7 @@
         "DisplayName": "Custom Server Header Image",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets a relative path to an optional server header image (shown in server browser if user selects the server). Recommended size: 1024x512 px",
+        "Description": "Sets a relative path to an optional server header image (shown in the server browser if a user selects the server). Recommended size: 1024x512 px",
         "Keywords": "server,custom,header,image,Server_CustomHeaderImage",
         "FieldName": "Server_CustomHeaderImage",
         "InputType": "text",
@@ -668,7 +669,7 @@
         "DisplayName": "Dead Body Despawn Time",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "General:build:3",
-        "Description": "Time in seconds until dead bodies despawn. Default: 1800 (30 minutes)",
+        "Description": "Sets the time until dead bodies despawn",
         "Keywords": "settings,deadbody,despawn,time,Settings_DeadBodyDespawnTime",
         "FieldName": "Settings_DeadBodyDespawnTime",
         "InputType": "number",
@@ -676,13 +677,15 @@
         "MaxValue": "86400",
         "ParamFieldName": "Settings_DeadBodyDespawnTime",
         "DefaultValue": "1800",
+        "Placeholder": "1800",
+        "Suffix": "seconds",
         "EnumValues": {}
     },
     {
-        "DisplayName": "Delete World Event Logs Days",
+        "DisplayName": "Delete World Event Logs Period",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "General:build:3",
-        "Description": "Determines after how many days old world event entries should be deleted. -1 to keep all entries",
+        "Description": "Sets the period after which old world event entries will be deleted. -1 = keep all entries",
         "Keywords": "settings,worldevent,delete,logs,days,Settings_DeleteWorldEventLogsDays",
         "FieldName": "Settings_DeleteWorldEventLogsDays",
         "InputType": "number",
@@ -690,6 +693,8 @@
         "MaxValue": "365",
         "ParamFieldName": "Settings_DeleteWorldEventLogsDays",
         "DefaultValue": "7",
+        "Placeholder": "7",
+        "Suffix": "days",
         "EnumValues": {}
     },
     {
@@ -934,7 +939,7 @@
         }
     },
     {
-        "DisplayName": "NPC Spawnrate Animals",
+        "DisplayName": "NPC Spawnrate For Animals",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "General:build:3",
         "Description": "Sets the spawn rate for animals. Lower values for less animals, higher values for more",
@@ -949,7 +954,7 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "NPC Spawnrate Bandits",
+        "DisplayName": "NPC Spawnrate For Bandits",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "General:build:3",
         "Description": "Sets the spawn rate for bandits and similar enemies. Lower values for less enemies, higher values for more",
@@ -964,7 +969,7 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "NPC Spawnrate Surface Monsters",
+        "DisplayName": "NPC Spawnrate For Surface Monsters",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "General:build:3",
         "Description": "Sets the spawn rate for surface monsters during night. Lower values for less enemies, higher values for more",
@@ -979,7 +984,7 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "NPC Spawnrate Underground Monsters",
+        "DisplayName": "NPC Spawnrate For Underground Monsters",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "General:build:3",
         "Description": "Sets the spawn rate for monsters which spawn underground (dungeons, hell etc). Lower values for less enemies, higher values for more",
@@ -1012,7 +1017,7 @@
         "DisplayName": "Object Recover Time",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "General:build:3",
-        "Description": "If a floating object breaks, it will spawn as item if its place time is less than this value",
+        "Description": "If a floating object breaks, it will spawn as an item if its place time is less than this value",
         "Keywords": "settings,object,recover,time,Settings_ObjectRecoverTime",
         "FieldName": "Settings_ObjectRecoverTime",
         "InputType": "number",
@@ -1254,7 +1259,7 @@
         "DisplayName": "Advertise PvE",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "General:build:3",
-        "Description": "If set, this server will be advertised as a PvE server (this alone does not affect the gameplay)",
+        "Description": "If set, the server will be advertised as a PvE server (this alone does not affect the gameplay)",
         "Keywords": "settings,server,pve,Settings_PvE",
         "FieldName": "Settings_PvE",
         "InputType": "checkbox",
@@ -1269,7 +1274,7 @@
         "DisplayName": "Advertise PvP",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "General:build:3",
-        "Description": "If set, this server will be advertised as a PvP server (this alone does not affect the gameplay)",
+        "Description": "If set, the server will be advertised as a PvP server (this alone does not affect the gameplay)",
         "Keywords": "settings,server,pvp,Settings_PvP",
         "FieldName": "Settings_PvP",
         "InputType": "checkbox",
@@ -1497,7 +1502,7 @@
         "DisplayName": "Starting Weather",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "General:build:3",
-        "Description": "Sets the initial weather effect (e.g. 'fog', 'rain' etc). Blank = default weather",
+        "Description": "Sets the initial weather effect (such as 'fog', 'rain' etc). Blank = default weather",
         "Keywords": "settings,server,start,weather,Settings_StartWeather",
         "FieldName": "Settings_StartWeather",
         "InputType": "text",
@@ -1506,11 +1511,11 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Time Duration",
+        "DisplayName": "Day Duration",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "General:build:3",
         "Description": "Sets the duration (in real time) of one in-game day",
-        "Keywords": "settings,server,time,duration,Settings_TimeDuration",
+        "Keywords": "settings,server,time,day,duration,Settings_TimeDuration",
         "FieldName": "Settings_TimeDuration",
         "InputType": "number",
         "MinValue": "1",
@@ -1619,7 +1624,7 @@
         "DisplayName": "In-Memory Database Save Interval",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "Database:database:4",
-        "Description": "Sets the save interval for the database being saved to disk when using the memory database",
+        "Description": "Sets the save interval for the database being saved to disk when using the in-memory database",
         "Keywords": "database,in-memory,backup,interval,Database_InMemoryBackupInterval",
         "FieldName": "Database_InMemoryBackupInterval",
         "InputType": "number",
@@ -1700,7 +1705,7 @@
         "DisplayName": "RCON Certificate",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "RCON:input:5",
-        "Description": "Sets the certificate path (relative to the server directory)",
+        "Description": "Sets the RCON certificate path (relative to the server directory)",
         "Keywords": "rcon,certificate,RCON_Certificate",
         "FieldName": "RCON_Certificate",
         "InputType": "text",
@@ -1712,7 +1717,7 @@
         "DisplayName": "RCON Certificate Password",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "RCON:input:5",
-        "Description": "Sets the certificate password",
+        "Description": "Sets the RCON certificate password",
         "Keywords": "rcon,certificate,password,RCON_CertificatePassword",
         "FieldName": "RCON_CertificatePassword",
         "InputType": "password",
@@ -1861,6 +1866,18 @@
         }
     },
     {
+        "DisplayName": "Default New Player Permission Group",
+        "Category": "Rising World:stadia_controller",
+        "Subcategory": "Permissions:verified_user:7",
+        "Description": "Sets the default permission group for new players. Blank = default permissions",
+        "Keywords": "permissions,default,new,player,group,Permissions_DefaultNewPlayerPermissionGroup",
+        "FieldName": "Permissions_DefaultNewPlayerPermissionGroup",
+        "InputType": "text",
+        "ParamFieldName": "Permissions_DefaultNewPlayerPermissionGroup",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Give Admins Full Permissions",
         "Category": "Rising World:stadia_controller",
         "Subcategory": "Permissions:verified_user:7",
@@ -1874,17 +1891,5 @@
             "False": "False",
             "True": "True"
         }
-    },
-    {
-        "DisplayName": "Default New Player Permission Group",
-        "Category": "Rising World:stadia_controller",
-        "Subcategory": "Permissions:verified_user:7",
-        "Description": "Sets the default permission group for new players. Blank = default permissions",
-        "Keywords": "permissions,default,new,player,group,Permissions_DefaultNewPlayerPermissionGroup",
-        "FieldName": "Permissions_DefaultNewPlayerPermissionGroup",
-        "InputType": "text",
-        "ParamFieldName": "Permissions_DefaultNewPlayerPermissionGroup",
-        "DefaultValue": "",
-        "EnumValues": {}
     }
 ]
