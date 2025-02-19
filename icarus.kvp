@@ -16,7 +16,7 @@ Meta.ContainerPolicyReason=
 Meta.ExtraSetupStepsURI=
 Meta.Prerequisites=[]
 Meta.ConfigReleaseState=NotSpecified
-Meta.ConfigVersion=1.2
+Meta.ConfigVersion=3
 Meta.AppConfigId=630a4794-6466-4de6-956d-91393d6f48e0
 App.DisplayName=Icarus
 App.RootDir=./icarus/
@@ -24,9 +24,9 @@ App.BaseDirectory=./icarus/2089300/
 App.ExecutableWin=2089300/Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe
 App.ExecutableLinux=.proton/proton
 App.WorkingDir=2089300
-App.LinuxCommandLineArgs=run "{{$FullBaseDir}}Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe" Icarus -ini:Engine:[OnlineSubsystemSteam]:AsyncTaskTimeout={{AsyncTaskTimeout}}
+App.LinuxCommandLineArgs=runinprefix "{{$FullBaseDir}}Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe" Icarus -ini:Engine:[OnlineSubsystemSteam]:AsyncTaskTimeout={{AsyncTaskTimeout}}
 App.WindowsCommandLineArgs=Icarus
-App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} {{StartupMode}}{{$FormattedArgs}} -stdout -FullStdOutLogOutput
+App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} {{StartupMode}}{{$FormattedArgs}} -log=Icarus.log
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1149460","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullBaseDir}}.steam/steam","HOME":"{{$FullBaseDir}}"}
