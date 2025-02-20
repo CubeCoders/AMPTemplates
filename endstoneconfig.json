@@ -1,0 +1,581 @@
+[
+    {
+        "DisplayName": "Python Version",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the specific Python 3 version to run the app with. The version must be installed on the system for all users (and in the System Path on Windows). Make sure the version is compatible with the app and any required packages. If using AMP's Docker, you will limited to its installed version",
+        "Keywords": "python,version,PythonVersion",
+        "FieldName": "PythonVersion",
+        "InputType": "enum",
+        "ParamFieldName": "PythonVersion",
+        "DefaultValue": "3",
+        "EnumValues": {
+            "3": "System default",
+            "3.8": "3.8",
+            "3.9": "3.9",
+            "3.10": "3.10",
+            "3.11": "3.11",
+            "3.12": "3.12"
+        }
+    },
+    {
+        "DisplayName": "Server Name",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the name of the server that is shown in the in-game server list. No semi-colons allowed",
+        "Keywords": "server,name,server-name",
+        "FieldName": "server-name",
+        "InputType": "text",
+        "ParamFieldName": "server-name",
+        "DefaultValue": "AMP Powered Endstone Server",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Game Mode",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the game mode for new players",
+        "Keywords": "game,mode,gamemode",
+        "FieldName": "gamemode",
+        "InputType": "enum",
+        "ParamFieldName": "gamemode",
+        "DefaultValue": "survival",
+        "EnumValues": {
+            "survival": "Survival (default)",
+            "creative": "Creative",
+            "adventure": "Adventure"
+        }
+    },
+    {
+        "DisplayName": "Force Game Mode",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will send game mode values to clients other than the one saved during world creation, if those values are set in 'server.properties' after world creation",
+        "Keywords": "force,gamemode,force-gamemode",
+        "FieldName": "force-gamemode",
+        "InputType": "checkbox",
+        "ParamFieldName": "force-gamemode",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Level Name",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the name of the level (world) to load, or create if it does not exist. No semi-colons allowed, nor any symbols that are illegal for file names. Levels are stored in the 'worlds' directory",
+        "Keywords": "level,world,name,level-name",
+        "FieldName": "level-name",
+        "InputType": "text",
+        "ParamFieldName": "level-name",
+        "DefaultValue": "Bedrock level",
+        "Placeholder": "Bedrock level",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Level Seed",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the seed to randomise the generation of a new world. Blank = random seed",
+        "Keywords": "level,seed,level-seed",
+        "FieldName": "level-seed",
+        "InputType": "text",
+        "ParamFieldName": "level-seed",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Difficulty Level",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the difficulty level of the world",
+        "Keywords": "difficulty,level",
+        "FieldName": "difficulty",
+        "InputType": "enum",
+        "ParamFieldName": "difficulty",
+        "DefaultValue": "easy",
+        "EnumValues": {
+            "peaceful": "Peaceful",
+            "easy": "Easy (default)",
+            "normal": "Normal",
+            "hard": "Hard"
+        }
+    },
+    {
+        "DisplayName": "Allow Cheats",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, cheats like commands can be used",
+        "Keywords": "cheats,allow-cheats",
+        "FieldName": "allow-cheats",
+        "InputType": "checkbox",
+        "ParamFieldName": "allow-cheats",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Player Limit",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum number of players allowed on the server at one time",
+        "Keywords": "max,players,limit,max-players",
+        "FieldName": "$MaxUsers",
+        "InputType": "number",
+        "MinValue": "1",
+        "ParamFieldName": "max-players",
+        "DefaultValue": "10",
+        "Placeholder": "10",
+        "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Online Mode",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, all connected players must be authenticated to Xbox Live. Remote clients must always be authenticated, even if this setting is disabled",
+        "Keywords": "online,mode,online-mode",
+        "FieldName": "online-mode",
+        "InputType": "checkbox",
+        "ParamFieldName": "online-mode",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Allow List",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, all connected players must be listed in 'allowlist.json'",
+        "Keywords": "allowlist,allow,list,allow-list,whitelist",
+        "FieldName": "allow-list",
+        "InputType": "checkbox",
+        "ParamFieldName": "allow-list",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "View Distance",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum allowed view distance. Higher values have performance impact",
+        "Keywords": "view,distance,view-distance",
+        "FieldName": "view-distance",
+        "InputType": "number",
+        "MinValue": "5",
+        "ParamFieldName": "view-distance",
+        "DefaultValue": "32",
+        "Placeholder": "32",
+        "Suffix": "chunks",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Tick Distance",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the distance from any player that the world will be ticked. Higher values have performance impact",
+        "Keywords": "tick,distance,player,tick-distance",
+        "FieldName": "tick-distance",
+        "InputType": "number",
+        "MinValue": "4",
+        "MaxValue": "12",
+        "ParamFieldName": "tick-distance",
+        "DefaultValue": "4",
+        "Placeholder": "4",
+        "Suffix": "chunks",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Idle Player Timeout",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the time after which a player will be kicked if idling. 0 = disabled",
+        "Keywords": "player,idle,timeout,player-idle-timeout",
+        "FieldName": "player-idle-timeout",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "player-idle-timeout",
+        "DefaultValue": "30",
+        "Placeholder": "30",
+        "Suffix": "minutes",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Default Player Permission Level",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the permission level for new players joining the server for the first time",
+        "Keywords": "default,player,permission,level,default-player-permission-level",
+        "FieldName": "default-player-permission-level",
+        "InputType": "enum",
+        "ParamFieldName": "default-player-permission-level",
+        "DefaultValue": "member",
+        "EnumValues": {
+            "visitor": "Visitor",
+            "member": "Member (default)",
+            "operator": "Operator"
+        }
+    },
+    {
+        "DisplayName": "Require Texture Packs",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, clients must use texture packs in the current world",
+        "Keywords": "texturepack,required,texturepack-required",
+        "FieldName": "texturepack-required",
+        "InputType": "checkbox",
+        "ParamFieldName": "texturepack-required",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Chat Restriction Level",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the level of restriction applied to the chat for each player that joins the server",
+        "Keywords": "chat,restriction,chat-restriction",
+        "FieldName": "chat-restriction",
+        "InputType": "enum",
+        "ParamFieldName": "chat-restriction",
+        "DefaultValue": "None",
+        "EnumValues": {
+            "None": "None (default)",
+            "Dropped": "Chat messages dropped",
+            "Disabled": "Chat UI disabled"
+        }
+    },
+    {
+        "DisplayName": "Ignore Player Interaction",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will inform clients to ignore other players when interacting with the world",
+        "Keywords": "disable,player,interaction,disable-player-interaction",
+        "FieldName": "disable-player-interaction",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-player-interaction",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Client Chunk Generation",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will inform clients that they have the ability to generate visual level chunks outside of player interaction distances",
+        "Keywords": "client-side,chunk,visual,level,generation,enabled,client-side-chunk-generation-enabled",
+        "FieldName": "client-side-chunk-generation-enabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "client-side-chunk-generation-enabled",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Server Build Radius Ratio",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets how much of the player's view the server will generate, disregarding client hardware capability. Allowed values = Disabled or any value in range 0.0 - 1.0. Client Chunk Generation must be enabled",
+        "Keywords": "server,build,radius,ratio,server-build-radius-ratio",
+        "FieldName": "server-build-radius-ratio",
+        "InputType": "text",
+        "ParamFieldName": "server-build-radius-ratio",
+        "DefaultValue": "Disabled",
+        "Placeholder": "Disabled",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Disable Custom Skins",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, custom skins that were customised outside of the Minecraft store assets or in game assets will not be allowed",
+        "Keywords": "disable,custom,skins,disable-custom-skins",
+        "FieldName": "disable-custom-skins",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-custom-skins",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Maximum CPU Threads",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum number of CPU threads the server will try to use. 0 = use as many as possible",
+        "Keywords": "max,threads,max-threads",
+        "FieldName": "max-threads",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "max-threads",
+        "DefaultValue": "8",
+        "Placeholder": "8",
+        "Suffix": "threads",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Content Errors Logging",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, logging content errors to a file will be enabled",
+        "Keywords": "content,log,logging,file,enabled,content-log-file-enabled",
+        "FieldName": "content-log-file-enabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "content-log-file-enabled",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Compression Threshold",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the smallest size of raw network payload to compress",
+        "Keywords": "compression,threshold,raw,network,payload,compress,compression-threshold",
+        "FieldName": "compression-threshold",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "65535",
+        "ParamFieldName": "compression-threshold",
+        "DefaultValue": "1",
+        "Placeholder": "1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Compression Algorithm",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the compression algorithm to use for networking",
+        "Keywords": "compression,algorithm,networking,compression-algorithm",
+        "FieldName": "compression-algorithm",
+        "InputType": "enum",
+        "ParamFieldName": "compression-algorithm",
+        "DefaultValue": "zlib",
+        "EnumValues": {
+            "zlib": "zlib (default)",
+            "snappy": "snappy"
+        }
+    },
+    {
+        "DisplayName": "Server Movement Authority",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the server authority on movement",
+        "Keywords": "server,authoritative,authority,movement,server-authoritative-movement",
+        "FieldName": "server-authoritative-movement",
+        "InputType": "enum",
+        "ParamFieldName": "server-authoritative-movement",
+        "DefaultValue": "server-auth",
+        "EnumValues": {
+            "client-auth": "Server has no authority",
+            "server-auth": "Server simulates movement but accepts client version (default)",
+            "server-auth-with-rewind": "Server replays input and pushes to client"
+        }
+    },
+    {
+        "DisplayName": "Player Position Tolerance Threshold",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the tolerance of discrepancies between the client and server player position, if the third option is selected under Server Movement Authority",
+        "Keywords": "player,position,acceptance,tolerance,threshold,player-position-acceptance-threshold",
+        "FieldName": "player-position-acceptance-threshold",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "player-position-acceptance-threshold",
+        "DefaultValue": "0.5",
+        "Placeholder": "0.5",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Attack/Look Direction Tolerance Threshold",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies the amount that the player's attack direction and look direction can differ",
+        "Keywords": "player,movement,action,attack,look,direction,threshold",
+        "FieldName": "player-movement-action-direction-threshold",
+        "InputType": "number",
+        "MinValue": "-1",
+        "MaxValue": "1",
+        "ParamFieldName": "player-movement-action-direction-threshold",
+        "DefaultValue": "0.85",
+        "Placeholder": "0.85",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Server Authority Block Breaking",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will compute block mining operations in sync with the client",
+        "Keywords": "server,authoritative,block,breaking,compute,sync,server-authoritative-block-breaking",
+        "FieldName": "server-authoritative-block-breaking",
+        "InputType": "checkbox",
+        "ParamFieldName": "server-authoritative-block-breaking",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Server Authority Block Breaking Pick Range Scalar",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the pick range scalar if Server Authority Block Breaking is enabled",
+        "Keywords": "server,authoritative,block,breaking,compute,sync,pick,range,scalar,server-authoritative-block-breaking-pick-range-scalar",
+        "FieldName": "server-authoritative-block-breaking-pick-range-scalar",
+        "InputType": "number",
+        "MinValue": "1",
+        "ParamFieldName": "server-authoritative-block-breaking-pick-range-scalar",
+        "DefaultValue": "1.5",
+        "Placeholder": "1.5",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Hash Block Network IDs",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies if the server will send hashed block network ID's instead of id's that start from 0 and go up",
+        "Keywords": "block,network,ids,hashed,block-network-ids-are-hashes",
+        "FieldName": "block-network-ids-are-hashes",
+        "InputType": "checkbox",
+        "ParamFieldName": "block-network-ids-are-hashes",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Disable Client Caching",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will inform clients to not cache game data",
+        "Keywords": "disable,client,caching,disable-client-caching",
+        "FieldName": "disable-client-caching",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-client-caching",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Allow Outbound Script Debugging",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, allows use of the script debugger 'connect' command and 'Connect' for the Script Debugger Auto-Attach Mode",
+        "Keywords": "allow,outbound,script,debugging,connect,allow-outbound-script-debugging",
+        "FieldName": "allow-outbound-script-debugging",
+        "InputType": "checkbox",
+        "ParamFieldName": "allow-outbound-script-debugging",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Allow Inbound Script Debugging",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, allows use of the script debugger 'listen' command and 'Listen' for the Script Debugger Auto-Attach Mode",
+        "Keywords": "allow,inbound,script,debugging,listen,allow-inbound-script-debugging",
+        "FieldName": "allow-inbound-script-debugging",
+        "InputType": "checkbox",
+        "ParamFieldName": "allow-inbound-script-debugging",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Script Debugger Auto-Attach Mode",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the behaviour of the script debugger auto-attach feature",
+        "Keywords": "script,debugger,auto,attach,mode,inbound,outbound,connections",
+        "FieldName": "script-debugger-auto-attach",
+        "InputType": "enum",
+        "ParamFieldName": "script-debugger-auto-attach",
+        "DefaultValue": "disabled",
+        "EnumValues": {
+            "disabled": "Disabled (default)",
+            "connect": "Connect",
+            "listen": "Listen"
+        }
+    },
+    {
+        "DisplayName": "Script Debugger Auto-Attach Connect Address",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the address to use when the Script Debugger Auto-Attach Mode is set to 'Connect'. Make sure to use the Debugger Port allocated to the instance",
+        "Keywords": "script,debugger,auto,attach,connect,address,host,port,script-debugger-auto-attach-connect-address",
+        "FieldName": "script-debugger-auto-attach-connect-address",
+        "InputType": "text",
+        "ParamFieldName": "script-debugger-auto-attach-connect-address",
+        "DefaultValue": "",
+        "Placeholder": "localhost:19144"
+    },
+    {
+        "DisplayName": "Enable Server Telemetry",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, server telemetry will be enabled, resulting in server data being sent to Microsoft",
+        "Keywords": "server,telemetry,data,emit-server-telemetry",
+        "FieldName": "emit-server-telemetry",
+        "InputType": "checkbox",
+        "ParamFieldName": "emit-server-telemetry",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Additional Server Settings",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies additional settings to include in 'server.properties' that are not otherwise set by AMP. One setting per line. Useful for new settings in preview server builds",
+        "Keywords": "additional,settings,custom",
+        "FieldName": "UserSettings",
+        "InputType": "Textarea",
+        "IsFlagArgument": false,
+        "ParamFieldName": "UserSettings",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Command Line Arguments",
+        "Category": "Endstone:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies any command line arguments to include when running the server",
+        "Keywords": "command,line,arguments,args,CommandLineArgs",
+        "FieldName": "CommandLineArgs",
+        "InputType": "text",
+        "ParamFieldName": "CommandLineArgs",
+        "DefaultValue": "",
+        "Placeholder": "value1=foo value2=bar",
+        "EnumValues": {}
+    }
+]

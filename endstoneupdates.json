@@ -1,0 +1,70 @@
+[
+    {
+        "UpdateStageName": "Allowlist.json Backup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}allowlist.json.bak",
+        "UpdateSourceArgs": "{{$FullBaseDir}}allowlist.json",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Permissions.json Backup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}permissions.json.bak",
+        "UpdateSourceArgs": "{{$FullBaseDir}}permissions.json",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Create Virtual Environment",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"/usr/bin/python{{PythonVersion}} -u -m venv --clear --upgrade-deps \\\"{{$FullBaseDir}}venv\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Virtual Environment",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C py -{{PythonVersion}} -u -m venv --clear --upgrade-deps \"{{$FullBaseDir}}venv\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install Endstone",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"source \\\"{{$FullBaseDir}}venv/bin/activate\\\" && python3 -u -m pip install -U endstone\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install Endstone",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -u -m pip install -U endstone",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Allowlist.json Restore",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}allowlist.json",
+        "UpdateSourceArgs": "{{$FullBaseDir}}allowlist.json.bak",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Permissions.json Restore",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}permissions.json",
+        "UpdateSourceArgs": "{{$FullBaseDir}}permissions.json.bak",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    }
+]
