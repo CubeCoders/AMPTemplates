@@ -22,7 +22,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"/usr/bin/python{{PythonVersion}} -u -m venv --clear --upgrade-deps \\\"{{$FullBaseDir}}venv\\\"\"",
+        "UpdateSourceArgs": "-c \"/usr/bin/python{{PythonVersion}} -u -m venv --clear --upgrade-deps \\\"{{$FullRootDir}}venv\\\"\"",
         "SkipOnFailure": false
     },
     {
@@ -30,7 +30,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C py -{{PythonVersion}} -u -m venv --clear --upgrade-deps \"{{$FullBaseDir}}venv\"",
+        "UpdateSourceArgs": "/C py -{{PythonVersion}} -u -m venv --clear --upgrade-deps \"{{$FullRootDir}}venv\"",
         "SkipOnFailure": false
     },
     {
@@ -38,7 +38,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"source \\\"{{$FullBaseDir}}venv/bin/activate\\\" && python3 -u -m pip install -U endstone\"",
+        "UpdateSourceArgs": "-c \"source \\\"{{$FullRootDir}}venv/bin/activate\\\" && python3 -u -m pip install -U endstone\"",
         "SkipOnFailure": false
     },
     {
@@ -46,7 +46,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C \"{{$FullBaseDir}}venv\\Scripts\\activate.bat\" && python.exe -u -m pip install -U endstone",
+        "UpdateSourceArgs": "/C \"{{$FullRootDir}}venv\\Scripts\\activate.bat\" && python.exe -u -m pip install -U endstone",
         "SkipOnFailure": false
     },
     {
