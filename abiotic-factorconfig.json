@@ -75,10 +75,25 @@
         }
     },
     {
+        "DisplayName": "Use All Available Cores",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will be forced to use all available cores. Disable Pause To Load Assets if you use this. Recommended on newer hardware",
+        "Keywords": "force,use,available,all,cores,cpu,useallavailablecores",
+        "FieldName": "useallavailablecores",
+        "InputType": "checkbox",
+        "ParamFieldName": "useallavailablecores",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-useallavailablecores "
+        }
+    },
+    {
         "DisplayName": "Pause To Load Assets",
         "Category": "Abiotic Factor:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, the server will be forced to pause to load new assets/level sectors instead of slowly loading them. Recommended",
+        "Description": "If set, the server will be forced to pause to load new assets/level sectors instead of slowly loading them. Recommended on older hardware",
         "Keywords": "force,pause,load,assets,sectors,NoAsyncLoadingThread",
         "FieldName": "NoAsyncLoadingThread",
         "InputType": "checkbox",
@@ -88,6 +103,18 @@
             "False": "",
             "True": "-NoAsyncLoadingThread "
         }
+    },
+    {
+        "DisplayName": "Additional Command Line Arguments",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies additional command line arguments (anything that begins with a - ) that are not otherwise set by AMP. Use with care",
+        "Keywords": "custom,server,arguments,parameters",
+        "FieldName": "CustomArgs",
+        "InputType": "text",
+        "ParamFieldName": "CustomArgs",
+        "DefaultValue": "",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Enable Loot Respawn",
@@ -548,6 +575,50 @@
             "5": "Pipe club",
             "6": "Random"
         }
+    },
+     {
+        "DisplayName": "Allow Death Bag Inventory Access",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, the host will be able to access the inventory items found in Death Bags, which are typically dropped by players on death",
+        "Keywords": "death,bag,inventory,host,access,HostAccessPlayerCorpses",
+        "FieldName": "HostAccessPlayerCorpses",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.HostAccessPlayerCorpses",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Restrict Containers",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, containers will be restricted by item type",
+        "Keywords": "containers,restrict,item,type,StorageByTag",
+        "FieldName": "StorageByTag",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.StorageByTag",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Structural Support Limit",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "Sets the limit on how much furniture and other deployables can be stacked. 0 = disabled",
+        "Keywords": "structural,support,limit,stack,furniture,deployables,StructuralSupportLimit",
+        "FieldName": "StructuralSupportLimit",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "SandboxSettings.StructuralSupportLimit",
+        "DefaultValue": "5",
+        "Placeholder": "5",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Proton GE Release Version (Linux)",
