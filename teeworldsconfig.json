@@ -62,6 +62,7 @@
         "Hidden": true,
         "ParamFieldName": "ec_bindaddr",
         "DefaultValue": "localhost",
+        "ExcludeFromImport": true,
         "EnumValues": {}
     },
     {
@@ -74,6 +75,21 @@
         "InputType": "password",
         "Hidden": true,
         "ParamFieldName": "ec_password",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Log File",
+        "Category": "Teeworlds:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "logfile",
+        "InputType": "text",
+        "Hidden": true,
+        "ParamFieldName": "logfile",
+        "DefaultValue": "log",
+        "ExcludeFromImport": true,
         "EnumValues": {}
     },
     {
@@ -229,8 +245,6 @@
         "Keywords": "rcon,ban,time,sv_rcon_bantime",
         "FieldName": "sv_rcon_bantime",
         "InputType": "number",
-        "MinValue": "0",
-        "MaxValue": "1440",
         "ParamFieldName": "sv_rcon_bantime",
         "DefaultValue": "5",
         "Placeholder": "5",
@@ -245,8 +259,6 @@
         "Keywords": "rcon,max,tries,sv_rcon_max_tries",
         "FieldName": "sv_rcon_max_tries",
         "InputType": "number",
-        "MinValue": "1",
-        "MaxValue": "10",
         "ParamFieldName": "sv_rcon_max_tries",
         "DefaultValue": "3",
         "Placeholder": "3",
@@ -275,8 +287,6 @@
         "Keywords": "auto,demo,max,sv_auto_demo_max",
         "FieldName": "sv_auto_demo_max",
         "InputType": "number",
-        "MinValue": "0",
-        "MaxValue": "1000",
         "ParamFieldName": "sv_auto_demo_max",
         "DefaultValue": "10",
         "Placeholder": "10",
@@ -309,7 +319,7 @@
         "DefaultValue": "2",
         "EnumValues": {
             "1": "Move player to spectator",
-            "2": "Move to free spectator slot/kick",
+            "2": "Move to free spectator slot, otherwise kick",
             "3": "Kick"
         }
     },
@@ -336,8 +346,6 @@
         "Keywords": "inactive,kick,time,sv_inactivekick_time",
         "FieldName": "sv_inactivekick_time",
         "InputType": "number",
-        "MinValue": "1",
-        "MaxValue": "60",
         "ParamFieldName": "sv_inactivekick_time",
         "DefaultValue": "3",
         "Placeholder": "3",
@@ -352,8 +360,6 @@
         "Keywords": "map,download,speed,sv_map_download_speed",
         "FieldName": "sv_map_download_speed",
         "InputType": "number",
-        "MinValue": "1",
-        "MaxValue": "100",
         "ParamFieldName": "sv_map_download_speed",
         "DefaultValue": "8",
         "Placeholder": "8",
@@ -443,26 +449,29 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Log File",
-        "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the filename to log all output to",
-        "Keywords": "log,file,logfile",
-        "FieldName": "logfile",
-        "InputType": "text",
-        "ParamFieldName": "logfile",
-        "DefaultValue": "",
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "Log File Timestamp",
         "Category": "Teeworlds:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, a time stamp will be added to the log file's name",
+        "Description": "If set, a time stamp will be added to the server's log file name ('user/dumps/log.txt'), meaning the file won't be overwritten on each start. The server's logs are separate to AMP's logs, which are not overwritten",
         "Keywords": "log,file,timestamp,logfile_timestamp",
         "FieldName": "logfile_timestamp",
         "InputType": "checkbox",
         "ParamFieldName": "logfile_timestamp",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Abort TCP Connection On Close",
+        "Category": "Teeworlds:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will abort the TCP connection on close",
+        "Keywords": "abort,tcp,connection,close,sv_abort_on_close",
+        "FieldName": "net_tcp_abort_on_close",
+        "InputType": "checkbox",
+        "ParamFieldName": "net_tcp_abort_on_close",
         "DefaultValue": "0",
         "EnumValues": {
             "False": "0",
@@ -545,12 +554,11 @@
         "DisplayName": "Match Countdown",
         "Category": "Teeworlds:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the number of seconds to freeze the game in a countdown before match starts. 0 = enabled only for survival gamemodes, -1 = disabled",
+        "Description": "Sets the number of seconds to freeze the game in a countdown before the match starts. 0 = enabled only for survival gamemodes, -1 = disabled",
         "Keywords": "countdown,sv_countdown",
         "FieldName": "sv_countdown",
         "InputType": "number",
         "MinValue": "-1",
-        "MaxValue": "60",
         "ParamFieldName": "sv_countdown",
         "DefaultValue": "0",
         "Placeholder": "0",
@@ -601,6 +609,20 @@
         }
     },
     {
+        "DisplayName": "Warmup Time",
+        "Category": "Teeworlds:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the warmup time before a match starts. 0 = disabled. -1 = all players ready",
+        "Keywords": "warmup,sv_warmup",
+        "FieldName": "sv_warmup",
+        "InputType": "number",
+        "ParamFieldName": "sv_warmup",
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Allow Powerups",
         "Category": "Teeworlds:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -619,7 +641,7 @@
         "DisplayName": "Respawn Delay (TDM)",
         "Category": "Teeworlds:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the time needed to respawn after death in Team Deathmatch gametype",
+        "Description": "Sets the time needed to respawn after death in the Team Deathmatch gametype",
         "Keywords": "respawn,delay,tdm,sv_respawn_delay_tdm",
         "FieldName": "sv_respawn_delay_tdm",
         "InputType": "number",
@@ -671,7 +693,7 @@
         }
     },
     {
-        "DisplayName": "Team Balance Time",
+        "DisplayName": "Team Auto Balance Delay",
         "Category": "Teeworlds:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
         "Description": "Sets how long to wait before autobalancing teams",
@@ -688,7 +710,7 @@
         "DisplayName": "Enable Team Damage",
         "Category": "Teeworlds:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Team damage",
+        "Description": "If set, team damage will be enabled",
         "Keywords": "team,damage,sv_teamdamage",
         "FieldName": "sv_teamdamage",
         "InputType": "checkbox",
@@ -731,19 +753,6 @@
         }
     },
     {
-        "DisplayName": "Vote Kick Ban Time",
-        "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "The time to ban a player if kicked by vote. 0 makes it just use kick",
-        "Keywords": "vote,kick,ban,time,sv_vote_kick_bantime",
-        "FieldName": "sv_vote_kick_bantime",
-        "InputType": "number",
-        "ParamFieldName": "sv_vote_kick_bantime",
-        "DefaultValue": "5",
-        "Placeholder": "5",
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "Vote Kick Minimum Players",
         "Category": "Teeworlds:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -754,6 +763,20 @@
         "ParamFieldName": "sv_vote_kick_min",
         "DefaultValue": "0",
         "Placeholder": "0",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Vote Kick Ban Time",
+        "Category": "Teeworlds:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the time to ban a player if kicked by vote. 0 = just use kick",
+        "Keywords": "vote,kick,ban,time,sv_vote_kick_bantime",
+        "FieldName": "sv_vote_kick_bantime",
+        "InputType": "number",
+        "ParamFieldName": "sv_vote_kick_bantime",
+        "DefaultValue": "5",
+        "Placeholder": "5",
+        "Suffix": "minutes",
         "EnumValues": {}
     },
     {
@@ -783,20 +806,6 @@
         "DefaultValue": "3",
         "Placeholder": "3",
         "Suffix": "minutes",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Warmup Time",
-        "Category": "Teeworlds:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the warmup time before a match starts. 0 = disabled. -1 = all players ready",
-        "Keywords": "warmup,sv_warmup",
-        "FieldName": "sv_warmup",
-        "InputType": "number",
-        "ParamFieldName": "sv_warmup",
-        "DefaultValue": "0",
-        "Placeholder": "0",
-        "Suffix": "seconds",
         "EnumValues": {}
     }
 ]
