@@ -50,7 +50,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"/usr/bin/python{{PythonVersion}} -u -m venv --clear --upgrade-deps \\\"{{$FullBaseDir}}venv\\\"\"",
+        "UpdateSourceArgs": "-c \"if ! command -v /usr/bin/python{{PythonVersion}} >/dev/null 2>&1; then echo 'Error: Python {{PythonVersion}} is not installed.\nSee https://discourse.cubecoders.com/t/python-app-runner-guide/7420#p-15668-h-11-linux-3'; exit 1; fi; /usr/bin/python{{PythonVersion}} -u -m venv --clear --upgrade-deps \\\"{{$FullBaseDir}}venv\\\"\"",
         "SkipOnFailure": false
     },
     {
@@ -58,7 +58,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C py -{{PythonVersion}} -u -m venv --clear --upgrade-deps \"{{$FullBaseDir}}venv\"",
+        "UpdateSourceArgs": "/C where py >NUL 2>&1 || (echo Error: Python launcher \"py\" is not installed for all users on this system or is not in the System PATH. & echo See https://discourse.cubecoders.com/t/python-app-runner-guide/7420#p-15668-h-12-windows-4 & exit /b 1) & py -{{PythonVersion}} --version >NUL 2>&1 || (echo Error: Python {{PythonVersion}} is not installed for all users on this system. & echo See https://discourse.cubecoders.com/t/python-app-runner-guide/7420#p-15668-h-12-windows-4 & exit /b 1) & py -{{PythonVersion}} -u -m venv --clear --upgrade-deps \"{{$FullBaseDir}}venv\"",
         "SkipOnFailure": false
     },
     {
