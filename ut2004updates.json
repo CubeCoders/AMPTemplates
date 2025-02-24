@@ -1,10 +1,19 @@
 [
+     {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ut2004 && rm -rf srv >/dev/null 2>&1; DownloadUrl=\\\"https://github.com/IceOfWraith/UT2004.git\\\"; [ ! -d .git ] && { echo \\\"Installing the server\\\" && git clone \\\"$DownloadUrl\\\" srv >/dev/null && \\cp -r srv/. ./ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && echo \\\"Server installed\\\"; } || { echo \\\"Updating the server\\\" && git fetch --all >/dev/null && git pull >/dev/null && echo \\\"Server updated\\\"; }\"",
+        "SkipOnFailure": false
+    },
     {
         "UpdateStageName": "Server Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "GitRepo",
-        "UpdateSourceData": "https://github.com/IceOfWraith/UT2004.git",
-        "UpdateSourceTarget": "{{$FullRootDir}}"
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd ut2004; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $DownloadUrl = \\\"https://github.com/IceOfWraith/UT2004.git\\\"; if (-Not (Test-Path .git)) { Write-Output \\\"Installing the server\\\"; git clone \\\"$DownloadUrl\\\" srv 1> $null; Copy-Item srv/* ./ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; if ($?) { Write-Output \\\"Server installed\\\" } } else { Write-Output \\\"Updating the server\\\"; git fetch --all 1> $null; if ($?) { git pull 1> $null }; if ($?) { Write-Output \\\"Server updated\\\" } }\"",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Pause Update Stages",
