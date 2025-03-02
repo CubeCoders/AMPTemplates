@@ -35,7 +35,7 @@ App.ExecutableLinux=2131400/Vein/Binaries/Linux/VeinServer-Linux-DebugGame
 App.WorkingDir=2131400
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} Vein -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{$FormattedArgs}} -stdout -FullStdOutLogOutput
+App.CommandLineArgs={{$PlatformArgs}} Vein -Port={{$GamePort}} -QueryPort={{$QueryPort}} -RCONPort={{$RCONPort}} -RCONPassword={{$RemoteAdminPassword}} {{$FormattedArgs}} -stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"2082470"}
@@ -54,7 +54,7 @@ App.ForceIPBinding=False
 App.SupportsIPv6=False
 App.ApplicationIPBinding=0.0.0.0
 App.Ports=@IncludeJson[veinports.json]
-App.AdminPortRef=0
+App.AdminPortRef=RCONPort
 App.PrimaryApplicationPortRef=GamePort
 App.UniversalSleepApplicationUDPPortRef=GamePort
 App.UniversalSleepSteamQueryPortRef=QueryPort
@@ -62,7 +62,7 @@ App.MaxUsers=16
 App.UseRandomAdminPassword=True
 App.PersistRandomPassword=True
 App.RemoteAdminPassword=
-App.AdminMethod=STDIO
+App.AdminMethod=SourceRCON
 App.IgnoreSTDOUTAfterRCON=False
 App.AdminLoginTransform=None
 App.LoginTransformPrefix=
