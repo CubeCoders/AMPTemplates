@@ -1,5 +1,17 @@
 [
     {
+        "DisplayName": "Bind Address",
+        "Category": "VEIN:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$ApplicationIPBinding",
+        "InputType": "text",
+        "ParamFieldName": "ini:Game:[/Script/Vein.VeinGameSession]:BindAddr",
+        "IncludeInCommandLine": true,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Server Name",
         "Category": "VEIN:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -7,7 +19,9 @@
         "Keywords": "name,ServerName",
         "FieldName": "ServerName",
         "InputType": "text",
-        "ParamFieldName": "/Script/Vein.VeinGameSession.ServerName",
+        "ParamFieldName": "ini:Game:[/Script/Vein.VeinGameSession]:ServerName",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
         "DefaultValue": "AMP Powered VEIN Server",
         "EnumValues": {}
     },
@@ -19,7 +33,9 @@
         "Keywords": "public,visible,server,browser,bPublic",
         "FieldName": "bPublic",
         "InputType": "checkbox",
-        "ParamFieldName": "/Script/Vein.VeinGameSession.bPublic",
+        "ParamFieldName": "ini:Game:[/Script/Vein.VeinGameSession]:bPublic",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
         "DefaultValue": "True",
         "EnumValues": {
             "False": "False",
@@ -34,7 +50,9 @@
         "Keywords": "server,password",
         "FieldName": "Password",
         "InputType": "password",
-        "ParamFieldName": "/Script/Vein.VeinGameSession.Password",
+        "ParamFieldName": "ini:Game:[/Script/Vein.VeinGameSession]:Password",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
         "DefaultValue": "",
         "EnumValues": {}
     },
@@ -47,7 +65,9 @@
         "FieldName": "$MaxUsers",
         "InputType": "number",
         "MinValue": "1",
-        "ParamFieldName": "/Script/Engine.GameSession.MaxPlayers",
+        "ParamFieldName": "ini:Game:[/Script/Engine.GameSession]:MaxPlayers",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
         "DefaultValue": "16",
         "Placeholder": "16",
         "Suffix": "players",
@@ -61,12 +81,28 @@
         "Keywords": "valve,anti,cheat,vac,VACEnabled",
         "FieldName": "VACEnabled",
         "InputType": "checkbox",
-        "ParamFieldName": "/Script/Vein.VeinGameSession.VACEnabled",
+        "ParamFieldName": "ini:Game:[OnlineSubsystemSteam]:VACEnabled",
+        "IncludeInCommandLine": true,
         "DefaultValue": "0",
         "EnumValues": {
             "False": "0",
             "True": "1"
         }
+    },
+    {
+        "DisplayName": "Heartbeat Interval",
+        "Category": "VEIN:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the interval between server heartbeats",
+        "Keywords": "heartbeat,interval,HeartbeatInterval",
+        "FieldName": "HeartbeatInterval",
+        "InputType": "number",
+        "ParamFieldName": "ini:Game:[/Script/Engine.GameSession]:HeartbeatInterval",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "5.0",
+        "Placeholder": "5.0",
+        "Suffix": "seconds",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Server Branch",
@@ -80,7 +116,6 @@
         "DefaultValue": "public",
         "EnumValues": {
             "public": "Public (default)",
-            "hotfix": "Hotfix builds (hotfix)",
             "experimental": "Experimental builds"
         }
     }
