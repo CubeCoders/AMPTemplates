@@ -7,9 +7,7 @@
         "Keywords": "name,ServerName",
         "FieldName": "ServerName",
         "InputType": "text",
-        "ParamFieldName": "ini:Game:[/Script/Vein.VeinGameSession]:ServerName",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
+        "ParamFieldName": "/Script/Vein.VeinGameSession.ServerName",
         "DefaultValue": "AMP Powered VEIN Server",
         "EnumValues": {}
     },
@@ -21,9 +19,7 @@
         "Keywords": "public,visible,server,browser,bPublic",
         "FieldName": "bPublic",
         "InputType": "checkbox",
-        "ParamFieldName": "ini:Game:[/Script/Vein.VeinGameSession]:bPublic",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
+        "ParamFieldName": "/Script/Vein.VeinGameSession.bPublic",
         "DefaultValue": "True",
         "EnumValues": {
             "False": "False",
@@ -38,9 +34,7 @@
         "Keywords": "server,password",
         "FieldName": "Password",
         "InputType": "password",
-        "ParamFieldName": "ini:Game:[/Script/Vein.VeinGameSession]:Password",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
+        "ParamFieldName": "/Script/Vein.VeinGameSession.Password",
         "DefaultValue": "",
         "EnumValues": {}
     },
@@ -53,9 +47,7 @@
         "FieldName": "$MaxUsers",
         "InputType": "number",
         "MinValue": "1",
-        "ParamFieldName": "ini:Game:[/Script/Engine.GameSession]:MaxPlayers",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
+        "ParamFieldName": "/Script/Engine.GameSession.MaxPlayers",
         "DefaultValue": "16",
         "Placeholder": "16",
         "Suffix": "players",
@@ -69,13 +61,34 @@
         "Keywords": "valve,anti,cheat,vac,VACEnabled",
         "FieldName": "bVACEnabled",
         "InputType": "checkbox",
-        "ParamFieldName": "ini:Game:[OnlineSubsystemSteam]:bVACEnabled",
-        "IncludeInCommandLine": true,
+        "ParamFieldName": "OnlineSubsystemSteam.bVACEnabled",
         "DefaultValue": "0",
         "EnumValues": {
             "False": "0",
             "True": "1"
         }
+    },
+    {
+        "DisplayName": "Server Admins",
+        "Category": "VEIN:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Server admins can be specified by their [Steam64 IDs](https://steamidfinder.com/) under Additional VeinGameSession Settings. Format is \"AdminSteamIDs=58475847389109874\" (don't include quotes, and put + at the start of the line for the second and subsequent entries). One admin per line",
+        "Keywords": "server,admins,AdminSteamIDs",
+        "FieldName": "AdminSteamIDs",
+        "InputType": "hidden",
+        "ParamFieldName": "AdminSteamIDs",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Super Server Admins",
+        "Category": "VEIN:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Super server admins (admins that can grant or demote admin ranks in-game) can be specified by their [Steam64 IDs](https://steamidfinder.com/) under Additional VeinGameSession Settings. Format is \"SuperAdminSteamIDs=58475847389109874\" (don't include quotes, and put + at the start of the line for the second and subsequent entries). One super admin per line",
+        "Keywords": "super,server,admins,SuperAdminSteamIDs",
+        "FieldName": "SuperAdminSteamIDs",
+        "InputType": "hidden",
+        "ParamFieldName": "SuperAdminSteamIDs",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Heartbeat Interval",
@@ -85,11 +98,84 @@
         "Keywords": "heartbeat,interval,HeartbeatInterval",
         "FieldName": "HeartbeatInterval",
         "InputType": "number",
-        "ParamFieldName": "ini:Game:[/Script/Engine.GameSession]:HeartbeatInterval",
-        "IncludeInCommandLine": true,
+        "ParamFieldName": "/Script/Engine.GameSession.HeartbeatInterval",
         "DefaultValue": "5.0",
         "Placeholder": "5.0",
         "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Show Scoreboard Badges",
+        "Category": "VEIN:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, player badges will be shown on the scoreboard",
+        "Keywords": "show,scoreboard,badges,GS_ShowScoreboardBadges",
+        "FieldName": "GS_ShowScoreboardBadges",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/Vein.ServerSettings.GS_ShowScoreboardBadges",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Additional GameSession Settings",
+        "Category": "VEIN:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies additional settings to include in the [/Script/Engine.GameSession] section of Game.ini that are not otherwise set by AMP. One setting per line",
+        "Keywords": "additional,gamesession,settings,custom",
+        "FieldName": "GameSessionUserSettings",
+        "InputType": "Textarea",
+        "ParamFieldName": "GameSessionUserSettings",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional VeinGameSession Settings",
+        "Category": "VEIN:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies additional settings to include in the [/Script/Vein.VeinGameSession] section of Game.ini that are not otherwise set by AMP. One setting per line",
+        "Keywords": "additional,veingamesession,settings,custom",
+        "FieldName": "VeinGameSessionUserSettings",
+        "InputType": "Textarea",
+        "ParamFieldName": "VeinGameSessionUserSettings",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional ServerSettings Settings",
+        "Category": "VEIN:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies additional settings to include in the [/Script/Vein.ServerSettings] section of Game.ini that are not otherwise set by AMP. One setting per line",
+        "Keywords": "additional,serversettings,settings,custom",
+        "FieldName": "ServerSettingsUserSettings",
+        "InputType": "Textarea",
+        "ParamFieldName": "ServerSettingsUserSettings",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional OnlineSubsystem Settings",
+        "Category": "VEIN:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies additional settings to include in the [OnlineSubsystem] section of Game.ini that are not otherwise set by AMP. One setting per line",
+        "Keywords": "additional,onlinesubsystemsteam,settings,custom",
+        "FieldName": "OnlineSubsystemSteamUserSettings",
+        "InputType": "Textarea",
+        "ParamFieldName": "OnlineSubsystemSteamUserSettings",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Gameplay Settings",
+        "Category": "VEIN:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "[Console variables](https://ramjet.notion.site/dedicated-servers?pvs=25#17ef9ec29f178035b54eedb0d967e113) to control the server's gameplay can be set in the [ConsoleVariables] section of Engine.ini",
+        "Keywords": "console,variables,gameplay,settings",
+        "FieldName": "ConsoleVariables",
+        "InputType": "hidden",
+        "ParamFieldName": "ConsoleVariables",
         "EnumValues": {}
     },
     {
