@@ -13,7 +13,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'cube2-sauerbraten'; Invoke-WebRequest -UseBasicParsing -Uri https://sourceforge.net/projects/sauerbraten/files/sauerbraten/2020_11_29/sauerbraten_2020_12_21_windows.exe/download -OutFile 'sauerbraten.exe'; Start-Process -FilePath sauerbraten.exe -ArgumentList \\\"/S /D=.\\\\\" -Wait -NoNewWindow\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'cube2-sauerbraten'; Invoke-WebRequest -UseBasicParsing -Uri https://sourceforge.net/projects/sauerbraten/files/sauerbraten/2020_11_29/sauerbraten_2020_12_21_windows.exe/download -OutFile 'sauerbraten.exe'; Start-Process -FilePath sauerbraten.exe -ArgumentList \\\"/S /D=.\\\\\" -Wait -NoNewWindow; if {$?) { Remove-Item -Path 'sauerbraten.exe' -Force -ErrorAction SilentlyContinue | Out-Null }\"",
         "SkipOnFailure": false
     },
     {
@@ -21,7 +21,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd cube2-sauerbraten && wget -qO sauerbraten.tar.bz2 https://sourceforge.net/projects/sauerbraten/files/sauerbraten/2020_11_29/sauerbraten_2020_12_29_linux.tar.bz2/download && tar -xjf sauerbraten.tar.bz2 --strip-components=1\"",
+        "UpdateSourceArgs": "-c \"cd cube2-sauerbraten && wget -qO sauerbraten.tar.bz2 https://sourceforge.net/projects/sauerbraten/files/sauerbraten/2020_11_29/sauerbraten_2020_12_29_linux.tar.bz2/download && tar -xjf sauerbraten.tar.bz2 --strip-components=1 && rm -f sauerbraten.tar.bz2\"",
         "SkipOnFailure": false
     },
     {
