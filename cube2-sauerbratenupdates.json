@@ -13,7 +13,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'cube2-sauerbraten'; Invoke-WebRequest -UseBasicParsing -Uri 'https://sourceforge.net/projects/sauerbraten/files/sauerbraten/2020_11_29/sauerbraten_2020_12_21_windows.exe/download' -OutFile 'sauerbraten.exe' -Headers @{\\\"User-Agent\\\"=\\\"Mozilla/5.0\\\"} -MaximumRedirection 5 -UseBasicParsing; Start-Process -FilePath sauerbraten.exe -ArgumentList \\\"/S /D=.\\\\\" -Wait -NoNewWindow; if {$?) { Write-Output \\\"Server installed\\\"; Remove-Item -Path 'sauerbraten.exe' -Force -ErrorAction SilentlyContinue | Out-Null }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'cube2-sauerbraten'; $downloadUrl = (Invoke-WebRequest -UseBasicParsing -Uri 'https://sourceforge.net/projects/sauerbraten/files/sauerbraten/2020_11_29/sauerbraten_2020_12_21_windows.exe/download' -Headers @{\\\"User-Agent\\\"=\\\"Mozilla/5.0\\\"} -MaximumRedirection 0).Headers.Location; Invoke-WebRequest -UseBasicParsing -Uri $downloadUrl -OutFile 'sauerbraten.exe'; Start-Process -FilePath 'sauerbraten.exe' -ArgumentList \\\"/S /D=.\\\\\\\" -Wait -NoNewWindow; if ($?) { Write-Output \\\"Server installed\\\"; Remove-Item -Path 'sauerbraten.exe' -Force -ErrorAction SilentlyContinue | Out-Null }\"",
         "SkipOnFailure": false
     },
     {
