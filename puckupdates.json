@@ -12,7 +12,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"BepInExBuildNumber=\\\"{{BepInExBuildNumber}}\\\" && if [[ -z \\\"$BepInExBuildNumber\\\" ]]; then BepInExBuildNumber=733; fi && if [[ ! \\\"$BepInExBuildNumber\\\" =~ ^[0-9]+$ ]]; then echo \\\"Invalid BepInEx build number specified\\\" && exit 1; fi && wget -qO BepInEx.zip https://builds.bepinex.dev/projects/bepinex_be/$BepInExBuildNumber/BepInEx-Unity.IL2CPP-linux-x64-6.0.0-be.$BepInExBuildNumber%2B*.zip && echo \\\"BepInEx IL2CPP Linux x64 bleeding edge build $BepInExBuildNumber downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"BepInExBuild=\\\"{{BepInExBuild}}\\\" && if [[ -z \\\"$BepInExBuild\\\" ]]; then echo \\\"BepInEx build not specified\\\" && exit 1; fi && BuildNum=$(echo $BepInExBuild | cut -d'+' -f1) && Hash=$(echo $BepInExBuild | cut -d'+' -f2) && wget -qO BepInEx.zip https://builds.bepinex.dev/projects/bepinex_be/$BuildNum/BepInEx-Unity.IL2CPP-linux-x64-6.0.0-be.$BepInExBuild.zip && echo \\\"BepInEx IL2CPP Linux x64 build $BepInExBuild downloaded\\\"\"",
         "UpdateSourceConditionSetting": "BepInExInstall",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
