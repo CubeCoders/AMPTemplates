@@ -12,7 +12,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"wget -qO Test.zip https://builds.bepinex.dev/projects/bepinex_be/733/BepInEx-Unity.IL2CPP-linux-x64-6.0.0-be.733%2B995f049.zip && echo \\\"BepInEx IL2CPP bleeding edge build downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"BepInExVersion=\\\"{{BepInExVersion}}\\\" && if [[ -z \\\"$BepInExVersion\\\" ]]; then BepInExVersion=$(wget -qO- https://api.github.com/repos/BepInEx/BepInEx/releases/latest | jq -r \\\".tag_name\\\" | sed 's/^v//'); fi && if [[ ! \\\"$BepInExVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+([-.]pre\\.[0-9]+)?$ ]]; then echo \\\"Invalid BepInEx version format specified\\\" && exit 1; fi && wget -qO BepInEx.zip https://github.com/BepInEx/BepInEx/releases/download/v$BepInExVersion/BepInEx-Unity.IL2CPP-linux-x64-$BepInExVersion.zip && echo \\\"BepInEx IL2CPP Linux x64 v$BepInExVersion downloaded\\\"\"",
         "UpdateSourceConditionSetting": "BepInExInstall",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
