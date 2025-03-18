@@ -3,14 +3,14 @@
         "UpdateStageName": "SteamCMD Server Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
-        "UpdateSourceData": "222860",
-        "UpdateSourceArgs": "550"
+        "UpdateSourceData": "295230",
+        "UpdateSourceArgs": "265630"
     },
     {
         "UpdateStageName": "Server.cfg Template File Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/left-4-dead2server.cfg",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/fistful-of-fragsserver.cfg",
         "UpdateSourceArgs": "AMP_server.cfg",
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "OverwriteExistingFiles": true
@@ -40,7 +40,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "ExtractArchive",
         "UpdateSourceData": "metamod.tar.gz",
-        "UpdateSourceTarget": "{{$FullBaseDir}}left4dead2",
+        "UpdateSourceTarget": "{{$FullBaseDir}}fof",
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "InstallMod",
@@ -52,7 +52,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "ExtractArchive",
         "UpdateSourceData": "metamod.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}left4dead2",
+        "UpdateSourceTarget": "{{$FullBaseDir}}fof",
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "InstallMod",
@@ -72,7 +72,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"SourcemodBuild=\\\"{{SourcemodBuild}}\\\" && SourceModBranch=\\\"{{SourceModBranch}}\\\" && if [[ -z \\\"$SourcemodBuild\\\" ]]; then LatestSourceModFile=$(wget -qO- https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-latest-linux) && wget -qO sourcemod.tar.gz https://sm.alliedmods.net/smdrop/$SourceModBranch/$LatestSourceModFile && echo \\\"Latest SourceMod $SourceModBranch build downloaded\\\"; elif [[ ! \\\"$SourcemodBuild\\\" =~ ^[0-9]+$ ]]; then echo \\\"Invalid SourceMod build version format specified\\\" && exit 1; else wget -qO sourcemod.tar.gz https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-$SourceModBranch.0-git$SourcemodBuild-linux.tar.gz && echo \\\"SourceMod $SourceModBranch build $SourcemodBuild downloaded\\\"; fi\"",
+        "UpdateSourceArgs": "-c \"SourceModBuild=\\\"{{SourceModBuild}}\\\" && SourceModBranch=\\\"{{SourceModBranch}}\\\" && if [[ -z \\\"$SourceModBuild\\\" ]]; then LatestSourceModFile=$(wget -qO- https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-latest-linux) && wget -qO sourcemod.tar.gz https://sm.alliedmods.net/smdrop/$SourceModBranch/$LatestSourceModFile && echo \\\"Latest SourceMod $SourceModBranch build downloaded\\\"; elif [[ ! \\\"$SourceModBuild\\\" =~ ^[0-9]+$ ]]; then echo \\\"Invalid SourceMod build version format specified\\\" && exit 1; else wget -qO sourcemod.tar.gz https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-$SourceModBranch.0-git$SourceModBuild-linux.tar.gz && echo \\\"SourceMod $SourceModBranch build $SourceModBuild downloaded\\\"; fi\"",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
@@ -82,7 +82,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $SourcemodBuild='{{SourcemodBuild}}'; $SourceModBranch='{{SourceModBranch}}'; if ([string]::IsNullOrWhiteSpace($SourcemodBuild)) { $LatestSourceModFile=(Invoke-RestMethod -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-latest-windows); Invoke-WebRequest -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/$LatestSourceModFile -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"Latest SourceMod $SourceModBranch build downloaded\\\"; } } elseif ($SourcemodBuild -notmatch '^\\d+$') { Write-Output \\\"Invalid SourceMod build version format specified\\\"; exit 1; } else { Invoke-WebRequest -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-$SourceModBranch.0-git$SourcemodBuild-windows.zip -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"SourceMod $SourceModBranch build $SourcemodBuild downloaded\\\"; } }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $SourceModBuild='{{SourceModBuild}}'; $SourceModBranch='{{SourceModBranch}}'; if ([string]::IsNullOrWhiteSpace($SourceModBuild)) { $LatestSourceModFile=(Invoke-RestMethod -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-latest-windows); Invoke-WebRequest -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/$LatestSourceModFile -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"Latest SourceMod $SourceModBranch build downloaded\\\"; } } elseif ($SourceModBuild -notmatch '^\\d+$') { Write-Output \\\"Invalid SourceMod build version format specified\\\"; exit 1; } else { Invoke-WebRequest -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-$SourceModBranch.0-git$SourceModBuild-windows.zip -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"SourceMod $SourceModBranch build $SourceModBuild downloaded\\\"; } }\"",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
@@ -116,7 +116,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'l4d2/222860'; if (Test-Path 'left4dead2/cfg/sourcemod') { Remove-Item -Path 'sm/cfg/sourcemod' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'left4dead2/addons/sourcemod/configs') { Remove-Item -Path 'sm/addons/sourcemod/configs' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'left4dead2/addons/sourcemod/plugins') { Remove-Item -Path 'sm/addons/sourcemod/plugins' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; Copy-Item -Path 'sm/*' -Destination 'left4dead2' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'sm' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'fof/295230'; if (Test-Path 'fof/cfg/sourcemod') { Remove-Item -Path 'sm/cfg/sourcemod' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'fof/addons/sourcemod/configs') { Remove-Item -Path 'sm/addons/sourcemod/configs' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'fof/addons/sourcemod/plugins') { Remove-Item -Path 'sm/addons/sourcemod/plugins' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; Copy-Item -Path 'sm/*' -Destination 'fof' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'sm' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": true
@@ -126,7 +126,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd l4d2/222860 && [ -d left4dead2/cfg/sourcemod ] && rm -rf sm/cfg/sourcemod >/dev/null 2>&1; [ -d left4dead2/addons/sourcemod/configs ] && rm -rf sm/addons/sourcemod/configs >/dev/null 2>&1; [ -d left4dead2/addons/sourcemod/plugins ] && rm -rf sm/addons/sourcemod/plugins >/dev/null 2>&1; \\cp -rf sm/* left4dead2/ >/dev/null 2>&1; rm -rf sm >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd fof/295230 && [ -d fof/cfg/sourcemod ] && rm -rf sm/cfg/sourcemod >/dev/null 2>&1; [ -d fof/addons/sourcemod/configs ] && rm -rf sm/addons/sourcemod/configs >/dev/null 2>&1; [ -d fof/addons/sourcemod/plugins ] && rm -rf sm/addons/sourcemod/plugins >/dev/null 2>&1; \\cp -rf sm/* fof/ >/dev/null 2>&1; rm -rf sm >/dev/null 2>&1\"",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": true
@@ -135,8 +135,8 @@
         "UpdateStageName": "Activate Metamod and SourceMod",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateFile",
-        "UpdateSourceData": "\"Plugin\"\n{\n\t\"file\"\t\"../left4dead2/addons/metamod/bin/server\"\n}",
-        "UpdateSourceArgs": "{{$FullBaseDir}}left4dead2/addons/metamod.vdf",
+        "UpdateSourceData": "\"Plugin\"\n{\n\t\"file\"\t\"../fof/addons/metamod/bin/server\"\n}",
+        "UpdateSourceArgs": "{{$FullBaseDir}}fof/addons/metamod.vdf",
         "OverwriteExistingFiles": true,
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "true"
@@ -146,7 +146,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd l4d2\\222860\\left4dead2\\addons > NUL 2>&1 && del /Q /F metamod.vdf > NUL 2>&1 & exit /b 0",
+        "UpdateSourceArgs": "/C cd fof\\295230\\fof\\addons > NUL 2>&1 && del /Q /F metamod.vdf > NUL 2>&1 & exit /b 0",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "false"
     },
@@ -155,7 +155,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd l4d2/222860/left4dead2/addons >/dev/null 2>&1 && rm -rf metamod.vdf >/dev/null 2>&1; exit 0\"",
+        "UpdateSourceArgs": "-c \"cd fof/295230/fof/addons >/dev/null 2>&1 && rm -rf metamod.vdf >/dev/null 2>&1; exit 0\"",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "false"
     }
