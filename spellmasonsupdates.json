@@ -1,0 +1,152 @@
+[
+	{
+        "UpdateStageName":"Spellmasons Folder Creation",
+        "UpdateSourcePlatform":"All",
+        "UpdateSource":"CreateDirectory",
+        "UpdateSourceArgs":"{{$FullBaseDir}}Spellmasons"
+    },
+    {
+        "UpdateStageName":"Downloading Server",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}}Spellmasons && git pull https://github.com/jdoleary/Spellmasons.git || git clone https://github.com/jdoleary/Spellmasons.git {{$FullBaseDir}}Spellmasons'",
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"Latest",
+        "SkipOnFailure":false
+    },
+	{
+        "UpdateStageName":"Downloading Server",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd {{$FullBaseDir}}Spellmasons && git pull https://github.com/jdoleary/Spellmasons.git && git reset --hard {{CustomVersion}} || git clone https://github.com/jdoleary/Spellmasons.git {{$FullBaseDir}}Spellmasons -b {{CustomVersion}}'",
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"Manual",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Downloading Server",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd {{$FullBaseDir}}Spellmasons && git pull https://github.com/jdoleary/Spellmasons.git || git clone https://github.com/jdoleary/Spellmasons.git {{$FullBaseDir}}Spellmasons",
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"Latest",
+        "SkipOnFailure":false
+    },
+	{
+        "UpdateStageName":"Downloading Server",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd {{$FullBaseDir}}Spellmasons && git pull https://github.com/jdoleary/Spellmasons.git && git reset --hard {{CustomVersion}} || git clone https://github.com/jdoleary/Spellmasons.git {{$FullBaseDir}}Spellmasons -b {{CustomVersion}}",
+        "UpdateSourceConditionSetting":"ServerVersion",
+        "UpdateSourceConditionValue":"Manual",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Node.js Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"x86_64",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://nodejs.org/download/release/v20.16.0/node-v20.16.0-linux-x64.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceConditionSetting":"DisableNodeDownload",
+        "UpdateSourceConditionValue":"false"
+    },
+    {
+        "UpdateStageName":"Node.js Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"x86_64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" >/dev/null 2>&1 && tar xfv node-v20.16.0-linux-x64.tar.gz > {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && mv -v node-v20.16.0-linux-x64 node >> {{$FullBaseDir}}AMPSetupLog.txt 2>&1 && rm node-v20.16.0-linux-x64.tar.gz'",
+        "UpdateSourceConditionSetting":"DisableNodeDownload",
+        "UpdateSourceConditionValue":"false",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Node.js Download",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://nodejs.org/download/release/v20.16.0/node-v20.16.0-linux-arm64.tar.gz",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UpdateSourceConditionSetting":"DisableNodeDownload",
+        "UpdateSourceConditionValue":"false"
+    },
+    {
+        "UpdateStageName":"Node.js Extract",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSourceArch":"aarch64",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'cd \"{{$FullBaseDir}}\" && rm -Rf \"{{$FullBaseDir}}node/\" >/dev/null 2>&1 && tar xfv node-v20.16.0-linux-arm64.tar.gz && mv -v node-v20.16.0-linux-arm64 node && rm node-v20.16.0-linux-arm64.tar.gz'",
+        "UpdateSourceConditionSetting":"DisableNodeDownload",
+        "UpdateSourceConditionValue":"false",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Node.js Download",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"FetchURL",
+        "UpdateSourceData":"https://nodejs.org/download/release/v20.16.0/node-v20.16.0-win-x64.zip",
+        "UpdateSourceTarget":"{{$FullBaseDir}}",
+        "UnzipUpdateSource":true,
+        "OverwriteExistingFiles":true,
+        "DeleteAfterExtract":true,
+        "UpdateSourceConditionSetting":"DisableNodeDownload",
+        "UpdateSourceConditionValue":"false"
+    },
+    {
+        "UpdateStageName":"Node.js Extract",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C cd \"{{$FullBaseDir}}\" & rmdir /S /Q \"{{$FullBaseDir}}node/\" > NUL 2>&1 & rename node-v20.16.0-win-x64 node > {{$FullBaseDir}}AMPSetupLog.txt 2>&1",
+        "UpdateSourceConditionSetting":"DisableNodeDownload",
+        "UpdateSourceConditionValue":"false",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Installing Necessary npm Packages",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd \"{{$FullBaseDir}}Spellmasons/\" && npm i'",
+        "UpdateSourceConditionSetting":"",
+        "UpdateSourceConditionValue":"",
+        "SkipOnFailure":false
+    },
+    {
+        "UpdateStageName":"Installing Necessary npm Packages",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}Spellmasons\\\" && npm i",
+        "UpdateSourceConditionSetting":"",
+        "UpdateSourceConditionValue":"",
+        "SkipOnFailure":false
+    },
+	{
+        "UpdateStageName":"Building Server",
+        "UpdateSourcePlatform":"Linux",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"/bin/bash",
+        "UpdateSourceArgs":"-c 'export PATH=$PATH:{{$FullBaseDir}}node/bin && cd {{$FullBaseDir}}Spellmasons && \"node_modules/.bin/tsc\" --project tsconfig.headless.json --outDir {{$FullBaseDir}}spellmasons-server/ && cp package-lock.json {{$FullBaseDir}}spellmasons-server/ && cp public/spellmasons-mods/build/SpellmasonsMods.cjs.js {{$FullBaseDir}}spellmasons-server/src/SpellmasonsMods.cjs.js && cd {{$FullBaseDir}}spellmasons-server/ && npm i --omit=dev'",
+        "UpdateSourceConditionSetting":"",
+        "UpdateSourceConditionValue":"",
+        "SkipOnFailure":false
+    },
+	{
+        "UpdateStageName":"Buiding Server",
+        "UpdateSourcePlatform":"Windows",
+        "UpdateSource":"Executable",
+        "UpdateSourceData":"cmd.exe",
+        "UpdateSourceArgs":"/C set PATH={{$FullBaseDir}}node;%PATH% && cd \"{{$FullBaseDir}}Spellmasons\\\" && \"node_modules\\.bin\\tsc\" --project tsconfig.headless.json --outDir {{$FullBaseDir}}spellmasons-server\\ && copy package-lock.json {{$FullBaseDir}}spellmasons-server\\ && copy public\\spellmasons-mods\\build\\SpellmasonsMods.cjs.js {{$FullBaseDir}}spellmasons-server\\src\\SpellmasonsMods.cjs.js && cd {{$FullBaseDir}}spellmasons-server\\ && npm i --omit=dev",
+        "UpdateSourceConditionSetting":"",
+        "UpdateSourceConditionValue":"",
+        "SkipOnFailure":false
+    }
+]
