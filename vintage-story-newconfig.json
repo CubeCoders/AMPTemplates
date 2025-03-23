@@ -129,7 +129,7 @@
         "DisplayName": "Server Release Stream",
         "Category": "Updates",
         "Subcategory": "Server Updates:build:-1",
-        "Description": "Sets the server release stream to install. An appropriate Server Version must also be set. NOTE: Update the server after changing this setting!",
+        "Description": "Sets the server release stream from which to install the latest server version (for Stable and Unstable only), unless a specific version is specified under Server Version. Update the server after changing this setting",
         "Keywords": "server,release,stream",
         "FieldName": "ServerReleaseStream",
         "InputType": "enum",
@@ -139,24 +139,23 @@
         "DefaultValue": "stable",
         "EnumValues": {
             "stable": "Stable (default)",
-            "pre": "Preview",
-            "unstable": "Unstable"
+            "unstable": "Unstable",
+            "pre": "Preview"
         }
     },
     {
         "DisplayName": "Server Version",
         "Category": "Updates",
         "Subcategory": "Server Updates:build:-1",
-        "Description": "Sets the server version to install, such as 1.18.5 or 1.19.0-pre.5. Minimum v1.18.8. NOTE: Update the server after changing this setting!",
+        "Description": "Sets the server version to install. Blank = latest version if Stable or Unstable is selected under Server Release Stream. For Preview, a version identifier must be specified. Minimum 1.18.8. Update the server after changing this setting",
         "Keywords": "server,version",
         "FieldName": "ServerVersion",
         "InputType": "text",
         "IsFlagArgument": false,
         "ParamFieldName": "ServerVersion",
         "IncludeInCommandLine": false,
-        "DefaultValue": "1.18.15",
-        "Placeholder": "1.18.15 | 1.19.0-pre.5",
-        "Required": true,
+        "DefaultValue": "",
+        "Placeholder": "1.18.15 | 1.20.0-rc.1 | 1.20.0-pre.13",
         "EnumValues": {}
     },
     {
@@ -180,16 +179,15 @@
         "DisplayName": "Dotnet Version",
         "Category": "Updates",
         "Subcategory": "Server Updates:build:-1",
-        "Description": "Sets the [.NET SDK 7.0 version](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) to install to run the server. NOTE: Update the server after switching versions!",
+        "Description": "Sets the [.NET SDK 7.0 version](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) to install to run the server. Blank = latest. NOTE: Update the server after switching versions!",
         "Keywords": "dotnet,version",
         "FieldName": "DotnetSDKVersion",
         "InputType": "text",
         "IsFlagArgument": false,
         "ParamFieldName": "DotnetSDKVersion",
         "IncludeInCommandLine": false,
-        "DefaultValue": "7.0.410",
+        "DefaultValue": "",
         "Placeholder": "7.0.410",
-        "Required": true,
         "EnumValues": {}
     }
 ]

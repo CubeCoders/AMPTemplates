@@ -8,21 +8,13 @@
         "UpdateSourceVersion": "{{Stream}}"
     },
     {
-        "UpdateStageName": "Create Mod Directory",
+        "UpdateStageName": "Create Mods Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullBaseDir}}Mods"
     },
     {
-        "UpdateStageName": "Settings File Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/{{ConfigFile}}.xml",
-        "UpdateSourceTarget": "./294420",
-        "OverwriteExistingFiles": false
-    },
-    {
-        "UpdateStageName": "UMOD Windows",
+        "UpdateStageName": "Download uMod",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "FetchURLFromJQ",
         "UpdateSourceData": "https://api.github.com/repos/OxideMod/Oxide.SevenDaysToDie/releases/latest",
@@ -35,7 +27,7 @@
         "DeleteAfterExtract": true
     },
     {
-        "UpdateStageName": "UMOD Linux",
+        "UpdateStageName": "Download uMod",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "FetchURLFromJQ",
         "UpdateSourceData": "https://api.github.com/repos/OxideMod/Oxide.SevenDaysToDie/releases/latest",
@@ -56,8 +48,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "UpdateSourceConditionSetting": "ConfigFile",
-        "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-stable",
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-EACEnabled=false -RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} ",
         "DeleteAfterExtract": true
     },
     {
@@ -69,8 +61,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "UpdateSourceConditionSetting": "ConfigFile",
-        "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-experimental",
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} -EACEnabled=false ",
         "DeleteAfterExtract": true
     },
     {
@@ -79,8 +71,8 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
         "UpdateSourceArgs": "/C move seven-days-to-die\\294420\\UndeadLegacyStable* seven-days-to-die\\294420\\UndeadLegacyStable && xcopy /E /Y /I seven-days-to-die\\294420\\UndeadLegacyStable\\* seven-days-to-die\\294420\\ && rmdir /Q /S seven-days-to-die\\294420\\UndeadLegacyStable",
-        "UpdateSourceConditionSetting": "ConfigFile",
-        "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-stable",
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-EACEnabled=false -RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} ",
         "SkipOnFailure": false
     },
     {
@@ -89,8 +81,8 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cp -rf ./seven-days-to-die/294420/UndeadLegacyStable*/* ./seven-days-to-die/294420/ && rm -rf ./seven-days-to-die/294420/UndeadLegacyStable*/\"",
-        "UpdateSourceConditionSetting": "ConfigFile",
-        "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-stable",
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-EACEnabled=false -RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} ",
         "SkipOnFailure": false
     },
     {
@@ -99,8 +91,8 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
         "UpdateSourceArgs": "/C move seven-days-to-die\\294420\\UndeadLegacyExperimental* seven-days-to-die\\294420\\UndeadLegacyExperimental && xcopy /E /Y /I seven-days-to-die\\294420\\UndeadLegacyExperimental\\* seven-days-to-die\\294420\\ && rmdir /Q /S seven-days-to-die\\294420\\UndeadLegacyExperimental",
-        "UpdateSourceConditionSetting": "ConfigFile",
-        "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-experimental",
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} -EACEnabled=false ",
         "SkipOnFailure": false
     },
     {
@@ -109,8 +101,8 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cp -rf ./seven-days-to-die/294420/UndeadLegacyExperimental*/* ./seven-days-to-die/294420/ && rm -rf ./seven-days-to-die/294420/UndeadLegacyExperimental*/\"",
-        "UpdateSourceConditionSetting": "ConfigFile",
-        "UpdateSourceConditionValue": "seven-days-settings-undead-legacy-experimental",
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} -EACEnabled=false ",
         "SkipOnFailure": false
     },
     {
@@ -122,9 +114,9 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "UpdateSourceConditionSetting": "DarknessFalls",
-        "UpdateSourceConditionValue": "A20",
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-EACEnabled=false "
     },
     {
         "UpdateStageName": "Darkness Falls Copy",
@@ -132,8 +124,8 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
         "UpdateSourceArgs": "/C xcopy /E /Y /I seven-days-to-die\\294420\\darkness-falls-a20-main\\* seven-days-to-die\\294420\\ && rmdir /Q /S seven-days-to-die\\294420\\darkness-falls-a20-main",
-        "UpdateSourceConditionSetting": "DarknessFalls",
-        "UpdateSourceConditionValue": "A20",
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-EACEnabled=false ",
         "SkipOnFailure": false
     },
     {
@@ -142,8 +134,8 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cp -rf ./seven-days-to-die/294420/darkness-falls-a20-main/* ./seven-days-to-die/294420/ && rm -rf ./seven-days-to-die/294420/darkness-falls-a20-main*/\"",
-        "UpdateSourceConditionSetting": "DarknessFalls",
-        "UpdateSourceConditionValue": "A20",
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-EACEnabled=false ",
         "SkipOnFailure": false
     },
     {
@@ -156,7 +148,7 @@
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
-        "UpdateSourceConditionSetting": "DarknessFalls",
-        "UpdateSourceConditionValue": "A21"
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-EACEnabled=false  "
     }
 ]

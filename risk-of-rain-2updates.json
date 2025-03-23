@@ -25,17 +25,36 @@
         "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName": "Download BepInEx From Thunderstore",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://gcdn.thunderstore.io/live/repository/packages/bbepis-BepInExPack-{{BepInExVersion}}.zip",
-        "UpdateSourceArgs": "bbepis-BepInExPack-{{BepInExVersion}}.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateStageName": "BepInEx Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"BepInExVersion=\\\"{{BepInExVersion}}\\\" && if [[ -z \\\"$BepInExVersion\\\" ]]; then BepInExVersion=$(wget -qO- https://thunderstore.io/api/v1/package-metrics/bbepis/BepInExPack | jq -r \\\".latest_version\\\"); fi && if [[ ! \\\"$BepInExVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid BepInEx version format specified\\\" && exit 1; fi && wget -qO BepInEx.zip https://gcdn.thunderstore.io/live/repository/packages/bbepis-BepInExPack-$BepInExVersion.zip && echo \\\"BepInEx v$BepInExVersion downloaded\\\"\"",
         "UpdateSourceConditionSetting": "BepInExInstall",
         "UpdateSourceConditionValue": "true",
-        "UnzipUpdateSource": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "BepInEx Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $BepInExVersion='{{BepInExVersion}}'; if ([string]::IsNullOrWhiteSpace($BepInExVersion)) { $BepInExVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://thunderstore.io/api/v1/package-metrics/bbepis/BepInExPack).latest_version }; if ($BepInExVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid BepInEx version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://gcdn.thunderstore.io/live/repository/packages/bbepis-BepInExPack-$BepInExVersion.zip -OutFile 'BepInEx.zip'; if ($?) { Write-Output \\\"BepInEx v$BepInExVersion downloaded\\\" }\"",
+        "UpdateSourceConditionSetting": "BepInExInstall",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "BepInEx Extract",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "BepInEx.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "BepInExInstall",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "BepInEx Copy",

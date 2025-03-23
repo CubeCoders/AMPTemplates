@@ -39,23 +39,39 @@
         "UpdateSourceArgs": "{{$FullBaseDir}}dotnet"
     },
     {
-        "UpdateStageName": "Dotnet download Windows",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://dotnetcli.azureedge.net/dotnet/Runtime/{{DotnetVersion}}/dotnet-runtime-{{DotnetVersion}}-win-x64.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}dotnet",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "UpdateStageName": ".NET Runtime Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\" && if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/{{DotnetRelease}}/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi && if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid .NET Runtime version format specified\\\" && exit 1; fi && wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$DotnetVersion/dotnet-runtime-$DotnetVersion-linux-x64.tar.gz && echo \\\".NET Runtime v$DotnetVersion downloaded\\\"\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Dotnet download Linux",
+        "UpdateStageName": ".NET Runtime Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $DotnetVersion='{{DotnetVersion}}'; if ([string]::IsNullOrWhiteSpace($DotnetVersion)) { $DotnetVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/release-metadata/{{DotnetRelease}}/releases.json).\\\"latest-runtime\\\" }; if ($DotnetVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid .NET Runtime version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/Runtime/$DotnetVersion/dotnet-runtime-$DotnetVersion-win-x64.zip -OutFile 'dotnet.zip'; if ($?) { Write-Output \\\".NET Runtime v$DotnetVersion downloaded\\\" }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": ".NET Runtime Extract",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://dotnetcli.azureedge.net/dotnet/Runtime/{{DotnetVersion}}/dotnet-runtime-{{DotnetVersion}}-linux-x64.tar.gz",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "dotnet.tar.gz",
         "UpdateSourceTarget": "{{$FullBaseDir}}dotnet",
-        "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": ".NET Runtime Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "dotnet.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}dotnet",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     }
 ]
