@@ -138,8 +138,9 @@
     {
         "UpdateStageName": "Fika Server Mod Download",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://github.com/project-fika/Fika-Server/releases/download/v{{FikaVersion}}/fika-server.zip",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/project-fika/Fika-Server/releases/tags/v{{FikaVersion}}",
+        "UpdateSourceArgs": "$.assets[0].browser_download_url",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
