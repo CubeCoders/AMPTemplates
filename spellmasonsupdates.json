@@ -1,0 +1,84 @@
+[
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-linux-x64.tar.gz",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "DisableNodeDownload",
+        "UpdateSourceConditionValue": "false"
+    },
+    {
+        "UpdateStageName": "Node.js Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd spellmasons && rm -Rf node/ >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-x64.tar.gz >/dev/null && mv -v node-{{NodeVersion}}-linux-x64 node >/dev/null && rm node-{{NodeVersion}}-linux-x64.tar.gz && echo \\\"Node.js {{NodeVersion}} installed\\\"\"",
+        "UpdateSourceConditionSetting": "DisableNodeDownload",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-linux-arm64.tar.gz",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "DisableNodeDownload",
+        "UpdateSourceConditionValue": "false"
+    },
+    {
+        "UpdateStageName": "Node.js Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd spellmasons && rm -Rf node/ >/dev/null 2>&1 && tar xfv node-{{NodeVersion}}-linux-arm64.tar.gz >/dev/null && mv -v node-{{NodeVersion}}-linux-arm64 node >/dev/null && rm node-{{NodeVersion}}-linux-arm64.tar.gz && echo \\\"Node.js {{NodeVersion}} installed\\\"\"",
+        "UpdateSourceConditionSetting": "DisableNodeDownload",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-win-x64.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "DisableNodeDownload",
+        "UpdateSourceConditionValue": "false"
+    },
+    {
+        "UpdateStageName": "Node.js Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd spellmasons && rmdir /S /Q node >NUL 2>&1 & rename node-{{NodeVersion}}-win-x64 node >NUL && echo Node.js {{NodeVersion}} installed",
+        "UpdateSourceConditionSetting": "DisableNodeDownload",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Spellmasons Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'spellmasons'; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $ServerVersion  = \\\"{{ServerVersion}}\\\"; if ([string]::IsNullOrEmpty(\\\"$ServerVersion\\\")) { $ServerVersion  = (Invoke-RestMethod \\\"https://api.github.com/repos/jdoleary/Spellmasons/tags\\\")[0].name }; if ($ServerVersion -notmatch '^v\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid Spellmasons version format specified\\\"; exit 1; } elseif (-Not (Test-Path server/.git)) { Write-Output \\\"Installing Spellmasons\\\"; git clone https://github.com/jdoleary/Spellmasons.git srv 1> $null; Copy-Item srv/* server/ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Set-Location -Path 'server'; git fetch --tags 1> $null; git checkout --force $ServerVersion 1> $null; if ($?) { $OutputMessage = \\\"Spellmasons ${ServerVersion} installed\\\" } } else { Write-Output \\\"Updating Spellmasons\\\"; Set-Location -Path 'server'; git fetch --tags 1> $null; git checkout --force $ServerVersion 1> $null; if ($?) { $OutputMessage = \\\"Spellmasons updated to ${ServerVersion}\\\" } }; if ($?) { $env:PATH='{{$FullRootDir}}node;' + $env:PATH; & node ../node/node_modules/npm/bin/npm-cli.js install 1> $null; & \\\"$env:ProgramFiles\\Git\\bin\\bash.exe\\\" -c \\\"npm run headless-build-only >/dev/null\\\" }; if ($?) { Write-Output \\\"$OutputMessage\\\" }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Spellmasons Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd spellmasons && rm -rf srv >/dev/null 2>&1; ServerVersion=\\\"{{ServerVersion}}\\\" && [[ -z \\\"$ServerVersion\\\" ]] && ServerVersion=$(wget -qO- \\\"https://api.github.com/repos/jdoleary/Spellmasons/tags\\\" | jq -r \\\".[0].name\\\"); if [[ ! \\\"$ServerVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Spellmasons version format specified\\\" && exit 1; elif [[ ! -d server/.git ]] then echo \\\"Installing Spellmasons\\\"; git clone https://github.com/jdoleary/Spellmasons.git srv >/dev/null && cp -r srv/. server/ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && cd server && git fetch --tags >/dev/null && git checkout --force $ServerVersion >/dev/null && OutputMessage=\\\"Spellmasons ${ServerVersion} installed\\\"; else echo \\\"Updating Spellmasons\\\" && cd server && git fetch --tags >/dev/null && git checkout $ServerVersion --force >/dev/null && OutputMessage=\\\"Spellmasons updated to ${ServerVersion}\\\"; fi && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm install >/dev/null && npm run headless-build-only >/dev/null && echo \\\"$OutputMessage\\\"\"",
+        "SkipOnFailure": false
+    }
+]
