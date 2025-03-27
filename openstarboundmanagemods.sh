@@ -2,7 +2,7 @@
 
 cd ./openstarbound/server/linux/mods
 
-workshopDir="../../211820/steamapps/workshop/content/211820"
+workshopDir="../../../211820/steamapps/workshop/content/211820"
 
 if [ -d "$workshopDir" ]; then
   echo "Linking mods"

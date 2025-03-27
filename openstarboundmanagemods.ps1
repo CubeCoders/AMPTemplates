@@ -1,6 +1,6 @@
 Set-Location -Path "./openstarbound/server/win/mods"
 
-$workshopDir = "../../211820/steamapps/workshop/content/211820"
+$workshopDir = "../../../211820/steamapps/workshop/content/211820"
 
 if (Test-Path $workshopDir) {
   Write-Output "Linking mods"
