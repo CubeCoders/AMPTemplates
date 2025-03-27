@@ -11,11 +11,6 @@ if (Test-Path $workshopDir) {
 
     if (Test-Path $pakFile) {
       $copyPath = "./$modID.pak"
-
-      if (Test-Path -LiteralPath $copyPath) {
-        Remove-Item -LiteralPath $copyPath -Force
-      }
-
       Copy-Item -Path $pakFile -Destination $copyPath -Force | Out-Null
     } else {
       Write-Output "No contents.pak in $modID, skipping"
