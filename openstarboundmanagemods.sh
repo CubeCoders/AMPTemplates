@@ -10,6 +10,8 @@ if [ -d "$workshopDir" ]; then
   find "$workshopDir" -maxdepth 1 -mindepth 1 -type d | while read -r modDir; do
     modID=$(basename "$modDir")
     pakFile="$modDir/contents.pak"
+    echo "modID: $modID"
+    echo "pakFile: $pakFile"
 
     if [ -f "$pakFile" ]; then
       ln -sf "$pakFile" "./$modID.pak"
