@@ -1,4 +1,4 @@
-Set-Location -Path "./openstarbound/server/mods"
+Set-Location -Path "./openstarbound/server/win/mods"
 
 $workshopDir = "../../211820/steamapps/workshop/content/211820"
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ./openstarbound/server/mods
+cd ./openstarbound/server/linux/mods
 
 workshopDir="../../211820/steamapps/workshop/content/211820"
 
