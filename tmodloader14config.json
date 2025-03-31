@@ -117,31 +117,49 @@
         "DefaultValue": "GitHub"
     },
     {
-        "DisplayName":"Server Branch",
+        "DisplayName": "Server Branch",
         "Category": "Updates",
         "Subcategory": "Server Updates:build:-1",
-        "Description":"Sets the beta branch to install. NOTE: Update Source MUST be Steam. Press update AFTER changing this setting.",
-        "Keywords":"branch,depot,beta,steam,version",
-        "FieldName":"BetaBranch",
-        "InputType":"text",
-        "IsFlagArgument":false,
-        "ParamFieldName":"BetaBranch",
-        "IncludeInCommandLine":false,
-        "DefaultValue":"public",
+        "Description": "Sets the beta branch to install. NOTE: Update Source MUST be Steam. Press update AFTER changing this setting.",
+        "Keywords": "branch,depot,beta,steam,version",
+        "FieldName": "BetaBranch",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "BetaBranch",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "public",
         "placeholder": "1.4.4-preview"
     },
     {
-        "DisplayName":"Dotnet Version",
+        "DisplayName": "Dotnet Release Stream",
         "Category": "Updates",
         "Subcategory": "Server Updates:build:-1",
-        "Description":"Sets the ASP.NET Core [8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) or [6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) version to install, as approopriate to the server version. Update the server after changing this setting",
-        "Keywords":"dotnet,version",
-        "FieldName":"DotnetVersion",
-        "InputType":"text",
-        "ParamFieldName":"DotnetVersion",
-        "DefaultValue":"8.0.4",
-        "Placeholder":"8.0.4",
-        "Required":true
+        "Description": "Sets the .NET release stream from which to install the latest .NET Runtime version, as appropriate to the server version, unless a specific version is specified under Dotnet Version. Update the server after changing this setting",
+        "Keywords": "dotnet,release,stream",
+        "FieldName": "DotnetRelease",
+        "InputType": "enum",
+        "ParamFieldName": "DotnetRelease",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "8.0",
+        "EnumValues": {
+            "8.0": "8.0 (default)",
+            "6.0": "6.0"
+        }
+    },
+    {
+        "DisplayName": "Dotnet Version",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Sets the .NET Runtime [8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) or [6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) version to install, as appropriate to the server version. Blank = latest version for the release stream specified under Dotnet Release Stream. Update the server after changing this setting",
+        "Keywords": "dotnet,version",
+        "FieldName": "DotnetVersion",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "DotnetVersion",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "8.0.4",
+        "EnumValues": {}
     },
     {
         "DisplayName": "World Path",
@@ -195,7 +213,7 @@
         "InputType": "number",
         "IncludeInCommandLine": false,
         "DefaultValue": "8",
-        "MinValue":"1"
+        "MinValue": "1"
     },
     {
         "DisplayName": "Password",

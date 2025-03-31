@@ -1,87 +1,91 @@
 [
     {
-        "UpdateStageName":"User Data Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}user-data"
+        "UpdateStageName": "User Data Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}user-data"
     },
     {
-        "UpdateStageName":"RCT2 Game Files Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}rct2game"
+        "UpdateStageName": "RCT2 Game Files Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}rct2game"
     },
     {
-        "UpdateStageName":"RCT1 Game Files Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}rct1game"
+        "UpdateStageName": "RCT1 Game Files Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}rct1game"
     },
     {
-        "UpdateStageName":"OpenRCT2 Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceData":"OpenRCT2-{{ReleaseVersion}}-windows-portable-x64.zip",
-        "UpdateSourceArgs":"OpenRCT2/OpenRCT2",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "OpenRCT2 Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd openrct2/server && ReleaseVersion={{ReleaseVersion}} && [[ -z \\\"$ReleaseVersion\\\" ]] && { wget -qO OpenRCT2.AppImage $(wget -qO- https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest | grep browser_download_url | cut -d\\\\\\\" -f4 | grep linux-x86_64.AppImage) && echo \\\"Latest OpenRCT2 downloaded\\\"; } || { wget -qO OpenRCT2.AppImage $(wget -qO- https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/tags/v$ReleaseVersion | grep browser_download_url | cut -d\\\\\\\" -f4 | grep linux-x86_64.AppImage) && echo \\\"OpenRCT2 v$ReleaseVersion downloaded\\\"; }\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"OpenRCT2 Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceData":"OpenRCT2-{{ReleaseVersion}}-linux-x86_64.AppImage",
-        "UpdateSourceArgs":"OpenRCT2/OpenRCT2",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":false,
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "OpenRCT2 Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $ReleaseVersion='{{ReleaseVersion}}'; if ([string]::IsNullOrWhiteSpace($ReleaseVersion)) { Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest').assets | Where-Object { $_.browser_download_url -like '*windows-portable-x64.zip' }).browser_download_url -OutFile 'OpenRCT2.zip'; if ($?) { Write-Output \\\"Latest OpenRCT2 downloaded\\\" } } else { Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri \"https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/tags/v$ReleaseVersion\").assets | Where-Object { $_.browser_download_url -like '*windows-portable-x64.zip' }).browser_download_url -OutFile 'OpenRCT2.zip'; if ($?) { Write-Output \\\"OpenRCT2 v$ReleaseVersion downloaded\\\" } }\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"OpenRCT2 Extract",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd ./openrct2/server/ && chmod +x OpenRCT2-{{ReleaseVersion}}-linux-x86_64.AppImage && ./OpenRCT2-{{ReleaseVersion}}-linux-x86_64.AppImage --appimage-extract && rm -f OpenRCT2-{{ReleaseVersion}}-linux-x86_64.AppImage\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "OpenRCT2 Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ./openrct2/server && chmod +x OpenRCT2.AppImage && ./OpenRCT2.AppImage --appimage-extract >/dev/null && rm -f OpenRCT2.AppImage\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"RCT2 Game Files Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"285330",
-        "UpdateSourceTarget":"{{$FullBaseDir}}rct2game",
-        "ForceDownloadPlatform":"Windows",
-        "UpdateSourceConditionSetting":"DisableRCT2Download",
-        "UpdateSourceConditionValue":"false"
+        "UpdateStageName": "OpenRCT2 Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "OpenRCT2.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
     },
     {
-        "UpdateStageName":"RCT1 Game Files Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"285310",
-        "UpdateSourceTarget":"{{$FullBaseDir}}rct1game",
-        "ForceDownloadPlatform":"Windows",
-        "UpdateSourceConditionSetting":"DisableRCT1Download",
-        "UpdateSourceConditionValue":"false"
+        "UpdateStageName": "RCT2 Game Files Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "285330",
+        "UpdateSourceTarget": "{{$FullBaseDir}}rct2game",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "DisableRCT2Download",
+        "UpdateSourceConditionValue": "false"
     },
     {
-        "UpdateStageName":"Config.ini File Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/openrct2config.ini",
-        "UpdateSourceArgs":"config.ini",
-        "UpdateSourceTarget":"{{$FullBaseDir}}user-data",
-        "OverwriteExistingFiles":false
+        "UpdateStageName": "RCT1 Game Files Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "285310",
+        "UpdateSourceTarget": "{{$FullBaseDir}}rct1game",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "DisableRCT1Download",
+        "UpdateSourceConditionValue": "false"
     },
     {
-        "UpdateStageName":"Groups.json File Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/openrct2groups.json",
-        "UpdateSourceArgs":"groups.json",
-        "UpdateSourceTarget":"{{$FullBaseDir}}user-data",
-        "OverwriteExistingFiles":false
+        "UpdateStageName": "Config.ini File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/openrct2config.ini",
+        "UpdateSourceArgs": "config.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}user-data",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Groups.json File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/openrct2groups.json",
+        "UpdateSourceArgs": "groups.json",
+        "UpdateSourceTarget": "{{$FullBaseDir}}user-data",
+        "OverwriteExistingFiles": false
     }
 ]

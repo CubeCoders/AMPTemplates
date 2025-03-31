@@ -1,128 +1,128 @@
 [
     {
-        "UpdateStageName":"7-Zip Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip"
+        "UpdateStageName": "7-Zip Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip"
     },
     {
-        "UpdateStageName":"7-Zip Installer Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://7-zip.org/a/7z2407-x64.exe",
-        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles":true,
-        "OneShot":true
+        "UpdateStageName": "7-Zip Installer Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://7-zip.org/a/7z2407-x64.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
     },
     {
-        "UpdateStageName":"7-Zip Console Tool Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.7-zip.org/a/7zr.exe",
-        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles":true,
-        "OneShot":true
+        "UpdateStageName": "7-Zip Console Tool Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.7-zip.org/a/7zr.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
     },
     {
-        "UpdateStageName":"7-Zip Installation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd mxbikes\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
-        "SkipOnFailure":true,
-        "OneShot":true
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd mxbikes\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
+        "SkipOnFailure": true,
+        "OneShot": true
     },
     {
-        "UpdateStageName":"7-Zip Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.7-zip.org/a/7z2301-linux-x64.tar.xz",
-        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles":true,
-        "OneShot":true
+        "UpdateStageName": "7-Zip Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.7-zip.org/a/7z2301-linux-x64.tar.xz",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
     },
     {
-        "UpdateStageName":"7-Zip Installation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd ./mxbikes/7-Zip && tar -xf 7z2301-linux-x64.tar.xz >/dev/null 2>&1 && rm -f 7z2301-linux-x64.tar.xz\"",
-        "SkipOnFailure":false,
-        "OneShot":true
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ./mxbikes/7-Zip && tar -xf 7z2301-linux-x64.tar.xz >/dev/null 2>&1 && rm -f 7z2301-linux-x64.tar.xz\"",
+        "SkipOnFailure": false,
+        "OneShot": true
     },
     {
-        "UpdateStageName":"MX Bikes Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd mxbikes/server && CURRENT_VERSION=$(wget -qO- \\\"https://betas.mxb-mods.com/\\\" | grep \\\"Current\\s*version:\\s*beta\\\" | sed \\\"s/.*Current\\s*version:\\s*beta\\([0-9a-zA-Z]\\+\\).*/\\1/\\\") && wget -qO mxbikes-beta.exe \\\"https://betas.mxb-mods.com/files/mxbikes-beta${CURRENT_VERSION}.exe\\\"\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "MX Bikes Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd mxbikes/server && DOWNLOAD_LINK=$(wget -qO- \\\"https://www.mx-bikes.com/?page=downloads\\\" | grep -o \\\"downloads/mxbikes[^\\\\\\\"]*.exe\\\" | head -n 1) && wget -qO mxbikes-beta.exe \\\"https://www.mx-bikes.com/$DOWNLOAD_LINK\\\"\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"MX Bikes Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'mxbikes/server'; (Invoke-RestMethod -UseBasicParsing -Uri 'https://betas.mxb-mods.com/') -match 'Current\\s*version:\\s*beta(?<Version>[0-9a-zA-Z]+)' | Out-Null; $CURRENT_VERSION=$matches['Version']; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://betas.mxb-mods.com/files/mxbikes-beta${CURRENT_VERSION}.exe\\\" -OutFile 'mxbikes-beta.exe'\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "MX Bikes Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'mxbikes/server'; $DOWNLOAD_LINK=((Invoke-WebRequest -UseBasicParsing -Uri 'https://www.mx-bikes.com/?page=downloads').Links | ? href -match 'downloads/mxbikes.*\\.exe' | select -ExpandProperty href); Invoke-WebRequest -UseBasicParsing -Uri \\\"https://www.mx-bikes.com/$DOWNLOAD_LINK\\\" -OutFile 'mxbikes-beta.exe'\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"MX Bikes Installation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd mxbikes\\server && ..\\7-Zip\\7z.exe x -y mxbikes-beta.exe > NUL 2>&1 && del /Q /F mxbikes-beta.exe",
-        "SkipOnFailure":false
+        "UpdateStageName": "MX Bikes Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd mxbikes\\server && ..\\7-Zip\\7z.exe x -y mxbikes-beta.exe > NUL 2>&1 && del /Q /F mxbikes-beta.exe",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"MX Bikes Installation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd ./mxbikes/server && ../7-Zip/7zzs x -y mxbikes-beta.exe >/dev/null 2>&1 && rm -f mxbikes-beta.exe\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "MX Bikes Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ./mxbikes/server && ../7-Zip/7zzs x -y mxbikes-beta.exe >/dev/null 2>&1 && rm -f mxbikes-beta.exe\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Results Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}results"
+        "UpdateStageName": "Results Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}results"
     },
     {
-        "UpdateStageName":"Replays Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}replays"
+        "UpdateStageName": "Replays Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}replays"
     },
     {
-        "UpdateStageName":"Config File Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/mxbikesdedicated.ini",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UpdateSourceArgs":"dedicated.ini",
-        "OverwriteExistingFiles":false
+        "UpdateStageName": "Config File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/mxbikesdedicated.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "dedicated.ini",
+        "OverwriteExistingFiles": false
     },
     {
-        "UpdateStageName":"Whitelist.txt Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateFile",
-        "UpdateSourceData":"",
-        "UpdateSourceArgs":"{{$FullBaseDir}}whitelist.txt"
+        "UpdateStageName": "Whitelist.txt Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "",
+        "UpdateSourceArgs": "{{$FullBaseDir}}whitelist.txt"
     },
     {
-        "UpdateStageName":"Blacklist.txt Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateFile",
-        "UpdateSourceData":"",
-        "UpdateSourceArgs":"{{$FullBaseDir}}blacklist.txt"
+        "UpdateStageName": "Blacklist.txt Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "",
+        "UpdateSourceArgs": "{{$FullBaseDir}}blacklist.txt"
     },
     {
-        "UpdateStageName":"Initialise Wine",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
     }
 ]

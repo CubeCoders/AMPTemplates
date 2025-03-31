@@ -1,35 +1,52 @@
 [
     {
-        "UpdateStageName":"SteamCMD Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"223350",
-        "UpdateSourceArgs":"221100"
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "223350",
+        "UpdateSourceArgs": "221100"
     },
     {
-        "UpdateStageName":"Config Template Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "OverwriteExistingFiles":false,
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-originalserver.cfg",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UpdateSourceArgs":"AMP_serverDZ.cfg"
+        "UpdateStageName": "Config Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-original1-6server.cfg",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UpdateSourceArgs": "AMP_serverDZ.cfg"
     },
     {
-        "UpdateStageName":"Modscript Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-originalconvertmods.sh",
-        "UpdateSourceArgs":"convertmods.sh",
-        "UpdateSourceTarget":"{{$FullInstanceDir}}",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "Modscript Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-originalmanagemods.sh",
+        "UpdateSourceArgs": "managemods.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName":"Convert Mods",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"./convertmods.sh",
-        "SkipOnFailure":true
+        "UpdateStageName": "Manage Mods",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "./managemods.sh {{ModDirFormat}}",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Modscript Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/dayz-originalmanagemods.ps1",
+        "UpdateSourceArgs": "managemods.ps1",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Manage Mods",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -File \"managemods.ps1\" \"{{ModDirFormat}}\"",
+        "SkipOnFailure": true
     }
 ]

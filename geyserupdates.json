@@ -1,97 +1,97 @@
 [
     {
-        "UpdateStageName":"Server Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/standalone",
-        "UpdateSourceArgs":"Geyser.jar",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/standalone",
+        "UpdateSourceArgs": "Geyser.jar",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName":"Java Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://api.adoptium.net/v3/binary/latest/{{JavaVersion}}/ga/windows/x64/jdk/hotspot/normal/eclipse",
-        "UpdateSourceArgs":"java.zip",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://api.adoptium.net/v3/binary/latest/{{JavaVersion}}/ga/windows/x64/jdk/hotspot/normal/eclipse",
+        "UpdateSourceArgs": "java.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
     },
     {
-        "UpdateStageName":"Remove Old Java Directory",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C RD /S /Q .\\geyser\\java > NUL 2>&1",
-        "SkipOnFailure":true
+        "UpdateStageName": "Remove Old Java Directory",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C RD /S /Q .\\geyser\\java > NUL 2>&1",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"Java Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://api.adoptium.net/v3/binary/latest/{{JavaVersion}}/ga/linux/x64/jdk/hotspot/normal/eclipse",
-        "UpdateSourceArgs":"java.tar.gz",
-        "UpdateSourceArch":"x86_64",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://api.adoptium.net/v3/binary/latest/{{JavaVersion}}/ga/linux/x64/jdk/hotspot/normal/eclipse",
+        "UpdateSourceArgs": "java.tar.gz",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
     },
     {
-        "UpdateStageName":"Java Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://api.adoptium.net/v3/binary/latest/{{JavaVersion}}/ga/linux/aarch64/jdk/hotspot/normal/eclipse",
-        "UpdateSourceArgs":"java.tar.gz",
-        "UpdateSourceArch":"aarch64",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://api.adoptium.net/v3/binary/latest/{{JavaVersion}}/ga/linux/aarch64/jdk/hotspot/normal/eclipse",
+        "UpdateSourceArgs": "java.tar.gz",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
     },
     {
-        "UpdateStageName":"Pause Update Stages",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Pause",
-        "UpdateSourceArgs":"1"
+        "UpdateStageName": "Pause Update Stages",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Pause",
+        "UpdateSourceArgs": "1"
     },
     {
-        "UpdateStageName":"Rename New Java Directory",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C move .\\geyser\\jdk* .\\geyser\\java > NUL 2>&1",
-        "SkipOnFailure":false
+        "UpdateStageName": "Rename New Java Directory",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C move .\\geyser\\jdk* .\\geyser\\java > NUL 2>&1",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Replace Java Directory",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"rm -rf ./geyser/java >/dev/null 2>&1; mv ./geyser/jdk* ./geyser/java >/dev/null 2>&1; chmod +x ./geyser/java/bin/java\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "Replace Java Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf ./geyser/java >/dev/null 2>&1; mv ./geyser/jdk* ./geyser/java >/dev/null 2>&1; chmod +x ./geyser/java/bin/java\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Pause Update Stages",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"Pause",
-        "UpdateSourceArgs":"2"
+        "UpdateStageName": "Pause Update Stages",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "Pause",
+        "UpdateSourceArgs": "2"
     },
     {
-        "UpdateStageName":"Start Server",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"StartApplication"
+        "UpdateStageName": "Start Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "StartApplication"
     },
     {
-        "UpdateStageName":"Wait For Server Start",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"WaitForStartupComplete"
+        "UpdateStageName": "Wait For Server Start",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "WaitForStartupComplete"
     },
     {
-        "UpdateStageName":"Stop Server",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"ShutdownApplication"
+        "UpdateStageName": "Stop Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ShutdownApplication"
     }
 ]

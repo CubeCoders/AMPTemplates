@@ -1,126 +1,158 @@
 [
     {
-        "UpdateStageName":"SteamCMD Server Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"740",
-        "UpdateSourceArgs":"730"
+        "UpdateStageName": "SteamCMD Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "740",
+        "UpdateSourceArgs": "730"
     },
     {
-        "UpdateStageName":"Remove Old Library",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"rm -rf csgo/740/bin/libgcc_s.so.1 >/dev/null 2>&1\"",
-        "SkipOnFailure":true
+        "UpdateStageName": "Remove Old Library",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf csgo/740/bin/libgcc_s.so.1 >/dev/null 2>&1\"",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"Server.cfg Template File Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/counter-strike-goserver.cfg",
-        "UpdateSourceArgs":"AMP_server.cfg",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "Server.cfg Template File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/counter-strike-goserver.cfg",
+        "UpdateSourceArgs": "AMP_server.cfg",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName":"Metamod Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://mms.alliedmods.net/mmsdrop/{{ModBranch}}/mmsource-{{ModBranch}}.0-git{{MetamodBuild}}-windows.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}csgo",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "Metamod Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"MetamodBuild=\\\"{{MetamodBuild}}\\\" && ModBranch=\\\"{{ModBranch}}\\\" && if [[ -z \\\"$MetamodBuild\\\" ]]; then LatestMetamodFile=$(wget -qO- https://mms.alliedmods.net/mmsdrop/$ModBranch/mmsource-latest-linux) && wget -qO metamod.tar.gz https://mms.alliedmods.net/mmsdrop/$ModBranch/$LatestMetamodFile && echo \\\"Latest Metamod $ModBranch build downloaded\\\"; elif [[ ! \\\"$MetamodBuild\\\" =~ ^[0-9]+$ ]]; then echo \\\"Invalid Metamod build version format specified\\\" && exit 1; else wget -qO metamod.tar.gz https://mms.alliedmods.net/mmsdrop/$ModBranch/mmsource-$ModBranch.0-git$MetamodBuild-linux.tar.gz && echo \\\"Metamod $ModBranch build $MetamodBuild downloaded\\\"; fi\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Metamod Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://mms.alliedmods.net/mmsdrop/{{ModBranch}}/mmsource-{{ModBranch}}.0-git{{MetamodBuild}}-linux.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}csgo",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "Metamod Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $MetamodBuild='{{MetamodBuild}}'; $ModBranch='{{ModBranch}}'; if ([string]::IsNullOrWhiteSpace($MetamodBuild)) { $LatestMetamodFile=(Invoke-RestMethod -UseBasicParsing -Uri https://mms.alliedmods.net/mmsdrop/$ModBranch/mmsource-latest-windows); Invoke-WebRequest -UseBasicParsing -Uri https://mms.alliedmods.net/mmsdrop/$ModBranch/$LatestMetamodFile -OutFile 'metamod.zip'; if ($?) { Write-Output \\\"Latest Metamod $ModBranch build downloaded\\\"; } } elseif ($MetamodBuild -notmatch '^\\d+$') { Write-Output \\\"Invalid Metamod build version format specified\\\"; exit 1; } else { Invoke-WebRequest -UseBasicParsing -Uri https://mms.alliedmods.net/mmsdrop/$ModBranch/mmsource-$ModBranch.0-git$MetamodBuild-windows.zip -OutFile 'metamod.zip'; if ($?) { Write-Output \\\"Metamod $ModBranch build $MetamodBuild downloaded\\\"; } }\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"SourceMod Download Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}sm"
+        "UpdateStageName": "Metamod Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "metamod.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}csgo",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"SourceMod Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://sm.alliedmods.net/smdrop/{{ModBranch}}/sourcemod-{{ModBranch}}.0-git{{SourcemodBuild}}-windows.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}sm",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "Metamod Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "metamod.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}csgo",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"SourceMod Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://sm.alliedmods.net/smdrop/{{ModBranch}}/sourcemod-{{ModBranch}}.0-git{{SourcemodBuild}}-linux.tar.gz",
-        "UpdateSourceTarget":"{{$FullBaseDir}}sm",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "SourceMod Download Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}sm"
     },
     {
-        "UpdateStageName":"SourceMod Installation",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"powershell.exe",
-        "UpdateSourceArgs":"-NoProfile -Command \"Set-Location -Path 'csgo/740'; if (Test-Path 'csgo/cfg/sourcemod') { Remove-Item -Path 'sm/cfg/sourcemod' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'csgo/addons/sourcemod/configs') { Remove-Item -Path 'sm/addons/sourcemod/configs' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'csgo/addons/sourcemod/plugins') { Remove-Item -Path 'sm/addons/sourcemod/plugins' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; Copy-Item -Path 'sm/*' -Destination 'csgo' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'sm' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
-        "SkipOnFailure":true
+        "UpdateStageName": "SourceMod Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"SourceModVersion=\\\"{{SourceModVersion}}\\\" && SourceModBranch=\\\"{{SourceModBranch}}\\\" && if [[ -z \\\"$SourceModVersion\\\" ]]; then LatestSourceModFile=$(wget -qO- https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-latest-linux) && wget -qO sourcemod.tar.gz https://sm.alliedmods.net/smdrop/$SourceModBranch/$LatestSourceModFile && echo \\\"Latest SourceMod $SourceModBranch build downloaded\\\"; elif [[ ! \\\"$SourceModVersion\\\" =~ ^[0-9]+$ ]]; then echo \\\"Invalid SourceMod build version format specified\\\" && exit 1; else wget -qO sourcemod.tar.gz https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-$SourceModBranch.0-git$SourceModVersion-linux.tar.gz && echo \\\"SourceMod $SourceModBranch build $SourceModVersion downloaded\\\"; fi\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"SourceMod Installation",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd csgo/740 && [ -d csgo/cfg/sourcemod ] && rm -rf sm/cfg/sourcemod >/dev/null 2>&1; [ -d csgo/addons/sourcemod/configs ] && rm -rf sm/addons/sourcemod/configs >/dev/null 2>&1; [ -d csgo/addons/sourcemod/plugins ] && rm -rf sm/addons/sourcemod/plugins >/dev/null 2>&1; \\cp -rf sm/* csgo/ >/dev/null 2>&1; rm -rf sm >/dev/null 2>&1\"",
-        "SkipOnFailure":true
+        "UpdateStageName": "SourceMod Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $SourceModVersion='{{SourceModVersion}}'; $SourceModBranch='{{SourceModBranch}}'; if ([string]::IsNullOrWhiteSpace($SourceModVersion)) { $LatestSourceModFile=(Invoke-RestMethod -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-latest-windows); Invoke-WebRequest -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/$LatestSourceModFile -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"Latest SourceMod $SourceModBranch build downloaded\\\"; } } elseif ($SourceModVersion -notmatch '^\\d+$') { Write-Output \\\"Invalid SourceMod build version format specified\\\"; exit 1; } else { Invoke-WebRequest -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-$SourceModBranch.0-git$SourceModVersion-windows.zip -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"SourceMod $SourceModBranch build $SourceModVersion downloaded\\\"; } }\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Activate Metamod and SourceMod",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateFile",
-        "UpdateSourceData":"\"Plugin\"\n{\n\t\"file\"\t\"../csgo/addons/metamod/bin/server\"\n}",
-        "UpdateSourceArgs":"{{$FullBaseDir}}csgo/addons/metamod.vdf",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "SourceMod Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "sourcemod.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}sm",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"NoLobbyReservation Plugin Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceArgs":"vanz666/NoLobbyReservation",
-        "UpdateSourceTarget":"{{$FullBaseDir}}csgo",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "SourceMod Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "sourcemod.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}sm",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"NoLobbyReservation Gamedata Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/eldoradoel/NoLobbyReservation/master/csgo/addons/sourcemod/gamedata/nolobbyreservation.games.txt",
-        "UpdateSourceTarget":"{{$FullBaseDir}}csgo/addons/sourcemod/gamedata",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "SourceMod Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'csgo/740'; if (Test-Path 'csgo/cfg/sourcemod') { Remove-Item -Path 'sm/cfg/sourcemod' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'csgo/addons/sourcemod/configs') { Remove-Item -Path 'sm/addons/sourcemod/configs' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'csgo/addons/sourcemod/plugins') { Remove-Item -Path 'sm/addons/sourcemod/plugins' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; Copy-Item -Path 'sm/*' -Destination 'csgo' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'sm' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"NoLobbyReservation Scripting Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/eldoradoel/NoLobbyReservation/master/csgo/addons/sourcemod/scripting/nolobbyreservation.sp",
-        "UpdateSourceTarget":"{{$FullBaseDir}}csgo/addons/sourcemod/scripting",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true
+        "UpdateStageName": "SourceMod Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd csgo/740 && [ -d csgo/cfg/sourcemod ] && rm -rf sm/cfg/sourcemod >/dev/null 2>&1; [ -d csgo/addons/sourcemod/configs ] && rm -rf sm/addons/sourcemod/configs >/dev/null 2>&1; [ -d csgo/addons/sourcemod/plugins ] && rm -rf sm/addons/sourcemod/plugins >/dev/null 2>&1; \\cp -rf sm/* csgo/ >/dev/null 2>&1; rm -rf sm >/dev/null 2>&1\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Activate Metamod and SourceMod",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "\"Plugin\"\n{\n\t\"file\"\t\"../csgo/addons/metamod/bin/server\"\n}",
+        "UpdateSourceArgs": "{{$FullBaseDir}}csgo/addons/metamod.vdf",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "NoLobbyReservation Plugin Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "vanz666/NoLobbyReservation",
+        "UpdateSourceTarget": "{{$FullBaseDir}}csgo",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "NoLobbyReservation Gamedata Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/eldoradoel/NoLobbyReservation/master/csgo/addons/sourcemod/gamedata/nolobbyreservation.games.txt",
+        "UpdateSourceTarget": "{{$FullBaseDir}}csgo/addons/sourcemod/gamedata",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "NoLobbyReservation Scripting Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/eldoradoel/NoLobbyReservation/master/csgo/addons/sourcemod/scripting/nolobbyreservation.sp",
+        "UpdateSourceTarget": "{{$FullBaseDir}}csgo/addons/sourcemod/scripting",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
     }
 ]
