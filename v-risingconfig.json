@@ -12,9 +12,9 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "1",
         "EnumValues": {
-            "0": "Easy",
-            "1": "Normal",
-            "2": "Brutal"
+            "0": "Relaxed - Bosses will in general not use too complex mechanics",
+            "1": "Normal - Bosses will use the default mechanics",
+            "2": "Brutal - Bosses will use some more advanced mechanics and behaviours"
         }
     },
     {
@@ -53,6 +53,23 @@
         }
     },
     {
+        "DisplayName": "Player Damage Mode",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Gameplay:joystick:1",
+        "Description": "Setting for when players can damage other players (Disabled in PvE)",
+        "Keywords": "player, damage, mode",
+        "FieldName": "PlayerDamageMode",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "PlayerDamageMode",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "Always",
+        "EnumValues": {
+            "Always": "Always",
+            "TimeRestricted": "Time Restricted"
+        }
+    },
+    {
         "DisplayName": "Siege Weapon Health",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
@@ -70,23 +87,6 @@
             "Normal": "Normal",
             "High": "High",
             "VeryHigh": "Very High"
-        }
-    },
-    {
-        "DisplayName": "Player Damage Mode",
-        "Category": "V Rising:stadia_controller",
-        "Subcategory": "Gameplay:joystick:1",
-        "Description": "Setting for when players can damage other players (Disabled in PvE)",
-        "Keywords": "player, damage, mode",
-        "FieldName": "PlayerDamageMode",
-        "InputType": "enum",
-        "IsFlagArgument": false,
-        "ParamFieldName": "PlayerDamageMode",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "Always",
-        "EnumValues": {
-            "Always": "Always",
-            "TimeRestricted": "Time Restricted"
         }
     },
     {
@@ -121,10 +121,10 @@
         "DefaultValue": "Medium",
         "EnumValues": {
             "Disabled": "Disabled",
-            "VeryShort": "Very Short",
-            "Short": "Short",
-            "Medium": "Medium",
-            "Long": "Long"
+            "VeryShort": "Very Short - 15 Minutes",
+            "Short": "Short - 30 Minutes",
+            "Medium": "Medium - 1 Hour",
+            "Long": "Long - 2 Hours"
         }
     },
     {
@@ -299,6 +299,23 @@
         }
     },
     {
+        "DisplayName": "Castle Relocation",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Gameplay:joystick:1",
+        "Description": "Players should be able to relocate their castle",
+        "Keywords": "castle, relocation",
+        "FieldName": "CastleRelocationEnabled",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "CastleRelocationEnabled",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Inactivity Kill Enabled",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
@@ -366,7 +383,7 @@
         "DisplayName": "Inventory Stacks Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Multiplies the amount of items that can be combined into a single stack (Min: 0.25, Max: 5.0)",
+        "Description": "Multiplies the amount of items that can be combined into a single stack (Min: 0.25, Max: 3.0)",
         "Keywords": "inventory, stacks, modifier",
         "FieldName": "InventoryStacksModifier",
         "InputType": "number",
@@ -374,15 +391,15 @@
         "ParamFieldName": "InventoryStacksModifier",
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
-        "MinValue": 0,
-        "MaxValue": 5,
+        "MinValue": 0.25,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
         "DisplayName": "Drop Table Modifier - General",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Multiplies all droptables with this factor granting more or less drops from kills and chests (Min: 0.25, Max: 5.0)",
+        "Description": "Multiplies all droptables with this factor granting more or less drops from kills and chests (Min: 0.25, Max: 3.0)",
         "Keywords": "drop, table, modifier",
         "FieldName": "DropTableModifier_General",
         "InputType": "number",
@@ -390,15 +407,15 @@
         "ParamFieldName": "DropTableModifier_General",
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
-        "MinValue": 0,
-        "MaxValue": 5,
+        "MinValue": 0.25,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
         "DisplayName": "Drop Table Modifier - Missions",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Multiplies the amount of loot received from successful servant hunts (Min: 0.25, Max: 5.0)",
+        "Description": "Multiplies the amount of loot received from successful servant hunts (Min: 0.25, Max: 3.0)",
         "Keywords": "drop, table, modifier",
         "FieldName": "DropTableModifier_Missions",
         "InputType": "number",
@@ -406,15 +423,15 @@
         "ParamFieldName": "DropTableModifier_Missions",
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
-        "MinValue": 0,
-        "MaxValue": 5,
+        "MinValue": 0.25,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
         "DisplayName": "Material Yield Modifier - Global",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Multiplies the amount of materials received from harvesting resource nodes (Min: 0.25, Max: 5.0)",
+        "Description": "Multiplies the amount of materials received from harvesting resource nodes (Min: 0.25, Max: 3.0)",
         "Keywords": "material, modifier",
         "FieldName": "MaterialYieldModifier_Global",
         "InputType": "number",
@@ -422,15 +439,15 @@
         "ParamFieldName": "MaterialYieldModifier_Global",
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
-        "MinValue": 0,
-        "MaxValue": 5,
+        "MinValue": 0.25,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
         "DisplayName": "Blood Essence Yield Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Multiplies the amount of blood essence received from defeating enemies (Min: 0.25, Max: 5.0)",
+        "Description": "Multiplies the amount of blood essence received from defeating enemies (Min: 0.25, Max: 3.0)",
         "Keywords": "blood, essence, modifier",
         "FieldName": "BloodEssenceYieldModifier",
         "InputType": "number",
@@ -438,8 +455,8 @@
         "ParamFieldName": "BloodEssenceYieldModifier",
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
-        "MinValue": 0,
-        "MaxValue": 5,
+        "MinValue": 0.25,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
@@ -455,24 +472,8 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 5,
+        "MaxValue": 3,
         "Suffix": "multiplier"
-    },
-    {
-        "DisplayName": "Castle Minimum Distance In Floors",
-        "Category": "V Rising:stadia_controller",
-        "Subcategory": "Gameplay:joystick:1",
-        "Description": "The number of minimum tiles where players can place a castle heart and/or floors next to another heart",
-        "Keywords": "castle, distance, floors",
-        "FieldName": "CastleMinimumDistanceInFloors",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "CastleMinimumDistanceInFloors",
-        "IncludeInCommandLine": false,
-        "DefaultValue": 2,
-        "MinValue": 0,
-        "MaxValue": 10,
-        "Suffix": "tiles"
     },
     {
         "DisplayName": "Clan Size",
@@ -485,6 +486,8 @@
         "IsFlagArgument": false,
         "ParamFieldName": "ClanSize",
         "DefaultValue": 4,
+        "MinValue": 1,
+        "MaxValue": 50,
         "IncludeInCommandLine": false,
         "Suffix": "players"
     },
@@ -501,7 +504,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 5,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
@@ -517,7 +520,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 5,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
@@ -533,7 +536,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 5,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
@@ -549,7 +552,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 5,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
@@ -565,7 +568,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 5,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
@@ -581,7 +584,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 5,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
@@ -597,7 +600,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 5,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
@@ -613,7 +616,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 5,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
@@ -628,7 +631,7 @@
         "ParamFieldName": "CastleSiegeTimer",
         "IncludeInCommandLine": false,
         "DefaultValue": 420,
-        "MinValue": 1,
+        "MinValue": 60,
         "MaxValue": 1800,
         "Suffix": "seconds"
     },
@@ -644,8 +647,40 @@
         "ParamFieldName": "CastleUnderAttackTimer",
         "IncludeInCommandLine": false,
         "DefaultValue": 60,
-        "MinValue": 1,
+        "MinValue": 0,
         "MaxValue": 180,
+        "Suffix": "seconds"
+    },
+    {
+        "DisplayName": "Castle Raid Timer",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Gameplay:joystick:1",
+        "Description": "Defines how long the castle defenses are down when triggered on a Castle Heart during a PvP siege",
+        "Keywords": "castle, raid, timer",
+        "FieldName": "CastleRaidTimer",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "CastleRaidTimer",
+        "IncludeInCommandLine": false,
+        "DefaultValue": 60,
+        "MinValue": 60,
+        "MaxValue": 3600,
+        "Suffix": "seconds"
+    },
+    {
+        "DisplayName": "Castle Raid Protection Time",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Gameplay:joystick:1",
+        "Description": "Defines how long a castle is protected from another Raid after being raided",
+        "Keywords": "castle, protection, time",
+        "FieldName": "CastleRaidProtectionTime",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "CastleRaidProtectionTime",
+        "IncludeInCommandLine": false,
+        "DefaultValue": 60,
+        "MinValue": 60,
+        "MaxValue": 604800,
         "Suffix": "seconds"
     },
     {
@@ -695,7 +730,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 10,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
@@ -711,14 +746,14 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 10,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
         "DisplayName": "Craft Rate Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Multiplies the cost of crafting items (Min: 0.1)",
+        "Description": "Multiplier on how fast items are being crafted (Min: 0.25)",
         "Keywords": "craft, rate, modifier",
         "FieldName": "CraftRateModifier",
         "InputType": "number",
@@ -726,15 +761,15 @@
         "ParamFieldName": "CraftRateModifier",
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
-        "MinValue": 0,
-        "MaxValue": 10,
+        "MinValue": 0.25,
+        "MaxValue": 6,
         "Suffix": "multiplier"
     },
     {
         "DisplayName": "Research Cost Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Multiplies the cost of researching (Min: 0.1)",
+        "Description": "Multiplies the cost of researching (Min: 0)",
         "Keywords": "research, cost, modifier",
         "FieldName": "ResearchCostModifier",
         "InputType": "number",
@@ -743,15 +778,15 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 10,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
         "DisplayName": "Refinement Cost Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Multiplies the cost of refining items (Min: 0.1)",
-        "Keywords": "recipe, cost, modifier",
+        "Description": "Multiplies the cost of refining items (Min: 0)",
+        "Keywords": "refinement, cost, modifier",
         "FieldName": "RefinementCostModifier",
         "InputType": "number",
         "IsFlagArgument": false,
@@ -759,14 +794,14 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 10,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
         "DisplayName": "Refinement Rate Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Rate for how quickly materials are refined. A higher rate result in more rapid refinement (Min: 0.1)",
+        "Description": "Rate for how quickly materials are refined. A higher rate result in more rapid refinement (Min: 0.25)",
         "Keywords": "refinement, rate, modifier",
         "FieldName": "RefinementRateModifier",
         "InputType": "number",
@@ -774,31 +809,15 @@
         "ParamFieldName": "RefinementRateModifier",
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
-        "MinValue": 0,
-        "MaxValue": 10,
-        "Suffix": "multiplier"
-    },
-    {
-        "DisplayName": "Research Time Modifier",
-        "Category": "V Rising:stadia_controller",
-        "Subcategory": "Gameplay:joystick:1",
-        "Description": "Modifies the speed of research (Min: 0.1)",
-        "Keywords": "research, time, modifier",
-        "FieldName": "ResearchTimeModifier",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "ResearchTimeModifier",
-        "IncludeInCommandLine": false,
-        "DefaultValue": 1,
-        "MinValue": 0,
-        "MaxValue": 10,
+        "MinValue": 0.25,
+        "MaxValue": 6,
         "Suffix": "multiplier"
     },
     {
         "DisplayName": "Dismantle Resource Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "The material reimbursement players receive from dismantling a structure (Min: 0.1)",
+        "Description": "The material reimbursement players receive from dismantling a structure (Min: 0)",
         "Keywords": "dismantle, resource, modifier",
         "FieldName": "DismantleResourceModifier",
         "InputType": "number",
@@ -813,7 +832,7 @@
         "DisplayName": "Servant Convert Rate Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Rate for how quickly humans turn into servants. A higher rate result in more rapid conversion (Min: 0.1)",
+        "Description": "Rate for how quickly humans turn into servants. A higher rate result in more rapid conversion (Min: 0.25)",
         "Keywords": "servant, convert, modifier",
         "FieldName": "ServantConvertRateModifier",
         "InputType": "number",
@@ -821,15 +840,15 @@
         "ParamFieldName": "ServantConvertRateModifier",
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
-        "MinValue": 0,
-        "MaxValue": 20,
+        "MinValue": 0.25,
+        "MaxValue": 6,
         "Suffix": "multiplier"
     },
     {
         "DisplayName": "Repair Cost Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Modifies the cost for repairing an item",
+        "Description": "Modifies the cost for repairing an item (Min: 0)",
         "Keywords": "repair, cost, modifier",
         "FieldName": "RepairCostModifier",
         "InputType": "number",
@@ -838,7 +857,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0,
-        "MaxValue": 10,
+        "MaxValue": 3,
         "Suffix": "multiplier"
     },
     {
@@ -877,7 +896,7 @@
         "DisplayName": "Stock Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Multiplies the amount of stock a trader has. A higher value results in more items in stock. (Min: 0.1)",
+        "Description": "Multiplies the amount of stock a trader has. A higher value results in more items in stock. (Min: 0.25)",
         "Keywords": "stock, modifier",
         "FieldName": "TraderModifiers.StockModifier",
         "InputType": "number",
@@ -885,14 +904,14 @@
         "ParamFieldName": "$.TraderModifiers.StockModifier",
         "IncludeInCommandLine": false,
         "DefaultValue": 1.0,
-        "MinValue": 0,
-        "MaxValue": 5
+        "MinValue": 0.25,
+        "MaxValue": 10
     },
     {
         "DisplayName": "Price Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Multiplies the price of items in the trader inventory. A higher value results in higher prices. (Min: 0.1)",
+        "Description": "Multiplies the price of items in the trader inventory. A higher value results in higher prices. (Min: 0.25)",
         "Keywords": "price, modifier",
         "FieldName": "TraderModifiers.PriceModifier",
         "InputType": "number",
@@ -900,14 +919,14 @@
         "ParamFieldName": "$.TraderModifiers.PriceModifier",
         "IncludeInCommandLine": false,
         "DefaultValue": 1.0,
-        "MinValue": 0,
-        "MaxValue": 5
+        "MinValue": 0.25,
+        "MaxValue": 10
     },
     {
         "DisplayName": "Restock Timer Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Multiplies the amount of time it takes for a trader to restock their inventory. A higher value results in a longer restock time. (Min: 0.1)",
+        "Description": "Multiplies the amount of time it takes for a trader to restock their inventory. A higher value results in a longer restock time. (Min: 0.25)",
         "Keywords": "price, modifier",
         "FieldName": "TraderModifiers.RestockTimerModifier",
         "InputType": "number",
@@ -915,8 +934,8 @@
         "ParamFieldName": "$.TraderModifiers.RestockTimerModifier",
         "IncludeInCommandLine": false,
         "DefaultValue": 1.0,
-        "MinValue": 0,
-        "MaxValue": 5
+        "MinValue": 0.25,
+        "MaxValue": 10
     },
     {
         "DisplayName": "Admin List",
@@ -1456,22 +1475,37 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 50,
         "MinValue": 9,
-        "MaxValue": 800
+        "MaxValue": 9999
     },
     {
         "DisplayName": "Level 1 Servant Limit",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Castles:castle:5",
         "Description": "The number of servant coffins players may build in a single castle",
-        "Keywords": "castle, heart, floor, limit",
+        "Keywords": "castle, heart, servant, limit",
         "FieldName": "CastleStatModifiers_Global.HeartLimits.Level1.ServantLimit",
         "InputType": "number",
         "IsFlagArgument": false,
         "ParamFieldName": "$.CastleStatModifiers_Global.HeartLimits.Level1.ServantLimit",
         "IncludeInCommandLine": false,
         "DefaultValue": 4,
-        "MinValue": 1,
-        "MaxValue": 20
+        "MinValue": 0,
+        "MaxValue": 35
+    },
+    {
+        "DisplayName": "Level 1 Height Limit",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Castles:castle:5",
+        "Description": "Defines the max height for a castle (may vary depending on the placement of the castle)",
+        "Keywords": "castle, heart, height, limit",
+        "FieldName": "CastleStatModifiers_Global.HeartLimits.Level1.HeightLimit",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "$.CastleStatModifiers_Global.HeartLimits.Level1.HeightLimit",
+        "IncludeInCommandLine": false,
+        "DefaultValue": 1,
+        "MinValue": 0,
+        "MaxValue": 255
     },
     {
         "DisplayName": "Level 2 Floor Limit",
@@ -1486,22 +1520,37 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 140,
         "MinValue": 9,
-        "MaxValue": 800
+        "MaxValue": 9999
     },
     {
         "DisplayName": "Level 2 Servant Limit",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Castles:castle:5",
         "Description": "The number of servant coffins players may build in a single castle",
-        "Keywords": "castle, heart, floor, limit",
+        "Keywords": "castle, heart, servant, limit",
         "FieldName": "CastleStatModifiers_Global.HeartLimits.Level2.ServantLimit",
         "InputType": "number",
         "IsFlagArgument": false,
         "ParamFieldName": "$.CastleStatModifiers_Global.HeartLimits.Level2.ServantLimit",
         "IncludeInCommandLine": false,
         "DefaultValue": 5,
-        "MinValue": 1,
-        "MaxValue": 20
+        "MinValue": 0,
+        "MaxValue": 35
+    },
+    {
+        "DisplayName": "Level 2 Height Limit",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Castles:castle:5",
+        "Description": "Defines the max height for a castle (may vary depending on the placement of the castle)",
+        "Keywords": "castle, heart, height, limit",
+        "FieldName": "CastleStatModifiers_Global.HeartLimits.Level2.HeightLimit",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "$.CastleStatModifiers_Global.HeartLimits.Level2.HeightLimit",
+        "IncludeInCommandLine": false,
+        "DefaultValue": 2,
+        "MinValue": 0,
+        "MaxValue": 255
     },
     {
         "DisplayName": "Level 3 Floor Limit",
@@ -1516,22 +1565,37 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 240,
         "MinValue": 9,
-        "MaxValue": 800
+        "MaxValue": 9999
     },
     {
         "DisplayName": "Level 3 Servant Limit",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Castles:castle:5",
         "Description": "The number of servant coffins players may build in a single castle",
-        "Keywords": "castle, heart, floor, limit",
+        "Keywords": "castle, heart, servant, limit",
         "FieldName": "CastleStatModifiers_Global.HeartLimits.Level3.ServantLimit",
         "InputType": "number",
         "IsFlagArgument": false,
         "ParamFieldName": "$.CastleStatModifiers_Global.HeartLimits.Level3.ServantLimit",
         "IncludeInCommandLine": false,
         "DefaultValue": 6,
-        "MinValue": 1,
-        "MaxValue": 20
+        "MinValue": 0,
+        "MaxValue": 35
+    },
+    {
+        "DisplayName": "Level 3 Height Limit",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Castles:castle:5",
+        "Description": "Defines the max height for a castle (may vary depending on the placement of the castle)",
+        "Keywords": "castle, heart, height, limit",
+        "FieldName": "CastleStatModifiers_Global.HeartLimits.Level3.HeightLimit",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "$.CastleStatModifiers_Global.HeartLimits.Level3.HeightLimit",
+        "IncludeInCommandLine": false,
+        "DefaultValue": 3,
+        "MinValue": 0,
+        "MaxValue": 255
     },
     {
         "DisplayName": "Level 4 Floor Limit",
@@ -1546,22 +1610,37 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 360,
         "MinValue": 9,
-        "MaxValue": 800
+        "MaxValue": 9999
     },
     {
         "DisplayName": "Level 4 Servant Limit",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Castles:castle:5",
         "Description": "The number of servant coffins players may build in a single castle",
-        "Keywords": "castle, heart, floor, limit",
+        "Keywords": "castle, heart, servant, limit",
         "FieldName": "CastleStatModifiers_Global.HeartLimits.Level4.ServantLimit",
         "InputType": "number",
         "IsFlagArgument": false,
         "ParamFieldName": "$.CastleStatModifiers_Global.HeartLimits.Level4.ServantLimit",
         "IncludeInCommandLine": false,
         "DefaultValue": 7,
-        "MinValue": 1,
-        "MaxValue": 20
+        "MinValue": 0,
+        "MaxValue": 35
+    },
+    {
+        "DisplayName": "Level 4 Height Limit",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Castles:castle:5",
+        "Description": "Defines the max height for a castle (may vary depending on the placement of the castle)",
+        "Keywords": "castle, heart, height, limit",
+        "FieldName": "CastleStatModifiers_Global.HeartLimits.Level4.HeightLimit",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "$.CastleStatModifiers_Global.HeartLimits.Level4.HeightLimit",
+        "IncludeInCommandLine": false,
+        "DefaultValue": 4,
+        "MinValue": 0,
+        "MaxValue": 255
     },
     {
         "DisplayName": "Level 5 Floor Limit",
@@ -1576,22 +1655,37 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 550,
         "MinValue": 9,
-        "MaxValue": 800
+        "MaxValue": 9999
     },
     {
         "DisplayName": "Level 5 Servant Limit",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Castles:castle:5",
         "Description": "The number of servant coffins players may build in a single castle",
-        "Keywords": "castle, heart, floor, limit",
+        "Keywords": "castle, heart, servant, limit",
         "FieldName": "CastleStatModifiers_Global.HeartLimits.Level5.ServantLimit",
         "InputType": "number",
         "IsFlagArgument": false,
         "ParamFieldName": "$.CastleStatModifiers_Global.HeartLimits.Level5.ServantLimit",
         "IncludeInCommandLine": false,
         "DefaultValue": 8,
-        "MinValue": 1,
-        "MaxValue": 20
+        "MinValue": 0,
+        "MaxValue": 35
+    },
+    {
+        "DisplayName": "Level 5 Height Limit",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Castles:castle:5",
+        "Description": "Defines the max height for a castle (may vary depending on the placement of the castle)",
+        "Keywords": "castle, heart, height, limit",
+        "FieldName": "CastleStatModifiers_Global.HeartLimits.Level5.HeightLimit",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "$.CastleStatModifiers_Global.HeartLimits.Level5.HeightLimit",
+        "IncludeInCommandLine": false,
+        "DefaultValue": 5,
+        "MinValue": 0,
+        "MaxValue": 255
     },
     {
         "DisplayName": "Time Zone",
