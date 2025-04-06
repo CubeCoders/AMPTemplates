@@ -25,7 +25,7 @@
 # SOFTWARE.
 
 # --- Dependency Checks ---
-command -v perl >/dev/null 2>&1 || { echo >&2 "Error: 'perl' is required but not installed (needed for decompression and .mod generation). Install it."; exit 1; }
+command -v perl >/dev/null 2>&1 || { echo >&2 "Executable 'perl' is not installed. Please install it."; exit 1; }
 perl -MCompress::Raw::Zlib -e 1 >/dev/null 2>&1 || { echo >&2 "Error: Perl module 'Compress::Raw::Zlib' not found. Install it."; exit 1; }
 
 # --- Main Logic ---

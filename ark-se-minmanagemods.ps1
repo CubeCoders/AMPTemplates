@@ -22,113 +22,211 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-Set-Location -Path ".\arkse\376030"
+# Requires PowerShell Version 5.1
 
-$workshopDir = ".\steamapps\workshop\content\346110"
-$modsInstallDir = ".\ShooterGame\Content\Mods"
-
-if (Test-Path $workshopDir) {
-  Write-Output "Installing mods..."
-  Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
-    $modID = $_.Name
-    $modExtractDir = $_.FullName
-    $modInfoPath = Join-Path $modExtractDir "mod.info"
-    $modMetaPath = Join-Path $modExtractDir "modmeta.info"
-    $modOutputPath = Join-Path $modsInstallDir "$modID.mod"
-    $sourceDir = Join-Path $modExtractDir "WindowsNoEditor"
-    $targetDir = Join-Path $modsInstallDir $modID
-
-    if (-not (Test-Path $modInfoPath)) {
-      Write-Warning "Missing mod.info for $modID"
-      continue
-    }
-
-    if (-not (Test-Path $sourceDir)) {
-      Write-Warning "Missing WindowsNoEditor directory for $modID"
-      continue
-    }
-
-    if (Test-Path $modOutputPath) {
-      Remove-Item -Force $modOutputPath
-    }
-
-    # Read mod.info
-    $data = [System.IO.File]::ReadAllBytes($modInfoPath)
-    $reader = New-Object System.IO.BinaryReader([System.IO.MemoryStream]::new($data))
-    $writer = New-Object System.IO.BinaryWriter([System.IO.File]::OpenWrite($modOutputPath))
-
-    # Parse mod.info structure
-    $mapNameLen = $reader.ReadInt32()
-    $mapNameBytes = $reader.ReadBytes($mapNameLen - 1)
-    $reader.ReadByte() | Out-Null # consume null byte
-    $mapName = [System.Text.Encoding]::ASCII.GetString($mapNameBytes)
-    $numMaps = $reader.ReadInt32()
-
-    # Build .mod content
-    $modName = $null
-    try {
-      $steamPage = "https://steamcommunity.com/workshop/filedetails/?id=$modID"
-      $modName = (Invoke-WebRequest -UseBasicParsing -Uri $steamPage -ErrorAction Stop).Content |
-        Select-String -Pattern '<div class="workshopItemTitle">([^<]*)</div>' |
-        ForEach-Object { $_.Matches.Groups[1].Value } |
-        Select-Object -First 1
-    } catch {
-      $modName = $mapName
-    }
-
-    $modNameBytes = [System.Text.Encoding]::ASCII.GetBytes($modName)
-    $modNameBytesWithNull = $modNameBytes + 0
-    $modPath = "..\..\..\ShooterGame\Content\Mods\$modID"
-    $modPathBytes = [System.Text.Encoding]::ASCII.GetBytes($modPath)
-    $modPathBytesWithNull = $modPathBytes + 0
-
-    $writer.Write($modIDInt)
-    $writer.Write(0) # ModType = 0
-    $writer.Write($modNameBytesWithNull.Length)
-    $writer.Write($modNameBytesWithNull)
-    $writer.Write($modPathBytesWithNull.Length)
-    $writer.Write($modPathBytesWithNull)
-    $writer.Write($numMaps)
-
-    for ($i = 0; $i -lt $numMaps; $i++) {
-      $mapFileLen = $reader.ReadInt32()
-      $mapFileBytes = $reader.ReadBytes($mapFileLen)
-      $writer.Write($mapFileLen)
-      $writer.Write($mapFileBytes)
-    }
-
-    # Footer
-    $footer = [byte[]](0x33, 0xFF, 0x22, 0xFF, 0x02, 0x00, 0x00, 0x00, 0x01)
-    $writer.Write($footer)
-
-    # modmeta.info or fallback
-    if (Test-Path $modMetaPath) {
-      $metaBytes = [System.IO.File]::ReadAllBytes($modMetaPath)
-      $writer.Write($metaBytes)
-    } else {
-      $fallbackBytes = [byte[]](
-        0x01, 0x00, 0x00, 0x00, # count
-        0x08, 0x00, 0x00, 0x00, # length of key "ModType"
-        0x4D, 0x6F, 0x64, 0x54, 0x79, 0x70, 0x65, 0x00, # "ModType\0"
-        0x02, 0x00, 0x00, 0x00, # type = int
-        0x31, 0x00              # value = "1\0"
-      )
-      $writer.Write($fallbackBytes)
-    }
-
-    $reader.Close()
-    $writer.Close()
-
-    # Create junction
-    if (Test-Path -LiteralPath $targetDir) {
-      Remove-Item -LiteralPath $targetDir -Force -Recurse
-    }
-    New-Item -ItemType Junction -Path $targetDir -Target $sourceDir -Force | Out-Null
-
-    Write-Output "Installed mod: $modID ($modName)"
-  }
-} else {
-  Write-Output "No mods to install"
+# --- Dependency Checks ---
+$perlPath = Get-Command perl -ErrorAction SilentlyContinue
+if (-not $perlPath) {
+  Write-Error "Executable 'perl' not found in PATH. Please install Perl, ideally from https://strawberryperl.com/."
+  exit 1
 }
 
+# --- Main Logic ---
+$basePath = $PSScriptRoot
+$arkInstancePath = Join-Path -Path $basePath -ChildPath "arkse\376030"
+$workshopContentDir = Join-Path -Path $arkInstancePath -ChildPath "steamapps\workshop\content\346110"
+$modsInstallDir = Join-Path -Path $arkInstancePath -ChildPath "ShooterGame\Content\Mods"
+
+if (-not (Test-Path -LiteralPath $workshopContentDir -PathType Container)) {
+  Write-Host "No mods to install."
+  exit 0
+}
+
+Write-Host "Installing mods..."
+
+# Ensure the base mods installation directory exists
+if (-not (Test-Path -LiteralPath $modsInstallDir -PathType Container)) {
+  New-Item -Path $modsInstallDir -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null
+}
+
+# --- Loop through downloaded mods ---
+Get-ChildItem -Path $workshopContentDir -Directory | ForEach-Object {
+  $modSrcToplevelDir = $_
+  $modId = $modSrcToplevelDir.Name
+  $modDestDir = Join-Path -Path $modsInstallDir -ChildPath $modId
+
+  # Determine actual source directory based on branch
+  $modSrcDir = Join-Path -Path $modSrcToplevelDir.FullName -ChildPath "WindowsNoEditor"
+  $modInfoFile = Join-Path -Path $modSrcDir -ChildPath "mod.info"
+  $modMetaFile = Join-Path -Path $modSrcDir -ChildPath "modmeta.info"
+
+  if (-not (Test-Path -LiteralPath $modSrcDir -PathType Container)) {
+    $modInfoFileToplevel = Join-Path -Path $modSrcToplevelDir.FullName -ChildPath "mod.info"
+    if (Test-Path -LiteralPath $modInfoFileToplevel -PathType Leaf) {
+      $modSrcDir = $modSrcToplevelDir.FullName
+      $modInfoFile = $modInfoFileToplevel
+      $modMetaFile = Join-Path -Path $modSrcDir -ChildPath "modmeta.info"
+    } else {
+      Write-Host "  Error: Mod source directory for branch Windows in '$($modSrcToplevelDir.FullName)'. Cannot find mod.info. Skipping mod $modId."
+      return
+    }
+  } elseif (-not (Test-Path -LiteralPath $modInfoFile -PathType Leaf)) {
+    Write-Host "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping mod $modId."
+    return
+  }
+
+  # --- Sync/Copy Files ---
+  try {
+    if (Test-Path -LiteralPath $modDestDir) {
+      Remove-Item -LiteralPath $modDestDir -Recurse -Force -ErrorAction Stop
+    }
+    Copy-Item -LiteralPath $modSrcDir -Destination $modsInstallDir -Recurse -Force -ErrorAction Stop
+  } catch {
+    Write-Host "  Error copying files for mod $modId from $modSrcDir to $modsInstallDir. Error: $($_.Exception.Message). Skipping mod $modId."
+    return
+  }
+
+  # --- Decompress .z files (using Perl) ---
+  $zFiles = Get-ChildItem -Path $modDestDir -Recurse -Filter *.z -ErrorAction SilentlyContinue
+  if ($zFiles) {
+    $perlDecompressScript = 'use strict; use warnings; use File::Basename; use File::Copy; use Compress::Raw::Zlib; my ($infile, $outfile) = @ARGV; my $tempoutfile = $outfile . ".tmpperl$$"; open(IN, "<:raw", $infile) or die "Cannot open input $infile: $!"; my $sig; read(IN, $sig, 8) == 8 or die "Unable to read signature from $infile: $!"; if ($sig ne "\xC1\x83\x2A\x9E\x00\x00\x00\x00") { die "Bad file magic in $infile"; } my $header; read(IN, $header, 24) == 24 or die "Unable to read header from $infile: $!"; my ($cl, $ch, $ctl, $cth, $utl, $uth) = unpack("(L<L<L<L<L<L<)", $header); my @chunks = (); my $cu = 0; while ($cu < $ctl) { my $chdr; read(IN, $chdr, 16) == 16 or die "Unable to read chunk header from $infile: $!"; my ($csl, $csh, $usl, $ush) = unpack("(L<L<L<L<)", $chdr); push @chunks, $csl; $cu += $csl; } open(OUT, ">:raw", $tempoutfile) or die "Cannot open output $tempoutfile: $!"; foreach my $cs (@chunks) { my $d; read(IN, $d, $cs) == $cs or die "File read failed for chunk in $infile: $!"; my ($inf, $st) = new Compress::Raw::Zlib::Inflate(); my $o; $st = $inf->inflate($d, $o, 1); if ($st != Z_OK && $st != Z_STREAM_END) { die "Decompression error in $infile; status: $st"; } print OUT $o; } close IN; close OUT; unless (rename($tempoutfile, $outfile)) { unlink $tempoutfile; die "Failed to rename $tempoutfile to $outfile: $!"; } exit 0;'
+
+    foreach ($zFileItem in $zFiles) {
+      $zSrcFile = $zFileItem.FullName
+      $zDestFile = $zSrcFile -replace '\.z$'
+      if (-not (Test-Path -LiteralPath $zDestFile) -or ($zFileItem.LastWriteTimeUtc -gt (Get-Item -LiteralPath $zDestFile -ErrorAction SilentlyContinue).LastWriteTimeUtc)) {
+         # Execute Perl simply, check exit code, suppress stderr from PS side
+         & $perlPath.Path -e $perlDecompressScript $zSrcFile $zDestFile 2>$null
+         if ($?) {
+            (Get-Item -LiteralPath $zDestFile).LastWriteTimeUtc = $zFileItem.LastWriteTimeUtc
+            Remove-Item -LiteralPath $zSrcFile -Force -ErrorAction SilentlyContinue
+         } else {
+            # Silently remove partial file on failure
+            if (Test-Path -LiteralPath $zDestFile) { Remove-Item -LiteralPath $zDestFile -Force -ErrorAction SilentlyContinue }
+         }
+      } else {
+        Remove-Item -LiteralPath $zSrcFile -Force -ErrorAction SilentlyContinue
+      }
+    }
+  }
+
+  # --- Generate .mod File (using Perl) ---
+  $modOutputFile = Join-Path -Path $modsInstallDir -ChildPath "$($modId).mod"
+
+  if (-not (Test-Path -LiteralPath $modInfoFile -PathType Leaf)) {
+    Write-Host "  Error: $modInfoFile not found before .mod generation! Skipping mod $modId."
+    return
+  }
+
+  # Fetch mod name from Steam Community
+  $modName = ""
+  try {
+      $response = Invoke-WebRequest -Uri "http://steamcommunity.com/sharedfiles/filedetails/?id=${modId}" -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue
+      if ($response -ne $null -and $response.StatusCode -eq 200) {
+           if ($response.Content -match '<div class="workshopItemTitle">([^<]*)</div>') {
+              $modName = $Matches[1].Trim()
+           }
+      }
+  } catch {
+      # Silently ignore exceptions (e.g., DNS errors, timeouts)
+  }
+
+ # Use Perl to read mod.info and write .mod file
+$perlModGenScript = @'
+use strict; use warnings; use File::Basename;
+# Args: arkserverdir_rel (ARGV[0]), modId_str (ARGV[1]), modName_fetched (ARGV[2])
+# Input: mod.info on STDIN
+# Output: .mod file core structure on STDOUT
+my ($arkserverdir_rel, $modId_str, $modName_fetched) = @ARGV;
+
+# Read mod.info from STDIN
+my $data;
+{ local $/; $data = <STDIN>; }
+
+my $mapnamelen = unpack("L<", substr($data, 0, 4));
+# Assuming length read from mod.info *includes* null, so use length-1 for mapname string itself
+my $mapname = $mapnamelen > 0 ? substr($data, 4, $mapnamelen - 1) : "";
+my $nummaps_offset = 4 + $mapnamelen;
+my $nummaps = unpack("L<", substr($data, $nummaps_offset, 4));
+my $pos = $nummaps_offset + 4; # Position after num maps field for reading map entries
+
+# Use fetched name (ARGV[2]) or mapname as fallback
+my $modname = ($modName_fetched || $mapname);
+$modname .= "\x00"; my $modnamelen = length($modname); # Ensure null termination for modname
+
+# Construct path using ARGV[0] (arkserverdir_rel) and ARGV[1] (modId_str)
+my $modpath = "../../../" . $arkserverdir_rel . "/Content/Mods/" . $modId_str . "\x00";
+my $modpathlen = length($modpath);
+
+my $modid_packed = pack("L<", int($modId_str)); # Pack Mod ID from ARGV[1]
+
+# --- Output Header to STDOUT using the original arkmanager order ---
+binmode STDOUT; # Ensure binary output
+print $modid_packed;                  # Mod ID (uint32)
+print pack("L<", 0);                  # Padding (uint32)
+print pack("L<", $modnamelen);        # Mod Name Length (uint32)
+print $modname;                       # Mod Name String (null-terminated)
+print pack("L<", $modpathlen);        # Mod Path Length (uint32)
+print $modpath;                       # Mod Path String (null-terminated)
+print pack("L<", $nummaps);           # Number of Maps (uint32)
+# --- End Header ---
+
+# --- Output Map Entries to STDOUT ---
+my $map_read_pos = $pos; # Use the calculated position for reading maps
+for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++){
+    # Read length at current position - unpack needs absolute offset
+    my $mapfilelen = unpack("@" . ($map_read_pos) . " L<", $data);
+    # Read map file name - ASSUME length read from mod.info includes null terminator
+    my $mapfile = $mapfilelen > 0 ? substr($data, $map_read_pos + 4, $mapfilelen) : "";
+    my $mapfilepackedlen = $mapfilelen; # Use length directly
+
+    print pack("L<", $mapfilepackedlen); # Print length (including null from source)
+    print $mapfile;                      # Print name (including null from source)
+
+    $map_read_pos += (4 + $mapfilelen); # Advance position correctly
+}
+# --- End Map Entries ---
+
+# --- Output Footer to STDOUT ---
+# Note: Using 0x01 ending, consistent with original snippet and Primal Fear example
+print "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
+
+exit 0; # Success
+'@
+
+  # Execute the Perl script using STDIN/STDOUT redirection, check exit code
+  try {
+    Get-Content -LiteralPath $modInfoFile -Encoding Byte -Raw |
+      & $perlPath.Path -e $perlModGenScript "ShooterGame" $modId "$modName" 2>$null |
+      Set-Content -Path $modOutputFile -Encoding Byte -NoNewline -ErrorAction Stop
+
+    # Check if the previous command pipeline (specifically perl) succeeded
+    if (-not $?) { throw "Perl script execution failed." }
+
+    # If Perl script succeeded, proceed with appending metadata and timestamping
+    # --- Append modmeta.info or fallback ---
+    if (Test-Path -LiteralPath $modMetaFile -PathType Leaf) {
+       # Silently attempt append, ignore errors to match bash style
+       Add-Content -Path $modOutputFile -Value (Get-Content -LiteralPath $modMetaFile -Encoding Byte -Raw) -ErrorAction SilentlyContinue
+    } else {
+      # Fallback bytes - ensure this matches desired default if needed
+      $fallbackBytes = [byte[]](0x01,0x00,0x00,0x00, 0x08,0x00,0x00,0x00, 0x4D,0x6F,0x64,0x54,0x79,0x70,0x65,0x00, 0x02,0x00,0x00,0x00, 0x31,0x00)
+       # Silently attempt append, ignore errors
+       Add-Content -Path $modOutputFile -Value $fallbackBytes -ErrorAction SilentlyContinue
+    }
+    # Set timestamp of .mod file to match the mod.info file, ignore errors
+    try {
+      (Get-Item -LiteralPath $modOutputFile).LastWriteTimeUtc = (Get-Item -LiteralPath $modInfoFile).LastWriteTimeUtc
+    } catch { } # Silently ignore timestamp errors
+
+  } catch {
+     # Use Write-Host for error to match bash echo style
+     Write-Host "  Error generating or processing .mod file for $modId. Error: $($_.Exception.Message)"
+     if (Test-Path -LiteralPath $modOutputFile) { Remove-Item -LiteralPath $modOutputFile -Force -ErrorAction SilentlyContinue } # Clean up partial file
+     return
+  }
+
+}
+
+Write-Host "Mod installation process finished."
 exit 0
