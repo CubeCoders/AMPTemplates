@@ -150,7 +150,7 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while IFS= read -r 
   # Use Perl to read mod.info and write .mod file
   if perl -e '
       use strict; use warnings;
-      # Args: arkserverdir_rel, modId_str, modName_fetched (ignored here), mod_info_path, output_mod_path
+      # Args: arkserverdir_rel, modId_str, modName_fetched (ignored), mod_info_path, output_mod_path
       my ($arkserverdir_rel, $modId_str, $modName_fetched, $mod_info_path, $output_mod_path) = @ARGV;
 
       open(my $fh_in, "<:raw", $mod_info_path) or die "Cannot open mod.info $mod_info_path: $!";
@@ -158,12 +158,10 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while IFS= read -r 
 
       # Read metadata needed from mod.info
       my $mapnamelen = unpack("L<", substr($data, 0, 4));
-      # Map name might still be needed for fallback if fetching fails, but not written directly here.
-      # my $mapname = $mapnamelen > 0 ? substr($data, 4, $mapnamelen - 1) : "";
       my $nummaps_offset = 4 + $mapnamelen;
       my $nummaps = unpack("L<", substr($data, $nummaps_offset, 4));
 
-      # Construct the Mod Path string (needed for length and printing)
+      # Construct the Mod Path string
       my $modpath = "../../../" . $arkserverdir_rel . "/Content/Mods/" . $modId_str . "\x00";
       my $modpathlen = length($modpath);
 
@@ -172,24 +170,27 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while IFS= read -r 
 
       open(my $fh_out, ">:raw", $output_mod_path) or die "Cannot open output .mod file $output_mod_path: $!";
 
-      # --- Write Header in Correct Order ---
+      # --- Write Header in Correct Order with BOTH padding fields ---
       print $fh_out $modId_packed;                  # Mod ID (uint32)
-      print $fh_out pack("L<", 0);                  # Padding (uint32 = 0)
+      print $fh_out pack("L<", 0);                  # Padding1 (uint32 = 0)
+      print $fh_out pack("L<", 0);                  # Padding2 (uint32 = 0) # ADDED MISSING PADDING
       print $fh_out pack("L<", $modpathlen);        # Length of Mod Path (uint32)
       print $fh_out $modpath;                       # Mod Path String (null-terminated)
       print $fh_out pack("L<", $nummaps);           # Number of Maps (uint32)
       # --- End Header ---
 
-      # --- Write Map Entries ---
+      # --- Write Map Entries (Corrected null handling) ---
       my $pos = $nummaps_offset + 4; # Position after num maps field in mod.info
       for (my $i = 0; $i < $nummaps; $i++) {
+          # Read map file length - Assume this length INCLUDES the null terminator from mod.info
           my $mapfilelen = unpack("L<", substr($data, $pos, 4));
+          # Read exactly mapfilelen bytes
           my $mapfile = $mapfilelen > 0 ? substr($data, $pos + 4, $mapfilelen) : "";
-          $mapfile .= "\x00"; # Add null termination
-          my $mapfilepackedlen = length($mapfile); # Length includes the added null
+          # Use mapfilelen directly as the packed length. DO NOT add extra null.
+          my $mapfilepackedlen = $mapfilelen;
 
-          print $fh_out pack("L<", $mapfilepackedlen);  # Map File Length (including null)
-          print $fh_out $mapfile;                       # Map File Name (null terminated)
+          print $fh_out pack("L<", $mapfilepackedlen);  # Map File Length (including null from source)
+          print $fh_out $mapfile;                       # Map File Name (including null from source)
 
           $pos += (4 + $mapfilelen); # Advance position in mod.info data
       }
