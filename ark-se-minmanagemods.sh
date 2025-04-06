@@ -149,28 +149,57 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while IFS= read -r 
 
   # Use Perl to read mod.info and write .mod file
   if perl -e '
-      # (Perl .mod generation code unchanged)
       use strict; use warnings;
+      # Args: arkserverdir_rel, modId_str, modName_fetched (ignored here), mod_info_path, output_mod_path
       my ($arkserverdir_rel, $modId_str, $modName_fetched, $mod_info_path, $output_mod_path) = @ARGV;
+
       open(my $fh_in, "<:raw", $mod_info_path) or die "Cannot open mod.info $mod_info_path: $!";
       my $data; { local $/; $data = <$fh_in>; } close $fh_in;
-      my $mapnamelen = unpack("L<", substr($data, 0, 4)); my $mapname = $mapnamelen > 0 ? substr($data, 4, $mapnamelen - 1) : "";
-      my $nummaps_offset = 4 + $mapnamelen; my $nummaps = unpack("L<", substr($data, $nummaps_offset, 4));
-      my $modName = ($modName_fetched || $mapname); $modName .= "\x00"; my $modNamelen = length($modName);
-      my $modpath = "../../../" . $arkserverdir_rel . "/Content/Mods/" . $modId_str . "\x00"; my $modpathlen = length($modpath);
+
+      # Read metadata needed from mod.info
+      my $mapnamelen = unpack("L<", substr($data, 0, 4));
+      # Map name might still be needed for fallback if fetching fails, but not written directly here.
+      # my $mapname = $mapnamelen > 0 ? substr($data, 4, $mapnamelen - 1) : "";
+      my $nummaps_offset = 4 + $mapnamelen;
+      my $nummaps = unpack("L<", substr($data, $nummaps_offset, 4));
+
+      # Construct the Mod Path string (needed for length and printing)
+      my $modpath = "../../../" . $arkserverdir_rel . "/Content/Mods/" . $modId_str . "\x00";
+      my $modpathlen = length($modpath);
+
+      # Pack the Mod ID
       my $modId_packed = pack("L<", int($modId_str));
+
       open(my $fh_out, ">:raw", $output_mod_path) or die "Cannot open output .mod file $output_mod_path: $!";
-      print $fh_out $modId_packed; print $fh_out pack("L<", 0); print $fh_out pack("L<", $modNamelen); print $fh_out $modName;
-      print $fh_out pack("L<", $modpathlen); print $fh_out $modpath; print $fh_out pack("L<", $nummaps);
-      my $pos = $nummaps_offset + 4;
+
+      # --- Write Header in Correct Order ---
+      print $fh_out $modId_packed;                  # Mod ID (uint32)
+      print $fh_out pack("L<", 0);                  # Padding (uint32 = 0)
+      print $fh_out pack("L<", $modpathlen);        # Length of Mod Path (uint32)
+      print $fh_out $modpath;                       # Mod Path String (null-terminated)
+      print $fh_out pack("L<", $nummaps);           # Number of Maps (uint32)
+      # --- End Header ---
+
+      # --- Write Map Entries ---
+      my $pos = $nummaps_offset + 4; # Position after num maps field in mod.info
       for (my $i = 0; $i < $nummaps; $i++) {
-          my $mapfilelen = unpack("L<", substr($data, $pos, 4)); my $mapfile = $mapfilelen > 0 ? substr($data, $pos + 4, $mapfilelen) : "";
-          $mapfile .= "\x00"; my $mapfilepackedlen = length($mapfile);
-          print $fh_out pack("L<", $mapfilepackedlen); print $fh_out $mapfile;
-          $pos += (4 + $mapfilelen);
+          my $mapfilelen = unpack("L<", substr($data, $pos, 4));
+          my $mapfile = $mapfilelen > 0 ? substr($data, $pos + 4, $mapfilelen) : "";
+          $mapfile .= "\x00"; # Add null termination
+          my $mapfilepackedlen = length($mapfile); # Length includes the added null
+
+          print $fh_out pack("L<", $mapfilepackedlen);  # Map File Length (including null)
+          print $fh_out $mapfile;                       # Map File Name (null terminated)
+
+          $pos += (4 + $mapfilelen); # Advance position in mod.info data
       }
+      # --- End Map Entries ---
+
+      # --- Write Footer ---
       print $fh_out "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
-      close $fh_out; exit 0;
+
+      close $fh_out;
+      exit 0; # Success
     ' "ShooterGame" "$modId" "$modName" "$modInfoFile" "$modOutputFile"; then
 
     # Append modmeta.info if it exists, otherwise append default footer
