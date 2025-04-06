@@ -81,9 +81,9 @@ Get-ChildItem -Path $workshopContentDir -Directory | ForEach-Object {
     if (Test-Path -LiteralPath $modDestDir) {
       Remove-Item -LiteralPath $modDestDir -Recurse -Force -ErrorAction Stop
     }
-    Copy-Item -LiteralPath $modSrcDir -Destination $modsInstallDir -Recurse -Force -ErrorAction Stop
+    Copy-Item -LiteralPath $modSrcDir -Destination $modDestDir -Recurse -Force -ErrorAction Stop
   } catch {
-    Write-Host "  Error copying files for mod $modId from $modSrcDir to $modsInstallDir. Error: $($_.Exception.Message). Skipping mod $modId."
+    Write-Host "  Error copying files for mod $modId from $modSrcDir to $modsDestDir. Error: $($_.Exception.Message). Skipping mod $modId."
     return
   }
 
