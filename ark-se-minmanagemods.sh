@@ -214,7 +214,7 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while IFS= read -r 
     continue
   fi
 
-done # End of loop through mod directories
+done
 
 echo "Mod installation process finished."
 exit 0

@@ -199,7 +199,6 @@ exit 0; # Success
     } else {
       # Default ModType footer (Type 1), append directly as binary
       $fallbackBytes = [byte[]](0x01,0x00,0x00,0x00, 0x08,0x00,0x00,0x00, 0x4D,0x6F,0x64,0x54,0x79,0x70,0x65,0x00, 0x02,0x00,0x00,0x00, 0x31,0x00)
-       # Silently attempt append, ignore errors
        Add-Content -Path $modOutputFile -Value $fallbackBytes -ErrorAction SilentlyContinue
     }
     # Set timestamp of .mod file to match the mod.info file, ignore errors
@@ -209,7 +208,7 @@ exit 0; # Success
 
   } catch {
      # Error occurred during Perl execution or potentially file access within Perl
-     Write-Host "  Error generating or processing .mod file for $modId. Error: $($_.Exception.Message)"
+     Write-Host "  Error: Failed to generate .mod file for $modId using Perl. Skipping."
      # Clean up potentially failed output file or temp file if possible
      if (Test-Path -LiteralPath $modOutputFile) { Remove-Item -LiteralPath $modOutputFile -Force -ErrorAction SilentlyContinue }
      if (Test-Path -LiteralPath "$modOutputFile.tmpperl*") { Remove-Item -LiteralPath "$modOutputFile.tmpperl*" -Force -ErrorAction SilentlyContinue }
