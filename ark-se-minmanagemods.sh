@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Function to convert a string to hex format
+string_to_hex() {
+  echo -n "$1" | od -An -tx1 | tr -d ' \n'
+}
+
 cd ./arkse/376030
 
 workshop_dir="./steamapps/workshop/content/346110"
@@ -45,32 +50,33 @@ for moddir in "$workshop_dir"/*; do
   # Write .mod
   : > "$modout"
   {
-    echo -n "$modid" | xxd -p | tr -d '\n'
-    echo -n "\x00\x00\x00\x00"
-    echo -n "${#modname}" | xxd -p | tr -d '\n'
-    echo -n "$modname" | xxd -p | tr -d '\n'
-    echo -n "${#modpath}" | xxd -p | tr -d '\n'
-    echo -n "$modpath" | xxd -p | tr -d '\n'
-    echo -n "$num_maps" | xxd -p | tr -d '\n'
+    # Replace xxd with string_to_hex
+    printf "%s" "$(string_to_hex "$modid")"
+    printf "\x00\x00\x00\x00"
+    printf "%s" "$(string_to_hex "${#modname}")"
+    printf "%s" "$(string_to_hex "$modname")"
+    printf "%s" "$(string_to_hex "${#modpath}")"
+    printf "%s" "$(string_to_hex "$modpath")"
+    printf "%s" "$(string_to_hex "$num_maps")"
 
     pos=$((mapnamelen + 8))
     for ((i = 0; i < num_maps; i++)); do
       len=$(od -An -t u4 -j $pos -N 4 "$modinfo" | tr -d ' ')
       mapfile=$(dd if="$modinfo" bs=1 skip=$((pos + 4)) count=$len 2>/dev/null)
-      echo -n "$len" | xxd -p | tr -d '\n'
-      echo -n "$mapfile" | xxd -p | tr -d '\n'
+      printf "%s" "$(string_to_hex "$len")"
+      printf "%s" "$(string_to_hex "$mapfile")"
       pos=$((pos + 4 + len))
     done
 
     # Footer
-    echo -n '\x33\xFF\x22\xFF\x02\x00\x00\x00\x01' | xxd -p | tr -d '\n'
+    printf "%s" "$(string_to_hex '\x33\xFF\x22\xFF\x02\x00\x00\x00\x01')"
   } >> "$modout"
 
   # Append modmeta or fallback
   if [ -f "$modmeta" ]; then
     cat "$modmeta" >> "$modout"
   else
-    echo -n '\x01\x00\x00\x00\x08\x00\x00\x00ModType\x00\x02\x00\x00\x001\x00' | xxd -p | tr -d '\n' >> "$modout"
+    printf "%s" "$(string_to_hex '\x01\x00\x00\x00\x08\x00\x00\x00ModType\x00\x02\x00\x00\x001\x00')" >> "$modout"
   fi
 
   # Create symlink
