@@ -9,12 +9,12 @@ if [ -d "$workshopDir" ]; then
 
   find "$workshopDir" -maxdepth 1 -mindepth 1 -type d | while read -r modDir; do
     modID=$(basename "$modDir")
-    pakFile="$modDir/contents.pak"
+    pakFile=$(find "$modDir" -maxdepth 1 -type f -name '*.pak' | head -n 1)
 
-    if [ -f "$pakFile" ]; then
+    if [ -n "$pakFile" ]; then
       ln -sf "$pakFile" "./$modID.pak"
     else
-      echo "No contents.pak in $modID, skipping"
+      echo "No .pak file in $modID, skipping"
     fi
   done
 else
