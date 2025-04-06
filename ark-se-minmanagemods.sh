@@ -170,7 +170,6 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while IFS= read -r 
 
     open(my $fh_out, ">:raw", $output_mod_path) or die "Cannot open output .mod file $output_mod_path: $!";
 
-    # Print using the original arkmanager order
     print $fh_out $modid_packed;                  # Mod ID (uint32)
     print $fh_out pack("L<", 0);                  # Padding (uint32)
     print $fh_out pack("L<", $modnamelen);        # Mod Name Length (uint32)
@@ -179,11 +178,9 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while IFS= read -r 
     print $fh_out $modpath;                       # Mod Path String (null-terminated)
     print $fh_out pack("L<", $nummaps);           # Number of Maps (uint32)
 
-    # Map Entries Loop (Using original logic which might be less robust on offset)
     my $map_read_pos = $pos; # Use the calculated position for reading maps
     for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++){
         my $mapfilelen = unpack("@" . ($map_read_pos) . " L<", $data); # Read length at current position
-        # Read map file name - ASSUME length includes null based on previous findings
         my $mapfile = $mapfilelen > 0 ? substr($data, $map_read_pos + 4, $mapfilelen) : "";
         my $mapfilepackedlen = $mapfilelen; # Use length directly
 

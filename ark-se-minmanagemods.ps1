@@ -135,60 +135,85 @@ Get-ChildItem -Path $workshopContentDir -Directory | ForEach-Object {
 
   # Use Perl to read mod.info and write .mod file
   $perlModGenScript = @'
-use strict; use warnings; use File::Basename;
-# Args: arkserverdir_rel (ARGV[0]), modId_str (ARGV[1]), modName_fetched (ARGV[2])
-# Input: mod.info on STDIN
-# Output: .mod file core structure on STDOUT
-my ($arkserverdir_rel, $modId_str, $modName_fetched) = @ARGV;
-my $data; { local $/; $data = <STDIN>; }
+use strict; use warnings; use File::Basename; use File::Copy; # Need Copy for rename
+
+# Args: arkserverdir_rel (ARGV[0]), modId_str (ARGV[1]), modName_fetched (ARGV[2]), mod_info_path (ARGV[3]), output_mod_path (ARGV[4])
+my ($arkserverdir_rel, $modId_str, $modName_fetched, $mod_info_path, $output_mod_path) = @ARGV;
+my $tempoutfile = $output_mod_path . ".tmpperl$$";
+
+open(my $fh_in, "<:raw", $mod_info_path) or die "Cannot open mod.info $mod_info_path: $!";
+my $data; { local $/; $data = <$fh_in>; } close $fh_in;
+
 my $mapnamelen = unpack("L<", substr($data, 0, 4));
 my $mapname = $mapnamelen > 0 ? substr($data, 4, $mapnamelen - 1) : "";
-my $nummaps_offset = 4 + $mapnamelen; my $nummaps = unpack("L<", substr($data, $nummaps_offset, 4));
-my $pos = $nummaps_offset + 4;
+my $nummaps_offset = 4 + $mapnamelen;
+my $nummaps = unpack("L<", substr($data, $nummaps_offset, 4));
+my $pos = $nummaps_offset + 4; # Position after num maps field for reading map entries
+
 my $modname = ($modName_fetched || $mapname);
-$modname .= "\x00"; my $modnamelen = length($modname);
-my $modpath = "../../../" . $arkserverdir_rel . "/Content/Mods/" . $modId_str . "\x00"; my $modpathlen = length($modpath);
-my $modid_packed = pack("L<", int($modId_str));
-binmode STDOUT;
-print $modid_packed; print pack("L<", 0); print pack("L<", $modnamelen); print $modname; print pack("L<", $modpathlen); print $modpath; print pack("L<", $nummaps);
-my $map_read_pos = $pos;
+$modname .= "\x00"; my $modnamelen = length($modname); # Ensure null termination for modname
+
+my $modpath = "../../../" . $arkserverdir_rel . "/Content/Mods/" . $modId_str . "\x00";
+my $modpathlen = length($modpath);
+
+my $modid_packed = pack("L<", int($modId_str)); # Pack Mod ID from ARGV[1]
+
+open(my $fh_out, ">:raw", $tempoutfile) or die "Cannot open output $tempoutfile: $!";
+
+print $fh_out $modid_packed;                  # Mod ID (uint32)
+print $fh_out pack("L<", 0);                  # Padding (uint32)
+print $fh_out pack("L<", $modnamelen);        # Mod Name Length (uint32)
+print $fh_out $modname;                       # Mod Name String (null-terminated)
+print $fh_out pack("L<", $modpathlen);        # Mod Path Length (uint32)
+print $fh_out $modpath;                       # Mod Path String (null-terminated)
+print $fh_out pack("L<", $nummaps);           # Number of Maps (uint32)
+
+my $map_read_pos = $pos; # Use the calculated position for reading maps
 for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++){
     my $mapfilelen = unpack("@" . ($map_read_pos) . " L<", $data);
     my $mapfile = $mapfilelen > 0 ? substr($data, $map_read_pos + 4, $mapfilelen) : "";
-    my $mapfilepackedlen = $mapfilelen;
-    print pack("L<", $mapfilepackedlen); print $mapfile;
-    $map_read_pos += (4 + $mapfilelen);
+    my $mapfilepackedlen = $mapfilelen; # Use length directly
+
+    print $fh_out pack("L<", $mapfilepackedlen); # Print length (including null from source)
+    print $fh_out $mapfile;                      # Print name (including null from source)
+
+    $map_read_pos += (4 + $mapfilelen); # Advance position correctly
 }
-print "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
-exit 0;
+
+print $fh_out "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01"; # Footer (Note: uses 0x01 ending)
+close $fh_out; # Close temp file
+
+unless (rename($tempoutfile, $output_mod_path)) {
+    unlink $tempoutfile; die "Failed to rename $tempoutfile to $output_mod_path: $!";
+}
+exit 0; # Success
 '@
 
-  # Execute the Perl script using STDIN/STDOUT redirection, check exit code
+# Execute the Perl script passing file paths as args, check exit code
   try {
-    Get-Content -LiteralPath $modInfoFile -Encoding Byte -Raw |
-      & $perlPath.Path -e $perlModGenScript "ShooterGame" $modId "$modName" 2>$null |
-      Set-Content -Path $modOutputFile -Encoding Byte -NoNewline -ErrorAction Stop
+    & $perlPath.Path -e $perlModGenScript "ShooterGame" $modId "$modName" $modInfoFile $modOutputFile 2>$null
 
-    # Append modmeta.info if it exists, otherwise append default footer
     if (Test-Path -LiteralPath $modMetaFile -PathType Leaf) {
-      # Silently attempt append
-      Add-Content -Path $modOutputFile -Value (Get-Content -LiteralPath $modMetaFile -Encoding Byte -Raw) -ErrorAction SilentlyContinue
+       # Silently attempt append
+       Add-Content -Path $modOutputFile -Value (Get-Content -LiteralPath $modMetaFile -Encoding Byte -Raw) -ErrorAction SilentlyContinue
     } else {
       # Default ModType footer (Type 1), append directly as binary
       $fallbackBytes = [byte[]](0x01,0x00,0x00,0x00, 0x08,0x00,0x00,0x00, 0x4D,0x6F,0x64,0x54,0x79,0x70,0x65,0x00, 0x02,0x00,0x00,0x00, 0x31,0x00)
-      # Silently attempt append
-      Add-Content -Path $modOutputFile -Value $fallbackBytes -ErrorAction SilentlyContinue
+       # Silently attempt append, ignore errors
+       Add-Content -Path $modOutputFile -Value $fallbackBytes -ErrorAction SilentlyContinue
     }
-    # Set timestamp of .mod file to match the mod.info file
+    # Set timestamp of .mod file to match the mod.info file, ignore errors
     try {
       (Get-Item -LiteralPath $modOutputFile).LastWriteTimeUtc = (Get-Item -LiteralPath $modInfoFile).LastWriteTimeUtc
-    } catch { } # Silently ignore timestamp errors
+    } catch { }
 
   } catch {
-    # Handle failure of Perl script to generate .mod file
-    Write-Host "  Error: Failed to generate .mod file for $modId using Perl. Skipping."
-    if (Test-Path -LiteralPath $modOutputFile) { Remove-Item -LiteralPath $modOutputFile -Force -ErrorAction SilentlyContinue } # Clean up potentially empty/partial file
-    return
+     # Error occurred during Perl execution or potentially file access within Perl
+     Write-Host "  Error generating or processing .mod file for $modId. Error: $($_.Exception.Message)"
+     # Clean up potentially failed output file or temp file if possible
+     if (Test-Path -LiteralPath $modOutputFile) { Remove-Item -LiteralPath $modOutputFile -Force -ErrorAction SilentlyContinue }
+     if (Test-Path -LiteralPath "$modOutputFile.tmpperl*") { Remove-Item -LiteralPath "$modOutputFile.tmpperl*" -Force -ErrorAction SilentlyContinue }
+     return
   }
 
 }
