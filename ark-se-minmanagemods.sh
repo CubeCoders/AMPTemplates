@@ -138,10 +138,9 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while IFS= read -r 
     continue
   fi
 
-  # Fetch mod name from Steam Community using wget
+  # Fetch mod name from Steam Community
   modName=""
   modNameRaw=""
-  # Use subshell to avoid potential variable conflicts if wget/sed fail badly
   modNameRaw=$(wget -qO- "http://steamcommunity.com/sharedfiles/filedetails/?id=${modId}" | sed -n 's|^.*<div class="workshopItemTitle">\([^<]*\)</div>.*|\1|p' | head -n 1)
   # Trim whitespace
   modName=$(echo "$modNameRaw" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
