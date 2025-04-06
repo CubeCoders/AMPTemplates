@@ -70,6 +70,7 @@ Get-ChildItem -Path $workshopContentDir -Directory | ForEach-Object {
     } else {
       Write-Host "  Error: Mod source directory for branch Windows in '$($modSrcToplevelDir.FullName)'. Cannot find mod.info. Skipping mod $modId."
       return
+    }
   } elseif (-not (Test-Path -LiteralPath $modInfoFile -PathType Leaf)) {
     Write-Host "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping mod $modId."
     return
