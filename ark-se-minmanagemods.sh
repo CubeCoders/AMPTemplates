@@ -45,32 +45,32 @@ for moddir in "$workshop_dir"/*; do
   # Write .mod
   : > "$modout"
   {
-    printf "\\x%02x\\x%02x\\x%02x\\x%02x" $((modid & 0xFF)) $(((modid >> 8) & 0xFF)) $(((modid >> 16) & 0xFF)) $(((modid >> 24) & 0xFF))
-    printf "\x00\x00\x00\x00"
-    printf "\\x%02x\\x%02x\\x%02x\\x%02x" $(( (${#modname} + 1) & 0xFF)) $(((${#modname} + 1 >> 8) & 0xFF)) 0 0
-    printf "%s\x00" "$modname"
-    printf "\\x%02x\\x%02x\\x%02x\\x%02x" $(( (${#modpath} + 1) & 0xFF)) $(((${#modpath} + 1 >> 8) & 0xFF)) 0 0
-    printf "%s\x00" "$modpath"
-    printf "\\x%02x\\x%02x\\x%02x\\x%02x" $((num_maps & 0xFF)) $(((num_maps >> 8) & 0xFF)) $(((num_maps >> 16) & 0xFF)) $(((num_maps >> 24) & 0xFF))
+    echo -n "$modid" | xxd -p | tr -d '\n'
+    echo -n "\x00\x00\x00\x00"
+    echo -n "${#modname}" | xxd -p | tr -d '\n'
+    echo -n "$modname" | xxd -p | tr -d '\n'
+    echo -n "${#modpath}" | xxd -p | tr -d '\n'
+    echo -n "$modpath" | xxd -p | tr -d '\n'
+    echo -n "$num_maps" | xxd -p | tr -d '\n'
 
     pos=$((mapnamelen + 8))
     for ((i = 0; i < num_maps; i++)); do
       len=$(od -An -t u4 -j $pos -N 4 "$modinfo" | tr -d ' ')
       mapfile=$(dd if="$modinfo" bs=1 skip=$((pos + 4)) count=$len 2>/dev/null)
-      printf "\\x%02x\\x%02x\\x%02x\\x%02x" $((len & 0xFF)) $(((len >> 8) & 0xFF)) $(((len >> 16) & 0xFF)) $(((len >> 24) & 0xFF))
-      printf "%s" "$mapfile"
+      echo -n "$len" | xxd -p | tr -d '\n'
+      echo -n "$mapfile" | xxd -p | tr -d '\n'
       pos=$((pos + 4 + len))
     done
 
     # Footer
-    printf '\x33\xFF\x22\xFF\x02\x00\x00\x00\x01'
+    echo -n '\x33\xFF\x22\xFF\x02\x00\x00\x00\x01' | xxd -p | tr -d '\n'
   } >> "$modout"
 
   # Append modmeta or fallback
   if [ -f "$modmeta" ]; then
     cat "$modmeta" >> "$modout"
   else
-    printf '\x01\x00\x00\x00\x08\x00\x00\x00ModType\x00\x02\x00\x00\x001\x00' >> "$modout"
+    echo -n '\x01\x00\x00\x00\x08\x00\x00\x00ModType\x00\x02\x00\x00\x001\x00' | xxd -p | tr -d '\n' >> "$modout"
   fi
 
   # Create symlink
