@@ -41,9 +41,9 @@ downloadMod() {
 
   while true; do
     output=$(./steamcmd.sh +force_install_dir 376030 +login anonymous +workshop_download_item 346110 "$modId" validate +quit 2>&1)
-    echo "$output"
+    lastLine=$(echo "$output" | tail -n 1)
 
-    if echo "$output" | grep -q "Timed out"; then
+    if echo "$lastLine" | grep -q "Timed out"; then
       if [ "$retry" -lt "$max_retries" ]; then
         echo "  Timeout detected. Retrying mod $modId..."
         retry=$((retry + 1))
@@ -53,6 +53,7 @@ downloadMod() {
         break
       fi
     else
+      echo "$lastLine"
       break
     fi
 done
