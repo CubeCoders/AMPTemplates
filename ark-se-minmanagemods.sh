@@ -165,7 +165,7 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while read -r modSr
       $pos = $pos + 4 + $mapfilelen;
     }
     print "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
-  ' "ShooterGame" "$modId" "$modName" <"$modInfoFile" >"$modOutputFile"
+  ' "ShooterGame" "$modId" "$modName" < "$modInfoFile" > "$modOutputFile"
 
   # Append modmeta.info if it exists, otherwise append default footer
   modmetaFile="$modSrcDir/modmeta.info"
