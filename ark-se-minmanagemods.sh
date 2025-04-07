@@ -43,7 +43,7 @@ downloadMod() {
     output=$(./steamcmd.sh +force_install_dir 376030 +login anonymous +workshop_download_item 346110 "$modId" validate +quit 2>&1)
     lastLine=$(echo "$output" | tail -n 1)
 
-    if echo "$lastLine" | grep -q "Timed out"; then
+    if echo "$lastLine" | grep -q "Timeout downloading item"; then
       if [ "$retry" -lt "$max_retries" ]; then
         echo "  Timeout detected. Retrying mod $modId..."
         retry=$((retry + 1))
@@ -206,8 +206,7 @@ installMod() {
   touch -c -r "$modInfoFile" "$modOutputFile"
 }
 
-# Main loop
-
+# --- Main Loop ---
 if [ -z "$1" ]; then
   echo "No mod IDs specified"
   exit 1

@@ -16,6 +16,50 @@
         "SkipOnFailure": false
     },
     {
+        "UpdateStageName": "Modscript Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/ark-se-minmanagemods.sh",
+        "UpdateSourceArgs": "managemods.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "automanagedmods",
+        "UpdateSourceConditionValue": "-automanagedmods ",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Manage Mods",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "./managemods.sh \\\"{{GameModIds}}\\\"",
+        "UpdateSourceConditionSetting": "automanagedmods",
+        "UpdateSourceConditionValue": "-automanagedmods ",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Modscript Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/ark-se-minmanagemods.ps1",
+        "UpdateSourceArgs": "managemods.ps1",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "automanagedmods",
+        "UpdateSourceConditionValue": "-automanagedmods ",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Manage Mods",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -File \"managemods.ps1\" \"{{GameModIds}}\"",
+        "UpdateSourceConditionSetting": "automanagedmods",
+        "UpdateSourceConditionValue": "-automanagedmods ",
+        "SkipOnFailure": false
+    },
+    {
         "UpdateStageName": "Working Directory Replacement",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
