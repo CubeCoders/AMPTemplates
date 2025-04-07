@@ -206,7 +206,7 @@ function Install-Mod {
   $modName = Invoke-RestMethod "http://steamcommunity.com/sharedfiles/filedetails/?id=$modId" | Select-String -Pattern '<div class="workshopItemTitle">([^<]*)</div>' | ForEach-Object { $_.Matches.Groups[1].Value } | Select-Object -First 1
 
   # Read the file content
-  $data = Get-Content -Path $modInfoFile -Raw -AsByteStream
+  $data = [System.IO.File]::ReadAllBytes($modInfoFile)
 
   # Unpack the values
   $mapnamelen = [BitConverter]::ToUInt32($data, 0)
