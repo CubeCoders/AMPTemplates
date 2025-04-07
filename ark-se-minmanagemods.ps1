@@ -34,7 +34,7 @@ function Download-Mod {
   $maxRetries = 5
 
   while ($true) {
-    $output = & ./steamcmd.exe +force_install_dir 376030 +login anonymous +workshop_download_item 346110 $modId validate +quit 2>&1
+    $output = & .\steamcmd.exe +force_install_dir 376030 +login anonymous +workshop_download_item 346110 $modId validate +quit 2>&1
     $lastLine = $output | Select-Object -Last 1
 
     if ($lastLine -match "Timeout downloading item") {
@@ -266,10 +266,10 @@ if ($args.Length -eq 0) {
 
 Write-Host "Installing/updating mods..."
 
-Set-Location -Path './arkse'
+Set-Location -Path '.\arkse'
 
-$workshopContentDir = "./376030/steamapps/workshop/content/346110"
-$modsInstallDir = "./376030/ShooterGame/Content/Mods"
+$workshopContentDir = Resolve-Path ".\376030\steamapps\workshop\content\346110"
+$modsInstallDir = Resolve-Path ".\376030\ShooterGame\Content\Mods"
 $modIds = $args[0] -replace '^"(.*)"$', '$1'
 $modIds = $modIds.Split(',')
 
