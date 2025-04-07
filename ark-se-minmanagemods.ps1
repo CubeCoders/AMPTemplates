@@ -122,26 +122,81 @@ function Install-Mod {
   }
 
   # Decompress the .z file using .NET's GzipStream class
-  try {
-      # Open the source .z file as an input stream
-      $inputStream = [System.IO.File]::OpenRead($srcFile)
-      $outputStream = [System.IO.File]::Create($destFile)
+  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" | ForEach-Object {
+    $srcFile = $_.FullName
+    $destFile = "$modDestDir\$($_.Name.Substring(0, $_.Name.Length - 2))"
+    
+    # Check if the destination file doesn't exist or the source file is newer
+    if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
+        
+        # Open the .z file
+        $srcFileStream = [System.IO.File]::OpenRead($srcFile)
+        
+        # Read the magic signature (8 bytes)
+        $signature = New-Object byte[] 8
+        $srcFileStream.Read($signature, 0, 8)
 
-      # Create a GzipStream for decompression
-      $gzipStream = New-Object System.IO.Compression.GzipStream($inputStream, [System.IO.Compression.CompressionMode]::Decompress)
+        # Validate the signature
+        if ($signature -ne [byte[]]@(0xC1, 0x83, 0x2A, 0x9E, 0x00, 0x00, 0x00, 0x00)) {
+            throw "Bad file magic"
+        }
 
-      # Copy the decompressed content to the output stream
-      $gzipStream.CopyTo($outputStream)
+        # Read the next 24 bytes of data
+        $data = New-Object byte[] 24
+        $srcFileStream.Read($data, 0, 24)
 
-      # Close streams
-      $gzipStream.Close()
-      $outputStream.Close()
-      $inputStream.Close()
+        # Unpack the data (similar to Perl unpack)
+        $chunksizelo = [BitConverter]::ToUInt32($data, 0)
+        $chunksizehi = [BitConverter]::ToUInt32($data, 4)
+        $comprtotlo = [BitConverter]::ToUInt32($data, 8)
+        $comprtothi = [BitConverter]::ToUInt32($data, 12)
+        $uncomtotlo = [BitConverter]::ToUInt32($data, 16)
+        $uncomtothi = [BitConverter]::ToUInt32($data, 20)
 
-      Write-Host "Decompressed $srcFile to $destFile"
-  } catch {
-      Write-Host "Error decompressing $srcFile"
-  }
+        # Initialize variables
+        $chunks = @()
+        $comprused = 0
+
+        # Process each chunk size
+        while ($comprused -lt $comprtotlo) {
+            $chunkData = New-Object byte[] 16
+            $srcFileStream.Read($chunkData, 0, 16)
+
+            $comprsizelo = [BitConverter]::ToUInt32($chunkData, 0)
+            $comprsizehi = [BitConverter]::ToUInt32($chunkData, 4)
+            $uncomsizelo = [BitConverter]::ToUInt32($chunkData, 8)
+            $uncomsizehi = [BitConverter]::ToUInt32($chunkData, 12)
+            
+            # Add the chunk size to the list
+            $chunks += $comprsizelo
+            $comprused += $comprsizelo
+        }
+
+        # Process the chunks and decompress
+        foreach ($comprsize in $chunks) {
+            $chunkData = New-Object byte[] $comprsize
+            $srcFileStream.Read($chunkData, 0, $comprsize)
+
+            # Inflate (decompress) using System.IO.Compression
+            $inflater = New-Object System.IO.Compression.DeflateStream([System.IO.MemoryStream]::new($chunkData), [System.IO.Compression.CompressionMode]::Decompress)
+            $outputStream = [System.IO.MemoryStream]::new()
+
+            $inflater.CopyTo($outputStream)
+
+            # Get decompressed data
+            $output = $outputStream.ToArray()
+
+            # Write decompressed data to the destination file
+            [System.IO.File]::WriteAllBytes($destFile, $output)
+        }
+
+        # Close the source file stream
+        $srcFileStream.Close()
+
+        # Preserve the timestamp (CreationTimeUtc)
+        (Get-Item $srcFile).CreationTimeUtc | Set-ItemProperty -Path $destFile -Name CreationTimeUtc
+    }
+}
 
   # --- Generate .mod File ---
   $modOutputFile = "$modsInstallDir\$modId.mod"
@@ -154,45 +209,53 @@ function Install-Mod {
   # Fetch mod name from Steam Community
   $modName = Invoke-RestMethod "http://steamcommunity.com/sharedfiles/filedetails/?id=$modId" | Select-String -Pattern '<div class="workshopItemTitle">([^<]*)</div>' | ForEach-Object { $_.Matches.Groups[1].Value } | Select-Object -First 1
 
-  try {
-    # Read the mod.info file content
-    $modInfoContent = Get-Content -Path $modInfoFile -Raw
-    $mapnamelen = [BitConverter]::ToInt32([System.Text.Encoding]::UTF8.GetBytes($modInfoContent.Substring(0, 4)), 0)
-    $mapname = $modInfoContent.Substring(4, $mapnamelen - 1)
-    $nummaps = [BitConverter]::ToInt32([System.Text.Encoding]::UTF8.GetBytes($modInfoContent.Substring($mapnamelen + 4, 4)), 0)
+  # Read the file content
+  $data = Get-Content -Path $modInfoFile -Raw -AsByteStream
 
-    # Create mod name and mod path (null-terminated strings)
-    $modname = $modName + [char]0
-    $modpath = "../../../ShooterGame/Content/Mods/" + $modInfoFile.BaseName + [char]0
+  # Unpack the values
+  $mapnamelen = [BitConverter]::ToUInt32($data, 0)
+  $mapname = [System.Text.Encoding]::ASCII.GetString($data, 4, $mapnamelen - 1)
+  $nummaps = [BitConverter]::ToUInt32($data, $mapnamelen + 4)
+  $pos = $mapnamelen + 8
 
-    # Open the .mod file for writing in binary mode
-    $modFileStream = New-Object System.IO.FileStream($modOutputFile, [System.IO.FileMode]::Create)
-    $writer = New-Object System.IO.BinaryWriter($modFileStream)
+  # Get the mod name (like $modname in Perl)
+  $modname = if ($args[2]) { $args[2] } else { $mapname } + [char]0
 
-    # Write header and mod info to the .mod file
-    $writer.Write([BitConverter]::GetBytes($nummaps))
-    $writer.Write([System.Text.Encoding]::UTF8.GetBytes($modname))
-    $writer.Write([System.Text.Encoding]::UTF8.GetBytes($modpath))
+  # Calculate modname length and modpath
+  $modnamelen = $modname.Length
+  $modpath = "../../../" + $args[0] + "/Content/Mods/" + $args[1] + [char]0
+  $modpathlen = $modpath.Length
 
-    # Optionally, if there are maps, write them out (this part can be adjusted as needed for the map data)
-    for ($i = 0; $i -lt $nummaps; $i++) {
-        $mapfilelen = [BitConverter]::ToInt32([System.Text.Encoding]::UTF8.GetBytes($modInfoContent.Substring($mapnamelen + 8 + ($i * 4), 4)), 0)
-        $mapfile = $modInfoContent.Substring($mapnamelen + 12 + ($i * $mapfilelen), $mapfilelen)
-        $writer.Write([BitConverter]::GetBytes($mapfilelen))
-        $writer.Write([System.Text.Encoding]::UTF8.GetBytes($mapfile))
-    }
+  # Prepare the output data for writing
+  $modOutputData = New-Object System.Collections.Generic.List[byte]
 
-    # Write end of file signature
-    $writer.Write([byte[]](0x33, 0xFF, 0x22, 0xFF, 0x02, 0x00, 0x00, 0x00, 0x01))
+  # Pack the first part
+  $modOutputData.AddRange([BitConverter]::GetBytes([UInt32]$args[1]))
+  $modOutputData.AddRange([BitConverter]::GetBytes(0))
+  $modOutputData.AddRange([BitConverter]::GetBytes($modnamelen))
+  $modOutputData.AddRange([System.Text.Encoding]::ASCII.GetBytes($modname))
+  $modOutputData.AddRange([BitConverter]::GetBytes($modpathlen))
+  $modOutputData.AddRange([System.Text.Encoding]::ASCII.GetBytes($modpath))
+  $modOutputData.AddRange([BitConverter]::GetBytes($nummaps))
 
-    # Close the file
-    $writer.Close()
-    $modFileStream.Close()
+  # Process the maps
+  for ($mapnum = 0; $mapnum -lt $nummaps; $mapnum++) {
+      $mapfilelen = [BitConverter]::ToUInt32($data, $pos)
+      $mapfile = [System.Text.Encoding]::ASCII.GetString($data, $mapnamelen + 12, $mapfilelen)
 
-    Write-Host "Created .mod file: $modOutputFile"
-  } catch {
-      Write-Host "Error creating .mod file"
+      # Pack the mapfile data
+      $modOutputData.AddRange([BitConverter]::GetBytes($mapfilelen))
+      $modOutputData.AddRange([System.Text.Encoding]::ASCII.GetBytes($mapfile))
+
+      # Move to next position
+      $pos += 4 + $mapfilelen
   }
+
+  # Append the footer
+  $modOutputData.AddRange([byte[]](0x33, 0xFF, 0x22, 0xFF, 0x02, 0x00, 0x00, 0x00, 0x01))
+
+  # Write to the file
+  [System.IO.File]::WriteAllBytes($modOutputFile, $modOutputData.ToArray())
 
   # Set timestamp of .mod file to match the mod.info file
   (Get-Item $modInfoFile).CreationTimeUtc | Set-ItemProperty -Path $modOutputFile -Name CreationTimeUtc
