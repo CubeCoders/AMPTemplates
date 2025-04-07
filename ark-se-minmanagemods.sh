@@ -41,6 +41,7 @@ downloadMod() {
 
   while true; do
     output=$(./steamcmd.sh +login anonymous +force_install_dir 376030 +workshop_download_item 346110 "$modId" validate +quit 2>&1)
+    echo "$output"
 
     if echo "$output" | grep -q "Timed out"; then
       if [ "$retry" -lt "$max_retries" ]; then
@@ -214,7 +215,7 @@ fi
 echo "Installing mods..."
 
 modIds=$(echo "$1" | sed 's/^"\(.*\)"$/\1/')
-IFS=',' read -ra modIds <<< "$1"
+IFS=',' read -ra modIds <<< "$modIds"
 cd ./arkse
 
 for modId in "${modIds[@]}"; do
