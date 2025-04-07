@@ -30,6 +30,18 @@ if (-not (Get-Command perl -ErrorAction SilentlyContinue)) {
   exit 1
 }
 
+# Get the Perl site library path dynamically
+$perlSiteLib = & perl -MConfig -e "print \$Config{installsitelib}" 2>$null
+
+if (-not $perlSiteLib -or -not (Test-Path $perlSiteLib)) {
+  Write-Host "Error: Unable to determine Perl site library path or it does not exist."
+  exit 1
+}
+
+# Export it into the environment for subsequent Perl calls
+$env:PERL5LIB = $perlSiteLib
+
+# Check if the Compress::Raw::Zlib module is available
 if (-not (perl -MCompress::Raw::Zlib -e '1' 2>&1)) {
   Write-Host "Error: Perl module 'Compress::Raw::Zlib' not found. Please install it."
   exit 1
