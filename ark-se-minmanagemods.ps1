@@ -24,6 +24,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+# Install SharpZipLib for .NET 4.5+ to handle .z files
+$libDir = Join-Path $PSScriptRoot 'lib'
+$ziplibDll = Join-Path $libDir 'ICSharpCode.SharpZipLib.dll'
+if (-not (Test-Path $ziplibDll)) {
+    Write-Host "Downloading and extracting SharpZipLib..."
+    $nupkgUrl = "https://www.nuget.org/api/v2/package/SharpZipLib"
+    $nupkgPath = Join-Path $libDir "SharpZipLib.nupkg"
+    New-Item -ItemType Directory -Force -Path $libDir | Out-Null
+    Invoke-WebRequest -Uri $nupkgUrl -OutFile $nupkgPath
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    [System.IO.Compression.ZipFile]::ExtractToDirectory($nupkgPath, $libDir)
+    Remove-Item $nupkgPath
+}
+Add-Type -Path $ziplibDll
+
 # Function to install a mod with retry on timeout
 function Download-Mod {
   param (
@@ -35,6 +50,7 @@ function Download-Mod {
 
   while ($true) {
     $output = & .\steamcmd.exe +force_install_dir 376030 +login anonymous +workshop_download_item 346110 $modId validate +quit 2>&1
+    $Write-Host $output
     $lastLine = $output | Select-Object -Last 1
 
     if ($lastLine -match "Timeout downloading item") {
@@ -116,83 +132,39 @@ function Install-Mod {
     }
   }
 
-  # Decompress the .z file using .NET's GzipStream class
-  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
+  # Decompress the .z file using SharpZipLib
+  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" -Recurse -ErrorAction SilentlyContinue | ForEach-Object {  
     $srcFile = $_.FullName
-    $destFile = Join-Path $modDestDir ($_.FullName.Substring($modSrcDir.Length) -replace '\.z$', '')"
-    
+    $destFile = Join-Path $modDestDir ($_.FullName.Substring($modSrcDir.Length) -replace '\.z$', '')
+
     # Check if the destination file doesn't exist or the source file is newer
     if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
-        
+
         # Open the .z file
         $srcFileStream = [System.IO.File]::OpenRead($srcFile)
         
-        # Read the magic signature (8 bytes)
-        $signature = New-Object byte[] 8
-        $srcFileStream.Read($signature, 0, 8)
+        # Create a GZip input stream using SharpZipLib
+        $gzipInputStream = New-Object ICSharpCode.SharpZipLib.GZip.GZipInputStream($srcFileStream)
+        $outputStream = [System.IO.MemoryStream]::new()
 
-        # Validate the signature
-        if ($signature -ne [byte[]]@(0xC1, 0x83, 0x2A, 0x9E, 0x00, 0x00, 0x00, 0x00)) {
-            throw "Bad file magic"
-        }
+        # Copy the decompressed data to the output stream
+        $gzipInputStream.CopyTo($outputStream)
 
-        # Read the next 24 bytes of data
-        $data = New-Object byte[] 24
-        $srcFileStream.Read($data, 0, 24)
+        # Get decompressed data
+        $output = $outputStream.ToArray()
 
-        # Unpack the data (similar to Perl unpack)
-        $chunksizelo = [BitConverter]::ToUInt32($data, 0)
-        $chunksizehi = [BitConverter]::ToUInt32($data, 4)
-        $comprtotlo = [BitConverter]::ToUInt32($data, 8)
-        $comprtothi = [BitConverter]::ToUInt32($data, 12)
-        $uncomtotlo = [BitConverter]::ToUInt32($data, 16)
-        $uncomtothi = [BitConverter]::ToUInt32($data, 20)
+        # Write decompressed data to the destination file
+        [System.IO.File]::WriteAllBytes($destFile, $output)
 
-        # Initialize variables
-        $chunks = @()
-        $comprused = 0
-
-        # Process each chunk size
-        while ($comprused -lt $comprtotlo) {
-            $chunkData = New-Object byte[] 16
-            $srcFileStream.Read($chunkData, 0, 16)
-
-            $comprsizelo = [BitConverter]::ToUInt32($chunkData, 0)
-            $comprsizehi = [BitConverter]::ToUInt32($chunkData, 4)
-            $uncomsizelo = [BitConverter]::ToUInt32($chunkData, 8)
-            $uncomsizehi = [BitConverter]::ToUInt32($chunkData, 12)
-            
-            # Add the chunk size to the list
-            $chunks += $comprsizelo
-            $comprused += $comprsizelo
-        }
-
-        # Process the chunks and decompress
-        foreach ($comprsize in $chunks) {
-            $chunkData = New-Object byte[] $comprsize
-            $srcFileStream.Read($chunkData, 0, $comprsize)
-
-            # Inflate (decompress) using System.IO.Compression
-            $inflater = New-Object System.IO.Compression.DeflateStream([System.IO.MemoryStream]::new($chunkData), [System.IO.Compression.CompressionMode]::Decompress)
-            $outputStream = [System.IO.MemoryStream]::new()
-
-            $inflater.CopyTo($outputStream)
-
-            # Get decompressed data
-            $output = $outputStream.ToArray()
-
-            # Write decompressed data to the destination file
-            [System.IO.File]::WriteAllBytes($destFile, $output)
-        }
-
-        # Close the source file stream
+        # Close the streams
+        $gzipInputStream.Close()
         $srcFileStream.Close()
 
         # Preserve the timestamp (CreationTimeUtc)
         $timestamp = (Get-Item $srcFile).CreationTimeUtc
-        Set-ItemProperty -Path $modOutputFile -Name CreationTimeUtc -Value $timestamp
+        Set-ItemProperty -Path $destFile -Name CreationTimeUtc -Value $timestamp
     }
-}
+  }
 
   # --- Generate .mod File ---
   $modOutputFile = "$modsInstallDir\$modId.mod"
