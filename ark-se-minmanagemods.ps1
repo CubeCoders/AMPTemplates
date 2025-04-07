@@ -271,6 +271,7 @@ Write-Host "Installing/updating mods..."
 
 $modIds = $args[0] -replace '^"(.*)"$', '$1'
 $modIds = $modIds.Split(',')
+Set-Location -Path '/.arkse'
 
 foreach ($modId in $modIds) {
   Download-Mod -modId $modId
