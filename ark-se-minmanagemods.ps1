@@ -69,7 +69,7 @@ function Install-Mod {
   $srcFile = ""
   $destFile = ""
 
-  New-Item -ItemType Directory -Force -Path $modDestDir
+  New-Item -ItemType Directory -Force -Path $modDestDir > $null
 
   # Determine actual source directory based on branch
   $modSrcDir = "$modSrcToplevelDir\WindowsNoEditor"
