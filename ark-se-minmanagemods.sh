@@ -40,7 +40,7 @@ downloadMod() {
   local maxRetries=5
 
   while true; do
-    output=$(steamcmd +login anonymous +force_install_dir 376030 +workshop_download_item 346110 "$modId" validate +quit 2>&1)
+    output=$(./steamcmd.sh +login anonymous +force_install_dir 376030 +workshop_download_item 346110 "$modId" validate +quit 2>&1)
 
     if echo "$output" | grep -q "Timed out"; then
       if [ "$retry" -lt "$max_retries" ]; then
@@ -213,6 +213,7 @@ fi
 
 echo "Installing mods..."
 
+modIds=$(echo "$1" | sed 's/^"\(.*\)"$/\1/')
 IFS=',' read -ra modIds <<< "$1"
 cd ./arkse
 
