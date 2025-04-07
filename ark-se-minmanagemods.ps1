@@ -139,29 +139,29 @@ function Install-Mod {
     # Check if the destination file doesn't exist or the source file is newer
     if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
 
-        # Open the .z file
-        $srcFileStream = [System.IO.File]::OpenRead($srcFile)
+      # Open the .z file
+      $srcFileStream = [System.IO.File]::OpenRead($srcFile)
         
-        # Create a GZip input stream using SharpZipLib
-        $gzipInputStream = New-Object ICSharpCode.SharpZipLib.GZip.GZipInputStream($srcFileStream)
-        $outputStream = [System.IO.MemoryStream]::new()
+      # Create a GZip input stream using SharpZipLib
+      $gzipInputStream = New-Object ICSharpCode.SharpZipLib.GZip.GZipInputStream($srcFileStream)
+      $outputStream = [System.IO.MemoryStream]::new()
 
-        # Copy the decompressed data to the output stream
-        $gzipInputStream.CopyTo($outputStream)
+      # Copy the decompressed data to the output stream
+      $gzipInputStream.CopyTo($outputStream)
 
-        # Get decompressed data
-        $output = $outputStream.ToArray()
+      # Get decompressed data
+      $output = $outputStream.ToArray()
 
-        # Write decompressed data to the destination file
-        [System.IO.File]::WriteAllBytes($destFile, $output)
+      # Write decompressed data to the destination file
+      [System.IO.File]::WriteAllBytes($destFile, $output)
 
-        # Close the streams
-        $gzipInputStream.Close()
-        $srcFileStream.Close()
+      # Close the streams
+      $gzipInputStream.Close()
+      $srcFileStream.Close()
 
-        # Preserve the timestamp (CreationTimeUtc)
-        $timestamp = (Get-Item $srcFile).CreationTimeUtc
-        Set-ItemProperty -Path $destFile -Name CreationTimeUtc -Value $timestamp
+      # Preserve the timestamp (CreationTimeUtc)
+      $timestamp = (Get-Item $srcFile).CreationTimeUtc
+      Set-ItemProperty -Path $destFile -Name CreationTimeUtc -Value $timestamp
     }
   }
 
