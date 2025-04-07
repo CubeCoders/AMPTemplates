@@ -24,29 +24,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# --- Dependency Checks ---
-if (-not (Get-Command perl -ErrorAction SilentlyContinue)) {
-  Write-Host "Error: Executable 'perl' is not found. Please install it, ideally from https://strawberryperl.com, and add it to the System PATH."
-  exit 1
-}
-
-# Get the Perl site library path dynamically
-$perlSiteLib = & perl -MConfig -e "print \$Config{installsitelib}" 2>$null
-
-if (-not $perlSiteLib -or -not (Test-Path $perlSiteLib)) {
-  Write-Host "Error: Unable to determine Perl site library path or it does not exist."
-  exit 1
-}
-
-# Export it into the environment for subsequent Perl calls
-$env:PERL5LIB = $perlSiteLib
-
-# Check if the Compress::Raw::Zlib module is available
-if (-not (perl -MCompress::Raw::Zlib -e '1' 2>&1)) {
-  Write-Host "Error: Perl module 'Compress::Raw::Zlib' not found. Please install it."
-  exit 1
-}
-
 # --- Variables ---
 $workshopContentDir = ".\376030\steamapps\workshop\content\346110"
 $modsInstallDir = ".\376030\ShooterGame\Content\Mods"
@@ -144,49 +121,26 @@ function Install-Mod {
     }
   }
 
-  # Decompress .z files
-  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" | ForEach-Object {
-    $srcFile = $_.FullName
-    $destFile = "$modDestDir\$($_.Name.Substring(0, $_.Name.Length - 2))"
-    if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
-      # Uncompress .z files with Perl
-      Get-Content -Path $srcFile -Raw -AsByteStream | perl -M'Compress::Raw::Zlib' -e '
-        my $sig;
-        read(STDIN, $sig, 8) or die "Unable to read compressed file: $!";
-        if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00"){
-          die "Bad file magic";
-        }
-        my $data;
-        read(STDIN, $data, 24) or die "Unable to read compressed file: $!";
-        my ($chunksizelo, $chunksizehi,
-          $comprtotlo,  $comprtothi,
-          $uncomtotlo,  $uncomtothi)  = unpack("(LLLLLL)<", $data);
-        my @chunks = ();
-        my $comprused = 0;
-        while ($comprused < $comprtotlo) {
-          read(STDIN, $data, 16) or die "Unable to read compressed file: $!";
-          my ($comprsizelo, $comprsizehi,
-            $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
-          push @chunks, $comprsizelo;
-          $comprused += $comprsizelo;
-        }
-        foreach my $comprsize (@chunks) {
-          read(STDIN, $data, $comprsize) or die "File read failed: $!";
-          my ($inflate, $status) = new Compress::Raw::Zlib::Inflate();
-          my $output;
-          $status = $inflate->inflate($data, $output, 1);
-          if ($status != Z_STREAM_END) {
-            die "Bad compressed stream; status: " . ($status);
-          }
-          if (length($data) != 0) {
-            die "Unconsumed data in input"
-          }
-          print $output;
-        }
-      ' > $destFile
-      # Touch the file to preserve timestamp
-      (Get-Item $srcFile).CreationTimeUtc | Set-ItemProperty -Path $destFile -Name CreationTimeUtc
-    }
+  # Decompress the .z file using .NET's GzipStream class
+  try {
+      # Open the source .z file as an input stream
+      $inputStream = [System.IO.File]::OpenRead($srcFile)
+      $outputStream = [System.IO.File]::Create($destFile)
+
+      # Create a GzipStream for decompression
+      $gzipStream = New-Object System.IO.Compression.GzipStream($inputStream, [System.IO.Compression.CompressionMode]::Decompress)
+
+      # Copy the decompressed content to the output stream
+      $gzipStream.CopyTo($outputStream)
+
+      # Close streams
+      $gzipStream.Close()
+      $outputStream.Close()
+      $inputStream.Close()
+
+      Write-Host "Decompressed $srcFile to $destFile"
+  } catch {
+      Write-Host "Error decompressing $srcFile: $_"
   }
 
   # --- Generate .mod File ---
@@ -200,36 +154,44 @@ function Install-Mod {
   # Fetch mod name from Steam Community
   $modName = Invoke-RestMethod "http://steamcommunity.com/sharedfiles/filedetails/?id=$modId" | Select-String -Pattern '<div class="workshopItemTitle">([^<]*)</div>' | ForEach-Object { $_.Matches.Groups[1].Value } | Select-Object -First 1
 
-  # Use Perl to read mod.info and write .mod file
-  Get-Content -Path $modInfoFile -Raw -AsByteStream | perl -e '
-    my $data;
-    { local $/; $data = <STDIN>; }
-    my $mapnamelen = unpack("@0 L<", $data);
-    my $mapname = substr($data, 4, $mapnamelen - 1);
-    my $nummaps = unpack("@" . ($mapnamelen + 4) . " L<", $data);
-    my $pos = $mapnamelen + 8;
-    my $modname = ($ARGV[2] || $mapname) . "\x00";
-    my $modnamelen = length($modname);
-    my $modpath = "../../../" . $ARGV[0] . "/Content/Mods/" . $ARGV[1] . "\x00";
-    my $modpathlen = length($modpath);
-    print pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
-      $ARGV[1], 0, $modnamelen, $modname, $modpathlen, $modpath,
-      $nummaps);
-    for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++){
-      my $mapfilelen = unpack("@" . ($pos) . " L<", $data);
-      my $mapfile = substr($data, $mapnamelen + 12, $mapfilelen);
-      print pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
-      $pos = $pos + 4 + $mapfilelen;
-    }
-    print "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
-  ' "ShooterGame" "$modId" "$modName" > $modOutputFile
+  try {
+    # Read the mod.info file content
+    $modInfoContent = Get-Content -Path $modInfoFile -Raw
+    $mapnamelen = [BitConverter]::ToInt32([System.Text.Encoding]::UTF8.GetBytes($modInfoContent.Substring(0, 4)), 0)
+    $mapname = $modInfoContent.Substring(4, $mapnamelen - 1)
+    $nummaps = [BitConverter]::ToInt32([System.Text.Encoding]::UTF8.GetBytes($modInfoContent.Substring($mapnamelen + 4, 4)), 0)
 
-  # Append modmeta.info if it exists, otherwise append default footer
-  $modmetaFile = "$modSrcDir\modmeta.info"
-  if (Test-Path $modmetaFile) {
-    Get-Content $modmetaFile | Add-Content $modOutputFile
-  } else {
-    [System.IO.File]::AppendAllText($modOutputFile, '\x01\x00\x00\x00\x08\x00\x00\x00ModType\x00\x02\x00\x00\x001\x00')
+    # Create mod name and mod path (null-terminated strings)
+    $modname = $modName + [char]0
+    $modpath = "../../../ShooterGame/Content/Mods/" + $modInfoFile.BaseName + [char]0
+
+    # Open the .mod file for writing in binary mode
+    $modFileStream = New-Object System.IO.FileStream($modOutputFile, [System.IO.FileMode]::Create)
+    $writer = New-Object System.IO.BinaryWriter($modFileStream)
+
+    # Write header and mod info to the .mod file
+    $writer.Write([BitConverter]::GetBytes($nummaps))
+    $writer.Write([System.Text.Encoding]::UTF8.GetBytes($modname))
+    $writer.Write([System.Text.Encoding]::UTF8.GetBytes($modpath))
+
+    # Optionally, if there are maps, write them out (this part can be adjusted as needed for the map data)
+    for ($i = 0; $i -lt $nummaps; $i++) {
+        $mapfilelen = [BitConverter]::ToInt32([System.Text.Encoding]::UTF8.GetBytes($modInfoContent.Substring($mapnamelen + 8 + ($i * 4), 4)), 0)
+        $mapfile = $modInfoContent.Substring($mapnamelen + 12 + ($i * $mapfilelen), $mapfilelen)
+        $writer.Write([BitConverter]::GetBytes($mapfilelen))
+        $writer.Write([System.Text.Encoding]::UTF8.GetBytes($mapfile))
+    }
+
+    # Write end of file signature
+    $writer.Write([byte[]](0x33, 0xFF, 0x22, 0xFF, 0x02, 0x00, 0x00, 0x00, 0x01))
+
+    # Close the file
+    $writer.Close()
+    $modFileStream.Close()
+
+    Write-Host "Created .mod file: $modOutputFile"
+  } catch {
+      Write-Host "Error creating .mod file: $_"
   }
 
   # Set timestamp of .mod file to match the mod.info file
