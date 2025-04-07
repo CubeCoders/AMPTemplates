@@ -93,14 +93,14 @@ function Install-Mod {
   # Create necessary sub-directories in destination
   Get-ChildItem -Path $modSrcDir -Directory -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
     $destDir = "$modDestDir\$($_.FullName.Substring($modSrcDir.Length))"
-    New-Item -ItemType Directory -Force -Path $destDir
+    New-Item -ItemType Directory -Force -Path $destDir > $null
   }
 
   # Remove files in destination not present in source
   Get-ChildItem -Path $modDestDir -File -ErrorAction SilentlyContinue | ForEach-Object {
     $file = $_.FullName.Substring($modDestDir.Length + 1)
     if (-not (Test-Path "$modSrcDir\$file") -and -not (Test-Path "$modSrcDir\$file.z")) {
-      Remove-Item "$modDestDir\$file"
+      Remove-Item "$modDestDir\$file" > $null
     }
   }
 
@@ -108,7 +108,7 @@ function Install-Mod {
   Get-ChildItem -Path $modDestDir -Directory -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
     $dir = $_.FullName.Substring($modDestDir.Length + 1)
     if (-not (Test-Path "$modSrcDir\$dir")) {
-      Remove-Item $_.FullName -Recurse
+      Remove-Item $_.FullName -Recurse > $null
     }
   }
 
@@ -117,7 +117,7 @@ function Install-Mod {
     $srcFile = $_.FullName
     $destFile = Join-Path $modDestDir $_.Name
     if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
-    New-Item -ItemType HardLink -Path $destFile -Target $srcFile
+    New-Item -ItemType HardLink -Path $destFile -Target $srcFile > $null
     }
   }
 
