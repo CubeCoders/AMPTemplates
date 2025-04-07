@@ -85,7 +85,7 @@ function Install-Mod {
   $srcFile = ""
   $destFile = ""
 
-  New-Item -ItemType Directory -Force -Path $modDestDir
+  New-Item -ItemType Directory -Force -Path $modDestDir > $null
 
   # Determine actual source directory based on branch
   $modSrcDir = "$modSrcToplevelDir\WindowsNoEditor"
@@ -128,7 +128,7 @@ function Install-Mod {
     $srcFile = $_.FullName
     $destFile = Join-Path $modDestDir $_.Name
     if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
-    New-Item -ItemType HardLink -Path $destFile -Target $srcFile > $null
+      New-Item -ItemType HardLink -Path $destFile -Target $srcFile > $null
     }
   }
 
@@ -208,15 +208,15 @@ function Install-Mod {
 
   # Process the maps
   for ($mapnum = 0; $mapnum -lt $nummaps; $mapnum++) {
-      $mapfilelen = [BitConverter]::ToUInt32($data, $pos)
-      $mapfile = [System.Text.Encoding]::ASCII.GetString($data, $mapnamelen + 12, $mapfilelen)
+    $mapfilelen = [BitConverter]::ToUInt32($data, $pos)
+    $mapfile = [System.Text.Encoding]::ASCII.GetString($data, $mapnamelen + 12, $mapfilelen)
 
-      # Pack the mapfile data
-      $modOutputData.AddRange([BitConverter]::GetBytes($mapfilelen))
-      $modOutputData.AddRange([System.Text.Encoding]::ASCII.GetBytes($mapfile))
+    # Pack the mapfile data
+    $modOutputData.AddRange([BitConverter]::GetBytes($mapfilelen))
+    $modOutputData.AddRange([System.Text.Encoding]::ASCII.GetBytes($mapfile))
 
-      # Move to next position
-      $pos += 4 + $mapfilelen
+    # Move to next position
+    $pos += 4 + $mapfilelen
   }
 
   # Append the footer
