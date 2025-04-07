@@ -117,9 +117,9 @@ function Install-Mod {
   }
 
   # Decompress the .z file using .NET's GzipStream class
-  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" -ErrorAction SilentlyContinue | ForEach-Object {
+  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
     $srcFile = $_.FullName
-    $destFile = "$modDestDir\$($_.Name.Substring(0, $_.Name.Length - 2))"
+    $destFile = Join-Path $modDestDir ($_.FullName.Substring($modSrcDir.Length) -replace '\.z$', '')"
     
     # Check if the destination file doesn't exist or the source file is newer
     if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
