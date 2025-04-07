@@ -50,7 +50,7 @@ function Download-Mod {
 
   while ($true) {
     $output = & .\steamcmd.exe +force_install_dir 376030 +login anonymous +workshop_download_item 346110 $modId validate +quit 2>&1
-    $Write-Host $output
+    Write-Host $output
     $lastLine = $output | Select-Object -Last 1
 
     if ($lastLine -match "Timeout downloading item") {
