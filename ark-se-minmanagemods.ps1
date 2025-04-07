@@ -112,87 +112,86 @@ function Install-Mod {
     $srcFile = $_.FullName
     $destFile = Join-Path $modDestDir $_.Name
     if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
-    New-Item -ItemType HardLink -Path $destFile -Target $srcFile > $null
+      New-Item -ItemType HardLink -Path $destFile -Target $srcFile > $null
     }
   }
 
   # Decompress the .z file using .NET's GzipStream class
-  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
+  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" -ErrorAction SilentlyContinue | ForEach-Object {
     $srcFile = $_.FullName
-    $destFile = Join-Path $modDestDir ($_.FullName.Substring($modSrcDir.Length) -replace '\.z$', '')"
+    $destFile = Join-Path $modDestDir (($_.FullName.Substring($modSrcDir.Length)) -replace '\.z$', '')
     
     # Check if the destination file doesn't exist or the source file is newer
     if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
         
-        # Open the .z file
-        $srcFileStream = [System.IO.File]::OpenRead($srcFile)
-        
-        # Read the magic signature (8 bytes)
-        $signature = New-Object byte[] 8
-        $srcFileStream.Read($signature, 0, 8)
+      # Read the entire file into memory
+      $srcFileBytes = [System.IO.File]::ReadAllBytes($srcFile)
 
-        # Validate the signature
-        if ($signature -ne [byte[]]@(0xC1, 0x83, 0x2A, 0x9E, 0x00, 0x00, 0x00, 0x00)) {
-            throw "Bad file magic"
-        }
+      # Keep track of position in the byte array
+      $pos = 0
 
-        # Read the next 24 bytes of data
-        $data = New-Object byte[] 24
-        $srcFileStream.Read($data, 0, 24)
+      # Read the magic signature (8 bytes)
+      $signature = $srcFileBytes[0..7]
+      $pos += 8
 
-        # Unpack the data (similar to Perl unpack)
-        $chunksizelo = [BitConverter]::ToUInt32($data, 0)
-        $chunksizehi = [BitConverter]::ToUInt32($data, 4)
-        $comprtotlo = [BitConverter]::ToUInt32($data, 8)
-        $comprtothi = [BitConverter]::ToUInt32($data, 12)
-        $uncomtotlo = [BitConverter]::ToUInt32($data, 16)
-        $uncomtothi = [BitConverter]::ToUInt32($data, 20)
+      # Validate the signature
+      if (-not ($signature -ceq [byte[]]@(0xC1, 0x83, 0x2A, 0x9E, 0x00, 0x00, 0x00, 0x00))) {
+        throw "Bad file magic"
+      }
 
-        # Initialize variables
-        $chunks = @()
-        $comprused = 0
+      # Read the next 24 bytes of header data
+      $data = $srcFileBytes[$pos..($pos + 23)]
+      $pos += 24
 
-        # Process each chunk size
-        while ($comprused -lt $comprtotlo) {
-            $chunkData = New-Object byte[] 16
-            $srcFileStream.Read($chunkData, 0, 16)
+      # Unpack values from header
+      $chunksizelo   = [BitConverter]::ToUInt32($data, 0)
+      $chunksizehi   = [BitConverter]::ToUInt32($data, 4)
+      $comprtotlo    = [BitConverter]::ToUInt32($data, 8)
+      $comprtothi    = [BitConverter]::ToUInt32($data, 12)
+      $uncomtotlo    = [BitConverter]::ToUInt32($data, 16)
+      $uncomtothi    = [BitConverter]::ToUInt32($data, 20)
 
-            $comprsizelo = [BitConverter]::ToUInt32($chunkData, 0)
-            $comprsizehi = [BitConverter]::ToUInt32($chunkData, 4)
-            $uncomsizelo = [BitConverter]::ToUInt32($chunkData, 8)
-            $uncomsizehi = [BitConverter]::ToUInt32($chunkData, 12)
-            
-            # Add the chunk size to the list
-            $chunks += $comprsizelo
-            $comprused += $comprsizelo
-        }
+      # Read chunk headers
+      $chunks = @()
+      $comprused = 0
+      while ($comprused -lt $comprtotlo) {
+        $chunkData = $srcFileBytes[$pos..($pos + 15)]
+        $pos += 16
 
-        # Process the chunks and decompress
-        foreach ($comprsize in $chunks) {
-            $chunkData = New-Object byte[] $comprsize
-            $srcFileStream.Read($chunkData, 0, $comprsize)
+        $comprsizelo   = [BitConverter]::ToUInt32($chunkData, 0)
+        $comprsizehi   = [BitConverter]::ToUInt32($chunkData, 4)
+        $uncomsizelo   = [BitConverter]::ToUInt32($chunkData, 8)
+        $uncomsizehi   = [BitConverter]::ToUInt32($chunkData, 12)
 
-            # Inflate (decompress) using System.IO.Compression
-            $inflater = New-Object System.IO.Compression.DeflateStream([System.IO.MemoryStream]::new($chunkData), [System.IO.Compression.CompressionMode]::Decompress)
-            $outputStream = [System.IO.MemoryStream]::new()
+        $chunks += $comprsizelo
+        $comprused += $comprsizelo
+      }
 
-            $inflater.CopyTo($outputStream)
+      # Decompress chunks
+      $outputStream = [System.IO.MemoryStream]::new()
 
-            # Get decompressed data
-            $output = $outputStream.ToArray()
+      foreach ($comprsize in $chunks) {
+        $chunkData = $srcFileBytes[$pos..($pos + $comprsize - 1)]
+        $pos += $comprsize
 
-            # Write decompressed data to the destination file
-            [System.IO.File]::WriteAllBytes($destFile, $output)
-        }
+        $ms = [System.IO.MemoryStream]::new($chunkData, 0, $chunkData.Length)
+        $inflater = [System.IO.Compression.DeflateStream]::new($ms, [System.IO.Compression.CompressionMode]::Decompress)
 
-        # Close the source file stream
-        $srcFileStream.Close()
+        $inflater.CopyTo($outputStream)
+        $inflater.Dispose()
+        $ms.Dispose()
+      }
 
-        # Preserve the timestamp (CreationTimeUtc)
-        $timestamp = (Get-Item $srcFile).CreationTimeUtc
-        Set-ItemProperty -Path $modOutputFile -Name CreationTimeUtc -Value $timestamp
+      # Write decompressed data
+      $output = $outputStream.ToArray()
+      [System.IO.File]::WriteAllBytes($destFile, $output)
+      $outputStream.Dispose()
+
+      # Set timestamp
+      $timestamp = (Get-Item $srcFile).CreationTimeUtc
+      Set-ItemProperty -Path $destFile -Name CreationTimeUtc -Value $timestamp
     }
-}
+  }
 
   # --- Generate .mod File ---
   $modOutputFile = "$modsInstallDir\$modId.mod"
@@ -236,15 +235,15 @@ function Install-Mod {
 
   # Process the maps
   for ($mapnum = 0; $mapnum -lt $nummaps; $mapnum++) {
-      $mapfilelen = [BitConverter]::ToUInt32($data, $pos)
-      $mapfile = [System.Text.Encoding]::ASCII.GetString($data, $mapnamelen + 12, $mapfilelen)
+    $mapfilelen = [BitConverter]::ToUInt32($data, $pos)
+    $mapfile = [System.Text.Encoding]::ASCII.GetString($data, $mapnamelen + 12, $mapfilelen)
 
-      # Pack the mapfile data
-      $modOutputData.AddRange([BitConverter]::GetBytes($mapfilelen))
-      $modOutputData.AddRange([System.Text.Encoding]::ASCII.GetBytes($mapfile))
+    # Pack the mapfile data
+    $modOutputData.AddRange([BitConverter]::GetBytes($mapfilelen))
+    $modOutputData.AddRange([System.Text.Encoding]::ASCII.GetBytes($mapfile))
 
-      # Move to next position
-      $pos += 4 + $mapfilelen
+    # Move to next position
+    $pos += 4 + $mapfilelen
   }
 
   # Append the footer
