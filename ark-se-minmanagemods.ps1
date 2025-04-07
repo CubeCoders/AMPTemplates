@@ -30,7 +30,7 @@ if (-not (Get-Command perl -ErrorAction SilentlyContinue)) {
   exit 1
 }
 
-Write-Host "Perl @INC: " (& perl -e 'print join(";", @INC)')
+& perl -e "print join(';', \@INC)"
 
 # Get the Perl site library path dynamically
 $perlSiteLib = & perl -MConfig -e "print \$Config{installsitelib}" 2>$null
