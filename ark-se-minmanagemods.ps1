@@ -24,11 +24,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# --- Variables ---
-$workshopContentDir = ".\376030\steamapps\workshop\content\346110"
-$modsInstallDir = ".\376030\ShooterGame\Content\Mods"
-$modIds = @()
-
 # Function to install a mod with retry on timeout
 function Download-Mod {
   param (
@@ -100,7 +95,7 @@ function Install-Mod {
   Get-ChildItem -Path $modDestDir -File -ErrorAction SilentlyContinue | ForEach-Object {
     $file = $_.FullName.Substring($modDestDir.Length + 1)
     if (-not (Test-Path "$modSrcDir\$file") -and -not (Test-Path "$modSrcDir\$file.z")) {
-      Remove-Item "$modDestDir\$file" > $null
+      Remove-Item "$modDestDir\$file" -ErrorAction SilentlyContinue > $null
     }
   }
 
@@ -194,7 +189,8 @@ function Install-Mod {
         $srcFileStream.Close()
 
         # Preserve the timestamp (CreationTimeUtc)
-        (Get-Item $srcFile).CreationTimeUtc | Set-ItemProperty -Path $destFile -Name CreationTimeUtc
+        $timestamp = (Get-Item $srcFile).CreationTimeUtc
+        Set-ItemProperty -Path $modOutputFile -Name CreationTimeUtc -Value $timestamp
     }
 }
 
@@ -258,7 +254,8 @@ function Install-Mod {
   [System.IO.File]::WriteAllBytes($modOutputFile, $modOutputData.ToArray())
 
   # Set timestamp of .mod file to match the mod.info file
-  (Get-Item $modInfoFile).CreationTimeUtc | Set-ItemProperty -Path $modOutputFile -Name CreationTimeUtc
+  $timestamp = (Get-Item $modInfoFile).CreationTimeUtc
+  Set-ItemProperty -Path $modOutputFile -Name CreationTimeUtc -Value $timestamp
 }
 
 # --- Main Loop ---
@@ -269,9 +266,12 @@ if ($args.Length -eq 0) {
 
 Write-Host "Installing/updating mods..."
 
+Set-Location -Path './arkse'
+
+$workshopContentDir = "./376030/steamapps/workshop/content/346110"
+$modsInstallDir = "./376030/ShooterGame/Content/Mods"
 $modIds = $args[0] -replace '^"(.*)"$', '$1'
 $modIds = $modIds.Split(',')
-Set-Location -Path './arkse'
 
 foreach ($modId in $modIds) {
   Download-Mod -modId $modId
