@@ -44,30 +44,33 @@ downloadMod() {
 
     if echo "$output" | grep -q "Timed out"; then
       if [ "$retry" -lt "$max_retries" ]; then
-        echo "  Timeout detected. Retrying mod $mod_id..."
+        echo "  Timeout detected. Retrying mod $modId..."
         retry=$((retry + 1))
         sleep 2
-        continue
       else
-        echo "  Failed after retry: $mod_id"
+        echo "  Failed after retry: $modId"
+        break
       fi
+    else
+      break
     fi
-    break
-  done
+done
 }
 
 # Function to extract and install downloaded mod files
 installMod() {
   local modId="$1"
-  local modDestDir
+  local modDestDir="${modsInstallDir}/${modId}"
+  local modSrcToplevelDir="${workshopContentDir}/${modId}"
   local modSrcDir
-  local modSrcToplevelDir
   local modOutputFile
   local modInfoFile
   local modmetaFile
   local modName
+  local srcFile
+  local destFile
   
-  modDestDir="${modsInstallDir}/${modId}"
+  
   mkdir -p "$modDestDir"
 
   # Determine actual source directory based on branch
@@ -77,11 +80,11 @@ installMod() {
       modSrcDir="$modSrcToplevelDir"
     else
       echo "  Error: Mod source directory not found for branch Windows in $modSrcToplevelDir. Cannot find mod.info. Skipping mod $modId."
-      continue
+      return
     fi
   elif [ ! -f "$modSrcDir/mod.info" ]; then
     echo "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping mod $modId."
-    continue
+    return
   fi
 
   # Create necessary sub-directories in destination
