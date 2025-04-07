@@ -138,7 +138,7 @@ function Install-Mod {
     $destFile = "$modDestDir\$($_.Name.Substring(0, $_.Name.Length - 2))"
     if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
       # Uncompress .z files with Perl
-      perl -M'Compress::Raw::Zlib' -e '
+      Get-Content -Path $srcFile -Raw -AsByteStream | perl -M'Compress::Raw::Zlib' -e '
         my $sig;
         read(STDIN, $sig, 8) or die "Unable to read compressed file: $!";
         if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00"){
@@ -171,7 +171,7 @@ function Install-Mod {
           }
           print $output;
         }
-      ' < $srcFile > $destFile
+      ' > $destFile
       # Touch the file to preserve timestamp
       (Get-Item $srcFile).CreationTimeUtc | Set-ItemProperty -Path $destFile -Name CreationTimeUtc
     }
@@ -189,7 +189,7 @@ function Install-Mod {
   $modName = Invoke-RestMethod "http://steamcommunity.com/sharedfiles/filedetails/?id=$modId" | Select-String -Pattern '<div class="workshopItemTitle">([^<]*)</div>' | ForEach-Object { $_.Matches.Groups[1].Value } | Select-Object -First 1
 
   # Use Perl to read mod.info and write .mod file
-  perl -e '
+  Get-Content -Path $modInfoFile -Raw -AsByteStream | perl -e '
     my $data;
     { local $/; $data = <STDIN>; }
     my $mapnamelen = unpack("@0 L<", $data);
@@ -210,7 +210,7 @@ function Install-Mod {
       $pos = $pos + 4 + $mapfilelen;
     }
     print "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
-  ' "ShooterGame" "$modId" "$modName" < $modInfoFile > $modOutputFile
+  ' "ShooterGame" "$modId" "$modName" > $modOutputFile
 
   # Append modmeta.info if it exists, otherwise append default footer
   $modmetaFile = "$modSrcDir\modmeta.info"
