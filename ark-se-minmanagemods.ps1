@@ -140,7 +140,7 @@ function Install-Mod {
 
       Write-Host "Decompressed $srcFile to $destFile"
   } catch {
-      Write-Host "Error decompressing $srcFile: $($Error[0])"
+      Write-Host "Error decompressing $srcFile"
   }
 
   # --- Generate .mod File ---
@@ -191,7 +191,7 @@ function Install-Mod {
 
     Write-Host "Created .mod file: $modOutputFile"
   } catch {
-      Write-Host "Error creating .mod file: $($Error[0])"
+      Write-Host "Error creating .mod file"
   }
 
   # Set timestamp of .mod file to match the mod.info file
