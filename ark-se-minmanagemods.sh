@@ -40,7 +40,7 @@ downloadMod() {
   local maxRetries=5
 
   while true; do
-    output=$(./steamcmd.sh +login anonymous +force_install_dir 376030 +workshop_download_item 346110 "$modId" validate +quit 2>&1)
+    output=$(./steamcmd.sh +force_install_dir 376030 +login anonymous +workshop_download_item 346110 "$modId" validate +quit 2>&1)
     echo "$output"
 
     if echo "$output" | grep -q "Timed out"; then
