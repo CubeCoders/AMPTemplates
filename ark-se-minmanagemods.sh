@@ -28,21 +28,45 @@
 command -v perl >/dev/null 2>&1 || { echo >&2 "Error: Executable 'perl' is not installed. Please install it."; exit 1; }
 perl -MCompress::Raw::Zlib -e 1 >/dev/null 2>&1 || { echo >&2 "Error: Perl module 'Compress::Raw::Zlib' not found. Please install it."; exit 1; }
 
-# --- Main Logic ---
-workshopContentDir="./arkse/376030/steamapps/workshop/content/346110"
-modsInstallDir="./arkse/376030/ShooterGame/Content/Mods"
+# --- Variables ---
+workshopContentDir="./376030/steamapps/workshop/content/346110"
+modsInstallDir="./376030/ShooterGame/Content/Mods"
+modIds=()
 
-if [ ! -d "$workshopContentDir" ]; then
-  echo "No mods to install."
-  exit 0
-fi
+# Function to install a mod with retry on timeout
+downloadMod() {
+  local modId="$1"
+  local retry=0
+  local maxRetries=5
 
-echo "Installing mods..."
+  while true; do
+    output=$(steamcmd +login anonymous +force_install_dir 376030 +workshop_download_item 346110 "$modId" validate +quit 2>&1)
 
-# --- Loop through downloaded mods ---
-find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while read -r modSrcToplevelDir; do
+    if echo "$output" | grep -q "Timed out"; then
+      if [ "$retry" -lt "$max_retries" ]; then
+        echo "  Timeout detected. Retrying mod $mod_id..."
+        retry=$((retry + 1))
+        sleep 2
+        continue
+      else
+        echo "  Failed after retry: $mod_id"
+      fi
+    fi
+    break
+  done
+}
 
-  modId="$(basename "$modSrcToplevelDir")"
+# Function to extract and install downloaded mod files
+installMod() {
+  local modId="$1"
+  local modDestDir
+  local modSrcDir
+  local modSrcToplevelDir
+  local modOutputFile
+  local modInfoFile
+  local modmetaFile
+  local modName
+  
   modDestDir="${modsInstallDir}/${modId}"
   mkdir -p "$modDestDir"
 
@@ -60,7 +84,6 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while read -r modSr
     continue
   fi
 
-  # --- Sync/Copy Files ---
   # Create necessary sub-directories in destination
   find "$modSrcDir" -type d -printf "$modDestDir/%P\0" | xargs -0 -r mkdir -p
 
@@ -140,7 +163,6 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while read -r modSr
   fi
 
   # Fetch mod name from Steam Community
-  modName=""
   modName=$(wget -qO- "http://steamcommunity.com/sharedfiles/filedetails/?id=${modId}" | sed -n 's|^.*<div class="workshopItemTitle">\([^<]*\)</div>.*|\1|p' | head -n 1)
   
   # Use Perl to read mod.info and write .mod file
@@ -177,7 +199,23 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while read -r modSr
 
   # Set timestamp of .mod file to match the mod.info file
   touch -c -r "$modInfoFile" "$modOutputFile"
+}
 
+# Main loop
+
+if [ -z "$1" ]; then
+  echo "No mod IDs specified"
+  exit 1
+fi
+
+echo "Installing mods..."
+
+IFS=',' read -ra modIds <<< "$1"
+cd ./arkse
+
+for modId in "${modIds[@]}"; do
+  downloadMod "$modId"
+  installMod "$modId"
 done
 
 echo "Mod installation process finished."
