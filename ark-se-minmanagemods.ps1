@@ -128,8 +128,7 @@ function Install-Mod {
       $br = [System.IO.BinaryReader]::new($fs)
 
       $signature = $br.ReadBytes(8)
-      if (-not ($signature -ceq [byte[]]@(0xC1, 0x83, 0x2A, 0x9E, 0x00, 0x00, 0x00, 0x00))) {
-        $br.Close(); $fs.Close()
+      if (-not ($signature[0..7] -join ',' -eq '193,131,42,158,0,0,0,0')) {
         throw "Bad file magic"
       }
 
