@@ -76,39 +76,46 @@ Get-ChildItem -Path $workshopContentDir -Directory | ForEach-Object {
     return
   }
 
-  # --- Sync/Copy Files ---
+  # --- Sync/Copy Files (Excluding .z*) ---
   try {
     if (Test-Path -LiteralPath $modDestDir) {
       Remove-Item -LiteralPath $modDestDir -Recurse -Force -ErrorAction Stop
     }
-    Copy-Item -LiteralPath $modSrcDir -Destination $modDestDir -Recurse -Force -ErrorAction Stop
+    Copy-Item -LiteralPath $modSrcDir -Destination $modDestDir -Recurse -Force -Exclude '*.z', '*.z.uncompressed_size' -ErrorAction Stop
   } catch {
-    Write-Host "  Error copying files for mod $modId from $modSrcDir to $modsDestDir. Error: $($_.Exception.Message). Skipping mod $modId."
+    Write-Host "  Error copying files for mod $modId from $modSrcDir to $modDestDir. Error: $($_.Exception.Message). Skipping mod $modId."
     return
   }
 
-  # --- Decompress .z files (using Perl) ---
-  $zFiles = Get-ChildItem -Path $modDestDir -Recurse -Filter *.z -ErrorAction SilentlyContinue
+  # --- Decompress .z files (using Perl, Source -> Destination) ---
+  $zFiles = Get-ChildItem -Path $modSrcDir -Recurse -Filter *.z -ErrorAction SilentlyContinue
   if ($zFiles) {
-    $perlDecompressScript = 'use strict; use warnings; use File::Basename; use File::Copy; use Compress::Raw::Zlib; my ($infile, $outfile) = @ARGV; my $tempoutfile = $outfile . ".tmpperl$$"; open(IN, "<:raw", $infile) or die "Cannot open input $infile: $!"; my $sig; read(IN, $sig, 8) == 8 or die "Unable to read signature from $infile: $!"; if ($sig ne "\xC1\x83\x2A\x9E\x00\x00\x00\x00") { die "Bad file magic in $infile"; } my $header; read(IN, $header, 24) == 24 or die "Unable to read header from $infile: $!"; my ($cl, $ch, $ctl, $cth, $utl, $uth) = unpack("(L<L<L<L<L<L<)", $header); my @chunks = (); my $cu = 0; while ($cu < $ctl) { my $chdr; read(IN, $chdr, 16) == 16 or die "Unable to read chunk header from $infile: $!"; my ($csl, $csh, $usl, $ush) = unpack("(L<L<L<L<)", $chdr); push @chunks, $csl; $cu += $csl; } open(OUT, ">:raw", $tempoutfile) or die "Cannot open output $tempoutfile: $!"; foreach my $cs (@chunks) { my $d; read(IN, $d, $cs) == $cs or die "File read failed for chunk in $infile: $!"; my ($inf, $st) = new Compress::Raw::Zlib::Inflate(); my $o; $st = $inf->inflate($d, $o, 1); if ($st != Z_OK && $st != Z_STREAM_END) { die "Decompression error in $infile; status: $st"; } print OUT $o; } close IN; close OUT; unless (rename($tempoutfile, $outfile)) { unlink $tempoutfile; die "Failed to rename $tempoutfile to $outfile: $!"; } exit 0;'
+    $perlDecompressScript = 'use strict; use warnings; use File::Basename; use File::Copy; use Compress::Raw::Zlib; my ($infile, $outfile) = @ARGV; my $tempoutfile = $outfile . ".tmpperl$$"; open(IN, "<:raw", $infile) or die "Cannot open input $infile: $!"; my $sig; read(IN, $sig, 8) == 8 or die "Unable to read signature from $infile: $!"; if ($sig ne "\xC1\x83\x2A\x9E\x00\x00\x00\x00") { die "Bad file magic in $infile"; } my $header; read(IN, $header, 24) == 24 or die "Unable to read header from $infile: $!"; my ($cl, $ch, $ctl, $cth, $utl, $uth) = unpack("(L<L<L<L<L<L<)", $header); my @chunks = (); my $cu = 0; while ($cu < $ctl) { my $chdr; read(IN, $chdr, 16) == 16 or die "Unable to read chunk header from $infile: $!"; my ($csl, $csh, $usl, $ush) = unpack("(L<L<L<L<)", $chdr); push @chunks, $csl; $cu += $csl; } use File::Path qw(make_path); my $outdir = dirname($tempoutfile); unless (-d $outdir) { make_path($outdir) or die "Cannot create directory $outdir: $!"; } open(OUT, ">:raw", $tempoutfile) or die "Cannot open output $tempoutfile: $!"; foreach my $cs (@chunks) { my $d; read(IN, $d, $cs) == $cs or die "File read failed for chunk in $infile: $!"; my ($inf, $st) = new Compress::Raw::Zlib::Inflate(); my $o; $st = $inf->inflate($d, $o, 1); if ($st != Z_OK && $st != Z_STREAM_END) { die "Decompression error in $infile; status: $st"; } print OUT $o; } close IN; close OUT; unless (rename($tempoutfile, $outfile)) { unlink $tempoutfile; die "Failed to rename $tempoutfile to $outfile: $!"; } exit 0;'
 
     foreach ($zFileItem in $zFiles) {
+      # Source path is the .z file found
       $zSrcFile = $zFileItem.FullName
-      $zDestFile = $zSrcFile -replace '\.z$'
+      # Calculate the relative path within the mod structure
+      $relativeZPath = $zFileItem.FullName.Substring($modSrcDir.Length)
+      # Calculate the final destination path for the DECOMPRESSED file
+      $zDestFile = Join-Path -Path $modDestDir -ChildPath ($relativeZPath -replace '\.z$')
+
+      # Check timestamp against DESTINATION path
       if (-not (Test-Path -LiteralPath $zDestFile) -or ($zFileItem.LastWriteTimeUtc -gt (Get-Item -LiteralPath $zDestFile -ErrorAction SilentlyContinue).LastWriteTimeUtc)) {
-        # Execute Perl simply, check exit code, suppress stderr from PS side
+        $destDirForFile = Split-Path $zDestFile -Parent
+        if (-not (Test-Path -LiteralPath $destDirForFile)) {
+           New-Item -ItemType Directory -Path $destDirForFile -Force -ErrorAction SilentlyContinue | Out-Null
+        }
+
         & $perlPath.Path -e $perlDecompressScript $zSrcFile $zDestFile 2>$null
-        if ($?) { # Check if last command succeeded
+        if ($?) {
+          # Set timestamp on the DESTINATION file
           (Get-Item -LiteralPath $zDestFile).LastWriteTimeUtc = $zFileItem.LastWriteTimeUtc
-          Remove-Item -LiteralPath $zSrcFile -Force -ErrorAction SilentlyContinue
         } else {
-          # Silently remove partial file on failure
           if (Test-Path -LiteralPath $zDestFile) { Remove-Item -LiteralPath $zDestFile -Force -ErrorAction SilentlyContinue }
         }
-      } else {
-        # Remove copied .z file if target exists and is newer/same
-        Remove-Item -LiteralPath $zSrcFile -Force -ErrorAction SilentlyContinue
       }
+      # else: Destination exists and is up-to-date, do nothing with source .z file
     }
   }
 
