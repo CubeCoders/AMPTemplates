@@ -213,7 +213,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-echo "Installing mods..."
+echo "Installing/updating mods..."
 
 modIds=$(echo "$1" | sed 's/^"\(.*\)"$/\1/')
 IFS=',' read -ra modIds <<< "$modIds"
@@ -224,5 +224,5 @@ for modId in "${modIds[@]}"; do
   installMod "$modId"
 done
 
-echo "Mod installation process finished."
+echo "Mod installation/update process finished."
 exit 0
