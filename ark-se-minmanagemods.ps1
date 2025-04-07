@@ -132,6 +132,7 @@ function Install-Mod {
 
       # Read the magic signature (8 bytes)
       $signature = $srcFileBytes[0..7]
+      $srcFileBytes[0..7] | ForEach-Object { "{0:X2}" -f $_ }
       $pos += 8
 
       # Validate the signature
