@@ -91,13 +91,13 @@ function Install-Mod {
   }
 
   # Create necessary sub-directories in destination
-  Get-ChildItem -Path $modSrcDir -Directory -Recurse | ForEach-Object {
+  Get-ChildItem -Path $modSrcDir -Directory -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
     $destDir = "$modDestDir\$($_.FullName.Substring($modSrcDir.Length))"
     New-Item -ItemType Directory -Force -Path $destDir
   }
 
   # Remove files in destination not present in source
-  Get-ChildItem -Path $modDestDir -File | ForEach-Object {
+  Get-ChildItem -Path $modDestDir -File -ErrorAction SilentlyContinue | ForEach-Object {
     $file = $_.FullName.Substring($modDestDir.Length + 1)
     if (-not (Test-Path "$modSrcDir\$file") -and -not (Test-Path "$modSrcDir\$file.z")) {
       Remove-Item "$modDestDir\$file"
@@ -105,7 +105,7 @@ function Install-Mod {
   }
 
   # Remove empty directories in destination
-  Get-ChildItem -Path $modDestDir -Directory -Recurse | ForEach-Object {
+  Get-ChildItem -Path $modDestDir -Directory -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
     $dir = $_.FullName.Substring($modDestDir.Length + 1)
     if (-not (Test-Path "$modSrcDir\$dir")) {
       Remove-Item $_.FullName -Recurse
@@ -113,16 +113,16 @@ function Install-Mod {
   }
 
   # Hardlink regular files
-  Get-ChildItem -Path $modSrcDir -File | ForEach-Object {
+  Get-ChildItem -Path $modSrcDir -File -ErrorAction SilentlyContinue | ForEach-Object {
     $srcFile = $_.FullName
     $destFile = Join-Path $modDestDir $_.Name
     if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
-      Create-HardLink -sourceFile $srcFile -destinationFile $destFile
+    New-Item -ItemType HardLink -Path $destFile -Target $srcFile
     }
   }
 
   # Decompress the .z file using .NET's GzipStream class
-  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" | ForEach-Object {
+  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" -ErrorAction SilentlyContinue | ForEach-Object {
     $srcFile = $_.FullName
     $destFile = "$modDestDir\$($_.Name.Substring(0, $_.Name.Length - 2))"
     
