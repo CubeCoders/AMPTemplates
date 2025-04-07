@@ -124,57 +124,39 @@ function Install-Mod {
     # Check if the destination file doesn't exist or the source file is newer
     if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
         
-      # Read the entire file into memory
-      $srcFileBytes = [System.IO.File]::ReadAllBytes($srcFile)
+      $fs = [System.IO.File]::OpenRead($srcFile)
+      $br = [System.IO.BinaryReader]::new($fs)
 
-      # Keep track of position in the byte array
-      $pos = 0
-
-      # Read the magic signature (8 bytes)
-      $signature = $srcFileBytes[0..7]
-      $srcFileBytes[0..7] | ForEach-Object { "{0:X2}" -f $_ }
-      $pos += 8
-
-      # Validate the signature
+      $signature = $br.ReadBytes(8)
       if (-not ($signature -ceq [byte[]]@(0xC1, 0x83, 0x2A, 0x9E, 0x00, 0x00, 0x00, 0x00))) {
+        $br.Close(); $fs.Close()
         throw "Bad file magic"
       }
 
-      # Read the next 24 bytes of header data
-      $data = $srcFileBytes[$pos..($pos + 23)]
-      $pos += 24
+      $data = $br.ReadBytes(24)
+      $chunksizelo = [BitConverter]::ToUInt32($data, 0)
+      $chunksizehi = [BitConverter]::ToUInt32($data, 4)
+      $comprtotlo  = [BitConverter]::ToUInt32($data, 8)
+      $comprtothi  = [BitConverter]::ToUInt32($data, 12)
+      $uncomtotlo  = [BitConverter]::ToUInt32($data, 16)
+      $uncomtothi  = [BitConverter]::ToUInt32($data, 20)
 
-      # Unpack values from header
-      $chunksizelo   = [BitConverter]::ToUInt32($data, 0)
-      $chunksizehi   = [BitConverter]::ToUInt32($data, 4)
-      $comprtotlo    = [BitConverter]::ToUInt32($data, 8)
-      $comprtothi    = [BitConverter]::ToUInt32($data, 12)
-      $uncomtotlo    = [BitConverter]::ToUInt32($data, 16)
-      $uncomtothi    = [BitConverter]::ToUInt32($data, 20)
-
-      # Read chunk headers
       $chunks = @()
       $comprused = 0
       while ($comprused -lt $comprtotlo) {
-        $chunkData = $srcFileBytes[$pos..($pos + 15)]
-        $pos += 16
-
-        $comprsizelo   = [BitConverter]::ToUInt32($chunkData, 0)
-        $comprsizehi   = [BitConverter]::ToUInt32($chunkData, 4)
-        $uncomsizelo   = [BitConverter]::ToUInt32($chunkData, 8)
-        $uncomsizehi   = [BitConverter]::ToUInt32($chunkData, 12)
+        $chunkData = $br.ReadBytes(16)
+        $comprsizelo = [BitConverter]::ToUInt32($chunkData, 0)
+        $comprsizehi = [BitConverter]::ToUInt32($chunkData, 4)
+        $uncomsizelo = [BitConverter]::ToUInt32($chunkData, 8)
+        $uncomsizehi = [BitConverter]::ToUInt32($chunkData, 12)
 
         $chunks += $comprsizelo
         $comprused += $comprsizelo
       }
 
-      # Decompress chunks
       $outputStream = [System.IO.MemoryStream]::new()
-
       foreach ($comprsize in $chunks) {
-        $chunkData = $srcFileBytes[$pos..($pos + $comprsize - 1)]
-        $pos += $comprsize
-
+        $chunkData = $br.ReadBytes($comprsize)
         $ms = [System.IO.MemoryStream]::new($chunkData, 0, $chunkData.Length)
         $inflater = [System.IO.Compression.DeflateStream]::new($ms, [System.IO.Compression.CompressionMode]::Decompress)
 
@@ -183,12 +165,13 @@ function Install-Mod {
         $ms.Dispose()
       }
 
-      # Write decompressed data
+      $br.Close()
+      $fs.Close()
+
       $output = $outputStream.ToArray()
       [System.IO.File]::WriteAllBytes($destFile, $output)
       $outputStream.Dispose()
 
-      # Set timestamp
       $timestamp = (Get-Item $srcFile).CreationTimeUtc
       Set-ItemProperty -Path $destFile -Name CreationTimeUtc -Value $timestamp
     }
