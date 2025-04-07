@@ -49,20 +49,18 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while read -r modSr
   # Determine actual source directory based on branch
   modSrcDir="$modSrcToplevelDir/WindowsNoEditor"
   if [ ! -d "$modSrcDir" ]; then
-    # Fallback to top-level if WindowsNoEditor doesn't exist but mod.info does
     if [ -f "$modSrcToplevelDir/mod.info" ]; then
       modSrcDir="$modSrcToplevelDir"
     else
       echo "  Error: Mod source directory not found for branch Windows in $modSrcToplevelDir. Cannot find mod.info. Skipping mod $modId."
       continue
     fi
-  # Check if WindowsNoEditor exists but is missing mod.info
   elif [ ! -f "$modSrcDir/mod.info" ]; then
     echo "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping mod $modId."
     continue
   fi
 
- # --- Sync/Copy Files ---
+  # --- Sync/Copy Files ---
   # Create necessary sub-directories in destination
   find "$modSrcDir" -type d -printf "$modDestDir/%P\0" | xargs -0 -r mkdir -p
 
@@ -75,19 +73,16 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while read -r modSr
 
   # Remove empty directories in destination
   find "$modDestDir" -depth -type d -printf "%P\n" | while read -r d; do
-      if [ ! -d "$modSrcDir/$d" ]; then
-        rmdir "$modDestDir/$d"
-      fi
+    if [ ! -d "$modSrcDir/$d" ]; then
+      rmdir "$modDestDir/$d"
+    fi
   done
 
   # Copy/link regular files (using reflink primarily)
   find "$modSrcDir" -type f ! \( -name '*.z' -or -name '*.z.uncompressed_size' \) -printf "%P\n" | while read -r f; do
     srcFile="$modSrcDir/$f"
     destFile="$modDestDir/$f"
-    # Check if destination doesn't exist or source is newer
     if [ ! -f "$destFile" ] || [ "$srcFile" -nt "$destFile" ]; then
-#      mkdir -p "$(dirname "$destFile")"
-      # Attempt reflink, fall back to standard copy within cp if needed
       cp --reflink=auto -p "$srcFile" "$destFile"
     fi
   done
@@ -96,40 +91,42 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while read -r modSr
   find "$modSrcDir" -type f -name '*.z' -printf "%P\n" | while read -r f; do
     srcFile="$modSrcDir/$f"
     destFile="$modDestDir/${f%.z}"
-    # Check if dest doesn't exist or source is newer
     if [ ! -f "$destFile" ] || [ "$srcFile" -nt "$destFile" ]; then
-      mkdir -p "$(dirname "$destFile")"
-      # Decompress using Perl
-      if perl -M'Compress::Raw::Zlib' -e '
-          # (Perl decompression code unchanged)
-          my $infile = $ARGV[0]; my $outfile = $ARGV[1];
-          open(IN, "<", $infile) or die "Cannot open input $infile: $!"; binmode IN;
-          my $sig; read(IN, $sig, 8) == 8 or die "Unable to read signature from $infile: $!";
-          if ($sig ne "\xC1\x83\x2A\x9E\x00\x00\x00\x00") { die "Bad file magic in $infile"; }
-          my $header; read(IN, $header, 24) == 24 or die "Unable to read header from $infile: $!";
-          my ($cl, $ch, $ctl, $cth, $utl, $uth) = unpack("(L<L<L<L<L<L<)", $header);
-          my @chunks = (); my $cu = 0;
-          while ($cu < $ctl) {
-              my $chdr; read(IN, $chdr, 16) == 16 or die "Unable to read chunk header from $infile: $!";
-              my ($csl, $csh, $usl, $ush) = unpack("(L<L<L<L<)", $chdr);
-              push @chunks, $csl; $cu += $csl;
+      perl -M'Compress::Raw::Zlib' -e '
+        my $sig;
+        read(STDIN, $sig, 8) or die "Unable to read compressed file: $!";
+        if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00"){
+          die "Bad file magic";
+        }
+        my $data;
+        read(STDIN, $data, 24) or die "Unable to read compressed file: $!";
+        my ($chunksizelo, $chunksizehi,
+            $comprtotlo,  $comprtothi,
+            $uncomtotlo,  $uncomtothi)  = unpack("(LLLLLL)<", $data);
+        my @chunks = ();
+        my $comprused = 0;
+        while ($comprused < $comprtotlo) {
+          read(STDIN, $data, 16) or die "Unable to read compressed file: $!";
+          my ($comprsizelo, $comprsizehi,
+              $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
+          push @chunks, $comprsizelo;
+          $comprused += $comprsizelo;
+        }
+        foreach my $comprsize (@chunks) {
+          read(STDIN, $data, $comprsize) or die "File read failed: $!";
+          my ($inflate, $status) = new Compress::Raw::Zlib::Inflate();
+          my $output;
+          $status = $inflate->inflate($data, $output, 1);
+          if ($status != Z_STREAM_END) {
+            die "Bad compressed stream; status: " . ($status);
           }
-          open(OUT, ">", $outfile) or die "Cannot open output $outfile: $!"; binmode OUT;
-          foreach my $cs (@chunks) {
-              my $d; read(IN, $d, $cs) == $cs or die "File read failed for chunk in $infile: $!";
-              my ($inf, $st) = new Compress::Raw::Zlib::Inflate(); my $o;
-              $st = $inf->inflate($d, $o, 1);
-              if ($st != Z_OK && $st != Z_STREAM_END) { die "Decompression error in $infile; status: $st"; }
-              print OUT $o;
+          if (length($data) != 0) {
+            die "Unconsumed data in input"
           }
-          close IN; close OUT; exit 0;
-      ' "$srcFile" "$destFile"; then
-        # If successful, match timestamp
-        touch -c -r "$srcFile" "$destFile"
-      else
-        # If failed, remove potentially incomplete output file
-        rm -f "$destFile"
-      fi
+          print $output;
+        }
+      ' < "$srcFile" > "$destFile"
+      touch -c -r "$srcFile" "$destFile"
     fi
   done
 
@@ -144,79 +141,42 @@ find "$workshopContentDir" -mindepth 1 -maxdepth 1 -type d | while read -r modSr
 
   # Fetch mod name from Steam Community
   modName=""
-  modNameRaw=""
-  modNameRaw=$(wget -qO- "http://steamcommunity.com/sharedfiles/filedetails/?id=${modId}" | sed -n 's|^.*<div class="workshopItemTitle">\([^<]*\)</div>.*|\1|p' | head -n 1)
-  # Trim whitespace
-  modName=$(echo "$modNameRaw" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-
+  modName=$(wget -qO- "http://steamcommunity.com/sharedfiles/filedetails/?id=${modId}" | sed -n 's|^.*<div class="workshopItemTitle">\([^<]*\)</div>.*|\1|p' | head -n 1)
+  
   # Use Perl to read mod.info and write .mod file
-  if perl -e '
-    use strict; use warnings;
-    # Args: arkserverdir_rel, modId_str, modName_fetched, mod_info_path, output_mod_path
-    my ($arkserverdir_rel, $modId_str, $modName_fetched, $mod_info_path, $output_mod_path) = @ARGV;
-
-    open(my $fh_in, "<:raw", $mod_info_path) or die "Cannot open mod.info $mod_info_path: $!";
-    my $data; { local $/; $data = <$fh_in>; } close $fh_in;
-
-    my $mapnamelen = unpack("L<", substr($data, 0, 4));
-    my $mapname = $mapnamelen > 0 ? substr($data, 4, $mapnamelen - 1) : ""; # Assuming length includes null
-    my $nummaps_offset = 4 + $mapnamelen;
-    my $nummaps = unpack("L<", substr($data, $nummaps_offset, 4));
-    my $pos = $nummaps_offset + 4; # Position after num maps field
-
-    my $modname = ($modName_fetched || $mapname); # Use fetched name or mapname
-    $modname .= "\x00"; my $modnamelen = length($modname);
-
-    my $modpath = "../../../" . $arkserverdir_rel . "/Content/Mods/" . $modId_str . "\x00";
+  perl -e '
+    my $data;
+    { local $/; $data = <STDIN>; }
+    my $mapnamelen = unpack("@0 L<", $data);
+    my $mapname = substr($data, 4, $mapnamelen - 1);
+    my $nummaps = unpack("@" . ($mapnamelen + 4) . " L<", $data);
+    my $pos = $mapnamelen + 8;
+    my $modname = ($ARGV[2] || $mapname) . "\x00";
+    my $modnamelen = length($modname);
+    my $modpath = "../../../" . $ARGV[0] . "/Content/Mods/" . $ARGV[1] . "\x00";
     my $modpathlen = length($modpath);
-
-    my $modid_packed = pack("L<", int($modId_str));
-
-    open(my $fh_out, ">:raw", $output_mod_path) or die "Cannot open output .mod file $output_mod_path: $!";
-
-    print $fh_out $modid_packed;                  # Mod ID (uint32)
-    print $fh_out pack("L<", 0);                  # Padding (uint32)
-    print $fh_out pack("L<", $modnamelen);        # Mod Name Length (uint32)
-    print $fh_out $modname;                       # Mod Name String (null-terminated)
-    print $fh_out pack("L<", $modpathlen);        # Mod Path Length (uint32)
-    print $fh_out $modpath;                       # Mod Path String (null-terminated)
-    print $fh_out pack("L<", $nummaps);           # Number of Maps (uint32)
-
-    my $map_read_pos = $pos; # Use the calculated position for reading maps
+    print pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
+      $ARGV[1], 0, $modnamelen, $modname, $modpathlen, $modpath,
+      $nummaps);
     for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++){
-        my $mapfilelen = unpack("@" . ($map_read_pos) . " L<", $data); # Read length at current position
-        my $mapfile = $mapfilelen > 0 ? substr($data, $map_read_pos + 4, $mapfilelen) : "";
-        my $mapfilepackedlen = $mapfilelen; # Use length directly
-
-        print $fh_out pack("L<", $mapfilepackedlen); # Print length
-        print $fh_out $mapfile;                      # Print name (including null from source)
-
-        $map_read_pos += (4 + $mapfilelen); # Advance position correctly
+      my $mapfilelen = unpack("@" . ($pos) . " L<", $data);
+      my $mapfile = substr($data, $mapnamelen + 12, $mapfilelen);
+      print pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
+      $pos = $pos + 4 + $mapfilelen;
     }
+    print "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
+  ' "ShooterGame" "$modId" "$modName" <"$modInfoFile" >"$modOutputFile"
 
-    print $fh_out "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01"; # Footer (Note: uses 0x01 ending)
-
-    close $fh_out;
-    exit 0; # Success
-    ' "ShooterGame" "$modId" "$modName" "$modInfoFile" "$modOutputFile"; then
-
-    # Append modmeta.info if it exists, otherwise append default footer
-    modmetaFile="$modSrcDir/modmeta.info"
-    if [ -f "$modmetaFile" ]; then
-      cat "$modmetaFile" >> "$modOutputFile"
-    else
-      # Default ModType footer (Type 1), append directly as binary
-      printf '\x01\x00\x00\x00\x08\x00\x00\x00ModType\x00\x02\x00\x00\x001\x00' >> "$modOutputFile"
-    fi
-
-     # Set timestamp of .mod file to match the mod.info file
-     touch -c -r "$modInfoFile" "$modOutputFile"
+  # Append modmeta.info if it exists, otherwise append default footer
+  modmetaFile="$modSrcDir/modmeta.info"
+  if [ -f "$modmetaFile" ]; then
+    cat "$modmetaFile" >> "$modOutputFile"
   else
-    # Handle failure of Perl script to generate .mod file
-    echo "  Error: Failed to generate .mod file for $modId using Perl. Skipping."
-    rm -f "$modOutputFile" # Clean up potentially empty/partial file
-    continue
+    printf '\x01\x00\x00\x00\x08\x00\x00\x00ModType\x00\x02\x00\x00\x001\x00' >> "$modOutputFile"
   fi
+
+  # Set timestamp of .mod file to match the mod.info file
+  touch -c -r "$modInfoFile" "$modOutputFile"
 
 done
 
