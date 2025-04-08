@@ -132,63 +132,80 @@ function Install-Mod {
   }
 
   # Decompress the .z file using SharpZipLib
-  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" -Recurse | ForEach-Object {
+  Get-ChildItem -Path $modSrcDir -Filter *.z -Recurse -File | ForEach-Object {
     $srcFile = $_.FullName
-    $relPath = $srcFile.Substring($modSrcDir.Length).TrimStart('\', '/')
+    $relPath = $srcFile.Substring($modSrcDir.Length).TrimStart('\')
     $destFile = Join-Path $modDestDir ($relPath -replace '\.z$', '')
 
-    if (-not (Test-Path $destFile) -or ((Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime)) {
-        $fs = New-Object System.IO.FileStream($srcFile, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read)
-        $br = New-Object System.IO.BinaryReader($fs)
+    $destDir = Split-Path $destFile
+    if (-not (Test-Path $destDir)) {
+        New-Item -ItemType Directory -Path $destDir -Force | Out-Null
+    }
 
-        # Read and validate header
-        $expectedMagic = [byte[]](0xC1, 0x83, 0x2A, 0x9E, 0x00, 0x00, 0x00, 0x00)
-        $magic = $br.ReadBytes(8)
-        if (-not ($magic -join ',' -eq $expectedMagic -join ',')) {
-            throw "Invalid file signature: $srcFile"
+    if (-not (Test-Path $destFile) -or ((Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime)) {
+
+        # Open stream using SharpZipLib
+        $fs = New-Object System.IO.FileStream($srcFile, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read)
+
+        # Read signature
+        $signature = New-Object byte[] 8
+        $fs.Read($signature, 0, 8) | Out-Null
+        $expected = @(0xC1, 0x83, 0x2A, 0x9E, 0x00, 0x00, 0x00, 0x00)
+
+        for ($i = 0; $i -lt 8; $i++) {
+            if ($signature[$i] -ne $expected[$i]) {
+                throw "Invalid file signature: $srcFile"
+            }
         }
 
-        # Read header values
-        $chunksizelo  = $br.ReadUInt32()
-        $chunksizehi  = $br.ReadUInt32()
-        $comprtotlo   = $br.ReadUInt32()
-        $comprtothi   = $br.ReadUInt32()
-        $uncomptotlo  = $br.ReadUInt32()
-        $uncomptothi  = $br.ReadUInt32()
+        # Read 24-byte header
+        $header = New-Object byte[] 24
+        $fs.Read($header, 0, 24) | Out-Null
 
+        $chunksizelo = [BitConverter]::ToUInt32($header, 0)
+        $chunksizehi = [BitConverter]::ToUInt32($header, 4)
+        $comprtotlo = [BitConverter]::ToUInt32($header, 8)
+        $comprtothi = [BitConverter]::ToUInt32($header, 12)
+        $uncomtotlo = [BitConverter]::ToUInt32($header, 16)
+        $uncomtothi = [BitConverter]::ToUInt32($header, 20)
+
+        $chunks = @()
         $comprused = 0
-        $chunkSizes = @()
 
         while ($comprused -lt $comprtotlo) {
-            $comprsizelo  = $br.ReadUInt32()
-            $comprsizehi  = $br.ReadUInt32()
-            $uncompsizelo = $br.ReadUInt32()
-            $uncompsizehi = $br.ReadUInt32()
+            $chunkHeader = New-Object byte[] 16
+            $fs.Read($chunkHeader, 0, 16) | Out-Null
 
-            $chunkSizes += $comprsizelo
+            $comprsizelo = [BitConverter]::ToUInt32($chunkHeader, 0)
+            $uncomsizelo = [BitConverter]::ToUInt32($chunkHeader, 8)
+
+            $chunks += [PSCustomObject]@{
+                ComprSize = $comprsizelo
+                UncomprSize = $uncomsizelo
+            }
+
             $comprused += $comprsizelo
         }
 
-        $outputStream = New-Object System.IO.MemoryStream
+        $destStream = [System.IO.File]::Create($destFile)
 
-        foreach ($size in $chunkSizes) {
-            $compressed = $br.ReadBytes($size)
+        foreach ($chunk in $chunks) {
+            $chunkData = New-Object byte[] $chunk.ComprSize
+            $fs.Read($chunkData, 0, $chunk.ComprSize) | Out-Null
 
-            $memStream = New-Object System.IO.MemoryStream($compressed, 0, $size)
-            $inflater = New-Object ICSharpCode.SharpZipLib.Zip.Compression.Streams.InflaterInputStream($memStream, (New-Object ICSharpCode.SharpZipLib.Zip.Compression.Inflater $false))
-            $inflater.CopyTo($outputStream)
-            $inflater.Dispose()
-            $memStream.Dispose()
+            $inputStream = New-Object System.IO.MemoryStream(,$chunkData)
+            $inflater = New-Object ICSharpCode.SharpZipLib.Zip.Compression.Streams.InflaterInputStream($inputStream, [ICSharpCode.SharpZipLib.Zip.Compression.Inflater]::new($true))
+            $buffer = New-Object byte[] 8192
+            while (($read = $inflater.Read($buffer, 0, $buffer.Length)) -gt 0) {
+                $destStream.Write($buffer, 0, $read)
+            }
+            $inflater.Close()
         }
 
         $fs.Close()
-        $br.Close()
+        $destStream.Close()
 
-        # Write decompressed data
-        [System.IO.File]::WriteAllBytes($destFile, $outputStream.ToArray())
-        $outputStream.Dispose()
-
-        # Copy timestamp
+        # Preserve timestamp
         $timestamp = (Get-Item $srcFile).CreationTimeUtc
         Set-ItemProperty -Path $destFile -Name CreationTimeUtc -Value $timestamp
     }
