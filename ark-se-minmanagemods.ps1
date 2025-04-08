@@ -26,9 +26,9 @@
 
 # Install SharpZipLib for .NET 4.5+ to handle .z files
 $libDir = Join-Path $PSScriptRoot 'SharpZipLib'
-$ziplibDll = Join-Path $libDir 'ICSharpCode.SharpZipLib.dll'
+$ziplibDll = Join-Path $libDir 'lib\net45\ICSharpCode.SharpZipLib.dll'
 if (-not (Test-Path $ziplibDll)) {
-  $nupkgUrl = "https://www.nuget.org/api/v2/package/SharpZipLib"
+  $nupkgUrl = "https://www.nuget.org/api/v2/package/SharpZipLib/1.3.3"
   $nupkgPath = Join-Path $libDir "SharpZipLib.nupkg"
   New-Item -ItemType Directory -Force -Path $libDir | Out-Null
   Invoke-WebRequest -Uri $nupkgUrl -OutFile $nupkgPath
