@@ -143,18 +143,14 @@ function Install-Mod {
     }
 
     # Skip if already extracted and up-to-date
-    if (Test-Path $destFile -and (Get-Item $srcFile).LastWriteTime -le (Get-Item $destFile).LastWriteTime) {
+    if ((Test-Path $destFile) -and (Get-Item $srcFile).LastWriteTime -le (Get-Item $destFile).LastWriteTime) {
         return
     }
 
     $fs = [System.IO.File]::OpenRead($srcFile)
 
-    # Check file signature
-    $signature = New-Object byte[] 8
-    $fs.Read($signature, 0, 8) | Out-Null
-    $expected = [byte[]](0xC1, 0x83, 0x2A, 0x9E, 0x00, 0x00, 0x00, 0x00)
-    if (-not ($signature -ceq $expected)) {
-        throw "Invalid file signature: $srcFile"
+    if (-not ($signature.Length -eq $expected.Length -and ($signature | ForEach-Object -Index ($i = 0) { $_ -eq $expected[$i++] }) -notcontains $false)) {
+      throw "Invalid file signature: $srcFile"
     }
 
     # Read header
