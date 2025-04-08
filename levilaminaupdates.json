@@ -25,10 +25,21 @@
     },
     {
         "UpdateStageName": "Lip Download",
-        "UpdateSourcePlatform": "All",
+        "UpdateSourcePlatform": "Windows",
         "UpdateSource": "GithubRelease",
         "UpdateSourceArgs": "futrime/lip",
         "UpdateSourceData": "lip-cli-win-x64-self-contained.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}lip",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "Lip Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "futrime/lip",
+        "UpdateSourceData": "llip-cli-linux-x64-self-contained.tar.gz",
         "UpdateSourceTarget": "{{$FullRootDir}}lip",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
@@ -40,6 +51,14 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
         "UpdateSourceArgs": "-NoProfile -Command \"cd levilamina/server; ../lip/lip install -y --upgrade github.com/LiteLDev/LeviLamina\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd levilamina/server; chmod +x ../lip/lip && ../lip/lip install -y --upgrade github.com/LiteLDev/LeviLamina\"",
         "SkipOnFailure": false
     },
     {
@@ -64,14 +83,6 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "./winescript.sh",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Server Installation",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd levilamina/server; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wine ../lip/lip.exe install -y --upgrade github.com/LiteLDev/LeviLamina\"",
         "SkipOnFailure": false
     },
     {
