@@ -132,38 +132,89 @@ function Install-Mod {
   }
 
   # Decompress the .z file using SharpZipLib
-  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" -Recurse -ErrorAction SilentlyContinue | ForEach-Object {  
+  Get-ChildItem -Path $modSrcDir -File -Filter "*.z" -Recurse | ForEach-Object {
     $srcFile = $_.FullName
-    $destFile = Join-Path $modDestDir ($_.FullName.Substring($modSrcDir.Length) -replace '\.z$', '')
+    $destFile = Join-Path $modDestDir ($_.FullName.Substring($modSrcDir.Length).TrimStart('\') -replace '\.z$', '')
 
-    # Check if the destination file doesn't exist or the source file is newer
-    if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
-
-      # Open the .z file
-      $srcFileStream = [System.IO.File]::OpenRead($srcFile)
-        
-      # Create a GZip input stream using SharpZipLib
-      $gzipInputStream = New-Object ICSharpCode.SharpZipLib.GZip.GZipInputStream($srcFileStream)
-      $outputStream = [System.IO.MemoryStream]::new()
-
-      # Copy the decompressed data to the output stream
-      $gzipInputStream.CopyTo($outputStream)
-
-      # Get decompressed data
-      $output = $outputStream.ToArray()
-
-      # Write decompressed data to the destination file
-      [System.IO.File]::WriteAllBytes($destFile, $output)
-
-      # Close the streams
-      $gzipInputStream.Close()
-      $srcFileStream.Close()
-
-      # Preserve the timestamp (CreationTimeUtc)
-      $timestamp = (Get-Item $srcFile).CreationTimeUtc
-      Set-ItemProperty -Path $destFile -Name CreationTimeUtc -Value $timestamp
+    # Ensure destination directory exists
+    $destDir = Split-Path $destFile
+    if (-not (Test-Path $destDir)) {
+        New-Item -ItemType Directory -Path $destDir -Force | Out-Null
     }
-  }
+
+    # Skip if already extracted and up-to-date
+    if (Test-Path $destFile -and (Get-Item $srcFile).LastWriteTime -le (Get-Item $destFile).LastWriteTime) {
+        return
+    }
+
+    $fs = [System.IO.File]::OpenRead($srcFile)
+
+    # Check file signature
+    $signature = New-Object byte[] 8
+    $fs.Read($signature, 0, 8) | Out-Null
+    $expected = [byte[]](0xC1, 0x83, 0x2A, 0x9E, 0x00, 0x00, 0x00, 0x00)
+    if (-not ($signature -ceq $expected)) {
+        throw "Invalid file signature: $srcFile"
+    }
+
+    # Read header
+    $header = New-Object byte[] 24
+    $fs.Read($header, 0, 24) | Out-Null
+    $chunksizelo   = [BitConverter]::ToUInt32($header, 0)
+    $chunksizehi   = [BitConverter]::ToUInt32($header, 4)
+    $comprtotlo    = [BitConverter]::ToUInt32($header, 8)
+    $comprtothi    = [BitConverter]::ToUInt32($header, 12)
+    $uncomptotlo   = [BitConverter]::ToUInt32($header, 16)
+    $uncomptothi   = [BitConverter]::ToUInt32($header, 20)
+
+    $comprused = 0
+    $chunkSizes = @()
+
+    while ($comprused -lt $comprtotlo) {
+        $chunkHeader = New-Object byte[] 16
+        $fs.Read($chunkHeader, 0, 16) | Out-Null
+
+        $comprsizelo = [BitConverter]::ToUInt32($chunkHeader, 0)
+        $comprsizehi = [BitConverter]::ToUInt32($chunkHeader, 4)
+        $uncomsizelo = [BitConverter]::ToUInt32($chunkHeader, 8)
+        $uncomsizehi = [BitConverter]::ToUInt32($chunkHeader, 12)
+
+        $chunkSizes += @{ 
+            Compressed = $comprsizelo
+            Uncompressed = $uncomsizelo
+        }
+
+        $comprused += $comprsizelo
+    }
+
+    $outStream = New-Object System.IO.MemoryStream
+
+    foreach ($chunk in $chunkSizes) {
+        $chunkBytes = New-Object byte[] $chunk.Compressed
+        $fs.Read($chunkBytes, 0, $chunk.Compressed) | Out-Null
+
+        $inMem = New-Object System.IO.MemoryStream(,$chunkBytes)
+        $inflater = New-Object ICSharpCode.SharpZipLib.Zip.Compression.Streams.InflaterInputStream($inMem)
+
+        $buffer = New-Object byte[] 8192
+        while (($read = $inflater.Read($buffer, 0, $buffer.Length)) -gt 0) {
+            $outStream.Write($buffer, 0, $read)
+        }
+
+        $inflater.Close()
+        $inMem.Close()
+    }
+
+    $fs.Close()
+
+    # Write final decompressed content
+    [System.IO.File]::WriteAllBytes($destFile, $outStream.ToArray())
+    $outStream.Close()
+
+    # Copy CreationTimeUtc from original file
+    $timestamp = (Get-Item $srcFile).CreationTimeUtc
+    Set-ItemProperty -Path $destFile -Name CreationTimeUtc -Value $timestamp
+}
 
   # --- Generate .mod File ---
   $modOutputFile = "$modsInstallDir\$modId.mod"
