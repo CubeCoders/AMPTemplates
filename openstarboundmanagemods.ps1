@@ -7,13 +7,15 @@ if (Test-Path $workshopDir) {
 
   Get-ChildItem -Path $workshopDir -Directory | ForEach-Object {
     $modID = $_.Name
-    $pakFile = Join-Path -Path $workshopDir -ChildPath "$modID/contents.pak"
+    $modPath = Join-Path -Path $workshopDir -ChildPath $modID
 
-    if (Test-Path $pakFile) {
+    $pakFile = Get-ChildItem -Path $modPath -Filter *.pak -File -ErrorAction SilentlyContinue | Select-Object -First 1
+
+    if ($pakFile) {
       $copyPath = "./$modID.pak"
-      Copy-Item -Path $pakFile -Destination $copyPath -Force | Out-Null
+      Copy-Item -Path $pakFile.FullName -Destination $copyPath -Force | Out-Null
     } else {
-      Write-Output "No contents.pak in $modID, skipping"
+      Write-Output "No .pak file in $modID, skipping"
     }
   }
 } else {
