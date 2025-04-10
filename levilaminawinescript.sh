@@ -21,7 +21,7 @@ export DISPLAY=:$DPY_NUM
 wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
 
-PACKAGES="vcrun2022 dotnet9"
+PACKAGES="vcrun2022"
 echo "" > winescript_log.txt 2>&1
 for PACKAGE in $PACKAGES; do
   ./winetricks -q $PACKAGE >> winescript_log.txt 2>&1
