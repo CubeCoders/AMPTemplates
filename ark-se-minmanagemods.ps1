@@ -27,7 +27,7 @@
 # Function to set up the environment for Strawberry Perl
 function Setup-StrawberryPerl {
 
-  $perlRoot = Join-Path $PSScriptRoot "arkse\Perl"
+  $perlRoot = Join-Path $PSScriptRoot "arkse\perl"
   $perlBin  = Join-Path $PerlRoot "perl\bin"
   $perlCbin = Join-Path $PerlRoot "c\bin"
 
