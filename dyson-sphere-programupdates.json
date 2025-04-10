@@ -84,6 +84,18 @@
         "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/config"
     },
     {
+        "UpdateStageName": "Mods Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/plugins/IlLine"
+    },
+    {
+        "UpdateStageName": "Mods Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/plugins/BulletTime"
+    },
+    {
         "UpdateStageName": "Nebula Mods Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "GithubRelease",
@@ -101,6 +113,26 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}BepInEx/config",
         "UpdateSourceArgs": "nebula.cfg",
         "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Required Mods Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://gcdn.thunderstore.io/live/repository/packages/PhantomGamers-IlLine-1.0.0.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}BepInEx/plugins/IlLine",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "Required Mods Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://gcdn.thunderstore.io/live/repository/packages/starfi5h-BulletTime-1.5.8.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}BepInEx/plugins/BulletTime",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
     },
     {
         "UpdateStageName": "Initialise Wine",
