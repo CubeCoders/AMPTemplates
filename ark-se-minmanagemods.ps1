@@ -158,7 +158,7 @@ function Install-Mod {
     if (-not (Test-Path $destFile) -or ((Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime)) {
       
       # Run the Perl decompression logic
-      perl -M'Compress::Raw::Zlib' -e @'
+      $perlScript = @'
 my $sig;
 read(STDIN, $sig, 8) or die "Unable to read compressed file: $!";
 if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00") {
@@ -191,11 +191,48 @@ foreach my $comprsize (@chunks) {
   }
   print $output;
 }
-'@ < $srcFile > $destFile
+'@
 
-      # Preserve last modified timestamp
-      $timestamp = (Get-Item $srcFile).LastWriteTimeUtc
-      (Get-Item $destFile).LastWriteTimeUtc = $timestamp
+      # Read the .z file as input bytes
+      $inputBytes = [System.IO.File]::ReadAllBytes($srcFile)
+
+      # Create and configure Perl process
+      $psi = New-Object System.Diagnostics.ProcessStartInfo
+      $psi.FileName = "perl"
+      $psi.Arguments = "-MCompress::Raw::Zlib -e `"${perlScript.Replace('"', '\"')}`""
+      $psi.UseShellExecute = $false
+      $psi.RedirectStandardInput = $true
+      $psi.RedirectStandardOutput = $true
+      $psi.RedirectStandardError = $true
+      $psi.CreateNoWindow = $true
+
+      $proc = [System.Diagnostics.Process]::Start($psi)
+
+      # Send input bytes (compressed) to Perl
+      $proc.StandardInput.BaseStream.Write($inputBytes, 0, $inputBytes.Length)
+      $proc.StandardInput.Close()
+
+      # Capture output
+      $outputStream = New-Object System.IO.MemoryStream
+      $buffer = New-Object byte[] 4096
+      while (($count = $proc.StandardOutput.BaseStream.Read($buffer, 0, $buffer.Length)) -gt 0) {
+        $outputStream.Write($buffer, 0, $count)
+      }
+
+      # Optionally show any Perl stderr output for debugging
+      $stderr = $proc.StandardError.ReadToEnd()
+      if ($stderr) {
+        Write-Host "Perl error: $stderr"
+      }
+
+      $proc.WaitForExit()
+
+      # Save to destination
+      [System.IO.File]::WriteAllBytes($destFile, $outputStream.ToArray())
+
+      # Preserve timestamp
+      $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
+      (Get-Item $destFile).LastWriteTimeUtc = $srcTime
     }
   }
 
