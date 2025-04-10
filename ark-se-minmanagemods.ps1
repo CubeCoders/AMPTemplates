@@ -88,8 +88,8 @@ function Install-Mod {
   $modDestDir = "$modsInstallDir\$modId"
   $modSrcToplevelDir = "$workshopContentDir\$modId"
   $modSrcDir = ""
-  $modOutputFile = ""
   $modInfoFile = ""
+  $modOutputFile = ""
   $modmetaFile = ""
   $modName = ""
   $srcFile = ""
@@ -144,7 +144,7 @@ function Install-Mod {
     }
   }
 
-  # Decompress the .z file using Perl
+  # Decompress the .z files using Perl
   Get-ChildItem -Path $modSrcDir -Filter *.z -Recurse -File | ForEach-Object {
     $srcFile = $_.FullName
     $relPath = $srcFile.Substring($modSrcDir.Length).TrimStart('\')
@@ -152,7 +152,7 @@ function Install-Mod {
 
     $destDir = Split-Path $destFile
     if (-not (Test-Path $destDir)) {
-      New-Item -ItemType Directory -Path $destDir -Force | Out-Null
+        New-Item -ItemType Directory -Path $destDir -Force | Out-Null
     }
 
     if (-not (Test-Path $destFile) -or ((Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime)) {
@@ -167,16 +167,16 @@ if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00") {
 my $data;
 read(STDIN, $data, 24) or die "Unable to read compressed file: $!";
 my ($chunksizelo, $chunksizehi,
-    $comprtotlo,  $comprtothi,
-    $uncomtotlo,  $uncomtothi)  = unpack("(LLLLLL)<", $data);
+  $comprtotlo,  $comprtothi,
+  $uncomtotlo,  $uncomtothi)  = unpack("(LLLLLL)<", $data);
 my @chunks = ();
 my $comprused = 0;
 while ($comprused < $comprtotlo) {
   read(STDIN, $data, 16) or die "Unable to read compressed file: $!";
   my ($comprsizelo, $comprsizehi,
-      $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
+    $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
   push @chunks, $comprsizelo;
-  $comprused += $comprsizelo;
+    $comprused += $comprsizelo;
 }
 foreach my $comprsize (@chunks) {
   read(STDIN, $data, $comprsize) or die "File read failed: $!";
@@ -191,56 +191,79 @@ foreach my $comprsize (@chunks) {
   }
   print $output;
 }
-'@
+'@ < $srcFile > $destFile
 
-      # Read mod.info binary content
-      $inputBytes = [System.IO.File]::ReadAllBytes($modInfoFile)
-
-      # Build Perl process
-      $psi = New-Object System.Diagnostics.ProcessStartInfo
-      $psi.FileName = "perl"
-      $escapedScript = $perlScript.Replace('"', '\"')
-      $psi.Arguments = "-e `"$escapedScript`" ShooterGame $modId $modName"
-      $psi.UseShellExecute = $false
-      $psi.RedirectStandardInput = $true
-      $psi.RedirectStandardOutput = $true
-      $psi.CreateNoWindow = $true
-
-      $proc = [System.Diagnostics.Process]::Start($psi)
-
-      # Feed input to Perl
-      $proc.StandardInput.BaseStream.Write($inputBytes, 0, $inputBytes.Length)
-      $proc.StandardInput.Close()
-
-      # Capture Perl output
-      $outputStream = New-Object System.IO.MemoryStream
-      $buffer = New-Object byte[] 4096
-      while (($count = $proc.StandardOutput.BaseStream.Read($buffer, 0, $buffer.Length)) -gt 0) {
-        $outputStream.Write($buffer, 0, $count)
-      }
-      $proc.WaitForExit()
-
-      # Append modmeta.info if it exists, else append default binary footer
-      if (Test-Path $modmetaFile) {
-        $modmetaBytes = [System.IO.File]::ReadAllBytes($modmetaFile)
-        $outputStream.Write($modmetaBytes, 0, $modmetaBytes.Length)
-      } else {
-        $defaultFooter = [byte[]] (0x01, 0x00, 0x00, 0x00,
-                                   0x08, 0x00, 0x00, 0x00,
-                                   0x4D, 0x6F, 0x64, 0x54, 0x79, 0x70, 0x65, 0x00,
-                                   0x02, 0x00, 0x00, 0x00,
-                                   0x31, 0x00)
-        $outputStream.Write($defaultFooter, 0, $defaultFooter.Length)
-      }
-
-      # Save output
-      [System.IO.File]::WriteAllBytes($modOutputFile, $outputStream.ToArray())
-
-      # Match timestamp from mod.info
-      $srcTime = (Get-Item $modInfoFile).LastWriteTimeUtc
-      (Get-Item $modOutputFile).LastWriteTimeUtc = $srcTime
+      # Preserve last modified timestamp
+      $timestamp = (Get-Item $srcFile).LastWriteTimeUtc
+      (Get-Item $destFile).LastWriteTimeUtc = $timestamp
     }
   }
+
+  # Generate .mod file
+  $perlScript = @'
+my $data;
+{ local $/; $data = <STDIN>; }
+my $mapnamelen = unpack("@0 L<", $data);
+my $mapname = substr($data, 4, $mapnamelen - 1);
+my $nummaps = unpack("@" . ($mapnamelen + 4) . " L<", $data);
+my $pos = $mapnamelen + 8;
+my $modname = ($ARGV[2] || $mapname) . "\x00";
+my $modnamelen = length($modname);
+my $modpath = "../../../" . $ARGV[0] . "/Content/Mods/" . $ARGV[1] . "\x00";
+my $modpathlen = length($modpath);
+print pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
+  $ARGV[1], 0, $modnamelen, $modname, $modpathlen, $modpath,
+  $nummaps);
+for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++){
+  my $mapfilelen = unpack("@" . ($pos) . " L<", $data);
+  my $mapfile = substr($data, $mapnamelen + 12, $mapfilelen);
+  print pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
+  $pos = $pos + 4 + $mapfilelen;
+}
+print "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
+'@
+
+  $inputBytes = [System.IO.File]::ReadAllBytes($modInfoFile)
+
+  $psi = New-Object System.Diagnostics.ProcessStartInfo
+  $psi.FileName = "perl"
+  $escapedScript = $perlScript.Replace('"', '\"')
+  $psi.Arguments = "-e `"$escapedScript`" ShooterGame $modId $modName"
+  $psi.UseShellExecute = $false
+  $psi.RedirectStandardInput = $true
+  $psi.RedirectStandardOutput = $true
+  $psi.CreateNoWindow = $true
+
+  $proc = [System.Diagnostics.Process]::Start($psi)
+
+  $proc.StandardInput.BaseStream.Write($inputBytes, 0, $inputBytes.Length)
+  $proc.StandardInput.Close()
+
+  $outputStream = New-Object System.IO.MemoryStream
+  $buffer = New-Object byte[] 4096
+  while (($count = $proc.StandardOutput.BaseStream.Read($buffer, 0, $buffer.Length)) -gt 0) {
+      $outputStream.Write($buffer, 0, $count)
+  }
+  $proc.WaitForExit()
+
+  # Append modmeta.info if it exists, else append default binary footer
+  if (Test-Path $modmetaFile) {
+      $modmetaBytes = [System.IO.File]::ReadAllBytes($modmetaFile)
+      $outputStream.Write($modmetaBytes, 0, $modmetaBytes.Length)
+  } else {
+      $defaultFooter = [byte[]] (0x01, 0x00, 0x00, 0x00,
+                                0x08, 0x00, 0x00, 0x00,
+                                0x4D, 0x6F, 0x64, 0x54, 0x79, 0x70, 0x65, 0x00,
+                                0x02, 0x00, 0x00, 0x00,
+                                0x31, 0x00)
+      $outputStream.Write($defaultFooter, 0, $defaultFooter.Length)
+  }
+
+  [System.IO.File]::WriteAllBytes($modOutputFile, $outputStream.ToArray())
+
+  # Match timestamp from mod.info
+  $srcTime = (Get-Item $modInfoFile).LastWriteTimeUtc
+  (Get-Item $modOutputFile).LastWriteTimeUtc = $srcTime
 }
 
 # --- Main Loop ---
