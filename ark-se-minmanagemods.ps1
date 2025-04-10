@@ -133,8 +133,10 @@ function Install-Mod {
     }
   }
 
-  # Hardlink regular files
-  Get-ChildItem -Path $modSrcDir -File -ErrorAction SilentlyContinue | ForEach-Object {
+  # Hardlink regular files (excluding .z and .z.uncompressed_size)
+  Get-ChildItem -Path $modSrcDir -File -ErrorAction SilentlyContinue | Where-Object {
+    $_.Name -notlike '*.z' -and $_.Name -notlike '*.z.uncompressed_size'
+  } | ForEach-Object {
     $srcFile = $_.FullName
     $destFile = Join-Path $modDestDir $_.Name
     if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
