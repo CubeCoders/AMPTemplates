@@ -49,7 +49,7 @@
         "UpdateStageName": "BepInEx Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://github.com/BepInEx/BepInEx/releases/download/v5.4.20/BepInEx_x64_5.4.20.0.zip",
+        "UpdateSourceData": "https://gcdn.thunderstore.io/live/repository/packages/xiaoye97-BepInEx-5.4.17.zip",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
@@ -60,18 +60,6 @@
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/plugins"
-    },
-    {
-        "UpdateStageName": "BepInEx patchers Directory Creation",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/patchers"
-    },
-    {
-        "UpdateStageName": "BepInEx config Directory Creation",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/config"
     },
     {
         "UpdateStageName": "Nebula Mods Download",
@@ -91,114 +79,6 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}BepInEx/config",
         "UpdateSourceArgs": "nebula.cfg",
         "OverwriteExistingFiles": false
-    },
-    {
-        "UpdateStageName": "Mods Directory Creation",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/temp"
-    },
-    {
-        "UpdateStageName": "Mods Directory Creation",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/plugins/IlLine"
-    },
-    {
-        "UpdateStageName": "Mods Directory Creation",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/plugins/CommonAPI"
-    },
-    {
-        "UpdateStageName": "Mods Directory Creation",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/patchers/CommonAPI"
-    },
-    {
-        "UpdateStageName": "Mods Directory Creation",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/plugins/BulletTime"
-    },
-    {
-        "UpdateStageName": "Mods Directory Creation",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/plugins/LDBTool"
-    },
-    {
-        "UpdateStageName": "Mods Directory Creation",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}BepInEx/plugins/DSPModSave"
-    },
-    {
-        "UpdateStageName": "Required Mods Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://gcdn.thunderstore.io/live/repository/packages/PhantomGamers-IlLine-1.0.0.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}BepInEx/plugins/IlLine",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
-    },
-    {
-        "UpdateStageName": "Required Mods Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://gcdn.thunderstore.io/live/repository/packages/CommonAPI-CommonAPI-1.6.5.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}BepInEx/temp",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
-    },
-    {
-        "UpdateStageName": "Required Mods Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://gcdn.thunderstore.io/live/repository/packages/starfi5h-BulletTime-1.4.7.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}BepInEx/plugins/BulletTime",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
-    },
-    {
-        "UpdateStageName": "Required Mods Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://gcdn.thunderstore.io/live/repository/packages/xiaoye97-LDBTool-3.0.1.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}BepInEx/plugins/LDBTool",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
-    },
-    {
-        "UpdateStageName": "Required Mods Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://gcdn.thunderstore.io/live/repository/packages/CommonAPI-DSPModSave-1.2.1.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}BepInEx/plugins/DSPModSave",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
-    },
-    {
-        "UpdateStageName": "CommonAPI Files Copy",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd dsp\\1366540\\BepInEx && xcopy /E /Y /I temp\\plugins\\* plugins\\CommonAPI\\ > NUL 2>&1 && xcopy /E /Y /I temp\\patchers\\* patchers\\CommonAPI\\ > NUL 2>&1 && rmdir /Q /S temp > NUL 2>&1",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "CommonAPI Files Copy",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd dsp/1366540/BepInEx && \\cp -rf temp/plugins/* plugins/CommonAPI/ >/dev/null 2>&1 && \\cp -rf temp/patchers/* patchers/CommonAPI/ >/dev/null 2>&1 && rm -rf temp >/dev/null 2>&1\"",
-        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Initialise Wine",
@@ -238,7 +118,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullBaseDir}}yson Sphere Program\\\"; cd dsp/.wine/drive_c/users/amp/Documents && ln -sf \\\"../../../../../1366540/Dyson Sphere Program\\\" ./\"",
+        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullBaseDir}}Dyson Sphere Program\\\"; cd dsp/.wine/drive_c/users/amp/Documents && ln -sf \\\"../../../../../1366540/Dyson Sphere Program\\\" ./\"",
         "SkipOnFailure": false
     }
 ]
