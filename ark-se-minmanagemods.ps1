@@ -24,19 +24,30 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# Install SharpZipLib for .NET 4.5+ to handle .z files
-$libDir = Join-Path $PSScriptRoot 'SharpZipLib'
-$ziplibDll = Join-Path $libDir 'lib\net45\ICSharpCode.SharpZipLib.dll'
-if (-not (Test-Path $ziplibDll)) {
-  $nupkgUrl = "https://www.nuget.org/api/v2/package/SharpZipLib/1.3.3"
-  $nupkgPath = Join-Path $libDir "SharpZipLib.nupkg"
-  New-Item -ItemType Directory -Force -Path $libDir | Out-Null
-  Invoke-WebRequest -Uri $nupkgUrl -OutFile $nupkgPath
-  Add-Type -AssemblyName System.IO.Compression.FileSystem
-  [System.IO.Compression.ZipFile]::ExtractToDirectory($nupkgPath, $libDir)
-  Remove-Item $nupkgPath
+# Function to set up the environment for Strawberry Perl
+function Setup-StrawberryPerl {
+
+  $perlRoot = Join-Path $PSScriptRoot "arkse\Perl"
+  $perlBin  = Join-Path $PerlRoot "perl\bin"
+  $perlCbin = Join-Path $PerlRoot "c\bin"
+
+  # Add Strawberry Perl to PATH
+  $env:PATH = "$perlBin;$perlCbin;$env:PATH"
+
+  # Check if the module is already installed
+  & perl -e "eval { require Compress::Raw::Zlib } or exit 1"
+  if ($LASTEXITCODE -eq 0) {
+      return
+  }
+
+  # Install cpanm if it's not available
+  if (-not (Get-Command cpanm -ErrorAction SilentlyContinue)) {
+      & perl -MCPAN -e "install App::cpanminus"
+  }
+
+  # Install the module silently
+  & cpanm --notest --quiet Compress::Raw::Zlib
 }
-Add-Type -Path $ziplibDll
 
 # Function to install a mod with retry on timeout
 function Download-Mod {
@@ -131,7 +142,7 @@ function Install-Mod {
     }
   }
 
-  # Decompress the .z file using SharpZipLib
+  # Decompress the .z file using Perl
   Get-ChildItem -Path $modSrcDir -Filter *.z -Recurse -File | ForEach-Object {
     $srcFile = $_.FullName
     $relPath = $srcFile.Substring($modSrcDir.Length).TrimStart('\')
@@ -139,140 +150,95 @@ function Install-Mod {
 
     $destDir = Split-Path $destFile
     if (-not (Test-Path $destDir)) {
-        New-Item -ItemType Directory -Path $destDir -Force | Out-Null
+      New-Item -ItemType Directory -Path $destDir -Force | Out-Null
     }
 
     if (-not (Test-Path $destFile) -or ((Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime)) {
-
-        # Open stream using SharpZipLib
-        $fs = New-Object System.IO.FileStream($srcFile, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read)
-
-        # Read signature
-        $signature = New-Object byte[] 8
-        $fs.Read($signature, 0, 8) | Out-Null
-        $expected = @(0xC1, 0x83, 0x2A, 0x9E, 0x00, 0x00, 0x00, 0x00)
-
-        for ($i = 0; $i -lt 8; $i++) {
-            if ($signature[$i] -ne $expected[$i]) {
-                throw "Invalid file signature: $srcFile"
-            }
-        }
-
-        # Read 24-byte header
-        $header = New-Object byte[] 24
-        $fs.Read($header, 0, 24) | Out-Null
-
-        $chunksizelo = [BitConverter]::ToUInt32($header, 0)
-        $chunksizehi = [BitConverter]::ToUInt32($header, 4)
-        $comprtotlo = [BitConverter]::ToUInt32($header, 8)
-        $comprtothi = [BitConverter]::ToUInt32($header, 12)
-        $uncomtotlo = [BitConverter]::ToUInt32($header, 16)
-        $uncomtothi = [BitConverter]::ToUInt32($header, 20)
-
-        $chunks = @()
-        $comprused = 0
-
-        while ($comprused -lt $comprtotlo) {
-            $chunkHeader = New-Object byte[] 16
-            $fs.Read($chunkHeader, 0, 16) | Out-Null
-
-            $comprsizelo = [BitConverter]::ToUInt32($chunkHeader, 0)
-            $uncomsizelo = [BitConverter]::ToUInt32($chunkHeader, 8)
-
-            $chunks += [PSCustomObject]@{
-                ComprSize = $comprsizelo
-                UncomprSize = $uncomsizelo
-            }
-
-            $comprused += $comprsizelo
-        }
-
-        $destStream = [System.IO.File]::Create($destFile)
-
-        foreach ($chunk in $chunks) {
-            $chunkData = New-Object byte[] $chunk.ComprSize
-            $fs.Read($chunkData, 0, $chunk.ComprSize) | Out-Null
-
-            $inputStream = New-Object System.IO.MemoryStream(,$chunkData)
-            $inflater = New-Object ICSharpCode.SharpZipLib.Zip.Compression.Streams.InflaterInputStream($inputStream, [ICSharpCode.SharpZipLib.Zip.Compression.Inflater]::new($true))
-            $buffer = New-Object byte[] 8192
-            while (($read = $inflater.Read($buffer, 0, $buffer.Length)) -gt 0) {
-                $destStream.Write($buffer, 0, $read)
-            }
-            $inflater.Close()
-        }
-
-        $fs.Close()
-        $destStream.Close()
-
-        # Preserve timestamp
-        $timestamp = (Get-Item $srcFile).CreationTimeUtc
-        Set-ItemProperty -Path $destFile -Name CreationTimeUtc -Value $timestamp
-    }
+      
+      # Run the Perl decompression logic
+      perl -M'Compress::Raw::Zlib' -e @'
+my $sig;
+read(STDIN, $sig, 8) or die "Unable to read compressed file: $!";
+if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00") {
+  die "Bad file magic";
 }
-
-  # --- Generate .mod File ---
-  $modOutputFile = "$modsInstallDir\$modId.mod"
-  $modInfoFile = "$modSrcDir\mod.info"
-  if (-not (Test-Path $modInfoFile)) {
-    Write-Host "  Error: $modInfoFile not found! Cannot generate .mod file. Skipping mod $modId."
-    return
+my $data;
+read(STDIN, $data, 24) or die "Unable to read compressed file: $!";
+my ($chunksizelo, $chunksizehi,
+    $comprtotlo,  $comprtothi,
+    $uncomtotlo,  $uncomtothi)  = unpack("(LLLLLL)<", $data);
+my @chunks = ();
+my $comprused = 0;
+while ($comprused < $comprtotlo) {
+  read(STDIN, $data, 16) or die "Unable to read compressed file: $!";
+  my ($comprsizelo, $comprsizehi,
+      $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
+  push @chunks, $comprsizelo;
+  $comprused += $comprsizelo;
+}
+foreach my $comprsize (@chunks) {
+  read(STDIN, $data, $comprsize) or die "File read failed: $!";
+  my ($inflate, $status) = new Compress::Raw::Zlib::Inflate();
+  my $output;
+  $status = $inflate->inflate($data, $output, 1);
+  if ($status != Z_STREAM_END) {
+    die "Bad compressed stream; status: " . ($status);
   }
-
-  # Fetch mod name from Steam Community
-  $modName = Invoke-RestMethod "http://steamcommunity.com/sharedfiles/filedetails/?id=$modId" | Select-String -Pattern '<div class="workshopItemTitle">([^<]*)</div>' | ForEach-Object { $_.Matches.Groups[1].Value } | Select-Object -First 1
-
-  # Read the file content
-  $data = [System.IO.File]::ReadAllBytes($modInfoFile)
-
-  # Unpack the values
-  $mapnamelen = [BitConverter]::ToUInt32($data, 0)
-  $mapname = [System.Text.Encoding]::ASCII.GetString($data, 4, $mapnamelen - 1)
-  $nummaps = [BitConverter]::ToUInt32($data, $mapnamelen + 4)
-  $pos = $mapnamelen + 8
-
-  # Get the mod name (like $modname in Perl)
-  $modname = if ($args[2]) { $args[2] } else { $mapname } + [char]0
-
-  # Calculate modname length and modpath
-  $modnamelen = $modname.Length
-  $modpath = "../../../" + $args[0] + "/Content/Mods/" + $args[1] + [char]0
-  $modpathlen = $modpath.Length
-
-  # Prepare the output data for writing
-  $modOutputData = New-Object System.Collections.Generic.List[byte]
-
-  # Pack the first part
-  $modOutputData.AddRange([BitConverter]::GetBytes([UInt32]$args[1]))
-  $modOutputData.AddRange([BitConverter]::GetBytes(0))
-  $modOutputData.AddRange([BitConverter]::GetBytes($modnamelen))
-  $modOutputData.AddRange([System.Text.Encoding]::ASCII.GetBytes($modname))
-  $modOutputData.AddRange([BitConverter]::GetBytes($modpathlen))
-  $modOutputData.AddRange([System.Text.Encoding]::ASCII.GetBytes($modpath))
-  $modOutputData.AddRange([BitConverter]::GetBytes($nummaps))
-
-  # Process the maps
-  for ($mapnum = 0; $mapnum -lt $nummaps; $mapnum++) {
-    $mapfilelen = [BitConverter]::ToUInt32($data, $pos)
-    $mapfile = [System.Text.Encoding]::ASCII.GetString($data, $mapnamelen + 12, $mapfilelen)
-
-    # Pack the mapfile data
-    $modOutputData.AddRange([BitConverter]::GetBytes($mapfilelen))
-    $modOutputData.AddRange([System.Text.Encoding]::ASCII.GetBytes($mapfile))
-
-    # Move to next position
-    $pos += 4 + $mapfilelen
+  if (length($data) != 0) {
+    die "Unconsumed data in input"
   }
+  print $output;
+}
+'@
 
-  # Append the footer
-  $modOutputData.AddRange([byte[]](0x33, 0xFF, 0x22, 0xFF, 0x02, 0x00, 0x00, 0x00, 0x01))
+      # Read mod.info binary content
+      $inputBytes = [System.IO.File]::ReadAllBytes($modInfoFile)
 
-  # Write to the file
-  [System.IO.File]::WriteAllBytes($modOutputFile, $modOutputData.ToArray())
+      # Build Perl process
+      $psi = New-Object System.Diagnostics.ProcessStartInfo
+      $psi.FileName = "perl"
+      $escapedScript = $perlScript.Replace('"', '\"')
+      $psi.Arguments = "-e `"$escapedScript`" ShooterGame $modId $modName"
+      $psi.UseShellExecute = $false
+      $psi.RedirectStandardInput = $true
+      $psi.RedirectStandardOutput = $true
+      $psi.CreateNoWindow = $true
 
-  # Set timestamp of .mod file to match the mod.info file
-  $timestamp = (Get-Item $modInfoFile).CreationTimeUtc
-  Set-ItemProperty -Path $modOutputFile -Name CreationTimeUtc -Value $timestamp
+      $proc = [System.Diagnostics.Process]::Start($psi)
+
+      # Feed input to Perl
+      $proc.StandardInput.BaseStream.Write($inputBytes, 0, $inputBytes.Length)
+      $proc.StandardInput.Close()
+
+      # Capture Perl output
+      $outputStream = New-Object System.IO.MemoryStream
+      $buffer = New-Object byte[] 4096
+      while (($count = $proc.StandardOutput.BaseStream.Read($buffer, 0, $buffer.Length)) -gt 0) {
+        $outputStream.Write($buffer, 0, $count)
+      }
+      $proc.WaitForExit()
+
+      # Append modmeta.info if it exists, else append default binary footer
+      if (Test-Path $modmetaFile) {
+        $modmetaBytes = [System.IO.File]::ReadAllBytes($modmetaFile)
+        $outputStream.Write($modmetaBytes, 0, $modmetaBytes.Length)
+      } else {
+        $defaultFooter = [byte[]] (0x01, 0x00, 0x00, 0x00,
+                                   0x08, 0x00, 0x00, 0x00,
+                                   0x4D, 0x6F, 0x64, 0x54, 0x79, 0x70, 0x65, 0x00,
+                                   0x02, 0x00, 0x00, 0x00,
+                                   0x31, 0x00)
+        $outputStream.Write($defaultFooter, 0, $defaultFooter.Length)
+      }
+
+      # Save output
+      [System.IO.File]::WriteAllBytes($modOutputFile, $outputStream.ToArray())
+
+      # Match timestamp from mod.info
+      $srcTime = (Get-Item $modInfoFile).LastWriteTimeUtc
+      (Get-Item $modOutputFile).LastWriteTimeUtc = $srcTime
+    }
+  }
 }
 
 # --- Main Loop ---
@@ -289,6 +255,8 @@ $workshopContentDir = Resolve-Path ".\376030\steamapps\workshop\content\346110"
 $modsInstallDir = Resolve-Path ".\376030\ShooterGame\Content\Mods"
 $modIds = $args[0] -replace '^"(.*)"$', '$1'
 $modIds = $modIds.Split(',')
+
+Setup-StrawberryPerl
 
 foreach ($modId in $modIds) {
   Download-Mod -modId $modId
