@@ -197,9 +197,11 @@ foreach my $comprsize (@chunks) {
       $inputBytes = [System.IO.File]::ReadAllBytes($srcFile)
 
       # Create and configure Perl process
+      $tempPerlScript = [System.IO.Path]::GetTempFileName() + ".pl"
+      Set-Content -Path $tempPerlScript -Value $perlScript -Encoding ASCII
       $psi = New-Object System.Diagnostics.ProcessStartInfo
       $psi.FileName = "perl"
-      $psi.Arguments = "-MCompress::Raw::Zlib -e `"${perlScript.Replace('"', '\"')}`""
+      $psi.Arguments = "-MCompress::Raw::Zlib `"$tempPerlScript`""
       $psi.UseShellExecute = $false
       $psi.RedirectStandardInput = $true
       $psi.RedirectStandardOutput = $true
