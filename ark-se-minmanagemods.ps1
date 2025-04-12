@@ -208,29 +208,32 @@ foreach my $comprsize (@chunks) {
       $psi.RedirectStandardError = $true
       $psi.CreateNoWindow = $true
 
-      $proc = [System.Diagnostics.Process]::Start($psi)
+      $proc = New-Object System.Diagnostics.Process
+      $proc.StartInfo = $psi
+      $proc.Start() | Out-Null
 
-      # Send input bytes (compressed) to Perl
+      # Read input bytes fully and write them
+      $inputBytes = [System.IO.File]::ReadAllBytes($srcFile)
       $proc.StandardInput.BaseStream.Write($inputBytes, 0, $inputBytes.Length)
+      $proc.StandardInput.BaseStream.Flush()
       $proc.StandardInput.Close()
 
-      # Capture output
-      $outputStream = New-Object System.IO.MemoryStream
-      $buffer = New-Object byte[] 4096
+      # Capture output and errors
+      $outputBytes = New-Object System.IO.MemoryStream
+      $buffer = New-Object byte[] 8192
       while (($count = $proc.StandardOutput.BaseStream.Read($buffer, 0, $buffer.Length)) -gt 0) {
-        $outputStream.Write($buffer, 0, $count)
-      }
-
-      # Optionally show any Perl stderr output for debugging
-      $stderr = $proc.StandardError.ReadToEnd()
-      if ($stderr) {
-        Write-Host "Perl error: $stderr"
+          $outputBytes.Write($buffer, 0, $count)
       }
 
       $proc.WaitForExit()
+      $stderr = $proc.StandardError.ReadToEnd()
+      if ($proc.ExitCode -ne 0 -or $stderr -ne "") {
+          Write-Error "Perl error: $stderr"
+      } else {
+          [System.IO.File]::WriteAllBytes($destFile, $outputBytes.ToArray())
+      }
 
-      # Save to destination
-      [System.IO.File]::WriteAllBytes($destFile, $outputStream.ToArray())
+      Remove-Item $tempPerlScript -Force
 
       # Preserve timestamp
       $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
