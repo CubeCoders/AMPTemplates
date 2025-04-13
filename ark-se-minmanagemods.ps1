@@ -198,8 +198,7 @@ foreach my $comprsize (@chunks) {
       Set-Content -Path $perlTemp -Value $perlScript -Encoding ASCII
 
       # Use cmd.exe to run it with binary redirection
-      $cmd = "cmd /c perl `"$perlTemp`" < `"$srcFile`" > `"$destFile`""
-      Invoke-Expression $cmd
+      Start-Process -FilePath "cmd.exe" -ArgumentList "/c perl `"$perlTemp`" < `"$srcFile`" > `"$destFile`"" -Wait -NoNewWindow
 
       # Preserve timestamp
       $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
