@@ -202,13 +202,14 @@ foreach my $comprsize (@chunks) {
   }
   print $out $output;
 }
+  
+close $out;
+close $in;
+exit 0;
 '@
 
-      # Save Perl script to temp file
       $perlTemp = "$env:TEMP\decompress.pl"
       Set-Content -Path $perlTemp -Value $perlScript -Encoding ASCII
-
-      # Use cmd.exe to run it with binary redirection
       perl $perlTemp "$srcFile" "$destFile"
 
       # Preserve timestamp
