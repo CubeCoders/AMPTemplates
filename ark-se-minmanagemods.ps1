@@ -193,14 +193,13 @@ foreach my $comprsize (@chunks) {
 }
 '@
 
-      # Escape double quotes and line breaks for command shell
-      $escaped = ($perlScript -replace '"', '\"') -join ' '
+      # Save Perl script to temp file
+      $perlTemp = "$env:TEMP\decompress_temp.pl"
+      Set-Content -Path $perlTemp -Value $perlScript -Encoding ASCII
 
-      # Build the command
-      $command = "cmd /c perl -e `"$escaped`" < `"$srcFile`" > `"$destFile`""
-
-      # Execute the command
-      Invoke-Expression $command
+      # Use cmd.exe to run it with binary redirection
+      $cmd = "cmd /c perl `"$perlTemp`" < `"$srcFile`" > `"$destFile`""
+      Invoke-Expression $cmd
 
       # Preserve timestamp
       $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
