@@ -159,48 +159,57 @@ function Install-Mod {
       
       # Run the Perl decompression logic
       $perlScript = @'
-binmode(STDIN);
-binmode(STDOUT);
+use strict;
+use warnings;
+use Compress::Raw::Zlib;
+
+my ($infile, $outfile) = @ARGV;
+open my $in,  '<:raw', $infile  or die "Cannot open $infile: $!";
+open my $out, '>:raw', $outfile or die "Cannot open $outfile: $!";
+
 my $sig;
-read(STDIN, $sig, 8) or die "Unable to read compressed file: $!";
-if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00") {
+read($in, $sig, 8) or die "Unable to read compressed file: $!";
+if ($sig ne "\xC1\x83\x2A\x9E\x00\x00\x00\x00") {
   die "Bad file magic";
 }
+
 my $data;
-read(STDIN, $data, 24) or die "Unable to read compressed file: $!";
+read($in, $data, 24) or die "Unable to read compressed file: $!";
 my ($chunksizelo, $chunksizehi,
-  $comprtotlo,  $comprtothi,
-  $uncomtotlo,  $uncomtothi)  = unpack('V6', $data);
-my @chunks = ();
+    $comprtotlo,  $comprtothi,
+    $uncomtotlo,  $uncomtothi) = unpack('V6', $data);
+
+my @chunks;
 my $comprused = 0;
 while ($comprused < $comprtotlo) {
-  read(STDIN, $data, 16) or die "Unable to read compressed file: $!";
+  read($in, $data, 16) or die "Unable to read compressed file: $!";
   my ($comprsizelo, $comprsizehi,
-    $uncomsizelo, $uncomsizehi) = unpack('V4', $data);
+      $uncomsizelo, $uncomsizehi) = unpack('V4', $data);
   push @chunks, $comprsizelo;
-    $comprused += $comprsizelo;
+  $comprused += $comprsizelo;
 }
+
 foreach my $comprsize (@chunks) {
-  read(STDIN, $data, $comprsize) or die "File read failed: $!";
-  my ($inflate, $status) = new Compress::Raw::Zlib::Inflate();
+  read($in, $data, $comprsize) or die "File read failed: $!";
+  my ($inflate, $status) = Compress::Raw::Zlib::Inflate->new();
   my $output;
   $status = $inflate->inflate($data, $output, 1);
   if ($status != Z_STREAM_END) {
-    die "Bad compressed stream; status: " . ($status);
+    die "Bad compressed stream; status: " . $status;
   }
   if (length($data) != 0) {
-    die "Unconsumed data in input"
+    die "Unconsumed data in input";
   }
-  print $output;
+  print $out $output;
 }
 '@
 
       # Save Perl script to temp file
-      $perlTemp = "$env:TEMP\decompress_temp.pl"
+      $perlTemp = "$env:TEMP\decompress.pl"
       Set-Content -Path $perlTemp -Value $perlScript -Encoding ASCII
 
       # Use cmd.exe to run it with binary redirection
-      Start-Process -FilePath "cmd.exe" -ArgumentList "/c perl -MCompress::Raw::Zlib `"$perlTemp`" < `"$srcFile`" > `"$destFile`"" -Wait -NoNewWindow
+      perl $perlTemp $srcFile $destFile
 
       # Preserve timestamp
       $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
