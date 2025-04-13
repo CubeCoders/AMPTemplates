@@ -193,47 +193,14 @@ foreach my $comprsize (@chunks) {
 }
 '@
 
-      # Read the .z file as input bytes
-      $inputBytes = [System.IO.File]::ReadAllBytes($srcFile)
+      # Escape double quotes and line breaks for command shell
+      $escaped = ($perlScript -replace '"', '\"') -join ' '
 
-      # Create and configure Perl process
-      $tempPerlScript = [System.IO.Path]::GetTempFileName() + ".pl"
-      Set-Content -Path $tempPerlScript -Value $perlScript -Encoding ASCII
-      $psi = New-Object System.Diagnostics.ProcessStartInfo
-      $psi.FileName = "perl"
-      $psi.Arguments = "-MCompress::Raw::Zlib `"$tempPerlScript`""
-      $psi.UseShellExecute = $false
-      $psi.RedirectStandardInput = $true
-      $psi.RedirectStandardOutput = $true
-      $psi.RedirectStandardError = $true
-      $psi.CreateNoWindow = $true
+      # Build the command
+      $command = "cmd /c perl -e `"$escaped`" < `"$srcFile`" > `"$destFile`""
 
-      $proc = New-Object System.Diagnostics.Process
-      $proc.StartInfo = $psi
-      $proc.Start() | Out-Null
-
-      # Read input bytes fully and write them
-      $inputBytes = [System.IO.File]::ReadAllBytes($srcFile)
-      $proc.StandardInput.BaseStream.Write($inputBytes, 0, $inputBytes.Length)
-      $proc.StandardInput.BaseStream.Flush()
-      $proc.StandardInput.Close()
-
-      # Capture output and errors
-      $outputBytes = New-Object System.IO.MemoryStream
-      $buffer = New-Object byte[] 8192
-      while (($count = $proc.StandardOutput.BaseStream.Read($buffer, 0, $buffer.Length)) -gt 0) {
-          $outputBytes.Write($buffer, 0, $count)
-      }
-
-      $proc.WaitForExit()
-      $stderr = $proc.StandardError.ReadToEnd()
-      if ($proc.ExitCode -ne 0 -or $stderr -ne "") {
-          Write-Error "Perl error: $stderr"
-      } else {
-          [System.IO.File]::WriteAllBytes($destFile, $outputBytes.ToArray())
-      }
-
-      Remove-Item $tempPerlScript -Force
+      # Execute the command
+      Invoke-Expression $command
 
       # Preserve timestamp
       $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
