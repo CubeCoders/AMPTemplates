@@ -159,6 +159,7 @@ function Install-Mod {
       
       # Run the Perl decompression logic
       $perlScript = @'
+use Compress::Raw::Zlib;
 my $sig;
 read(STDIN, $sig, 8) or die "Unable to read compressed file: $!";
 if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00") {
@@ -168,13 +169,13 @@ my $data;
 read(STDIN, $data, 24) or die "Unable to read compressed file: $!";
 my ($chunksizelo, $chunksizehi,
   $comprtotlo,  $comprtothi,
-  $uncomtotlo,  $uncomtothi)  = unpack("(LLLLLL)<", $data);
+  $uncomtotlo,  $uncomtothi)  = unpack('V6', $data);
 my @chunks = ();
 my $comprused = 0;
 while ($comprused < $comprtotlo) {
   read(STDIN, $data, 16) or die "Unable to read compressed file: $!";
   my ($comprsizelo, $comprsizehi,
-    $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
+    $uncomsizelo, $uncomsizehi) = unpack('V4', $data);
   push @chunks, $comprsizelo;
     $comprused += $comprsizelo;
 }
