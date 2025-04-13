@@ -209,7 +209,7 @@ foreach my $comprsize (@chunks) {
       Set-Content -Path $perlTemp -Value $perlScript -Encoding ASCII
 
       # Use cmd.exe to run it with binary redirection
-      perl $perlTemp $srcFile $destFile
+      perl $perlTemp "$srcFile" "$destFile"
 
       # Preserve timestamp
       $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
