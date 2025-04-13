@@ -159,7 +159,8 @@ function Install-Mod {
       
       # Run the Perl decompression logic
       $perlScript = @'
-use Compress::Raw::Zlib;
+binmode(STDIN);
+binmode(STDOUT);
 my $sig;
 read(STDIN, $sig, 8) or die "Unable to read compressed file: $!";
 if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00") {
@@ -199,7 +200,7 @@ foreach my $comprsize (@chunks) {
       Set-Content -Path $perlTemp -Value $perlScript -Encoding ASCII
 
       # Use cmd.exe to run it with binary redirection
-      Start-Process -FilePath "cmd.exe" -ArgumentList "/c perl `"$perlTemp`" < `"$srcFile`" > `"$destFile`"" -Wait -NoNewWindow
+      Start-Process -FilePath "cmd.exe" -ArgumentList "/c perl -MCompress::Raw::Zlib `"$perlTemp`" < `"$srcFile`" > `"$destFile`"" -Wait -NoNewWindow
 
       # Preserve timestamp
       $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
