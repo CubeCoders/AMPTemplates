@@ -189,20 +189,20 @@ while ($comprused < $comprtotlo) {
   $comprused += $comprsizelo;
 }
 
+my $inflate = Compress::Raw::Zlib::Inflate->new();
 foreach my $comprsize (@chunks) {
   read($in, $data, $comprsize) or die "File read failed: $!";
-  my ($inflate, $status) = Compress::Raw::Zlib::Inflate->new();
   my $output;
-  $status = $inflate->inflate($data, $output, 1);
+  my $status = $inflate->inflate($data, $output, 1);
+  
   if ($status != Z_STREAM_END) {
-    die "Bad compressed stream; status: " . $status;
+    die "Bad compressed stream; status: $status";
   }
-  if (length($data) != 0) {
-    die "Unconsumed data in input";
-  }
+  
+  # Write the decompressed data
   print $out $output;
 }
-  
+
 close $out;
 close $in;
 exit 0;
