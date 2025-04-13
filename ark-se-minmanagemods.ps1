@@ -145,20 +145,7 @@ function Install-Mod {
   }
 
   # Decompress the .z files using Perl
-  Get-ChildItem -Path $modSrcDir -Filter *.z -Recurse -File | ForEach-Object {
-    $srcFile = $_.FullName
-    $relPath = $srcFile.Substring($modSrcDir.Length).TrimStart('\')
-    $destFile = Join-Path $modDestDir ($relPath -replace '\.z$', '')
-
-    $destDir = Split-Path $destFile
-    if (-not (Test-Path $destDir)) {
-        New-Item -ItemType Directory -Path $destDir -Force | Out-Null
-    }
-
-    if (-not (Test-Path $destFile) -or ((Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime)) {
-      
-      # Run the Perl decompression logic
-      $perlScript = @'
+  $decompressScript = @'
 use strict;
 use warnings;
 use Compress::Raw::Zlib;
@@ -199,7 +186,6 @@ foreach my $comprsize (@chunks) {
     die "Bad compressed stream; status: $status";
   }
   
-  # Write the decompressed data
   print $out $output;
 }
 
@@ -208,9 +194,23 @@ close $in;
 exit 0;
 '@
 
-      $perlTemp = "$env:TEMP\decompress.pl"
-      Set-Content -Path $perlTemp -Value $perlScript -Encoding ASCII
-      perl $perlTemp "$srcFile" "$destFile"
+  $decompressScriptFile = "$env:TEMP\decompress.pl"
+  Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII
+
+  Get-ChildItem -Path $modSrcDir -Filter *.z -Recurse -File | ForEach-Object {
+    $srcFile = $_.FullName
+    $relPath = $srcFile.Substring($modSrcDir.Length).TrimStart('\')
+    $destFile = Join-Path $modDestDir ($relPath -replace '\.z$', '')
+
+    $destDir = Split-Path $destFile
+    if (-not (Test-Path $destDir)) {
+        New-Item -ItemType Directory -Path $destDir -Force | Out-Null
+    }
+
+    if (-not (Test-Path $destFile) -or ((Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime)) {
+      
+      # Run the Perl decompression logic
+      perl $decompressScriptFile "$srcFile" "$destFile"
 
       # Preserve timestamp
       $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
