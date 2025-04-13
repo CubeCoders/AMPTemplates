@@ -145,7 +145,7 @@ function Install-Mod {
   }
 
   # Decompress the .z files using Perl
-  Get-ChildItem -Path $modSrcDir -Filter *.z -Recurse -File | ForEach-Object {
+  Get-ChildItem -Path $modSrcDir -Filter *.z -File | ForEach-Object {
     $srcFile = $_.FullName
     $relPath = $srcFile.Substring($modSrcDir.Length).TrimStart('\')
     $destFile = Join-Path $modDestDir ($relPath -replace '\.z$', '')
