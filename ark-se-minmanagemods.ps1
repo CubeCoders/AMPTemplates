@@ -308,8 +308,8 @@ Write-Host "Installing/updating mods..."
 
 Set-Location -Path '.\arkse'
 
-$workshopContentDir = Resolve-Path ".\376030\steamapps\workshop\content\346110"
-$modsInstallDir = Resolve-Path ".\376030\ShooterGame\Content\Mods"
+$workshopContentDir = Join-Path $PSScriptRoot "arkse\376030\steamapps\workshop\content\346110"
+$modsInstallDir = Join-Path $PSScriptRoot "arkse\376030\ShooterGame\Content\Mods"
 $modIds = $args[0] -replace '^"(.*)"$', '$1'
 $modIds = $modIds.Split(',')
 
