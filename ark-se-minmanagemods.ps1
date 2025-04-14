@@ -164,14 +164,14 @@ my $data;
 read($in, $data, 24) or die "Unable to read compressed file: $!";
 my ($chunksizelo, $chunksizehi,
     $comprtotlo,  $comprtothi,
-    $uncomtotlo,  $uncomtothi) = unpack('V6', $data);
+    $uncomtotlo,  $uncomtothi) = unpack("(LLLLLL)<", $data);
 
 my @chunks;
 my $comprused = 0;
 while ($comprused < $comprtotlo) {
   read($in, $data, 16) or die "Unable to read compressed file: $!";
   my ($comprsizelo, $comprsizehi,
-      $uncomsizelo, $uncomsizehi) = unpack('V4', $data);
+      $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
   push @chunks, $comprsizelo;
   $comprused += $comprsizelo;
 }
@@ -218,7 +218,106 @@ exit 0;
     }
   }
 
-  
+  # Generate .mod file
+  $modOutputFile = Join-Path $modsInstallDir "$modId.mod"
+  $modInfoFile = Join-Path $modSrcDir "mod.info"
+  $modmetaFile = Join-Path $modSrcDir "modmeta.info"
+
+  if (!(Test-Path $modInfoFile)) {
+      Write-Host "  Error: $modInfoFile not found! Cannot generate .mod file. Skipping mod $modId."
+      return
+  }
+
+  # Fetch mod name
+  $html = Invoke-WebRequest -Uri "http://steamcommunity.com/sharedfiles/filedetails/?id=$modId" -UseBasicParsing
+  $modName = ($html.Content -split '<div class="workshopItemTitle">')[1] -split '</div>' | Select-Object -First 1
+  $modName = $modName.Trim()
+
+  $createModfileScript = @'
+use strict;
+use warnings;
+
+my ($game, $modId, $modName, $inputFile, $outputFile, $modmetaFile) = @ARGV;
+
+open my $in,  '<:raw', $inputFile  or die "Cannot open $inputFile: $!";
+binmode $in;
+my $data;
+{ local $/; $data = <$in>; }
+close $in;
+
+my $mapnamelen = unpack("@0 L<", $data);
+my $mapname = substr($data, 4, $mapnamelen - 1);
+my $nummaps = unpack("@" . ($mapnamelen + 4) . " L<", $data);
+my $pos = $mapnamelen + 8;
+
+my $modname = ($modName || $mapname) . "\x00";
+my $modnamelen = length($modname);
+my $modpath = "../../../" . $game . "/Content/Mods/" . $modId . "\x00";
+my $modpathlen = length($modpath);
+
+my $output;
+$output .= pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
+  $modId, 0, $modnamelen, $modname, $modpathlen, $modpath, $nummaps);
+
+for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++) {
+  my $mapfilelen = unpack("@" . ($pos) . " L<", $data);
+  my $mapfile = substr($data, $mapnamelen + 12, $mapfilelen);
+  $output .= pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
+  $pos += 4 + $mapfilelen;
+}
+
+$output .= "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
+
+# Write to a temp file and append modmeta or default footer
+open my $out, '>:raw', $outputFile or die "Cannot open $outputFile: $!";
+binmode $out;
+print $out $output;
+
+if ($modmetaFile && -e $modmetaFile) {
+  open my $meta, '<:raw', $modmetaFile or die "Cannot open $modmetaFile: $!";
+  binmode $meta;
+  my $modmeta;
+  { local $/; $modmeta = <$meta>; }
+  print $out $modmeta;
+  close $meta;
+} else {
+  print $out pack("C*", 0x01, 0x00, 0x00, 0x00,
+                         0x08, 0x00, 0x00, 0x00,
+                         0x4D, 0x6F, 0x64, 0x54, 0x79, 0x70, 0x65, 0x00,
+                         0x02, 0x00, 0x00, 0x00,
+                         0x31, 0x00);
+}
+
+close $out;
+exit 0;
+'@
+
+  $createModfileScriptFile = "$env:TEMP\create_modfile.pl"
+  Set-Content -Path $createModfileScriptFile -Value $createModfileScript -Encoding ASCII
+  perl $createModfileScriptFile "$modInfoFile" "$modOutputFile" "ShooterGame" "$modId" "$modName"
+
+  # Append modmeta.info or default footer
+  $bytes = [System.IO.File]::ReadAllBytes($modOutputFile)
+  $outputStream = New-Object System.IO.MemoryStream
+  $outputStream.Write($bytes, 0, $bytes.Length)
+
+  if (Test-Path $modmetaFile) {
+      $modmetaBytes = [System.IO.File]::ReadAllBytes($modmetaFile)
+      $outputStream.Write($modmetaBytes, 0, $modmetaBytes.Length)
+  } else {
+      $defaultFooter = [byte[]] (0x01, 0x00, 0x00, 0x00,
+                                0x08, 0x00, 0x00, 0x00,
+                                0x4D, 0x6F, 0x64, 0x54, 0x79, 0x70, 0x65, 0x00,
+                                0x02, 0x00, 0x00, 0x00,
+                                0x31, 0x00)
+      $outputStream.Write($defaultFooter, 0, $defaultFooter.Length)
+  }
+
+  [System.IO.File]::WriteAllBytes($modOutputFile, $outputStream.ToArray())
+
+  # Match timestamp from mod.info
+  $srcTime = (Get-Item $modInfoFile).LastWriteTimeUtc
+  (Get-Item $modOutputFile).LastWriteTimeUtc = $srcTime
 }
 
 # --- Main Loop ---
