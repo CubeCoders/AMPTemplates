@@ -236,63 +236,41 @@ exit 0;
   $createModfileScript = @'
 use strict;
 use warnings;
+my ($infile, $outfile, $game, $modid, $modname) = @ARGV;
+open my $in,  "<:raw", $infile  or die "Cannot open $infile: $!";
+open my $out, ">:raw", $outfile or die "Cannot open $outfile: $!";
 
-my ($game, $modId, $modName, $inputFile, $outputFile, $modmetaFile) = @ARGV;
-
-open my $in,  '<:raw', $inputFile  or die "Cannot open $inputFile: $!";
-binmode $in;
 my $data;
 { local $/; $data = <$in>; }
-close $in;
 
 my $mapnamelen = unpack("@0 L<", $data);
 my $mapname = substr($data, 4, $mapnamelen - 1);
 my $nummaps = unpack("@" . ($mapnamelen + 4) . " L<", $data);
 my $pos = $mapnamelen + 8;
-
-my $modname = ($modName || $mapname) . "\x00";
-my $modnamelen = length($modname);
-my $modpath = "../../../" . $game . "/Content/Mods/" . $modId . "\x00";
+my $realmodname = $modname || $mapname;
+my $modnamez = $realmodname . "\x00";
+my $modnamelen = length($modnamez);
+my $modpath = "../../../$game/Content/Mods/$modid\x00";
 my $modpathlen = length($modpath);
 
-my $output;
-$output .= pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
-  $modId, 0, $modnamelen, $modname, $modpathlen, $modpath, $nummaps);
+print $out pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
+  $modid, 0, $modnamelen, $modnamez, $modpathlen, $modpath,
+  $nummaps);
 
 for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++) {
-  my $mapfilelen = unpack("@" . ($pos) . " L<", $data);
+  my $mapfilelen = unpack("@" . $pos . " L<", $data);
   my $mapfile = substr($data, $mapnamelen + 12, $mapfilelen);
-  $output .= pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
+  print $out pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
   $pos += 4 + $mapfilelen;
 }
 
-$output .= "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
-
-# Write to a temp file and append modmeta or default footer
-open my $out, '>:raw', $outputFile or die "Cannot open $outputFile: $!";
-binmode $out;
-print $out $output;
-
-if ($modmetaFile && -e $modmetaFile) {
-  open my $meta, '<:raw', $modmetaFile or die "Cannot open $modmetaFile: $!";
-  binmode $meta;
-  my $modmeta;
-  { local $/; $modmeta = <$meta>; }
-  print $out $modmeta;
-  close $meta;
-} else {
-  print $out pack("C*", 0x01, 0x00, 0x00, 0x00,
-                         0x08, 0x00, 0x00, 0x00,
-                         0x4D, 0x6F, 0x64, 0x54, 0x79, 0x70, 0x65, 0x00,
-                         0x02, 0x00, 0x00, 0x00,
-                         0x31, 0x00);
-}
+print $out "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
 
 close $out;
-exit 0;
+close $in;
 '@
 
-  $createModfileScriptFile = "$env:TEMP\create_modfile.pl"
+  $createModfileScriptFile = "$env:TEMP\createModfile.pl"
   Set-Content -Path $createModfileScriptFile -Value $createModfileScript -Encoding ASCII
   perl $createModfileScriptFile "$modInfoFile" "$modOutputFile" "ShooterGame" "$modId" "$modName"
 
