@@ -243,7 +243,7 @@ open my $out, ">:raw", $outfile or die "Cannot open $outfile: $!";
 my $data;
 { local $/; $data = <$in>; }
 
-my $mapnamelen = unpack("@0 L<", $data);
+my $mapnamelen = unpack('@0 L<', $data);
 my $mapname = substr($data, 4, $mapnamelen - 1);
 my $nummaps = unpack("@" . ($mapnamelen + 4) . " L<", $data);
 my $pos = $mapnamelen + 8;
