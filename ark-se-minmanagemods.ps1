@@ -34,19 +34,22 @@ function Setup-StrawberryPerl {
   # Add Strawberry Perl to PATH
   $env:PATH = "$perlBin;$perlCbin;$env:PATH"
 
-  # Check if the module is already installed
-  & perl -e "eval { require Compress::Raw::Zlib } or exit 1"
-  if ($LASTEXITCODE -eq 0) {
-      return
-  }
-
   # Install cpanm if it's not available
   if (-not (Get-Command cpanm -ErrorAction SilentlyContinue)) {
       & perl -MCPAN -e "install App::cpanminus"
   }
 
-  # Install the module silently
-  & cpanm --notest --quiet Compress::Raw::Zlib
+  $requiredPerlModules = @(
+    'Compress::Raw::Zlib',
+    'Win32::LongPath'
+  )
+
+  try {
+    & cpanm --notest --quiet $requiredPerlModules -ErrorAction Stop
+  } catch {
+      Write-Host "  Error: Failed to install required Perl modules $requiredPerlModules. Aborting."
+    exit 1
+  }
 }
 
 # Function to install a mod with retry on timeout
@@ -206,10 +209,11 @@ function Install-Mod {
 use strict;
 use warnings;
 use Compress::Raw::Zlib;
+use Win32::LongPath qw(openL);
 
 my ($infile, $outfile) = @ARGV;
-open my $in,  '<:raw', $infile  or die "Cannot open $infile: $!";
-open my $out, '>:raw', $outfile or die "Cannot open $outfile: $!";
+openL($in,  '<:raw', $infile)  or die "Cannot openL $infile: $!";
+openL($out, '>:raw', $outfile) or die "Cannot openL $outfile: $!";
 
 my $sig;
 read($in, $sig, 8) or die "Unable to read compressed file: $!";
