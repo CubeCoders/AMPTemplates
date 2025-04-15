@@ -86,82 +86,105 @@ function Install-Mod {
   param (
     [string]$modId
   )
-  
+
   Set-Location -Path "$PSScriptRoot\arkse\376030"
 
   $workshopContentDir = "steamapps\workshop\content\346110"
   $modsInstallDir = "ShooterGame\Content\Mods"
-  $modDestDir = "$modsInstallDir\$modId"
-  $modSrcToplevelDir = "$workshopContentDir\$modId"
+  $modDestDir = Join-Path $modsInstallDir $modId
+  $modSrcToplevelDir = Join-Path $workshopContentDir $modId
   $modSrcDir = ""
   $modInfoFile = ""
   $modOutputFile = ""
   $modmetaFile = ""
   $modName = ""
-  $srcFile = ""
-  $destFile = ""
 
-  New-Item -ItemType Directory -Force -Path $modDestDir > $null
+  if (-not (Test-Path $modDestDir)) {
+    New-Item -ItemType Directory -Force -Path $modDestDir > $null
+  }
 
-  # Determine actual source directory based on branch
-  $modSrcDir = "$modSrcToplevelDir\WindowsNoEditor"
-  if (-not (Test-Path $modSrcDir)) {
-    if (Test-Path "$modSrcToplevelDir\mod.info") {
+  $potentialSrcDir = Join-Path $modSrcToplevelDir "WindowsNoEditor"
+  if (-not (Test-Path $potentialSrcDir)) {
+    $modInfoCheckPath = Join-Path $modSrcToplevelDir "mod.info"
+    if (Test-Path $modInfoCheckPath) {
       $modSrcDir = $modSrcToplevelDir
     } else {
       Write-Host "  Error: Mod source directory not found for branch Windows in $modSrcToplevelDir. Cannot find mod.info. Skipping mod $modId."
       return
     }
-  } elseif (-not (Test-Path "$modSrcDir\mod.info")) {
-    Write-Host "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping mod $modId."
-    return
+  } else {
+    $modSrcDir = $potentialSrcDir
+    $modInfoCheckPath = Join-Path $modSrcDir "mod.info"
+    if (-not (Test-Path $modInfoCheckPath)) {
+      Write-Host "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping mod $modId."
+      return
+    }
   }
 
-  # Create necessary sub-directories in destination
+  $modSrcDirResolved = Resolve-Path -Path $modSrcDir -ErrorAction SilentlyContinue
+  $modDestDirResolved = Resolve-Path -Path $modDestDir -ErrorAction SilentlyContinue
+  if (-not $modSrcDirResolved -or -not $modDestDirResolved) {
+     Write-Host "  Error: Could not resolve base paths '$modSrcDir' or '$modDestDir'. Skipping mod $modId."
+     return
+  }
+
   Get-ChildItem -Path $modSrcDir -Directory -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
-    $destDir = "$modDestDir\$($_.FullName.Substring($modSrcDir.Length))"
-    New-Item -ItemType Directory -Force -Path $destDir > $null
+    $relativeDirPath = Resolve-Path -Path $_.FullName -Relative -BasePath $modSrcDirResolved.Path
+    $destDirRelative = Join-Path $modDestDir $relativeDirPath
+    if (-not (Test-Path $destDirRelative)) {
+      New-Item -ItemType Directory -Force -Path $destDirRelative > $null
+    }
   }
 
-  # Remove files in destination not present in source
   Get-ChildItem -Path $modDestDir -File -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
-    $relPath = $_.FullName.Substring($modDestDir.Length + 1).TrimStart('\')
-
-    $srcFile = Join-Path $modSrcDir $relPath
-    $srcZFile = "$srcFile.z"
-
-    if (-not (Test-Path $srcFile) -and -not (Test-Path $srcZFile)) {
-      Remove-Item $_.FullName -ErrorAction SilentlyContinue > $null
+    $relPath = Resolve-Path -Path $_.FullName -Relative -BasePath $modDestDirResolved.Path
+    $srcFileRelative = Join-Path $modSrcDir $relPath
+    $srcZFileRelative = "$srcFileRelative.z"
+    if (-not (Test-Path $srcFileRelative) -and -not (Test-Path $srcZFileRelative)) {
+      $destFileToRemove = Join-Path $modDestDir $relPath
+      Remove-Item -Path $destFileToRemove -Force -ErrorAction SilentlyContinue > $null
     }
   }
 
-  # Remove empty directories in destination
   Get-ChildItem -Path $modDestDir -Directory -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
-    $dir = $_.FullName.Substring($modDestDir.Length + 1)
-    if (-not (Test-Path "$modSrcDir\$dir")) {
-      Remove-Item $_.FullName -Recurse > $null
+    $dirRelPath = Resolve-Path -Path $_.FullName -Relative -BasePath $modDestDirResolved.Path
+    $srcDirPath = Join-Path $modSrcDir $dirRelPath
+    $destDirPath = Join-Path $modDestDir $dirRelPath
+    if (-not (Test-Path $srcDirPath)) {
+      Remove-Item -Path $destDirPath -Recurse -Force -ErrorAction SilentlyContinue > $null
     }
   }
-
-  # Hardlink regular files (excluding .z and .z.uncompressed_size)
-  $cwd = (Get-Location).Path
+  Get-ChildItem -Path $modDestDir -Directory -Recurse -ErrorAction SilentlyContinue | Sort-Object { $_.FullName.Length } -Descending | ForEach-Object {
+      $destDirPath = Join-Path $modDestDir (Resolve-Path -Path $_.FullName -Relative -BasePath $modDestDirResolved.Path)
+      if ((Get-ChildItem -Path $destDirPath -ErrorAction SilentlyContinue).Count -eq 0) {
+         Remove-Item -Path $destDirPath -Force -ErrorAction SilentlyContinue > $null
+      }
+  }
 
   Get-ChildItem -Path $modSrcDir -File -Recurse -ErrorAction SilentlyContinue | Where-Object {
     $_.Name -notlike '*.z' -and $_.Name -notlike '*.z.uncompressed_size'
   } | ForEach-Object {
-    $srcFile = $_.FullName.Substring($cwd.Length + 1)
+    $relPath = Resolve-Path -Path $_.FullName -Relative -BasePath $modSrcDirResolved.Path
+    $srcFileRelative = Join-Path $modSrcDir $relPath
+    $destFileRelative = Join-Path $modDestDir $relPath
 
-    # Get relative path from $modSrcDir to preserve structure
-    $relPath = $_.FullName.Substring($modSrcDir.Length + 1)
-
-    $destFile = Join-Path $modDestDir $relPath
-
-    if (-not (Test-Path $destFile) -or ((Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime)) {
-        New-Item -ItemType HardLink -Path $destFile -Target $srcFile > $null
+    $needsLink = $true
+    if (Test-Path $destFileRelative) {
+       if ((Get-Item $srcFileRelative).LastWriteTimeUtc -le (Get-Item $destFileRelative).LastWriteTimeUtc) {
+           $needsLink = $false
+       } else {
+           Remove-Item -Path $destFileRelative -Force > $null
+       }
+    }
+    if ($needsLink) {
+        $parentDirRelative = Split-Path -Path $destFileRelative -Parent
+        if ($parentDirRelative -and (-not (Test-Path $parentDirRelative))) {
+            New-Item -ItemType Directory -Force -Path $parentDirRelative > $null
+        }
+        New-Item -ItemType HardLink -Path $destFileRelative -Target $srcFileRelative -Force -ErrorAction SilentlyContinue > $null
     }
 }
 
-  # Decompress the .z files using Perl
   $decompressScript = @'
 use strict;
 use warnings;
@@ -198,11 +221,11 @@ foreach my $comprsize (@chunks) {
   read($in, $data, $comprsize) or die "File read failed: $!";
   my $output;
   my $status = $inflate->inflate($data, $output, 1);
-  
+
   if ($status != Z_STREAM_END) {
     die "Bad compressed stream; status: $status";
   }
-  
+
   print $out $output;
 }
 
@@ -211,41 +234,53 @@ close $in;
 exit 0;
 '@
 
-  $decompressScriptFile = "$env:TEMP\decompress.pl"
-  Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII
+  $decompressScriptFile = Join-Path $env:TEMP "decompress.pl" # Reverted to original name
+  Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII -Force
 
   Get-ChildItem -Path $modSrcDir -Filter *.z -Recurse -File | ForEach-Object {
-    $srcFile = $_.FullName
-    $relPath = $srcFile.Substring($modSrcDir.Length).TrimStart('\')
-    $destFile = Join-Path $modDestDir ($relPath -replace '\.z$', '')
+    $relPathWithZ = Resolve-Path -Path $_.FullName -Relative -BasePath $modSrcDirResolved.Path
+    $srcFileRelative = Join-Path $modSrcDir $relPathWithZ
+    $relPath = $relPathWithZ -replace '\.z$', ''
+    $destFileRelative = Join-Path $modDestDir $relPath
 
-    $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
-    $destExists = Test-Path $destFile
-    $needsUpdate = -not $destExists -or $srcTime -gt (Get-Item $destFile).LastWriteTimeUtc
+    $srcTime = $_.LastWriteTimeUtc
+    $destExists = Test-Path $destFileRelative
+    $needsUpdate = -not $destExists -or $srcTime -gt (Get-Item $destFileRelative).LastWriteTimeUtc
 
     if ($needsUpdate) {
-        perl $decompressScriptFile "$srcFile" "$destFile"
-
-        if (Test-Path $destFile) {
-            (Get-Item $destFile).LastWriteTimeUtc = $srcTime
+        $parentDirRelative = Split-Path -Path $destFileRelative -Parent
+        if ($parentDirRelative -and (-not (Test-Path $parentDirRelative))) {
+            New-Item -ItemType Directory -Force -Path $parentDirRelative > $null
         }
+        perl $decompressScriptFile "$srcFileRelative" "$destFileRelative"
+        if ($LASTEXITCODE -eq 0 -and (Test-Path $destFileRelative)) {
+            (Get-Item $destFileRelative).LastWriteTimeUtc = $srcTime
+        } elseif ($LASTEXITCODE -ne 0) {
+             Write-Host "  Warning: Perl decompression failed for '$srcFileRelative' (Exit code: $LASTEXITCODE)."
+         }
     }
   }
+  # Removed temp file cleanup to be closer to original script state
+  # Remove-Item $decompressScriptFile -Force -ErrorAction SilentlyContinue
 
-  # Generate .mod file
-  $modOutputFile = Join-Path $modsInstallDir "$modId.mod"
-  $modInfoFile = Join-Path $modSrcDir "mod.info"
-  $modmetaFile = Join-Path $modSrcDir "modmeta.info"
+  $modOutputFileRelative = Join-Path $modsInstallDir "$modId.mod"
+  $modInfoFileRelative = Join-Path $modSrcDir "mod.info"
+  $modmetaFileRelative = Join-Path $modSrcDir "modmeta.info"
 
-  if (!(Test-Path $modInfoFile)) {
-      Write-Host "  Error: $modInfoFile not found! Cannot generate .mod file. Skipping mod $modId."
+  if (!(Test-Path $modInfoFileRelative)) {
+      Write-Host "  Error: $modInfoFileRelative not found! Cannot generate .mod file. Skipping mod $modId."
       return
   }
 
-  # Fetch mod name
-  $html = Invoke-WebRequest -Uri "http://steamcommunity.com/sharedfiles/filedetails/?id=$modId" -UseBasicParsing
-  $modName = ($html.Content -split '<div class="workshopItemTitle">')[1] -split '</div>' | Select-Object -First 1
-  $modName = $modName.Trim()
+  $modName = ""
+  try {
+    # Kept try/catch around Invoke-WebRequest as network errors are common & expected
+    $html = Invoke-WebRequest -Uri "http://steamcommunity.com/sharedfiles/filedetails/?id=$modId" -UseBasicParsing -ErrorAction Stop -TimeoutSec 10
+    $modName = ($html.Content -split '<div class="workshopItemTitle">')[1] -split '</div>' | Select-Object -First 1
+    $modName = $modName.Trim()
+  } catch {
+      Write-Host "  Warning: Failed to fetch mod name for $modId. Using name from mod.info."
+  }
 
   $createModfileScript = @'
 use strict;
@@ -273,8 +308,9 @@ print $out pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
 
 for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++) {
   my $mapfilelen = unpack("@" . $pos . " L<", $data);
-  my $mapfile = substr($data, $mapnamelen + 12, $mapfilelen);
-  print $out pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
+  my $mapfile_with_null = substr($data, $pos + 4, $mapfilelen);
+  print $out pack("L<", $mapfilelen);
+  print $out $mapfile_with_null;
   $pos += 4 + $mapfilelen;
 }
 
@@ -284,17 +320,26 @@ close $out;
 close $in;
 '@
 
-  $createModfileScriptFile = "$env:TEMP\createModfile.pl"
-  Set-Content -Path $createModfileScriptFile -Value $createModfileScript -Encoding ASCII
-  perl $createModfileScriptFile "$modInfoFile" "$modOutputFile" "ShooterGame" "$modId" "$modName"
+  $createModfileScriptFile = Join-Path $env:TEMP "createModfile.pl" # Reverted to original name
+  Set-Content -Path $createModfileScriptFile -Value $createModfileScript -Encoding ASCII -Force
+  perl $createModfileScriptFile "$modInfoFileRelative" "$modOutputFileRelative" "ShooterGame" "$modId" "$modName"
+  if ($LASTEXITCODE -ne 0) {
+     Write-Host "  Error: Perl script failed to generate '$modOutputFileRelative' (Exit code: $LASTEXITCODE)."
+     # Removed temp file cleanup to be closer to original script state
+     # Remove-Item $createModfileScriptFile -Force -ErrorAction SilentlyContinue
+     return
+  }
+  # Removed temp file cleanup to be closer to original script state
+  # Remove-Item $createModfileScriptFile -Force -ErrorAction SilentlyContinue
 
-  # Append modmeta.info or default footer
-  $bytes = [System.IO.File]::ReadAllBytes($modOutputFile)
+  $modOutputFileResolved = Resolve-Path $modOutputFileRelative
+  $bytes = [System.IO.File]::ReadAllBytes($modOutputFileResolved.Path)
   $outputStream = New-Object System.IO.MemoryStream
   $outputStream.Write($bytes, 0, $bytes.Length)
 
-  if (Test-Path $modmetaFile) {
-      $modmetaBytes = [System.IO.File]::ReadAllBytes($modmetaFile)
+  if (Test-Path $modmetaFileRelative) {
+      $modmetaFileResolved = Resolve-Path $modmetaFileRelative
+      $modmetaBytes = [System.IO.File]::ReadAllBytes($modmetaFileResolved.Path)
       $outputStream.Write($modmetaBytes, 0, $modmetaBytes.Length)
   } else {
       $defaultFooter = [byte[]] (0x01, 0x00, 0x00, 0x00,
@@ -305,11 +350,11 @@ close $in;
       $outputStream.Write($defaultFooter, 0, $defaultFooter.Length)
   }
 
-  [System.IO.File]::WriteAllBytes($modOutputFile, $outputStream.ToArray())
+  [System.IO.File]::WriteAllBytes($modOutputFileResolved.Path, $outputStream.ToArray())
+  $outputStream.Close()
 
-  # Match timestamp from mod.info
-  $srcTime = (Get-Item $modInfoFile).LastWriteTimeUtc
-  (Get-Item $modOutputFile).LastWriteTimeUtc = $srcTime
+  $srcTime = (Get-Item $modInfoFileRelative).LastWriteTimeUtc
+  (Get-Item $modOutputFileRelative).LastWriteTimeUtc = $srcTime
 }
 
 # --- Main Loop ---
