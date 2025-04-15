@@ -213,8 +213,13 @@ use Win32::LongPath qw(openL);
 
 my ($infile, $outfile) = @ARGV;
 my ($in, $out);
-openL($in,  '<:raw', $infile)  or die "Cannot openL $infile: $!";
-openL($out, '>:raw', $outfile) or die "Cannot openL $outfile: $!";
+
+# Use openL and add explicit checks immediately after
+openL($in,  '<:raw', $infile)  or die "Cannot openL (read) $infile: $!";
+die "FATAL: Failed to get valid input filehandle for $infile after openL" unless fileno($in);
+
+openL($out, '>:raw', $outfile) or die "Cannot openL (write) $outfile: $!";
+die "FATAL: Failed to get valid output filehandle for $outfile after openL" unless fileno($out);
 
 my $sig;
 read($in, $sig, 8) or die "Unable to read compressed file: $!";
