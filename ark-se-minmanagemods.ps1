@@ -55,6 +55,8 @@ function Download-Mod {
     [string]$modId
   )
   
+  Set-Location -Path "$PSScriptRoot\arkse"
+
   $retry = 0
   $maxRetries = 5
 
@@ -85,6 +87,10 @@ function Install-Mod {
     [string]$modId
   )
   
+  Set-Location -Path "$PSScriptRoot\arkse\376030"
+
+  $workshopContentDir = "steamapps\workshop\content\346110"
+  $modsInstallDir = "ShooterGame\Content\Mods"
   $modDestDir = "$modsInstallDir\$modId"
   $modSrcToplevelDir = "$workshopContentDir\$modId"
   $modSrcDir = ""
@@ -118,10 +124,14 @@ function Install-Mod {
   }
 
   # Remove files in destination not present in source
-  Get-ChildItem -Path $modDestDir -File -ErrorAction SilentlyContinue | ForEach-Object {
-    $file = $_.FullName.Substring($modDestDir.Length + 1)
-    if (-not (Test-Path "$modSrcDir\$file") -and -not (Test-Path "$modSrcDir\$file.z")) {
-      Remove-Item "$modDestDir\$file" -ErrorAction SilentlyContinue > $null
+  Get-ChildItem -Path $modDestDir -File -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
+    $relPath = $_.FullName.Substring($modDestDir.Length + 1).TrimStart('\')
+
+    $srcFile = Join-Path $modSrcDir $relPath
+    $srcZFile = "$srcFile.z"
+
+    if (-not (Test-Path $srcFile) -and -not (Test-Path $srcZFile)) {
+      Remove-Item $_.FullName -ErrorAction SilentlyContinue > $null
     }
   }
 
@@ -134,15 +144,22 @@ function Install-Mod {
   }
 
   # Hardlink regular files (excluding .z and .z.uncompressed_size)
-  Get-ChildItem -Path $modSrcDir -File -ErrorAction SilentlyContinue | Where-Object {
+  $cwd = (Get-Location).Path
+
+  Get-ChildItem -Path $modSrcDir -File -Recurse -ErrorAction SilentlyContinue | Where-Object {
     $_.Name -notlike '*.z' -and $_.Name -notlike '*.z.uncompressed_size'
   } | ForEach-Object {
-    $srcFile = $_.FullName
-    $destFile = Join-Path $modDestDir $_.Name
-    if (-not (Test-Path $destFile) -or (Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime) {
-      New-Item -ItemType HardLink -Path $destFile -Target $srcFile > $null
+    $srcFile = $_.FullName.Substring($cwd.Length + 1)
+
+    # Get relative path from $modSrcDir to preserve structure
+    $relPath = $_.FullName.Substring($modSrcDir.Length + 1)
+
+    $destFile = Join-Path $modDestDir $relPath
+
+    if (-not (Test-Path $destFile) -or ((Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime)) {
+        New-Item -ItemType HardLink -Path $destFile -Target $srcFile > $null
     }
-  }
+}
 
   # Decompress the .z files using Perl
   $decompressScript = @'
@@ -202,19 +219,16 @@ exit 0;
     $relPath = $srcFile.Substring($modSrcDir.Length).TrimStart('\')
     $destFile = Join-Path $modDestDir ($relPath -replace '\.z$', '')
 
-    $destDir = Split-Path $destFile
-    if (-not (Test-Path $destDir)) {
-        New-Item -ItemType Directory -Path $destDir -Force | Out-Null
-    }
+    $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
+    $destExists = Test-Path $destFile
+    $needsUpdate = -not $destExists -or $srcTime -gt (Get-Item $destFile).LastWriteTimeUtc
 
-    if (-not (Test-Path $destFile) -or ((Get-Item $srcFile).LastWriteTime -gt (Get-Item $destFile).LastWriteTime)) {
-      
-      # Run the Perl decompression logic
-      perl $decompressScriptFile "$srcFile" "$destFile"
+    if ($needsUpdate) {
+        perl $decompressScriptFile "$srcFile" "$destFile"
 
-      # Preserve timestamp
-      $srcTime = (Get-Item $srcFile).LastWriteTimeUtc
-      (Get-Item $destFile).LastWriteTimeUtc = $srcTime
+        if (Test-Path $destFile) {
+            (Get-Item $destFile).LastWriteTimeUtc = $srcTime
+        }
     }
   }
 
@@ -306,10 +320,6 @@ if ($args.Length -eq 0) {
 
 Write-Host "Installing/updating mods..."
 
-Set-Location -Path '.\arkse'
-
-$workshopContentDir = "376030\steamapps\workshop\content\346110"
-$modsInstallDir = "376030\ShooterGame\Content\Mods"
 $modIds = $args[0] -replace '^"(.*)"$', '$1'
 $modIds = $modIds.Split(',')
 
