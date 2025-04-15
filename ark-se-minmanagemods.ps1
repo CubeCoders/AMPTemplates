@@ -255,43 +255,62 @@ exit 0;
   Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII -Force
 
   Get-ChildItem -Path $modSrcDir -Filter *.z -Recurse -File | ForEach-Object {
-    $relPathWithZ = Get-RelativePath -ReferencePath $modSrcDirResolved.Path -ItemPath $_.FullName
-    $srcFileRelative = Join-Path $modSrcDir $relPathWithZ
+    # Resolve to get absolute path information
+    $srcItemResolved = Resolve-Path -LiteralPath $_.FullName # Use LiteralPath for safety
+
+    # Construct the \\?\ prefixed absolute path for the source .z file
+    $longSrcZFilePath = '\\?\' + $srcItemResolved.ProviderPath
+
+    # Calculate the relative path segment (needed to construct destination)
+    $relPathWithZ = Get-RelativePath -ReferencePath $modSrcDirResolved.Path -ItemPath $srcItemResolved.Path
+    # Construct the relative destination path (without .z)
     $relPath = $relPathWithZ -replace '\.z$', ''
-    $destFileRelative = Join-Path $modDestDir $relPath
+    $relativeDestFile = Join-Path $modDestDir $relPath
+
+    # Resolve the destination path and construct the \\?\ prefixed absolute path
+    $destItemResolved = Resolve-Path -Path $relativeDestFile -ErrorAction SilentlyContinue # Resolve relative dest path
+    # Need to handle case where dest doesn't exist yet for resolution
+    $longDestFilePath = ""
+    if ($destItemResolved) {
+        $longDestFilePath = '\\?\' + $destItemResolved.ProviderPath
+    } else {
+        # If it doesn't exist, construct the absolute path manually and add prefix
+        $absoluteDestPath = Join-Path (Get-Location).Path $relativeDestFile
+        $longDestFilePath = '\\?\' + $absoluteDestPath
+    }
 
     $srcTime = $_.LastWriteTimeUtc
-    $destExists = Test-Path $destFileRelative
+    $destExists = Test-Path -LiteralPath $longDestFilePath # Test long path
     $needsUpdate = $true
     if ($destExists) {
-        if ($srcTime -le (Get-Item $destFileRelative).LastWriteTimeUtc) {
+        # Use Get-Item with -LiteralPath for long paths
+        if ($srcTime -le (Get-Item -LiteralPath $longDestFilePath).LastWriteTimeUtc) {
             $needsUpdate = $false
         }
     }
 
-
     if ($needsUpdate) {
-        $parentDirRelative = Split-Path -Path $destFileRelative -Parent
+        # Ensure parent directory exists (using normal relative path is likely fine for New-Item)
+        $parentDirRelative = Split-Path -Path $relativeDestFile -Parent
         if ($parentDirRelative -and (-not (Test-Path $parentDirRelative))) {
             New-Item -ItemType Directory -Force -Path $parentDirRelative > $null
         }
-        perl $decompressScriptFile "$srcFileRelative" "$destFileRelative"
-        if ($LASTEXITCODE -eq 0 -and (Test-Path $destFileRelative)) {
-            (Get-Item $destFileRelative).LastWriteTimeUtc = $srcTime
+
+        # --- Pass \\?\ prefixed paths to Perl ---
+        perl $decompressScriptFile "$longSrcZFilePath" "$longDestFilePath"
+
+        if ($LASTEXITCODE -eq 0 -and (Test-Path -LiteralPath $longDestFilePath)) {
+            # Use LiteralPath for Set-ItemProperty or Get-Item/Set time
+            try {
+                (Get-Item -LiteralPath $longDestFilePath).LastWriteTimeUtc = $srcTime
+            } catch {
+                Write-Warning "Could not set timestamp on long path '$longDestFilePath': $($_.Exception.Message)"
+            }
         } elseif ($LASTEXITCODE -ne 0) {
-             Write-Host "  Warning: Perl decompression failed for '$srcFileRelative' (Exit code: $LASTEXITCODE)."
-         }
+            # Show the path Perl likely failed on (the long path)
+            Write-Host "  Warning: Perl decompression failed for '$longSrcZFilePath' (Exit code: $LASTEXITCODE)."
+        }
     }
-  }
-  Remove-Item $decompressScriptFile -Force -ErrorAction SilentlyContinue
-
-  $modOutputFileRelative = Join-Path $modsInstallDir "$modId.mod"
-  $modInfoFileRelative = Join-Path $modSrcDir "mod.info"
-  $modmetaFileRelative = Join-Path $modSrcDir "modmeta.info"
-
-  if (!(Test-Path $modInfoFileRelative)) {
-      Write-Host "  Error: $modInfoFileRelative not found! Cannot generate .mod file. Skipping mod $modId."
-      return
   }
 
   $modName = ""
@@ -347,10 +366,8 @@ close $in;
   perl $createModfileScriptFile "$modInfoFileRelative" "$modOutputFileRelative" "ShooterGame" "$modId" "$modName"
   if ($LASTEXITCODE -ne 0) {
      Write-Host "  Error: Perl script failed to generate '$modOutputFileRelative' (Exit code: $LASTEXITCODE)."
-     Remove-Item $createModfileScriptFile -Force -ErrorAction SilentlyContinue
      return
   }
-  Remove-Item $createModfileScriptFile -Force -ErrorAction SilentlyContinue
 
   $modOutputFileResolved = Resolve-Path $modOutputFileRelative
   $bytes = [System.IO.File]::ReadAllBytes($modOutputFileResolved.Path)
