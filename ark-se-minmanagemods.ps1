@@ -222,13 +222,13 @@ openL($out, '>:raw', $outfile) or die "Cannot openL (write) $outfile: $!";
 die "FATAL: Failed to get valid output filehandle for $outfile after openL" unless fileno($out);
 
 my $sig;
-read($in, $sig, 8) or die "Unable to read compressed file: $!";
+readL($in, $sig, 8) or die "Unable to read compressed file: $!";
 if ($sig ne "\xC1\x83\x2A\x9E\x00\x00\x00\x00") {
   die "Bad file magic";
 }
 
 my $data;
-read($in, $data, 24) or die "Unable to read compressed file: $!";
+readL($in, $data, 24) or die "Unable to read compressed file: $!";
 my ($chunksizelo, $chunksizehi,
     $comprtotlo,  $comprtothi,
     $uncomtotlo,  $uncomtothi) = unpack("(LLLLLL)<", $data);
@@ -236,7 +236,7 @@ my ($chunksizelo, $chunksizehi,
 my @chunks;
 my $comprused = 0;
 while ($comprused < $comprtotlo) {
-  read($in, $data, 16) or die "Unable to read compressed file: $!";
+  readL($in, $data, 16) or die "Unable to read compressed file: $!";
   my ($comprsizelo, $comprsizehi,
       $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
   push @chunks, $comprsizelo;
@@ -245,7 +245,7 @@ while ($comprused < $comprtotlo) {
 
 my $inflate = Compress::Raw::Zlib::Inflate->new();
 foreach my $comprsize (@chunks) {
-  read($in, $data, $comprsize) or die "File read failed: $!";
+  readL($in, $data, $comprsize) or die "File read failed: $!";
   my $output;
   my $status = $inflate->inflate($data, $output, 1);
 
@@ -253,11 +253,11 @@ foreach my $comprsize (@chunks) {
     die "Bad compressed stream; status: $status";
   }
 
-  print $out $output;
+  printL $out $output;
 }
 
-close $out;
-close $in;
+closeL $out;
+closeL $in;
 exit 0;
 '@
 
