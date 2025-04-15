@@ -45,7 +45,7 @@ function Setup-StrawberryPerl {
   )
 
   try {
-    & cpanm --notest --quiet $requiredPerlModules -ErrorAction Stop
+    & cpanm --notest --quiet $requiredPerlModules
   } catch {
       Write-Host "  Error: Failed to install required Perl modules $requiredPerlModules. Aborting."
     exit 1
@@ -212,6 +212,7 @@ use Compress::Raw::Zlib;
 use Win32::LongPath qw(openL);
 
 my ($infile, $outfile) = @ARGV;
+my ($in, $out);
 openL($in,  '<:raw', $infile)  or die "Cannot openL $infile: $!";
 openL($out, '>:raw', $outfile) or die "Cannot openL $outfile: $!";
 
