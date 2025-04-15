@@ -234,7 +234,7 @@ close $in;
 exit 0;
 '@
 
-  $decompressScriptFile = Join-Path $env:TEMP "decompress.pl" # Reverted to original name
+  $decompressScriptFile = Join-Path $env:TEMP "decompress.pl"
   Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII -Force
 
   Get-ChildItem -Path $modSrcDir -Filter *.z -Recurse -File | ForEach-Object {
@@ -260,8 +260,7 @@ exit 0;
          }
     }
   }
-  # Removed temp file cleanup to be closer to original script state
-  # Remove-Item $decompressScriptFile -Force -ErrorAction SilentlyContinue
+  Remove-Item $decompressScriptFile -Force -ErrorAction SilentlyContinue
 
   $modOutputFileRelative = Join-Path $modsInstallDir "$modId.mod"
   $modInfoFileRelative = Join-Path $modSrcDir "mod.info"
@@ -274,7 +273,6 @@ exit 0;
 
   $modName = ""
   try {
-    # Kept try/catch around Invoke-WebRequest as network errors are common & expected
     $html = Invoke-WebRequest -Uri "http://steamcommunity.com/sharedfiles/filedetails/?id=$modId" -UseBasicParsing -ErrorAction Stop -TimeoutSec 10
     $modName = ($html.Content -split '<div class="workshopItemTitle">')[1] -split '</div>' | Select-Object -First 1
     $modName = $modName.Trim()
@@ -320,17 +318,15 @@ close $out;
 close $in;
 '@
 
-  $createModfileScriptFile = Join-Path $env:TEMP "createModfile.pl" # Reverted to original name
+  $createModfileScriptFile = Join-Path $env:TEMP "createModfile.pl"
   Set-Content -Path $createModfileScriptFile -Value $createModfileScript -Encoding ASCII -Force
   perl $createModfileScriptFile "$modInfoFileRelative" "$modOutputFileRelative" "ShooterGame" "$modId" "$modName"
   if ($LASTEXITCODE -ne 0) {
      Write-Host "  Error: Perl script failed to generate '$modOutputFileRelative' (Exit code: $LASTEXITCODE)."
-     # Removed temp file cleanup to be closer to original script state
-     # Remove-Item $createModfileScriptFile -Force -ErrorAction SilentlyContinue
+     Remove-Item $createModfileScriptFile -Force -ErrorAction SilentlyContinue
      return
   }
-  # Removed temp file cleanup to be closer to original script state
-  # Remove-Item $createModfileScriptFile -Force -ErrorAction SilentlyContinue
+  Remove-Item $createModfileScriptFile -Force -ErrorAction SilentlyContinue
 
   $modOutputFileResolved = Resolve-Path $modOutputFileRelative
   $bytes = [System.IO.File]::ReadAllBytes($modOutputFileResolved.Path)
