@@ -279,7 +279,6 @@ exit 0;
         }
     }
 
-
     if ($needsUpdate) {
         $parentDirRelative = Split-Path -Path $destFileRelative -Parent
         if ($parentDirRelative -and (-not (Test-Path $parentDirRelative))) {
