@@ -128,8 +128,24 @@ function Install-Mod {
      return
   }
 
+  # Helper function for robust relative path calculation using .NET Uri
+  Function Get-RelativePath {
+    param(
+      [string]$ReferencePath,
+      [string]$ItemPath
+    )
+    if (-not $ReferencePath.EndsWith([System.IO.Path]::DirectorySeparatorChar)) {
+        $ReferencePath += [System.IO.Path]::DirectorySeparatorChar
+    }
+    $baseUri = [System.Uri]::new($ReferencePath)
+    $itemUri = [System.Uri]::new($ItemPath)
+    $relativeUri = $baseUri.MakeRelativeUri($itemUri)
+    $relPath = [System.Uri]::UnescapeDataString($relativeUri.OriginalString)
+    return $relPath.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+  }
+
   Get-ChildItem -Path $modSrcDir -Directory -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
-    $relativeDirPath = Resolve-Path -Path $_.FullName -Relative -BasePath $modSrcDirResolved.Path
+    $relativeDirPath = Get-RelativePath -ReferencePath $modSrcDirResolved.Path -ItemPath $_.FullName
     $destDirRelative = Join-Path $modDestDir $relativeDirPath
     if (-not (Test-Path $destDirRelative)) {
       New-Item -ItemType Directory -Force -Path $destDirRelative > $null
@@ -137,7 +153,7 @@ function Install-Mod {
   }
 
   Get-ChildItem -Path $modDestDir -File -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
-    $relPath = Resolve-Path -Path $_.FullName -Relative -BasePath $modDestDirResolved.Path
+    $relPath = Get-RelativePath -ReferencePath $modDestDirResolved.Path -ItemPath $_.FullName
     $srcFileRelative = Join-Path $modSrcDir $relPath
     $srcZFileRelative = "$srcFileRelative.z"
     if (-not (Test-Path $srcFileRelative) -and -not (Test-Path $srcZFileRelative)) {
@@ -147,7 +163,7 @@ function Install-Mod {
   }
 
   Get-ChildItem -Path $modDestDir -Directory -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
-    $dirRelPath = Resolve-Path -Path $_.FullName -Relative -BasePath $modDestDirResolved.Path
+    $dirRelPath = Get-RelativePath -ReferencePath $modDestDirResolved.Path -ItemPath $_.FullName
     $srcDirPath = Join-Path $modSrcDir $dirRelPath
     $destDirPath = Join-Path $modDestDir $dirRelPath
     if (-not (Test-Path $srcDirPath)) {
@@ -155,7 +171,8 @@ function Install-Mod {
     }
   }
   Get-ChildItem -Path $modDestDir -Directory -Recurse -ErrorAction SilentlyContinue | Sort-Object { $_.FullName.Length } -Descending | ForEach-Object {
-      $destDirPath = Join-Path $modDestDir (Resolve-Path -Path $_.FullName -Relative -BasePath $modDestDirResolved.Path)
+      $dirRelPath = Get-RelativePath -ReferencePath $modDestDirResolved.Path -ItemPath $_.FullName
+      $destDirPath = Join-Path $modDestDir $dirRelPath
       if ((Get-ChildItem -Path $destDirPath -ErrorAction SilentlyContinue).Count -eq 0) {
          Remove-Item -Path $destDirPath -Force -ErrorAction SilentlyContinue > $null
       }
@@ -164,7 +181,7 @@ function Install-Mod {
   Get-ChildItem -Path $modSrcDir -File -Recurse -ErrorAction SilentlyContinue | Where-Object {
     $_.Name -notlike '*.z' -and $_.Name -notlike '*.z.uncompressed_size'
   } | ForEach-Object {
-    $relPath = Resolve-Path -Path $_.FullName -Relative -BasePath $modSrcDirResolved.Path
+    $relPath = Get-RelativePath -ReferencePath $modSrcDirResolved.Path -ItemPath $_.FullName
     $srcFileRelative = Join-Path $modSrcDir $relPath
     $destFileRelative = Join-Path $modDestDir $relPath
 
@@ -238,14 +255,20 @@ exit 0;
   Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII -Force
 
   Get-ChildItem -Path $modSrcDir -Filter *.z -Recurse -File | ForEach-Object {
-    $relPathWithZ = Resolve-Path -Path $_.FullName -Relative -BasePath $modSrcDirResolved.Path
+    $relPathWithZ = Get-RelativePath -ReferencePath $modSrcDirResolved.Path -ItemPath $_.FullName
     $srcFileRelative = Join-Path $modSrcDir $relPathWithZ
     $relPath = $relPathWithZ -replace '\.z$', ''
     $destFileRelative = Join-Path $modDestDir $relPath
 
     $srcTime = $_.LastWriteTimeUtc
     $destExists = Test-Path $destFileRelative
-    $needsUpdate = -not $destExists -or $srcTime -gt (Get-Item $destFileRelative).LastWriteTimeUtc
+    $needsUpdate = $true
+    if ($destExists) {
+        if ($srcTime -le (Get-Item $destFileRelative).LastWriteTimeUtc) {
+            $needsUpdate = $false
+        }
+    }
+
 
     if ($needsUpdate) {
         $parentDirRelative = Split-Path -Path $destFileRelative -Parent
@@ -279,6 +302,7 @@ exit 0;
   } catch {
       Write-Host "  Warning: Failed to fetch mod name for $modId. Using name from mod.info."
   }
+
 
   $createModfileScript = @'
 use strict;
