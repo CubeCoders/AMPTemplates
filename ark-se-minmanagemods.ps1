@@ -264,24 +264,34 @@ exit 0;
   $decompressScriptFile = Join-Path $env:TEMP "decompress.pl"
   Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII -Force
 
-  # Use a relative path known to be potentially long/problematic
-  $testRelPath = 'C:\AMPDatastore\Instances\ARKSurvivalEvolvedMinimal-ModTesting01\arkse\376030\steamapps\workshop\content\346110\1785880078\WindowsNoEditor\PrimalEarth\Human\Female\Outfits\Underwear_July4th\Icon\Bra\HUD_VDay22_Bra_SauropodHearts_Icon_Colorized_MIC.uasset.z'
-  Write-Host "DEBUG: Testing Perl standard open (2-arg style) on full path: $testRelPath"
+  # Use the full, absolute path you provided
+  $testAbsPath = 'C:\AMPDatastore\Instances\ARKSurvivalEvolvedMinimal-ModTesting01\arkse\376030\steamapps\workshop\content\346110\1785880078\WindowsNoEditor\PrimalEarth\Human\Female\Outfits\Underwear_July4th\Icon\Bra\HUD_VDay22_Bra_SauropodHearts_Icon_Colorized_MIC.uasset.z'
 
-  # Construct Perl command using 2-argument open and bareword FH
-  # Use doubled single quotes for PowerShell to pass literal single quotes to Perl
-  $perlCmd = 'open(FH, ''<:raw'', $ARGV[0]) or die "Standard open failed for $ARGV[0]: $!"; print "Standard open OK for $ARGV[0]\n"; close FH; exit 0;'
+  Write-Host "DEBUG: Testing Perl Win32::LongPath::openL on absolute path: $testAbsPath"
+  Write-Host "DEBUG: Path Length: $($testAbsPath.Length)" # Check length
 
-  # Execute the command
-  & perl -e $perlCmd "$testRelPath"
+  # Verify file existence from PowerShell first using LiteralPath for accuracy
+  if (-not (Test-Path -LiteralPath $testAbsPath)) {
+       Write-Warning "DEBUG: File does NOT exist at specified absolute path according to PowerShell Test-Path!"
+       # Consider adding an 'exit' or 'return' here if the file definitely doesn't exist
+  }
+
+  # Construct Perl command using Win32::LongPath::openL
+  # Using 2-arg style openL(FH, mode, path) which should work
+  # Doubled single quotes '...' are for PowerShell to pass literal single quotes to Perl's -e
+  $perlCmd = 'use Win32::LongPath qw(openL); openL(FH, ''<:raw'', $ARGV[0]) or die "Win32::LongPath::openL failed for $ARGV[0]: $!"; print "Win32::LongPath::openL OK for $ARGV[0]\n"; close FH; exit 0;'
+
+  # Execute the command, passing the absolute path
+  # Assumes 'perl' is in path and Win32::LongPath is installed
+  & perl -e $perlCmd "$testAbsPath"
   $exitCode = $LASTEXITCODE # Capture exit code immediately
-  Write-Host "DEBUG: Perl standard open (2-arg style) exit code: $exitCode"
+  Write-Host "DEBUG: Perl openL exit code: $exitCode"
 
   # Check the result
   if ($exitCode -ne 0) {
-      Write-Host "DEBUG: Standard Perl open failed. This likely means the path is too long for standard functions OR permissions are denied."
+      Write-Host "DEBUG: Perl Win32::LongPath::openL FAILED. Check Perl output/STDERR for 'Cannot openL...' message. Likely still permissions or environment issue blocking access."
   } else {
-      Write-Host "DEBUG: Standard Perl open SUCCEEDED. This is unexpected if the path is truly too long."
+      Write-Host "DEBUG: Perl Win32::LongPath::openL SUCCEEDED for this path."
   }
 
   Get-ChildItem -Path $modSrcDir -Filter *.z -File | ForEach-Object {
