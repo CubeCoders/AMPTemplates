@@ -265,8 +265,8 @@ exit 0;
   Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII -Force
 
   # Use a relative path known to be potentially long/problematic
-  $testRelPath = 'steamapps\workshop\content\346110\1785880078\WindowsNoEditor\Alchemist\Bookshelf\Props\T_Cover7Alpha.uasset.z'
-  Write-Host "DEBUG: Testing Perl standard open (2-arg style) on relative path: $testRelPath"
+  $testRelPath = 'C:\AMPDatastore\Instances\ARKSurvivalEvolvedMinimal-ModTesting01\arkse\376030\steamapps\workshop\content\346110\1785880078\WindowsNoEditor\PrimalEarth\Human\Female\Outfits\Underwear_July4th\Icon\Bra\HUD_VDay22_Bra_SauropodHearts_Icon_Colorized_MIC.uasset.z'
+  Write-Host "DEBUG: Testing Perl standard open (2-arg style) on full path: $testRelPath"
 
   # Construct Perl command using 2-argument open and bareword FH
   # Use doubled single quotes for PowerShell to pass literal single quotes to Perl
