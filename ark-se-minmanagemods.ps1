@@ -264,12 +264,27 @@ exit 0;
   $decompressScriptFile = Join-Path $env:TEMP "decompress.pl"
   Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII -Force
 
-  $testRelPath = 'steamapps\workshop\content\346110\1785880078\WindowsNoEditor\Alchemist\Bookshelf\Props\T_Cover7Alpha.uasset.z' # A known failing relative path
-  Write-Host "DEBUG: Testing Perl standard open on relative path: $testRelPath"
-  & perl -e "open(my $fh, '<:raw', $ARGV[0]) or die qq(Standard open failed: $!); print qq(Standard open OK\n); close $fh;" "$testRelPath"
-  Write-Host "DEBUG: Perl standard open exit code: $LASTEXITCODE"
+  # Use a relative path known to be potentially long/problematic
+  $testRelPath = 'steamapps\workshop\content\346110\1785880078\WindowsNoEditor\Alchemist\Bookshelf\Props\T_Cover7Alpha.uasset.z'
+  Write-Host "DEBUG: Testing Perl standard open (2-arg style) on relative path: $testRelPath"
 
-  Get-ChildItem -Path $modSrcDir -Filter *.z -Recurse -File | ForEach-Object {
+  # Construct Perl command using 2-argument open and bareword FH
+  # Use doubled single quotes for PowerShell to pass literal single quotes to Perl
+  $perlCmd = 'open(FH, ''<:raw'', $ARGV[0]) or die "Standard open failed for $ARGV[0]: $!"; print "Standard open OK for $ARGV[0]\n"; close FH; exit 0;'
+
+  # Execute the command
+  & perl -e $perlCmd "$testRelPath"
+  $exitCode = $LASTEXITCODE # Capture exit code immediately
+  Write-Host "DEBUG: Perl standard open (2-arg style) exit code: $exitCode"
+
+  # Check the result
+  if ($exitCode -ne 0) {
+      Write-Host "DEBUG: Standard Perl open failed. This likely means the path is too long for standard functions OR permissions are denied."
+  } else {
+      Write-Host "DEBUG: Standard Perl open SUCCEEDED. This is unexpected if the path is truly too long."
+  }
+
+  Get-ChildItem -Path $modSrcDir -Filter *.z -File | ForEach-Object {
     $relPathWithZ = Get-RelativePath -ReferencePath $modSrcDirResolved.Path -ItemPath $_.FullName
     $srcFileRelative = Join-Path $modSrcDir $relPathWithZ
     $relPath = $relPathWithZ -replace '\.z$', ''
