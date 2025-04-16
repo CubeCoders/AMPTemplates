@@ -265,27 +265,36 @@ exit 0;
   Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII -Force
 
   # Use the full, absolute path you provided
-  $testAbsPath = 'C:\AMPDatastore\Instances\ARKSurvivalEvolvedMinimal-ModTesting01\arkse\376030\steamapps\workshop\content\346110\1785880078\WindowsNoEditor\PrimalEarth\Human\Female\Outfits\Underwear_July4th\Icon\Bra\HUD_VDay22_Bra_SauropodHearts_Icon_Colorized_MIC.uasset.z'
+  $absoluteSrcZFilePath = 'C:\AMPDatastore\Instances\ARKSurvivalEvolvedMinimal-ModTesting01\arkse\376030\steamapps\workshop\content\346110\1785880078\WindowsNoEditor\PrimalEarth\Human\Female\Outfits\Underwear_July4th\Icon\Bra\HUD_VDay22_Bra_SauropodHearts_Icon_Colorized_MIC.uasset.z'
 
-  Write-Host "DEBUG: Testing Perl Win32::LongPath::openL on absolute path: $testAbsPath"
-  Write-Host "DEBUG: Path Length: $($testAbsPath.Length)" # Check length
+  # --- BEGIN Add .NET Read Test ---
+    # ($absoluteSrcZFilePath should be defined just before this from Resolve-Path)
+    Write-Host "DEBUG: Testing direct .NET read access for source: $absoluteSrcZFilePath"
+    # Construct the path with the long path prefix for .NET
+    $testReadPathWithPrefix = '\\?\' + $absoluteSrcZFilePath
+    $fileStream = $null
+    try {
+        # Attempt to open for reading using .NET FileStream
+        $fileStream = [System.IO.FileStream]::new($testReadPathWithPrefix, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::Read)
+        # Attempt to read one byte to confirm access
+        $oneByte = $fileStream.ReadByte()
+        if ($oneByte -ge 0) {
+            Write-Host "DEBUG: Direct .NET read access SUCCEEDED (read one byte)."
+        } else {
+            # ReadByte returns -1 at end of file
+            Write-Host "DEBUG: Direct .NET read access OK but file appears empty?"
+        }
+    } catch {
+        # Report any error during .NET access
+        Write-Host "DEBUG: Direct .NET read access FAILED. Error: $($_.Exception.Message)"
+    } finally {
+        # Ensure stream is closed if opened
+        if ($fileStream -ne $null) { $fileStream.Dispose() }
+    }
+    # --- END Add .NET Read Test ---
 
-  # Verify file existence from PowerShell first using LiteralPath for accuracy
-  if (-not (Test-Path -LiteralPath $testAbsPath)) {
-       Write-Warning "DEBUG: File does NOT exist at specified absolute path according to PowerShell Test-Path!"
-       # Consider adding an 'exit' or 'return' here if the file definitely doesn't exist
-  }
-
-  # Construct Perl command using Win32::LongPath::openL
-  # Using 2-arg style openL(FH, mode, path) which should work
-  # Doubled single quotes '...' are for PowerShell to pass literal single quotes to Perl's -e
-  $perlCmd = 'use Win32::LongPath qw(openL); openL(FH, ''<:raw'', $ARGV[0]) or die "Win32::LongPath::openL failed for $ARGV[0]: $!"; print "Win32::LongPath::openL OK for $ARGV[0]\n"; close FH; exit 0;'
-
-  # Execute the command, passing the absolute path
-  # Assumes 'perl' is in path and Win32::LongPath is installed
-  & perl -e $perlCmd "$testAbsPath"
-  $exitCode = $LASTEXITCODE # Capture exit code immediately
-  Write-Host "DEBUG: Perl openL exit code: $exitCode"
+    # Also log the exact paths being passed to Perl
+    Write-Host "DEBUG: Passing to decompress.pl - infile='$absoluteSrcZFilePath' outfile='$absoluteDestFilePath'"
 
   # Check the result
   if ($exitCode -ne 0) {
