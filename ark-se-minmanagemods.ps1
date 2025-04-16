@@ -264,6 +264,11 @@ exit 0;
   $decompressScriptFile = Join-Path $env:TEMP "decompress.pl"
   Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII -Force
 
+  $testRelPath = 'steamapps\workshop\content\346110\1785880078\WindowsNoEditor\Alchemist\Bookshelf\Props\T_Cover7Alpha.uasset.z' # A known failing relative path
+  Write-Host "DEBUG: Testing Perl standard open on relative path: $testRelPath"
+  & perl -e "open(my $fh, '<:raw', $ARGV[0]) or die qq(Standard open failed: $!); print qq(Standard open OK\n); close $fh;" "$testRelPath"
+  Write-Host "DEBUG: Perl standard open exit code: $LASTEXITCODE"
+
   Get-ChildItem -Path $modSrcDir -Filter *.z -Recurse -File | ForEach-Object {
     $relPathWithZ = Get-RelativePath -ReferencePath $modSrcDirResolved.Path -ItemPath $_.FullName
     $srcFileRelative = Join-Path $modSrcDir $relPathWithZ
