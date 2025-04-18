@@ -156,5 +156,38 @@
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "ModMode",
         "UpdateSourceConditionValue": "-EACEnabled=false  "
+    },
+    {
+        "UpdateStageName": "Remove Mods Directory",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C rmdir /Q /S seven-days-to-die\\294420\\Mods",
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-EACEnabled=false   ",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Remove Mods Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf ./seven-days-to-die/294420/Mods/\"",
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-EACEnabled=false   ",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Download Darkness Falls",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://dev.azure.com/KhaineUK/f8438d9f-d741-420b-9429-f0838ed77e7f/_apis/git/repositories/80d717da-eb1e-4211-b0c2-eae2d478e749/items?path=/&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=main&resolveLfs=true&%24format=zip&api-version=5.0&download=true",
+        "UpdateSourceArgs": "DarknessFalls1.4.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "ModMode",
+        "UpdateSourceConditionValue": "-EACEnabled=false   "
     }
 ]
