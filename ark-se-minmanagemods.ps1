@@ -205,7 +205,7 @@ function Install-Mod {
     }
 }
 
-$decompressScript = @'
+  $decompressScript = @'
 use strict;
 use warnings;
 use Win32::LongPath qw(openL);
