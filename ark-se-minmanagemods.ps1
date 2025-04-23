@@ -308,7 +308,6 @@ close $in or warn "Warning: close failed for input file handle for '$infile': $!
         }
     }
 
-
     if ($needsUpdate) {
         $parentDirRelative = Split-Path -Path $destFileRelative -Parent
         if ($parentDirRelative -and (-not (Test-Path $parentDirRelative))) {
@@ -322,7 +321,6 @@ close $in or warn "Warning: close failed for input file handle for '$infile': $!
          }
     }
   }
-  Remove-Item $decompressScriptFile -Force -ErrorAction SilentlyContinue
 
   $modOutputFileRelative = Join-Path $modsInstallDir "$modId.mod"
   $modInfoFileRelative = Join-Path $modSrcDir "mod.info"
@@ -347,10 +345,8 @@ close $in or warn "Warning: close failed for input file handle for '$infile': $!
   perl $createModfileScriptFile "$modInfoFileRelative" "$modOutputFileRelative" "ShooterGame" "$modId" "$modName"
   if ($LASTEXITCODE -ne 0) {
      Write-Host "  Error: Perl script failed to generate '$modOutputFileRelative' (Exit code: $LASTEXITCODE)."
-     Remove-Item $createModfileScriptFile -Force -ErrorAction SilentlyContinue
      return
   }
-  Remove-Item $createModfileScriptFile -Force -ErrorAction SilentlyContinue
 
   $modOutputFileResolved = Resolve-Path $modOutputFileRelative
   $bytes = [System.IO.File]::ReadAllBytes($modOutputFileResolved.Path)
