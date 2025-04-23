@@ -314,8 +314,8 @@ close $in or warn "Warning: close failed for input file handle for '$infile': $!
           New-Item -ItemType Directory -Force -Path $parentDirRelative > $null
       }
   
-      $srcFileAbsolute = Join-Path "$PSScriptRoot" "arkse\376030" "$srcFileRelative"
-      $destFileAbsolute = Join-Path "$PSScriptRoot" "arkse\376030" "$destFileRelative"
+      $srcFileAbsolute = Join-Path "$PSScriptRoot\arkse\376030" "$srcFileRelative"
+      $destFileAbsolute = Join-Path "$PSScriptRoot\arkse\376030" "$destFileRelative"
 
       perl $decompressScriptFile "$srcFileAbsolute" "$destFileAbsolute"
       if ($LASTEXITCODE -eq 0 -and (Test-Path $destFileRelative)) {
