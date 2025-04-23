@@ -321,7 +321,7 @@ close $in or warn "Warning: close failed for input file handle for '$infile': $!
       if ($LASTEXITCODE -eq 0 -and (Test-Path $destFileRelative)) {
           (Get-Item $destFileRelative).LastWriteTimeUtc = $srcTime
       } elseif ($LASTEXITCODE -ne 0) {
-           Write-Host "  Warning: Perl decompression failed for '$srcFileRelative' (Exit code: $LASTEXITCODE)."
+           Write-Host "  Warning: Perl decompression failed for '$srcFileAbsolute' (Exit code: $LASTEXITCODE)."
        }
     }
   }
