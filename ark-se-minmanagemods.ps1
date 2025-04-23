@@ -309,16 +309,20 @@ close $in or warn "Warning: close failed for input file handle for '$infile': $!
     }
 
     if ($needsUpdate) {
-        $parentDirRelative = Split-Path -Path $destFileRelative -Parent
-        if ($parentDirRelative -and (-not (Test-Path $parentDirRelative))) {
-            New-Item -ItemType Directory -Force -Path $parentDirRelative > $null
-        }
-        perl $decompressScriptFile "$srcFileRelative" "$destFileRelative"
-        if ($LASTEXITCODE -eq 0 -and (Test-Path $destFileRelative)) {
-            (Get-Item $destFileRelative).LastWriteTimeUtc = $srcTime
-        } elseif ($LASTEXITCODE -ne 0) {
-             Write-Host "  Warning: Perl decompression failed for '$srcFileRelative' (Exit code: $LASTEXITCODE)."
-         }
+      $parentDirRelative = Split-Path -Path $destFileRelative -Parent
+      if ($parentDirRelative -and (-not (Test-Path $parentDirRelative))) {
+          New-Item -ItemType Directory -Force -Path $parentDirRelative > $null
+      }
+  
+      $srcFileAbsolute = Resolve-Path -Path $srcFileRelative
+      $destFileAbsolute = Resolve-Path -Path $destFileRelative
+  
+      perl $decompressScriptFile "$srcFileAbsolute" "$destFileAbsolute"
+      if ($LASTEXITCODE -eq 0 -and (Test-Path $destFileRelative)) {
+          (Get-Item $destFileRelative).LastWriteTimeUtc = $srcTime
+      } elseif ($LASTEXITCODE -ne 0) {
+           Write-Host "  Warning: Perl decompression failed for '$srcFileRelative' (Exit code: $LASTEXITCODE)."
+       }
     }
   }
 
