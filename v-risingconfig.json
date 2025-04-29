@@ -73,7 +73,7 @@
         "DisplayName": "Siege Weapon Health",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Setting for Siege Golem Health",
+        "Description": "Setting for Siege Golem Health. Settings above Very High require v1.1 or higher",
         "Keywords": "siege, weapon, health",
         "FieldName": "SiegeWeaponHealth",
         "InputType": "enum",
@@ -86,7 +86,11 @@
             "Low": "Low",
             "Normal": "Normal",
             "High": "High",
-            "VeryHigh": "Very High"
+            "VeryHigh": "Very High",
+            "MegaHigh": "Mega High",
+            "UltraHigh": "Ultra High",
+            "CrazyHigh": "Crazy High",
+            "Max": "Maximum"
         }
     },
     {
@@ -400,7 +404,7 @@
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
         "Description": "Multiplies all droptables with this factor granting more or less drops from kills and chests (Min: 0.25, Max: 3.0)",
-        "Keywords": "drop, table, modifier",
+        "Keywords": "drop, table, modifier, general",
         "FieldName": "DropTableModifier_General",
         "InputType": "number",
         "IsFlagArgument": false,
@@ -416,7 +420,7 @@
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
         "Description": "Multiplies the amount of loot received from successful servant hunts (Min: 0.25, Max: 3.0)",
-        "Keywords": "drop, table, modifier",
+        "Keywords": "drop, table, modifier, missions",
         "FieldName": "DropTableModifier_Missions",
         "InputType": "number",
         "IsFlagArgument": false,
@@ -424,6 +428,38 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0.25,
+        "MaxValue": 3,
+        "Suffix": "multiplier"
+    },
+    {
+        "DisplayName": "Drop Table Modifier - Stygian Shards",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Gameplay:joystick:1",
+        "Description": "Multiplies the number of Stygian shards dropped in Rift Incursions (Min: 0.25, Max: 3.0). Requires v1.1 or higher",
+        "Keywords": "drop, table, modifier, stygian, shards",
+        "FieldName": "DropTableModifier_StygianShards",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "DropTableModifier_StygianShards",
+        "IncludeInCommandLine": false,
+        "DefaultValue": 1,
+        "MinValue": 0.25,
+        "MaxValue": 3,
+        "Suffix": "multiplier"
+    },
+    {
+        "DisplayName": "Soul Shard Durability Drop Rate",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Gameplay:joystick:1",
+        "Description": "The durability loss rate for Soul Shards (Min: 0, Max: 3.0). Requires v1.1 or higher",
+        "Keywords": "soul, shard, durability, drop, rate",
+        "FieldName": "SoulShard_DurabilityLossRate",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "SoulShard_DurabilityLossRate",
+        "IncludeInCommandLine": false,
+        "DefaultValue": 1,
+        "MinValue": 0,
         "MaxValue": 3,
         "Suffix": "multiplier"
     },
@@ -769,7 +805,7 @@
         "DisplayName": "Research Cost Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Gameplay:joystick:1",
-        "Description": "Multiplies the cost of researching (Min: 0)",
+        "Description": "Multiplies the cost of researching (Min: 0). Not used in v1.1 or higher",
         "Keywords": "research, cost, modifier",
         "FieldName": "ResearchCostModifier",
         "InputType": "number",
@@ -1233,7 +1269,7 @@
         "DisplayName": "Equipment Movement Speed Modifier",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Vampires:dark_mode:3",
-        "Description": "Multiplies the amount of siege power gained from equipment (Min: 0.1)",
+        "Description": "Multiplies the amount of siege power gained from equipment (Min: 0.1). Not used in v1.1 or higher",
         "Keywords": "equipment, movement, speed, modifier",
         "FieldName": "EquipmentStatModifiers_Global.MovementSpeedModifier",
         "InputType": "number",
@@ -1453,7 +1489,7 @@
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Castles:castle:5",
         "Description": "The number of throne of darkness a single player is allowed to construct",
-        "Keywords": "castle, nether, gate, limit",
+        "Keywords": "castle, throne, darkness, limit",
         "FieldName": "CastleStatModifiers_Global.ThroneOfDarknessLimit",
         "InputType": "number",
         "IsFlagArgument": false,
@@ -1461,6 +1497,23 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 1,
         "MinValue": 0
+    },
+    {
+        "DisplayName": "Castle Heart Limit Type",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Castles:castle:5",
+        "Description": "Defines the castle heart limit type",
+        "Keywords": "castle, heart, limit, type",
+        "FieldName": "CastleStatModifiers_Global.CastleHeartLimitType",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "$.CastleStatModifiers_Global.CastleHeartLimitType",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "User",
+        "EnumValues": {
+            "User": "User basis",
+            "Clan": "Clan basis"
+        }
     },
     {
         "DisplayName": "Level 1 Floor Limit",
@@ -1721,7 +1774,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 20,
         "MinValue": 0,
-        "MaxValue": 24,
+        "MaxValue": 23,
         "Suffix": "hours"
     },
     {
@@ -1737,7 +1790,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 0,
         "MinValue": 0,
-        "MaxValue": 60,
+        "MaxValue": 59,
         "Suffix": "minutes"
     },
     {
@@ -1753,7 +1806,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 22,
         "MinValue": 0,
-        "MaxValue": 24,
+        "MaxValue": 23,
         "Suffix": "hours"
     },
     {
@@ -1769,7 +1822,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 0,
         "MinValue": 0,
-        "MaxValue": 60,
+        "MaxValue": 59,
         "Suffix": "minutes"
     },
     {
@@ -1785,7 +1838,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 20,
         "MinValue": 0,
-        "MaxValue": 24,
+        "MaxValue": 23,
         "Suffix": "hours"
     },
     {
@@ -1801,7 +1854,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 0,
         "MinValue": 0,
-        "MaxValue": 60,
+        "MaxValue": 59,
         "Suffix": "minutes"
     },
     {
@@ -1817,7 +1870,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 22,
         "MinValue": 0,
-        "MaxValue": 24,
+        "MaxValue": 23,
         "Suffix": "hours"
     },
     {
@@ -1833,7 +1886,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 0,
         "MinValue": 0,
-        "MaxValue": 60,
+        "MaxValue": 59,
         "Suffix": "minutes"
     },
     {
@@ -1849,7 +1902,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 20,
         "MinValue": 0,
-        "MaxValue": 24,
+        "MaxValue": 23,
         "Suffix": "hours"
     },
     {
@@ -1865,7 +1918,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 0,
         "MinValue": 0,
-        "MaxValue": 60,
+        "MaxValue": 59,
         "Suffix": "minutes"
     },
     {
@@ -1881,7 +1934,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 22,
         "MinValue": 0,
-        "MaxValue": 24,
+        "MaxValue": 23,
         "Suffix": "hours"
     },
     {
@@ -1897,7 +1950,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 0,
         "MinValue": 0,
-        "MaxValue": 60,
+        "MaxValue": 59,
         "Suffix": "minutes"
     },
     {
@@ -1913,7 +1966,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 20,
         "MinValue": 0,
-        "MaxValue": 24,
+        "MaxValue": 23,
         "Suffix": "hours"
     },
     {
@@ -1929,7 +1982,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 0,
         "MinValue": 0,
-        "MaxValue": 60,
+        "MaxValue": 59,
         "Suffix": "minutes"
     },
     {
@@ -1945,7 +1998,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 22,
         "MinValue": 0,
-        "MaxValue": 24,
+        "MaxValue": 23,
         "Suffix": "hours"
     },
     {
@@ -1961,7 +2014,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": 0,
         "MinValue": 0,
-        "MaxValue": 60,
+        "MaxValue": 59,
         "Suffix": "minutes"
     },
     {
