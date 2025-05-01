@@ -3,7 +3,7 @@
         "UpdateStageName": "Node.js Download",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://nodejs.org/download/release/v20.11.1/node-v20.11.1-win-x64.zip",
+        "UpdateSourceData": "https://nodejs.org/download/release/v22.12.0/node-v22.12.0-win-x64.zip",
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
@@ -15,7 +15,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-x64.tar.gz",
+        "UpdateSourceData": "https://nodejs.org/download/release/v22.12.0/node-v22.12.0-linux-x64.tar.gz",
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "OverwriteExistingFiles": true,
         "OneShot": true
@@ -25,7 +25,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-arm64.tar.gz",
+        "UpdateSourceData": "https://nodejs.org/download/release/v22.12.0/node-v22.12.0-linux-arm64.tar.gz",
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "OverwriteExistingFiles": true,
         "OneShot": true
@@ -35,7 +35,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd tarkov && rmdir /S /Q node > NUL 2>&1 & rename node-v20.11.1-win-x64 node",
+        "UpdateSourceArgs": "/C cd tarkov && rmdir /S /Q node > NUL 2>&1 & rename node-v22.12.0-win-x64 node",
         "SkipOnFailure": false,
         "OneShot": true
     },
@@ -45,7 +45,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf node >/dev/null 2>&1 && tar xfv node-v20.11.1-linux-x64.tar.gz >/dev/null 2>&1 && mv node-v20.11.1-linux-x64 node >/dev/null 2>&1 && rm node-v20.11.1-linux-x64.tar.gz\"",
+        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf node >/dev/null 2>&1 && tar xfv node-v22.12.0-linux-x64.tar.gz >/dev/null 2>&1 && mv node-v22.12.0-linux-x64 node >/dev/null 2>&1 && rm node-v22.12.0-linux-x64.tar.gz\"",
         "SkipOnFailure": false,
         "OneShot": true
     },
@@ -55,7 +55,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf node >/dev/null 2>&1 && tar xfv node-v20.11.1-linux-arm64.tar.gz >/dev/null 2>&1 && mv node-v20.11.1-linux-arm64 node >/dev/null 2>&1 && rm node-v20.11.1-linux-arm64.tar.gz\"",
+        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf node >/dev/null 2>&1 && tar xfv node-v22.12.0-linux-arm64.tar.gz >/dev/null 2>&1 && mv node-v22.12.0-linux-arm64 node >/dev/null 2>&1 && rm node-v22.12.0-linux-arm64.tar.gz\"",
         "SkipOnFailure": false,
         "OneShot": true
     },
@@ -63,8 +63,8 @@
         "UpdateStageName": "SPT-AKI Installation",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd tarkov && rd /S /Q srv > NUL 2>&1 & git clone https://github.com/sp-tarkov/server.git srv > NUL && cd srv/project && git lfs pull > NUL && set PATH={{$FullRootDir}}node;%PATH% && npm install > NUL 2>&1 && npm run build:release -- --arch=x64 --platform=win32 > NUL 2>&1 && xcopy /E /Y /I build\\* \"{{$FullBaseDir}}\" > NUL 2>&1 && cd \"{{$FullBaseDir}}\" && rd /S /Q \"{{$FullRootDir}}srv\" > NUL 2>&1",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'tarkov'; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $LatestVersion = (Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/sp-tarkov/build/releases/latest').tag_name; git clone --branch $LatestVersion https://github.com/sp-tarkov/server.git srv 1> $null; if ($?) { Set-Location -Path 'srv/project'; git lfs pull 1> $null }; if ($?) { $env:PATH='{{$FullRootDir}}node;' + $env:PATH; & node ../../node/node_modules/npm/bin/npm-cli.js install 1> $null; & node ../../node/node_modules/npm/bin/npm-cli.js run build:release -- --arch=x64 --platform=win32 1> $null; Copy-Item build/* '{{$FullBaseDir}}' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Set-Location -Path '{{$FullBaseDir}}'; Remove-Item '{{$FullRootDir}}srv' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }\"",
         "UpdateSourceConditionSetting": "SPTSelector",
         "UpdateSourceConditionValue": "latest",
         "SkipOnFailure": false
@@ -75,7 +75,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf srv; git clone https://github.com/sp-tarkov/server.git srv >/dev/null && cd srv/project && git-lfs pull >/dev/null && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \\\"{{$FullBaseDir}}\\\" >/dev/null 2>&1 && cd \\\"{{$FullBaseDir}}\\\" && rm -rf \\\"{{$FullRootDir}}srv\\\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf srv; LatestVersion=$(wget -qO- https://api.github.com/repos/sp-tarkov/build/releases/latest | grep tag_name | cut -d\\\\\\\" -f4) && git clone --branch $LatestVersion https://github.com/sp-tarkov/server.git srv >/dev/null && cd srv/project && git-lfs pull >/dev/null && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=x64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \\\"{{$FullBaseDir}}\\\" >/dev/null 2>&1 && cd \\\"{{$FullBaseDir}}\\\" && rm -rf \\\"{{$FullRootDir}}srv\\\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1\"",
         "UpdateSourceConditionSetting": "SPTSelector",
         "UpdateSourceConditionValue": "latest",
         "SkipOnFailure": false
@@ -86,7 +86,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf srv; git clone https://github.com/sp-tarkov/server.git srv >/dev/null && cd srv/project && git-lfs pull >/dev/null && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \\\"{{$FullBaseDir}}\\\" >/dev/null 2>&1 && cd \\\"{{$FullBaseDir}}\\\" && rm -rf \\\"{{$FullRootDir}}srv\\\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd tarkov && rm -rf srv; LatestVersion=$(wget -qO- https://api.github.com/repos/sp-tarkov/build/releases/latest | grep tag_name | cut -d\\\\\\\" -f4) && git clone --branch $LatestVersion https://github.com/sp-tarkov/server.git srv >/dev/null && cd srv/project && git-lfs pull >/dev/null && export PATH={{$FullRootDir}}node/bin:$PATH && npm install >/dev/null 2>&1 && npm run build:release -- --arch=arm64 --platform=linux >/dev/null 2>&1 && \\cp -rf build/* \\\"{{$FullBaseDir}}\\\" >/dev/null 2>&1 && cd \\\"{{$FullBaseDir}}\\\" && rm -rf \\\"{{$FullRootDir}}srv\\\" >/dev/null 2>&1 && chmod +x SPT.Server.exe >/dev/null 2>&1\"",
         "UpdateSourceConditionSetting": "SPTSelector",
         "UpdateSourceConditionValue": "latest",
         "SkipOnFailure": false
@@ -95,8 +95,8 @@
         "UpdateStageName": "SPT-AKI Installation",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd tarkov && rd /S /Q srv > NUL 2>&1 & git clone --branch {{SPTAKIVersion}} https://github.com/sp-tarkov/server.git srv > NUL && cd srv/project && git lfs pull > NUL && set PATH={{$FullRootDir}}node;%PATH% && npm install > NUL 2>&1 && npm run build:release -- --arch=x64 --platform=win32 > NUL 2>&1 && xcopy /E /Y /I build\\* \"{{$FullBaseDir}}\" > NUL 2>&1 && cd \"{{$FullBaseDir}}\" && rd /S /Q \"{{$FullRootDir}}srv\" > NUL 2>&1 && if exist Aki.Server.exe ( move /Y Aki.Server.exe SPT.Server.exe > NUL 2>&1 )",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'tarkov'; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; git clone --branch {{SPTAKIVersion}} https://github.com/sp-tarkov/server.git srv 1> $null; if ($?) { Set-Location -Path 'srv/project'; git lfs pull 1> $null }; if ($?) { $env:PATH='{{$FullRootDir}}node;' + $env:PATH; & node ../../node/node_modules/npm/bin/npm-cli.js install 1> $null; & node ../../node/node_modules/npm/bin/npm-cli.js run build:release -- --arch=x64 --platform=win32 1> $null; Copy-Item build/* '{{$FullBaseDir}}' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Set-Location -Path '{{$FullBaseDir}}'; Remove-Item '{{$FullRootDir}}srv' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; if (Test-Path 'Aki.Server.exe') { Move-Item -Force -LiteralPath 'Aki.Server.exe' -Destination 'SPT.Server.exe' -ErrorAction SilentlyContinue } }\"",
         "UpdateSourceConditionSetting": "SPTSelector",
         "UpdateSourceConditionValue": "specific",
         "SkipOnFailure": false
