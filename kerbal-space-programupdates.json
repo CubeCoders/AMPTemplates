@@ -3,7 +3,9 @@
         "UpdateStageName": "Create Dotnet Directory",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullRootDir}}Dotnet"
+        "UpdateSourceArgs": "{{$FullRootDir}}Dotnet",
+        "UpdateSourceConditionSetting": "ServerBuild",
+        "UpdateSourceConditionValue": "release"
     },
     {
         "UpdateStageName": ".NET Runtime Download",
@@ -11,7 +13,9 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
         "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $DotnetVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/release-metadata/5.0/releases.json).\\\"latest-runtime\\\"; if ($?) { Invoke-WebRequest -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/Runtime/$DotnetVersion/dotnet-runtime-$DotnetVersion-win-x64.zip -OutFile 'dotnet.zip' }; if ($?) { Write-Output \\\".NET Runtime v$DotnetVersion downloaded\\\" }\"",
-        "SkipOnFailure": false
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "ServerBuild",
+        "UpdateSourceConditionValue": "release"
     },
     {
         "UpdateStageName": ".NET Runtime Extract",
@@ -21,7 +25,9 @@
         "UpdateSourceTarget": "{{$FullRootDir}}Dotnet",
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
-        "SkipOnFailure": false
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "ServerBuild",
+        "UpdateSourceConditionValue": "release"
     },
     {
         "UpdateStageName": "Server Download",
@@ -32,7 +38,9 @@
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "ServerBuild",
+        "UpdateSourceConditionValue": "release"
     },
     {
         "UpdateStageName": "Server Download",
@@ -55,6 +63,24 @@
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/LunaMultiplayer/LunaMultiplayer/releases/download/0.29.0-Draft/LunaMultiplayer-Server-win-x64-Release.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "ServerBuild",
+        "UpdateSourceConditionValue": "nightly"
+    },
+    {
+        "UpdateStageName": "Make Server Executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Server"
     },
     {
         "UpdateStageName": "Start Server",
