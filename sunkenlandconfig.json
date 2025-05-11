@@ -83,6 +83,36 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Public IP Selection Mode",
+        "Category": "Sunkenland:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets whether and how the public IP advertised for the server is set. If 'Manually set' is selected, specify the desired public IP under Manual Public IP",
+        "Keywords": "public,ip,publicip",
+        "FieldName": "publicIP",
+        "InputType": "enum",
+        "ParamFieldName": "publicIP",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Not explicity set (default)", 
+            "{{$ExternalIP}}": "Automatically set by AMP",
+            "{{ManualPublicIP}}": "Manually set"
+        }
+    },
+    {
+        "DisplayName": "Manual Public IP",
+        "Category": "Sunkenland:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the public IP advertised for the server, if 'Manually set' is selected as the Public IP Selection Mode. Useful if the host network has multiple public IPs, or the server is behind a public proxy",
+        "Keywords": "manual,public,ip,publicip",
+        "FieldName": "ManualPublicIP",
+        "InputType": "text",
+        "ParamFieldName": "ManualPublicIP",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Custom Command Line Arguments",
         "Category": "Sunkenland:stadia_controller",
         "Subcategory": "Server:dns:1",
