@@ -1,0 +1,80 @@
+[
+    {
+        "UpdateStageName": "Fetching Assets",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/STJr/SRB2/releases/download/SRB2_release_2.2.15/SRB2-v2215-Full.zip",
+        "UpdateSourceArgs": "",
+        "UpdateSourceTarget": "",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Git clone the source code",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/usr/bin/git",
+        "UpdateSourceArgs": "clone -b SRB2_release_2.2.15 https://github.com/STJr/SRB2.git srb2/SRB2",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Compile SRB2",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/usr/bin/make",
+        "UpdateSourceArgs": "-j 4 -C srb2/SRB2/",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Stripping debug symbols",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/usr/bin/strip",
+        "UpdateSourceArgs": "--strip-debug srb2/SRB2/bin/lsdl2srb2",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Copy linux binary",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "./srb2/srb2linux.exe",
+        "UpdateSourceArgs": "./srb2/SRB2/bin/lsdl2srb2",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Remove complation directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/usr/bin/rm",
+        "UpdateSourceArgs": "-R srb2/SRB2/",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Make game executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/usr/bin/chmod",
+        "UpdateSourceArgs": "+x srb2/srb2linux.exe",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    }
+]
