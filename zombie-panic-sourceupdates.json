@@ -3,8 +3,8 @@
         "UpdateStageName": "SteamCMD Server Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
-        "UpdateSourceData": "17575",
-        "UpdateSourceArgs": "17570"
+        "UpdateSourceData": "17505",
+        "UpdateSourceArgs": "17500"
     },
     {
         "UpdateStageName": "Server.cfg Template File Download",
@@ -40,7 +40,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "ExtractArchive",
         "UpdateSourceData": "metamod.tar.gz",
-        "UpdateSourceTarget": "{{$FullBaseDir}}pvkii",
+        "UpdateSourceTarget": "{{$FullBaseDir}}zps",
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "InstallMod",
@@ -52,7 +52,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "ExtractArchive",
         "UpdateSourceData": "metamod.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}pvkii",
+        "UpdateSourceTarget": "{{$FullBaseDir}}zps",
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "InstallMod",
@@ -116,7 +116,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'pvkii/17575'; if (Test-Path 'pvkii/cfg/sourcemod') { Remove-Item -Path 'sm/cfg/sourcemod' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'pvkii/addons/sourcemod/configs') { Remove-Item -Path 'sm/addons/sourcemod/configs' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'pvkii/addons/sourcemod/plugins') { Remove-Item -Path 'sm/addons/sourcemod/plugins' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; Copy-Item -Path 'sm/*' -Destination 'pvkii' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'sm' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'zombie-panic-source/17505'; if (Test-Path 'zps/cfg/sourcemod') { Remove-Item -Path 'sm/cfg/sourcemod' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'zps/addons/sourcemod/configs') { Remove-Item -Path 'sm/addons/sourcemod/configs' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'zps/addons/sourcemod/plugins') { Remove-Item -Path 'sm/addons/sourcemod/plugins' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; Copy-Item -Path 'sm/*' -Destination 'zps' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'sm' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": true
@@ -126,7 +126,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd pvkii/17575 && [ -d pvkii/cfg/sourcemod ] && rm -rf sm/cfg/sourcemod >/dev/null 2>&1; [ -d pvkii/addons/sourcemod/configs ] && rm -rf sm/addons/sourcemod/configs >/dev/null 2>&1; [ -d pvkii/addons/sourcemod/plugins ] && rm -rf sm/addons/sourcemod/plugins >/dev/null 2>&1; \\cp -rf sm/* pvkii/ >/dev/null 2>&1; rm -rf sm >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd zombie-panic-source/17505 && [ -d zps/cfg/sourcemod ] && rm -rf sm/cfg/sourcemod >/dev/null 2>&1; [ -d zps/addons/sourcemod/configs ] && rm -rf sm/addons/sourcemod/configs >/dev/null 2>&1; [ -d zps/addons/sourcemod/plugins ] && rm -rf sm/addons/sourcemod/plugins >/dev/null 2>&1; \\cp -rf sm/* zps/ >/dev/null 2>&1; rm -rf sm >/dev/null 2>&1\"",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": true
@@ -135,8 +135,8 @@
         "UpdateStageName": "Activate Metamod and SourceMod",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateFile",
-        "UpdateSourceData": "\"Plugin\"\n{\n\t\"file\"\t\"../pvkii/addons/metamod/bin/server\"\n}",
-        "UpdateSourceArgs": "{{$FullBaseDir}}pvkii/addons/metamod.vdf",
+        "UpdateSourceData": "\"Plugin\"\n{\n\t\"file\"\t\"../zps/addons/metamod/bin/server\"\n}",
+        "UpdateSourceArgs": "{{$FullBaseDir}}zps/addons/metamod.vdf",
         "OverwriteExistingFiles": true,
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "true"
@@ -146,7 +146,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd pvkii\\17575\\pvkii\\addons > NUL 2>&1 && del /Q /F metamod.vdf > NUL 2>&1 & exit /b 0",
+        "UpdateSourceArgs": "/C cd zombie-panic-source\\17505\\zps\\addons > NUL 2>&1 && del /Q /F metamod.vdf > NUL 2>&1 & exit /b 0",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "false"
     },
@@ -155,7 +155,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd pvkii/17575/pvkii/addons >/dev/null 2>&1 && rm -rf metamod.vdf >/dev/null 2>&1; exit 0\"",
+        "UpdateSourceArgs": "-c \"cd zombie-panic-source/17505/zps/addons >/dev/null 2>&1 && rm -rf metamod.vdf >/dev/null 2>&1; exit 0\"",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "false"
     }
