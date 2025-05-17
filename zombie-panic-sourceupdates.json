@@ -7,6 +7,14 @@
         "UpdateSourceArgs": "17500"
     },
     {
+        "UpdateStageName": "Steam Runtime Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd zombie-panic-source/17505/bin && wget -qO- \\\"https://repo.steampowered.com/steamrt-images-scout/snapshots/latest-steam-client-general-availability/steam-runtime.tar.xz\\\" | tar xvfJ - >/dev/null && echo \\\"Steam Runtime downloaded\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
         "UpdateStageName": "Server.cfg Template File Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
@@ -14,14 +22,6 @@
         "UpdateSourceArgs": "AMP_server.cfg",
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "OverwriteExistingFiles": true
-    },
-    {
-        "UpdateStageName": "Steam Runtime Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd zombie-panic-source/17505/bin && wget -qO- \\\"https://repo.steampowered.com/steamrt-images-scout/snapshots/latest-steam-client-general-availability/steam-runtime.tar.xz\\\" | tar xvfJ - >/dev/null\"",
-        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Metamod Download",
