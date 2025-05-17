@@ -7,6 +7,14 @@
         "UpdateSourceArgs": "17520"
     },
     {
+        "UpdateStageName": "Steam Runtime Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd synergy/17520/bin && wget -qO- \\\"https://repo.steampowered.com/steamrt-images-scout/snapshots/latest-steam-client-general-availability/steam-runtime.tar.xz\\\" | tar xvfJ - >/dev/null && echo \\\"Steam Runtime downloaded\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
         "UpdateStageName": "Server.cfg Template File Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
@@ -40,7 +48,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "ExtractArchive",
         "UpdateSourceData": "metamod.tar.gz",
-        "UpdateSourceTarget": "{{$FullBaseDir}}hl2mp",
+        "UpdateSourceTarget": "{{$FullBaseDir}}synergy",
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "InstallMod",
@@ -52,7 +60,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "ExtractArchive",
         "UpdateSourceData": "metamod.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}hl2mp",
+        "UpdateSourceTarget": "{{$FullBaseDir}}synergy",
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "InstallMod",
@@ -116,7 +124,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'hl2dm/232370'; if (Test-Path 'hl2mp/cfg/sourcemod') { Remove-Item -Path 'sm/cfg/sourcemod' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'hl2mp/addons/sourcemod/configs') { Remove-Item -Path 'sm/addons/sourcemod/configs' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'hl2mp/addons/sourcemod/plugins') { Remove-Item -Path 'sm/addons/sourcemod/plugins' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; Copy-Item -Path 'sm/*' -Destination 'hl2mp' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'sm' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'synergy/17520'; if (Test-Path 'synergy/cfg/sourcemod') { Remove-Item -Path 'sm/cfg/sourcemod' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'synergy/addons/sourcemod/configs') { Remove-Item -Path 'sm/addons/sourcemod/configs' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'synergy/addons/sourcemod/plugins') { Remove-Item -Path 'sm/addons/sourcemod/plugins' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; Copy-Item -Path 'sm/*' -Destination 'synergy' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'sm' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": true
@@ -126,7 +134,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd hl2dm/232370 && [ -d hl2mp/cfg/sourcemod ] && rm -rf sm/cfg/sourcemod >/dev/null 2>&1; [ -d hl2mp/addons/sourcemod/configs ] && rm -rf sm/addons/sourcemod/configs >/dev/null 2>&1; [ -d hl2mp/addons/sourcemod/plugins ] && rm -rf sm/addons/sourcemod/plugins >/dev/null 2>&1; \\cp -rf sm/* hl2mp/ >/dev/null 2>&1; rm -rf sm >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd synergy/17520 && [ -d synergy/cfg/sourcemod ] && rm -rf sm/cfg/sourcemod >/dev/null 2>&1; [ -d synergy/addons/sourcemod/configs ] && rm -rf sm/addons/sourcemod/configs >/dev/null 2>&1; [ -d synergy/addons/sourcemod/plugins ] && rm -rf sm/addons/sourcemod/plugins >/dev/null 2>&1; \\cp -rf sm/* synergy/ >/dev/null 2>&1; rm -rf sm >/dev/null 2>&1\"",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": true
@@ -135,8 +143,8 @@
         "UpdateStageName": "Activate Metamod and SourceMod",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateFile",
-        "UpdateSourceData": "\"Plugin\"\n{\n\t\"file\"\t\"../hl2mp/addons/metamod/bin/server\"\n}",
-        "UpdateSourceArgs": "{{$FullBaseDir}}hl2mp/addons/metamod.vdf",
+        "UpdateSourceData": "\"Plugin\"\n{\n\t\"file\"\t\"../synergy/addons/metamod/bin/server\"\n}",
+        "UpdateSourceArgs": "{{$FullBaseDir}}synergy/addons/metamod.vdf",
         "OverwriteExistingFiles": true,
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "true"
@@ -146,7 +154,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd hl2dm\\232370\\hl2mp\\addons > NUL 2>&1 && del /Q /F metamod.vdf > NUL 2>&1 & exit /b 0",
+        "UpdateSourceArgs": "/C cd synergy\\17520\\synergy\\addons > NUL 2>&1 && del /Q /F metamod.vdf > NUL 2>&1 & exit /b 0",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "false"
     },
@@ -155,7 +163,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd hl2dm/232370/hl2mp/addons >/dev/null 2>&1 && rm -rf metamod.vdf >/dev/null 2>&1; exit 0\"",
+        "UpdateSourceArgs": "-c \"cd synergy/17520/synergy/addons >/dev/null 2>&1 && rm -rf metamod.vdf >/dev/null 2>&1; exit 0\"",
         "UpdateSourceConditionSetting": "InstallMod",
         "UpdateSourceConditionValue": "false"
     }
