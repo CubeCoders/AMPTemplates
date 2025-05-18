@@ -12,6 +12,32 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Localhost RCON Rate Limit Bypass",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "rcon_localhost_bypass",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "rcon_localhost_bypass",
+        "DefaultValue": "1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "RCON Console Activity",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "rcon_prints",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "rcon_prints",
+        "DefaultValue": "1",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Continuous Log",
         "Category": "CoD BO2:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -89,7 +115,7 @@
         "DefaultValue": "+map_rotate",
         "EnumValues": {
             "+map_rotate": "Map rotation (default)",
-            "+map \"{{map_name}}\"": "Specific initial map"
+            "+set_gametype {{gametype}} +map \"{{map_name}}\"": "Specific initial map"
         }
     },
     {
@@ -109,22 +135,26 @@
         "Category": "CoD BO2:stadia_controller",
         "Subcategory": "Server:dns:1",
         "Description": "Sets the game type to start the server with. This setting will be overridden if map rotation is configured. Settings for each game type can be set in 'dedicated.cfg' or 'dedicated_zm.cfg' (as applicable)",
-        "Keywords": "game,type,g_gametype",
-        "FieldName": "g_gametype",
+        "Keywords": "game,type,gametype,set_gametype",
+        "FieldName": "gametype",
         "InputType": "enum",
-        "ParamFieldName": "g_gametype",
+        "ParamFieldName": "gametype",
         "DefaultValue": "dm",
         "EnumValues": {
-            "ctf": "Capture the Flag",
-            "dm": "Deathmatch / Free-for-all (default)",
-            "dem": "Demolition",
-            "dom": "Domination",
-            "koth": "Hardpoint",
-            "hq": "Headquarters",
-            "conf": "Kill Confirmed",
-            "onflag": "One-flag CTF",
-            "sd": "Search And Destroy",
-            "war": "Team Deathmatch"
+            "ctf": "Capture the Flag (Multiplayer)",
+            "dm": "Deathmatch / Free-for-all (Multiplayer) (default)",
+            "dem": "Demolition (Multiplayer)",
+            "dom": "Domination (Multiplayer)",
+            "koth": "Hardpoint (Multiplayer)",
+            "hq": "Headquarters (Multiplayer)",
+            "conf": "Kill Confirmed (Multiplayer)",
+            "onflag": "One-flag CTF (Multiplayer)",
+            "sd": "Search & Destroy (Multiplayer)",
+            "war": "Team Deathmatch (Multiplayer)",
+            "classic": "Classic (Zombies)",
+            "standard": "Survival (Zombies)",
+            "grief": "Grief (Zombies)",
+            "cleansed": "Turned (Zombies)"
         }
     },
     {
@@ -159,7 +189,7 @@
         "DisplayName": "Player Limit",
         "Category": "CoD BO2:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the maximum number of players allowed on the server at one time. Maximum 18 for Multiplayer, 8 for Zombies",
+        "Description": "Sets the maximum number of players allowed on the server at one time. Maximum 18 for Multiplayer, 8 for Zombies (4 recommended)",
         "Keywords": "max,players,limit,sv_maxclients",
         "FieldName": "$MaxUsers",
         "InputType": "number",
@@ -185,19 +215,18 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Server Voice Chat Mode",
+        "DisplayName": "Enable Voice Chat",
         "Category": "CoD BO2:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the server voice chat mode",
-        "Keywords": "voice,chat,mode,sv_voice",
+        "Description": "If set, voice chat will be enabled",
+        "Keywords": "voice,chat,sv_voice",
         "FieldName": "sv_voice",
-        "InputType": "enum",
+        "InputType": "checkbox",
         "ParamFieldName": "sv_voice",
-        "DefaultValue": "2",
+        "DefaultValue": "1",
         "EnumValues": {
-            "0": "Disabled",
-            "1": "Everyone hears",
-            "2": "Teams only hear (default)"
+            "False": "0",
+            "True": "1"
         }
     },
     {
@@ -213,6 +242,21 @@
         "ParamFieldName": "sv_voicequality",
         "DefaultValue": "3",
         "Placeholder": "3",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "RCON Rate Limit",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the RCON rate limit (per IP). Localhost RCON commands are not rate limited",
+        "Keywords": "rcon,rate,limit,rcon_rate_limit",
+        "FieldName": "rcon_rate_limit",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "10000",
+        "ParamFieldName": "rcon_rate_limit",
+        "DefaultValue": "500",
+        "Placeholder": "500",
         "EnumValues": {}
     },
     {
@@ -257,6 +301,98 @@
         "DefaultValue": "Console",
         "Placeholder": "Console",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Replace Bots",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, the server will try to kick a bot when a player joins a full game",
+        "Keywords": "replace,bots,sv_replacebots",
+        "FieldName": "sv_replaceBots",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_replaceBots",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Player Collision Mode",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets who players collide with",
+        "Keywords": "collision,players,g_playerCollision",
+        "FieldName": "g_playerCollision",
+        "InputType": "enum",
+        "ParamFieldName": "g_playerCollision",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "0": "Everybody (default)",
+            "1": "Enemies",
+            "2": "Nobody"
+        }
+    },
+    {
+        "DisplayName": "Player Ejection Mode",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets from whom players are ejected",
+        "Keywords": "collision,players,g_playerEjection",
+        "FieldName": "g_playerEjection",
+        "InputType": "enum",
+        "ParamFieldName": "g_playerEjection",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "0": "Everybody (default)",
+            "1": "Enemies",
+            "2": "Nobody"
+        }
+    },
+    {
+        "DisplayName": "Enable Team To Affect Bullet Penetration",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, team members will affect bullet penetration",
+        "Keywords": "team,bullet,penetration,bullet_penetration_affected_by_team",
+        "FieldName": "bullet_penetration_affected_by_team",
+        "InputType": "checkbox",
+        "ParamFieldName": "bullet_penetration_affected_by_team",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Fix Bullet Damage Duplication",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, the issue where players that are clipped inside each other receive duplicate bullet damage will be fixed",
+        "Keywords": "bullet,damage,duplication,g_fixBulletDamageDupe",
+        "FieldName": "g_fixBulletDamageDupe",
+        "InputType": "checkbox",
+        "ParamFieldName": "g_fixBulletDamageDupe",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Allow Rocket Jumps",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, rocket jumps will be allowed",
+        "Keywords": "rocket,jumps,g_patchRocketJumps",
+        "FieldName": "g_patchRocketJumps",
+        "InputType": "checkbox",
+        "ParamFieldName": "g_patchRocketJumps",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
     },
     {
         "DisplayName": "Show Perks on Spawn (Multiplayer)",
@@ -334,34 +470,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Enable Item Restriction (Multiplayer)",
-        "Category": "CoD BO2:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, enables the custom restriction system",
-        "Keywords": "enable,item,restriction,sv_enableItemRestriction",
-        "FieldName": "sv_enableItemRestriction",
-        "InputType": "checkbox",
-        "ParamFieldName": "sv_enableItemRestriction",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Restriction List File (Multiplayer)",
-        "Category": "CoD BO2:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the file name for the restriction system",
-        "Keywords": "restriction,list,file,sv_restrictionList",
-        "FieldName": "sv_restrictionList",
-        "InputType": "text",
-        "ParamFieldName": "sv_restrictionList",
-        "DefaultValue": "restricted.cfg",
-        "Placeholder": "restricted.cfg",
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "Custom Team Names (Multiplayer)",
         "Category": "CoD BO2:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -421,36 +529,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Enable Gun Game (Zombies)",
-        "Category": "CoD BO2:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, Pluto's custom Gun Game will be enabled",
-        "Keywords": "zombies,gungame,gun,game,enable,zm_gungame",
-        "FieldName": "zm_gungame",
-        "InputType": "checkbox",
-        "ParamFieldName": "zm_gungame",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Enable Sharp Shooter (Zombies)",
-        "Category": "CoD BO2:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, Pluto's custom Sharp Shooter will be enabled",
-        "Keywords": "zombies,sharpshooter,enable,zm_sharpshooter",
-        "FieldName": "zm_sharpshooter",
-        "InputType": "checkbox",
-        "ParamFieldName": "zm_sharpshooter",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
         "DisplayName": "Difficulty Level (Zombies)",
         "Category": "CoD BO2:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -458,7 +536,7 @@
         "Keywords": "zombies,difficulty,zombies,zmDifficulty",
         "FieldName": "zmDifficulty",
         "InputType": "enum",
-        "ParamFieldName": "zmDifficulty",
+        "ParamFieldName": "gts zmDifficulty",
         "DefaultValue": "1",
         "EnumValues": {
             "0": "Easy",
@@ -466,14 +544,14 @@
         }
     },
     {
-        "DisplayName": "Fix Weapons (Zombies)",
+        "DisplayName": "Fix Unkillable Zombies Bug (Zombies)",
         "Category": "CoD BO2:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, fixes the SMR's ADS spread, 870 MCS's penetration damage, and allow sprinting with Galvaknuckles",
-        "Keywords": "fix,zombies,weapons,sv_fix_zm_weapons",
-        "FieldName": "sv_fix_zm_weapons",
+        "Description": "If set, fixes the unkillable zombies in traps bug",
+        "Keywords": "fix,zombies,damage,unkillable,traps,g_zm_fix_damage_overflow",
+        "FieldName": "g_zm_fix_damage_overflow",
         "InputType": "checkbox",
-        "ParamFieldName": "sv_fix_zm_weapons",
+        "ParamFieldName": "g_zm_fix_damage_overflow",
         "DefaultValue": "1",
         "EnumValues": {
             "False": "0",
@@ -481,18 +559,91 @@
         }
     },
     {
-        "DisplayName": "Patch Weapons (Zombies)",
+        "DisplayName": "Enable Starting Round (Zombies)",
         "Category": "CoD BO2:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, applies Post DLC1 changes to tar21_zm, type95_zm, xm8_zm, an94_zm, hamr_zm, rpd_zm, pdw57_zm and kard_zm",
-        "Keywords": "patch,zombies,weapons,sv_patch_zm_weapons",
-        "FieldName": "sv_patch_zm_weapons",
+        "Description": "If set, enables the starting round. Works on all maps",
+        "Keywords": "zombies,round,start,startRound",
+        "FieldName": "startRound",
+        "InputType": "number",
+        "ParamFieldName": "gts startRound",
+        "DefaultValue": "1",
+        "MinValue": "1",
+        "Placeholder": "1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Remove Magic (Zombies)",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, all supernatural assistance will be removed. Only Survival (Standard) and Grief gametypes have this option!",
+        "Keywords": "zombies,magic,remove,magic",
+        "FieldName": "magic",
         "InputType": "checkbox",
-        "ParamFieldName": "sv_patch_zm_weapons",
+        "ParamFieldName": "gts magic",
         "DefaultValue": "1",
         "EnumValues": {
             "False": "0",
             "True": "1"
         }
+    },
+    {
+        "DisplayName": "Headshots Only (Zombies)",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, only headshots will be allowed. Only Survival and Grief have this option!",
+        "Keywords": "zombies,headshots,only,headshotsonly",
+        "FieldName": "headshotsonly",
+        "InputType": "checkbox",
+        "ParamFieldName": "gts headshotsonly",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Allow Hellhounds (Zombies)",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, Hellhounds will be allowed. Only Survival has this option!",
+        "Keywords": "zombies,hellhounds,allow,allowdogs",
+        "FieldName": "allowdogs",
+        "InputType": "checkbox",
+        "ParamFieldName": "gts allowdogs",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Allow Cleansed Loadout (Zombies)",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, players will be allowed to choose their Loadout. Only Turned has this option!",
+        "Keywords": "zombies,loadout,cleansed,cleansedLoadout",
+        "FieldName": "cleansedLoadout",
+        "InputType": "checkbox",
+        "ParamFieldName": "gts cleansedLoadout",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Team Count (Zombies)",
+        "Category": "CoD BO2:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the number of teams. Set to 2 by default when loading Grief",
+        "Keywords": "zombies,teams,count,teamCount",
+        "FieldName": "teamCount",
+        "InputType": "number",
+        "MinValue": "1",
+        "ParamFieldName": "gts teamCount",
+        "DefaultValue": "2",
+        "Placeholder": "2",
+        "EnumValues": {}
     }
 ]
