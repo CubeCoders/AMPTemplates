@@ -61,6 +61,56 @@
         "UpdateSourceConditionValue": "creatordlc-profiling"
     },
     {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "233780",
+        "UpdateSourceArgs": "107410",
+        "UpdateSourceVersion": "legacy",
+        "UpdateSourceConditionSetting": "ServerBranch",
+        "UpdateSourceConditionValue": "legacy"
+    },
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "233780",
+        "UpdateSourceArgs": "107410",
+        "UpdateSourceVersion": "legacycontact",
+        "UpdateSourceConditionSetting": "ServerBranch",
+        "UpdateSourceConditionValue": "legacycontact"
+    },
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "233780",
+        "UpdateSourceArgs": "107410",
+        "UpdateSourceVersion": "legacyports",
+        "UpdateSourceConditionSetting": "ServerBranch",
+        "UpdateSourceConditionValue": "legacyports"
+    },
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "233780",
+        "UpdateSourceArgs": "107410",
+        "UpdateSourceVersion": "rc",
+        "UpdateSourceConditionSetting": "ServerBranch",
+        "UpdateSourceConditionValue": "rc"
+    },
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "233780",
+        "UpdateSourceArgs": "107410",
+        "UpdateSourceVersion": "creatordlcrc",
+        "UpdateSourceConditionSetting": "ServerBranch",
+        "UpdateSourceConditionValue": "creatordlcrc"
+    },
+    {
         "UpdateStageName": "Performance Profiling Binary Copy",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "CopyFilePath",
@@ -116,17 +166,34 @@
         "UpdateStageName": "Modscript Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/arma3convertmods.sh",
-        "UpdateSourceArgs": "convertmods.sh",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/arma3managemods.sh",
+        "UpdateSourceArgs": "managemods.sh",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
         "OverwriteExistingFiles": true
     },
     {
-        "UpdateStageName": "Convert Mods",
+        "UpdateStageName": "Manage Mods",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "./convertmods.sh",
+        "UpdateSourceArgs": "./managemods.sh {{ModDirFormat}}",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Modscript Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/arma3managemods.ps1",
+        "UpdateSourceArgs": "managemods.ps1",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Manage Mods",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -File \"managemods.ps1\" \"{{ModDirFormat}}\"",
         "SkipOnFailure": true
     }
 ]

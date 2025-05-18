@@ -55,7 +55,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd mxbikes/server && CURRENT_VERSION=$(wget -qO- \\\"https://betas.mxb-mods.com/\\\" | grep \\\"Current\\s*version:\\s*beta\\\" | sed \\\"s/.*Current\\s*version:\\s*beta\\([0-9a-zA-Z]\\+\\).*/\\1/\\\") && wget -qO mxbikes-beta.exe \\\"https://betas.mxb-mods.com/files/mxbikes-beta${CURRENT_VERSION}.exe\\\"\"",
+        "UpdateSourceArgs": "-c \"cd mxbikes/server && DOWNLOAD_LINK=$(wget -qO- \\\"https://www.mx-bikes.com/?page=downloads\\\" | grep -o \\\"downloads/mxbikes[^\\\\\\\"]*.exe\\\" | head -n 1) && wget -qO mxbikes-beta.exe \\\"https://www.mx-bikes.com/$DOWNLOAD_LINK\\\"\"",
         "SkipOnFailure": false
     },
     {
@@ -63,7 +63,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'mxbikes/server'; (Invoke-RestMethod -UseBasicParsing -Uri 'https://betas.mxb-mods.com/') -match 'Current\\s*version:\\s*beta(?<Version>[0-9a-zA-Z]+)' | Out-Null; $CURRENT_VERSION=$matches['Version']; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://betas.mxb-mods.com/files/mxbikes-beta${CURRENT_VERSION}.exe\\\" -OutFile 'mxbikes-beta.exe'\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'mxbikes/server'; $DOWNLOAD_LINK=((Invoke-WebRequest -UseBasicParsing -Uri 'https://www.mx-bikes.com/?page=downloads').Links | ? href -match 'downloads/mxbikes.*\\.exe' | select -ExpandProperty href); Invoke-WebRequest -UseBasicParsing -Uri \\\"https://www.mx-bikes.com/$DOWNLOAD_LINK\\\" -OutFile 'mxbikes-beta.exe'\"",
         "SkipOnFailure": false
     },
     {

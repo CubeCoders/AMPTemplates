@@ -118,6 +118,7 @@
         "InputType": "text",
         "IsFlagArgument": false,
         "ParamFieldName": "/ServerSettings/property[@name='ServerPort']/@value",
+        "ExcludeFromImport": true,
         "IncludeInCommandLine": false,
         "DefaultValue": "26900",
         "EnumValues": {},
@@ -266,6 +267,7 @@
         "IsFlagArgument": false,
         "ParamFieldName": "/ServerSettings/property[@name='ControlPanelPort']/@value | /ServerSettings/property[@name='WebDashboardPort']/@value",
         "IncludeInCommandLine": false,
+        "ExcludeFromImport": true,
         "DefaultValue": "8080",
         "EnumValues": {},
         "Hidden": true
@@ -342,6 +344,7 @@
         "IsFlagArgument": false,
         "ParamFieldName": "/ServerSettings/property[@name='TelnetPort']/@value",
         "IncludeInCommandLine": false,
+        "ExcludeFromImport": true,
         "DefaultValue": "8081",
         "EnumValues": {},
         "Hidden": true
@@ -357,6 +360,7 @@
         "IsFlagArgument": false,
         "ParamFieldName": "/ServerSettings/property[@name='TelnetPassword']/@value",
         "IncludeInCommandLine": false,
+        "ExcludeFromImport": true,
         "EnumValues": {}
     },
     {
@@ -556,7 +560,7 @@
         "DisplayName": "Game World",
         "Category": "7 Days to Die:skull",
         "Subcategory": "Gameplay:joystick",
-        "Description": "\"RWG\" (see WorldGenSeed and WorldGenSize options below) or any already existing world name in the Worlds folder.",
+        "Description": "\"RWG\" (see WorldGenSeed and WorldGenSize options below) or any already existing world name in the 'Data/Worlds' or 'User/GeneratedWorlds' folders.",
         "Keywords": "Game,World,GameWorld",
         "FieldName": "GameWorld",
         "InputType": "text",
@@ -866,7 +870,7 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "45",
         "EnumValues": {},
-        "Suffix": "minutes"
+        "Suffix": "days"
     },
     {
         "DisplayName": "Allow Spawn Near Backpack",
@@ -1492,9 +1496,10 @@
         "EnumValues": {
             "public": "Public (default)",
             "latest_experimental": "Experimental",
+            "v1.4": "Version 1.4",
+            "v1.3": "Version 1.3",
             "v1.2": "Version 1.2",
             "v1.1": "Version 1.1",
-            "v1.0": "Version 1.0",
             "alpha21.2": "Alpha 21.2",
             "alpha21.1": "Alpha 21.1",
             "alpha20.7": "Alpha 20.7",
@@ -1529,7 +1534,7 @@
         "DisplayName": "Mod Mode",
         "Category": "Updates",
         "Subcategory": "Server Updates:system_update_alt:-1",
-        "Description": "Sets whether to install and run the standard server, or a relevant overhaul mod. You must also set the Release Stream accordingly. EAC is automatically disabled when running Undead Legacy (overriding AMP's setting). The relevant Game World is set automatically when running Darkness Falls (overriding AMP's setting). Update the server after changing this setting.",
+        "Description": "Sets whether to install and run the standard server, or a relevant overhaul mod. You must also set the Release Stream accordingly. EAC is automatically disabled when running an overhaul mod (overriding AMP's setting). Set the Game World to \"RWG\" or a custom Darkness Falls map when running Darkness Falls. Update the server after changing this setting.",
         "Keywords": "mod,mode,undead,legacy,darkness,falls,vanilla",
         "FieldName": "ModMode",
         "InputType": "enum",
@@ -1539,10 +1544,11 @@
         "DefaultValue": "",
         "EnumValues": {
             "": "Standard server (default)",
-            "-EACEnabled=false -RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} ": "Undead Legacy Stable mod (Alpha 20.7 version)",
-            "-RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} -EACEnabled=false ": "Undead Legacy Experimental mod (Alpha 20.7 version)",
-            "-GameWorld=DFalls-Small1-NoCP ": "Darkness Falls mod (Alpha 20.7 version)",
-            "-GameWorld=DFalls-Navezgane ": "Darkness Falls mod (Alpha 21.2 version)"
+            "-EACEnabled=false -RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} ": "Undead Legacy Stable mod (Alpha 20.7 build)",
+            "-RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} -EACEnabled=false ": "Undead Legacy Experimental mod (Alpha 20.7 build)",
+            "-EACEnabled=false ": "Darkness Falls mod (Alpha 20.7 build)",
+            "-EACEnabled=false  ": "Darkness Falls V5 mod (Alpha 21.2 build)",
+            "-EACEnabled=false   ": "Darkness Falls V6 mod (Version 1.4 build)"
         }
     },
     {

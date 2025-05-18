@@ -89,6 +89,21 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Enable Full Pal Level Randomization",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, the wild pals level will be fully randomized. Otherwise, wild pals will be randomized within a level optimized with the area",
+        "Keywords": "randomizer,level,wild,pals,bIsRandomizerPalLevelRandom",
+        "FieldName": "bIsRandomizerPalLevelRandom",
+        "InputType": "checkbox",
+        "ParamFieldName": "bIsRandomizerPalLevelRandom",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Server Region",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -238,7 +253,7 @@
         "DisplayName": "Process Thread Number",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the number of process threads that the server will use. Multi-Threaded Performance Improvements must be enabled. Maximum = CPU thread count - 1. Leave blank to disable",
+        "Description": "Sets the number of process threads that the server will use. Multi-Threaded Performance Improvements must be enabled. Maximum = CPU thread count - 1. Empty = disabled",
         "Keywords": "process,thread,number,NumberOfWorkerThreadsServer",
         "FieldName": "NumberOfWorkerThreadsServer",
         "InputType": "number",
@@ -277,20 +292,17 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Allow Connect Platform",
+        "DisplayName": "Crossplay Platforms",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the allowed connect platform",
-        "Keywords": "allow,connect,platform,steam,xbox,mac,AllowConnectPlatform",
-        "FieldName": "AllowConnectPlatform",
-        "InputType": "enum",
-        "ParamFieldName": "AllowConnectPlatform",
-        "DefaultValue": "Steam",
-        "EnumValues": {
-            "Steam": "Steam (default)",
-            "Xbox": "Xbox",
-            "Mac": "Mac"
-        }
+        "Description": "Comma-separated list of platforms that can connect to the server. Available options: Steam, Xbox, PS5, Mac",
+        "Keywords": "crossplay,connect,platform,steam,xbox,ps5,mac,CrossplayPlatforms",
+        "FieldName": "CrossplayPlatforms",
+        "InputType": "text",
+        "ParamFieldName": "CrossplayPlatforms",
+        "DefaultValue": "Steam,Xbox,PS5,Mac",
+        "Placeholder": "Steam,Xbox,PS5,Mac",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Enable World Backup",
@@ -317,8 +329,8 @@
         "InputType": "number",
         "MinValue": "0",
         "ParamFieldName": "AutoSaveSpan",
-        "DefaultValue": "30",
-        "Placeholder": "30",
+        "DefaultValue": "30.000000",
+        "Placeholder": "30.000000",
         "Suffix": "seconds",
         "EnumValues": {}
     },
@@ -536,8 +548,8 @@
         "MinValue": "0",
         "MaxValue": "10",
         "ParamFieldName": "BaseCampMaxNumInGuild",
-        "DefaultValue": "3",
-        "Placeholder": "3",
+        "DefaultValue": "4",
+        "Placeholder": "4",
         "EnumValues": {}
     },
     {
@@ -684,6 +696,21 @@
         "FieldName": "bPalLost",
         "InputType": "checkbox",
         "ParamFieldName": "bPalLost",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Character Recreation In Hardcore Mode",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, characters will be recreated in hardcore mode",
+        "Keywords": "character,recreate,hardcore,bCharacterRecreateInHardcore",
+        "FieldName": "bCharacterRecreateInHardcore",
+        "InputType": "checkbox",
+        "ParamFieldName": "bCharacterRecreateInHardcore",
         "DefaultValue": "False",
         "EnumValues": {
             "False": "False",
@@ -883,6 +910,36 @@
         "Placeholder": "15000.000000",
         "Suffix": "cm",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Allow Saving To Global Palbox",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, saving to the global palbox will be allowed",
+        "Keywords": "allow,saving,export,global,palbox,bAllowGlobalPalboxExport",
+        "FieldName": "bAllowGlobalPalboxExport",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowGlobalPalboxExport",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Importing From Global Palbox",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, importing from the global palbox will be allowed",
+        "Keywords": "allow,import,global,palbox,bAllowGlobalPalboxImport",
+        "FieldName": "bAllowGlobalPalboxImport",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowGlobalPalboxImport",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
     },
     {
         "DisplayName": "Day Time Speed Rate",

@@ -75,10 +75,28 @@
         "MinValue": "1"
     },
     {
-        "DisplayName": "Enable Whitelist",
+        "DisplayName": "Whitelist Mode",
         "Category": "Vintage Story:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If enabled, only whitelisted players can join the server",
+        "Description": "Sets whether the whitelist is enabled, meaning only whitelisted players can join the server. Default = enabled. Only for versions 1.20 and above",
+        "Keywords": "whitelist,mode,WhitelistMode",
+        "FieldName": "WhitelistMode",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "$.WhitelistMode",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "0": "Default",
+            "1": "Off",
+            "2": "On"
+        }
+    },
+    {
+        "DisplayName": "Enable Whitelist (Legacy)",
+        "Category": "Vintage Story:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, only whitelisted players can join the server. Only for versions 1.19 and below",
         "Keywords": "whitelist",
         "FieldName": "OnlyWhitelisted",
         "InputType": "checkbox",
@@ -147,7 +165,7 @@
         "DisplayName": "Server Version",
         "Category": "Updates",
         "Subcategory": "Server Updates:build:-1",
-        "Description": "Sets the server version to install. Blank = latest version if Stable or Unstable is selected under Server Release Stream. For Preview, a version identifier must be specified. Minimum 1.18.8. Update the server after changing this setting",
+        "Description": "Sets the server version to install. Empty = latest version if Stable or Unstable is selected under Server Release Stream. For Preview, a version identifier must be specified. Minimum 1.18.8. For Linux ARM64, Experimental Server Version must also be set. Update the server after changing this setting",
         "Keywords": "server,version",
         "FieldName": "ServerVersion",
         "InputType": "text",
@@ -156,7 +174,6 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "",
         "Placeholder": "1.18.15 | 1.20.0-rc.1 | 1.20.0-pre.13",
-        "Required": true,
         "EnumValues": {}
     },
     {
@@ -177,10 +194,28 @@
         }
     },
     {
+        "DisplayName": "Experimental Server Version (Linux ARM64)",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Sets the [ARM64 experimental server version](https://github.com/anegostudios/VintagestoryServerArm64) to install. A corresponding Server Version (1.20.x, 1.19.x or 1.18.x) must also be installed. Update the server after changing this setting",
+        "Keywords": "experimental,server,version,arm64",
+        "FieldName": "ExperimentalServerVersion",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "ExperimentalServerVersion",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "1.19",
+        "EnumValues": {
+            "1.20.0": "1.20.0",
+            "1.19": "1.19 (default)",
+            "1.18": "1.18"
+        }
+    },
+    {
         "DisplayName": "Dotnet Version",
         "Category": "Updates",
         "Subcategory": "Server Updates:build:-1",
-        "Description": "Sets the [.NET SDK 7.0 version](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) to install to run the server. Blank = latest. NOTE: Update the server after switching versions!",
+        "Description": "Sets the [.NET SDK 7.0 version](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) to install to run the server. Empty = latest. NOTE: Update the server after switching versions!",
         "Keywords": "dotnet,version",
         "FieldName": "DotnetSDKVersion",
         "InputType": "text",
