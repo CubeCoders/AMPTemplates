@@ -295,6 +295,21 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Allow Spectators",
+        "Category": "Synergy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, spectator mode will be enabled",
+        "Keywords": "allow,spectators,mp_allowspectators",
+        "FieldName": "mp_allowspectators",
+        "InputType": "checkbox",
+        "ParamFieldName": "mp_allowspectators",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
         "DisplayName": "Pure Server Mode",
         "Category": "Synergy:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -520,6 +535,23 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Ping Boost",
+        "Category": "Synergy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Selects between optimised network code stack. Setting at 2 usually reduces latency toward 1ms without loss of activity input packets",
+        "Keywords": "ping,boost,latency,network,pingboost",
+        "FieldName": "pingboost",
+        "InputType": "enum",
+        "ParamFieldName": "pingboost",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "None",
+            "-pingboost 1 ": "1",
+            "-pingboost 2 ": "2",
+            "-pingboost 3 ": "3"
+        }
+    },
+    {
         "DisplayName": "Enable CPU Stats Collection",
         "Category": "Synergy:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -544,51 +576,6 @@
         "InputType": "hidden",
         "ParamFieldName": "ip",
         "EnumValues": {}
-    },
-    {
-        "DisplayName": "Player Timeout",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the time before a client is dropped after loss of communication",
-        "Keywords": "time,timeout,sv_timeout",
-        "FieldName": "sv_timeout",
-        "InputType": "number",
-        "MinValue": "0",
-        "ParamFieldName": "sv_timeout",
-        "DefaultValue": "65",
-        "Placeholder": "65",
-        "Suffix": "seconds",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Decal Frequency",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the time before players can spray their decal again",
-        "Keywords": "time,frequency,decal,decalfrequency",
-        "FieldName": "decalfrequency",
-        "InputType": "number",
-        "MinValue": "0",
-        "ParamFieldName": "decalfrequency",
-        "DefaultValue": "10",
-        "Placeholder": "10",
-        "Suffix": "seconds",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Log Bans",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "If set, server bans will be logged in the server log",
-        "Keywords": "bans,log,sv_logbans",
-        "FieldName": "sv_logbans",
-        "InputType": "checkbox",
-        "ParamFieldName": "sv_logbans",
-        "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
     },
     {
         "DisplayName": "Additional Command Line Parameters",
@@ -627,110 +614,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Enable Cooperative Play",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, cooperative play will be enabled",
-        "Keywords": "enable,coop,cooperative,play",
-        "FieldName": "coop",
-        "InputType": "checkbox",
-        "ParamFieldName": "coop",
-        "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Enable Deathmatch",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, deathmatch will be enabled",
-        "Keywords": "enable,deathmatch",
-        "FieldName": "deathmatch",
-        "InputType": "checkbox",
-        "ParamFieldName": "deathmatch",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "World Gravity",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the world gravity",
-        "Keywords": "gravity,sv_gravity",
-        "FieldName": "sv_gravity",
-        "InputType": "number",
-        "MinValue": "1",
-        "ParamFieldName": "sv_gravity",
-        "DefaultValue": "600",
-        "Placeholder": "600",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Enable Weapons Stay",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, weapons will stay (allowing immediate pickup by players without weapons). Requires that there be additional ammo (can't pick up a weapon to get more ammo)",
-        "Keywords": "stay,weapon,weaponstay",
-        "FieldName": "mp_weaponstay",
-        "InputType": "checkbox",
-        "ParamFieldName": "mp_weaponstay",
-        "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Force Respawn",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If sets, players will be forced to respawn after death",
-        "Keywords": "force,respawn,spawn,mp_forcerespawn",
-        "FieldName": "mp_forcerespawn",
-        "InputType": "checkbox",
-        "ParamFieldName": "mp_forcerespawn",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Weapon Respawn Time",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the time period before weapons respawn",
-        "Keywords": "weapon,respawn,time,period,sv_hl2mp_weapon_respawn_time,weaponrespawn",
-        "FieldName": "weapon,respawn,time,period,sv_hl2mp_weapon_respawn_time",
-        "InputType": "number",
-        "MinValue": "1",
-        "ParamFieldName": "sv_hl2mp_weapon_respawn_time",
-        "DefaultValue": "20",
-        "Placeholder": "20",
-        "Suffix": "seconds",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Item Respawn Time",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the time period before items respawn",
-        "Keywords": "item,respawn,time,period,sv_hl2mp_item_respawn_time,itemrespawn",
-        "FieldName": "sv_hl2mp_item_respawn_time",
-        "InputType": "number",
-        "MinValue": "1",
-        "ParamFieldName": "sv_hl2mp_item_respawn_time",
-        "DefaultValue": "30",
-        "Placeholder": "30",
-        "Suffix": "seconds",
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "Enable Friendly Fire",
         "Category": "Synergy:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -749,7 +632,7 @@
         "DisplayName": "Enable Footsteps",
         "Category": "Synergy:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, footstep sounds will be enabled",
+        "Description": "If set, the server will always play footstep sounds",
         "Keywords": "footstep,sounds,mp_footsteps",
         "FieldName": "mp_footsteps",
         "InputType": "checkbox",
@@ -776,11 +659,26 @@
         }
     },
     {
-        "DisplayName": "Enable Voice",
+        "DisplayName": "Allow Wait Command",
         "Category": "Synergy:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If enabled, voice communication for the server will be allowed",
-        "Keywords": "enable,voice,sv_voiceenable",
+        "Description": "If enabled, the wait command will be allowed on clients connected to the server. Recommended to keep disabled to prevent server crash exploits",
+        "Keywords": "wait,command,sv_allow_wait_command",
+        "FieldName": "sv_allow_wait_command",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_allow_wait_command",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Enable Voice Communication",
+        "Category": "Synergy:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, voice communication will be enabled on the server",
+        "Keywords": "voice,communication,sv_voiceenable",
         "FieldName": "sv_voiceenable",
         "InputType": "checkbox",
         "ParamFieldName": "sv_voiceenable",
@@ -806,42 +704,40 @@
         }
     },
     {
-        "DisplayName": "Voice Codec",
+        "DisplayName": "Force Respawn",
         "Category": "Synergy:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the voice codec used for in-game voice communication",
-        "Keywords": "voice,codec,sv_voicecodec",
-        "FieldName": "sv_voicecodec",
-        "InputType": "enum",
-        "ParamFieldName": "sv_voicecodec",
-        "DefaultValue": "vaudio_celt",
+        "Description": "If enabled, players will be forced to respawn after death",
+        "Keywords": "force,respawn,death,mp_forcerespawn",
+        "FieldName": "mp_forcerespawn",
+        "InputType": "checkbox",
+        "ParamFieldName": "mp_forcerespawn",
+        "DefaultValue": "1",
         "EnumValues": {
-            "vaudio_speex": "Legacy Speex codec (lowest quality)",
-            "vaudio_celt": "Newer CELT codec",
-            "steam": "Steam voice API"
+            "False": "0",
+            "True": "1"
         }
     },
     {
-        "DisplayName": "Team Balancing Mode",
+        "DisplayName": "Enable Fade To Black",
         "Category": "Synergy:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the team balancing mode",
-        "Keywords": "balance,team,teams,mp_autoteambalance",
-        "FieldName": "mp_autoteambalance",
-        "InputType": "enum",
-        "ParamFieldName": "mp_autoteambalance",
+        "Description": "If enabled, a player's screen fades to black for the remainder of the round after death (HUD and chat still works)",
+        "Keywords": "fade,black,spectator,death,mp_fadetoblack",
+        "FieldName": "mp_fadetoblack",
+        "InputType": "checkbox",
+        "ParamFieldName": "mp_fadetoblack",
         "DefaultValue": "0",
         "EnumValues": {
-            "0": "Off (default)",
-            "1": "Forcibly switch players",
-            "2": "Ask for volunteers"
+            "False": "0",
+            "True": "1"
         }
     },
     {
         "DisplayName": "Map Rotation Time Limit",
         "Category": "Synergy:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the time period between map rotations. 0 = disabled",
+        "Description": "Sets the game time per map. 0 = disabled",
         "Keywords": "time,limit,rotation,mp_timelimit",
         "FieldName": "mp_timelimit",
         "InputType": "number",
@@ -853,134 +749,45 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Maximum Round Limit",
+        "DisplayName": "Round Kill Limit",
         "Category": "Synergy:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the maximum number of rounds to play before the map rotates. 0 = disabled",
-        "Keywords": "round,limit,rotation,mp_maxrounds",
-        "FieldName": "mp_maxrounds",
-        "InputType": "number",
-        "MinValue": "0",
-        "ParamFieldName": "mp_maxrounds",
-        "DefaultValue": "0",
-        "Placeholder": "0",
-        "Suffix": "rounds",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Frag Limit",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the frag limit (number of kills) before the map rotates. 0 = disabled",
-        "Keywords": "frag,kills,limit,mp_fraglimit",
+        "Description": "Sets the number of kills at which the map ends. 0 = disabled",
+        "Keywords": "kill,frag,limit,rotation,mp_fraglimit",
         "FieldName": "mp_fraglimit",
         "InputType": "number",
         "MinValue": "0",
         "ParamFieldName": "mp_fraglimit",
         "DefaultValue": "0",
         "Placeholder": "0",
+        "Suffix": "kills",
         "EnumValues": {}
     },
     {
-        "DisplayName": "Enable Flashlight",
+        "DisplayName": "Restrict Spectator Mode",
         "Category": "Synergy:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If sets, allows the use of the flashlight by pressing the F button",
-        "Keywords": "flashlight,mp_flashlight",
-        "FieldName": "mp_flashlight",
+        "Description": "If set, the spectator mode for dead players will be restricted",
+        "Keywords": "spectator,camera,first,person,mp_forcecamera",
+        "FieldName": "mp_forcecamera",
         "InputType": "checkbox",
-        "ParamFieldName": "mp_flashlight",
+        "ParamFieldName": "mp_forcecamera",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Alternate Ticks",
+        "Category": "Synergy:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, the server only simulates entities on even numbered ticks",
+        "Keywords": "alternate,ticks,sv_alternateticks",
+        "FieldName": "sv_alternateticks",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_alternateticks",
         "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Allow NPCs",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, NPCs will be enabled",
-        "Keywords": "bot,bots,npcs,mp_allowNPCs",
-        "FieldName": "mp_allowNPCs",
-        "InputType": "checkbox",
-        "ParamFieldName": "mp_allowNPCs",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Enable Auto Crosshair",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, auto crosshair will be enabled",
-        "Keywords": "auto,crosshair,mp_autocrosshair",
-        "FieldName": "mp_autocrosshair",
-        "InputType": "checkbox",
-        "ParamFieldName": "mp_autocrosshair",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Allow Spectators",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Spectators:eyeglasses:3",
-        "Description": "If set, players will be allowed to join the server as spectators",
-        "Keywords": "allow,spectators,allow_spectators",
-        "FieldName": "mp_allowspectators",
-        "InputType": "checkbox",
-        "ParamFieldName": "mp_allowspectators",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Spectator Acceleration",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Spectators:eyeglasses:3",
-        "Description": "Sets the value to multiply the server's Player Acceleration value by for spectators in noclip mode",
-        "Keywords": "accelerate,spectators,spec,sv_specaccelerate",
-        "FieldName": "sv_specaccelerate",
-        "InputType": "number",
-        "MinValue": "0",
-        "MaxValue": "100",
-        "ParamFieldName": "sv_specaccelerate",
-        "DefaultValue": "5",
-        "Placeholder": "5",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Spectator Speed",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Spectators:eyeglasses:3",
-        "Description": "Sets the speed multiplier for spectators in noclip mode",
-        "Keywords": "spec,spectator,speed,sv_specspeed",
-        "FieldName": "sv_specspeed",
-        "InputType": "number",
-        "MinValue": "0",
-        "MaxValue": "100",
-        "ParamFieldName": "sv_specspeed",
-        "DefaultValue": "3",
-        "Placeholder": "3",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Enable Spectator Noclip",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "Spectators:eyeglasses:3",
-        "Description": "If set, enables noclip mode for spectators",
-        "Keywords": "noclip,spectators,sv_specnoclip",
-        "FieldName": "sv_specnoclip",
-        "InputType": "checkbox",
-        "ParamFieldName": "sv_specnoclip",
-        "DefaultValue": "1",
         "EnumValues": {
             "False": "0",
             "True": "1"
@@ -989,9 +796,9 @@
     {
         "DisplayName": "Disable SourceTV",
         "Category": "Synergy:stadia_controller",
-        "Subcategory": "SourceTV:tv:4",
+        "Subcategory": "SourceTV:tv:3",
         "Description": "If set, SourceTV will be disabled on the server",
-        "Keywords": "sourcetv,source,tv,nohltv",
+        "Keywords": "sourcetv,source,nohltv",
         "FieldName": "nohltv",
         "InputType": "checkbox",
         "ParamFieldName": "nohltv",
@@ -1002,35 +809,11 @@
         }
     },
     {
-        "DisplayName": "SourceTV Name",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "SourceTV:tv:4",
-        "Description": "Sets the SourceTV name as it appears in server browser and scoreboard",
-        "Keywords": "sourcetv,source,tv,name,tv_name",
-        "FieldName": "tv_name",
-        "InputType": "text",
-        "ParamFieldName": "tv_name",
-        "DefaultValue": "Synergy SourceTV",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "SourceTV Password",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "SourceTV:tv:4",
-        "Description": "Sets the password required for spectators to connect to the server's SourceTV. Default is no password",
-        "Keywords": "sourcetv,source,tv,password,tv_password",
-        "FieldName": "tv_password",
-        "InputType": "password",
-        "ParamFieldName": "tv_password",
-        "DefaultValue": "",
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "Enable Automatic Demo Recording",
         "Category": "Synergy:stadia_controller",
-        "Subcategory": "SourceTV:tv:4",
+        "Subcategory": "SourceTV:tv:3",
         "Description": "If set, all games will be recorded as SourceTV demos",
-        "Keywords": "sourcetv,source,tv,tv_autorecord",
+        "Keywords": "sourcetv,tv,tv_autorecord",
         "FieldName": "tv_autorecord",
         "InputType": "checkbox",
         "ParamFieldName": "tv_autorecord",
@@ -1043,56 +826,25 @@
     {
         "DisplayName": "SourceTV Viewer Limit",
         "Category": "Synergy:stadia_controller",
-        "Subcategory": "SourceTV:tv:4",
+        "Subcategory": "SourceTV:tv:3",
         "Description": "Sets the maximum number of clients allowed to connect to the server's SourceTV. 0 = no SourceTV viewers are allowed, the game will only be recorded locally",
-        "Keywords": "max,maximum,spectators,clients,viewers,sourcetv,source,tv,tv_maxclients",
-        "FieldName": "sourcetv,source,tv,tv_maxclients",
+        "Keywords": "max,spectators,clients,viewers,sourcetv,tv,tv_maxclients",
+        "FieldName": "tv_maxclients",
         "InputType": "number",
         "MinValue": "0",
         "MaxValue": "255",
         "ParamFieldName": "tv_maxclients",
-        "DefaultValue": "64",
-        "Placeholder": "64",
+        "DefaultValue": "128",
+        "Placeholder": "128",
         "Suffix": "viewers",
         "EnumValues": {}
     },
     {
-        "DisplayName": "SourceTV Delay",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "SourceTV:tv:4",
-        "Description": "Sets the period for which the SourceTV stream will be delayed",
-        "Keywords": "spectators,sourcetv,source,tv,tv_delay",
-        "FieldName": "tv_delay",
-        "InputType": "number",
-        "MinValue": "0",
-        "MaxValue": "255",
-        "ParamFieldName": "tv_delay",
-        "DefaultValue": "15",
-        "Placeholder": "15",
-        "Suffix": "seconds",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Delay Map Change",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "SourceTV:tv:4",
-        "Description": "If set, the server will be delayed from changing maps until the broadcast is complete",
-        "Keywords": "sourcetv,source,tv,tv_delaymapchange",
-        "FieldName": "tv_delaymapchange",
-        "InputType": "checkbox",
-        "ParamFieldName": "tv_delaymapchange",
-        "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
         "DisplayName": "Maximum SourceTV Bandwidth",
         "Category": "Synergy:stadia_controller",
-        "Subcategory": "SourceTV:tv:4",
+        "Subcategory": "SourceTV:tv:3",
         "Description": "Sets the maximum SourceTV spectator bandwidth rate allowed. 0 = unlimited",
-        "Keywords": "maximum,bandwidth,rate,sourcetv,source,tv,tv_maxrate",
+        "Keywords": "maximum,bandwidth,rate,sourcetv,tv,tv_maxrate",
         "FieldName": "tv_maxrate",
         "InputType": "number",
         "MinValue": "0",
@@ -1100,68 +852,6 @@
         "DefaultValue": "8000",
         "Placeholder": "8000",
         "EnumValues": {}
-    },
-    {
-        "DisplayName": "Relay Voice",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "SourceTV:tv:4",
-        "Description": "If set, relay of voice data will be enabled",
-        "Keywords": "sourcetv,source,tv,tv_relayvoice",
-        "FieldName": "tv_relayvoice",
-        "InputType": "checkbox",
-        "ParamFieldName": "tv_relayvoice",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Transmit All",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "SourceTV:tv:4",
-        "Description": " If set, the whole game is transmitted and spectators can switch their view to any player they want, not only director view",
-        "Keywords": "sourcetv,source,tv,tv_transmitall",
-        "FieldName": "tv_transmitall",
-        "InputType": "checkbox",
-        "ParamFieldName": "tv_transmitall",
-        "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Chat Delay",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "SourceTV:tv:4",
-        "Description": "Sets the time before spectators can send another message in chat. 0 = no delay",
-        "Keywords": "spectators,chat,sourcetv,source,tv,tv_chattimelimit",
-        "FieldName": "tv_chattimelimit",
-        "InputType": "number",
-        "MinValue": "0",
-        "MaxValue": "500",
-        "ParamFieldName": "tv_chattimelimit",
-        "DefaultValue": "8",
-        "Placeholder": "8",
-        "Suffix": "seconds",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Dispatch Mode",
-        "Category": "Synergy:stadia_controller",
-        "Subcategory": "SourceTV:tv:4",
-        "Description": "Sets the SourceTV client dispatch mode for connecting clients",
-        "Keywords": "sourcetv,source,tv,tv_dispatchmode",
-        "FieldName": "tv_dispatchmode",
-        "InputType": "enum",
-        "ParamFieldName": "tv_dispatchmode",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "0": "Never",
-            "1": "If appropriate",
-            "2": "Always"
-        }
     },
     {
         "DisplayName": "Metamod and SourceMod Management",
