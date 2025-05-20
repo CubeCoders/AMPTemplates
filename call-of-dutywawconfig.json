@@ -341,6 +341,22 @@
         }
     },
     {
+        "DisplayName": "RCON Rate Limit",
+        "Category": "CoD WaW:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the RCON rate limit (per IP)",
+        "Keywords": "rcon,rate,limit,rcon_rate_limit",
+        "FieldName": "rcon_rate_limit",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "10000",
+        "ParamFieldName": "rcon_rate_limit",
+        "DefaultValue": "500",
+        "Placeholder": "500",
+        "Suffix": "milliseconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable Server Voice Chat",
         "Category": "CoD WaW:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -371,19 +387,32 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "RCON Rate Limit",
+        "DisplayName": "Enable Global Voice Chat",
         "Category": "CoD WaW:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the RCON rate limit (per IP)",
-        "Keywords": "rcon,rate,limit,rcon_rate_limit",
-        "FieldName": "rcon_rate_limit",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, global voice chat will be enabled",
+        "Keywords": "voice,chat,global,voice_global",
+        "FieldName": "voice_global",
+        "InputType": "checkbox",
+        "ParamFieldName": "voice_global",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Voice Chat Talking Duration",
+        "Category": "CoD WaW:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the voice chat talking duration",
+        "Keywords": "voice,chat,talking,duration,g_voiceChatTalkingDuration",
+        "FieldName": "g_voiceChatTalkingDuration",
         "InputType": "number",
         "MinValue": "0",
-        "MaxValue": "10000",
-        "ParamFieldName": "rcon_rate_limit",
+        "ParamFieldName": "g_voiceChatTalkingDuration",
         "DefaultValue": "500",
         "Placeholder": "500",
-        "Suffix": "milliseconds",
         "EnumValues": {}
     },
     {
@@ -402,15 +431,15 @@
         }
     },
     {
-        "DisplayName": "Enable Dead Text Chat (Zombies)",
+        "DisplayName": "Enable Voice Chat Local Echo",
         "Category": "CoD WaW:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If enabled, dead players will be allowed to use text chat to communicate with living players",
-        "Keywords": "text,dead,chat,g_deadChat",
-        "FieldName": "g_deadChat",
+        "Description": "If set, voice chat local echo be enabled",
+        "Keywords": "voice,chat,local,echo,voice_localEcho",
+        "FieldName": "voice_localEcho",
         "InputType": "checkbox",
-        "ParamFieldName": "g_deadChat",
-        "DefaultValue": "1",
+        "ParamFieldName": "voice_localEcho",
+        "DefaultValue": "0",
         "EnumValues": {
             "False": "0",
             "True": "1"
@@ -430,21 +459,6 @@
             "0": "None",
             "1": "Players only (default)",
             "2": "Free"
-        }
-    },
-    {
-        "DisplayName": "Enable Killcam (Multiplayer)",
-        "Category": "CoD WaW:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, the killcam feature will be enabled, which shows how a player was killed",
-        "Keywords": "killcam,scr_game_allowkillcam",
-        "FieldName": "scr_game_allowkillcam",
-        "InputType": "checkbox",
-        "ParamFieldName": "scr_game_allowkillcam",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
         }
     },
     {
@@ -478,6 +492,156 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Team Affects Bullet Penetration",
+        "Category": "CoD WaW:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, teammates' bodies will affect bullet penetration",
+        "Keywords": "bullet,penetration,team,teammates,bodies,bullet_penetration_affected_by_team",
+        "FieldName": "bullet_penetration_affected_by_team",
+        "InputType": "checkbox",
+        "ParamFieldName": "bullet_penetration_affected_by_team",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Allow Rocket Jumps",
+        "Category": "CoD WaW:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, rocket jumps will be allowed",
+        "Keywords": "rocket,jumps,g_patchRocketJumps",
+        "FieldName": "g_patchRocketJumps",
+        "InputType": "checkbox",
+        "ParamFieldName": "g_patchRocketJumps",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Allow Client-Side Features",
+        "Category": "CoD WaW:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, allows various client-side features to be enabled",
+        "Keywords": "client,side,features,sv_clientside",
+        "FieldName": "sv_clientside",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_clientside",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Enable Client-Side Bullets",
+        "Category": "CoD WaW:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, clients will handle bullet holes and tracers. Requires Client-Side Features to be enabled",
+        "Keywords": "client,side,bullets,sv_clientSideBullets",
+        "FieldName": "sv_clientSideBullets",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_clientSideBullets",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Enable Client-Side Vehicles",
+        "Category": "CoD WaW:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, vehicles will be predicted on the client, reducing response time. Requires Client-Side Features to be enabled",
+        "Keywords": "client,side,vehicles,sv_clientSideVehicles",
+        "FieldName": "sv_clientSideVehicles",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_clientSideVehicles",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Enable Client Archive (Multiplayer)",
+        "Category": "CoD WaW:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, clients will archive data to save bandwidth on the server. Requires Client-Side Features to be enabled",
+        "Keywords": "client,archive,sv_clientArchive",
+        "FieldName": "sv_clientArchive",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_clientArchive",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Enable Client-Side Lights (Multiplayer)",
+        "Category": "CoD WaW:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, clients will handle lighting. Requires Client-Side Features to be enabled",
+        "Keywords": "client,side,lights,lighting,g_client_side_lights",
+        "FieldName": "g_client_side_lights",
+        "InputType": "checkbox",
+        "ParamFieldName": "g_client_side_lights",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Allow Voting (Multiplayer)",
+        "Category": "CoD WaW:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, voting will be allowed",
+        "Keywords": "allow,vote,voting,g_allowVote",
+        "FieldName": "g_allowVote",
+        "InputType": "checkbox",
+        "ParamFieldName": "g_allowVote",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Abstain Vote Weight (Multiplayer)",
+        "Category": "CoD WaW:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the weight of abstain votes in voting",
+        "Keywords": "vote,abstain,weight,g_voteAbstainWeight",
+        "FieldName": "g_voteAbstainWeight",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "1",
+        "ParamFieldName": "g_voteAbstainWeight",
+        "DefaultValue": "0.5",
+        "Placeholder": "0.5",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Killcam (Multiplayer)",
+        "Category": "CoD WaW:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, the killcam feature will be enabled, which shows how a player was killed",
+        "Keywords": "killcam,scr_game_allowkillcam",
+        "FieldName": "scr_game_allowkillcam",
+        "InputType": "checkbox",
+        "ParamFieldName": "scr_game_allowkillcam",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
         "DisplayName": "Team Balancing (Multiplayer)",
         "Category": "CoD WaW:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -506,21 +670,6 @@
         "DefaultValue": "32",
         "Placeholder": "32",
         "EnumValues": {}
-    },
-    {
-        "DisplayName": "Team Affects Bullet Penetration",
-        "Category": "CoD WaW:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, teammates' bodies will affect bullet penetration",
-        "Keywords": "bullet,penetration,team,teammates,bodies,bullet_penetration_affected_by_team",
-        "FieldName": "bullet_penetration_affected_by_team",
-        "InputType": "checkbox",
-        "ParamFieldName": "bullet_penetration_affected_by_team",
-        "DefaultValue": "true",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
     },
     {
         "DisplayName": "Fix Bullet Damage Duplication (Multiplayer)",
@@ -568,74 +717,30 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Allow Client-Side Features",
+        "DisplayName": "Minimum Starting Players (Zombies)",
         "Category": "CoD WaW:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, allows various client-side features to be enabled",
-        "Keywords": "client,side,features,sv_clientside",
-        "FieldName": "sv_clientside",
-        "InputType": "checkbox",
-        "ParamFieldName": "sv_clientside",
-        "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Enable Client Archive (Multiplayer)",
-        "Category": "CoD WaW:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, clients will archive data to save bandwidth on the server. Requires Client-Side Features to be enabled",
-        "Keywords": "client,archive,sv_clientArchive",
-        "FieldName": "sv_clientArchive",
-        "InputType": "checkbox",
-        "ParamFieldName": "sv_clientArchive",
+        "Description": "Sets the minimum players needed to start the game. Do NOT set this higher than the Player Limit!",
+        "Keywords": "zombies,minimum,starting,players,sp_minplayers",
+        "FieldName": "sp_minplayers",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "4",
+        "ParamFieldName": "sp_minplayers",
         "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
+        "Placeholder": "1",
+        "Suffix": "players",
+        "EnumValues": {}
     },
     {
-        "DisplayName": "Enable Client-Side Bullets",
+        "DisplayName": "Enable Dead Text Chat (Zombies)",
         "Category": "CoD WaW:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, clients will handle bullet holes and tracers. Requires Client-Side Features to be enabled",
-        "Keywords": "client,side,bullets,sv_clientSideBullets",
-        "FieldName": "sv_clientSideBullets",
+        "Description": "If enabled, dead players will be allowed to use text chat to communicate with living players",
+        "Keywords": "text,dead,chat,g_deadChat",
+        "FieldName": "g_deadChat",
         "InputType": "checkbox",
-        "ParamFieldName": "sv_clientSideBullets",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Enable Client-Side Vehicles",
-        "Category": "CoD WaW:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, vehicles will be predicted on the client, reducing response time. Requires Client-Side Features to be enabled",
-        "Keywords": "client,side,vehicles,sv_clientSideVehicles",
-        "FieldName": "sv_clientSideVehicles",
-        "InputType": "checkbox",
-        "ParamFieldName": "sv_clientSideVehicles",
-        "DefaultValue": "1",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
-    },
-    {
-        "DisplayName": "Enable Client-Side Lights (Multiplayer)",
-        "Category": "CoD WaW:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, clients will handle lighting. Requires Client-Side Features to be enabled",
-        "Keywords": "client,side,lights,lighting,g_client_side_lights",
-        "FieldName": "g_client_side_lights",
-        "InputType": "checkbox",
-        "ParamFieldName": "g_client_side_lights",
+        "ParamFieldName": "g_deadChat",
         "DefaultValue": "1",
         "EnumValues": {
             "False": "0",
