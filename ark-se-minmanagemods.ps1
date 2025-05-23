@@ -239,8 +239,6 @@ function Install-Mod {
 }
 
   $decompressScript = @'
-use strict;
-use warnings;
 use Compress::Raw::Zlib;
 use Win32::LongPath qw(openL);
 
@@ -256,29 +254,39 @@ my $ok_out = openL($out, '>:raw', $outfile);
 die "Cannot openL '$outfile': $!" unless $ok_out && defined $out && defined fileno($out) && fileno($out) >= 0;
 
 my $sig;
-read($in, $sig, 8) == 8 or die "Unable to read signature\n";
-die "Bad file magic" unless $sig eq "\xC1\x83\x2A\x9E\x00\x00\x00\x00";
+read($in, $sig, 8) or die "Unable to read compressed file: $!";
+if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00"){
+  die "Bad file magic";
+}
 
 my $data;
-read($in, $data, 24) == 24 or die "Unable to read header\n";
-my ($chunksizelo, $chunksizehi, $comprtotlo, $comprtothi, $uncomtotlo, $uncomtothi) = unpack("(LLLLLL)<", $data);
+read($in, $data, 24) or die "Unable to read compressed file: $!";
+my ($chunksizelo, $chunksizehi,
+    $comprtotlo, $comprtothi,
+    $uncomtotlo, $uncomtothi) = unpack("(LLLLLL)<", $data);
 
-my @chunks;
+my @chunks = ();
 my $comprused = 0;
 while ($comprused < $comprtotlo) {
-  read($in, $data, 16) == 16 or die "Unable to read chunk header\n";
-  my ($comprsizelo, $comprsizehi, $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
+  read($in, $data, 16) or die "Unable to read read compressed file: $!";
+  my ($comprsizelo, $comprsizehi,
+      $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
   push @chunks, $comprsizelo;
   $comprused += $comprsizelo;
 }
 
 foreach my $comprsize (@chunks) {
-  read($in, $data, $comprsize) == $comprsize or die "Read failed for chunk of size $comprsize\n";
-  my $inflate = Compress::Raw::Zlib::Inflate->new();
+  read($in, $data, $comprsize) == $comprsize or die "File read failed: $!";
+  my ($inflate, $status) = new Compress::Raw::Zlib::Inflate();
   my $output;
-  my $status = $inflate->inflate($data, $output, 1);
-  die "Bad compressed stream; status: $status" unless $status == Z_STREAM_END;
-  print $out $output or die "Write failed\n";
+  $status = $inflate->inflate($data, $output, 1);
+  if ($status != Z_STREAM_END) {
+    die "Bad compressed stream; status: " . ($status);
+  }
+  if (length($data) != 0) {
+    die "Unconsumed data in input"
+  }
+  print $output;
 }
 
 close($out);
