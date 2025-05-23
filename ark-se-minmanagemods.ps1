@@ -283,7 +283,6 @@ foreach my $comprsize (@chunks) {
   my $output = '';
   my $status = $inflate->inflate($data, $output, 1);
   die "Bad compressed stream; status $status" unless $status == Z_STREAM_END;
-  die "Unconsumed data remains" unless length($data) == 0;
   print $out $output or die "Write failed to '$outfile'";
 }
 
