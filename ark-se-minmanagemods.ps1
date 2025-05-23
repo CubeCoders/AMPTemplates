@@ -247,9 +247,6 @@ use Win32::LongPath qw(openL);
 my ($infile, $outfile) = @ARGV;
 die "Usage: decompress.pl <infile> <outfile>" unless $infile && $outfile;
 
-$infile = winpath($infile);
-$outfile = winpath($outfile);
-
 my $ok_in = openL(my $in, '<:raw', $infile);
 die "Cannot openL '$infile': $!" unless $ok_in && defined fileno($in);
 
@@ -301,7 +298,6 @@ my $inok = openL($in, "<:raw", $infile);
 die "Cannot openL (read) '$infile': $!" unless $inok && defined $in && defined fileno($in) && fileno($in) >= 0;
 my $outok = openL($out, ">:raw", $outfile);
 die "Cannot openL (write) '$outfile': $!" unless $outok && defined $out && defined fileno($out) && fileno($out) >= 0;
-
 
 my $data;
 { local $/; $data = <$in>; }
