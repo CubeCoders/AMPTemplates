@@ -214,10 +214,11 @@ use Compress::Raw::Zlib;
 my ($infile, $outfile) = @ARGV;
 my ($in, $out);
 
-openL($in,  '<:raw', $infile)  or die "Cannot openL (read) '$infile': $!";
-die "FATAL: Failed to get valid input filehandle for '$infile' after openL" unless defined fileno($in) && fileno($in) >= 0;
-openL($out, '>:raw', $outfile) or die "Cannot openL (write) '$outfile': $!";
-die "FATAL: Failed to get valid output filehandle for '$outfile' after openL" unless defined fileno($out) && fileno($out) >= 0;
+my $inok = openL($in,  '<:raw', $infile);
+warn "DEBUG: failed openL path was: $infile\n";
+die "Cannot openL (read) '$infile': $!" unless $inok && defined $in && defined fileno($in) && fileno($in) >= 0;
+my $outok = openL($out, '>:raw', $outfile);
+die "Cannot openL (write) '$outfile': $!" unless $outok && defined $out && defined fileno($out) && fileno($out) >= 0;
 
 my $sig;
 read($in, $sig, 8) or die "Unable to read compressed file signature from handle for '$infile': $!";
@@ -258,10 +259,11 @@ use Encode;
 my ($infile, $outfile, $game, $modid, $modname) = @ARGV;
 my ($in, $out);
 
-openL($in,  "<:raw", $infile)  or die "Cannot openL (read) '$infile': $!";
-die "FATAL: Failed to get valid input filehandle for '$infile' after openL" unless defined fileno($in) && fileno($in) >= 0;
-openL($out, ">:raw", $outfile) or die "Cannot openL (write) '$outfile': $!";
-die "FATAL: Failed to get valid output filehandle for '$outfile' after openL" unless defined fileno($out) && fileno($out) >= 0;
+my $inok = openL($in, "<:raw", $infile);
+die "Cannot openL (read) '$infile': $!" unless $inok && defined $in && defined fileno($in) && fileno($in) >= 0;
+my $outok = openL($out, ">:raw", $outfile);
+die "Cannot openL (write) '$outfile': $!" unless $outok && defined $out && defined fileno($out) && fileno($out) >= 0;
+
 
 my $data;
 { local $/; $data = <$in>; }
