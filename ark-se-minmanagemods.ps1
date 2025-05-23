@@ -247,41 +247,42 @@ use Win32::LongPath qw(openL);
 my ($infile, $outfile) = @ARGV;
 die "Usage: decompress.pl <infile> <outfile>" unless $infile && $outfile;
 
-my $ok_in = openL(my $in, '<:raw', $infile);
-die "Cannot openL '$infile': $!" unless $ok_in && defined fileno($in);
+my ($in, $out);
 
-my $ok_out = openL(my $out, '>:raw', $outfile);
-die "Cannot openL '$outfile': $!" unless $ok_out && defined fileno($out);
+my $ok_in = openL($in, '<:raw', $infile);
+die "Cannot openL '$infile': $!" unless $ok_in && defined $in && defined fileno($in) && fileno($in) >= 0;
+
+my $ok_out = openL($out, '>:raw', $outfile);
+die "Cannot openL '$outfile': $!" unless $ok_out && defined $out && defined fileno($out) && fileno($out) >= 0;
 
 my $sig;
-read($in, $sig, 8) == 8 or die "Unable to read compressed file signature: $!";
+read($in, $sig, 8) == 8 or die "Unable to read signature\n";
 die "Bad file magic" unless $sig eq "\xC1\x83\x2A\x9E\x00\x00\x00\x00";
 
 my $data;
-read($in, $data, 24) == 24 or die "Unable to read compressed file header: $!";
+read($in, $data, 24) == 24 or die "Unable to read header\n";
 my ($chunksizelo, $chunksizehi, $comprtotlo, $comprtothi, $uncomtotlo, $uncomtothi) = unpack("(LLLLLL)<", $data);
 
 my @chunks;
 my $comprused = 0;
 while ($comprused < $comprtotlo) {
-  read($in, $data, 16) == 16 or die "Unable to read chunk header: $!";
+  read($in, $data, 16) == 16 or die "Unable to read chunk header\n";
   my ($comprsizelo, $comprsizehi, $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
   push @chunks, $comprsizelo;
   $comprused += $comprsizelo;
 }
 
-my $inflate = Compress::Raw::Zlib::Inflate->new();
 foreach my $comprsize (@chunks) {
-  read($in, $data, $comprsize) == $comprsize or die "File read failed for chunk ($comprsize bytes)";
-  my $output = '';
+  read($in, $data, $comprsize) == $comprsize or die "Read failed for chunk of size $comprsize\n";
+  my $inflate = Compress::Raw::Zlib::Inflate->new();
+  my $output;
   my $status = $inflate->inflate($data, $output, 1);
-  die "Bad compressed stream; status $status" unless $status == Z_STREAM_END;
-  print $out $output or die "Write failed to '$outfile'";
+  die "Bad compressed stream; status: $status" unless $status == Z_STREAM_END;
+  print $out $output or die "Write failed\n";
 }
 
-close($out) or warn "Warning: failed to close '$outfile'";
-close($in) or warn "Warning: failed to close '$infile'";
-
+close($out);
+close($in);
 exit 0;
 '@
 
