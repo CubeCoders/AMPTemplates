@@ -281,7 +281,7 @@ foreach my $comprsize (@chunks) {
   if (length($data) != 0) {
     die "Unconsumed data in input"
   }
-  print $output;
+  print $out $output;
 }
 
 close($out);
