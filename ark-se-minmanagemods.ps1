@@ -245,12 +245,8 @@ use Win32::LongPath qw(openL);
 my ($infile, $outfile) = @ARGV;
 
 my ($in, $out);
-
-my $ok_in = openL(\$in, '<:raw', $infile);
-die "Cannot openL '$infile': $!" unless $ok_in && defined $in && defined fileno($in) && fileno($in) >= 0;
-
-my $ok_out = openL(\$out, '>:raw', $outfile);
-die "Cannot openL '$outfile': $!" unless $ok_out && defined $out && defined fileno($out) && fileno($out) >= 0;
+openL(\$in, '<:raw', $infile);
+openL(\$out, '>:raw', $outfile);
 
 my $sig;
 read($in, $sig, 8) or die "Unable to read compressed file: $!";
@@ -368,7 +364,7 @@ close $in or warn "Warning: close failed for input file handle for '$infile': $!
        }
     }
   }
-
+  <#
   $modOutputFileRelative = Join-Path $modsInstallDir "$modId.mod"
   $modInfoFileRelative = Join-Path $modSrcDir "mod.info"
   $modmetaFileRelative = Join-Path $modSrcDir "modmeta.info"
@@ -418,6 +414,7 @@ close $in or warn "Warning: close failed for input file handle for '$infile': $!
 
   $srcTime = (Get-Item $modInfoFileRelative).LastWriteTimeUtc
   (Get-Item $modOutputFileRelative).LastWriteTimeUtc = $srcTime
+  #>
 }
 
 # --- Main Loop ---
