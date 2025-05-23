@@ -289,40 +289,6 @@ close($in);
 exit 0;
 '@
 
-  $createModfileScript = @'
-use Win32::LongPath qw(openL);
-
-my $infile = @ARGV[0];
-my $outfile = @ARGV[1];
-my ($in, $out);
-
-openL(\$in, "<:raw", $infile);
-openL(\$out, ">:raw", $outfile);
-
-my $data;
-{ local $/; $data = <$in>; }
-my $mapnamelen = unpack("@0 L<", $data);
-  my $mapname = substr($data, 4, $mapnamelen - 1);
-  my $nummaps = unpack("@" . ($mapnamelen + 4) . " L<", $data);
-  my $pos = $mapnamelen + 8;
-  my $modname = ($ARGV[4] || $mapname) . "\x00";
-  my $modnamelen = length($modname);
-  my $modpath = "../../../" . $ARGV[2] . "/Content/Mods/" . $ARGV[3] . "\x00";
-  my $modpathlen = length($modpath);
-  print pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
-    $ARGV[3], 0, $modnamelen, $modname, $modpathlen, $modpath,
-    $nummaps);
-  for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++){
-    my $mapfilelen = unpack("@" . ($pos) . " L<", $data);
-    my $mapfile = substr($data, $mapnamelen + 12, $mapfilelen);
-    print pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
-    $pos = $pos + 4 + $mapfilelen;
-  }
-print $out "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
-close($out);
-close($in);
-'@
-
   $decompressScriptFile = Join-Path $env:TEMP "decompress.pl"
   Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII -Force
 
@@ -376,6 +342,40 @@ close($in);
   } catch {
       Write-Host "  Warning: Failed to fetch mod name for $modId. Using name from mod.info."
   }
+
+  $createModfileScript = @'
+use Win32::LongPath qw(openL);
+
+my $infile = @ARGV[0];
+my $outfile = @ARGV[1];
+my ($in, $out);
+
+openL(\$in, "<:raw", $infile);
+openL(\$out, ">:raw", $outfile);
+
+my $data;
+{ local $/; $data = <$in>; }
+my $mapnamelen = unpack("@0 L<", $data);
+  my $mapname = substr($data, 4, $mapnamelen - 1);
+  my $nummaps = unpack("@" . ($mapnamelen + 4) . " L<", $data);
+  my $pos = $mapnamelen + 8;
+  my $modname = ($ARGV[4] || $mapname) . "\x00";
+  my $modnamelen = length($modname);
+  my $modpath = "../../../" . $ARGV[2] . "/Content/Mods/" . $ARGV[3] . "\x00";
+  my $modpathlen = length($modpath);
+  print pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
+    $ARGV[3], 0, $modnamelen, $modname, $modpathlen, $modpath,
+    $nummaps);
+  for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++){
+    my $mapfilelen = unpack("@" . ($pos) . " L<", $data);
+    my $mapfile = substr($data, $mapnamelen + 12, $mapfilelen);
+    print pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
+    $pos = $pos + 4 + $mapfilelen;
+  }
+print $out "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
+close($out);
+close($in);
+'@
 
   $createModfileScriptFile = Join-Path $env:TEMP "createModfile.pl"
   Set-Content -Path $createModfileScriptFile -Value $createModfileScript -Encoding ASCII -Force
