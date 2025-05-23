@@ -30,13 +30,45 @@ function Setup-StrawberryPerl {
   $perlRoot = Join-Path $PSScriptRoot "arkse\perl"
   $perlBin  = Join-Path $PerlRoot "perl\bin"
   $perlCbin = Join-Path $PerlRoot "c\bin"
+  $perlExe  = Join-Path $perlBin "perl.exe"
 
+  # Check if Perl is already installed
+  if (-not (Test-Path $perlExe)) {
+    $zipUrl = "https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54001_64bit_UCRT/strawberry-perl-5.40.0.1-64bit-portable.zip"
+    $zipFile = "$env:TEMP\strawberry-perl.zip"
+
+    try {
+      if (-not (Test-Path $zipFile)) {
+        Invoke-WebRequest -Uri $zipUrl -OutFile $zipFile -UseBasicParsing
+      }
+
+      if (-not (Test-Path $perlRoot)) {
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
+        [System.IO.Compression.ZipFile]::ExtractToDirectory($zipFile, $perlRoot)
+      }
+    } catch {
+      Write-Host "  Error: Failed to download or extract Strawberry Perl. Aborting."
+      return $false
+    }
+
+    if (-not (Test-Path $perlExe)) {
+      Write-Host "  Error: Failed to extract Strawberry Perl. Aborting."
+      return $false
+    }
+  }
+  
   # Add Strawberry Perl to PATH
   $env:PATH = "$perlBin;$perlCbin;$env:PATH"
 
   # Install cpanm if it's not available
-  if (-not (Get-Command cpanm -ErrorAction SilentlyContinue)) {
+  if (-not (Get-Command cpanm.exe -ErrorAction SilentlyContinue)) {
+    Write-Host "Installing App::cpanminus..."
+    try {
       & perl -MCPAN -e "install App::cpanminus"
+    } catch {
+      Write-Host "  Error: Failed to install cpanminus. Aborting."
+      return $false
+    }
   }
 
   $requiredPerlModules = @(
@@ -45,11 +77,13 @@ function Setup-StrawberryPerl {
   )
 
   try {
-    & cpanm --notest --quiet $requiredPerlModules
+    & cpanm --notest --quiet @requiredPerlModules
   } catch {
-      Write-Host "  Error: Failed to install required Perl modules $requiredPerlModules. Aborting."
-    exit 1
+    Write-Host "  Error: Failed to install required Perl modules $requiredPerlModules."
+    return $false
   }
+
+  return $true
 }
 
 # Function to install a mod with retry on timeout
@@ -390,11 +424,11 @@ Write-Host "Installing/updating mods..."
 $modIds = $args[0] -replace '^"(.*)"$', '$1'
 $modIds = $modIds.Split(',')
 
-Setup-StrawberryPerl
-
-foreach ($modId in $modIds) {
-  Download-Mod -modId $modId
-  Install-Mod -modId $modId
+if (Setup-StrawberryPerl) {
+  foreach ($modId in $modIds) {
+    Download-Mod -modId $modId
+    Install-Mod -modId $modId
+  }
 }
 
 Write-Host "Mod installation/update process finished."
