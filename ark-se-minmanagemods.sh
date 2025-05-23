@@ -45,9 +45,9 @@ downloadMod() {
     echo "Downloading mod $modId"
     
     output=$(./steamcmd.sh +force_install_dir 376030 +login anonymous +workshop_download_item 346110 "$modId" validate +quit 2>&1)
-
-    # Check success
-    if echo "$output" | grep -q "Success. Downloaded item $modId"; then
+    result=$?
+    echo "$output"
+    if [ $result -eq 0 ]; then
       echo "Mod $modId downloaded successfully"
       return 0
     fi
