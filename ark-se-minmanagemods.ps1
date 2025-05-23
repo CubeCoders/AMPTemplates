@@ -242,30 +242,37 @@ function Install-Mod {
   $decompressScript = @'
 use strict;
 use warnings;
-use Win32::LongPath qw(openL);
 use Compress::Raw::Zlib;
 
-my ($infile, $outfile) = @ARGV;
-my ($in, $out);
+sub winpath {
+  my $p = shift;
+  return $p =~ /^\\\\\?\\/ ? $p : "\\\\?\\" . $p;
+}
 
-my $inok = openL($in,  '<:raw', $infile);
-warn "DEBUG: failed openL path was: $infile\n";
-die "Cannot openL (read) '$infile': $!" unless $inok && defined $in && defined fileno($in) && fileno($in) >= 0;
-my $outok = openL($out, '>:raw', $outfile);
-die "Cannot openL (write) '$outfile': $!" unless $outok && defined $out && defined fileno($out) && fileno($out) >= 0;
+my ($infile, $outfile) = @ARGV;
+die "Usage: decompress.pl <infile> <outfile>" unless $infile && $outfile;
+
+$infile = winpath($infile);
+$outfile = winpath($outfile);
+
+open(my $in, '<:raw', $infile) or die "Cannot open '$infile': $!";
+binmode($in);
+
+open(my $out, '>:raw', $outfile) or die "Cannot open '$outfile': $!";
+binmode($out);
 
 my $sig;
-read($in, $sig, 8) or die "Unable to read compressed file signature from handle for '$infile': $!";
-if ($sig ne "\xC1\x83\x2A\x9E\x00\x00\x00\x00") { die "Bad file magic"; }
+read($in, $sig, 8) == 8 or die "Unable to read compressed file signature: $!";
+die "Bad file magic" unless $sig eq "\xC1\x83\x2A\x9E\x00\x00\x00\x00";
 
 my $data;
-read($in, $data, 24) or die "Unable to read compressed file header from handle for '$infile': $!";
-my ($chunksizelo, $chunksizehi, $comprtotlo,  $comprtothi, $uncomtotlo,  $uncomtothi) = unpack("(LLLLLL)<", $data);
+read($in, $data, 24) == 24 or die "Unable to read compressed file header: $!";
+my ($chunksizelo, $chunksizehi, $comprtotlo, $comprtothi, $uncomtotlo, $uncomtothi) = unpack("(LLLLLL)<", $data);
 
 my @chunks;
 my $comprused = 0;
 while ($comprused < $comprtotlo) {
-  read($in, $data, 16) or die "Unable to read compressed file chunk header from handle for '$infile': $!";
+  read($in, $data, 16) == 16 or die "Unable to read chunk header: $!";
   my ($comprsizelo, $comprsizehi, $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
   push @chunks, $comprsizelo;
   $comprused += $comprsizelo;
@@ -273,14 +280,17 @@ while ($comprused < $comprtotlo) {
 
 my $inflate = Compress::Raw::Zlib::Inflate->new();
 foreach my $comprsize (@chunks) {
-  read($in, $data, $comprsize) or die "File read failed for chunk from handle for '$infile': $!";
-  my $output;
+  read($in, $data, $comprsize) == $comprsize or die "File read failed for chunk ($comprsize bytes)";
+  my $output = '';
   my $status = $inflate->inflate($data, $output, 1);
-  if ($status != Z_STREAM_END) { die "Bad compressed stream; status: $status"; }
-  print $out $output or die "File print failed for '$outfile': $!";
+  die "Bad compressed stream; status $status" unless $status == Z_STREAM_END;
+  die "Unconsumed data remains" unless length($data) == 0;
+  print $out $output or die "Write failed to '$outfile'";
 }
-close $out or warn "Warning: close failed for output file handle for '$outfile': $!";
-close $in or warn "Warning: close failed for input file handle for '$infile': $!";
+
+close($out) or warn "Warning: failed to close '$outfile'";
+close($in) or warn "Warning: failed to close '$infile'";
+
 exit 0;
 '@
 
