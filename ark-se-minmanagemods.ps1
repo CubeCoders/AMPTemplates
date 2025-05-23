@@ -243,7 +243,6 @@ use Compress::Raw::Zlib;
 use Win32::LongPath qw(openL);
 
 my ($infile, $outfile) = @ARGV;
-die "Usage: decompress.pl <infile> <outfile>" unless $infile && $outfile;
 
 my ($in, $out);
 
