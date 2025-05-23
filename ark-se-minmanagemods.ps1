@@ -61,8 +61,7 @@ function Setup-StrawberryPerl {
   $env:PATH = "$perlBin;$perlCbin;$env:PATH"
 
   # Install cpanm if it's not available
-  if (-not (Get-Command cpanm.exe -ErrorAction SilentlyContinue)) {
-    Write-Host "Installing App::cpanminus..."
+  if (-not (Get-Command cpanm -ErrorAction SilentlyContinue)) {
     try {
       & perl -MCPAN -e "install App::cpanminus"
     } catch {
