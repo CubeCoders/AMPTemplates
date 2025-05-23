@@ -38,24 +38,13 @@ downloadMod() {
   local modId="$1"
   local maxRetries=5
   local attempt=0
+  local output
 
   while (( attempt < maxRetries )); do
     ((attempt++))
-    echo "Attempt $attempt: Downloading mod $modId"
-
-    local tmpScript
-    tmpScript=$(mktemp)
-
-    cat > "$tmpScript" <<EOF
-force_install_dir 376030
-login anonymous
-workshop_download_item 346110 $modId validate
-quit
-EOF
-
-    local output
-    output=$(./steamcmd.sh +runscript "$tmpScript" 2>&1)
-    rm -f "$tmpScript"
+    echo "Downloading mod $modId"
+    
+    output=$(./steamcmd.sh +force_install_dir 376030 +login anonymous +workshop_download_item 346110 "$modId" validate +quit 2>&1)
 
     # Check success
     if echo "$output" | grep -q "Success. Downloaded item $modId"; then
