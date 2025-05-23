@@ -332,7 +332,6 @@ for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++) {
 print $out "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01" or die "File print failed for footer: $!";
 close $out or warn "Warning: close failed for output file handle for '$outfile': $!";
 close $in or warn "Warning: close failed for input file handle for '$infile': $!";
-
 '@
 
   $decompressScriptFile = Join-Path $env:TEMP "decompress.pl"
