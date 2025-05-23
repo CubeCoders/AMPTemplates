@@ -363,13 +363,13 @@ my $mapnamelen = unpack("@0 L<", $data);
   my $modnamelen = length($modname);
   my $modpath = "../../../" . $ARGV[2] . "/Content/Mods/" . $ARGV[3] . "\x00";
   my $modpathlen = length($modpath);
-  print pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
+  print $out pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
     $ARGV[3], 0, $modnamelen, $modname, $modpathlen, $modpath,
     $nummaps);
   for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++){
     my $mapfilelen = unpack("@" . ($pos) . " L<", $data);
     my $mapfile = substr($data, $mapnamelen + 12, $mapfilelen);
-    print pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
+    print $out pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
     $pos = $pos + 4 + $mapfilelen;
   }
 print $out "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
