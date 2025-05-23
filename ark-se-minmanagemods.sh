@@ -40,12 +40,12 @@ downloadMods() {
 
   # Create SteamCMD script
   {
-    echo "+force_install_dir 376030"
-    echo "+login anonymous"
+    echo "force_install_dir 376030"
+    echo "login anonymous"
     for modId in "${modIds[@]}"; do
-      echo "+workshop_download_item 346110 $modId validate"
+      echo "workshop_download_item 346110 $modId validate"
     done
-    echo "+quit"
+    echo "quit"
   } > "$steamcmdScriptFile"
 
   # Run the SteamCMD script once
