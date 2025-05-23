@@ -34,23 +34,41 @@ modsInstallDir="./376030/ShooterGame/Content/Mods"
 modIds=()
 
 # Function to install a mod with retry on timeout
-downloadMods() {
-  local modIds=("$@")
-  local steamcmdScriptFile="batch_workshop_download.txt"
+downloadMod() {
+  local modId="$1"
+  local maxRetries=5
+  local attempt=0
 
-  # Create SteamCMD script
-  {
-    echo "force_install_dir 376030"
-    echo "login anonymous"
-    for modId in "${modIds[@]}"; do
-      echo "workshop_download_item 346110 $modId validate"
-    done
-    echo "quit"
-  } > "$steamcmdScriptFile"
+  while (( attempt < maxRetries )); do
+    ((attempt++))
+    echo "Attempt $attempt: Downloading mod $modId"
 
-  # Run the SteamCMD script once
-  ./steamcmd.sh +runscript "$steamcmdScriptFile"
-  rm -f "$steamcmdScriptFile"
+    local tmpScript
+    tmpScript=$(mktemp)
+
+    cat > "$tmpScript" <<EOF
+force_install_dir 376030
+login anonymous
+workshop_download_item 346110 $modId validate
+quit
+EOF
+
+    local output
+    output=$(./steamcmd.sh +runscript "$tmpScript" 2>&1)
+    rm -f "$tmpScript"
+
+    # Check success
+    if echo "$output" | grep -q "Success. Downloaded item $modId"; then
+      echo "Mod $modId downloaded successfully"
+      return 0
+    fi
+
+    echo "Download failed for mod $modId. Retrying..."
+    sleep 2
+  done
+
+  echo "Mod $modId failed after $maxRetries attempts"
+  return 1
 }
 
 # Function to extract and install downloaded mod files
@@ -212,10 +230,10 @@ modIds=$(echo "$1" | sed 's/^"\(.*\)"$/\1/')
 IFS=',' read -ra modIdArray <<< "$modIds"
 cd ./arkse
 
-downloadMods "${modIdArray[@]}"
-
 for modId in "${modIdArray[@]}"; do
-  installMod "$modId"
+  if downloadMod "$modId"; then
+    installMod "$modId"
+  fi
 done
 
 echo "Mod installation/update process finished."
