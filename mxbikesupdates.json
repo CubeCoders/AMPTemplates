@@ -55,7 +55,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd mxbikes/server && DOWNLOAD_LINK=$(wget -qO- \\\"https://www.mx-bikes.com/?page=downloads\\\" | grep -o \\\"downloads/mxbikes[^\\\\\\\"]*.exe\\\" | head -n 1) && wget -qO mxbikes-beta.exe \\\"https://www.mx-bikes.com/$DOWNLOAD_LINK\\\"\"",
+        "UpdateSourceArgs": "-c \"cd mxbikes/server && ServerDownloadMirror=\\\"{{ServerDownloadMirror}}\\\"; if [ \\\"$ServerDownloadMirror\\\" = \\\"MXB-Mods.com\\\" ]; then DownloadLink=$(wget -qO- \\\"https://betas.mxb-mods.com/\\\" | grep -o \\\"files/mxbikes[^\\\\\\\"]*\\.exe\\\" | head -n 1) && wget --header=\\\"Referer: https://betas.mxb-mods.com/download/\\\" -qO mxbikes-beta.exe \\\"https://betas.mxb-mods.com/$DownloadLink\\\"; else DownloadLink=$(wget -qO- \\\"https://www.mx-bikes.com/?page=downloads\\\" | grep -o \\\"downloads/mxbikes[^\\\\\\\"]*\\.exe\\\" | head -n 1) && wget -qO mxbikes-beta.exe \\\"https://www.mx-bikes.com/$DownloadLink\\\"; fi\"",
         "SkipOnFailure": false
     },
     {
@@ -63,7 +63,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'mxbikes/server'; $DOWNLOAD_LINK=((Invoke-WebRequest -UseBasicParsing -Uri 'https://www.mx-bikes.com/?page=downloads').Links | ? href -match 'downloads/mxbikes.*\\.exe' | select -ExpandProperty href); Invoke-WebRequest -UseBasicParsing -Uri \\\"https://www.mx-bikes.com/$DOWNLOAD_LINK\\\" -OutFile 'mxbikes-beta.exe'\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'mxbikes/server'; $ServerDownloadMirror='{{ServerDownloadMirror}}'; if ($ServerDownloadMirror -eq 'MXB-Mods.com') { $html = Invoke-WebRequest -UseBasicParsing -Uri 'https://betas.mxb-mods.com/'; $DownloadLink = ($html.Links | Where-Object href -like 'files/mxbikes*.exe')[0].href; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://betas.mxb-mods.com/$DownloadLink\\\" -OutFile 'mxbikes-beta.exe' -Headers @{ Referer = 'https://betas.mxb-mods.com/download/' } } else { $html = Invoke-WebRequest -UseBasicParsing -Uri 'https://www.mx-bikes.com/?page=downloads'; $DownloadLink = ($html.Links | Where-Object href -like 'downloads/mxbikes*.exe')[0].href; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://www.mx-bikes.com/$DownloadLink\\\" -OutFile 'mxbikes-beta.exe' }\"",
         "SkipOnFailure": false
     },
     {
