@@ -245,15 +245,12 @@ use Win32::LongPath qw(openL);
 my ($infile, $outfile) = @ARGV;
 die "Usage: decompress.pl <infile> <outfile>" unless $infile && $outfile;
 
-print STDERR "infile: [$ARGV[0]]\n";
-print STDERR "outfile: [$ARGV[1]]\n";
-
 my ($in, $out);
 
-my $ok_in = openL($in, '<:raw', $infile);
+my $ok_in = openL(\$in, '<:raw', $infile);
 die "Cannot openL '$infile': $!" unless $ok_in && defined $in && defined fileno($in) && fileno($in) >= 0;
 
-my $ok_out = openL($out, '>:raw', $outfile);
+my $ok_out = openL(\$out, '>:raw', $outfile);
 die "Cannot openL '$outfile': $!" unless $ok_out && defined $out && defined fileno($out) && fileno($out) >= 0;
 
 my $sig;
