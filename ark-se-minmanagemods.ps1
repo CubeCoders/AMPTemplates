@@ -242,11 +242,7 @@ function Install-Mod {
 use strict;
 use warnings;
 use Compress::Raw::Zlib;
-
-sub winpath {
-  my $p = shift;
-  return $p =~ /^\\\\\?\\/ ? $p : "\\\\?\\" . $p;
-}
+use Win32::LongPath qw(openL);
 
 my ($infile, $outfile) = @ARGV;
 die "Usage: decompress.pl <infile> <outfile>" unless $infile && $outfile;
@@ -254,11 +250,11 @@ die "Usage: decompress.pl <infile> <outfile>" unless $infile && $outfile;
 $infile = winpath($infile);
 $outfile = winpath($outfile);
 
-open(my $in, '<:raw', $infile) or die "Cannot open '$infile': $!";
-binmode($in);
+my $ok_in = openL(my $in, '<:raw', $infile);
+die "Cannot openL '$infile': $!" unless $ok_in && defined fileno($in);
 
-open(my $out, '>:raw', $outfile) or die "Cannot open '$outfile': $!";
-binmode($out);
+my $ok_out = openL(my $out, '>:raw', $outfile);
+die "Cannot openL '$outfile': $!" unless $ok_out && defined fileno($out);
 
 my $sig;
 read($in, $sig, 8) == 8 or die "Unable to read compressed file signature: $!";
