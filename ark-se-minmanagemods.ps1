@@ -257,8 +257,8 @@ if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00"){
 my $data;
 read($in, $data, 24) or die "Unable to read compressed file: $!";
 my ($chunksizelo, $chunksizehi,
-    $comprtotlo, $comprtothi,
-    $uncomtotlo, $uncomtothi) = unpack("(LLLLLL)<", $data);
+    $comprtotlo,  $comprtothi,
+    $uncomtotlo,  $uncomtothi) = unpack("(LLLLLL)<", $data);
 
 my @chunks = ();
 my $comprused = 0;
@@ -290,43 +290,37 @@ exit 0;
 '@
 
   $createModfileScript = @'
-use strict;
-use warnings;
 use Win32::LongPath qw(openL);
-use Encode;
 
-my ($infile, $outfile, $game, $modid, $modname) = @ARGV;
+my $infile = @ARGV[0];
+my $outfile = @ARGV[1];
 my ($in, $out);
 
-my $inok = openL($in, "<:raw", $infile);
-die "Cannot openL (read) '$infile': $!" unless $inok && defined $in && defined fileno($in) && fileno($in) >= 0;
-my $outok = openL($out, ">:raw", $outfile);
-die "Cannot openL (write) '$outfile': $!" unless $outok && defined $out && defined fileno($out) && fileno($out) >= 0;
+openL(\$in, "<:raw", $infile);
+openL(\$out, ">:raw", $outfile);
 
 my $data;
 { local $/; $data = <$in>; }
-die "Failed to read data from '$infile': $!" unless defined $data;
-
-my $mapnamelen = unpack('@0 L<', $data);
-my $mapname = substr($data, 4, $mapnamelen - 1);
-my $nummaps = unpack("@" . ($mapnamelen + 4) . " L<", $data);
-my $pos = $mapnamelen + 8;
-my $realmodname = $modname || $mapname;
-my $modnamez = $realmodname . "\x00";
-my $modnamelen = length($modnamez);
-my $modpath = "../../../$game/Content/Mods/$modid\x00";
-my $modpathlen = length($modpath);
-print $out pack("L< L< L< Z$modnamelen L< Z$modpathlen L<", $modid, 0, $modnamelen, $modnamez, $modpathlen, $modpath, $nummaps) or die "File print failed for header: $!";
-for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++) {
-  my $mapfilelen = unpack("@" . $pos . " L<", $data);
-  my $mapfile_with_null = substr($data, $pos + 4, $mapfilelen);
-  print $out pack("L<", $mapfilelen) or die "File print failed for map len: $!";
-  print $out $mapfile_with_null or die "File print failed for map name: $!";
-  $pos += 4 + $mapfilelen;
-}
-print $out "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01" or die "File print failed for footer: $!";
-close $out or warn "Warning: close failed for output file handle for '$outfile': $!";
-close $in or warn "Warning: close failed for input file handle for '$infile': $!";
+my $mapnamelen = unpack("@0 L<", $data);
+  my $mapname = substr($data, 4, $mapnamelen - 1);
+  my $nummaps = unpack("@" . ($mapnamelen + 4) . " L<", $data);
+  my $pos = $mapnamelen + 8;
+  my $modname = ($ARGV[4] || $mapname) . "\x00";
+  my $modnamelen = length($modname);
+  my $modpath = "../../../" . $ARGV[2] . "/Content/Mods/" . $ARGV[3] . "\x00";
+  my $modpathlen = length($modpath);
+  print pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
+    $ARGV[3], 0, $modnamelen, $modname, $modpathlen, $modpath,
+    $nummaps);
+  for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++){
+    my $mapfilelen = unpack("@" . ($pos) . " L<", $data);
+    my $mapfile = substr($data, $mapnamelen + 12, $mapfilelen);
+    print pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
+    $pos = $pos + 4 + $mapfilelen;
+  }
+print $out "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
+close($out);
+close($in);
 '@
 
   $decompressScriptFile = Join-Path $env:TEMP "decompress.pl"
@@ -364,7 +358,7 @@ close $in or warn "Warning: close failed for input file handle for '$infile': $!
        }
     }
   }
-  <#
+  
   $modOutputFileRelative = Join-Path $modsInstallDir "$modId.mod"
   $modInfoFileRelative = Join-Path $modSrcDir "mod.info"
   $modmetaFileRelative = Join-Path $modSrcDir "modmeta.info"
@@ -385,9 +379,13 @@ close $in or warn "Warning: close failed for input file handle for '$infile': $!
 
   $createModfileScriptFile = Join-Path $env:TEMP "createModfile.pl"
   Set-Content -Path $createModfileScriptFile -Value $createModfileScript -Encoding ASCII -Force
-  perl $createModfileScriptFile "$modInfoFileRelative" "$modOutputFileRelative" "ShooterGame" "$modId" "$modName"
+
+  $modInfoFileAbsolute = Join-Path "$PSScriptRoot\arkse\376030" "$modInfoFileRelative"
+  $modOutputFileAbsolute = Join-Path "$PSScriptRoot\arkse\376030" "$modOutputFileRelative"
+
+  perl $createModfileScriptFile "$modInfoFileAbsolute" "$modOutputFileAbsolute" "ShooterGame" "$modId" "$modName"
   if ($LASTEXITCODE -ne 0) {
-     Write-Host "  Error: Perl script failed to generate '$modOutputFileRelative' (Exit code: $LASTEXITCODE)."
+     Write-Host "  Error: Perl script failed to generate '$modOutputFileAbsolute' (Exit code: $LASTEXITCODE)."
      return
   }
 
@@ -414,7 +412,6 @@ close $in or warn "Warning: close failed for input file handle for '$infile': $!
 
   $srcTime = (Get-Item $modInfoFileRelative).LastWriteTimeUtc
   (Get-Item $modOutputFileRelative).LastWriteTimeUtc = $srcTime
-  #>
 }
 
 # --- Main Loop ---
