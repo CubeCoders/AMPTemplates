@@ -103,11 +103,11 @@ function Download-Mod {
       return $true
     }
 
-    Write-Host "Download failed for mod $modId. Retrying..."
+    Write-Host "  Error: Download failed for mod $modId. Retrying..."
     Start-Sleep -Seconds 2
   }
 
-  Write-Host "Mod $modId download failed after $maxRetries attempts"
+  Write-Host "  Error: Mod $modId download failed after $maxRetries attempts"
   return $false
 }
 
@@ -117,8 +117,13 @@ function Install-Mod {
     [string]$modId
   )
 
+  Write-Host "Extracting and installing mod $modId"
   $modDestDir = Join-Path $modsInstallDir $modId
-  $modDestDirAbs = Resolve-Path -LiteralPath $modDestDir | Select-Object -ExpandProperty Path
+  if (Test-Path $modDestDir) {
+    $modDestDirAbs = Convert-Path $modDestDir
+  } else {
+    $modDestDirAbs = Join-Path (Convert-Path ".") $modDestDir
+  }
   $modSrcToplevelDir = Join-Path $workshopContentDir $modId
   $modSrcDir = $null
   $modOutputFile = $null
@@ -147,7 +152,7 @@ function Install-Mod {
     Write-Host "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping mod $modId."
     return
   }
-  $modSrcDirAbs = Resolve-Path -LiteralPath $modSrcDir | Select-Object -ExpandProperty Path
+  $modSrcDirAbs = Join-Path (Convert-Path ".") $modSrcDir
 
   # Create necessary sub-directories in destination
   Get-ChildItem -Path $modSrcDir -Directory -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
@@ -278,7 +283,10 @@ exit 0;
         # Update timestamp to match source
         $ts = [System.IO.File]::GetLastWriteTimeUtc($srcFileAbsolute)
         [System.IO.File]::SetLastWriteTimeUtc($destFileAbsolute, $ts)
-      } catch { }
+      } catch {
+          Write-Host "  Error: Decompression failed for mod $modId. Skipping."
+          return
+       }
     }
   }
   
@@ -336,10 +344,15 @@ close($in);
   $createModfileScriptFile = Join-Path $env:TEMP "createModfile.pl"
   Set-Content -Path $createModfileScriptFile -Value $createModfileScript -Encoding ASCII -Force
 
-  $modInfoFileAbsolute = (Resolve-Path $modInfoFile).Path
-  $modOutputFileAbsolute = (Resolve-Path $modOutputFile).Path
+  $modInfoFileAbsolute = Join-Path (Convert-Path ".") $modInfoFile
+  $modOutputFileAbsolute = Join-Path (Convert-Path ".") $modOutputFile
 
-  & perl $createModfileScriptFile "$modInfoFileAbsolute" "$modOutputFileAbsolute" "ShooterGame" "$modId" "$modName"
+  try {
+    & perl $createModfileScriptFile "$modInfoFileAbsolute" "$modOutputFileAbsolute" "ShooterGame" "$modId" "$modName"
+  } catch {
+    Write-Host "  Error: Failed to create .mod file for mod $modId. Skipping."
+    return
+  }
 
   $modmetaFile = Join-Path $modSrcDir "modmeta.info"
   if (Test-Path $modmetaFile) {
@@ -354,8 +367,10 @@ close($in);
   }
 
   # Match timestamp to mod.info
-  $ts = [System.IO.File]::GetLastWriteTimeUtc($modInfoFile)
-  [System.IO.File]::SetLastWriteTimeUtc($modOutputFile, $ts)
+  $ts = [System.IO.File]::GetLastWriteTimeUtc($modInfoFileAbsolute)
+  [System.IO.File]::SetLastWriteTimeUtc($modOutputFileAbsolute, $ts)
+
+  Write-Host "Mod $modId extracted and installed successfully"
 }
 
 # --- Main Loop ---
