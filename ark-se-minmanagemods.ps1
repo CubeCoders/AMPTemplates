@@ -25,8 +25,8 @@
 # SOFTWARE.
 
 # --- Variables ---
-$workshopContentDir = Join-Path $PSScriptRoot "376030\steamapps\workshop\content\346110"
-$modsInstallDir = Join-Path $PSScriptRoot "376030\ShooterGame\Content\Mods"
+$workshopContentDir = Join-Path $PSScriptRoot "arkse\376030\steamapps\workshop\content\346110"
+$modsInstallDir = Join-Path $PSScriptRoot "arkse\376030\ShooterGame\Content\Mods"
 
 # Function to set up the environment for Strawberry Perl
 function Setup-StrawberryPerl {
