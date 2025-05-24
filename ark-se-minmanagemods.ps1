@@ -40,7 +40,7 @@ function Setup-StrawberryPerl {
 
   # Check if Perl is already installed
   if (-not (Test-Path $perlExe)) {
-    $zipUrl = "https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54001_64bit_UCRT/strawberry-perl-5.40.0.1-64bit-portable.zip"
+    $zipUrl = "https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54021_64bit_UCRT/strawberry-perl-5.40.2.1-64bit-portable.zip"
     $zipFile = "$env:TEMP\strawberry-perl.zip"
 
     Write-Host "Downloading and installing Perl. This will take a while ..."
