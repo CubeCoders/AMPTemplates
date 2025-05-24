@@ -397,6 +397,7 @@ Write-Host "Installing/updating mods ..."
 
 $modIds = $args[0] -replace '^"(.*)"$', '$1'
 $modIds = $modIds.Split(',')
+$ProgressPreference='SilentlyContinue'
 
 if (Setup-StrawberryPerl) {
   foreach ($modId in $modIds) {
