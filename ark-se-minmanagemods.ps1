@@ -25,8 +25,8 @@
 # SOFTWARE.
 
 # --- Variables ---
-$workshopContentDir = "376030\steamapps\workshop\content\346110"
-$modsInstallDir = "376030\ShooterGame\Content\Mods"
+$workshopContentDir = Join-Path $PSScriptRoot "376030\steamapps\workshop\content\346110"
+$modsInstallDir = Join-Path $PSScriptRoot "376030\ShooterGame\Content\Mods"
 
 # Function to set up the environment for Strawberry Perl
 function Setup-StrawberryPerl {
@@ -119,11 +119,6 @@ function Install-Mod {
 
   Write-Host "Extracting and installing mod $modId"
   $modDestDir = Join-Path $modsInstallDir $modId
-  if (Test-Path $modDestDir) {
-    $modDestDirAbs = Convert-Path $modDestDir
-  } else {
-    $modDestDirAbs = Join-Path (Convert-Path ".") $modDestDir
-  }
   $modSrcToplevelDir = Join-Path $workshopContentDir $modId
   $modSrcDir = $null
   $modOutputFile = $null
@@ -152,7 +147,6 @@ function Install-Mod {
     Write-Host "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping mod $modId."
     return
   }
-  $modSrcDirAbs = Join-Path (Convert-Path ".") $modSrcDir
 
   # Helper function to get relative path
   function Get-RelativePath {
@@ -202,27 +196,27 @@ function Install-Mod {
   }
 
   # Copy or hardlink regular files
-  Get-ChildItem -Path $modSrcDirAbs -Recurse -File -ErrorAction SilentlyContinue |
+  Get-ChildItem -Path $modSrcDir -Recurse -File -ErrorAction SilentlyContinue |
   Where-Object { $_.Extension -ne '.z' -and $_.Name -notlike '*.z.uncompressed_size' } |
   ForEach-Object {
-    $srcFileAbsolute = $_.FullName
-    $relativePath = Get-RelativePath -ReferencePath $modSrcDirAbs -ItemPath $srcFileAbsolute
-    $destFileAbsolute = Join-Path $modDestDirAbs $relativePath
+    $srcFile = $_.FullName
+    $relativePath = Get-RelativePath -ReferencePath $modSrcDir -ItemPath $srcFile
+    $destFileAbsolute = Join-Path $modDestDir $relativePath
 
-    $destDir = Split-Path $destFileAbsolute
+    $destDir = Split-Path $destFile
     if (-not (Test-Path $destDir)) {
       New-Item -ItemType Directory -Path $destDir -Force > $null
     }
 
-    if (-not (Test-Path $destFileAbsolute) -or
-      ([System.IO.File]::GetLastWriteTimeUtc($srcFileAbsolute) -gt [System.IO.File]::GetLastWriteTimeUtc($destFileAbsolute))) {
+    if (-not (Test-Path $destFile) -or
+      ([System.IO.File]::GetLastWriteTimeUtc($srcFile) -gt [System.IO.File]::GetLastWriteTimeUtc($destFile))) {
       try {
-        if (Test-Path $destFileAbsolute) {
-          Remove-Item $destFileAbsolute -Force > $null
+        if (Test-Path $destFile) {
+          Remove-Item $destFile -Force > $null
         }
-        New-Item -ItemType HardLink -Path $destFileAbsolute -Target $srcFileAbsolute -ErrorAction Stop > $null
+        New-Item -ItemType HardLink -Path $destFile -Target $srcFile -ErrorAction Stop > $null
       } catch {
-        Copy-Item -Path $srcFileAbsolute -Destination $destFileAbsolute -Force -ErrorAction SilentlyContinue > $null
+        Copy-Item -Path $srcFile -Destination $destFile -Force -ErrorAction SilentlyContinue > $null
       }
     }
   }
@@ -281,24 +275,24 @@ exit 0;
   $decompressScriptFile = Join-Path $env:TEMP "decompress.pl"
   Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII -Force
 
-  Get-ChildItem -Path $modSrcDirAbs -Recurse -Filter '*.z' -File | ForEach-Object {
-    $srcFileAbsolute = $_.FullName
-    $relativePath = Get-RelativePath -ReferencePath $modSrcDirAbs -ItemPath $srcFileAbsolute
-    $destFileAbsolute = Join-Path $modDestDirAbs ($relativePath -replace '\.z$', '')
+  Get-ChildItem -Path $modSrcDir -Recurse -Filter '*.z' -File | ForEach-Object {
+    $srcFile = $_.FullName
+    $relativePath = Get-RelativePath -ReferencePath $modSrcDir -ItemPath $srcFile
+    $destFile = Join-Path $modDestDir ($relativePath -replace '\.z$', '')
 
-    if (-not (Test-Path $destFileAbsolute) -or
-      ([System.IO.File]::GetLastWriteTimeUtc($srcFileAbsolute) -gt [System.IO.File]::GetLastWriteTimeUtc($destFileAbsolute))) {
+    if (-not (Test-Path $destFile) -or
+      ([System.IO.File]::GetLastWriteTimeUtc($srcFile) -gt [System.IO.File]::GetLastWriteTimeUtc($destFile))) {
 
-      $destDir = Split-Path $destFileAbsolute
+      $destDir = Split-Path $destFile
       if (-not (Test-Path $destDir)) {
         New-Item -ItemType Directory -Path $destDir -Force > $null
       }
 
       try {
-        & perl $decompressScriptFile "$srcFileAbsolute" "$destFileAbsolute"
+        & perl $decompressScriptFile "$srcFile" "$destFile"
         # Update timestamp to match source
-        $ts = [System.IO.File]::GetLastWriteTimeUtc($srcFileAbsolute)
-        [System.IO.File]::SetLastWriteTimeUtc($destFileAbsolute, $ts)
+        $ts = [System.IO.File]::GetLastWriteTimeUtc($srcFile)
+        [System.IO.File]::SetLastWriteTimeUtc($destFile, $ts)
       } catch {
           Write-Host "  Error: Decompression failed for mod $modId. Skipping."
           return
@@ -360,11 +354,8 @@ close($in);
   $createModfileScriptFile = Join-Path $env:TEMP "createModfile.pl"
   Set-Content -Path $createModfileScriptFile -Value $createModfileScript -Encoding ASCII -Force
 
-  $modInfoFileAbsolute = Join-Path (Convert-Path ".") $modInfoFile
-  $modOutputFileAbsolute = Join-Path (Convert-Path ".") $modOutputFile
-
   try {
-    & perl $createModfileScriptFile "$modInfoFileAbsolute" "$modOutputFileAbsolute" "ShooterGame" "$modId" "$modName"
+    & perl $createModfileScriptFile "$modInfoFile" "$modOutputFile" "ShooterGame" "$modId" "$modName"
   } catch {
     Write-Host "  Error: Failed to create .mod file for mod $modId. Skipping."
     return
@@ -383,8 +374,8 @@ close($in);
   }
 
   # Match timestamp to mod.info
-  $ts = [System.IO.File]::GetLastWriteTimeUtc($modInfoFileAbsolute)
-  [System.IO.File]::SetLastWriteTimeUtc($modOutputFileAbsolute, $ts)
+  $ts = [System.IO.File]::GetLastWriteTimeUtc($modInfoFile)
+  [System.IO.File]::SetLastWriteTimeUtc($modOutputFile, $ts)
 
   Write-Host "Mod $modId extracted and installed successfully"
 }
