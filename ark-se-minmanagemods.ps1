@@ -43,6 +43,7 @@ function Setup-StrawberryPerl {
     $zipUrl = "https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54001_64bit_UCRT/strawberry-perl-5.40.0.1-64bit-portable.zip"
     $zipFile = "$env:TEMP\strawberry-perl.zip"
 
+    Write-Host "Downloading and installing Perl. This will take a while ..."
     try {
       if (Test-Path $perlRoot) {
         Remove-Item -Path $perlRoot -Recurse -Force > $null
@@ -56,12 +57,12 @@ function Setup-StrawberryPerl {
       Add-Type -AssemblyName System.IO.Compression.FileSystem
       [System.IO.Compression.ZipFile]::ExtractToDirectory($zipFile, $perlRoot)
     } catch {
-      Write-Host "  Error: Failed to download or extract Strawberry Perl. Aborting"
+      Write-Host "  Error: Failed to download or extract Perl. Aborting"
       return $false
     }
 
     if (-not (Test-Path $perlExe)) {
-      Write-Host "  Error: Failed to extract Strawberry Perl. Aborting"
+      Write-Host "  Error: Failed to extract Perl. Aborting"
       return $false
     }
   }
