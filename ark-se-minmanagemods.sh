@@ -36,13 +36,13 @@ checkPerl() {
   
   # Check if Perl executable exists
   if ! command -v perl >/dev/null 2>&1; then
-    echo >&2 "  Error: Executable 'perl' is not installed. Please install it. Aborting."
+    echo >&2 "  Error: Executable 'perl' is not installed. Please install it. Aborting"
     return 1
   fi
 
   # Check if Compress::Raw::Zlib module is installed
   if ! perl -MCompress::Raw::Zlib -e 1 >/dev/null 2>&1; then
-    echo >&2 "  Error: Required Perl module 'Compress::Raw::Zlib' not found. Please install it. Aborting."
+    echo >&2 "  Error: Required Perl module 'Compress::Raw::Zlib' not found. Please install it. Aborting"
     return 1
   fi
 
@@ -60,20 +60,20 @@ downloadMod() {
 
   while (( attempt < maxRetries )); do
     ((attempt++))
-    echo "Downloading mod $modId"
+    echo "Downloading item $modId ..."
     
     output=$("$steamScript" +force_install_dir "$steamInstallDir" +login anonymous +workshop_download_item 346110 "$modId" validate +quit 2>&1)
     
     if [[ "$output" == *"Success. Downloaded item $modId"* ]]; then
-      echo "Mod $modId downloaded successfully"
+      echo "Success. Downloaded item $modId"
       return 0
     fi
 
-    echo >&2 "  Error: Download failed for mod $modId. Retrying..."
+    echo >&2 "  Error: Download of item $modId failed. Retrying ..."
     sleep 10
   done
 
-  echo >&2 "Error: Mod $modId download failed after $maxRetries attempts"
+  echo >&2 "  Error: Download of item $modId failed after $maxRetries attempts"
   return 1
 }
 
@@ -90,7 +90,7 @@ installMod() {
   local srcFile
   local destFile
   
-  echo "Extracting and installing mod $modId"
+  echo "Extracting and installing item $modId ..."
   mkdir -p "$modDestDir"
 
   # Determine actual source directory based on branch
@@ -99,11 +99,11 @@ installMod() {
     if [ -f "$modSrcToplevelDir/mod.info" ]; then
       modSrcDir="$modSrcToplevelDir"
     else
-      echo >&2 "  Error: Mod source directory not found for branch Windows in $modSrcToplevelDir. Cannot find mod.info. Skipping mod $modId."
+      echo >&2 "  Error: Source directory not found for branch Windows in $modSrcToplevelDir. Cannot find mod.info. Skipping item $modId"
       return
     fi
   elif [ ! -f "$modSrcDir/mod.info" ]; then
-    echo >&2 "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping mod $modId."
+    echo >&2 "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping item $modId"
     return
   fi
 
@@ -172,7 +172,7 @@ installMod() {
           print $output;
         }
       ' < "$srcFile" > "$destFile"; then
-        echo "  Error: Decompression failed for mod $modId. Skipping."
+        echo "  Error: Decompression of item $modId failed. Skipping"
         return
       fi
       touch -c -r "$srcFile" "$destFile"
@@ -184,7 +184,7 @@ installMod() {
 
   modInfoFile="$modSrcDir/mod.info"
   if [ ! -f "$modInfoFile" ]; then
-    echo >&2 "  Error: $modInfoFile not found! Cannot generate .mod file. Skipping mod $modId."
+    echo >&2 "  Error: $modInfoFile not found! Cannot generate .mod file. Skipping item $modId"
     continue
   fi
 
@@ -214,7 +214,7 @@ installMod() {
     }
     print "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
   ' "ShooterGame" "$modId" "$modName" < "$modInfoFile" > "$modOutputFile"; then
-    echo >&2 "  Error: Failed to generate .mod file for mod $modId. Skipping."
+    echo >&2 "  Error: Failed to generate .mod file for item $modId. Skipping"
     return
   fi
 
@@ -229,7 +229,7 @@ installMod() {
   # Set timestamp of .mod file to match the mod.info file
   touch -c -r "$modInfoFile" "$modOutputFile"
 
-  echo "Mod $modId extracted and installed successfully"
+  echo "Success. Extracted and installed item $modId"
 }
 
 # --- Main Loop ---
@@ -238,7 +238,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-echo "Installing/updating mods..."
+echo "Installing/updating mods ..."
 
 modIds=$(echo "$1" | sed 's/^"\(.*\)"$/\1/')
 IFS=',' read -ra modIdArray <<< "$modIds"
@@ -251,5 +251,5 @@ if checkPerl; then
   done
 fi
 
-echo "Mod installation/update process finished."
+echo "Mod installation/update process finished"
 exit 0

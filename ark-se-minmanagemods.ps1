@@ -53,12 +53,12 @@ function Setup-StrawberryPerl {
         [System.IO.Compression.ZipFile]::ExtractToDirectory($zipFile, $perlRoot)
       }
     } catch {
-      Write-Host "  Error: Failed to download or extract Strawberry Perl. Aborting."
+      Write-Host "  Error: Failed to download or extract Strawberry Perl. Aborting"
       return $false
     }
 
     if (-not (Test-Path $perlExe)) {
-      Write-Host "  Error: Failed to extract Strawberry Perl. Aborting."
+      Write-Host "  Error: Failed to extract Strawberry Perl. Aborting"
       return $false
     }
   }
@@ -71,7 +71,7 @@ function Setup-StrawberryPerl {
     try {
       & perl -MCPAN -e "install App::cpanminus"
     } catch {
-      Write-Host "  Error: Failed to install cpanminus. Aborting."
+      Write-Host "  Error: Failed to install cpanminus. Aborting"
       return $false
     }
   }
@@ -84,7 +84,7 @@ function Setup-StrawberryPerl {
   try {
     & cpanm --notest --quiet @requiredPerlModules
   } catch {
-    Write-Host "  Error: Failed to install required Perl modules $requiredPerlModules. Aborting."
+    Write-Host "  Error: Failed to install required Perl modules $requiredPerlModules. Aborting"
     return $false
   }
 
@@ -99,19 +99,19 @@ function Download-Mod {
   $steamInstallDir = $arkBaseDir
   $maxRetries = 5
   for ($attempt = 1; $attempt -le $maxRetries; $attempt++) {
-    Write-Host "Downloading mod $modId"
+    Write-Host "Downloading item $modId ..."
     $output = & "$steamExe" +force_install_dir "$steamInstallDir" +login anonymous +workshop_download_item 346110 $modId validate +quit 2>&1
 
     if ($output -match "Success\. Downloaded item $modId") {
-      Write-Host "Mod $modId downloaded successfully"
+      Write-Host "Success. Downloaded item $modId"
       return $true
     }
 
-    Write-Host "  Error: Download failed for mod $modId. Retrying..."
+    Write-Host "  Error: Download of item $modId failed. Retrying ..."
     Start-Sleep -Seconds 10
   }
 
-  Write-Host "  Error: Mod $modId download failed after $maxRetries attempts"
+  Write-Host "  Error: Download of item $modId failed after $maxRetries attempts"
   return $false
 }
 
@@ -121,7 +121,7 @@ function Install-Mod {
     [string]$modId
   )
 
-  Write-Host "Extracting and installing mod $modId"
+  Write-Host "Extracting and installing item $modId ..."
   $modDestDir = Join-Path $modsInstallDir $modId
   $modSrcToplevelDir = Join-Path $workshopContentDir $modId
   $modSrcDir = $null
@@ -144,11 +144,11 @@ function Install-Mod {
     if (Test-Path $modInfoCheckPath) {
       $modSrcDir = $modSrcToplevelDir
     } else {
-      Write-Host "  Error: Mod source directory not found for branch Windows in $modSrcToplevelDir. Cannot find mod.info. Skipping mod $modId."
+      Write-Host "  Error: Source directory not found for branch Windows in $modSrcToplevelDir. Cannot find mod.info. Skipping item $modId"
       return
     }
   } elseif (-not (Test-Path (Join-Path $modSrcDir "mod.info"))) {
-    Write-Host "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping mod $modId."
+    Write-Host "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping item $modId"
     return
   }
 
@@ -298,7 +298,7 @@ exit 0;
         $ts = [System.IO.File]::GetLastWriteTimeUtc($srcFile)
         [System.IO.File]::SetLastWriteTimeUtc($destFile, $ts)
       } catch {
-        Write-Host "  Error: Decompression failed for mod $modId. Skipping."
+        Write-Host "  Error: Decompression of item $modId failed. Skipping"
         return
       }
     }
@@ -308,7 +308,7 @@ exit 0;
   $modInfoFile = Join-Path $modSrcDir "mod.info"
 
   if (-not (Test-Path -LiteralPath $modInfoFile)) {
-    Write-Host "  Error: $modInfoFile not found! Cannot generate .mod file. Skipping mod $modId."
+    Write-Host "  Error: $modInfoFile not found! Cannot generate .mod file. Skipping item $modId"
     return
   }
 
@@ -361,7 +361,7 @@ close($in);
   try {
     & perl $createModfileScriptFile "$modInfoFile" "$modOutputFile" "ShooterGame" "$modId" "$modName"
   } catch {
-    Write-Host "  Error: Failed to create .mod file for mod $modId. Skipping."
+    Write-Host "  Error: Failed to generate .mod file for item $modId. Skipping"
     return
   }
 
@@ -381,7 +381,7 @@ close($in);
   $ts = [System.IO.File]::GetLastWriteTimeUtc($modInfoFile)
   [System.IO.File]::SetLastWriteTimeUtc($modOutputFile, $ts)
 
-  Write-Host "Mod $modId extracted and installed successfully"
+  Write-Host "Success. Extracted and installed item $modId"
 }
 
 # --- Main Loop ---
@@ -390,7 +390,7 @@ if ($args.Length -eq 0) {
   exit 1
 }
 
-Write-Host "Installing/updating mods..."
+Write-Host "Installing/updating mods ..."
 
 $modIds = $args[0] -replace '^"(.*)"$', '$1'
 $modIds = $modIds.Split(',')
@@ -403,5 +403,5 @@ if (Setup-StrawberryPerl) {
   }
 }
 
-Write-Host "Mod installation/update process finished."
+Write-Host "Mod installation/update process finished"
 exit 0
