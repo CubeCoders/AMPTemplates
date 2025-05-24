@@ -101,6 +101,7 @@ installMod() {
   local srcFile
   local destFile
   
+  echo "Extracting and installing mod $modId"
   mkdir -p "$modDestDir"
 
   # Determine actual source directory based on branch
