@@ -33,7 +33,7 @@ $modsInstallDir = Join-Path $arkBaseDir "ShooterGame\Content\Mods"
 # Function to set up the environment for Strawberry Perl
 function Setup-StrawberryPerl {
 
-  $perlRoot = Join-Path $PSScriptRoot "arkse\perl"
+  $perlRoot = Join-Path $arkRootDir "perl"
   $perlBin  = Join-Path $PerlRoot "perl\bin"
   $perlCbin = Join-Path $PerlRoot "c\bin"
   $perlExe  = Join-Path $perlBin "perl.exe"
@@ -44,14 +44,17 @@ function Setup-StrawberryPerl {
     $zipFile = "$env:TEMP\strawberry-perl.zip"
 
     try {
-      if (-not (Test-Path $zipFile)) {
-        Invoke-WebRequest -Uri $zipUrl -OutFile $zipFile -UseBasicParsing
+      if (Test-Path $perlRoot) {
+        Remove-Item -Path $perlRoot -Recurse -Force > $null
+      }
+      if (Test-Path $zipFile) {
+        Remove-Item -Path $zipFile -Force > $null
       }
 
-      if (-not (Test-Path $perlRoot)) {
-        Add-Type -AssemblyName System.IO.Compression.FileSystem
-        [System.IO.Compression.ZipFile]::ExtractToDirectory($zipFile, $perlRoot)
-      }
+      Invoke-WebRequest -UseBasicParsing -Uri $zipUrl -OutFile $zipFile
+
+      Add-Type -AssemblyName System.IO.Compression.FileSystem
+      [System.IO.Compression.ZipFile]::ExtractToDirectory($zipFile, $perlRoot)
     } catch {
       Write-Host "  Error: Failed to download or extract Strawberry Perl. Aborting"
       return $false
