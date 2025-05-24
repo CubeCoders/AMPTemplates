@@ -154,9 +154,25 @@ function Install-Mod {
   }
   $modSrcDirAbs = Join-Path (Convert-Path ".") $modSrcDir
 
+  # Helper function to get relative path
+  function Get-RelativePath {
+    param(
+      [string]$ReferencePath,
+      [string]$ItemPath
+    )
+    if (-not $ReferencePath.EndsWith([System.IO.Path]::DirectorySeparatorChar)) {
+      $ReferencePath += [System.IO.Path]::DirectorySeparatorChar
+    }
+    $baseUri = [System.Uri]::new($ReferencePath)
+    $itemUri = [System.Uri]::new($ItemPath)
+    $relativeUri = $baseUri.MakeRelativeUri($itemUri)
+    $relPath = [System.Uri]::UnescapeDataString($relativeUri.OriginalString)
+    return $relPath.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+  }
+
   # Create necessary sub-directories in destination
-  Get-ChildItem -Path $modSrcDir -Directory -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
-    $relativePath = $_.FullName.Substring($modSrcDir.Length).TrimStart('\','/')
+  Get-ChildItem -Path $modSrcDir -Directory -Recurse | ForEach-Object {
+    $relativePath = Get-RelativePath -ReferencePath $modSrcDir -ItemPath $_.FullName
     $destPath = Join-Path $modDestDir $relativePath
     if (-not (Test-Path $destPath)) {
       New-Item -ItemType Directory -Path $destPath -Force > $null
@@ -164,8 +180,8 @@ function Install-Mod {
   }
 
   # Remove files in destination not present in source
-  Get-ChildItem -Path $modDestDir -File -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.Name -notmatch '^\.' } | ForEach-Object {
-    $relativePath = $_.FullName.Substring($modDestDir.Length).TrimStart('\','/')
+  Get-ChildItem -Path $modDestDir -File -Recurse | Where-Object { $_.Name -notmatch '^\.' } | ForEach-Object {
+    $relativePath = Get-RelativePath -ReferencePath $modDestDir -ItemPath $_.FullName
     $srcPath = Join-Path $modSrcDir $relativePath
     $srcZPath = "$srcPath.z"
 
@@ -175,9 +191,9 @@ function Install-Mod {
   }
 
   # Remove empty directories in destination
-  Get-ChildItem -Path $modDestDir -Recurse -Directory -ErrorAction SilentlyContinue | Sort-Object FullName -Descending | ForEach-Object {
-    $relPath = $_.FullName.Substring($modDestDir.Length).TrimStart('\','/')
-    $srcDir = Join-Path $modSrcDir $relPath
+  Get-ChildItem -Path $modDestDir -Directory -Recurse | Sort-Object FullName -Descending | ForEach-Object {
+    $relativePath = Get-RelativePath -ReferencePath $modDestDir -ItemPath $_.FullName
+    $srcDir = Join-Path $modSrcDir $relativePath
     if (-not (Test-Path -Path $srcDir -PathType Container)) {
       try {
         Remove-Item -Path $_.FullName -Force -ErrorAction Stop
@@ -190,7 +206,7 @@ function Install-Mod {
   Where-Object { $_.Extension -ne '.z' -and $_.Name -notlike '*.z.uncompressed_size' } |
   ForEach-Object {
     $srcFileAbsolute = $_.FullName
-    $relativePath = $srcFileAbsolute.Substring($modSrcDirAbs.Length).TrimStart('\')
+    $relativePath = Get-RelativePath -ReferencePath $modSrcDirAbs -ItemPath $srcFileAbsolute
     $destFileAbsolute = Join-Path $modDestDirAbs $relativePath
 
     $destDir = Split-Path $destFileAbsolute
@@ -267,7 +283,7 @@ exit 0;
 
   Get-ChildItem -Path $modSrcDirAbs -Recurse -Filter '*.z' -File | ForEach-Object {
     $srcFileAbsolute = $_.FullName
-    $relativePath = $srcFileAbsolute.Substring($modSrcDirAbs.Length).TrimStart('\')
+    $relativePath = Get-RelativePath -ReferencePath $modSrcDirAbs -ItemPath $srcFileAbsolute
     $destFileAbsolute = Join-Path $modDestDirAbs ($relativePath -replace '\.z$', '')
 
     if (-not (Test-Path $destFileAbsolute) -or
