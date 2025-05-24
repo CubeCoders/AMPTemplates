@@ -50,7 +50,7 @@ setupPerl() {
   if ! perl -MCompress::Raw::Zlib -e1 >/dev/null 2>&1; then
     echo "  Installing required Perl module..."
     if ! cpanm --notest --quiet Compress::Raw::Zlib; then
-      echo "  Error: Failed to install Compress::Raw::Zlib."
+      echo "  Error: Failed to install required Perl module Compress::Raw::Zlib. Aborting."
       return 1
     fi
   fi
