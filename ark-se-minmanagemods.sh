@@ -76,11 +76,11 @@ downloadMod() {
       return 0
     fi
 
-    echo "Download failed for mod $modId. Retrying..."
+    echo "  Error: Download failed for mod $modId. Retrying..."
     sleep 2
   done
 
-  echo "Mod $modId download failed after $maxRetries attempts"
+  echo "Error: Mod $modId download failed after $maxRetries attempts"
   return 1
 }
 
