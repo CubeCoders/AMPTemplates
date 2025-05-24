@@ -201,7 +201,7 @@ function Install-Mod {
   ForEach-Object {
     $srcFile = $_.FullName
     $relativePath = Get-RelativePath -ReferencePath $modSrcDir -ItemPath $srcFile
-    $destFileAbsolute = Join-Path $modDestDir $relativePath
+    $destFile = Join-Path $modDestDir $relativePath
 
     $destDir = Split-Path $destFile
     if (-not (Test-Path $destDir)) {
