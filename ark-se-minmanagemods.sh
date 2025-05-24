@@ -24,14 +24,39 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# --- Dependency Checks ---
-command -v perl >/dev/null 2>&1 || { echo >&2 "Error: Executable 'perl' is not installed. Please install it."; exit 1; }
-perl -MCompress::Raw::Zlib -e 1 >/dev/null 2>&1 || { echo >&2 "Error: Perl module 'Compress::Raw::Zlib' not found. Please install it."; exit 1; }
-
 # --- Variables ---
 workshopContentDir="./376030/steamapps/workshop/content/346110"
 modsInstallDir="./376030/ShooterGame/Content/Mods"
 modIds=()
+
+# Function to set up the environment for Perl
+setupPerl() {
+  
+  # Check if Perl executable exists
+  if ! command -v perl >/dev/null 2>&1; then
+    echo >&2 "Error: Executable 'perl' is not installed. Please install it."
+    return 1
+  fi
+
+  # Check if cpanm is available
+  if ! command -v cpanm >/dev/null 2>&1; then
+    echo "  Installing cpanminus..."
+    perl -MCPAN -e 'install App::cpanminus' || {
+      echo "  Error: Failed to install cpanminus. Aborting."
+      return 1
+    }
+  fi
+
+  if ! perl -MCompress::Raw::Zlib -e1 >/dev/null 2>&1; then
+    echo "  Installing required Perl module..."
+    if ! cpanm --notest --quiet Compress::Raw::Zlib; then
+      echo "  Error: Failed to install Compress::Raw::Zlib."
+      return 1
+    fi
+  fi
+
+  return 0
+}
 
 # Function to install a mod with retry on timeout
 downloadMod() {
@@ -55,7 +80,7 @@ downloadMod() {
     sleep 2
   done
 
-  echo "Mod $modId failed after $maxRetries attempts"
+  echo "Mod $modId download failed after $maxRetries attempts"
   return 1
 }
 
@@ -71,7 +96,6 @@ installMod() {
   local modName
   local srcFile
   local destFile
-  
   
   mkdir -p "$modDestDir"
 
@@ -218,11 +242,13 @@ modIds=$(echo "$1" | sed 's/^"\(.*\)"$/\1/')
 IFS=',' read -ra modIdArray <<< "$modIds"
 cd ./arkse
 
-for modId in "${modIdArray[@]}"; do
-  if downloadMod "$modId"; then
-    installMod "$modId"
-  fi
-done
+if setupPerl; then
+  for modId in "${modIdArray[@]}"; do
+    if downloadMod "$modId"; then
+      installMod "$modId"
+    fi
+  done
+fi
 
 echo "Mod installation/update process finished."
 exit 0
