@@ -108,7 +108,7 @@ function Download-Mod {
     }
 
     Write-Host "  Error: Download failed for mod $modId. Retrying..."
-    Start-Sleep -Seconds 2
+    Start-Sleep -Seconds 10
   }
 
   Write-Host "  Error: Mod $modId download failed after $maxRetries attempts"
