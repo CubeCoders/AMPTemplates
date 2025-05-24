@@ -25,8 +25,10 @@
 # SOFTWARE.
 
 # --- Variables ---
-$workshopContentDir = Join-Path $PSScriptRoot "arkse\376030\steamapps\workshop\content\346110"
-$modsInstallDir = Join-Path $PSScriptRoot "arkse\376030\ShooterGame\Content\Mods"
+$arkRootDir = Join-Path $PSScriptRoot "arkse"
+$arkBaseDir = Join-Path $arkRootDir "376030"
+$workshopContentDir = Join-Path $arkBaseDir "steamapps\workshop\content\346110"
+$modsInstallDir = Join-Path $arkBaseDir "ShooterGame\Content\Mods"
 
 # Function to set up the environment for Strawberry Perl
 function Setup-StrawberryPerl {
@@ -93,10 +95,12 @@ function Setup-StrawberryPerl {
 function Download-Mod {
   param([string]$modId)
 
+  $steamExe = Join-Path $arkRootDir "steamcmd.exe"
+  $steamInstallDir = $arkBaseDir
   $maxRetries = 5
   for ($attempt = 1; $attempt -le $maxRetries; $attempt++) {
     Write-Host "Downloading mod $modId"
-    $output = & .\steamcmd.exe +force_install_dir 376030 +login anonymous +workshop_download_item 346110 $modId validate +quit 2>&1
+    $output = & "$steamExe" +force_install_dir "$steamInstallDir" +login anonymous +workshop_download_item 346110 $modId validate +quit 2>&1
 
     if ($output -match "Success\. Downloaded item $modId") {
       Write-Host "Mod $modId downloaded successfully"
@@ -294,9 +298,9 @@ exit 0;
         $ts = [System.IO.File]::GetLastWriteTimeUtc($srcFile)
         [System.IO.File]::SetLastWriteTimeUtc($destFile, $ts)
       } catch {
-          Write-Host "  Error: Decompression failed for mod $modId. Skipping."
-          return
-       }
+        Write-Host "  Error: Decompression failed for mod $modId. Skipping."
+        return
+      }
     }
   }
   
@@ -390,7 +394,6 @@ Write-Host "Installing/updating mods..."
 
 $modIds = $args[0] -replace '^"(.*)"$', '$1'
 $modIds = $modIds.Split(',')
-Set-Location -Path "$PSScriptRoot\arkse"
 
 if (Setup-StrawberryPerl) {
   foreach ($modId in $modIds) {

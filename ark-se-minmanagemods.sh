@@ -25,8 +25,10 @@
 # SOFTWARE.
 
 # --- Variables ---
-workshopContentDir="./376030/steamapps/workshop/content/346110"
-modsInstallDir="./376030/ShooterGame/Content/Mods"
+arkRootDir="./arkse"
+arkBaseDir="$arkRootDir/376030"
+workshopContentDir="$arkBaseDir/steamapps/workshop/content/346110"
+modsInstallDir="$arkBaseDir/ShooterGame/Content/Mods"
 modIds=()
 
 # Function to set up the environment for Perl
@@ -61,6 +63,8 @@ setupPerl() {
 # Function to install a mod with retry on timeout
 downloadMod() {
   local modId="$1"
+  local steamScript="$arkRootDir/steamcmd.sh"
+  local steamInstallDir="$(realpath "$arkBaseDir")"
   local maxRetries=5
   local attempt=0
   local output
@@ -69,7 +73,7 @@ downloadMod() {
     ((attempt++))
     echo "Downloading mod $modId"
     
-    output=$(./steamcmd.sh +force_install_dir 376030 +login anonymous +workshop_download_item 346110 "$modId" validate +quit 2>&1)
+    output=$("$steamScript" +force_install_dir "$steamInstallDir" +login anonymous +workshop_download_item 346110 "$modId" validate +quit 2>&1)
     
     if [[ "$output" == *"Success. Downloaded item $modId"* ]]; then
       echo "Mod $modId downloaded successfully"
@@ -144,7 +148,7 @@ installMod() {
     srcFile="$modSrcDir/$f"
     destFile="$modDestDir/${f%.z}"
     if [ ! -f "$destFile" ] || [ "$srcFile" -nt "$destFile" ]; then
-      perl -M'Compress::Raw::Zlib' -e '
+      if ! perl -M'Compress::Raw::Zlib' -e '
         my $sig;
         read(STDIN, $sig, 8) or die "Unable to read compressed file: $!";
         if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00"){
@@ -177,7 +181,10 @@ installMod() {
           }
           print $output;
         }
-      ' < "$srcFile" > "$destFile"
+      ' < "$srcFile" > "$destFile"; then
+        echo "  Error: Decompression failed for mod $modId. Skipping."
+        return
+      fi
       touch -c -r "$srcFile" "$destFile"
     fi
   done
@@ -195,7 +202,7 @@ installMod() {
   modName=$(wget -qO- "http://steamcommunity.com/sharedfiles/filedetails/?id=${modId}" | sed -n 's|^.*<div class="workshopItemTitle">\([^<]*\)</div>.*|\1|p' | head -n 1)
   
   # Use Perl to read mod.info and write .mod file
-  perl -e '
+  if ! perl -e '
     my $data;
     { local $/; $data = <STDIN>; }
     my $mapnamelen = unpack("@0 L<", $data);
@@ -216,7 +223,10 @@ installMod() {
       $pos = $pos + 4 + $mapfilelen;
     }
     print "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
-  ' "ShooterGame" "$modId" "$modName" < "$modInfoFile" > "$modOutputFile"
+  ' "ShooterGame" "$modId" "$modName" < "$modInfoFile" > "$modOutputFile"; then
+    echo "  Error: Failed to generate .mod file for mod $modId. Skipping."
+    return
+  fi
 
   # Append modmeta.info if it exists, otherwise append default footer
   modmetaFile="$modSrcDir/modmeta.info"
@@ -228,6 +238,8 @@ installMod() {
 
   # Set timestamp of .mod file to match the mod.info file
   touch -c -r "$modInfoFile" "$modOutputFile"
+
+  echo "Mod $modId extracted and installed successfully"
 }
 
 # --- Main Loop ---
@@ -240,7 +252,6 @@ echo "Installing/updating mods..."
 
 modIds=$(echo "$1" | sed 's/^"\(.*\)"$/\1/')
 IFS=',' read -ra modIdArray <<< "$modIds"
-cd ./arkse
 
 if setupPerl; then
   for modId in "${modIdArray[@]}"; do
