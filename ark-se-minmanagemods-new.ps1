@@ -373,7 +373,7 @@ try {
         param(
             [string]$currentModId
         )
-        Write-Host "Installing/Updating item ${currentModId} ..."
+        Write-Host "Installing/updating item ${currentModId} ..."
 
         $sourceFolderRoot = Join-Path -Path $workshopContentDir -ChildPath $currentModId
         $modContentDestDir = Join-Path -Path $modsInstallDir -ChildPath $currentModId
