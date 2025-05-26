@@ -1,412 +1,675 @@
 #Requires -Version 5.1
+# Inspired by https://github.com/Bletch1971/ServerManagers/blob/source/src/ARKServerManager/Utils/ModUtils.cs and
+# https://github.com/arkmanager/ark-server-tools/blob/master/tools/arkmanager
 
-# Adapted from, and with credit to, https://github.com/arkmanager/ark-server-tools/blob/master/tools/arkmanager
-#
-# The MIT License (MIT)
-#
-# Copyright (c) 2015 Fez Vrasta
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
+param (
+    [Parameter(Mandatory = $true, Position = 0)]
+    [string]$modIds
+)
 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+$ErrorActionPreference = "Stop"
+Set-StrictMode -Version Latest
 
-# --- Variables ---
-$arkRootDir = Join-Path $PSScriptRoot "arkse"
-$arkBaseDir = Join-Path $arkRootDir "376030"
-$workshopContentDir = Join-Path $arkBaseDir "steamapps\workshop\content\346110"
-$modsInstallDir = Join-Path $arkBaseDir "ShooterGame\Content\Mods"
+# --- Global variables ---
+$scriptDir = (Resolve-Path -LiteralPath ".").Path
+$arkRootDir = Join-Path -Path $scriptDir -ChildPath "arkse"
+$arkBaseDir = Join-Path -Path $arkRootDir -ChildPath "376030"
+$workshopContentDir = Join-Path -Path $arkBaseDir -ChildPath "Engine\Binaries\ThirdParty\SteamCMD\Win64\steamapps\workshop\content\346110"
+$modsInstallDir = Join-Path -Path $arkBaseDir -ChildPath "ShooterGame\Content\Mods"
 
-# Function to set up the environment for Strawberry Perl
-function Setup-StrawberryPerl {
-
-  $perlRoot = Join-Path $arkRootDir "perl"
-  $perlBin  = Join-Path $PerlRoot "perl\bin"
-  $perlCbin = Join-Path $PerlRoot "c\bin"
-  $perlExe  = Join-Path $perlBin "perl.exe"
-
-  # Check if Perl is already installed
-  if (-not (Test-Path $perlExe)) {
-    $zipUrl = "https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54021_64bit_UCRT/strawberry-perl-5.40.2.1-64bit-portable.zip"
-    $zipFile = "$env:TEMP\strawberry-perl.zip"
-
-    Write-Host "Downloading and installing Perl. This will take a while ..."
-    try {
-      if (Test-Path $perlRoot) {
-        Remove-Item -Path $perlRoot -Recurse -Force > $null
-      }
-      if (Test-Path $zipFile) {
-        Remove-Item -Path $zipFile -Force > $null
-      }
-
-      Invoke-WebRequest -UseBasicParsing -Uri $zipUrl -OutFile $zipFile
-
-      Add-Type -AssemblyName System.IO.Compression.FileSystem
-      [System.IO.Compression.ZipFile]::ExtractToDirectory($zipFile, $perlRoot)
-    } catch {
-      Write-Host "  Error: Failed to download or extract Perl. Aborting"
-      return $false
-    }
-
-    if (-not (Test-Path $perlExe)) {
-      Write-Host "  Error: Failed to extract Perl. Aborting"
-      return $false
-    }
-  }
-  
-  # Add Strawberry Perl to PATH
-  $env:PATH = "$perlBin;$perlCbin;$env:PATH"
-
-  # Install cpanm if it's not available
-  if (-not (Get-Command cpanm -ErrorAction SilentlyContinue)) {
-    try {
-      & perl -MCPAN -e "install App::cpanminus"
-    } catch {
-      Write-Host "  Error: Failed to install cpanminus. Aborting"
-      return $false
-    }
-  }
-
-  $requiredPerlModules = @(
-    'Compress::Raw::Zlib',
-    'Win32::LongPath'
-  )
-
-  try {
-    & cpanm --notest --quiet @requiredPerlModules
-  } catch {
-    Write-Host "  Error: Failed to install required Perl modules $requiredPerlModules. Aborting"
-    return $false
-  }
-
-  return $true
-}
-
-# Function to install a mod with retry on timeout
-function Download-Mod {
-  param([string]$modId)
-
-  $steamExe = Join-Path $arkRootDir "steamcmd.exe"
-  $steamInstallDir = $arkBaseDir
-  $maxRetries = 5
-  for ($attempt = 1; $attempt -le $maxRetries; $attempt++) {
-    Write-Host "Downloading item $modId ..."
-    $output = & "$steamExe" +force_install_dir "$steamInstallDir" +login anonymous +workshop_download_item 346110 $modId validate +quit 2>&1
-
-    if ($output -match "Success\. Downloaded item $modId") {
-      Write-Host "Success. Downloaded item $modId"
-      return $true
-    }
-
-    Write-Host "  Error: Download of item $modId failed. Retrying ..."
-    Start-Sleep -Seconds 10
-  }
-
-  Write-Host "  Error: Download of item $modId failed after $maxRetries attempts"
-  return $false
-}
-
-# Function to extract and install downloaded mod files
-function Install-Mod {
-  param (
-    [string]$modId
-  )
-
-  Write-Host "Extracting and installing item $modId ..."
-  $modDestDir = Join-Path $modsInstallDir $modId
-  $modSrcToplevelDir = Join-Path $workshopContentDir $modId
-  $modSrcDir = $null
-  $modOutputFile = $null
-  $modInfoFile = $null
-  $modmetaFile = $null
-  $modName = $null
-  $srcFile = $null
-  $destFile = $null
-
-  if (-not (Test-Path $modDestDir)) {
-    New-Item -ItemType Directory -Path $modDestDir -Force > $null
-  }
-
-  # Determine actual source directory based on branch
-  $modSrcDir = Join-Path $modSrcToplevelDir "WindowsNoEditor"
-
-  if (-not (Test-Path $modSrcDir)) {
-    $modInfoCheckPath = Join-Path $modSrcToplevelDir "mod.info"
-    if (Test-Path $modInfoCheckPath) {
-      $modSrcDir = $modSrcToplevelDir
-    } else {
-      Write-Host "  Error: Source directory not found for branch Windows in $modSrcToplevelDir. Cannot find mod.info. Skipping item $modId"
-      return
-    }
-  } elseif (-not (Test-Path (Join-Path $modSrcDir "mod.info"))) {
-    Write-Host "  Error: Found branch directory $modSrcDir, but it's missing mod.info. Skipping item $modId"
-    return
-  }
-
-  # Helper function to get relative path
-  function Get-RelativePath {
-    param(
-      [string]$ReferencePath,
-      [string]$ItemPath
-    )
-    if (-not $ReferencePath.EndsWith([System.IO.Path]::DirectorySeparatorChar)) {
-      $ReferencePath += [System.IO.Path]::DirectorySeparatorChar
-    }
-    $baseUri = [System.Uri]::new($ReferencePath)
-    $itemUri = [System.Uri]::new($ItemPath)
-    $relativeUri = $baseUri.MakeRelativeUri($itemUri)
-    $relPath = [System.Uri]::UnescapeDataString($relativeUri.OriginalString)
-    return $relPath.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
-  }
-
-  # Create necessary sub-directories in destination
-  Get-ChildItem -Path $modSrcDir -Directory -Recurse | ForEach-Object {
-    $relativePath = Get-RelativePath -ReferencePath $modSrcDir -ItemPath $_.FullName
-    $destPath = Join-Path $modDestDir $relativePath
-    if (-not (Test-Path $destPath)) {
-      New-Item -ItemType Directory -Path $destPath -Force > $null
-    }
-  }
-
-  # Remove files in destination not present in source
-  Get-ChildItem -Path $modDestDir -File -Recurse | Where-Object { $_.Name -notmatch '^\.' } | ForEach-Object {
-    $relativePath = Get-RelativePath -ReferencePath $modDestDir -ItemPath $_.FullName
-    $srcPath = Join-Path $modSrcDir $relativePath
-    $srcZPath = "$srcPath.z"
-
-    if (-not (Test-Path $srcPath) -and -not (Test-Path $srcZPath)) {
-      Remove-Item -Force -Path $_.FullName
-    }
-  }
-
-  # Remove empty directories in destination
-  Get-ChildItem -Path $modDestDir -Directory -Recurse | Sort-Object FullName -Descending | ForEach-Object {
-    $relativePath = Get-RelativePath -ReferencePath $modDestDir -ItemPath $_.FullName
-    $srcDir = Join-Path $modSrcDir $relativePath
-    if (-not (Test-Path -Path $srcDir -PathType Container)) {
-      try {
-        Remove-Item -Path $_.FullName -Force -ErrorAction Stop
-      } catch { }
-    }
-  }
-
-  # Copy or hardlink regular files
-  Get-ChildItem -Path $modSrcDir -Recurse -File -ErrorAction SilentlyContinue |
-  Where-Object { $_.Extension -ne '.z' -and $_.Name -notlike '*.z.uncompressed_size' } |
-  ForEach-Object {
-    $srcFile = $_.FullName
-    $relativePath = Get-RelativePath -ReferencePath $modSrcDir -ItemPath $srcFile
-    $destFile = Join-Path $modDestDir $relativePath
-
-    $destDir = Split-Path $destFile
-    if (-not (Test-Path $destDir)) {
-      New-Item -ItemType Directory -Path $destDir -Force > $null
-    }
-
-    if (-not (Test-Path $destFile) -or
-      ([System.IO.File]::GetLastWriteTimeUtc($srcFile) -gt [System.IO.File]::GetLastWriteTimeUtc($destFile))) {
-      try {
-        if (Test-Path $destFile) {
-          Remove-Item $destFile -Force > $null
-        }
-        New-Item -ItemType HardLink -Path $destFile -Target $srcFile -ErrorAction Stop > $null
-      } catch {
-        Copy-Item -Path $srcFile -Destination $destFile -Force -ErrorAction SilentlyContinue > $null
-      }
-    }
-  }
-
-  $decompressScript = @'
-use Compress::Raw::Zlib;
+# --- Embedded Perl script: create_mod_file.pl ---
+$createModFilePerlScriptContent = @'
+#!/usr/bin/perl
+use strict;
+use warnings;
+use utf8;
+use File::Basename;
+use Encode qw(encode decode FB_CROAK);
+use Getopt::Long qw(GetOptions);
+use IO::Handle;
 use Win32::LongPath qw(openL);
 
-my ($infile, $outfile) = @ARGV;
+my $MODTYPE_MOD = "1";
 
-my ($in, $out);
-openL(\$in, '<:raw', $infile);
-openL(\$out, '>:raw', $outfile);
-
-my $sig;
-read($in, $sig, 8) or die "Unable to read compressed file: $!";
-if ($sig != "\xC1\x83\x2A\x9E\x00\x00\x00\x00"){
-  die "Bad file magic";
+sub read_ue4_string {
+    my ($fh) = @_;
+    my $buffer;
+    my $bytes_read;
+    $bytes_read = read($fh, $buffer, 4);
+    unless (defined $bytes_read && $bytes_read == 4) { return undef; }
+    my $count = unpack('l<', $buffer);
+    my $was_negative_originally = 0;
+    if ($count < 0) { $was_negative_originally = 1; $count = -$count; }
+    if ($was_negative_originally || $count <= 0) {
+        if (!$was_negative_originally && $count == 1) { read($fh, $buffer, 1); }
+        return "";
+    }
+    $bytes_read = read($fh, $buffer, $count);
+    unless (defined $bytes_read && $bytes_read == $count) { return undef; }
+    my $str_data = substr($buffer, 0, $count - 1);
+    return decode('UTF-8', $str_data, FB_CROAK);
 }
 
-my $data;
-read($in, $data, 24) or die "Unable to read compressed file: $!";
-my ($chunksizelo, $chunksizehi,
-    $comprtotlo,  $comprtothi,
-    $uncomtotlo,  $uncomtothi) = unpack("(LLLLLL)<", $data);
-
-my @chunks = ();
-my $comprused = 0;
-while ($comprused < $comprtotlo) {
-  read($in, $data, 16) or die "Unable to read read compressed file: $!";
-  my ($comprsizelo, $comprsizehi,
-      $uncomsizelo, $uncomsizehi) = unpack("(LLLL)<", $data);
-  push @chunks, $comprsizelo;
-  $comprused += $comprsizelo;
+sub write_ue4_string {
+    my ($fh, $string_to_write) = @_;
+    my $utf8_bytes = encode('UTF-8', $string_to_write, FB_CROAK);
+    my $num_bytes_for_string_itself = length($utf8_bytes);
+    my $total_length_field = $num_bytes_for_string_itself + 1;
+    print $fh pack('l<', $total_length_field);
+    print $fh $utf8_bytes;
+    print $fh pack('C', 0);
 }
 
-foreach my $comprsize (@chunks) {
-  read($in, $data, $comprsize) == $comprsize or die "File read failed: $!";
-  my ($inflate, $status) = new Compress::Raw::Zlib::Inflate();
-  my $output;
-  $status = $inflate->inflate($data, $output, 1);
-  if ($status != Z_STREAM_END) {
-    die "Bad compressed stream; status: " . ($status);
-  }
-  if (length($data) != 0) {
-    die "Unconsumed data in input"
-  }
-  print $out $output;
+sub parse_mod_info {
+    my ($mod_info_filepath) = @_;
+    my @map_names;
+    my $fh;
+    openL(\$fh, '<:raw', $mod_info_filepath) or die "Perl: Cannot open mod.info '$mod_info_filepath' with openL: $!";
+    my $mod_name_from_info_file = read_ue4_string($fh);
+    if (!defined $mod_name_from_info_file) { close $fh; return (); }
+    my $buffer;
+    my $bytes_read = read($fh, $buffer, 4);
+    unless (defined $bytes_read && $bytes_read == 4) { close $fh; return (); }
+    my $num_map_names = unpack('l<', $buffer);
+    for (my $i = 0; $i < $num_map_names; $i++) {
+        my $map_name = read_ue4_string($fh);
+        if (defined $map_name) { push @map_names, $map_name; }
+    }
+    close $fh;
+    return @map_names;
 }
 
-close($out);
-close($in);
+sub parse_modmeta_info {
+    my ($modmeta_info_filepath) = @_;
+    my %meta_info;
+    my $fh;
+    unless (openL(\$fh, '<:raw', $modmeta_info_filepath)) {
+        return %meta_info;
+    }
+    if (-z $fh) { close $fh; return %meta_info; }
+    seek($fh, 0, 0) or die "Perl: Seek failed on '$modmeta_info_filepath': $!";
+    my $buffer;
+    my $bytes_read = read($fh, $buffer, 4);
+    unless (defined $bytes_read && $bytes_read == 4) { close $fh; return %meta_info; }
+    my $num_pairs = unpack('l<', $buffer);
+    if ($num_pairs < 0) { $num_pairs = 0; }
+    for (my $i = 0; $i < $num_pairs; $i++) {
+        my $key = read_ue4_string($fh);
+        my $value = read_ue4_string($fh);
+        if (defined $key && defined $value) { $meta_info{$key} = $value; }
+    }
+    close $fh;
+    return %meta_info;
+}
+
+sub create_mod_file {
+    my ($output_filepath, $mod_id_str, $map_names_ref, $meta_info_ref) = @_;
+    my $fh;
+    openL(\$fh, '>:raw', $output_filepath) or die "Perl: Cannot create .mod file '$output_filepath' with openL: $!";
+    my $mod_id_val;
+    if ($mod_id_str =~ /^\d+$/) { $mod_id_val = $mod_id_str; }
+    else { die "Perl: Invalid modId: '$mod_id_str'."; }
+    print $fh pack('Q<', $mod_id_val);
+    write_ue4_string($fh, "ModName");
+    write_ue4_string($fh, "");
+    my $num_map_names = scalar(@$map_names_ref);
+    print $fh pack('l<', $num_map_names);
+    foreach my $map_name (@$map_names_ref) { write_ue4_string($fh, $map_name); }
+    print $fh pack('L<', 4280483635);
+    print $fh pack('l<', 2);
+    my $has_mod_type_key = exists($meta_info_ref->{'ModType'}) ? 1 : 0;
+    print $fh pack('C', $has_mod_type_key);
+    my $num_meta_pairs = scalar(keys %$meta_info_ref);
+    print $fh pack('l<', $num_meta_pairs);
+    foreach my $key (sort keys %$meta_info_ref) {
+        my $value = $meta_info_ref->{$key};
+        write_ue4_string($fh, $key);
+        write_ue4_string($fh, $value);
+    }
+    close $fh;
+}
+
+my $modIdArg;
+my $modInfoFileArg;
+my $modmetaInfoFileArg = '';
+my $outputModFileArg;
+my $defaultModtypeIfMetaEmptyArg = 0;
+
+GetOptions(
+    'modid=s' => \$modIdArg,
+    'modinfo=s' => \$modInfoFileArg,
+    'modmeta:s' => \$modmetaInfoFileArg,
+    'output=s' => \$outputModFileArg,
+    'default-modtype-if-meta-empty!' => \$defaultModtypeIfMetaEmptyArg,
+) or die "Perl Usage: $0 --modid <id> --modinfo <path> [--modmeta <path>] --output <path> [--default-modtype-if-meta-empty]\n";
+
+my @map_names = parse_mod_info($modInfoFileArg);
+
+my %meta_information;
+my $modmetaFileWasProvided = (defined $modmetaInfoFileArg && length $modmetaInfoFileArg > 0);
+my $metaInfoActuallyParsed = 0;
+
+if ($modmetaFileWasProvided) {
+    %meta_information = parse_modmeta_info($modmetaInfoFileArg);
+    if (scalar(keys %meta_information) > 0) {
+        $metaInfoActuallyParsed = 1;
+    } elsif (eval { Win32::LongPath::statL($modmetaInfoFileArg); 1 }) { 
+        $metaInfoActuallyParsed = 1; 
+    }
+}
+
+if ($defaultModtypeIfMetaEmptyArg) {
+    if (!$modmetaFileWasProvided ||
+        ($modmetaFileWasProvided && !scalar(keys %meta_information))
+       ) {
+        $meta_information{'ModType'} = $MODTYPE_MOD;
+    }
+}
+
+create_mod_file($outputModFileArg, $modIdArg, \@map_names, \%meta_information);
 exit 0;
 '@
 
-  $decompressScriptFile = Join-Path $env:TEMP "decompress.pl"
-  Set-Content -Path $decompressScriptFile -Value $decompressScript -Encoding ASCII -Force
+$ue4DecompressPerlScriptContent = @'
+#!/usr/bin/perl
+use strict;
+use warnings;
 
-  Get-ChildItem -Path $modSrcDir -Recurse -Filter '*.z' -File | ForEach-Object {
-    $srcFile = $_.FullName
-    $relativePath = Get-RelativePath -ReferencePath $modSrcDir -ItemPath $srcFile
-    $destFile = Join-Path $modDestDir ($relativePath -replace '\.z$', '')
-
-    if (-not (Test-Path $destFile) -or
-      ([System.IO.File]::GetLastWriteTimeUtc($srcFile) -gt [System.IO.File]::GetLastWriteTimeUtc($destFile))) {
-
-      $destDir = Split-Path $destFile
-      if (-not (Test-Path $destDir)) {
-        New-Item -ItemType Directory -Path $destDir -Force > $null
-      }
-
-      try {
-        & perl $decompressScriptFile "$srcFile" "$destFile"
-        # Update timestamp to match source
-        $ts = [System.IO.File]::GetLastWriteTimeUtc($srcFile)
-        [System.IO.File]::SetLastWriteTimeUtc($destFile, $ts)
-      } catch {
-        Write-Host "  Error: Decompression of item $modId failed. Skipping"
-        return
-      }
-    }
-  }
-  
-  $modOutputFile = Join-Path $modsInstallDir "$modId.mod"
-  $modInfoFile = Join-Path $modSrcDir "mod.info"
-
-  if (-not (Test-Path -LiteralPath $modInfoFile)) {
-    Write-Host "  Error: $modInfoFile not found! Cannot generate .mod file. Skipping item $modId"
-    return
-  }
-
-  # Fetch mod name from Steam Community
-  try {
-    $modName = Invoke-WebRequest -UseBasicParsing -Uri "http://steamcommunity.com/sharedfiles/filedetails/?id=$modId" |
-      Select-String -Pattern '<div class="workshopItemTitle">([^<]*)</div>' |
-      ForEach-Object { $_.Matches[0].Groups[1].Value }
-  } catch {
-    $modName = ""
-  }
-
-  $createModfileScript = @'
+use Getopt::Long qw(GetOptions);
+use File::Basename;
+use Compress::Zlib;
+use IO::Handle;
 use Win32::LongPath qw(openL);
 
-my $infile = @ARGV[0];
-my $outfile = @ARGV[1];
-my ($in, $out);
+use constant { PACKAGE_FILE_TAG => 2653586369, LOADING_COMPRESSION_CHUNK_SIZE => 131072 };
 
-openL(\$in, "<:raw", $infile);
-openL(\$out, ">:raw", $outfile);
+sub read_int64_le {
+    my ($fh) = @_;
+    my $buffer;
+    my $bytes_read = read($fh, $buffer, 8);
+    unless (defined $bytes_read && $bytes_read == 8) { return undef; }
+    return unpack('q<', $buffer);
+}
 
-my $data;
-{ local $/; $data = <$in>; }
-my $mapnamelen = unpack("@0 L<", $data);
-  my $mapname = substr($data, 4, $mapnamelen - 1);
-  my $nummaps = unpack("@" . ($mapnamelen + 4) . " L<", $data);
-  my $pos = $mapnamelen + 8;
-  my $modname = ($ARGV[4] || $mapname) . "\x00";
-  my $modnamelen = length($modname);
-  my $modpath = "../../../" . $ARGV[2] . "/Content/Mods/" . $ARGV[3] . "\x00";
-  my $modpathlen = length($modpath);
-  print $out pack("L< L< L< Z$modnamelen L< Z$modpathlen L<",
-    $ARGV[3], 0, $modnamelen, $modname, $modpathlen, $modpath,
-    $nummaps);
-  for (my $mapnum = 0; $mapnum < $nummaps; $mapnum++){
-    my $mapfilelen = unpack("@" . ($pos) . " L<", $data);
-    my $mapfile = substr($data, $mapnamelen + 12, $mapfilelen);
-    print $out pack("L< Z$mapfilelen", $mapfilelen, $mapfile);
-    $pos = $pos + 4 + $mapfilelen;
-  }
-print $out "\x33\xFF\x22\xFF\x02\x00\x00\x00\x01";
-close($out);
-close($in);
+sub ue4_chunk_unzip {
+    my ($source_filepath, $destination_filepath) = @_;
+    my $in_fh;
+    openL(\$in_fh, '<:raw', $source_filepath) or die "Perl: Cannot open source '$source_filepath' with openL: $!";
+    my $out_fh;
+    openL(\$out_fh, '>:raw', $destination_filepath) or die "Perl: Cannot open dest '$destination_filepath' with openL: $!";
+
+    my $header1_compressed_size = read_int64_le($in_fh);
+    die "Perl: Failed h1_comp_size from '$source_filepath'" unless defined $header1_compressed_size;
+    my $header1_uncompressed_size = read_int64_le($in_fh);
+    die "Perl: Failed h1_uncomp_size from '$source_filepath'" unless defined $header1_uncompressed_size;
+    my $header2_compressed_size = read_int64_le($in_fh);
+    die "Perl: Failed h2_comp_size from '$source_filepath'" unless defined $header2_compressed_size;
+    my $total_uncompressed_size = read_int64_le($in_fh);
+    die "Perl: Failed total_uncomp_size from '$source_filepath'" unless defined $total_uncompressed_size;
+
+    my $ue4_uncompressed_chunk_size = $header1_uncompressed_size;
+    if ($ue4_uncompressed_chunk_size == PACKAGE_FILE_TAG) { $ue4_uncompressed_chunk_size = LOADING_COMPRESSION_CHUNK_SIZE; }
+    if ($ue4_uncompressed_chunk_size <= 0) { die "Perl: UE4 Chunk Size must be positive, got $ue4_uncompressed_chunk_size from '$source_filepath'\n"; }
+    my $num_chunks = 0;
+    if ($total_uncompressed_size > 0) { $num_chunks = int(($total_uncompressed_size + $ue4_uncompressed_chunk_size - 1) / $ue4_uncompressed_chunk_size); }
+    elsif ($total_uncompressed_size == 0) { $num_chunks = 0; }
+    else { die "Perl: Total uncompressed size cannot be negative ($total_uncompressed_size) from '$source_filepath'.\n"; }
+    if ($num_chunks < 0) { die "Perl: Number of chunks cannot be negative ($num_chunks) from '$source_filepath'.\n"; }
+
+    my @chunk_table;
+    for (my $i = 0; $i < $num_chunks; $i++) {
+        my $chunk_compressed_size = read_int64_le($in_fh);
+        die "Perl: Failed to read compressed size for chunk $i from '$source_filepath'" unless defined $chunk_compressed_size;
+        my $chunk_uncompressed_size = read_int64_le($in_fh);
+        die "Perl: Failed to read uncompressed size for chunk $i from '$source_filepath'" unless defined $chunk_uncompressed_size;
+        if ($chunk_compressed_size < 0 || $chunk_uncompressed_size < 0) { die "Perl: Chunk $i from '$source_filepath' has negative size(s)."; }
+        push @chunk_table, { compressed_size => $chunk_compressed_size, uncompressed_size => $chunk_uncompressed_size };
+    }
+    my $current_uncompressed_total = 0;
+    for (my $i = 0; $i < $num_chunks; $i++) {
+        my $chunk_info = $chunk_table[$i];
+        my $bytes_to_read_for_chunk = $chunk_info->{compressed_size};
+        my $uncompressed_data;
+        if ($bytes_to_read_for_chunk == 0) { $uncompressed_data = ""; }
+        else {
+            my $compressed_data_buffer;
+            my $bytes_read = read($in_fh, $compressed_data_buffer, $bytes_to_read_for_chunk);
+            unless (defined $bytes_read && $bytes_read == $bytes_to_read_for_chunk) {
+                die "Perl: Failed to read $bytes_to_read_for_chunk bytes for chunk $i from '$source_filepath'. Expected $bytes_to_read_for_chunk, got " . ($bytes_read//0) . ". Error: " . ($!//"Unknown");
+            }
+            $uncompressed_data = Compress::Zlib::uncompress($compressed_data_buffer);
+            unless (defined $uncompressed_data) {
+                my $z_err_num; { no warnings 'once'; $z_err_num = $Compress::Zlib::unzerrno; }
+                my $zlib_error_str = Compress::Zlib::unzerror($z_err_num) || "Unknown Zlib err $z_err_num";
+                die "Perl: Zlib uncomp fail chunk $i from '$source_filepath': $zlib_error_str";
+            }
+        }
+        print {$out_fh} $uncompressed_data;
+        $current_uncompressed_total += length($uncompressed_data);
+    }
+    close $in_fh;
+    close $out_fh;
+}
+
+my $sourceFileArg; my $destFileArg;
+GetOptions(
+        'source=s' => \$sourceFileArg,
+        'destination=s' => \$destFileArg
+) or die "Perl Usage: $0 --source <file.z> --destination <file_uncomp>\n";
+
+ue4_chunk_unzip($sourceFileArg, $destFileArg);
+exit 0;
 '@
 
-  $createModfileScriptFile = Join-Path $env:TEMP "createModfile.pl"
-  Set-Content -Path $createModfileScriptFile -Value $createModfileScript -Encoding ASCII -Force
+# --- Temporary file setup ---
+$tempDir = Join-Path -Path $env:TEMP -ChildPath ("ark_mod_proc_" + (New-Guid).ToString())
+$null = New-Item -ItemType Directory -Path $tempDir -Force
+$createModFilePerlExecutable = Join-Path -Path $tempDir -ChildPath "create_mod_file.pl"
+$ue4DecompressPerlExecutable = Join-Path -Path $tempDir -ChildPath "ue4_decompress.pl"
 
-  try {
-    & perl $createModfileScriptFile "$modInfoFile" "$modOutputFile" "ShooterGame" "$modId" "$modName"
-  } catch {
-    Write-Host "  Error: Failed to generate .mod file for item $modId. Skipping"
-    return
-  }
+# Ensure the script exits and cleans up temp files
+try {
+    [System.IO.File]::WriteAllLines($createModFilePerlExecutable, $createModFilePerlScriptContent, (New-Object System.Text.UTF8Encoding($false)))
+    [System.IO.File]::WriteAllLines($ue4DecompressPerlExecutable, $ue4DecompressPerlScriptContent, (New-Object System.Text.UTF8Encoding($false)))
 
-  $modmetaFile = Join-Path $modSrcDir "modmeta.info"
-  if (Test-Path $modmetaFile) {
-    Get-Content -Encoding Byte $modmetaFile | Add-Content -Encoding Byte $modOutputFile
-  } else {
-    $footer = [byte[]](0x01,0x00,0x00,0x00,0x08,0x00,0x00,0x00) +
-              [System.Text.Encoding]::ASCII.GetBytes("ModType") +
-              0x00,0x02,0x00,0x00,0x00 +
-              [System.Text.Encoding]::ASCII.GetBytes("1") +
-              0x00
-    [System.IO.File]::WriteAllBytes($modOutputFile, ([System.IO.File]::ReadAllBytes($modOutputFile) + $footer))
-  }
+    # --- Helper functions ---
+    function Setup-Perl {
+        [CmdletBinding()]
+        param()
 
-  # Match timestamp to mod.info
-  $ts = [System.IO.File]::GetLastWriteTimeUtc($modInfoFile)
-  [System.IO.File]::SetLastWriteTimeUtc($modOutputFile, $ts)
+        $perlInstallRoot = Join-Path -Path $script:arkRootDir -ChildPath "perl"
+        $perlBinDir = Join-Path -Path $perlInstallRoot -ChildPath "perl\bin"
+        $perlCBinDir = Join-Path -Path $perlInstallRoot -ChildPath "c\bin"
+        $perlExecutablePath = Join-Path -Path $perlBinDir -ChildPath "perl.exe"
 
-  Write-Host "Success. Extracted and installed item $modId"
-}
+        if (-not (Test-Path -LiteralPath $perlExecutablePath -PathType Leaf)) {
+            $zipUrl = "https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54021_64bit_UCRT/strawberry-perl-5.40.2.1-64bit-portable.zip"
+            $zipFileName = "strawberry-perl-portable.zip"
+            $zipFilePath = Join-Path -Path $env:TEMP -ChildPath $zipFileName
 
-# --- Main Loop ---
-if ($args.Length -eq 0) {
-  Write-Host "No mod IDs specified"
-  exit 1
-}
+            Write-Host "Downloading and installing portable Strawberry Perl to '$perlInstallRoot'. This may take a while ..."
+            
+            try {
+                if (Test-Path -LiteralPath $perlInstallRoot -PathType Container) {
+                    Remove-Item -LiteralPath $perlInstallRoot -Recurse -Force
+                }
+                if (Test-Path -LiteralPath $zipFilePath) {
+                    Remove-Item -LiteralPath $zipFilePath -Force
+                }
 
-Write-Host "Installing/updating mods ..."
+                $ProgressPreference = "SilentlyContinue"
+                Invoke-WebRequest -UseBasicParsing -Uri $zipUrl -OutFile $zipFilePath
+                Add-Type -AssemblyName System.IO.Compression.FileSystem
+                [System.IO.Compression.ZipFile]::ExtractToDirectory($zipFilePath, $perlInstallRoot)
+                
+            } catch {
+                Write-Error "Error: Failed to download or extract Perl. Details: $($_.Exception.Message)"
+                return $false
+            } finally {
+                if (Test-Path -LiteralPath $zipFilePath) {
+                    Remove-Item -LiteralPath $zipFilePath -Force -ErrorAction SilentlyContinue
+                }
+            }
 
-$modIds = $args[0] -replace '^"(.*)"$', '$1'
-$modIds = $modIds.Split(',')
-$ProgressPreference='SilentlyContinue'
+            if (-not (Test-Path -LiteralPath $perlExecutablePath -PathType Leaf)) {
+                Write-Error "Error: Perl executable not found at '$perlExecutablePath' after attempted installation"
+                return $false
+            }
+            Write-Host "Strawberry Perl installed successfully to '$perlInstallRoot'"
+        }
+      
+        $originalPath = $env:PATH
+        $env:PATH = "$perlBinDir;$perlCBinDir;$originalPath"
 
-if (Setup-StrawberryPerl) {
-  foreach ($modId in $modIds) {
-    if (Download-Mod -modId $modId) {
-      Install-Mod -modId $modId
+        # Install cpanm (App::cpanminus) if it's not available
+        $cpanmCmdInfo = Get-Command cpanm -ErrorAction SilentlyContinue
+        if (-not $cpanmCmdInfo) {
+            Write-Host "cpanminus (cpanm) not found in PATH. Attempting to install it via CPAN.pm ..."
+            try {
+                & perl.exe -MCPAN -e "CPAN::Shell->install('App::cpanminus');"
+                $cpanmCmdInfo = Get-Command cpanm -ErrorAction SilentlyContinue
+                if (-not $cpanmCmdInfo) {
+                    Write-Error "Error: Failed to find cpanm in PATH after installation attempt"
+                    $env:PATH = $originalPath
+                    return $false
+                }
+                Write-Host "cpanminus installed successfully"
+            } catch {
+                Write-Error "Error: Failed to install cpanminus using CPAN.pm. Details: $($_.Exception.Message)"
+                $env:PATH = $originalPath
+                return $false
+            }
+        }
+
+        $requiredPerlModules = @(
+            'Compress::Zlib',
+            'Win32::LongPath'
+        )
+
+        try {
+            $cpanmExecutable = $cpanmCmdInfo.Source
+            & $cpanmExecutable --notest --quiet $requiredPerlModules
+            
+            foreach ($moduleName in $requiredPerlModules) {
+                & perl.exe -M"$moduleName" -e "exit 0" 2>$null
+                if ($LASTEXITCODE -ne 0) {
+                    Write-Error "Error: Failed to load/verify Perl module '$moduleName' after cpanm attempt"
+                    $env:PATH = $originalPath
+                    return $false
+                }
+            }
+            Write-Host "Required Perl modules are available/installed"
+        } catch {
+            Write-Error "Error: Failed during cpanm execution for modules ($($requiredPerlModules -join ', ')). Details: $($_.Exception.Message)"
+            $env:PATH = $originalPath
+            return $false
+        }
+        
+        return $true
     }
-  }
+
+    function Download-Mod {
+        param(
+            [string]$modId
+        )
+        $steamScript = Join-Path -Path $arkRootDir -ChildPath "steamcmd.exe"
+        $steamInstallDir = Join-Path -Path $arkBaseDir -ChildPath "Engine\Binaries\ThirdParty\SteamCMD\Win64"
+        $maxRetries = 5
+        $attempt = 0
+        $outputLog = ""
+
+        Write-Host "Downloading item $modId ..."
+        
+        while ($attempt -lt $maxRetries) {
+            $attempt++
+            $outputLog = ""
+            try {
+                $psi = New-Object System.Diagnostics.ProcessStartInfo
+                $psi.FileName = $steamScript
+                $psi.Arguments = "+force_install_dir `"$steamInstallDir`" +login anonymous +workshop_download_item 346110 `"$modId`" validate +quit"
+                $psi.UseShellExecute = $false
+                $psi.RedirectStandardOutput = $true
+                $psi.RedirectStandardError = $true
+                $psi.CreateNoWindow = $true
+                $process = [System.Diagnostics.Process]::Start($psi)
+                $outputLog = $process.StandardOutput.ReadToEnd()
+                $errorLog = $process.StandardError.ReadToEnd()
+                $process.WaitForExit()
+                $outputLog += $errorLog
+
+                if ($outputLog -match "Success. Downloaded item $modId") {
+                    Write-Host "Success. Downloaded item $modId"
+                    return $true
+                }
+                Write-Error "Warning: Item ${modId} download attempt $attempt/$maxRetries failed. Retrying in 10s ..."
+            } catch {
+                Write-Error "Error: Exception during steamcmd execution for $modId (attempt $attempt): $($_.Exception.Message)"
+            }
+            if ($attempt -lt $maxRetries) {
+                Start-Sleep -Seconds 10
+            }
+        }
+        Write-Error "Error: Download of item $modId failed after $maxRetries attempts"
+        return $false
+    }
+
+    function Install-Mod {
+        param(
+            [string]$currentModId
+        )
+        Write-Host "Installing/updating item ${currentModId} ..."
+
+        $sourceRootDir = Join-Path -Path $workshopContentDir -ChildPath $currentModId
+        $modContentDestDir = Join-Path -Path $modsInstallDir -ChildPath $currentModId
+        $modDefinitionFile = Join-Path -Path $modsInstallDir -ChildPath ($currentModId + ".mod")
+
+        if (-not (Test-Path -LiteralPath $sourceRootDir -PathType Container)) {
+            Write-Error "Error: Source for item ${currentModId} ('$sourceRootDir') not found"
+            return $false
+        }
+
+        $null = New-Item -ItemType Directory -Path $modContentDestDir -Force -ErrorAction SilentlyContinue
+
+        $originalModInfoFile = Join-Path -Path $sourceRootDir -ChildPath "mod.info"
+        $originalModMetaFile = Join-Path -Path $sourceRootDir -ChildPath "modmeta.info"
+
+        if (-not (Test-Path -LiteralPath $originalModInfoFile -PathType Leaf)) {
+            Write-Error "Error: mod.info for item ${currentModId} ('$originalModInfoFile') not found"
+            return $false
+        }
+
+        $effectiveContentSourceDir = $sourceRootDir
+        $modMetaExistsAndReadable = $false
+        if (Test-Path -LiteralPath $originalModMetaFile -PathType Leaf) {
+            $modMetaExistsAndReadable = $true
+            $effectiveContentSourceDir = Join-Path -Path $sourceRootDir -ChildPath "WindowsNoEditor"
+        }
+
+        $foundPrimalGameDataFile = $false
+
+        if (-not (Test-Path -LiteralPath $effectiveContentSourceDir -PathType Container)) {
+            Write-Warning "Warning: Effective content source ('$effectiveContentSourceDir') for item ${currentModId} does not exist. Cleaning destination"
+            if (Test-Path -LiteralPath $modContentDestDir -PathType Container) {
+                 Get-ChildItem -Path $modContentDestDir -Force | Remove-Item -Recurse -Force
+            }
+        } else {
+            $allSourceFiles = Get-ChildItem -LiteralPath $effectiveContentSourceDir -File -Recurse -ErrorAction SilentlyContinue
+            
+            if ($allSourceFiles) {
+                foreach ($sourceFileItem in $allSourceFiles) {
+                    $sourceFileFullPath = $sourceFileItem.FullName
+                    $cleanRelativeFile = $sourceFileFullPath.Substring($effectiveContentSourceDir.Length).TrimStart("\","/")
+                    if ([string]::IsNullOrEmpty($cleanRelativeFile)) { continue }
+
+                    $destFileParentDir = $null
+
+                    if ($cleanRelativeFile.EndsWith(".z.uncompressed_size", [System.StringComparison]::OrdinalIgnoreCase)) {
+                        continue
+                    } elseif ($cleanRelativeFile.EndsWith(".z", [System.StringComparison]::OrdinalIgnoreCase)) {
+                        # This is a .z file, destination is uncompressed
+                        $destUncompressedFileFullPath = Join-Path -Path $modContentDestDir -ChildPath ($cleanRelativeFile -replace '\.z$','')
+                        $destFileParentDir = Split-Path -Path $destUncompressedFileFullPath -Parent
+                        
+                        $needsProcessing = $false
+                        if (-not (Test-Path -LiteralPath $destUncompressedFileFullPath -PathType Leaf)) {
+                            $needsProcessing = $true
+                        } else {
+                            $destUncompressedFileObject = Get-Item -LiteralPath $destUncompressedFileFullPath
+                            if ($sourceFileItem.LastWriteTime -gt $destUncompressedFileObject.LastWriteTime) {
+                                $needsProcessing = $true
+                            }
+                        }
+
+                        if ($needsProcessing) {
+                            if (-not (Test-Path -LiteralPath $destFileParentDir -PathType Container)) {
+                                try {
+                                    $null = New-Item -ItemType Directory -Path $destFileParentDir -Force
+                                } catch {
+                                    Write-Error "Error: Failed to create directory '$destFileParentDir' for item $currentModId"
+                                    return $false
+                                }
+                            }
+                            
+                            try {
+                                & perl.exe $ue4DecompressPerlExecutable --source "$sourceFileFullPath" --destination "$destUncompressedFileFullPath"
+                                # Set timestamp of uncompressed file to match the source .z file
+                                (Get-Item -LiteralPath $destUncompressedFileFullPath).LastWriteTime = $sourceFileItem.LastWriteTime
+                            } catch {
+                                Write-Error "Error: Decompression of '$sourceFileFullPath' for item $currentModId failed. Output file may be incomplete or missing. Error: $($_.Exception.Message)"
+                                if (Test-Path -LiteralPath $destUncompressedFileFullPath -PathType Leaf) {
+                                    Remove-Item -LiteralPath $destUncompressedFileFullPath -Force -ErrorAction SilentlyContinue
+                                }
+                                return $false
+                            }
+                        }
+                    } else { # Regular file (non-.z, non-.z.uncompressed_size)
+                        $destFileFullPath = Join-Path -Path $modContentDestDir -ChildPath $cleanRelativeFile
+                        $destFileParentDir = Split-Path -Path $destFileFullPath -Parent
+
+                        $needsProcessing = $false
+                        if (-not (Test-Path -LiteralPath $destFileFullPath)) {
+                            $needsProcessing = $true
+                        } else {
+                            # Ensure it's a file we are comparing against
+                            if (Test-Path -LiteralPath $destFileFullPath -PathType Leaf) {
+                                $destFileObject = Get-Item -LiteralPath $destFileFullPath
+                                if ($sourceFileItem.LastWriteTime -gt $destFileObject.LastWriteTime) {
+                                    $needsProcessing = $true
+                                }
+                            } else { 
+                                # Destination exists but is not a file (e.g., a directory). Overwrite/replace.
+                                $needsProcessing = $true
+                            }
+                        }
+
+                        if ($needsProcessing) {
+                            if (-not (Test-Path -LiteralPath $destFileParentDir -PathType Container)) {
+                            try {
+                                    $null = New-Item -ItemType Directory -Path $destFileParentDir -Force
+                                } catch {
+                                    Write-Error "Error: Failed to create directory '$destFileParentDir' for item $currentModId"
+                                    return $false
+                                }
+                            }
+                            try {
+                                Copy-Item -LiteralPath $sourceFileFullPath -Destination $destFileFullPath -Force
+                            } catch {
+                                Write-Error "Error: Failed to copy '$cleanRelativeFile' to '$destFileFullPath' for item $currentModId. Error: $($_.Exception.Message)"
+                                return $false
+                            }
+                        }
+                    }
+                }
+            }
+            
+            # Clean up uncompressed files in destination for which a compressed or direct source no longer exists, and any stray compressed files
+            Get-ChildItem -LiteralPath $modContentDestDir -File -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
+                if ($_.Extension -eq ".z") {
+                    # .z files should not be in the final destination. Any found are considered stray.
+                    Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue
+                    return
+                }
+
+                $fileRelativeToDest = $_.FullName.Substring($modContentDestDir.Length).TrimStart("\","/")
+                
+                $correspondingSourceDirectFile = Join-Path -Path $effectiveContentSourceDir -ChildPath $fileRelativeToDest
+                $correspondingSourceZFile = Join-Path -Path $effectiveContentSourceDir -ChildPath ($fileRelativeToDest + ".z")
+
+                if ((-not (Test-Path -LiteralPath $correspondingSourceDirectFile -PathType Leaf)) -and `
+                    (-not (Test-Path -LiteralPath $correspondingSourceZFile -PathType Leaf)) ) {
+                    Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue
+                }
+            }
+
+            # Prune empty directories in destination
+            Get-ChildItem -LiteralPath $modContentDestDir -Directory -Recurse | Sort-Object -Property FullName -Descending | ForEach-Object {
+                if (-not ($_.GetFiles()) -and -not ($_.GetDirectories())) {
+                    Remove-Item -LiteralPath $_.FullName -Recurse -Force -ErrorAction SilentlyContinue
+                }
+            }
+        }
+
+        if (Get-ChildItem -LiteralPath $modContentDestDir -Filter "*PrimalGameData*" -Recurse -File -ErrorAction SilentlyContinue | Select-Object -First 1) {
+            $foundPrimalGameDataFile = $true
+        }
+    
+        $defaultModtypePerlArg = ""
+        if (-not $modMetaExistsAndReadable -and $foundPrimalGameDataFile) {
+            $defaultModtypePerlArg = "--default-modtype-if-meta-empty"
+        }
+
+        $createModCmdArgs = New-Object System.Collections.ArrayList
+        $null = $createModCmdArgs.Add("--modid")
+        $null = $createModCmdArgs.Add($currentModId)
+        $null = $createModCmdArgs.Add("--modinfo")
+        $null = $createModCmdArgs.Add($originalModInfoFile)
+        $null = $createModCmdArgs.Add("--output")
+        $null = $createModCmdArgs.Add($modDefinitionFile)
+        if ($modMetaExistsAndReadable) {
+            $null = $createModCmdArgs.Add("--modmeta")
+            $null = $createModCmdArgs.Add($originalModMetaFile)
+        }
+        if (-not [string]::IsNullOrEmpty($defaultModtypePerlArg)) {
+            $null = $createModCmdArgs.Add($defaultModtypePerlArg)
+        }
+
+        if (Test-Path -LiteralPath $modDefinitionFile) { Remove-Item -LiteralPath $modDefinitionFile -Force }
+        try {
+            & perl.exe $createModFilePerlExecutable @createModCmdArgs
+        } catch {
+            Write-Error "Error: Creation of .mod file for item ${currentModId} failed. Error: $($_.Exception.Message)"
+            return $false
+        }
+
+        Write-Host "Success: Installed/updated item ${currentModId}"
+        return $true
+    }
+
+    # --- Script entry point ---
+    if (-not (Setup-Perl)) {
+        Write-Error "Failed to set up the required Perl environment. Aborting"
+        exit 1
+    }
+    
+    $trimmedModIdsInput = $modIds -replace '^"?(.*?)"?$', '$1'
+    if ([string]::IsNullOrWhiteSpace($trimmedModIdsInput)) {
+        Write-Error "Error: No workshop item IDs specified"
+        exit 1
+    }
+    [string[]]$modIdArray = $trimmedModIdsInput.Split(',') | ForEach-Object { $_.Trim() } | Where-Object { $_ }
+
+    if ($modIdArray.Count -eq 0 -and -not [string]::IsNullOrWhiteSpace($modIds)) {
+        continue
+    } elseif ($modIdArray.Count -eq 0) {
+        Write-Error "Error: No workshop item IDs specified"
+        exit 1
+    }
+
+    $null = New-Item -ItemType Directory -Path $modsInstallDir -Force -ErrorAction SilentlyContinue
+
+    $processedCount = 0
+    $failedCount = 0
+    $totalModsAttempted = 0
+
+    Write-Host "Installing/updating workshop items ..."
+
+    foreach ($modIdItem in $modIdArray) {
+        if ([string]::IsNullOrEmpty($modIdItem)) { continue }
+        $totalModsAttempted++
+
+        if ($modIdItem -notmatch '^[0-9]+$') {
+            Write-Error "Error: Invalid workshop item ID format '${modIdItem}'. Must be numeric. Skipping"
+            $failedCount++
+            continue
+        }
+
+        if (Download-Mod -modId $modIdItem) {
+            if (Install-Mod -currentModId $modIdItem) {
+                $processedCount++
+            } else {
+                $failedCount++
+            }
+        } else {
+            $failedCount++
+        }
+    }
+
+    Write-Host "--------------------------------------------------"
+    Write-Host "Workshop item installation/update process finished"
+    Write-Host "Summary:"
+    Write-Host "  Total workshop item IDs attempted: $totalModsAttempted"
+    Write-Host "  Successfully processed:  $processedCount"
+    Write-Host "  Failed to process:     $failedCount"
+    Write-Host "--------------------------------------------------"
+
+    if ($failedCount -gt 0) {
+        exit 1
+    }
+
+} finally {
+    if (Test-Path -LiteralPath $tempDir -PathType Container) {
+        Remove-Item -LiteralPath $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+    }
 }
 
-Write-Host "Mod installation/update process finished"
 exit 0
