@@ -1,0 +1,640 @@
+[
+    {
+        "DisplayName": "RCON Password",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$RemoteAdminPassword",
+        "InputType": "text",
+        "Hidden": true,
+        "ParamFieldName": "rcon_password",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Localhost RCON Rate Limit Bypass",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "rcon_localhost_bypass",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "rcon_localhost_bypass",
+        "DefaultValue": "1",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "RCON Console Activity",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "rcon_prints",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "rcon_prints",
+        "DefaultValue": "1",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Continuous Log",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "g_logSync",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "g_logSync",
+        "DefaultValue": "2",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Log File Name",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "g_log",
+        "InputType": "text",
+        "Hidden": true,
+        "ParamFieldName": "g_log",
+        "DefaultValue": "logs\\games.log",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Game Mode",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the game mode. Configure the relevant config file accordingly - 'Plutonium/storage/t6/dedicated.cfg' for Multiplayer, 'Plutonium/storage/t6/dedicated_zm.cfg' for Zombies",
+        "Keywords": "game,mode,gamemode",
+        "FieldName": "GameMode",
+        "InputType": "enum",
+        "ParamFieldName": "GameMode",
+        "DefaultValue": "t6mp \"{{$FullBaseDir}}T6\" -dedicated +set key {{ServerKey}} +set fs_game \"\" +exec dedicated.cfg",
+        "EnumValues": {
+            "t6mp \"{{$FullBaseDir}}T6\" -dedicated +set key {{ServerKey}} +set fs_game \"\" +exec dedicated.cfg": "Multiplayer (default)",
+            "t6zm \"{{$FullBaseDir}}T6\" -dedicated +set key {{ServerKey}} +set fs_game \"\" +exec dedicated_zm.cfg": "Zombies"
+        }
+    },
+    {
+        "DisplayName": "Server Key",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the [server key](https://platform.plutonium.pw/serverkeys) required to run the server. This also sets the server name. A Plutonium account must be at least one week old to create a key, and game ownership must be [verified](https://forum.plutonium.pw/topic/32250/an-update-on-game-ownership-verification)",
+        "Keywords": "server,key,serverkey",
+        "FieldName": "ServerKey",
+        "InputType": "password",
+        "ParamFieldName": "ServerKey",
+        "DefaultValue": "",
+        "Required": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Password",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the password to join the server. Default is no password",
+        "Keywords": "password,g_password",
+        "FieldName": "g_password",
+        "InputType": "password",
+        "ParamFieldName": "g_password",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Map Mode",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets whether to enable map rotation (the Map Rotation List must then also be set) or to load a specific initial map (the Initial Game Type and Initial Map must then also be set)",
+        "Keywords": "map,mode,map_rotate",
+        "FieldName": "MapMode",
+        "InputType": "enum",
+        "ParamFieldName": "MapMode",
+        "DefaultValue": "+map_rotate",
+        "EnumValues": {
+            "+map_rotate": "Map rotation (default)",
+            "+set gametype {{gametype}} +map \"{{map_name}}\"": "Specific initial map"
+        }
+    },
+    {
+        "DisplayName": "Map Rotation List",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Configure the map rotation in 'dedicated.cfg' or 'dedicated_zm.cfg' (as applicable)",
+        "Keywords": "map,rotation,list,sv_maprotation",
+        "FieldName": "MapRotation",
+        "InputType": "hidden",
+        "ParamFieldName": "MapRotation",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Initial Game Type",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the game type to start the server with. This setting will be overridden if map rotation is configured. Settings for each game type can be set in 'dedicated.cfg' or 'dedicated_zm.cfg' (as applicable)",
+        "Keywords": "game,type,gametype",
+        "FieldName": "gametype",
+        "InputType": "enum",
+        "ParamFieldName": "gametype",
+        "DefaultValue": "dm",
+        "EnumValues": {
+            "ctf": "Capture the Flag (Multiplayer)",
+            "dm": "Deathmatch / Free-for-all (Multiplayer) (default)",
+            "dem": "Demolition (Multiplayer)",
+            "dom": "Domination (Multiplayer)",
+            "koth": "Hardpoint (Multiplayer)",
+            "hq": "Headquarters (Multiplayer)",
+            "conf": "Kill Confirmed (Multiplayer)",
+            "onflag": "One-flag CTF (Multiplayer)",
+            "sd": "Search & Destroy (Multiplayer)",
+            "war": "Team Deathmatch (Multiplayer)",
+            "classic": "Classic (Zombies)",
+            "standard": "Survival (Zombies)",
+            "grief": "Grief (Zombies)",
+            "cleansed": "Turned (Zombies)"
+        }
+    },
+    {
+        "DisplayName": "Initial Map",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the map to start the server with. See 'dedicated.cfg' or 'dedicated_zm.cfg' (as applicable) for map names. This setting will be overridden if map rotation is configured",
+        "Keywords": "map",
+        "FieldName": "map_name",
+        "InputType": "text",
+        "ParamFieldName": "map_name",
+        "DefaultValue": "mp_dockside",
+        "Placeholder": "mp_dockside",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Limit",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum number of players allowed on the server at one time. Maximum 18 for Multiplayer, 8 for Zombies (4 recommended)",
+        "Keywords": "max,players,limit,sv_maxclients",
+        "FieldName": "$MaxUsers",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "18",
+        "ParamFieldName": "sv_maxclients",
+        "DefaultValue": "8",
+        "Placeholder": "8",
+        "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Fast Download URL",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the base URL for [fast download](https://plutonium.pw/docs/server/t6/fastdl/) of mods",
+        "Keywords": "base,url,download,redirection,sv_wwwBaseURL",
+        "FieldName": "sv_wwwBaseURL",
+        "InputType": "url",
+        "ParamFieldName": "seta sv_wwwBaseURL",
+        "DefaultValue": "",
+        "Placeholder": "http://domain.tld/t6",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "RCON Rate Limit",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the RCON rate limit (per IP). Localhost RCON commands are not rate limited",
+        "Keywords": "rcon,rate,limit,rcon_rate_limit",
+        "FieldName": "rcon_rate_limit",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "10000",
+        "ParamFieldName": "rcon_rate_limit",
+        "DefaultValue": "500",
+        "Placeholder": "500",
+        "Suffix": "milliseconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Voice Chat",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, voice chat will be enabled",
+        "Keywords": "voice,chat,sv_voice",
+        "FieldName": "sv_voice",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_voice",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Server Voice Chat Quality",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the server voice quality level",
+        "Keywords": "voice,chat,quality,sv_voicequality",
+        "FieldName": "sv_voicequality",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "9",
+        "ParamFieldName": "sv_voicequality",
+        "DefaultValue": "3",
+        "Placeholder": "3",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Allow Aim Assist",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, Aim Assist will be allowed on gamepads",
+        "Keywords": "aim,assist,sv_allowAimAssist",
+        "FieldName": "sv_allowAimAssist",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_allowAimAssist",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Enable Demo Recording",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, matches will be recorded as demo files",
+        "Keywords": "demo,recording,enable,demo_enabled",
+        "FieldName": "demo_enabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "demo_enabled",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Server Say Name",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the name that server-side 'say' commands show up as",
+        "Keywords": "server,say,name,sv_sayname",
+        "FieldName": "sv_sayname",
+        "InputType": "text",
+        "ParamFieldName": "sv_sayname",
+        "DefaultValue": "Console",
+        "Placeholder": "Console",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Replace Bots",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, the server will try to kick a bot when a player joins a full game",
+        "Keywords": "replace,bots,sv_replacebots",
+        "FieldName": "sv_replaceBots",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_replaceBots",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Player Collision Mode",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets who players collide with",
+        "Keywords": "collision,players,g_playerCollision",
+        "FieldName": "g_playerCollision",
+        "InputType": "enum",
+        "ParamFieldName": "g_playerCollision",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "0": "Everybody (default)",
+            "1": "Enemies",
+            "2": "Nobody"
+        }
+    },
+    {
+        "DisplayName": "Player Ejection Mode",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets from whom players are ejected",
+        "Keywords": "collision,players,g_playerEjection",
+        "FieldName": "g_playerEjection",
+        "InputType": "enum",
+        "ParamFieldName": "g_playerEjection",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "0": "Everybody (default)",
+            "1": "Enemies",
+            "2": "Nobody"
+        }
+    },
+    {
+        "DisplayName": "Enable Team To Affect Bullet Penetration",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, team members will affect bullet penetration",
+        "Keywords": "team,bullet,penetration,bullet_penetration_affected_by_team",
+        "FieldName": "bullet_penetration_affected_by_team",
+        "InputType": "checkbox",
+        "ParamFieldName": "bullet_penetration_affected_by_team",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Fix Bullet Damage Duplication",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, the issue where players that are clipped inside each other receive duplicate bullet damage will be fixed",
+        "Keywords": "bullet,damage,duplication,g_fixBulletDamageDupe",
+        "FieldName": "g_fixBulletDamageDupe",
+        "InputType": "checkbox",
+        "ParamFieldName": "g_fixBulletDamageDupe",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Allow Rocket Jumps",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, rocket jumps will be allowed",
+        "Keywords": "rocket,jumps,g_patchRocketJumps",
+        "FieldName": "g_patchRocketJumps",
+        "InputType": "checkbox",
+        "ParamFieldName": "g_patchRocketJumps",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Show Perks on Spawn (Multiplayer)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, currently equipped perks will be displayed on the HUD when spawning",
+        "Keywords": "perks,hud,spawn,scr_showperksonspawn",
+        "FieldName": "scr_showperksonspawn",
+        "InputType": "checkbox",
+        "ParamFieldName": "scr_showperksonspawn",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Delete Explosives On Spawn (Multiplayer)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, thrown lethal explosives will be removed when killed",
+        "Keywords": "explosives,spawn,delete,scr_deleteexplosivesonspawn",
+        "FieldName": "scr_deleteexplosivesonspawn",
+        "InputType": "checkbox",
+        "ParamFieldName": "scr_deleteexplosivesonspawn",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Disable Custom Classes (Multiplayer)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, custom classes will be disabled",
+        "Keywords": "disable,custom,classes,scr_disable_cac",
+        "FieldName": "scr_disable_cac",
+        "InputType": "checkbox",
+        "ParamFieldName": "scr_disable_cac",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Maximum Rank (Multiplayer)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Every player with a level above the set value will be blocked",
+        "Keywords": "maximum,rank,block,scr_max_rank",
+        "FieldName": "scr_max_rank",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "1000",
+        "ParamFieldName": "scr_max_rank",
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Minimum Prestige (Multiplayer)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Every player with a prestige below the set value will be blocked",
+        "Keywords": "minimum,prestige,block,scr_min_prestige",
+        "FieldName": "scr_min_prestige",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "15",
+        "ParamFieldName": "scr_min_prestige",
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Custom Team Names (Multiplayer)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets custom team names on the scoreboard",
+        "Keywords": "custom,team,names,g_customteamnames",
+        "FieldName": "g_customteamnames",
+        "InputType": "text",
+        "ParamFieldName": "g_customteamnames",
+        "DefaultValue": "allies,Team 1|axis,Team 2",
+        "Placeholder": "allies,Team 1|axis,Team 2",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Allow Depth Of Field (Multiplayer)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If disabled, clients will not be allowed to have Depth of Field, in order to prevent glitches and gain performance",
+        "Keywords": "depth,field,dof,sv_allowDof",
+        "FieldName": "sv_allowDof",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_allowDof",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "DSR-50 Patches (Multiplayer)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, DSR-50 patches will be applied on the server",
+        "Keywords": "dsr50,patches,sv_patch_dsr50",
+        "FieldName": "sv_patch_dsr50",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_patch_dsr50",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Minimum Starting Players (Zombies)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the minimum players needed to start the game. Do NOT set this higher than the Player Limit!",
+        "Keywords": "zombies,minimum,starting,players,zombies_minplayers",
+        "FieldName": "zombies_minplayers",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "8",
+        "ParamFieldName": "zombies_minplayers",
+        "DefaultValue": "1",
+        "Placeholder": "1",
+        "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Difficulty Level (Zombies)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the difficulty level for Zombies mode. If set to Easy, it must be manually set on the client as well",
+        "Keywords": "zombies,difficulty,zombies,zmDifficulty",
+        "FieldName": "zmDifficulty",
+        "InputType": "enum",
+        "ParamFieldName": "gts zmDifficulty",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "0": "Easy",
+            "1": "Normal"
+        }
+    },
+    {
+        "DisplayName": "Fix Unkillable Zombies Bug (Zombies)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, fixes the unkillable zombies in traps bug",
+        "Keywords": "fix,zombies,damage,unkillable,traps,g_zm_fix_damage_overflow",
+        "FieldName": "g_zm_fix_damage_overflow",
+        "InputType": "checkbox",
+        "ParamFieldName": "g_zm_fix_damage_overflow",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Enable Starting Round (Zombies)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, enables the starting round. Works on all maps",
+        "Keywords": "zombies,round,start,startRound",
+        "FieldName": "startRound",
+        "InputType": "number",
+        "ParamFieldName": "gts startRound",
+        "DefaultValue": "1",
+        "MinValue": "1",
+        "Placeholder": "1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Remove Magic (Zombies)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, all supernatural assistance will be removed. Only Survival and Grief gametypes have this option!",
+        "Keywords": "zombies,magic,remove,magic",
+        "FieldName": "magic",
+        "InputType": "checkbox",
+        "ParamFieldName": "gts magic",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Headshots Only (Zombies)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, only headshots will be allowed. Only Survival and Grief have this option!",
+        "Keywords": "zombies,headshots,only,headshotsonly",
+        "FieldName": "headshotsonly",
+        "InputType": "checkbox",
+        "ParamFieldName": "gts headshotsonly",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Allow Hellhounds (Zombies)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, Hellhounds will be allowed. Only Survival has this option!",
+        "Keywords": "zombies,hellhounds,allow,allowdogs",
+        "FieldName": "allowdogs",
+        "InputType": "checkbox",
+        "ParamFieldName": "gts allowdogs",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Allow Cleansed Loadout (Zombies)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, players will be allowed to choose their Loadout. Only Turned has this option!",
+        "Keywords": "zombies,loadout,cleansed,cleansedLoadout",
+        "FieldName": "cleansedLoadout",
+        "InputType": "checkbox",
+        "ParamFieldName": "gts cleansedLoadout",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Team Count (Zombies)",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the number of teams. Set to 2 by default when loading Grief",
+        "Keywords": "zombies,teams,count,teamCount",
+        "FieldName": "teamCount",
+        "InputType": "number",
+        "MinValue": "1",
+        "ParamFieldName": "gts teamCount",
+        "DefaultValue": "2",
+        "Placeholder": "2",
+        "EnumValues": {}
+    }
+]

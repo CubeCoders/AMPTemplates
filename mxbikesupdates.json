@@ -3,7 +3,9 @@
         "UpdateStageName": "7-Zip Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip"
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "standalone"
     },
     {
         "UpdateStageName": "7-Zip Installer Download",
@@ -12,7 +14,9 @@
         "UpdateSourceData": "https://7-zip.org/a/7z2407-x64.exe",
         "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
         "OverwriteExistingFiles": true,
-        "OneShot": true
+        "OneShot": true,
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "standalone"
     },
     {
         "UpdateStageName": "7-Zip Console Tool Download",
@@ -21,7 +25,9 @@
         "UpdateSourceData": "https://www.7-zip.org/a/7zr.exe",
         "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
         "OverwriteExistingFiles": true,
-        "OneShot": true
+        "OneShot": true,
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "standalone"
     },
     {
         "UpdateStageName": "7-Zip Installation",
@@ -30,7 +36,9 @@
         "UpdateSourceData": "cmd.exe",
         "UpdateSourceArgs": "/C cd mxbikes\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
         "SkipOnFailure": true,
-        "OneShot": true
+        "OneShot": true,
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "standalone"
     },
     {
         "UpdateStageName": "7-Zip Download",
@@ -39,7 +47,9 @@
         "UpdateSourceData": "https://www.7-zip.org/a/7z2301-linux-x64.tar.xz",
         "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
         "OverwriteExistingFiles": true,
-        "OneShot": true
+        "OneShot": true,
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "standalone"
     },
     {
         "UpdateStageName": "7-Zip Installation",
@@ -48,23 +58,29 @@
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cd ./mxbikes/7-Zip && tar -xf 7z2301-linux-x64.tar.xz >/dev/null 2>&1 && rm -f 7z2301-linux-x64.tar.xz\"",
         "SkipOnFailure": false,
-        "OneShot": true
+        "OneShot": true,
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "standalone"
     },
     {
         "UpdateStageName": "MX Bikes Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd mxbikes/server && DOWNLOAD_LINK=$(wget -qO- \\\"https://www.mx-bikes.com/?page=downloads\\\" | grep -o \\\"downloads/mxbikes[^\\\\\\\"]*.exe\\\" | head -n 1) && wget -qO mxbikes-beta.exe \\\"https://www.mx-bikes.com/$DOWNLOAD_LINK\\\"\"",
-        "SkipOnFailure": false
+        "UpdateSourceArgs": "-c \"cd mxbikes/server && ServerDownloadMirror=\\\"{{ServerDownloadMirror}}\\\"; if [ \\\"$ServerDownloadMirror\\\" = \\\"MXB-Mods.com\\\" ]; then DownloadLink=$(wget -qO- \\\"https://betas.mxb-mods.com/\\\" | grep -o \\\"files/mxbikes[^\\\\\\\"]*\\.exe\\\" | head -n 1) && wget --header=\\\"Referer: https://betas.mxb-mods.com/download/\\\" -qO mxbikes-beta.exe \\\"https://betas.mxb-mods.com/$DownloadLink\\\"; else DownloadLink=$(wget -qO- \\\"https://www.mx-bikes.com/?page=downloads\\\" | grep -o \\\"downloads/mxbikes[^\\\\\\\"]*\\.exe\\\" | head -n 1) && wget -qO mxbikes-beta.exe \\\"https://www.mx-bikes.com/$DownloadLink\\\"; fi\"",
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "standalone"
     },
     {
         "UpdateStageName": "MX Bikes Download",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'mxbikes/server'; $DOWNLOAD_LINK=((Invoke-WebRequest -UseBasicParsing -Uri 'https://www.mx-bikes.com/?page=downloads').Links | ? href -match 'downloads/mxbikes.*\\.exe' | select -ExpandProperty href); Invoke-WebRequest -UseBasicParsing -Uri \\\"https://www.mx-bikes.com/$DOWNLOAD_LINK\\\" -OutFile 'mxbikes-beta.exe'\"",
-        "SkipOnFailure": false
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'mxbikes/server'; $ServerDownloadMirror='{{ServerDownloadMirror}}'; if ($ServerDownloadMirror -eq 'MXB-Mods.com') { $html = Invoke-WebRequest -UseBasicParsing -Uri 'https://betas.mxb-mods.com/'; $DownloadLink = ($html.Links | Where-Object href -like 'files/mxbikes*.exe')[0].href; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://betas.mxb-mods.com/$DownloadLink\\\" -OutFile 'mxbikes-beta.exe' -Headers @{ Referer = 'https://betas.mxb-mods.com/download/' } } else { $html = Invoke-WebRequest -UseBasicParsing -Uri 'https://www.mx-bikes.com/?page=downloads'; $DownloadLink = ($html.Links | Where-Object href -like 'downloads/mxbikes*.exe')[0].href; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://www.mx-bikes.com/$DownloadLink\\\" -OutFile 'mxbikes-beta.exe' }\"",
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "standalone"
     },
     {
         "UpdateStageName": "MX Bikes Installation",
@@ -72,7 +88,9 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
         "UpdateSourceArgs": "/C cd mxbikes\\server && ..\\7-Zip\\7z.exe x -y mxbikes-beta.exe > NUL 2>&1 && del /Q /F mxbikes-beta.exe",
-        "SkipOnFailure": false
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "standalone"
     },
     {
         "UpdateStageName": "MX Bikes Installation",
@@ -80,7 +98,30 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cd ./mxbikes/server && ../7-Zip/7zzs x -y mxbikes-beta.exe >/dev/null 2>&1 && rm -f mxbikes-beta.exe\"",
-        "SkipOnFailure": false
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "standalone"
+    },
+    {
+        "UpdateStageName": "MX Bikes Game Files Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "655500",
+        "UpdateSourceArgs": "655500",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "steam"
+    },
+    {
+        "UpdateStageName": "MX Bikes Server Patch Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "http://www.mx-bikes.com/downloads/mxbikes.exe",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "steam"
     },
     {
         "UpdateStageName": "Results Directory Creation",
