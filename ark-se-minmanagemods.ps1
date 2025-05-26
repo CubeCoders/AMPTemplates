@@ -287,7 +287,7 @@ try {
             $zipFileName = "strawberry-perl-portable.zip"
             $zipFilePath = Join-Path -Path $env:TEMP -ChildPath $zipFileName
 
-            Write-Host "Downloading and installing portable Strawberry Perl to '$perlInstallRoot'. This may take a while ..."
+            Write-Host "Downloading and installing portable Strawberry Perl. This may take a while ..."
             
             try {
                 if (Test-Path -LiteralPath $perlInstallRoot -PathType Container) {
@@ -315,7 +315,7 @@ try {
                 Write-Error "Error: Perl executable not found at '$perlExecutablePath' after attempted installation"
                 return $false
             }
-            Write-Host "Strawberry Perl installed successfully to '$perlInstallRoot'"
+            Write-Host "Strawberry Perl installed successfully"
         }
       
         $originalPath = $env:PATH
