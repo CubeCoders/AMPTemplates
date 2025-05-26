@@ -2,6 +2,11 @@
 # Inspired by https://github.com/Bletch1971/ServerManagers/blob/source/src/ARKServerManager/Utils/ModUtils.cs and
 # https://github.com/arkmanager/ark-server-tools/blob/master/tools/arkmanager
 
+param (
+    [Parameter(Mandatory = $true, Position = 0)]
+    [string]$modIds
+)
+
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
@@ -567,10 +572,14 @@ try {
         exit 1
     }
     
-    $trimmedModIdsInput = $ModIds -replace '^"?(.*?)"?$', '$1'
+    $trimmedModIdsInput = $modIds -replace '^"?(.*?)"?$', '$1'
+    if ([string]::IsNullOrWhiteSpace($trimmedModIdsInput)) {
+        Write-Error "Error: No workshop item IDs specified"
+        exit 1
+    }
     [string[]]$modIdArray = $trimmedModIdsInput.Split(',') | ForEach-Object { $_.Trim() } | Where-Object { $_ }
 
-    if ($modIdArray.Count -eq 0 -and -not [string]::IsNullOrWhiteSpace($ModIds)) {
+    if ($modIdArray.Count -eq 0 -and -not [string]::IsNullOrWhiteSpace($modIds)) {
         continue
     } elseif ($modIdArray.Count -eq 0) {
         Write-Error "No workshop item IDs specified"

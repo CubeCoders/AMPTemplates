@@ -457,6 +457,11 @@ InstallMod() {
 }
 
 # --- Script entry point ---
+if [ -z "$1" ]; then
+    echo "No workshop item IDs specified"
+    exit 1
+fi
+
 if ! CheckPerl; then
     exit 1
 fi
