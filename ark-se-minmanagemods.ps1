@@ -110,8 +110,9 @@ sub create_mod_file {
     if ($mod_id_str =~ /^\d+$/) { $mod_id_val = $mod_id_str; }
     else { die "Perl: Invalid modId: '$mod_id_str'."; }
     print $fh pack('Q<', $mod_id_val);
-    write_ue4_string($fh, "ModName");
-    write_ue4_string($fh, "");
+    print $fh pack('l<', 0);
+    my $path_string = "../../../ShooterGame/Content/Mods/" . $mod_id_str;
+    write_ue4_string($fh, $path_string);
     my $num_map_names = scalar(@$map_names_ref);
     print $fh pack('l<', $num_map_names);
     foreach my $map_name (@$map_names_ref) { write_ue4_string($fh, $map_name); }
