@@ -409,53 +409,90 @@ try {
                  Get-ChildItem -Path $modContentDestDir -Force | Remove-Item -Recurse -Force
             }
         } else {
-            # Sync non-.z files using Robocopy (mirrors, includes deletions)
-            $robocopySource = $effectiveContentSourceFolder
-            $robocopyDest = $modContentDestDir
-            $robocopyArgs = @(
-                "`"$robocopySource`"", # Quoted for paths with spaces
-                "`"$robocopyDest`"",   # Quoted for paths with spaces
-                "/E",                  # Copy Subdirectories, including Empty ones.
-                "/PURGE",              # Delete destination files/folders that no longer exist in source.
-                "/XF", "*.z", "*.z.uncompressed_size", # Exclude Files
-                "/R:2", "/W:5",        # Retry 2 times, Wait 5 seconds between retries
-                "/NJH", "/NJS",        # No Job Header, No Job Summary
-                "/NDL", "/NFL", "/NP"  # No Directory List, No File List, No Progress
-            )
-            robocopy $robocopyArgs | Out-Null
-            if ($LASTEXITCODE -ge 8) {
-                Write-Error "Error: Robocopy of non-.z files failed for item ${currentModId}. Robocopy Exit Code: $LASTEXITCODE"
-                return $false
-            }
+            $allSourceFiles = Get-ChildItem -LiteralPath $effectiveContentSourceFolder -File -Recurse -ErrorAction SilentlyContinue
+            
+            if ($allSourceFiles) {
+                foreach ($sourceFileItem in $allSourceFiles) {
+                    $sourceFileFullPath = $sourceFileItem.FullName
+                    $cleanRelativeFile = $sourceFileFullPath.Substring($effectiveContentSourceFolder.Length).TrimStart("\","/")
+                    if ([string]::IsNullOrEmpty($cleanRelativeFile)) { continue }
 
-            # Process .z files: decompress if new or updated, set timestamp
-            $zFiles = Get-ChildItem -LiteralPath $effectiveContentSourceFolder -Filter "*.z" -Recurse -File -ErrorAction SilentlyContinue
-            if ($zFiles) {
-                foreach ($sourceZFileItem in $zFiles) {
-                    $sourceZFileFullPath = $sourceZFileItem.FullName
-                    $fileRelativeToSrcZ = $sourceZFileFullPath.Substring($effectiveContentSourceFolder.Length).TrimStart("\/")
-                    $destUncompressedFileFullPath = Join-Path -Path $modContentDestDir -ChildPath ($fileRelativeToSrcZ -replace '\.z$','')
-                    $destUncompressedDir = Split-Path -Path $destUncompressedFileFullPath -Parent
-                    
-                    $needsDecompression = $false
-                    if (-not (Test-Path -LiteralPath $destUncompressedFileFullPath -PathType Leaf)) {
-                        $needsDecompression = $true
-                    } else {
-                        $destFileObject = Get-Item -LiteralPath $destUncompressedFileFullPath
-                        if ($sourceZFileItem.LastWriteTime -gt $destFileObject.LastWriteTime) {
-                            $needsDecompression = $true
+                    $destFileParentDir = $null
+
+                    if ($cleanRelativeFile.EndsWith(".z.uncompressed_size", [System.StringComparison]::OrdinalIgnoreCase)) {
+                        continue
+                    } elseif ($cleanRelativeFile.EndsWith(".z", [System.StringComparison]::OrdinalIgnoreCase)) {
+                        # This is a .z file, destination is uncompressed
+                        $destUncompressedFileFullPath = Join-Path -Path $modContentDestFolder -ChildPath ($cleanRelativeFile -replace '\.z$','')
+                        $destFileParentDir = Split-Path -Path $destUncompressedFileFullPath -Parent
+                        
+                        $needsProcessing = $false
+                        if (-not (Test-Path -LiteralPath $destUncompressedFileFullPath -PathType Leaf)) {
+                            $needsProcessing = $true
+                        } else {
+                            $destUncompressedFileObject = Get-Item -LiteralPath $destUncompressedFileFullPath
+                            if ($sourceFileItem.LastWriteTime -gt $destUncompressedFileObject.LastWriteTime) {
+                                $needsProcessing = $true
+                            }
                         }
-                    }
 
-                    if ($needsDecompression) {
-                        $null = New-Item -ItemType Directory -Path $destUncompressedDir -Force -ErrorAction SilentlyContinue
-                        try {
-                            & perl.exe $ue4DecompressPerlExecutable --source "$sourceZFileFullPath" --destination "$destUncompressedFileFullPath"
-                            (Get-Item -LiteralPath $destUncompressedFileFullPath).LastWriteTime = $sourceZFileItem.LastWriteTime
-                        } catch {
-                            Write-Error "Error: Decompression of item $currentModId ('$($sourceZFileItem.Name)') failed. Skipping. Error: $($_.Exception.Message)"
-                            if(Test-Path -LiteralPath $destUncompressedFileFullPath){ Remove-Item -LiteralPath $destUncompressedFileFullPath -Force }
-                            return $false
+                        if ($needsProcessing) {
+                            if (-not (Test-Path -LiteralPath $destFileParentDir -PathType Container)) {
+                                try {
+                                    $null = New-Item -ItemType Directory -Path $destFileParentDir -Force
+                                } catch {
+                                    Write-Error "Error: Failed to create directory '$destFileParentDir' for item $currentModId"
+                                    return $false
+                                }
+                            }
+                            
+                            try {
+                                & perl.exe $ue4DecompressPerlExecutable --source "$sourceFileFullPath" --destination "$destUncompressedFileFullPath"
+                                # Set timestamp of uncompressed file to match the source .z file
+                                (Get-Item -LiteralPath $destUncompressedFileFullPath).LastWriteTime = $sourceFileItem.LastWriteTime
+                            } catch {
+                                Write-Error "Error: Decompression of '$sourceFileFullPath' for item $currentModId failed. Output file may be incomplete or missing. Error: $($_.Exception.Message)"
+                                if (Test-Path -LiteralPath $destUncompressedFileFullPath -PathType Leaf) {
+                                    Remove-Item -LiteralPath $destUncompressedFileFullPath -Force -ErrorAction SilentlyContinue
+                                }
+                                return $false
+                            }
+                        }
+                    } else { # Regular file (non-.z, non-.z.uncompressed_size)
+                        $destFileFullPath = Join-Path -Path $modContentDestFolder -ChildPath $cleanRelativeFile
+                        $destFileParentDir = Split-Path -Path $destFileFullPath -Parent
+
+                        $needsProcessing = $false
+                        if (-not (Test-Path -LiteralPath $destFileFullPath)) {
+                            $needsProcessing = $true
+                        } else {
+                            # Ensure it's a file we are comparing against
+                            if (Test-Path -LiteralPath $destFileFullPath -PathType Leaf) {
+                                $destFileObject = Get-Item -LiteralPath $destFileFullPath
+                                if ($sourceFileItem.LastWriteTime -gt $destFileObject.LastWriteTime) {
+                                    $needsProcessing = $true
+                                }
+                            } else { 
+                                # Destination exists but is not a file (e.g., a directory). Overwrite/replace.
+                                $needsProcessing = $true
+                            }
+                        }
+
+                        if ($needsProcessing) {
+                            if (-not (Test-Path -LiteralPath $destFileParentDir -PathType Container)) {
+                            try {
+                                    $null = New-Item -ItemType Directory -Path $destFileParentDir -Force
+                                } catch {
+                                    Write-Error "Error: Failed to create directory '$destFileParentDir' for item $currentModId"
+                                    return $false
+                                }
+                            }
+                            try {
+                                Copy-Item -LiteralPath $sourceFileFullPath -Destination $destFileFullPath -Force
+                            } catch {
+                                Write-Error "Error: Failed to copy '$cleanRelativeFile' to '$destFileFullPath' for item $currentModId. Error: $($_.Exception.Message)"
+                                return $false
+                            }
                         }
                     }
                 }
