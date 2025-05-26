@@ -342,7 +342,6 @@ try {
         }
 
         $requiredPerlModules = @(
-            'Compress::Zlib',
             'Win32::LongPath'
         )
 
