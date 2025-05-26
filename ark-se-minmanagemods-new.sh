@@ -163,7 +163,6 @@ ue4DecompressPerlScriptContent=$(cat <<'PERL_DECOMPRESS_EOF'
 #!/usr/bin/perl
 use strict;
 use warnings;
-
 use Getopt::Long qw(GetOptions);
 use File::Basename;
 use Compress::Zlib;
@@ -233,7 +232,8 @@ sub ue4_chunk_unzip {
         print {$out_fh} $uncompressed_data;
         $current_uncompressed_total += length($uncompressed_data);
     }
-    close $in_fh; close $out_fh;
+    close $in_fh;
+    close $out_fh;
 }
 
 my $sourceFileArg; my $destFileArg;
