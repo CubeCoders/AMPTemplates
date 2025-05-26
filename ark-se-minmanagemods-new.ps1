@@ -334,7 +334,7 @@ try {
             [string]$modId
         )
         $steamScript = Join-Path -Path $arkRootDir -ChildPath "steamcmd.exe"
-        $steamInstallDir = Join-Path - Path $arkBaseDir -ChildPath "Engine\Binaries\ThirdParty\SteamCMD\Win64"
+        $steamInstallDir = Join-Path -Path $arkBaseDir -ChildPath "Engine\Binaries\ThirdParty\SteamCMD\Win64"
         $maxRetries = 5
         $attempt = 0
         $outputLog = ""
@@ -582,7 +582,7 @@ try {
     if ($modIdArray.Count -eq 0 -and -not [string]::IsNullOrWhiteSpace($modIds)) {
         continue
     } elseif ($modIdArray.Count -eq 0) {
-        Write-Error "No workshop item IDs specified"
+        Write-Error "Error: No workshop item IDs specified"
         exit 1
     }
 
