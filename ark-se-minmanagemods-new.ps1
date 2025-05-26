@@ -400,27 +400,27 @@ try {
             return $false
         }
 
-        $$effectiveContentSourceDir = $sourceRootDir
+        $effectiveContentSourceDir = $sourceRootDir
         $modMetaExistsAndReadable = $false
         if (Test-Path -LiteralPath $originalModMetaFile -PathType Leaf) {
             $modMetaExistsAndReadable = $true
-            $$effectiveContentSourceDir = Join-Path -Path $sourceRootDir -ChildPath "WindowsNoEditor"
+            $effectiveContentSourceDir = Join-Path -Path $sourceRootDir -ChildPath "WindowsNoEditor"
         }
 
         $foundPrimalGameDataFile = $false
 
-        if (-not (Test-Path -LiteralPath $$effectiveContentSourceDir -PathType Container)) {
-            Write-Warning "Warning: Effective content source ('$$effectiveContentSourceDir') for item ${currentModId} does not exist. Cleaning destination"
+        if (-not (Test-Path -LiteralPath $effectiveContentSourceDir -PathType Container)) {
+            Write-Warning "Warning: Effective content source ('$effectiveContentSourceDir') for item ${currentModId} does not exist. Cleaning destination"
             if (Test-Path -LiteralPath $modContentDestDir -PathType Container) {
                  Get-ChildItem -Path $modContentDestDir -Force | Remove-Item -Recurse -Force
             }
         } else {
-            $allSourceFiles = Get-ChildItem -LiteralPath $$effectiveContentSourceDir -File -Recurse -ErrorAction SilentlyContinue
+            $allSourceFiles = Get-ChildItem -LiteralPath $effectiveContentSourceDir -File -Recurse -ErrorAction SilentlyContinue
             
             if ($allSourceFiles) {
                 foreach ($sourceFileItem in $allSourceFiles) {
                     $sourceFileFullPath = $sourceFileItem.FullName
-                    $cleanRelativeFile = $sourceFileFullPath.Substring($$effectiveContentSourceDir.Length).TrimStart("\","/")
+                    $cleanRelativeFile = $sourceFileFullPath.Substring($effectiveContentSourceDir.Length).TrimStart("\","/")
                     if ([string]::IsNullOrEmpty($cleanRelativeFile)) { continue }
 
                     $destFileParentDir = $null
@@ -514,8 +514,8 @@ try {
 
                 $fileRelativeToDest = $_.FullName.Substring($modContentDestDir.Length).TrimStart("\","/")
                 
-                $correspondingSourceDirectFile = Join-Path -Path $$effectiveContentSourceDir -ChildPath $fileRelativeToDest
-                $correspondingSourceZFile = Join-Path -Path $$effectiveContentSourceDir -ChildPath ($fileRelativeToDest + ".z")
+                $correspondingSourceDirectFile = Join-Path -Path $effectiveContentSourceDir -ChildPath $fileRelativeToDest
+                $correspondingSourceZFile = Join-Path -Path $effectiveContentSourceDir -ChildPath ($fileRelativeToDest + ".z")
 
                 if ((-not (Test-Path -LiteralPath $correspondingSourceDirectFile -PathType Leaf)) -and `
                     (-not (Test-Path -LiteralPath $correspondingSourceZFile -PathType Leaf)) ) {
