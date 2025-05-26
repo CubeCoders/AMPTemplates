@@ -11,10 +11,11 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 # --- Global variables ---
-Set-Variable -Name "arkRootDir" -Value ".\arkse" -Option Constant -Scope Script
-Set-Variable -Name "arkBaseDir" -Value (Join-Path -Path $arkRootDir -ChildPath "376030") -Option Constant -Scope Script
-Set-Variable -Name "workshopContentDir" -Value (Join-Path -Path $arkBaseDir -ChildPath "Engine\Binaries\ThirdParty\SteamCMD\Win64\steamapps\workshop\content\346110") -Option Constant -Scope Script
-Set-Variable -Name "modsInstallDir" -Value (Join-Path -Path $arkBaseDir -ChildPath "ShooterGame\Content\Mods") -Option Constant -Scope Script
+$scriptDir = (Resolve-Path -LiteralPath ".").Path
+$arkRootDir = Join-Path -Path $scriptDir -ChildPath "arkse"
+$arkBaseDir = Join-Path -Path $arkRootDir -ChildPath "376030"
+$workshopContentDir = Join-Path -Path $arkBaseDir -ChildPath "Engine\Binaries\ThirdParty\SteamCMD\Win64\steamapps\workshop\content\346110"
+$modsInstallDir = Join-Path -Path $arkBaseDir -ChildPath "ShooterGame\Content\Mods"
 
 # --- Embedded Perl script: create_mod_file.pl ---
 $createModFilePerlScriptContent = @'
@@ -380,46 +381,46 @@ try {
         )
         Write-Host "Installing/updating item ${currentModId} ..."
 
-        $sourceFolderRoot = Join-Path -Path $workshopContentDir -ChildPath $currentModId
+        $sourceRootDir = Join-Path -Path $workshopContentDir -ChildPath $currentModId
         $modContentDestDir = Join-Path -Path $modsInstallDir -ChildPath $currentModId
         $modDefinitionFile = Join-Path -Path $modsInstallDir -ChildPath ($currentModId + ".mod")
 
-        if (-not (Test-Path -LiteralPath $sourceFolderRoot -PathType Container)) {
-            Write-Error "Error: Source for item ${currentModId} ('$sourceFolderRoot') not found"
+        if (-not (Test-Path -LiteralPath $sourceRootDir -PathType Container)) {
+            Write-Error "Error: Source for item ${currentModId} ('$sourceRootDir') not found"
             return $false
         }
 
         $null = New-Item -ItemType Directory -Path $modContentDestDir -Force -ErrorAction SilentlyContinue
 
-        $originalModInfoFile = Join-Path -Path $sourceFolderRoot -ChildPath "mod.info"
-        $originalModMetaFile = Join-Path -Path $sourceFolderRoot -ChildPath "modmeta.info"
+        $originalModInfoFile = Join-Path -Path $sourceRootDir -ChildPath "mod.info"
+        $originalModMetaFile = Join-Path -Path $sourceRootDir -ChildPath "modmeta.info"
 
         if (-not (Test-Path -LiteralPath $originalModInfoFile -PathType Leaf)) {
             Write-Error "Error: mod.info for item ${currentModId} ('$originalModInfoFile') not found"
             return $false
         }
 
-        $effectiveContentSourceFolder = $sourceFolderRoot
+        $$effectiveContentSourceDir = $sourceRootDir
         $modMetaExistsAndReadable = $false
         if (Test-Path -LiteralPath $originalModMetaFile -PathType Leaf) {
             $modMetaExistsAndReadable = $true
-            $effectiveContentSourceFolder = Join-Path -Path $sourceFolderRoot -ChildPath "WindowsNoEditor"
+            $$effectiveContentSourceDir = Join-Path -Path $sourceRootDir -ChildPath "WindowsNoEditor"
         }
 
         $foundPrimalGameDataFile = $false
 
-        if (-not (Test-Path -LiteralPath $effectiveContentSourceFolder -PathType Container)) {
-            Write-Warning "Warning: Effective content source ('$effectiveContentSourceFolder') for item ${currentModId} does not exist. Cleaning destination"
+        if (-not (Test-Path -LiteralPath $$effectiveContentSourceDir -PathType Container)) {
+            Write-Warning "Warning: Effective content source ('$$effectiveContentSourceDir') for item ${currentModId} does not exist. Cleaning destination"
             if (Test-Path -LiteralPath $modContentDestDir -PathType Container) {
                  Get-ChildItem -Path $modContentDestDir -Force | Remove-Item -Recurse -Force
             }
         } else {
-            $allSourceFiles = Get-ChildItem -LiteralPath $effectiveContentSourceFolder -File -Recurse -ErrorAction SilentlyContinue
+            $allSourceFiles = Get-ChildItem -LiteralPath $$effectiveContentSourceDir -File -Recurse -ErrorAction SilentlyContinue
             
             if ($allSourceFiles) {
                 foreach ($sourceFileItem in $allSourceFiles) {
                     $sourceFileFullPath = $sourceFileItem.FullName
-                    $cleanRelativeFile = $sourceFileFullPath.Substring($effectiveContentSourceFolder.Length).TrimStart("\","/")
+                    $cleanRelativeFile = $sourceFileFullPath.Substring($$effectiveContentSourceDir.Length).TrimStart("\","/")
                     if ([string]::IsNullOrEmpty($cleanRelativeFile)) { continue }
 
                     $destFileParentDir = $null
@@ -428,7 +429,7 @@ try {
                         continue
                     } elseif ($cleanRelativeFile.EndsWith(".z", [System.StringComparison]::OrdinalIgnoreCase)) {
                         # This is a .z file, destination is uncompressed
-                        $destUncompressedFileFullPath = Join-Path -Path $modContentDestFolder -ChildPath ($cleanRelativeFile -replace '\.z$','')
+                        $destUncompressedFileFullPath = Join-Path -Path $modContentDestDir -ChildPath ($cleanRelativeFile -replace '\.z$','')
                         $destFileParentDir = Split-Path -Path $destUncompressedFileFullPath -Parent
                         
                         $needsProcessing = $false
@@ -464,7 +465,7 @@ try {
                             }
                         }
                     } else { # Regular file (non-.z, non-.z.uncompressed_size)
-                        $destFileFullPath = Join-Path -Path $modContentDestFolder -ChildPath $cleanRelativeFile
+                        $destFileFullPath = Join-Path -Path $modContentDestDir -ChildPath $cleanRelativeFile
                         $destFileParentDir = Split-Path -Path $destFileFullPath -Parent
 
                         $needsProcessing = $false
@@ -504,17 +505,17 @@ try {
             }
             
             # Clean up uncompressed files in destination for which a compressed or direct source no longer exists, and any stray compressed files
-            Get-ChildItem -LiteralPath $modContentDestFolder -File -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
+            Get-ChildItem -LiteralPath $modContentDestDir -File -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
                 if ($_.Extension -eq ".z") {
                     # .z files should not be in the final destination. Any found are considered stray.
                     Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue
                     return
                 }
 
-                $fileRelativeToDest = $_.FullName.Substring($modContentDestFolder.Length).TrimStart("\","/")
+                $fileRelativeToDest = $_.FullName.Substring($modContentDestDir.Length).TrimStart("\","/")
                 
-                $correspondingSourceDirectFile = Join-Path -Path $effectiveContentSourceFolder -ChildPath $fileRelativeToDest
-                $correspondingSourceZFile = Join-Path -Path $effectiveContentSourceFolder -ChildPath ($fileRelativeToDest + ".z")
+                $correspondingSourceDirectFile = Join-Path -Path $$effectiveContentSourceDir -ChildPath $fileRelativeToDest
+                $correspondingSourceZFile = Join-Path -Path $$effectiveContentSourceDir -ChildPath ($fileRelativeToDest + ".z")
 
                 if ((-not (Test-Path -LiteralPath $correspondingSourceDirectFile -PathType Leaf)) -and `
                     (-not (Test-Path -LiteralPath $correspondingSourceZFile -PathType Leaf)) ) {
