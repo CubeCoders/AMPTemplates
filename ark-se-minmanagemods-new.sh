@@ -320,48 +320,48 @@ InstallMod() {
     local currentModId="$1"
     echo "Installing/updating item ${currentModId} ..."
 
-    local sourceFolderRoot="${workshopContentDir}/${currentModId}"
+    local sourceRootDir="${workshopContentDir}/${currentModId}"
     local modContentDestDir="${modsInstallDir}/${currentModId}"
     local modDefinitionFile="${modsInstallDir}/${currentModId}.mod"
 
-    if [ ! -d "${sourceFolderRoot}" ]; then
-        echo "Error: Source for item ${currentModId} ('${sourceFolderRoot}') not found" >&2
+    if [ ! -d "${sourceRootDir}" ]; then
+        echo "Error: Source for item ${currentModId} ('${sourceRootDir}') not found" >&2
         return 1
     fi
 
     mkdir -p "${modContentDestDir}" \
         || { echo "Error: Failed to create destination '${modContentDestDir}' for item ${currentModId}" >&2; return 1; }
 
-    local originalModInfoFile="${sourceFolderRoot}/mod.info"
-    local originalModMetaFile="${sourceFolderRoot}/modmeta.info"
+    local originalModInfoFile="${sourceRootDir}/mod.info"
+    local originalModMetaFile="${sourceRootDir}/modmeta.info"
 
     if [ ! -f "${originalModInfoFile}" ]; then
         echo "Error: mod.info for item ${currentModId} ('${originalModInfoFile}') not found" >&2
         return 1
     fi
 
-    local effectiveContentSourceFolder="${sourceFolderRoot}"
+    local effectiveContentSourceDir="${sourceRootDir}"
     local modMetaExistsAndReadable=0
     if [ -f "${originalModMetaFile}" ] && [ -r "${originalModMetaFile}" ]; then
         modMetaExistsAndReadable=1
-        effectiveContentSourceFolder="${sourceFolderRoot}/WindowsNoEditor"
+        effectiveContentSourceDir="${sourceRootDir}/WindowsNoEditor"
     fi
 
     local foundPrimalGameDataFile=0
 
-    if [ ! -d "${effectiveContentSourceFolder}" ]; then
-        echo "Warning: Effective content source ('${effectiveContentSourceFolder}') for item ${currentModId} does not exist. Cleaning destination" >&2
+    if [ ! -d "${effectiveContentSourceDir}" ]; then
+        echo "Warning: Effective content source ('${effectiveContentSourceDir}') for item ${currentModId} does not exist. Cleaning destination" >&2
         if [ -d "${modContentDestDir}" ]; then
              find "${modContentDestDir}" -mindepth 1 -delete
         fi
     else
         local allSourceFilesList="${tmpDir}/source_files_${currentModId}_${RANDOM}.txt"
         # Find all files in the source and save to a temporary list
-        find "${effectiveContentSourceFolder}" -type f -print0 > "${allSourceFilesList}"
+        find "${effectiveContentSourceDir}" -type f -print0 > "${allSourceFilesList}"
 
         if [ -s "${allSourceFilesList}" ]; then
             while IFS= read -r -d $'\0' sourceFileFullPath; do
-                local cleanRelativeFile="${sourceFileFullPath#${effectiveContentSourceFolder}/}"
+                local cleanRelativeFile="${sourceFileFullPath#${effectiveContentSourceDir}/}"
                 cleanRelativeFile="${cleanRelativeFile#/}"
                 if [ -z "${cleanRelativeFile}" ]; then continue; fi
 
@@ -411,8 +411,8 @@ InstallMod() {
         if [ -s "${tempDestPotentialUncompressedFiles}" ] ; then
             while IFS= read -r -d $'\0' destFileToCheck; do
                 local relativeDestPath="${destFileToCheck#${modContentDestDir}/}"
-                local correspondingSourceZFile="${effectiveContentSourceFolder}/${relativeDestPath}.z"
-                local correspondingSourceDirectFile="${effectiveContentSourceFolder}/${relativeDestPath}"
+                local correspondingSourceZFile="${effectiveContentSourceDir}/${relativeDestPath}.z"
+                local correspondingSourceDirectFile="${effectiveContentSourceDir}/${relativeDestPath}"
 
                 # If the destination file exists, but its original source (either direct or as .z) is gone, remove it.
                 if [ ! -f "${correspondingSourceDirectFile}" ] && [ ! -f "${correspondingSourceZFile}" ]; then
