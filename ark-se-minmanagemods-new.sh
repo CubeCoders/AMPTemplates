@@ -16,7 +16,6 @@ createModFilePerlScriptContent=$(cat <<'PERL_CREATE_MOD_EOF'
 use strict;
 use warnings;
 use utf8;
-
 use File::Basename;
 use Encode qw(encode decode FB_CROAK);
 use Getopt::Long qw(GetOptions);
@@ -28,16 +27,16 @@ sub read_ue4_string {
     my ($fh) = @_;
     my $buffer;
     my $bytes_read;
-    $bytes_read = $fh->read($buffer, 4);
+    $bytes_read = read($fh, $buffer, 4);
     unless (defined $bytes_read && $bytes_read == 4) { return undef; }
     my $count = unpack('l<', $buffer);
     my $was_negative_originally = 0;
     if ($count < 0) { $was_negative_originally = 1; $count = -$count; }
     if ($was_negative_originally || $count <= 0) {
-        if (!$was_negative_originally && $count == 1) { $fh->read($buffer, 1); }
+        if (!$was_negative_originally && $count == 1) { read($fh, $buffer, 1); }
         return "";
     }
-    $bytes_read = $fh->read($buffer, $count);
+    $bytes_read = read($fh, $buffer, $count);
     unless (defined $bytes_read && $bytes_read == $count) { return undef; }
     my $str_data = substr($buffer, 0, $count - 1);
     return decode('UTF-8', $str_data, FB_CROAK);
@@ -48,9 +47,9 @@ sub write_ue4_string {
     my $utf8_bytes = encode('UTF-8', $string_to_write, FB_CROAK);
     my $num_bytes_for_string_itself = length($utf8_bytes);
     my $total_length_field = $num_bytes_for_string_itself + 1;
-    $fh->print(pack('l<', $total_length_field));
-    $fh->print($utf8_bytes);
-    $fh->print(pack('C', 0));
+    print $fh pack('l<', $total_length_field);
+    print $fh $utf8_bytes;
+    print $fh pack('C', 0);
 }
 
 sub parse_mod_info {
@@ -60,7 +59,7 @@ sub parse_mod_info {
     my $mod_name_from_info_file = read_ue4_string($fh);
     if (!defined $mod_name_from_info_file) { close $fh; return (); }
     my $buffer;
-    my $bytes_read = $fh->read($buffer, 4);
+    my $bytes_read = read($fh, $buffer, 4);
     unless (defined $bytes_read && $bytes_read == 4) { close $fh; return (); }
     my $num_map_names = unpack('l<', $buffer);
     for (my $i = 0; $i < $num_map_names; $i++) {
@@ -78,7 +77,7 @@ sub parse_modmeta_info {
     if (-z $modmeta_info_filepath) { return %meta_info; }
     open my $fh, '<:raw', $modmeta_info_filepath or die "Perl: Cannot open modmeta.info '$modmeta_info_filepath': $!";
     my $buffer;
-    my $bytes_read = $fh->read($buffer, 4);
+    my $bytes_read = read($fh, $buffer, 4);
     unless (defined $bytes_read && $bytes_read == 4) { close $fh; return %meta_info; }
     my $num_pairs = unpack('l<', $buffer);
     if ($num_pairs < 0) { $num_pairs = 0; }
@@ -96,19 +95,19 @@ sub create_mod_file {
     open my $fh, '>:raw', $output_filepath or die "Perl: Cannot create .mod file '$output_filepath': $!";
     my $mod_id_val;
     if ($mod_id_str =~ /^\d+$/) { $mod_id_val = $mod_id_str; }
-    else { die "Perl: Invalid modId: '$mod_id_str'. Must be an unsigned integer string."; }
-    $fh->print(pack('Q<', $mod_id_val));
+    else { die "Perl: Invalid modId: '$mod_id_str'."; }
+    print $fh pack('Q<', $mod_id_val);
     write_ue4_string($fh, "ModName");
     write_ue4_string($fh, "");
     my $num_map_names = scalar(@$map_names_ref);
-    $fh->print(pack('l<', $num_map_names));
+    print $fh pack('l<', $num_map_names);
     foreach my $map_name (@$map_names_ref) { write_ue4_string($fh, $map_name); }
-    $fh->print(pack('L<', 4280483635));
-    $fh->print(pack('l<', 2));
+    print $fh pack('L<', 4280483635);
+    print $fh pack('l<', 2);
     my $has_mod_type_key = exists($meta_info_ref->{'ModType'}) ? 1 : 0;
-    $fh->print(pack('C', $has_mod_type_key));
+    print $fh pack('C', $has_mod_type_key);
     my $num_meta_pairs = scalar(keys %$meta_info_ref);
-    $fh->print(pack('l<', $num_meta_pairs));
+    print $fh pack('l<', $num_meta_pairs);
     foreach my $key (sort keys %$meta_info_ref) {
         my $value = $meta_info_ref->{$key};
         write_ue4_string($fh, $key);
@@ -124,35 +123,37 @@ my $outputModFileArg;
 my $defaultModtypeIfMetaEmptyArg = 0;
 
 GetOptions(
-    'modid=s'           => \$modIdArg,
-    'modinfo=s'         => \$modInfoFileArg,
-    'modmeta:s'         => \$modmetaInfoFileArg,
-    'output=s'          => \$outputModFileArg,
+    'modid=s' => \$modIdArg,
+    'modinfo=s' => \$modInfoFileArg,
+    'modmeta:s' => \$modmetaInfoFileArg,
+    'output=s' => \$outputModFileArg,
     'default-modtype-if-meta-empty!' => \$defaultModtypeIfMetaEmptyArg,
 ) or die "Perl Usage: $0 --modid <id> --modinfo <path> [--modmeta <path>] --output <path> [--default-modtype-if-meta-empty]\n";
 
-die "Perl: Missing --modid for create_mod_file.pl\n" unless defined $modIdArg;
-die "Perl: Missing --modinfo for create_mod_file.pl\n" unless defined $modInfoFileArg;
-die "Perl: Missing --output for create_mod_file.pl\n" unless defined $outputModFileArg;
 unless (-f $modInfoFileArg && -r _) {
     die "Perl: mod.info file not found or not readable at '$modInfoFileArg' for create_mod_file.pl.\n";
 }
-
 my @map_names = parse_mod_info($modInfoFileArg);
+
 my %meta_information;
-my $modmetaWasSpecifiedAndValid = 0;
-if (defined $modmetaInfoFileArg && length $modmetaInfoFileArg > 0) {
+my $modmetaFileWasProvided = (defined $modmetaInfoFileArg && length $modmetaInfoFileArg > 0);
+my $metaInfoActuallyParsed = 0;
+
+if ($modmetaFileWasProvided) {
     if (-f $modmetaInfoFileArg && -r _) {
         %meta_information = parse_modmeta_info($modmetaInfoFileArg);
-        $modmetaWasSpecifiedAndValid = 1;
+        $metaInfoActuallyParsed = 1;
     }
 }
+
 if ($defaultModtypeIfMetaEmptyArg) {
-    my $apply_default = 0;
-    if (!(defined $modmetaInfoFileArg && length $modmetaInfoFileArg > 0)) { $apply_default = 1; }
-    elsif ($modmetaWasSpecifiedAndValid && scalar(keys %meta_information) == 0) { $apply_default = 1; }
-    if ($apply_default) { $meta_information{'ModType'} = $MODTYPE_MOD; }
+    if (!$modmetaFileWasProvided ||
+        ($modmetaFileWasProvided && !scalar(keys %meta_information))
+       ) {
+        $meta_information{'ModType'} = $MODTYPE_MOD;
+    }
 }
+
 create_mod_file($outputModFileArg, $modIdArg, \@map_names, \%meta_information);
 exit 0;
 PERL_CREATE_MOD_EOF
@@ -166,6 +167,7 @@ use warnings;
 use Getopt::Long qw(GetOptions);
 use File::Basename;
 use Compress::Zlib;
+use IO::Handle;
 
 use constant { PACKAGE_FILE_TAG => 2653586369, LOADING_COMPRESSION_CHUNK_SIZE => 131072 };
 
@@ -180,42 +182,33 @@ sub read_int64_le {
 sub ue4_chunk_unzip {
     my ($source_filepath, $destination_filepath) = @_;
     open my $in_fh, '<:raw', $source_filepath or die "Perl: Cannot open source '$source_filepath': $!";
-    binmode $in_fh;
     open my $out_fh, '>:raw', $destination_filepath or die "Perl: Cannot open dest '$destination_filepath': $!";
-    binmode $out_fh;
 
     my $header1_compressed_size = read_int64_le($in_fh);
-    die "Perl: Failed header1_compressed_size from '$source_filepath'" unless defined $header1_compressed_size;
+    die "Perl: Failed h1_comp_size from '$source_filepath'" unless defined $header1_compressed_size;
     my $header1_uncompressed_size = read_int64_le($in_fh);
-    die "Perl: Failed header1_uncompressed_size from '$source_filepath'" unless defined $header1_uncompressed_size;
-    my $header2_compressed_size = read_int64_le($in_fh); 
-    die "Perl: Failed header2_compressed_size from '$source_filepath'" unless defined $header2_compressed_size;
+    die "Perl: Failed h1_uncomp_size from '$source_filepath'" unless defined $header1_uncompressed_size;
+    my $header2_compressed_size = read_int64_le($in_fh);
+    die "Perl: Failed h2_comp_size from '$source_filepath'" unless defined $header2_compressed_size;
     my $total_uncompressed_size = read_int64_le($in_fh);
-    die "Perl: Failed total_uncompressed_size from '$source_filepath'" unless defined $total_uncompressed_size;
+    die "Perl: Failed total_uncomp_size from '$source_filepath'" unless defined $total_uncompressed_size;
 
     my $ue4_uncompressed_chunk_size = $header1_uncompressed_size;
-    if ($ue4_uncompressed_chunk_size == PACKAGE_FILE_TAG) {
-        $ue4_uncompressed_chunk_size = LOADING_COMPRESSION_CHUNK_SIZE;
-    }
-    if ($ue4_uncompressed_chunk_size <= 0) {
-        die "Perl: UE4 Uncompressed Chunk Size must be positive, got $ue4_uncompressed_chunk_size from '$source_filepath'\n";
-    }
+    if ($ue4_uncompressed_chunk_size == PACKAGE_FILE_TAG) { $ue4_uncompressed_chunk_size = LOADING_COMPRESSION_CHUNK_SIZE; }
+    if ($ue4_uncompressed_chunk_size <= 0) { die "Perl: UE4 Chunk Size must be positive, got $ue4_uncompressed_chunk_size from '$source_filepath'\n"; }
     my $num_chunks = 0;
-    if ($total_uncompressed_size > 0) {
-        $num_chunks = int(($total_uncompressed_size + $ue4_uncompressed_chunk_size - 1) / $ue4_uncompressed_chunk_size);
-    } elsif ($total_uncompressed_size == 0) { $num_chunks = 0; }
-    else { die "Perl: Total uncompressed size negative: $total_uncompressed_size from '$source_filepath'.\n"; }
-    if ($num_chunks < 0) { die "Perl: Num chunks negative: $num_chunks from '$source_filepath'.\n"; }
-    
+    if ($total_uncompressed_size > 0) { $num_chunks = int(($total_uncompressed_size + $ue4_uncompressed_chunk_size - 1) / $ue4_uncompressed_chunk_size); }
+    elsif ($total_uncompressed_size == 0) { $num_chunks = 0; }
+    else { die "Perl: Total uncompressed size cannot be negative ($total_uncompressed_size) from '$source_filepath'.\n"; }
+    if ($num_chunks < 0) { die "Perl: Number of chunks cannot be negative ($num_chunks) from '$source_filepath'.\n"; }
+
     my @chunk_table;
     for (my $i = 0; $i < $num_chunks; $i++) {
         my $chunk_compressed_size = read_int64_le($in_fh);
-        die "Perl: Failed comp size chunk $i from '$source_filepath'" unless defined $chunk_compressed_size;
-        my $chunk_uncompressed_size = read_int64_le($in_fh); 
-        die "Perl: Failed uncomp size chunk $i from '$source_filepath'" unless defined $chunk_uncompressed_size;
-        if ($chunk_compressed_size < 0 || $chunk_uncompressed_size < 0) {
-            die "Perl: Chunk $i from '$source_filepath' negative size(s): Comp=$chunk_compressed_size, Uncomp=$chunk_uncompressed_size.";
-        }
+        die "Perl: Failed to read compressed size for chunk $i from '$source_filepath'" unless defined $chunk_compressed_size;
+        my $chunk_uncompressed_size = read_int64_le($in_fh);
+        die "Perl: Failed to read uncompressed size for chunk $i from '$source_filepath'" unless defined $chunk_uncompressed_size;
+        if ($chunk_compressed_size < 0 || $chunk_uncompressed_size < 0) { die "Perl: Chunk $i from '$source_filepath' has negative size(s)."; }
         push @chunk_table, { compressed_size => $chunk_compressed_size, uncompressed_size => $chunk_uncompressed_size };
     }
     my $current_uncompressed_total = 0;
@@ -228,15 +221,11 @@ sub ue4_chunk_unzip {
             my $compressed_data_buffer;
             my $bytes_read = read($in_fh, $compressed_data_buffer, $bytes_to_read_for_chunk);
             unless (defined $bytes_read && $bytes_read == $bytes_to_read_for_chunk) {
-                die "Perl: Failed to read $bytes_to_read_for_chunk bytes for chunk $i from '$source_filepath'. Got " . ($bytes_read//0) . " bytes. Error: " . ($!//"Unknown");
+                die "Perl: Failed to read $bytes_to_read_for_chunk bytes for chunk $i from '$source_filepath'. Expected $bytes_to_read_for_chunk, got " . ($bytes_read//0) . ". Error: " . ($!//"Unknown");
             }
             $uncompressed_data = Compress::Zlib::uncompress($compressed_data_buffer);
             unless (defined $uncompressed_data) {
-                my $z_err_num;
-                {
-                    no warnings 'once';
-                    $z_err_num = $Compress::Zlib::unzerrno; 
-                }
+                my $z_err_num; { no warnings 'once'; $z_err_num = $Compress::Zlib::unzerrno; }
                 my $zlib_error_str = Compress::Zlib::unzerror($z_err_num) || "Unknown Zlib err $z_err_num";
                 die "Perl: Zlib uncomp fail chunk $i from '$source_filepath': $zlib_error_str";
             }
@@ -246,12 +235,13 @@ sub ue4_chunk_unzip {
     }
     close $in_fh; close $out_fh;
 }
-my $sourceFileArg;
-my $destFileArg;
-GetOptions('source=s' => \$sourceFileArg, 'destination=s' => \$destFileArg)
-    or die "Perl Usage: $0 --source <file.z> --destination <file_uncomp>\n";
-die "Perl: Missing --source for ue4_decompress.pl\n" unless defined $sourceFileArg;
-die "Perl: Missing --destination for ue4_decompress.pl\n" unless defined $destFileArg;
+
+my $sourceFileArg; my $destFileArg;
+GetOptions(
+        'source=s' => \$sourceFileArg,
+        'destination=s' => \$destFileArg
+) or die "Perl Usage: $0 --source <file.z> --destination <file_uncomp>\n";
+
 unless (-f $sourceFileArg && -r _) {
     die "Perl: Source file '$sourceFileArg' not found/readable for ue4_decompress.pl.\n";
 }
