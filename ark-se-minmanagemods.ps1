@@ -369,59 +369,74 @@ try {
     }
 
     function Download-Mod {
+        [CmdletBinding()]
         param(
             [string]$modId
         )
-        $steamScript = Join-Path -Path $arkRootDir -ChildPath "steamcmd.exe"
-        $steamInstallDir = Join-Path -Path $arkBaseDir -ChildPath "Engine\Binaries\ThirdParty\SteamCMD\Win64"
+        
+        $steamScript = Join-Path -Path $script:arkRootDir -ChildPath "steamcmd.exe"
+        $steamInstallDir = Join-Path -Path $script:arkBaseDir -ChildPath "Engine\Binaries\ThirdParty\SteamCMD\Win64"
         $maxRetries = 5
         $attempt = 0
         $outputLog = ""
+        $successStatus = $false
 
-        Write-Host "Downloading item $modId ..."
-        
+        Write-Host "Downloading item ${modId} ..."
+
         while ($attempt -lt $maxRetries) {
             $attempt++
             $outputLog = ""
-            try {
-                $psi = New-Object System.Diagnostics.ProcessStartInfo
-                $psi.FileName = $steamScript
-                $psi.Arguments = "+force_install_dir `"$steamInstallDir`" +login anonymous +workshop_download_item 346110 `"$modId`" validate +quit"
-                $psi.UseShellExecute = $false
-                $psi.RedirectStandardOutput = $true
-                $psi.RedirectStandardError = $true
-                $psi.CreateNoWindow = $true
-                $process = [System.Diagnostics.Process]::Start($psi)
-                $outputLog = $process.StandardOutput.ReadToEnd()
-                $errorLog = $process.StandardError.ReadToEnd()
-                $process.WaitForExit()
-                $outputLog += $errorLog
+            
+            $steamCmdArgs = @(
+                "+force_install_dir", "`"$steamInstallDir`"",
+                "+login", "anonymous",
+                "+workshop_download_item", "346110", $modId, "validate",
+                "+quit"
+            )
 
-                if ($outputLog -match "Success. Downloaded item $modId") {
-                    Write-Host "Success. Downloaded item $modId"
-                    return $true
+            try {
+                $process = Start-Process -FilePath $steamScript -ArgumentList $steamCmdArgs -Wait -NoNewWindow -PassThru -RedirectStandardOutput (Join-Path $env:TEMP "steamcmd_stdout.log") -RedirectStandardError (Join-Path $env:TEMP "steamcmd_stderr.log")
+                $stdoutContent = Get-Content (Join-Path $env:TEMP "steamcmd_stdout.log") -ErrorAction SilentlyContinue
+                $stderrContent = Get-Content (Join-Path $env:TEMP "steamcmd_stderr.log") -ErrorAction SilentlyContinue
+                $outputLog = ($stdoutContent -join [System.Environment]::NewLine) + [System.Environment]::NewLine + ($stderrContent -join [System.Environment]::NewLine)
+                
+                Remove-Item (Join-Path $env:TEMP "steamcmd_stdout.log") -ErrorAction SilentlyContinue
+                Remove-Item (Join-Path $env:TEMP "steamcmd_stderr.log") -ErrorAction SilentlyContinue
+
+                if ($outputLog -match "Success. Downloaded item ${modId}") {
+                    Write-Host "Success. Downloaded item ${modId}"
+                    $successStatus = $true
+                    break 
                 }
-                Write-Error "Warning: Item ${modId} download attempt $attempt/$maxRetries failed. Retrying in 10s ..."
-            } catch {
-                Write-Error "Error: Exception during steamcmd execution for $modId (attempt $attempt): $($_.Exception.Message)"
-            }
-            if ($attempt -lt $maxRetries) {
+            } catch { }
+            
+            if (-not $successStatus -and $attempt -lt $maxRetries) {
+                $errorMessage = "Warning: Item ${modId} download attempt ${attempt}/${maxRetries} failed. Retrying in 10s ..."
+                [Console]::Error.WriteLine($errorMessage)
                 Start-Sleep -Seconds 10
             }
+        } 
+
+        if ($successStatus) {
+            return $true
+        } else {
+            $finalErrorMessage = "Error: Item ${modId} download failed after ${maxRetries} attempts"
+            [Console]::Error.WriteLine($finalErrorMessage)
+            return $false
         }
-        Write-Error "Error: Download of item $modId failed after $maxRetries attempts"
-        return $false
     }
 
     function Install-Mod {
-        param(
+        [CmdletBinding()]
+            param(
             [string]$currentModId
         )
+
         Write-Host "Installing/updating item ${currentModId} ..."
 
-        $sourceRootDir = Join-Path -Path $workshopContentDir -ChildPath $currentModId
-        $modContentDestDir = Join-Path -Path $modsInstallDir -ChildPath $currentModId
-        $modDefinitionFile = Join-Path -Path $modsInstallDir -ChildPath ($currentModId + ".mod")
+        $sourceRootDir = Join-Path -Path $script:workshopContentDir -ChildPath $currentModId
+        $modContentDestDir = Join-Path -Path $script:modsInstallDir -ChildPath $currentModId
+        $modDefinitionFile = Join-Path -Path $script:modsInstallDir -ChildPath ($currentModId + ".mod")
 
         if (-not (Test-Path -LiteralPath $sourceRootDir -PathType Container)) {
             Write-Error "Error: Source for item ${currentModId} ('$sourceRootDir') not found"
