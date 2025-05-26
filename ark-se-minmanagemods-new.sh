@@ -7,7 +7,7 @@ set -euo pipefail
 # --- Global variables ---
 readonly arkRootDir="./arkse"
 readonly arkBaseDir="${arkRootDir}/376030"
-readonly workshopContentDir="${arkBaseDir}/steamapps/workshop/content/346110"
+readonly workshopContentDir="${arkBaseDir}/Engine/Binaries/ThirdParty/SteamCMD/Linux/steamapps/workshop/content/346110"
 readonly modsInstallDir="${arkBaseDir}/ShooterGame/Content/Mods"
 
 # --- Embedded Perl script: create_mod_file.pl ---
@@ -289,7 +289,7 @@ DownloadMod() {
     local modId="$1"
     local steamScript="${arkRootDir}/steamcmd.sh"
     local steamInstallDir
-    steamInstallDir=$(realpath "${arkBaseDir}")
+    steamInstallDir=$(realpath "${arkBaseDir}/Engine/Binaries/ThirdParty/SteamCMD/Linux")
     local maxRetries=5
     local attempt=0
     local outputLog

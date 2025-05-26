@@ -8,7 +8,7 @@ Set-StrictMode -Version Latest
 # --- Global variables ---
 Set-Variable -Name "arkRootDir" -Value ".\arkse" -Option Constant -Scope Script
 Set-Variable -Name "arkBaseDir" -Value (Join-Path -Path $arkRootDir -ChildPath "376030") -Option Constant -Scope Script
-Set-Variable -Name "workshopContentDir" -Value (Join-Path -Path $arkBaseDir -ChildPath "steamapps\workshop\content\346110") -Option Constant -Scope Script
+Set-Variable -Name "workshopContentDir" -Value (Join-Path -Path $arkBaseDir -ChildPath "Engine\Binaries\ThirdParty\SteamCMD\Win64\steamapps\workshop\content\346110") -Option Constant -Scope Script
 Set-Variable -Name "modsInstallDir" -Value (Join-Path -Path $arkBaseDir -ChildPath "ShooterGame\Content\Mods") -Option Constant -Scope Script
 
 # --- Embedded Perl script: create_mod_file.pl ---
@@ -225,8 +225,8 @@ $ue4DecompressPerlExecutable = Join-Path -Path $tempDir -ChildPath "ue4_decompre
 
 # Ensure the script exits and cleans up temp files
 try {
-    Set-Content -Path $createModFilePerlExecutable -Value $createModFilePerlScriptContent -Encoding UTF8NoBOM
-    Set-Content -Path $ue4DecompressPerlExecutable -Value $ue4DecompressPerlScriptContent -Encoding UTF8NoBOM
+    [System.IO.File]::WriteAllLines($createModFilePerlExecutable, $createModFilePerlScriptContent, (New-Object System.Text.UTF8Encoding($false)))
+    [System.IO.File]::WriteAllLines($ue4DecompressPerlExecutable, $ue4DecompressPerlScriptContent, (New-Object System.Text.UTF8Encoding($false)))
 
     # --- Helper functions ---
     function Setup-Perl {
@@ -329,7 +329,7 @@ try {
             [string]$modId
         )
         $steamScript = Join-Path -Path $arkRootDir -ChildPath "steamcmd.exe"
-        $steamInstallDir = (Resolve-Path -LiteralPath $arkBaseDir).Path
+        $steamInstallDir = Join-Path - Path $arkBaseDir -ChildPath "Engine\Binaries\ThirdParty\SteamCMD\Win64"
         $maxRetries = 5
         $attempt = 0
         $outputLog = ""
