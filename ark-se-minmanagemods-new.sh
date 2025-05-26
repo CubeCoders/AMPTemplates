@@ -355,38 +355,54 @@ InstallMod() {
              find "${modContentDestDir}" -mindepth 1 -delete
         fi
     else
-        # Sync non-.z files using rsync
-        rsync -a --delete --exclude='*.z' --exclude='*.z.uncompressed_size' \
-              "${effectiveContentSourceFolder}/" "${modContentDestDir}/" \
-            || { echo "Error: Rsync of non-.z files failed for item ${currentModId}." >&2; return 1; }
+        local allSourceFilesList="${tmpDir}/source_files_${currentModId}_${RANDOM}.txt"
+        # Find all files in the source and save to a temporary list
+        find "${effectiveContentSourceFolder}" -type f -print0 > "${allSourceFilesList}"
 
-        # Process .z files: decompress if new or updated, set timestamp
-        local tempZFilesListForMod="${tmpDir}/z_files_diff_${currentModId}_${RANDOM}.txt"
-        find "${effectiveContentSourceFolder}" -type f -name '*.z' -print0 > "${tempZFilesListForMod}"
+        if [ -s "${allSourceFilesList}" ]; then
+            while IFS= read -r -d $'\0' sourceFileFullPath; do
+                local cleanRelativeFile="${sourceFileFullPath#${effectiveContentSourceFolder}/}"
+                cleanRelativeFile="${cleanRelativeFile#/}"
+                if [ -z "${cleanRelativeFile}" ]; then continue; fi
 
-        if [ -s "${tempZFilesListForMod}" ]; then
-            while IFS= read -r -d $'\0' sourceZFileFullPath; do
-                local fileRelativeToSrcZ="${sourceZFileFullPath#${effectiveContentSourceFolder}/}"
-                local destUncompressedFileFullPath="${modContentDestDir}/${fileRelativeToSrcZ%.z}"
-                local destUncompressedDir
-                destUncompressedDir=$(dirname "${destUncompressedFileFullPath}")
+                local destFileParentDir 
 
-                if [ ! -f "${destUncompressedFileFullPath}" ] || [ "${sourceZFileFullPath}" -nt "${destUncompressedFileFullPath}" ]; then
-                    mkdir -p "${destUncompressedDir}" \
-                        || { echo "Error: Failed to create directory '${destUncompressedDir}' for mod ${currentModId}" >&2; return 1; }
-                    
-                    if "${ue4DecompressPerlExecutable}" --source "${sourceZFileFullPath}" --destination "${destUncompressedFileFullPath}"; then
-                        touch -c -r "${sourceZFileFullPath}" "${destUncompressedFileFullPath}" \
-                            || echo "Warning: Failed to set timestamp on '${destUncompressedFileFullPath}' for item ${currentModId}" >&2
-                    else
-                        echo "Error: Decompression of '${sourceZFileFullPath}' for item ${currentModId} failed. Output file may be incomplete or missing" >&2
-                        rm -f "${destUncompressedFileFullPath}"
-                        return 1
+                if [[ "${cleanRelativeFile}" == *".z.uncompressed_size" ]]; then
+                    continue
+                elif [[ "${cleanRelativeFile}" == *".z" ]]; then
+                    # Processing a .z file
+                    local destUncompressedFileFullPath="${modContentDestDir}/${cleanRelativeFile%.z}"
+                    destFileParentDir=$(dirname "${destUncompressedFileFullPath}")
+                    if [ ! -f "${destUncompressedFileFullPath}" ] || [ "${sourceFileFullPath}" -nt "${destUncompressedFileFullPath}" ]; then
+                        mkdir -p "${destFileParentDir}" \
+                            || { echo "Error: Failed to create directory '${destFileParentDir}' for item ${currentModId}" >&2; return 1; }
+                        
+                        if "${ue4DecompressPerlExecutable}" --source "${sourceFileFullPath}" --destination "${destUncompressedFileFullPath}"; then
+                            touch -c -r "${sourceFileFullPath}" "${destUncompressedFileFullPath}" \
+                                || echo "Warning: Failed to set timestamp on '${destUncompressedFileFullPath}' for item ${currentModId}" >&2
+                        else
+                            echo "Error: Decompression of '${sourceFileFullPath}' for item ${currentModId} failed. Output file may be incomplete or missing" >&2
+                            rm -f "${destUncompressedFileFullPath}"
+                            return 1
+                        fi
+                    fi
+                else 
+                    # Processing a regular (non-.z) file
+                    local destFileFullPath="${modContentDestDir}/${cleanRelativeFile}"
+                    destFileParentDir=$(dirname "${destFileFullPath}")
+                    if [ ! -e "${destFileFullPath}" ] || [ "${sourceFileFullPath}" -nt "${destFileFullPath}" ]; then
+                        mkdir -p "${destFileParentDir}" \
+                            || { echo "Error: Failed to create directory '${destFileParentDir}' for item ${currentModId}" >&2; return 1; }
+                        
+                        if ! { cp -p --reflink=auto "${sourceFileFullPath}" "${destFileFullPath}" 2>/dev/null || cp -p "${sourceFileFullPath}" "${destFileFullPath}"; }; then
+                            echo "Error: Failed to copy '${cleanRelativeFile}' to '${destFileFullPath}' for item ${currentModId}." >&2
+                            return 1
+                        fi
                     fi
                 fi
-            done < "${tempZFilesListForMod}"
+            done < "${allSourceFilesList}"
         fi
-        rm -f "${tempZFilesListForMod}"
+        rm -f "${allSourceFilesList}"
 
         # Clean up uncompressed files in destination for which a .z source no longer exists
         local tempDestPotentialUncompressedFiles="${tmpDir}/dest_uncomp_check_${currentModId}_${RANDOM}.txt"
@@ -441,11 +457,6 @@ InstallMod() {
 }
 
 # --- Script entry point ---
-if ! command -v rsync >/dev/null 2>&1; then
-    echo "Error: rsync command not found. Please install rsync" >&2
-    exit 1
-fi
-
 if ! CheckPerl; then
     exit 1
 fi
