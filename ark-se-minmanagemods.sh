@@ -491,50 +491,74 @@ InstallMod() {
         fi
         rm -f "${allSourceFilesList}"
 
-        if [ ${#zJobSourcePathsForPerl[@]} -gt 0 ]; then                        
+        if [ ${#zJobSourcePathsForPerl[@]} -gt 0 ]; then            
             local jqInputFile="${tmpDir}/jq_intermediate_input_${currentModId}_${RANDOM}.txt"
-            >"${jqInputFile}" 
+            >"${jqInputFile}" # Create or truncate
 
+            # Create a file where each line is a self-contained JSON object
             for (( i=0; i < ${#zJobSourcePathsForPerl[@]}; i++ )); do
                 local srcPath="${zJobSourcePathsForPerl[i]}"
                 local destPath="${zJobDestPathsForPerl[i]}"
                 
-                if ! jq -n --arg sp "$srcPath" --arg dp "$destPath" '{SourcePath: $sp, DestPath: $dp}' >> "${jqInputFile}"; then
-                    echo "Error: jq failed to create individual JSON object for mod ${currentModId}" >&2
-                    echo "Src: $srcPath, Dest: $destPath" >&2
-                    rm -f "${jqInputFile}"
-                    return 1
-                fi
+                # Use printf to write the JSON object string to the intermediate file.
+                # This is safer than echo for complex strings and ensures a newline.
+                # jq will handle escaping of paths.
+                printf '{"SourcePath": %s, "DestPath": %s}\n' \
+                    "$(jq -R -s --arg str "$srcPath" '$str' < /dev/null)" \
+                    "$(jq -R -s --arg str "$destPath" '$str' < /dev/null)" >> "${jqInputFile}"
             done
 
+            # Verify intermediate JSON file content before slurp
+            if [ ! -s "${jqInputFile}" ]; then
+                echo "Error: Intermediate jq input file '${jqInputFile}' is empty or not created." >&2
+                return 1
+            fi
+            # Optional: cat "${jqInputFile}" >&2 # To see the raw intermediate JSON lines
+
+            # Use jq --slurp '.' to read all JSON objects from jqInputFile and form them into a single JSON array
+            local jobListFilePath="${tmpDir}/perl_z_job_list_${currentModId}_${RANDOM}.json"
             if ! jq --slurp '.' < "${jqInputFile}" > "${jobListFilePath}"; then
-                echo "Error: jq failed to create final JSON job list array for mod ${currentModId}" >&2
+                echo "Error: jq failed to create final JSON job list array for mod ${currentModId}." >&2
+                echo "jq input file content:" >&2
+                cat "${jqInputFile}" >&2 # Dump input to jq for debugging
                 rm -f "${jqInputFile}"
                 return 1
             fi
-            rm -f "${jqInputFile}"
+            rm -f "${jqInputFile}" # Clean up intermediate file
 
-            local perlExitCode=0
-            local perlStdErrFile="${tmpDir}/perl_batch_stderr_${currentModId}_${RANDOM}.txt"
-            
-            local perlStdOut
-            
-            set +e 
-            perlStdOut=$(perl "${ue4BatchDecompressPerlExecutable}" --jsonjobfile "${jobListFilePath}" 2> "${perlStdErrFile}")
-            perlExitCode=$?
-            set -e
-
-            if [ $perlExitCode -ne 0 ]; then
-                echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} error(s)." >&2
-                if [ -s "${perlStdErrFile}" ]; then
-                    echo "Perl STDERR:" >&2
-                    cat "${perlStdErrFile}" >&2
-                else
-                    echo "Perl STDERR: (empty or not captured)" >&2
-                fi
-                rm -f "${jobListFilePath}"
-                rm -f "${perlStdErrFile}"
+            # --- CRITICAL DEBUGGING STEP: VALIDATE FINAL JSON FILE ---
+            if [ ! -s "${jobListFilePath}" ]; then
+                echo "Error: Final JSON job list file '${jobListFilePath}' is empty or not created after jq." >&2
                 return 1
+            fi
+            if ! jq '.' "${jobListFilePath}" > /dev/null; then
+                echo "Error: Final JSON job list file '${jobListFilePath}' is malformed JSON!" >&2
+                echo "File content:" >&2
+                cat "${jobListFilePath}" >&2 # Dump malformed JSON for inspection
+                return 1
+            fi
+            echo "DEBUG: Final JSON job list '${jobListFilePath}' is valid JSON." >&2 # Confirm validity
+
+            local perlCmdOutput
+            local perlExitCode=0
+            
+            # The call to Perl remains the same
+            if ! perlCmdOutput=$(perl "${ue4BatchDecompressPerlExecutable}" --jsonjobfile "${jobListFilePath}" 2>&1); then
+                perlExitCode=$? 
+                echo "Error: Perl batch decompression for item ${currentModId} (command execution failed). Exit code: ${perlExitCode}" >&2
+                echo "Perl Output/Errors:" >&2
+                echo "${perlCmdOutput}" >&2
+                rm -f "${jobListFilePath}"
+                return 1
+            else
+                perlExitCode=$? 
+                if [ $perlExitCode -ne 0 ]; then
+                    echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} file error(s)." >&2
+                    echo "Perl Output/Errors:" >&2
+                    echo "${perlCmdOutput}" >&2
+                    rm -f "${jobListFilePath}"
+                    return 1
+                 fi
             fi
             
             for jobEntryWithTime in "${zJobsForBashTouch[@]}"; do
