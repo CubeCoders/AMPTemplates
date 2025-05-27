@@ -542,6 +542,7 @@ InstallMod() {
             local perlCmdOutput
             local perlExitCode=0
             
+            cat "${jobListFilePath}" >&2
             # The call to Perl remains the same
             if ! perlCmdOutput=$(perl "${ue4BatchDecompressPerlExecutable}" --jsonjobfile "${jobListFilePath}" 2>&1); then
                 perlExitCode=$? 
