@@ -302,7 +302,6 @@ try {
                 Invoke-WebRequest -UseBasicParsing -Uri $zipUrl -OutFile $zipFilePath
                 Add-Type -AssemblyName System.IO.Compression.FileSystem
                 [System.IO.Compression.ZipFile]::ExtractToDirectory($zipFilePath, $perlInstallRoot)
-                
             } catch {
                 Write-Error "Error: Failed to download or extract Perl. Details: $($_.Exception.Message)"
                 return $false
@@ -324,11 +323,14 @@ try {
 
         # Install cpanm (App::cpanminus) if it's not available
         $cpanmCmdInfo = Get-Command cpanm -ErrorAction SilentlyContinue
+
         if (-not $cpanmCmdInfo) {
             Write-Host "cpanminus (cpanm) not found in PATH. Attempting to install it via CPAN.pm ..."
+
             try {
                 & perl.exe -MCPAN -e "CPAN::Shell->install('App::cpanminus');"
                 $cpanmCmdInfo = Get-Command cpanm -ErrorAction SilentlyContinue
+                
                 if (-not $cpanmCmdInfo) {
                     Write-Error "Error: Failed to find cpanm in PATH after installation attempt"
                     $env:PATH = $originalPath
