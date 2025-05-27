@@ -487,8 +487,6 @@ InstallMod() {
         rm -f "${allSourceFilesList}"
 
         if [ ${#zJobsForPerl[@]} -gt 0 ]; then
-            echo "Mod ${currentModId}: Batch decompressing ${#zJobsForPerl[@]} .z file(s)..."
-            
             local jqInputFile="${tmpDir}/jq_feed_${currentModId}_${RANDOM}.txt"
             >"${jqInputFile}"
 
