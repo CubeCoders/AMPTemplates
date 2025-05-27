@@ -338,7 +338,7 @@ foreach my $job (@$jobs_array_ref) {
     
     eval { 
         decompress_single_z_file_core($src_path, $dest_path); 
-        1; # Ensure eval returns true on success
+        1;
     };
     if ($@) {
         my $eval_error = $@;
