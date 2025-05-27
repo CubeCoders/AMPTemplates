@@ -493,20 +493,16 @@ InstallMod() {
 
         if [ ${#zJobSourcePathsForPerl[@]} -gt 0 ]; then
             local jobListFilePath="${tmpDir}/perl_z_job_list_${currentModId}_${RANDOM}.json"
-            local -a zJobsJson=()
-
-            for (( i=0; i < ${#zJobSourcePathsForPerl[@]}; i++ )); do
-                local srcPath="$(realpath "${zJobSourcePathsForPerl[i]}")"
-                local destPath="$(realpath -m "${zJobDestPathsForPerl[i]}")"
-
-                zJobsJson+=("$(jq -n --arg src "$srcPath" --arg dest "$destPath" \
-                    '{SourcePath: $src, DestPath: $dest}')")
-            done
-
-            printf '%s\n' "${zJobsJson[@]}" | jq -s '.' > "${jobListFilePath}" || {
-                echo "Error: Failed to generate JSON job list for mod ${currentModId}" >&2
-                return 1
-            }
+            {
+                echo '['
+                for (( i=0; i < ${#zJobSourcePathsForPerl[@]}; i++ )); do
+                    local srcPath="$(realpath "${zJobSourcePathsForPerl[i]}")"
+                    local destPath="$(realpath -m "${zJobDestPathsForPerl[i]}")"
+                    printf '{"SourcePath":"%s","DestPath":"%s"}' "$srcPath" "$destPath"
+                    (( i < ${#zJobSourcePathsForPerl[@]} - 1 )) && echo ','
+                done
+                echo ']'
+            } > "$jobListFilePath"
 
             local perlCmdOutput
             if ! perlCmdOutput=$(perl "${ue4BatchDecompressPerlExecutable}" --jsonjobfile "${jobListFilePath}" 2>&1); then
