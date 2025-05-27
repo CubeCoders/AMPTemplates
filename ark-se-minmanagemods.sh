@@ -469,9 +469,7 @@ InstallMod() {
         fi
         rm -f "${allSourceFilesList}"
 
-        if [ ${#zJobsToProcess[@]} -gt 0 ]; then
-            echo "Mod ${currentModId}: Batch decompressing ${#zJobsToProcess[@]} .z file(s)..."
-            
+        if [ ${#zJobsToProcess[@]} -gt 0 ]; then            
             local jsonJobListContent="["
             local firstJob=true
             for jobEntry in "${zJobsToProcess[@]}"; do
