@@ -239,36 +239,36 @@ sub decompress_single_z_file_core {
 
     my $current_uncompressed_total = 0;
     for (my $i = 0; $i < $num_chunks; $i++) { 
-        my $ci = $chunk_table[$i];
-        my $btrfc = $ci->{compressed_size};
-        my $ud; 
-        if ($btrfc == 0) {
-            $ud = "";
+        my $chunk_info = $chunk_table[$i];
+        my $bytes_to_read_for_chunk = $chunk_info->{compressed_size};
+        my $uncompressed_data; 
+        if ($bytes_to_read_for_chunk == 0) {
+            $uncompressed_data = "";
         } else {
-            my $cdb;
-            my $br = read($in_fh, $cdb, $btrfc);
-            unless (defined $br && $br == $btrfc) {
-                die "Failed to read $btrfc bytes for chunk $i from '$source_filepath'. Expected $btrfc, got " . 
-                    ($br // 0) . ". Error: " . ($! // "Unknown");
+            my $compressed_data_buffer;
+            my $bytes_read = read($in_fh, $compressed_data_buffer, $bytes_to_read_for_chunk);
+            unless (defined $bytes_read && $bytes_read == $bytes_to_read_for_chunk) {
+                die "Failed to read $bytes_to_read_for_chunk bytes for chunk $i from '$source_filepath'. Expected $bytes_to_read_for_chunk, got " . 
+                    ($bytes_read // 0) . ". Error: " . ($! // "Unknown");
             }
-            $ud = Compress::Zlib::uncompress($cdb);
-            unless (defined $ud) {
-                my $zen; 
+            $uncompressed_data = Compress::Zlib::uncompress($compressed_data_buffer);
+            unless (defined $uncompressed_data) {
+                my $z_error_number; 
                 { 
                     no warnings 'once';
-                    $zen = $Compress::Zlib::unzerrno;
+                    $z_error_number = $Compress::Zlib::unzerrno;
                 }
-                my $zes = Compress::Zlib::unzerror($zen) || "Unknown Zlib err $zen";
-                die "Zlib uncomp fail chunk $i from '$source_filepath': $zes";
+                my $zlib_error_string = Compress::Zlib::unzerror($z_error_number) || "Unknown Zlib err $z_error_number";
+                die "Zlib uncomp fail chunk $i from '$source_filepath': $zlib_error_string";
             }
         }
-        print {$out_fh} $ud;
-        $cut += length($ud);
+        print {$out_fh} $uncompressed_data;
+        $current_uncompressed_total += length($uncompressed_data);
     }
     close $in_fh;
     close $out_fh; 
-    if ($nc > 0 && $cut != $tus) { # Using original variables for this specific informational warning
-        warn "Perl_Batch_Warning: Decompressed size mismatch for '$source_filepath'. Expected $tus, got $cut.\n";
+    if ($num_chunks > 0 && $current_uncompressed_total != $total_uncompressed_size) {
+        warn "Perl_Batch_Warning: Decompressed size mismatch for '$source_filepath'. Expected $total_uncompressed_size, got $current_uncompressed_total.\n";
     }
     return 1;
 }
