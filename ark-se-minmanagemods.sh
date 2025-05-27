@@ -10,7 +10,7 @@ readonly arkBaseDir="${arkRootDir}/376030"
 readonly workshopContentDir="${arkBaseDir}/Engine/Binaries/ThirdParty/SteamCMD/Linux/steamapps/workshop/content/346110"
 readonly modsInstallDir="${arkBaseDir}/ShooterGame/Content/Mods"
 
-# --- Embedded Perl script: create_mod_file.pl ---
+# --- Embedded Perl scripts ---
 createModFilePerlScriptContent=$(cat <<'PERL_CREATE_MOD_EOF'
 #!/usr/bin/perl
 use strict;
@@ -143,7 +143,11 @@ my $metaInfoActuallyParsed = 0;
 if ($modmetaFileWasProvided) {
     if (-f $modmetaInfoFileArg && -r _) {
         %meta_information = parse_modmeta_info($modmetaInfoFileArg);
-        $metaInfoActuallyParsed = 1;
+        if (scalar(keys %meta_information) > 0) {
+            $metaInfoActuallyParsed = 1;
+        } elsif (-e $modmetaInfoFileArg) { 
+            $metaInfoActuallyParsed = 1; 
+        }
     }
 }
 
@@ -160,110 +164,184 @@ exit 0;
 PERL_CREATE_MOD_EOF
 )
 
-ue4DecompressPerlScriptContent=$(cat <<'PERL_DECOMPRESS_EOF'
+ue4BatchDecompressPerlScriptContent=$(cat <<'PERL_BATCH_DECOMPRESS_EOF'
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Getopt::Long qw(GetOptions);
+use utf8;
+
 use File::Basename;
 use Compress::Zlib;
+use Getopt::Long qw(GetOptions);
+use JSON::PP;
 use IO::Handle;
 
 use constant { PACKAGE_FILE_TAG => 2653586369, LOADING_COMPRESSION_CHUNK_SIZE => 131072 };
 
 sub read_int64_le {
-    my ($fh) = @_;
-    my $buffer;
-    my $bytes_read = read($fh, $buffer, 8);
-    unless (defined $bytes_read && $bytes_read == 8) { return undef; }
+    my ($fh) = @_; 
+    my $buffer; 
+    my $bytes_read = read($fh, $buffer, 8); 
+    unless (defined $bytes_read && $bytes_read == 8) { 
+        return undef;
+    } 
     return unpack('q<', $buffer);
 }
 
-sub ue4_chunk_unzip {
+sub decompress_single_z_file_core {
     my ($source_filepath, $destination_filepath) = @_;
-    open my $in_fh, '<:raw', $source_filepath or die "Perl: Cannot open source '$source_filepath': $!";
-    open my $out_fh, '>:raw', $destination_filepath or die "Perl: Cannot open dest '$destination_filepath': $!";
-
+    
+    open my $in_fh, '<:raw', $source_filepath or die "Perl_Batch: Cannot open source '$source_filepath': $!";
+    open my $out_fh, '>:raw', $destination_filepath or die "Perl_Batch: Cannot open dest '$destination_filepath': $!";
+    
     my $header1_compressed_size = read_int64_le($in_fh);
-    die "Perl: Failed h1_comp_size from '$source_filepath'" unless defined $header1_compressed_size;
+    die "Failed h1_comp_size from '$source_filepath'" unless defined $header1_compressed_size;
     my $header1_uncompressed_size = read_int64_le($in_fh);
-    die "Perl: Failed h1_uncomp_size from '$source_filepath'" unless defined $header1_uncompressed_size;
-    my $header2_compressed_size = read_int64_le($in_fh);
-    die "Perl: Failed h2_comp_size from '$source_filepath'" unless defined $header2_compressed_size;
+    die "Failed h1_uncomp_size from '$source_filepath'" unless defined $header1_uncompressed_size;
+    my $header2_compressed_size = read_int64_le($in_fh); 
+    die "Failed h2_comp_size from '$source_filepath'" unless defined $header2_compressed_size;
     my $total_uncompressed_size = read_int64_le($in_fh);
-    die "Perl: Failed total_uncomp_size from '$source_filepath'" unless defined $total_uncompressed_size;
+    die "Failed total_uncomp_size from '$source_filepath'" unless defined $total_uncompressed_size;
 
     my $ue4_uncompressed_chunk_size = $header1_uncompressed_size;
-    if ($ue4_uncompressed_chunk_size == PACKAGE_FILE_TAG) { $ue4_uncompressed_chunk_size = LOADING_COMPRESSION_CHUNK_SIZE; }
-    if ($ue4_uncompressed_chunk_size <= 0) { die "Perl: UE4 Chunk Size must be positive, got $ue4_uncompressed_chunk_size from '$source_filepath'\n"; }
+    if ($ue4_uncompressed_chunk_size == PACKAGE_FILE_TAG) { 
+        $ue4_uncompressed_chunk_size = LOADING_COMPRESSION_CHUNK_SIZE; 
+    }
+    if ($ue4_uncompressed_chunk_size <= 0) { 
+        die "UE4 Chunk Size must be positive, got $ue4_uncompressed_chunk_size from '$source_filepath'\n"; 
+    }
     my $num_chunks = 0;
-    if ($total_uncompressed_size > 0) { $num_chunks = int(($total_uncompressed_size + $ue4_uncompressed_chunk_size - 1) / $ue4_uncompressed_chunk_size); }
-    elsif ($total_uncompressed_size == 0) { $num_chunks = 0; }
-    else { die "Perl: Total uncompressed size cannot be negative ($total_uncompressed_size) from '$source_filepath'.\n"; }
-    if ($num_chunks < 0) { die "Perl: Number of chunks cannot be negative ($num_chunks) from '$source_filepath'.\n"; }
-
+    if ($total_uncompressed_size > 0) { 
+        $num_chunks = int(($total_uncompressed_size + $ue4_uncompressed_chunk_size - 1) / $ue4_uncompressed_chunk_size); 
+    } elsif ($total_uncompressed_size == 0) { 
+        $num_chunks = 0; 
+    } else { 
+        die "Total uncomp size cannot be negative ($total_uncompressed_size) from '$source_filepath'.\n"; 
+    }
+    if ($num_chunks < 0) { 
+        die "Number of chunks cannot be negative ($num_chunks) from '$source_filepath'.\n"; 
+    } 
+    
     my @chunk_table;
     for (my $i = 0; $i < $num_chunks; $i++) {
         my $chunk_compressed_size = read_int64_le($in_fh);
-        die "Perl: Failed to read compressed size for chunk $i from '$source_filepath'" unless defined $chunk_compressed_size;
-        my $chunk_uncompressed_size = read_int64_le($in_fh);
-        die "Perl: Failed to read uncompressed size for chunk $i from '$source_filepath'" unless defined $chunk_uncompressed_size;
-        if ($chunk_compressed_size < 0 || $chunk_uncompressed_size < 0) { die "Perl: Chunk $i from '$source_filepath' has negative size(s)."; }
-        push @chunk_table, { compressed_size => $chunk_compressed_size, uncompressed_size => $chunk_uncompressed_size };
+        die "Failed to read compressed size for chunk $i from '$source_filepath'" unless defined $chunk_compressed_size;
+        my $chunk_uncompressed_size = read_int64_le($in_fh); 
+        die "Failed to read uncompressed size for chunk $i from '$source_filepath'" unless defined $chunk_uncompressed_size;
+        if ($chunk_compressed_size < 0 || $chunk_uncompressed_size < 0) { 
+            die "Chunk $i from '$source_filepath' has negative size(s)."; 
+        }
+        push @chunk_table, { 
+            compressed_size   => $chunk_compressed_size, 
+            uncompressed_size => $chunk_uncompressed_size 
+        };
     }
+
     my $current_uncompressed_total = 0;
-    for (my $i = 0; $i < $num_chunks; $i++) {
-        my $chunk_info = $chunk_table[$i];
-        my $bytes_to_read_for_chunk = $chunk_info->{compressed_size};
-        my $uncompressed_data;
-        if ($bytes_to_read_for_chunk == 0) { $uncompressed_data = ""; }
-        else {
-            my $compressed_data_buffer;
-            my $bytes_read = read($in_fh, $compressed_data_buffer, $bytes_to_read_for_chunk);
-            unless (defined $bytes_read && $bytes_read == $bytes_to_read_for_chunk) {
-                die "Perl: Failed to read $bytes_to_read_for_chunk bytes for chunk $i from '$source_filepath'. Expected $bytes_to_read_for_chunk, got " . ($bytes_read//0) . ". Error: " . ($!//"Unknown");
+    for (my $i = 0; $i < $num_chunks; $i++) { 
+        my $ci = $chunk_table[$i];
+        my $btrfc = $ci->{compressed_size};
+        my $ud; 
+        if ($btrfc == 0) {
+            $ud = "";
+        } else {
+            my $cdb;
+            my $br = read($in_fh, $cdb, $btrfc);
+            unless (defined $br && $br == $btrfc) {
+                die "Failed to read $btrfc bytes for chunk $i from '$source_filepath'. Expected $btrfc, got " . 
+                    ($br // 0) . ". Error: " . ($! // "Unknown");
             }
-            $uncompressed_data = Compress::Zlib::uncompress($compressed_data_buffer);
-            unless (defined $uncompressed_data) {
-                my $z_err_num; { no warnings 'once'; $z_err_num = $Compress::Zlib::unzerrno; }
-                my $zlib_error_str = Compress::Zlib::unzerror($z_err_num) || "Unknown Zlib err $z_err_num";
-                die "Perl: Zlib uncomp fail chunk $i from '$source_filepath': $zlib_error_str";
+            $ud = Compress::Zlib::uncompress($cdb);
+            unless (defined $ud) {
+                my $zen; 
+                { 
+                    no warnings 'once';
+                    $zen = $Compress::Zlib::unzerrno;
+                }
+                my $zes = Compress::Zlib::unzerror($zen) || "Unknown Zlib err $zen";
+                die "Zlib uncomp fail chunk $i from '$source_filepath': $zes";
             }
         }
-        print {$out_fh} $uncompressed_data;
-        $current_uncompressed_total += length($uncompressed_data);
+        print {$out_fh} $ud;
+        $cut += length($ud);
     }
     close $in_fh;
-    close $out_fh;
+    close $out_fh; 
+    if ($nc > 0 && $cut != $tus) { # Using original variables for this specific informational warning
+        warn "Perl_Batch_Warning: Decompressed size mismatch for '$source_filepath'. Expected $tus, got $cut.\n";
+    }
+    return 1;
 }
 
-my $sourceFileArg; my $destFileArg;
-GetOptions(
-        'source=s' => \$sourceFileArg,
-        'destination=s' => \$destFileArg
-) or die "Perl Usage: $0 --source <file.z> --destination <file_uncomp>\n";
+my $json_job_file_path_arg;
+GetOptions('jsonjobfile=s' => \$json_job_file_path_arg)
+    or die "Perl_Batch Usage: $0 --jsonjobfile <path_to_jobfile.json>\n"; 
+die "Perl_Batch_Error: --jsonjobfile not specified.\n" unless defined $json_job_file_path_arg;
 
-unless (-f $sourceFileArg && -r _) {
-    die "Perl: Source file '$sourceFileArg' not found/readable for ue4_decompress.pl.\n";
+open my $json_job_fh, '<:raw', $json_job_file_path_arg 
+    or die "Perl_Batch_Error: Cannot open job file '$json_job_file_path_arg': $!";
+my $json_text = do { local $/; <$json_job_fh> }; 
+close $json_job_fh;
+
+my $jobs_array_ref;
+eval { 
+    $jobs_array_ref = JSON::PP->new->utf8->decode($json_text); 
+    1; 
 }
-ue4_chunk_unzip($sourceFileArg, $destFileArg);
-exit 0;
-PERL_DECOMPRESS_EOF
+or do { 
+    my $json_err = $@ || "Unknown JSON error";
+    chomp $json_err;
+    die "Perl_Batch_Error: Could not decode JSON from job file. Error: $json_err\n";
+};
+unless (ref $jobs_array_ref eq 'ARRAY') {
+    die "Perl_Batch_Error: Job file content is not valid JSON array.\n";
+}
+
+my $error_count = 0; 
+my $processed_count = 0; 
+my $job_number = 0;
+foreach my $job (@$jobs_array_ref) {
+    $job_number++;
+    unless (ref $job eq 'HASH' && defined $job->{SourcePath} && defined $job->{DestPath}) {
+        print STDERR "Perl_Batch_Error: Skipping malformed JSON job object $job_number.\n";
+        $error_count++; 
+        next;
+    }
+    my $src_path = $job->{SourcePath}; 
+    my $dest_path = $job->{DestPath};
+    
+    eval { 
+        decompress_single_z_file_core($src_path, $dest_path); 
+        1; 
+    };
+    if ($@) {
+        my $eval_error = $@;
+        chomp $eval_error;
+        print STDERR "Perl_Batch_Error: FAILED on job $job_number '$src_path' -> '$dest_path': $eval_error\n";
+        $error_count++;
+    } else {
+        $processed_count++;
+    }
+}
+exit $error_count;
+PERL_BATCH_DECOMPRESS_EOF
 )
 
 # --- Temporary file setup ---
 tmpDir=$(mktemp -d -t ark_mod_proc_XXXXXX)
-tmpDir=$(realpath "${tmpDir}")
+if [[ "$tmpDir" != /* ]]; then
+    tmpDir="$PWD/$tmpDir"
+fi
 trap 'rm -rf "${tmpDir}"' EXIT HUP INT QUIT TERM
 
 createModFilePerlExecutable="${tmpDir}/create_mod_file.pl"
-ue4DecompressPerlExecutable="${tmpDir}/ue4_decompress.pl"
+ue4BatchDecompressPerlExecutable="${tmpDir}/ue4_batch_decompress.pl"
 
 echo "${createModFilePerlScriptContent}" > "${createModFilePerlExecutable}"
-echo "${ue4DecompressPerlScriptContent}" > "${ue4DecompressPerlExecutable}"
-chmod +x "${createModFilePerlExecutable}" "${ue4DecompressPerlExecutable}"
+echo "${ue4BatchDecompressPerlScriptContent}" > "${ue4BatchDecompressPerlExecutable}"
+chmod +x "${createModFilePerlExecutable}" "${ue4BatchDecompressPerlExecutable}"
 
-# --- Helper functions ---
+# --- Main functions ---
 CheckPerl() {
     if ! command -v perl >/dev/null 2>&1; then
         echo "Error: Perl executable not found. Please install it" >&2
@@ -271,6 +349,10 @@ CheckPerl() {
     fi
     if ! perl -MCompress::Zlib -e 1 >/dev/null 2>&1; then
         echo "Error: Perl module 'Compress::Zlib' not found (core module). Please install it" >&2
+        return 1
+    fi
+    if ! perl -MJSON::PP -e 1 >/dev/null 2>&1; then
+        echo "Error: Perl module 'JSON::PP' not found. Please install it" >&2
         return 1
     fi
     return 0
@@ -339,6 +421,7 @@ InstallMod() {
     fi
 
     local foundPrimalGameDataFile=0
+    local jobListFilePath="${tmpDir}/perl_z_job_list_${currentModId}_${RANDOM}.json"
 
     if [ ! -d "${effectiveContentSourceDir}" ]; then
         echo "Warning: Effective content source ('${effectiveContentSourceDir}') for item ${currentModId} does not exist. Cleaning destination" >&2
@@ -346,8 +429,9 @@ InstallMod() {
              find "${modContentDestDir}" -mindepth 1 -delete
         fi
     else
-        local allSourceFilesList="${tmpDir}/source_files_${currentModId}_${RANDOM}.txt"
-        # Find all files in the source and save to a temporary list
+        local -a zJobsToProcess=()
+        local allSourceFilesList="${tmpDir}/all_source_files_${currentModId}_${RANDOM}.txt"
+        
         find "${effectiveContentSourceDir}" -type f -print0 > "${allSourceFilesList}"
 
         if [ -s "${allSourceFilesList}" ]; then
@@ -361,24 +445,14 @@ InstallMod() {
                 if [[ "${cleanRelativeFile}" == *".z.uncompressed_size" ]]; then
                     continue
                 elif [[ "${cleanRelativeFile}" == *".z" ]]; then
-                    # Processing a .z file
                     local destUncompressedFileFullPath="${modContentDestDir}/${cleanRelativeFile%.z}"
-                    destFileParentDir=$(dirname "${destUncompressedFileFullPath}")
                     if [ ! -f "${destUncompressedFileFullPath}" ] || [ "${sourceFileFullPath}" -nt "${destUncompressedFileFullPath}" ]; then
+                        destFileParentDir=$(dirname "${destUncompressedFileFullPath}")
                         mkdir -p "${destFileParentDir}" \
                             || { echo "Error: Failed to create directory '${destFileParentDir}' for item ${currentModId}" >&2; return 1; }
-                        
-                        if "${ue4DecompressPerlExecutable}" --source "${sourceFileFullPath}" --destination "${destUncompressedFileFullPath}"; then
-                            touch -c -r "${sourceFileFullPath}" "${destUncompressedFileFullPath}" \
-                                || echo "Warning: Failed to set timestamp on '${destUncompressedFileFullPath}' for item ${currentModId}" >&2
-                        else
-                            echo "Error: Decompression of '${sourceFileFullPath}' for item ${currentModId} failed. Output file may be incomplete or missing" >&2
-                            rm -f "${destUncompressedFileFullPath}"
-                            return 1
-                        fi
+                        zJobsToProcess+=("${sourceFileFullPath}"$'\t'"${destUncompressedFileFullPath}"$'\t'"$(stat -c %Y "${sourceFileFullPath}")")
                     fi
                 else 
-                    # Processing a regular (non-.z) file
                     local destFileFullPath="${modContentDestDir}/${cleanRelativeFile}"
                     destFileParentDir=$(dirname "${destFileFullPath}")
                     if [ ! -e "${destFileFullPath}" ] || [ "${sourceFileFullPath}" -nt "${destFileFullPath}" ]; then
@@ -395,25 +469,75 @@ InstallMod() {
         fi
         rm -f "${allSourceFilesList}"
 
-        # Clean up uncompressed files in destination for which a .z source no longer exists
-        local tempDestPotentialUncompressedFiles="${tmpDir}/dest_uncomp_check_${currentModId}_${RANDOM}.txt"
-        # Find files in destination that do NOT end with .z (could be direct copies or decompressed files)
-        find "${modContentDestDir}" -type f ! -name '*.z' -print0 > "${tempDestPotentialUncompressedFiles}"
-        if [ -s "${tempDestPotentialUncompressedFiles}" ] ; then
+        if [ ${#zJobsToProcess[@]} -gt 0 ]; then
+            echo "Mod ${currentModId}: Batch decompressing ${#zJobsToProcess[@]} .z file(s)..."
+            
+            local jsonJobListContent="["
+            local firstJob=true
+            for jobEntry in "${zJobsToProcess[@]}"; do
+                IFS=$'\t' read -r src dest mtime <<< "$jobEntry"
+                if ! $firstJob; then
+                    jsonJobListContent+=","
+                fi
+                srcJson=$(sed 's/\\/\\\\/g; s/"/\\"/g' <<< "$src")
+                destJson=$(sed 's/\\/\\\\/g; s/"/\\"/g' <<< "$dest")
+                jsonJobListContent+="{ \"SourcePath\": \"${srcJson}\", \"DestPath\": \"${destJson}\" }"
+                firstJob=false
+            done
+            jsonJobListContent+="]"
+            echo "${jsonJobListContent}" > "${jobListFilePath}"
+
+            local perlCmdOutput
+            local perlExitCode
+            
+            if ! perlCmdOutput=$(perl "${ue4BatchDecompressPerlExecutable}" --jsonjobfile "${jobListFilePath}" 2>&1); then
+                perlExitCode=$?
+                echo "Error: Perl batch decompression for item ${currentModId} failed. Exit code: ${perlExitCode}" >&2
+                echo "Perl Output/Errors:" >&2
+                echo "${perlCmdOutput}" >&2
+                rm -f "${jobListFilePath}"
+                return 1
+            else
+                perlExitCode=$?
+                 if [ $perlExitCode -ne 0 ]; then
+                    echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} file error(s)." >&2
+                    echo "Perl Output/Errors:" >&2
+                    echo "${perlCmdOutput}" >&2
+                    rm -f "${jobListFilePath}"
+                    return 1
+                 fi
+            fi
+            
+            for jobEntry in "${zJobsToProcess[@]}"; do
+                 IFS=$'\t' read -r src dest mtime <<< "$jobEntry"
+                 if [ -f "${dest}" ]; then
+                     touch -c -m -d @"${mtime}" "${dest}" \
+                        || echo "Warning: Failed to set timestamp on '${dest}' for item ${currentModId}" >&2
+                 else
+                    echo "Warning: Decompressed file '${dest}' for item ${currentModId} not found after batch (Perl reported success)." >&2
+                 fi
+            done
+            rm -f "${jobListFilePath}"
+        fi
+        
+        # Stale file cleanup & empty directory pruning
+        local tempDestAllFiles="${tmpDir}/dest_all_files_check_${currentModId}_${RANDOM}.txt"
+        find "${modContentDestDir}" -type f -print0 > "${tempDestAllFiles}"
+        if [ -s "${tempDestAllFiles}" ] ; then
             while IFS= read -r -d $'\0' destFileToCheck; do
                 local relativeDestPath="${destFileToCheck#${modContentDestDir}/}"
-                local correspondingSourceZFile="${effectiveContentSourceDir}/${relativeDestPath}.z"
                 local correspondingSourceDirectFile="${effectiveContentSourceDir}/${relativeDestPath}"
+                local correspondingSourceZFile="${effectiveContentSourceDir}/${relativeDestPath}.z"
 
-                # If the destination file exists, but its original source (either direct or as .z) is gone, remove it.
-                if [ ! -f "${correspondingSourceDirectFile}" ] && [ ! -f "${correspondingSourceZFile}" ]; then
+                if [[ "${destFileToCheck}" == *.z ]]; then
+                    rm -f "${destFileToCheck}"
+                elif [ ! -f "${correspondingSourceDirectFile}" ] && [ ! -f "${correspondingSourceZFile}" ]; then
                     rm -f "${destFileToCheck}"
                 fi
-            done < "${tempDestPotentialUncompressedFiles}"
+            done < "${tempDestAllFiles}"
         fi
-        rm -f "${tempDestPotentialUncompressedFiles}"
-
-        # Prune empty directories that might be left after file removals
+        rm -f "${tempDestAllFiles}"
+        
         find "${modContentDestDir}" -depth -type d -empty -delete 2>/dev/null || true
     fi
 
@@ -437,7 +561,7 @@ InstallMod() {
         createModCmdArray+=( "${defaultModtypePerlArg}" )
     fi
 
-    rm -f "${modDefinitionFile}" # Ensure .mod file is fresh
+    rm -f "${modDefinitionFile}"
     if ! "${createModCmdArray[@]}"; then
         echo "Error: Creation of .mod file for item ${currentModId} failed" >&2
         return 1

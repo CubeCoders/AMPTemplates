@@ -697,7 +697,10 @@ try {
             
             # Stale file cleanup & empty directory pruning
             Get-ChildItem -LiteralPath $modContentDestDir -File -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
-                if ($_.Extension -eq ".z") {Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue; return }
+                if ($_.Extension -eq ".z") {
+                    Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue;
+                    return
+                }
                 $fileRelativeToDest = $_.FullName.Substring($modContentDestDir.Length).TrimStart("\","/")
                 $correspondingSourceDirectFile = Join-Path -Path $effectiveContentSourceDir -ChildPath $fileRelativeToDest
                 $correspondingSourceZFile = Join-Path -Path $effectiveContentSourceDir -ChildPath ($fileRelativeToDest + ".z")
