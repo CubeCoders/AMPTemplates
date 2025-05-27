@@ -512,23 +512,35 @@ InstallMod() {
                 return 1
             fi
 
-            local perlCmdOutput
             local perlExitCode=0
+            local perlStdErrFile="${tmpDir}/perl_batch_stderr_${currentModId}_${RANDOM}.txt"
             
-            if ! perlCmdOutput=$(perl "${ue4BatchDecompressPerlExecutable}" --jsonjobfile "${jobListFilePath}" 2>&1); then
-                perlExitCode=$? 
-                echo "Error: Perl batch decompression for item ${currentModId} (command execution failed). Exit code: ${perlExitCode}" >&2
-                echo "Perl Output/Errors:" >&2
-                echo "${perlCmdOutput}" >&2
+            # Execute Perl, explicitly redirecting its STDERR to a file
+            # STDOUT from perl (if any) will go to perlCmdOutput if needed, though our batch script uses STDERR for messages
+            local perlStdOut # Not expecting much here from the batch script
+            
+            # Run perl and capture its exit code
+            # We suppress set -e for this call to manually check exit code
+            set +e 
+            perlStdOut=$(perl "${ue4BatchDecompressPerlExecutable}" --jsonjobfile "${jobListFilePath}" 2> "${perlStdErrFile}")
+            perlExitCode=$?
+            set -e
+
+            if [ $perlExitCode -ne 0 ]; then
+                echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} error(s)." >&2
+                if [ -s "${perlStdErrFile}" ]; then # Check if error file has content
+                    echo "Perl STDERR:" >&2
+                    cat "${perlStdErrFile}" >&2
+                else
+                    echo "Perl STDERR: (empty or not captured)" >&2
+                fi
+                # if [ -n "${perlStdOut}" ]; then # If you also wanted to see STDOUT
+                #     echo "Perl STDOUT:" >&2
+                #     echo "${perlStdOut}" >&2
+                # fi
+                rm -f "${jobListFilePath}"
+                rm -f "${perlStdErrFile}"
                 return 1
-            else
-                perlExitCode=$? 
-                if [ $perlExitCode -ne 0 ]; then
-                    echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} file error(s)" >&2
-                    echo "Perl Output/Errors:" >&2
-                    echo "${perlCmdOutput}" >&2
-                    return 1
-                 fi
             fi
             
             for jobEntryWithTime in "${zJobsForBashTouch[@]}"; do
