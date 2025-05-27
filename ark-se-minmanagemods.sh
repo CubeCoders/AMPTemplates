@@ -178,13 +178,16 @@ use IO::Handle;
 
 STDERR->autoflush(1);
 
-use constant { PACKAGE_FILE_TAG => 2653586369, LOADING_COMPRESSION_CHUNK_SIZE => 131072 };
+use constant {
+    PACKAGE_FILE_TAG => 2653586369,
+    LOADING_COMPRESSION_CHUNK_SIZE => 131072
+};
 
 sub read_int64_le {
-    my ($fh) = @_; 
-    my $buffer; 
-    my $bytes_read = read($fh, $buffer, 8); 
-    unless (defined $bytes_read && $bytes_read == 8) { 
+    my ($fh) = @_;
+    my $buffer;
+    my $bytes_read = read($fh, $buffer, 8);
+    unless (defined $bytes_read && $bytes_read == 8) {
         return undef;
     } 
     return unpack('q<', $buffer);
@@ -206,23 +209,23 @@ sub decompress_single_z_file_core {
     die "Failed total_uncomp_size from '$source_filepath'" unless defined $total_uncompressed_size;
 
     my $ue4_uncompressed_chunk_size = $header1_uncompressed_size;
-    if ($ue4_uncompressed_chunk_size == PACKAGE_FILE_TAG) { 
-        $ue4_uncompressed_chunk_size = LOADING_COMPRESSION_CHUNK_SIZE; 
+    if ($ue4_uncompressed_chunk_size == PACKAGE_FILE_TAG) {
+        $ue4_uncompressed_chunk_size = LOADING_COMPRESSION_CHUNK_SIZE;
     }
-    if ($ue4_uncompressed_chunk_size <= 0) { 
-        die "UE4 Chunk Size must be positive, got $ue4_uncompressed_chunk_size from '$source_filepath'\n"; 
+    if ($ue4_uncompressed_chunk_size <= 0) {
+        die "UE4 Chunk Size must be positive, got $ue4_uncompressed_chunk_size from '$source_filepath'\n";
     }
     my $num_chunks = 0;
-    if ($total_uncompressed_size > 0) { 
-        $num_chunks = int(($total_uncompressed_size + $ue4_uncompressed_chunk_size - 1) / $ue4_uncompressed_chunk_size); 
-    } elsif ($total_uncompressed_size == 0) { 
-        $num_chunks = 0; 
-    } else { 
-        die "Total uncomp size cannot be negative ($total_uncompressed_size) from '$source_filepath'.\n"; 
+    if ($total_uncompressed_size > 0) {
+        $num_chunks = int(($total_uncompressed_size + $ue4_uncompressed_chunk_size - 1) / $ue4_uncompressed_chunk_size);
+    } elsif ($total_uncompressed_size == 0) {
+        $num_chunks = 0;
+    } else {
+        die "Total uncomp size cannot be negative ($total_uncompressed_size) from '$source_filepath'.\n";
     }
-    if ($num_chunks < 0) { 
-        die "Number of chunks cannot be negative ($num_chunks) from '$source_filepath'.\n"; 
-    } 
+    if ($num_chunks < 0) {
+        die "Number of chunks cannot be negative ($num_chunks) from '$source_filepath'.\n";
+    }
     
     my @chunk_table;
     for (my $i = 0; $i < $num_chunks; $i++) {
@@ -240,10 +243,10 @@ sub decompress_single_z_file_core {
     }
 
     my $current_uncompressed_total = 0;
-    for (my $i = 0; $i < $num_chunks; $i++) { 
+    for (my $i = 0; $i < $num_chunks; $i++) {
         my $chunk_info = $chunk_table[$i];
         my $bytes_to_read_for_chunk = $chunk_info->{compressed_size};
-        my $uncompressed_data; 
+        my $uncompressed_data;
         if ($bytes_to_read_for_chunk == 0) {
             $uncompressed_data = "";
         } else {

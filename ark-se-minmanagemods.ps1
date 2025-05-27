@@ -204,11 +204,11 @@ use constant {
     LOADING_COMPRESSION_CHUNK_SIZE => 131072 
 };
 
-sub read_int64_le { 
-    my ($fh) = @_; 
-    my $buffer; 
-    my $bytes_read = read($fh, $buffer, 8); 
-    unless (defined $bytes_read && $bytes_read == 8) { 
+sub read_int64_le {
+    my ($fh) = @_;
+    my $buffer;
+    my $bytes_read = read($fh, $buffer, 8);
+    unless (defined $bytes_read && $bytes_read == 8) {
         return undef;
     } 
     return unpack('q<', $buffer);
