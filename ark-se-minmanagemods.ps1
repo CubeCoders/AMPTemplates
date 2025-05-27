@@ -781,9 +781,9 @@ try {
     Write-Host "--------------------------------------------------"
     Write-Host "Workshop item installation/update process finished"
     Write-Host "Summary:"
-    Write-Host "  Total item IDs attempted: $totalModsAttempted"
-    Write-Host "  Successfully processed:   $processedCount"
-    Write-Host "  Failed to process:        $failedCount"
+    Write-Host "  Total item IDs attempted:   $totalModsAttempted"
+    Write-Host "  Successfully processed:     $processedCount"
+    Write-Host "  Failed to process:          $failedCount"
     Write-Host "--------------------------------------------------"
     if ($failedCount -gt 0) { 
         exit 1 
