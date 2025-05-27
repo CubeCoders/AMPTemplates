@@ -498,8 +498,8 @@ InstallMod() {
             else
                 perlExitCode=$?
                  if [ $perlExitCode -ne 0 ]; then
-                    echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} file error(s)." >&2
-                    echo "Perl Output/Errors:" >&2
+                    echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} file error(s)" >&2
+                    echo "Perl output/errors:" >&2
                     echo "${perlCmdOutput}" >&2
                     rm -f "${jobListFilePath}"
                     return 1
