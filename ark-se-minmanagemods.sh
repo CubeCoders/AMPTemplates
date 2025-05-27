@@ -497,8 +497,8 @@ InstallMod() {
 
             # Create a file where each line is a self-contained JSON object
             for (( i=0; i < ${#zJobSourcePathsForPerl[@]}; i++ )); do
-                local srcPath="${zJobSourcePathsForPerl[i]}"
-                local destPath="${zJobDestPathsForPerl[i]}"
+                local srcPath="$(realpath "${zJobSourcePathsForPerl[i]}")"
+                local destPath="$(realpath -m "${zJobDestPathsForPerl[i]}")"
                 
                 # Use printf to write the JSON object string to the intermediate file.
                 # This is safer than echo for complex strings and ensures a newline.
