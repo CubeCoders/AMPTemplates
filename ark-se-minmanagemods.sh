@@ -439,7 +439,8 @@ InstallMod() {
              find "${modContentDestDir}" -mindepth 1 -delete
         fi
     else
-        local -a zJobsForPerl=()
+        local -a zJobSourcePathsForPerl=()
+        local -a zJobDestPathsForPerl=()
         local -a zJobsForBashTouch=()
 
         local allSourceFilesList="${tmpDir}/all_source_files_${currentModId}_${RANDOM}.txt"
@@ -466,7 +467,8 @@ InstallMod() {
                         
                         local sourceMTime
                         sourceMTime=$(stat -c %Y "${sourceFileFullPath}")
-                        zJobsForPerl+=("SourcePath=${sourceFileFullPath}" "DestPath=${destUncompressedFileFullPath}")
+                        zJobSourcePathsForPerl+=("${sourceFileFullPath}")
+                        zJobDestPathsForPerl+=("${destUncompressedFileFullPath}")
                         zJobsForBashTouch+=("${sourceMTime}"$'\t'"${sourceFileFullPath}"$'\t'"${destUncompressedFileFullPath}")
                     fi
                 else 
@@ -486,26 +488,26 @@ InstallMod() {
         fi
         rm -f "${allSourceFilesList}"
 
-        if [ ${#zJobsForPerl[@]} -gt 0 ]; then
-            local jqInputFile="${tmpDir}/jq_feed_${currentModId}_${RANDOM}.txt"
-            >"${jqInputFile}"
+        if [ ${#zJobSourcePathsForPerl[@]} -gt 0 ]; then            
+            local -a jqCommand=()
+            jqCommand+=("jq" "-n")
 
-            for jobEntry in "${zJobsForPerl[@]}"; do
-                IFS=$'\t' read -r _jobMtime _jobSrcPath _jobDestPath <<< "$jobEntry"
-                
-                local srcJsonEscaped destJsonEscaped
-                srcJsonEscaped=$(jq -R -s --arg str "$_jobSrcPath" '$str' < /dev/null)
-                destJsonEscaped=$(jq -R -s --arg str "$_jobDestPath" '$str' < /dev/null)
-                
-                echo "{ \"SourcePath\": ${srcJsonEscaped}, \"DestPath\": ${destJsonEscaped} }" >> "${jqInputFile}"
+            local jqFilter="["
+            for (( i=0; i < ${#zJobSourcePathsForPerl[@]}; i++ )); do
+                if [ $i -gt 0 ]; then
+                    jqFilter+=","
+                fi
+                jqCommand+=(--arg "s$i" "${zJobSourcePathsForPerl[i]}")
+                jqCommand+=(--arg "d$i" "${zJobDestPathsForPerl[i]}")
+                jqFilter+="{SourcePath: \$s$i, DestPath: \$d$i}"
             done
+            jqFilter+="]"
+            jqCommand+=("${jqFilter}")
 
-            if ! jq -s '.' < "${jqInputFile}" > "${jobListFilePath}"; then
-                echo "Error: jq failed to create JSON job list from intermediate file for mod ${currentModId}." >&2
-                rm -f "${jqInputFile}"
+            if ! "${jqCommand[@]}" > "${jobListFilePath}"; then
+                echo "Error: jq failed to create JSON job list for mod ${currentModId}" >&2
                 return 1
             fi
-            rm -f "${jqInputFile}"
 
             local perlCmdOutput
             local perlExitCode=0
@@ -519,27 +521,25 @@ InstallMod() {
             else
                 perlExitCode=$? 
                 if [ $perlExitCode -ne 0 ]; then
-                    echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} file error(s)." >&2
+                    echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} file error(s)" >&2
                     echo "Perl Output/Errors:" >&2
                     echo "${perlCmdOutput}" >&2
                     return 1
                  fi
             fi
             
-            # Touch successfully decompressed files
-            for jobEntryWithTime in "${zJobsForPerl[@]}"; do
+            for jobEntryWithTime in "${zJobsForBashTouch[@]}"; do
                  IFS=$'\t' read -r mtime src dest <<< "$jobEntryWithTime"
                  if [ -f "${dest}" ]; then 
                      touch -c -m -d @"${mtime}" "${dest}" \
                         || echo "Warning: Failed to set timestamp on '${dest}' for item ${currentModId}" >&2
                  else
-                    echo "Warning: Decompressed file '${dest}' for item ${currentModId} not found after batch (Perl reported success)." >&2
+                    echo "Warning: Decompressed file '${dest}' for item ${currentModId} not found after batch (Perl reported success)" >&2
                  fi
             done
             rm -f "${jobListFilePath}"
         fi
         
-        # Stale file cleanup & empty directory pruning
         local tempDestAllFiles="${tmpDir}/dest_all_files_check_${currentModId}_${RANDOM}.txt"
         find "${modContentDestDir}" -type f -print0 > "${tempDestAllFiles}"
         if [ -s "${tempDestAllFiles}" ] ; then
@@ -641,9 +641,9 @@ done
 echo "--------------------------------------------------"
 echo "Workshop item installation/update process finished"
 echo "Summary:"
-echo "  Total workshop item IDs attempted: ${totalModsAttempted}"
-echo "  Successfully processed:  ${processedCount}"
-echo "  Failed to process:     ${failedCount}"
+echo "  Total item IDs attempted: ${totalModsAttempted}"
+echo "  Successfully processed:   ${processedCount}"
+echo "  Failed to process:        ${failedCount}"
 echo "--------------------------------------------------"
 
 if [ "${failedCount}" -gt 0 ]; then
