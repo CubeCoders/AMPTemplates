@@ -507,6 +507,12 @@ InstallMod() {
                     "$(jq -R -s --arg str "$srcPath" '$str' < /dev/null)" \
                     "$(jq -R -s --arg str "$destPath" '$str' < /dev/null)" >> "${jqInputFile}"
             done
+            if [ ${#zJobSourcePathsForPerl[@]} -ne ${#zJobDestPathsForPerl[@]} ]; then
+                echo "Error: Source and destination path arrays are mismatched!" >&2
+                echo "Source count: ${#zJobSourcePathsForPerl[@]}" >&2
+                echo "Dest count:   ${#zJobDestPathsForPerl[@]}" >&2
+                return 1
+            fi
 
             # Verify intermediate JSON file content before slurp
             if [ ! -s "${jqInputFile}" ]; then
