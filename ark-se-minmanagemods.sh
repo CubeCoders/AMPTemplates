@@ -173,8 +173,10 @@ use utf8;
 use File::Basename;
 use Compress::Zlib;
 use Getopt::Long qw(GetOptions);
-use JSON::PP;
+use JSON::PP; 
 use IO::Handle;
+
+STDERR->autoflush(1);
 
 use constant { PACKAGE_FILE_TAG => 2653586369, LOADING_COMPRESSION_CHUNK_SIZE => 131072 };
 
@@ -342,6 +344,14 @@ echo "${ue4BatchDecompressPerlScriptContent}" > "${ue4BatchDecompressPerlExecuta
 chmod +x "${createModFilePerlExecutable}" "${ue4BatchDecompressPerlExecutable}"
 
 # --- Main functions ---
+CheckJq() {
+    if ! command -v jq >/dev/null 2>&1; then
+        echo "Error: jq command not found. Please install it" >&2
+        return 1
+    fi
+    return 0
+}
+
 CheckPerl() {
     if ! command -v perl >/dev/null 2>&1; then
         echo "Error: Perl executable not found. Please install it" >&2
@@ -429,18 +439,21 @@ InstallMod() {
              find "${modContentDestDir}" -mindepth 1 -delete
         fi
     else
-        local -a zJobsToProcess=()
+        local -a zJobsForPerl=()
+        local -a zJobsForBashTouch=()
+
         local allSourceFilesList="${tmpDir}/all_source_files_${currentModId}_${RANDOM}.txt"
-        
         find "${effectiveContentSourceDir}" -type f -print0 > "${allSourceFilesList}"
 
         if [ -s "${allSourceFilesList}" ]; then
             while IFS= read -r -d $'\0' sourceFileFullPath; do
                 local cleanRelativeFile="${sourceFileFullPath#${effectiveContentSourceDir}/}"
                 cleanRelativeFile="${cleanRelativeFile#/}"
-                if [ -z "${cleanRelativeFile}" ]; then continue; fi
+                if [ -z "${cleanRelativeFile}" ]; then
+                    continue
+                fi
 
-                local destFileParentDir 
+                local destFileParentDir
 
                 if [[ "${cleanRelativeFile}" == *".z.uncompressed_size" ]]; then
                     continue
@@ -450,7 +463,11 @@ InstallMod() {
                         destFileParentDir=$(dirname "${destUncompressedFileFullPath}")
                         mkdir -p "${destFileParentDir}" \
                             || { echo "Error: Failed to create directory '${destFileParentDir}' for item ${currentModId}" >&2; return 1; }
-                        zJobsToProcess+=("${sourceFileFullPath}"$'\t'"${destUncompressedFileFullPath}"$'\t'"$(stat -c %Y "${sourceFileFullPath}")")
+                        
+                        local sourceMTime
+                        sourceMTime=$(stat -c %Y "${sourceFileFullPath}")
+                        zJobsForPerl+=("SourcePath=${sourceFileFullPath}" "DestPath=${destUncompressedFileFullPath}")
+                        zJobsForBashTouch+=("${sourceMTime}"$'\t'"${sourceFileFullPath}"$'\t'"${destUncompressedFileFullPath}")
                     fi
                 else 
                     local destFileFullPath="${modContentDestDir}/${cleanRelativeFile}"
@@ -469,46 +486,50 @@ InstallMod() {
         fi
         rm -f "${allSourceFilesList}"
 
-        if [ ${#zJobsToProcess[@]} -gt 0 ]; then            
-            local jsonJobListContent="["
-            local firstJob=true
-            for jobEntry in "${zJobsToProcess[@]}"; do
-                IFS=$'\t' read -r src dest mtime <<< "$jobEntry"
-                if ! $firstJob; then
-                    jsonJobListContent+=","
+        if [ ${#zJobsForPerl[@]} -gt 0 ]; then            
+            local jqFilter='.'
+            local -a jqArgs=()
+            local jobIndex=0
+            for (( i=0; i < ${#zJobsForPerl[@]}; i+=2 )); do
+                local srcPath="${zJobsForPerl[i]#SourcePath=}"
+                local destPath="${zJobsForPerl[i+1]#DestPath=}"
+                jqArgs+=(--argjson "s${jobIndex}" "\"${srcPath}\"")
+                jqArgs+=(--argjson "d${jobIndex}" "\"${destPath}\"")
+                if [ $jobIndex -eq 0 ]; then
+                    jqFilter="[{SourcePath: \$s${jobIndex}, DestPath: \$d${jobIndex}}]"
+                else
+                    jqFilter+=" + [{SourcePath: \$s${jobIndex}, DestPath: \$d${jobIndex}}]"
                 fi
-                srcJson=$(sed 's/\\/\\\\/g; s/"/\\"/g' <<< "$src")
-                destJson=$(sed 's/\\/\\\\/g; s/"/\\"/g' <<< "$dest")
-                jsonJobListContent+="{ \"SourcePath\": \"${srcJson}\", \"DestPath\": \"${destJson}\" }"
-                firstJob=false
+                jobIndex=$((jobIndex + 1))
             done
-            jsonJobListContent+="]"
-            echo "${jsonJobListContent}" > "${jobListFilePath}"
+
+            if ! jq -n "${jqArgs[@]}" "${jqFilter}" > "${jobListFilePath}"; then
+                echo "Error: jq failed to create JSON job list for mod ${currentModId}." >&2
+                return 1
+            fi
 
             local perlCmdOutput
-            local perlExitCode
+            local perlExitCode=0
             
             if ! perlCmdOutput=$(perl "${ue4BatchDecompressPerlExecutable}" --jsonjobfile "${jobListFilePath}" 2>&1); then
-                perlExitCode=$?
-                echo "Error: Perl batch decompression for item ${currentModId} failed. Exit code: ${perlExitCode}" >&2
+                perlExitCode=$? 
+                echo "Error: Perl batch decompression for item ${currentModId} (command execution failed). Exit code: ${perlExitCode}" >&2
                 echo "Perl Output/Errors:" >&2
                 echo "${perlCmdOutput}" >&2
-                rm -f "${jobListFilePath}"
                 return 1
             else
-                perlExitCode=$?
-                 if [ $perlExitCode -ne 0 ]; then
+                perlExitCode=$? 
+                if [ $perlExitCode -ne 0 ]; then
                     echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} file error(s)" >&2
-                    echo "Perl output/errors:" >&2
+                    echo "Perl Output/Errors:" >&2
                     echo "${perlCmdOutput}" >&2
-                    rm -f "${jobListFilePath}"
                     return 1
                  fi
             fi
             
-            for jobEntry in "${zJobsToProcess[@]}"; do
-                 IFS=$'\t' read -r src dest mtime <<< "$jobEntry"
-                 if [ -f "${dest}" ]; then
+            for jobEntryWithTime in "${zJobsForBashTouch[@]}"; do
+                 IFS=$'\t' read -r mtime src dest <<< "$jobEntryWithTime"
+                 if [ -f "${dest}" ]; then 
                      touch -c -m -d @"${mtime}" "${dest}" \
                         || echo "Warning: Failed to set timestamp on '${dest}' for item ${currentModId}" >&2
                  else
@@ -576,6 +597,10 @@ if [ -z "$1" ]; then
 fi
 
 if ! CheckPerl; then
+    exit 1
+fi
+
+if ! CheckJq; then
     exit 1
 fi
 
