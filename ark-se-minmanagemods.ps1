@@ -279,13 +279,13 @@ sub decompress_single_z_file_core {
             }
             $uncompressed_data = Compress::Zlib::uncompress($compressed_data_buffer);
             unless (defined $uncompressed_data) {
-                my $z_err_num; 
+                my $z_err_number; 
                 { 
                     no warnings 'once';
-                    $z_err_num = $Compress::Zlib::unzerrno;
+                    $z_err_number = $Compress::Zlib::unzerrno;
                 }
-                my $zlib_error_str = Compress::Zlib::unzerror($z_err_num) || "Unknown Zlib err $z_err_num";
-                die "Zlib uncomp fail chunk $i from '$source_filepath': $zlib_error_str";
+                my $zlib_error_string = Compress::Zlib::unzerror($z_err_number) || "Unknown Zlib err $z_err_number";
+                die "Zlib uncomp fail chunk $i from '$source_filepath': $zlib_error_string";
             }
         }
         print {$out_fh} $uncompressed_data;
@@ -311,7 +311,7 @@ close $json_job_fh;
 my $jobs_array_ref;
 eval { 
     $jobs_array_ref = JSON::PP->new->utf8->decode($json_text); 
-    1; # Ensure eval returns true on success
+    1;
 }
 or do { 
     my $json_err = $@ || "Unknown JSON error";
