@@ -491,36 +491,34 @@ InstallMod() {
         fi
         rm -f "${allSourceFilesList}"
 
-        if [ ${#zJobSourcePathsForPerl[@]} -gt 0 ]; then            
-            local -a jqCommand=()
-            jqCommand+=("jq" "-n")
+        if [ ${#zJobSourcePathsForPerl[@]} -gt 0 ]; then                        
+            local jqInputFile="${tmpDir}/jq_intermediate_input_${currentModId}_${RANDOM}.txt"
+            >"${jqInputFile}" 
 
-            local jqFilter="["
             for (( i=0; i < ${#zJobSourcePathsForPerl[@]}; i++ )); do
-                if [ $i -gt 0 ]; then
-                    jqFilter+=","
+                local srcPath="${zJobSourcePathsForPerl[i]}"
+                local destPath="${zJobDestPathsForPerl[i]}"
+                
+                if ! jq -n --arg sp "$srcPath" --arg dp "$destPath" '{SourcePath: $sp, DestPath: $dp}' >> "${jqInputFile}"; then
+                    echo "Error: jq failed to create individual JSON object for mod ${currentModId}" >&2
+                    echo "Src: $srcPath, Dest: $destPath" >&2
+                    rm -f "${jqInputFile}"
+                    return 1
                 fi
-                jqCommand+=(--arg "s$i" "${zJobSourcePathsForPerl[i]}")
-                jqCommand+=(--arg "d$i" "${zJobDestPathsForPerl[i]}")
-                jqFilter+="{SourcePath: \$s$i, DestPath: \$d$i}"
             done
-            jqFilter+="]"
-            jqCommand+=("${jqFilter}")
 
-            if ! "${jqCommand[@]}" > "${jobListFilePath}"; then
-                echo "Error: jq failed to create JSON job list for mod ${currentModId}" >&2
+            if ! jq --slurp '.' < "${jqInputFile}" > "${jobListFilePath}"; then
+                echo "Error: jq failed to create final JSON job list array for mod ${currentModId}" >&2
+                rm -f "${jqInputFile}"
                 return 1
             fi
+            rm -f "${jqInputFile}"
 
             local perlExitCode=0
             local perlStdErrFile="${tmpDir}/perl_batch_stderr_${currentModId}_${RANDOM}.txt"
             
-            # Execute Perl, explicitly redirecting its STDERR to a file
-            # STDOUT from perl (if any) will go to perlCmdOutput if needed, though our batch script uses STDERR for messages
-            local perlStdOut # Not expecting much here from the batch script
+            local perlStdOut
             
-            # Run perl and capture its exit code
-            # We suppress set -e for this call to manually check exit code
             set +e 
             perlStdOut=$(perl "${ue4BatchDecompressPerlExecutable}" --jsonjobfile "${jobListFilePath}" 2> "${perlStdErrFile}")
             perlExitCode=$?
@@ -528,16 +526,12 @@ InstallMod() {
 
             if [ $perlExitCode -ne 0 ]; then
                 echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} error(s)." >&2
-                if [ -s "${perlStdErrFile}" ]; then # Check if error file has content
+                if [ -s "${perlStdErrFile}" ]; then
                     echo "Perl STDERR:" >&2
                     cat "${perlStdErrFile}" >&2
                 else
                     echo "Perl STDERR: (empty or not captured)" >&2
                 fi
-                # if [ -n "${perlStdOut}" ]; then # If you also wanted to see STDOUT
-                #     echo "Perl STDOUT:" >&2
-                #     echo "${perlStdOut}" >&2
-                # fi
                 rm -f "${jobListFilePath}"
                 rm -f "${perlStdErrFile}"
                 return 1
