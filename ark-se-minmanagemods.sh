@@ -486,13 +486,13 @@ InstallMod() {
         fi
         rm -f "${allSourceFilesList}"
 
-        if [ ${#zJobsToProcessForPerl[@]} -gt 0 ]; then
-            echo "Mod ${currentModId}: Batch decompressing ${#zJobsToProcessForPerl[@]} .z file(s)..."
+        if [ ${#zJobsForPerl[@]} -gt 0 ]; then
+            echo "Mod ${currentModId}: Batch decompressing ${#zJobsForPerl[@]} .z file(s)..."
             
             local jqInputFile="${tmpDir}/jq_feed_${currentModId}_${RANDOM}.txt"
             >"${jqInputFile}"
 
-            for jobEntry in "${zJobsToProcessForPerl[@]}"; do
+            for jobEntry in "${zJobsForPerl[@]}"; do
                 IFS=$'\t' read -r _jobMtime _jobSrcPath _jobDestPath <<< "$jobEntry"
                 
                 local srcJsonEscaped destJsonEscaped
@@ -529,7 +529,7 @@ InstallMod() {
             fi
             
             # Touch successfully decompressed files
-            for jobEntryWithTime in "${zJobsToProcessForPerl[@]}"; do
+            for jobEntryWithTime in "${zJobsForPerl[@]}"; do
                  IFS=$'\t' read -r mtime src dest <<< "$jobEntryWithTime"
                  if [ -f "${dest}" ]; then 
                      touch -c -m -d @"${mtime}" "${dest}" \
