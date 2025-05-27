@@ -17,7 +17,7 @@ $arkBaseDir = Join-Path -Path $arkRootDir -ChildPath "376030"
 $workshopContentDir = Join-Path -Path $arkBaseDir -ChildPath "Engine\Binaries\ThirdParty\SteamCMD\Win64\steamapps\workshop\content\346110"
 $modsInstallDir = Join-Path -Path $arkBaseDir -ChildPath "ShooterGame\Content\Mods"
 
-# --- Embedded Perl script: create_mod_file.pl ---
+# --- Embedded Perl scripts ---
 $createModFilePerlScriptContent = @'
 #!/usr/bin/perl
 use strict;
@@ -171,32 +171,54 @@ create_mod_file($outputModFileArg, $modIdArg, \@map_names, \%meta_information);
 exit 0;
 '@
 
-# --- Embedded Perl script: ue4_batch_decompress.pl ---
 $ue4BatchDecompressPerlScriptContent = @'
 #!/usr/bin/perl
 use strict;
 use warnings;
 use utf8;
+
 use File::Basename;
 use Compress::Zlib;
 use Win32::LongPath qw(openL);
 use Getopt::Long qw(GetOptions);
+use JSON::PP;
 
-use constant { PACKAGE_FILE_TAG => 2653586369, LOADING_COMPRESSION_CHUNK_SIZE => 131072 };
+sub open_file_read_raw_or_die { 
+    my ($filepath) = @_; 
+    my $fh; 
+    Win32::LongPath::openL(\$fh, '<:raw', $filepath) 
+        or die "Cannot open file '$filepath' for reading: $!"; 
+    return $fh; 
+}
 
-sub read_int64_le {
+sub open_file_write_raw_or_die { 
+    my ($filepath) = @_; 
+    my $fh; 
+    Win32::LongPath::openL(\$fh, '>:raw', $filepath) 
+        or die "Cannot open file '$filepath' for writing: $!"; 
+    return $fh; 
+}
+
+use constant { 
+    PACKAGE_FILE_TAG => 2653586369, 
+    LOADING_COMPRESSION_CHUNK_SIZE => 131072 
+};
+
+sub read_int64_le { 
     my ($fh) = @_; 
-    my $buffer; my $bytes_read = read($fh, $buffer, 8);
-    unless (defined $bytes_read && $bytes_read == 8) { return undef; }
+    my $buffer; 
+    my $bytes_read = read($fh, $buffer, 8); 
+    unless (defined $bytes_read && $bytes_read == 8) { 
+        return undef;
+    } 
     return unpack('q<', $buffer);
 }
 
 sub decompress_single_z_file_core {
     my ($source_filepath, $destination_filepath) = @_;
-    my $in_fh;
-    openL(\$in_fh, '<:raw', $source_filepath) or die "Perl_Batch: Cannot open source '$source_filepath' with openL: $!";
-    my $out_fh;
-    openL(\$out_fh, '>:raw', $destination_filepath) or die "Perl_Batch: Cannot open dest '$destination_filepath' with openL: $!";
+    
+    my $in_fh = open_file_read_raw_or_die($source_filepath);
+    my $out_fh = open_file_write_raw_or_die($destination_filepath);
     
     my $header1_compressed_size = read_int64_le($in_fh);
     die "Failed h1_comp_size from '$source_filepath'" unless defined $header1_compressed_size;
@@ -208,13 +230,23 @@ sub decompress_single_z_file_core {
     die "Failed total_uncomp_size from '$source_filepath'" unless defined $total_uncompressed_size;
 
     my $ue4_uncompressed_chunk_size = $header1_uncompressed_size;
-    if ($ue4_uncompressed_chunk_size == PACKAGE_FILE_TAG) { $ue4_uncompressed_chunk_size = LOADING_COMPRESSION_CHUNK_SIZE; }
-    if ($ue4_uncompressed_chunk_size <= 0) { die "UE4 Chunk Size must be positive, got $ue4_uncompressed_chunk_size from '$source_filepath'\n"; }
+    if ($ue4_uncompressed_chunk_size == PACKAGE_FILE_TAG) {
+        $ue4_uncompressed_chunk_size = LOADING_COMPRESSION_CHUNK_SIZE;
+    }
+    if ($ue4_uncompressed_chunk_size <= 0) {
+        die "UE4 Chunk Size must be positive, got $ue4_uncompressed_chunk_size from '$source_filepath'\n";
+    }
     my $num_chunks = 0;
-    if ($total_uncompressed_size > 0) { $num_chunks = int(($total_uncompressed_size + $ue4_uncompressed_chunk_size - 1) / $ue4_uncompressed_chunk_size); }
-    elsif ($total_uncompressed_size == 0) { $num_chunks = 0; }
-    else { die "Total uncomp size cannot be negative ($total_uncompressed_size) from '$source_filepath'.\n"; }
-    if ($num_chunks < 0) { die "Number of chunks cannot be negative ($num_chunks) from '$source_filepath'.\n"; }
+    if ($total_uncompressed_size > 0) {
+        $num_chunks = int(($total_uncompressed_size + $ue4_uncompressed_chunk_size - 1) / $ue4_uncompressed_chunk_size);
+    } elsif ($total_uncompressed_size == 0) {
+        $num_chunks = 0;
+    } else {
+        die "Total uncomp size cannot be negative ($total_uncompressed_size) from '$source_filepath'.\n";
+    }
+    if ($num_chunks < 0) {
+        die "Number of chunks cannot be negative ($num_chunks) from '$source_filepath'.\n";
+    } 
     
     my @chunk_table;
     for (my $i = 0; $i < $num_chunks; $i++) {
@@ -222,24 +254,36 @@ sub decompress_single_z_file_core {
         die "Failed to read compressed size for chunk $i from '$source_filepath'" unless defined $chunk_compressed_size;
         my $chunk_uncompressed_size = read_int64_le($in_fh); 
         die "Failed to read uncompressed size for chunk $i from '$source_filepath'" unless defined $chunk_uncompressed_size;
-        if ($chunk_compressed_size < 0 || $chunk_uncompressed_size < 0) { die "Chunk $i from '$source_filepath' has negative size(s)."; }
-        push @chunk_table, { compressed_size => $chunk_compressed_size, uncompressed_size => $chunk_uncompressed_size };
+        if ($chunk_compressed_size < 0 || $chunk_uncompressed_size < 0) {
+            die "Chunk $i from '$source_filepath' has negative size(s).";
+        }
+        push @chunk_table, { 
+            compressed_size   => $chunk_compressed_size, 
+            uncompressed_size => $chunk_uncompressed_size 
+        };
     }
+
     my $current_uncompressed_total = 0;
     for (my $i = 0; $i < $num_chunks; $i++) {
         my $chunk_info = $chunk_table[$i];
         my $bytes_to_read_for_chunk = $chunk_info->{compressed_size};
         my $uncompressed_data;
-        if ($bytes_to_read_for_chunk == 0) { $uncompressed_data = ""; }
-        else {
+        if ($bytes_to_read_for_chunk == 0) {
+            $uncompressed_data = "";
+        } else {
             my $compressed_data_buffer;
             my $bytes_read = read($in_fh, $compressed_data_buffer, $bytes_to_read_for_chunk);
             unless (defined $bytes_read && $bytes_read == $bytes_to_read_for_chunk) {
-                die "Failed to read $bytes_to_read_for_chunk bytes for chunk $i from '$source_filepath'. Expected $bytes_to_read_for_chunk, got " . ($bytes_read//0) . ". Error: " . ($!//"Unknown");
+                die "Failed to read $bytes_to_read_for_chunk bytes for chunk $i from '$source_filepath'. Expected $bytes_to_read_for_chunk, got " . 
+                    ($bytes_read // 0) . ". Error: " . ($! // "Unknown");
             }
             $uncompressed_data = Compress::Zlib::uncompress($compressed_data_buffer);
             unless (defined $uncompressed_data) {
-                my $z_err_num; { no warnings 'once'; $z_err_num = $Compress::Zlib::unzerrno; }
+                my $z_err_num; 
+                { 
+                    no warnings 'once';
+                    $z_err_num = $Compress::Zlib::unzerrno;
+                }
                 my $zlib_error_str = Compress::Zlib::unzerror($z_err_num) || "Unknown Zlib err $z_err_num";
                 die "Zlib uncomp fail chunk $i from '$source_filepath': $zlib_error_str";
             }
@@ -247,63 +291,77 @@ sub decompress_single_z_file_core {
         print {$out_fh} $uncompressed_data;
         $current_uncompressed_total += length($uncompressed_data);
     }
-    close $in_fh; close $out_fh;
+    close $in_fh;
+    close $out_fh; 
     if ($num_chunks > 0 && $current_uncompressed_total != $total_uncompressed_size) {
         warn "Perl_Batch_Warning: Decompressed size mismatch for '$source_filepath'. Expected $total_uncompressed_size, got $current_uncompressed_total.\n";
     }
     return 1;
 }
 
-my $job_file_path_arg;
-GetOptions('jobfile=s' => \$job_file_path_arg)
-    or die "Perl_Batch Usage: $0 --jobfile <path_to_jobfile>\n";
+my $json_job_file_path_arg;
+GetOptions('jsonjobfile=s' => \$json_job_file_path_arg)
+    or die "Perl_Batch Usage: $0 --jsonjobfile <path_to_jobfile.json>\n"; 
+die "Perl_Batch_Error: --jsonjobfile not specified.\n" unless defined $json_job_file_path_arg;
 
-die "Perl_Batch_Error: --jobfile not specified.\n" unless defined $job_file_path_arg;
+my $json_job_fh = open_file_read_raw_or_die($json_job_file_path_arg);
+my $json_text = do { local $/; <$json_job_fh> }; 
+close $json_job_fh;
 
-my $job_fh;
-openL(\$job_fh, '<:raw', $job_file_path_arg) or die "Perl_Batch_Error: Cannot open job file '$job_file_path_arg' with openL: $!";
+my $jobs_array_ref;
+eval { 
+    $jobs_array_ref = JSON::PP->new->utf8->decode($json_text); 
+    1; # Ensure eval returns true on success
+}
+or do { 
+    my $json_err = $@ || "Unknown JSON error";
+    chomp $json_err;
+    die "Perl_Batch_Error: Could not decode JSON from job file. Error: $json_err\n";
+};
 
-my $error_count = 0;
-my $processed_count = 0;
-while (my $line = <$job_fh>) {
-    chomp $line;
-    my ($src_path, $dest_path) = split /\t/, $line, 2;
+unless (ref $jobs_array_ref eq 'ARRAY') {
+    die "Perl_Batch_Error: Job file content is not valid JSON array.\n";
+}
 
-    unless (defined $src_path && length $src_path && defined $dest_path && length $dest_path) {
-        print STDERR "Perl_Batch_Error: Skipping malformed job line: $line\n";
-        $error_count++;
+my $error_count = 0; 
+my $processed_count = 0; 
+my $job_number = 0;
+foreach my $job (@$jobs_array_ref) {
+    $job_number++;
+    unless (ref $job eq 'HASH' && defined $job->{SourcePath} && defined $job->{DestPath}) {
+        print STDERR "Perl_Batch_Error: Skipping malformed JSON job object $job_number.\n";
+        $error_count++; 
         next;
     }
-    eval {
-        decompress_single_z_file_core($src_path, $dest_path);
-        1;
+    my $src_path = $job->{SourcePath}; 
+    my $dest_path = $job->{DestPath};
+    
+    eval { 
+        decompress_single_z_file_core($src_path, $dest_path); 
+        1; # Ensure eval returns true on success
     };
     if ($@) {
         my $eval_error = $@;
         chomp $eval_error;
-        print STDERR "Perl_Batch_Error: FAILED '$src_path' -> '$dest_path': $eval_error\n";
+        print STDERR "Perl_Batch_Error: FAILED on job $job_number '$src_path' -> '$dest_path': $eval_error\n";
         $error_count++;
     } else {
         $processed_count++;
     }
 }
-close $job_fh;
 exit $error_count;
 '@
 
-# --- Temporary file setup ---
 $tempDir = Join-Path -Path $env:TEMP -ChildPath ("ark_mod_proc_" + (New-Guid).ToString())
 $null = New-Item -ItemType Directory -Path $tempDir -Force
 $createModFilePerlExecutable = Join-Path -Path $tempDir -ChildPath "create_mod_file.pl"
 $ue4BatchDecompressPerlExecutable = Join-Path -Path $tempDir -ChildPath "ue4_batch_decompress.pl"
 
-# Ensure the script exits and cleans up temp files
 try {
     $utf8NoBomEncoding = New-Object System.Text.UTF8Encoding($false)
     [System.IO.File]::WriteAllText($createModFilePerlExecutable, $createModFilePerlScriptContent, $utf8NoBomEncoding)
     [System.IO.File]::WriteAllText($ue4BatchDecompressPerlExecutable, $ue4BatchDecompressPerlScriptContent, $utf8NoBomEncoding)
 
-    # --- Main script functions ---
     function Setup-Perl {
         [CmdletBinding()]
         param()
@@ -317,9 +375,7 @@ try {
             $zipUrl = "https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54021_64bit_UCRT/strawberry-perl-5.40.2.1-64bit-portable.zip"
             $zipFileName = "strawberry-perl-portable.zip"
             $zipFilePath = Join-Path -Path $env:TEMP -ChildPath $zipFileName
-
             Write-Host "Downloading and installing portable Strawberry Perl. This may take a while ..."
-
             try {
                 if (Test-Path -LiteralPath $perlInstallRoot -PathType Container) {
                     Remove-Item -LiteralPath $perlInstallRoot -Recurse -Force
@@ -349,12 +405,9 @@ try {
         $originalPath = $env:PATH
         $env:PATH = "$perlBinDir;$perlCBinDir;$originalPath"
 
-        # Install cpanm (App::cpanminus) if it's not available
         $cpanmCmdInfo = Get-Command cpanm -ErrorAction SilentlyContinue
         if (-not $cpanmCmdInfo) {
-
             Write-Host "cpanminus (cpanm) not found in PATH. Attempting to install it via CPAN.pm ..."
-            
             try {
                 & perl.exe -MCPAN -e "CPAN::Shell->install('App::cpanminus');"
                 $cpanmCmdInfo = Get-Command cpanm -ErrorAction SilentlyContinue
@@ -371,7 +424,11 @@ try {
             }
         }
 
-        $requiredPerlModules = @('Win32::LongPath')
+        $requiredPerlModules = @(
+            'Win32::LongPath',
+            'JSON::PP'
+        )
+        Write-Host "Ensuring required Perl modules are installed: $($requiredPerlModules -join ', ')"
         try {
             $cpanmExecutable = $cpanmCmdInfo.Source
             & $cpanmExecutable --notest --quiet $requiredPerlModules
@@ -388,6 +445,29 @@ try {
         } catch {
             Write-Error "Error: Failed during cpanm execution for modules ($($requiredPerlModules -join ', ')). Details: $($_.Exception.Message)"
             $env:PATH = $originalPath
+            return $false
+        }
+        return $true
+    }
+
+    function Check-Perl {
+        if (-not (Get-Command perl.exe -ErrorAction SilentlyContinue)) {
+            Write-Error "Error: Perl executable not found."
+            return $false
+        }
+        & perl.exe -MCompress::Zlib -e "exit 0" 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "Error: Perl module 'Compress::Zlib' not found."
+            return $false
+        }
+        & perl.exe -MWin32::LongPath -e "exit 0" 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "Error: Perl module 'Win32::LongPath' not found."
+            return $false
+        }
+        & perl.exe -MJSON::PP -e "exit 0" 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "Error: Perl module 'JSON::PP' not found (core in Perl 5.14+)."
             return $false
         }
         return $true
@@ -433,7 +513,7 @@ try {
                     $successStatus = $true
                     break 
                 }
-            } catch { }
+            } catch {}
             
             if (-not $successStatus -and $attempt -lt $maxRetries) {
                 $errorMessage = "Warning: Item ${modId} download attempt ${attempt}/${maxRetries} failed. Retrying in 10s ..."
@@ -486,122 +566,163 @@ try {
         }
 
         $foundPrimalGameDataFile = $false
+        $jobListFilePath = $null 
 
         if (-not (Test-Path -LiteralPath $effectiveContentSourceDir -PathType Container)) {
             Write-Warning "Warning: Effective content source ('$effectiveContentSourceDir') for item ${currentModId} does not exist. Cleaning destination"
             if (Test-Path -LiteralPath $modContentDestDir -PathType Container) {
-                 Get-ChildItem -Path $modContentDestDir -Force | Remove-Item -Recurse -Force
+                Get-ChildItem -Path $modContentDestDir -Force | Remove-Item -Recurse -Force
             }
         } else {
             $zJobsToProcess = [System.Collections.Generic.List[object]]::new()
-            $sourceZFiles = Get-ChildItem -LiteralPath $effectiveContentSourceDir -Filter "*.z" -Recurse -File -ErrorAction SilentlyContinue
+            $allSourceFiles = Get-ChildItem -LiteralPath $effectiveContentSourceDir -File -Recurse -ErrorAction SilentlyContinue
             
-            if ($sourceZFiles) {
-                foreach ($sourceZFileItemInBatch in $sourceZFiles) {
-                    $sourceZFileFullPathBatch = $sourceZFileItemInBatch.FullName
-                    $fileRelativeToSrcZBatch = $sourceZFileFullPathBatch.Substring($effectiveContentSourceDir.Length).TrimStart("\","/")
-                    $destUncompressedFileFullPathBatch = Join-Path -Path $modContentDestDir -ChildPath ($fileRelativeToSrcZBatch -replace '\.z$','')
-                    $needsDecompressionBatch = $false
-                    if (-not (Test-Path -LiteralPath $destUncompressedFileFullPathBatch -PathType Leaf)) {
-                        $needsDecompressionBatch = $true
-                    } else {
-                        $destFileObjectBatch = Get-Item -LiteralPath $destUncompressedFileFullPathBatch
-                        if ($sourceZFileItemInBatch.LastWriteTime -gt $destFileObjectBatch.LastWriteTime) {
-                            $needsDecompressionBatch = $true
-                        }
+            if ($allSourceFiles) {
+                foreach ($sourceFileItem in $allSourceFiles) {
+                    $sourceFileFullPath = $sourceFileItem.FullName
+                    $cleanRelativeFile = $sourceFileFullPath.Substring($effectiveContentSourceDir.Length).TrimStart("\","/")
+                    if ([string]::IsNullOrEmpty($cleanRelativeFile)) { continue }
+
+                    $destFileParentDir = $null 
+
+                    if ($sourceFileItem.Name -like "*.z.uncompressed_size") {
+                        continue # Skip .z.uncompressed_size files
                     }
-                    if ($needsDecompressionBatch) {
-                        $destUncompressedDirBatch = Split-Path -Path $destUncompressedFileFullPathBatch -Parent
-                        if (-not (Test-Path -LiteralPath $destUncompressedDirBatch -PathType Container)) {
-                            $null = New-Item -ItemType Directory -Path $destUncompressedDirBatch -Force -ErrorAction SilentlyContinue
+                    elseif ($sourceFileItem.Extension -eq ".z") {
+                        # This is a .z file, prepare for batch decompression
+                        $destUncompressedFileFullPath = Join-Path -Path $modContentDestDir -ChildPath ($cleanRelativeFile -replace '\.z$','')
+                        
+                        $needsDecompression = $false
+                        if (-not (Test-Path -LiteralPath $destUncompressedFileFullPath -PathType Leaf)) {
+                            $needsDecompression = $true
+                        } else {
+                            $destUncompressedFileObject = Get-Item -LiteralPath $destUncompressedFileFullPath
+                            if ($sourceFileItem.LastWriteTime -gt $destUncompressedFileObject.LastWriteTime) {
+                                $needsDecompression = $true
+                            }
                         }
-                        $zJobsToProcess.Add([PSCustomObject]@{
-                            SourcePath    = $sourceZFileFullPathBatch
-                            DestPath      = $destUncompressedFileFullPathBatch
-                            SourceModTime = $sourceZFileItemInBatch.LastWriteTime
-                        })
+
+                        if ($needsDecompression) {
+                            $destFileParentDir = Split-Path -Path $destUncompressedFileFullPath -Parent
+                            if (-not (Test-Path -LiteralPath $destFileParentDir -PathType Container)) {
+                                $null = New-Item -ItemType Directory -Path $destFileParentDir -Force -ErrorAction SilentlyContinue
+                            }
+                            $zJobsToProcess.Add([PSCustomObject]@{
+                                SourcePath    = $sourceFileFullPath
+                                DestPath      = $destUncompressedFileFullPath
+                                SourceModTime = $sourceFileItem.LastWriteTime
+                            })
+                        }
+                    } else { 
+                        # This is a regular non-.z file
+                        $destFileFullPath = Join-Path -Path $modContentDestDir -ChildPath $cleanRelativeFile
+                        $destFileParentDir = Split-Path -Path $destFileFullPath -Parent
+
+                        $needsCopy = $false
+                        if (-not (Test-Path -LiteralPath $destFileFullPath)) { 
+                            $needsCopy = $true
+                        } else {
+                            if (Test-Path -LiteralPath $destFileFullPath -PathType Leaf) {
+                                $destFileObject = Get-Item -LiteralPath $destFileFullPath
+                                if ($sourceFileItem.LastWriteTime -gt $destFileObject.LastWriteTime) {
+                                    $needsCopy = $true
+                                }
+                            } else { 
+                                $needsCopy = $true 
+                            }
+                        }
+
+                        if ($needsCopy) {
+                            if (-not (Test-Path -LiteralPath $destFileParentDir -PathType Container)) {
+                                try {
+                                    $null = New-Item -ItemType Directory -Path $destFileParentDir -Force
+                                }
+                                catch {
+                                    Write-Error "Error: Failed to create directory '$destFileParentDir' for item ${currentModId}"; return $false
+                                }
+                            }
+                            try {
+                                Copy-Item -LiteralPath $sourceFileFullPath -Destination $destFileFullPath -Force
+                            } catch {
+                                Write-Error "Error: Failed to copy '$cleanRelativeFile' to '$destFileFullPath' for item ${currentModId}. Error: $($_.Exception.Message)"
+                                return $false
+                            }
+                        }
                     }
                 }
             }
-
+            
             if ($zJobsToProcess.Count -gt 0) {
                 Write-Host "Mod ${currentModId}: Batch decompressing $($zJobsToProcess.Count) .z file(s)..."
-                $jobListFilePath = Join-Path $tempDir "perl_z_job_list_${currentModId}.txt"
+                $jobListFilePath = Join-Path $tempDir "perl_z_job_list_${currentModId}.json"
                 
-                $jobFileContentLines = $zJobsToProcess | ForEach-Object { "$($_.SourcePath)\t$($_.DestPath)" }
-                $asciiEncoding = New-Object System.Text.ASCIIEncoding
-                [System.IO.File]::WriteAllLines($jobListFilePath, $jobFileContentLines, $asciiEncoding)
-                
-                $perlStdErrOutput = "" 
-                $perlExitCode = -1
-
-                $perlArgsForBatch = @(
-                    """$ue4BatchDecompressPerlExecutable""",
-                    "--jobfile", """$jobListFilePath"""
-                )
+                $jobDataForJson = $zJobsToProcess | ForEach-Object { @{ SourcePath = $_.SourcePath; DestPath = $_.DestPath } }
+                $jobJsonString = $jobDataForJson | ConvertTo-Json -Compress
                 
                 try {
-                    $processInfo = New-Object System.Diagnostics.ProcessStartInfo
-                    $processInfo.FileName = "perl.exe"
-                    $processInfo.Arguments = $perlArgsForBatch -join " "
-                    $processInfo.UseShellExecute = $false
-                    $processInfo.RedirectStandardOutput = $true
-                    $processInfo.RedirectStandardError = $true
-                    $processInfo.CreateNoWindow = $true
-
-                    $process = New-Object System.Diagnostics.Process
-                    $process.StartInfo = $processInfo
-                    $process.Start() | Out-Null
+                    $utf8NoBomEncoding = New-Object System.Text.UTF8Encoding($false)
+                    [System.IO.File]::WriteAllText($jobListFilePath, $jobJsonString, $utf8NoBomEncoding)
                     
-                    $process.WaitForExit()
-                    $perlExitCode = $process.ExitCode
-                    $stdOutputFromPerl = $process.StandardOutput.ReadToEnd() 
-                    $perlStdErrOutput = $process.StandardError.ReadToEnd()
+                    $perlStdErrOutput = "" 
+                    $perlExitCode = -1 
+                    $perlArgsForBatch = @("`"$ue4BatchDecompressPerlExecutable`"", "--jsonjobfile", "`"$jobListFilePath`"")
                     
-                    if ($perlExitCode -ne 0) {
-                        Write-Error "Error: Perl batch decompression for mod $currentModId reported $perlExitCode error(s)."
-                        if (-not [string]::IsNullOrWhiteSpace($perlStdErrOutput)) {
-                            Write-Error "Perl STDERR: $perlStdErrOutput"
-                        }
-                        # STDOUT from batch perl is not expected to contain primary data here
-                        if (-not [string]::IsNullOrWhiteSpace($stdOutputFromPerl)) {
-                            Write-Host "Perl STDOUT: $stdOutputFromPerl"
-                        }
-                        return $false 
+                    $psiBatchPerl = New-Object System.Diagnostics.ProcessStartInfo
+                    $psiBatchPerl.FileName = "perl.exe" 
+                    $psiBatchPerl.Arguments = ($perlArgsForBatch -join " ")
+                    $psiBatchPerl.UseShellExecute = $false 
+                    $psiBatchPerl.RedirectStandardOutput = $true 
+                    $psiBatchPerl.RedirectStandardError = $true
+                    $psiBatchPerl.CreateNoWindow = $true
+                    
+                    $processBatchPerl = New-Object System.Diagnostics.Process
+                    $processBatchPerl.StartInfo = $psiBatchPerl
+                    $processBatchPerl.Start() | Out-Null
+                    
+                    if (-not $processBatchPerl.WaitForExit(1800000)) { # 30 min timeout
+                        Write-Warning "Warning: Perl batch decompression timed out for mod ${currentModId}. Attempting to kill."
+                        try { if (-not $processBatchPerl.HasExited) { $processBatchPerl.Kill() } } catch {}
+                        $perlExitCode = -2 
+                    } else {
+                        $perlExitCode = $processBatchPerl.ExitCode
                     }
                     
+                    $stdOutputFromPerl = $processBatchPerl.StandardOutput.ReadToEnd() 
+                    $perlStdErrOutput = $processBatchPerl.StandardError.ReadToEnd()
+                    
+                    if (-not [string]::IsNullOrWhiteSpace($perlStdErrOutput)) {
+                        Write-Warning "Perl STDERR (Mod ${currentModId}): $($perlStdErrOutput.Split("`n") | ForEach-Object {'  '+$_})"
+                    }
+                    if ($perlExitCode -ne 0) {
+                        Write-Error "Error: Perl batch decompression for mod ${currentModId} reported $perlExitCode error(s)."
+                        return $false
+                    }
                     foreach ($job in $zJobsToProcess) {
                         if (Test-Path -LiteralPath $job.DestPath -PathType Leaf) {
-                            try { 
-                                (Get-Item -LiteralPath $job.DestPath).LastWriteTime = $job.SourceModTime 
-                            } catch { 
-                                Write-Warning "Warning: Failed to set timestamp on '$($job.DestPath)' for mod ${currentModId}: $($_.Exception.Message)" 
+                            try {
+                                (Get-Item -LiteralPath $job.DestPath).LastWriteTime = $job.SourceModTime
+                            }
+                            catch {
+                                Write-Warning "Warning: Failed to set timestamp on '$($job.DestPath)' for mod ${currentModId}: $($_.Exception.Message)"
                             }
                         } else {
-                            Write-Warning "Warning: Decompressed file '$($job.DestPath)' for mod $currentModId not found after batch (Perl reported overall success)."
+                            Write-Warning "Warning: Decompressed file '$($job.DestPath)' for mod ${currentModId} not found after batch (Perl success)."
                         }
                     }
-                } catch { 
-                    Write-Error "Error: PowerShell Exception during Perl batch process for mod ${currentModId}: $($_.Exception.ToString())"
-                    if (-not [string]::IsNullOrWhiteSpace($perlStdErrOutput)) {
-                        Write-Error "Perl STDERR contents before exception (if any captured): $perlStdErrOutput"
-                    }
+                } catch {
+                    Write-Error "Error: PS Exception during Perl batch for mod ${currentModId}: $($_.Exception.ToString())"
                     return $false
-                } finally { 
-                    if ($jobListFilePath -and (Test-Path -LiteralPath $jobListFilePath -PathType Leaf)) {
-                        Remove-Item -LiteralPath $jobListFilePath -Force -ErrorAction SilentlyContinue 
+                }
+                finally {
+                    if ($jobListFilePath -and (Test-Path -LiteralPath $jobListFilePath)) {
+                        Remove-Item -LiteralPath $jobListFilePath -Force -ErrorAction SilentlyContinue
                     }
                 }
-            } else {
-                Write-Host "Mod ${currentModId}: No .z files require new decompression."
             }
             
-            # Clean up uncompressed files in destination for which a compressed or direct source no longer exists, and any stray compressed files
+            # Stale file cleanup & empty directory pruning
             Get-ChildItem -LiteralPath $modContentDestDir -File -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
-                if ($_.Extension -eq ".z") {
-                    Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue
-                    return
-                }
+                if ($_.Extension -eq ".z") {Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue; return }
                 $fileRelativeToDest = $_.FullName.Substring($modContentDestDir.Length).TrimStart("\","/")
                 $correspondingSourceDirectFile = Join-Path -Path $effectiveContentSourceDir -ChildPath $fileRelativeToDest
                 $correspondingSourceZFile = Join-Path -Path $effectiveContentSourceDir -ChildPath ($fileRelativeToDest + ".z")
@@ -610,13 +731,10 @@ try {
                 }
             }
             Get-ChildItem -LiteralPath $modContentDestDir -Directory -Recurse | Sort-Object -Property FullName -Descending | ForEach-Object {
-                if (-not ($_.GetFiles()) -and -not ($_.GetDirectories())) {
-                    Remove-Item -LiteralPath $_.FullName -Recurse -Force -ErrorAction SilentlyContinue
-                }
+                if (-not ($_.GetFiles()) -and -not ($_.GetDirectories())) { Remove-Item -LiteralPath $_.FullName -Recurse -Force -ErrorAction SilentlyContinue }
             }
         }
-        
-        # Prune empty directories in destination
+
         if (Get-ChildItem -LiteralPath $modContentDestDir -Filter "*PrimalGameData*" -Recurse -File -ErrorAction SilentlyContinue | Select-Object -First 1) {
             $foundPrimalGameDataFile = $true
         }
@@ -625,12 +743,13 @@ try {
         if (-not $modMetaExistsAndReadable -and $foundPrimalGameDataFile) {
             $defaultModtypePerlArg = "--default-modtype-if-meta-empty"
         }
-
         $createModCmdArgs = New-Object System.Collections.ArrayList
         $null = $createModCmdArgs.Add("--modid"); $null = $createModCmdArgs.Add($currentModId)
         $null = $createModCmdArgs.Add("--modinfo"); $null = $createModCmdArgs.Add($originalModInfoFile)
         $null = $createModCmdArgs.Add("--output"); $null = $createModCmdArgs.Add($modDefinitionFile)
-        if ($modMetaExistsAndReadable) { $null = $createModCmdArgs.Add("--modmeta"); $null = $createModCmdArgs.Add($originalModMetaFile) }
+        if ($modMetaExistsAndReadable) {
+            $null = $createModCmdArgs.Add("--modmeta"); $null = $createModCmdArgs.Add($originalModMetaFile)
+        }
         if (-not [string]::IsNullOrEmpty($defaultModtypePerlArg)) {
             $null = $createModCmdArgs.Add($defaultModtypePerlArg)
         }
@@ -650,74 +769,51 @@ try {
     }
 
     # --- Script entry point ---
-    if (-not (Setup-Perl)) {
-        Write-Error "Failed to set up the required Perl environment. Aborting"
-        exit 1
+    if (-not (Setup-Perl)) { 
+        Write-Error "Failed to set up Perl. Aborting"
+        exit 1 
     }
     
     $trimmedModIdsInput = $modIds -replace '^"?(.*?)"?$', '$1'
-    if ([string]::IsNullOrWhiteSpace($trimmedModIdsInput)) {
+    if ([string]::IsNullOrWhiteSpace($trimmedModIdsInput)) { 
         Write-Error "Error: No workshop item IDs specified"
-        exit 1
+        exit 1 
     }
-    [string[]]$modIdArray = $trimmedModIdsInput.Split(',') | ForEach-Object {
-        $_.Trim() } | Where-Object { $_
+    [string[]]$modIdArray = $trimmedModIdsInput.Split(',') | ForEach-Object { $_.Trim() } | Where-Object { $_ }
+    if ($modIdArray.Count -eq 0) { 
+        if (-not [string]::IsNullOrWhiteSpace($modIds)) {
+             Write-Warning "Error: No workshop item IDs specified"
         }
-
-    if ($modIdArray.Count -eq 0 -and -not [string]::IsNullOrWhiteSpace($modIds)) {
-        continue
-    } elseif ($modIdArray.Count -eq 0) {
-        Write-Error "Error: No workshop item IDs specified"
+        Write-Error "Error: No processable workshop item IDs specified"
         exit 1
     }
 
     $null = New-Item -ItemType Directory -Path $modsInstallDir -Force -ErrorAction SilentlyContinue
-
-    $processedCount = 0
-    $failedCount = 0
-    $totalModsAttempted = 0
-
+    $processedCount = 0; $failedCount = 0; $totalModsAttempted = 0
     Write-Host "Installing/updating workshop items ..."
-
     foreach ($modIdItem in $modIdArray) {
-        if ([string]::IsNullOrEmpty($modIdItem)) {
-            continue
-        }
         $totalModsAttempted++
-
         if ($modIdItem -notmatch '^[0-9]+$') {
-            Write-Error "Error: Invalid workshop item ID format '${modIdItem}'. Must be numeric. Skipping"
-            $failedCount++
-            continue
+            Write-Error "Error: Invalid ID format '${modIdItem}'. Must be numeric. Skipping"; $failedCount++; continue
         }
-
         if (Download-Mod -modId $modIdItem) {
-            if (Install-Mod -currentModId $modIdItem) {
-                $processedCount++
-            } else {
-                $failedCount++
-            }
-        } else {
-            $failedCount++
-        }
+            if (Install-Mod -currentModId $modIdItem) { $processedCount++ } else { $failedCount++ }
+        } else { $failedCount++ }
     }
-
     Write-Host "--------------------------------------------------"
     Write-Host "Workshop item installation/update process finished"
     Write-Host "Summary:"
-    Write-Host "  Total workshop item IDs attempted: $totalModsAttempted"
+    Write-Host "  Total item IDs attempted: $totalModsAttempted"
     Write-Host "  Successfully processed:  $processedCount"
     Write-Host "  Failed to process:     $failedCount"
     Write-Host "--------------------------------------------------"
-
-    if ($failedCount -gt 0) {
-        exit 1
+    if ($failedCount -gt 0) { 
+        exit 1 
     }
 
 } finally {
-    if (Test-Path -LiteralPath $tempDir -PathType Container) {
+    if ($tempDir -and (Test-Path -LiteralPath $tempDir -PathType Container)) {
         Remove-Item -LiteralPath $tempDir -Recurse -Force -ErrorAction SilentlyContinue
     }
 }
-
 exit 0
