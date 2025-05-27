@@ -486,27 +486,28 @@ InstallMod() {
         fi
         rm -f "${allSourceFilesList}"
 
-        if [ ${#zJobsForPerl[@]} -gt 0 ]; then            
-            local jqFilter='.'
-            local -a jqArgs=()
-            local jobIndex=0
-            for (( i=0; i < ${#zJobsForPerl[@]}; i+=2 )); do
-                local srcPath="${zJobsForPerl[i]#SourcePath=}"
-                local destPath="${zJobsForPerl[i+1]#DestPath=}"
-                jqArgs+=(--argjson "s${jobIndex}" "\"${srcPath}\"")
-                jqArgs+=(--argjson "d${jobIndex}" "\"${destPath}\"")
-                if [ $jobIndex -eq 0 ]; then
-                    jqFilter="[{SourcePath: \$s${jobIndex}, DestPath: \$d${jobIndex}}]"
-                else
-                    jqFilter+=" + [{SourcePath: \$s${jobIndex}, DestPath: \$d${jobIndex}}]"
-                fi
-                jobIndex=$((jobIndex + 1))
+        if [ ${#zJobsToProcessForPerl[@]} -gt 0 ]; then
+            echo "Mod ${currentModId}: Batch decompressing ${#zJobsToProcessForPerl[@]} .z file(s)..."
+            
+            local jqInputFile="${tmpDir}/jq_feed_${currentModId}_${RANDOM}.txt"
+            >"${jqInputFile}"
+
+            for jobEntry in "${zJobsToProcessForPerl[@]}"; do
+                IFS=$'\t' read -r _jobMtime _jobSrcPath _jobDestPath <<< "$jobEntry"
+                
+                local srcJsonEscaped destJsonEscaped
+                srcJsonEscaped=$(jq -R -s --arg str "$_jobSrcPath" '$str' < /dev/null)
+                destJsonEscaped=$(jq -R -s --arg str "$_jobDestPath" '$str' < /dev/null)
+                
+                echo "{ \"SourcePath\": ${srcJsonEscaped}, \"DestPath\": ${destJsonEscaped} }" >> "${jqInputFile}"
             done
 
-            if ! jq -n "${jqArgs[@]}" "${jqFilter}" > "${jobListFilePath}"; then
-                echo "Error: jq failed to create JSON job list for mod ${currentModId}." >&2
+            if ! jq -s '.' < "${jqInputFile}" > "${jobListFilePath}"; then
+                echo "Error: jq failed to create JSON job list from intermediate file for mod ${currentModId}." >&2
+                rm -f "${jqInputFile}"
                 return 1
             fi
+            rm -f "${jqInputFile}"
 
             local perlCmdOutput
             local perlExitCode=0
@@ -520,14 +521,15 @@ InstallMod() {
             else
                 perlExitCode=$? 
                 if [ $perlExitCode -ne 0 ]; then
-                    echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} file error(s)" >&2
+                    echo "Error: Perl batch decompression for item ${currentModId} reported ${perlExitCode} file error(s)." >&2
                     echo "Perl Output/Errors:" >&2
                     echo "${perlCmdOutput}" >&2
                     return 1
                  fi
             fi
             
-            for jobEntryWithTime in "${zJobsForBashTouch[@]}"; do
+            # Touch successfully decompressed files
+            for jobEntryWithTime in "${zJobsToProcessForPerl[@]}"; do
                  IFS=$'\t' read -r mtime src dest <<< "$jobEntryWithTime"
                  if [ -f "${dest}" ]; then 
                      touch -c -m -d @"${mtime}" "${dest}" \
