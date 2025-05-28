@@ -634,9 +634,9 @@ done
 echo "--------------------------------------------------"
 echo "Workshop item installation/update process finished"
 echo "Summary:"
-echo "  Total item IDs attempted:   ${totalModsAttempted}"
-echo "  Successfully processed:     ${processedCount}"
-echo "  Failed to process:          ${failedCount}"
+echo "  Total items attempted:     ${totalModsAttempted}"
+echo "  Successfully processed:    ${processedCount}"
+echo "  Failed to process:         ${failedCount}"
 echo "--------------------------------------------------"
 
 if [ "${failedCount}" -gt 0 ]; then
