@@ -75,7 +75,7 @@
         "DisplayName": "Custom Map Name",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets a custom map for the server. \"Custom\" type must be selected under Map, and the map files included in ShooterGame/Content/Mods. Automatically Manage Mods can be used for this purpose",
+        "Description": "Sets a custom map for the server. \"Custom\" type must be selected under Map, and the map files included in ShooterGame/Content/Mods. Mod Management Mode can be used for this purpose",
         "Keywords": "custom,map",
         "FieldName": "CustomMap",
         "InputType": "text",
@@ -87,27 +87,26 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Automatically Manage Mods",
+        "DisplayName": "Mod Management Mode",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, enables automatic mod download and updating (on server start). Specify the relevant mods under Mods List. Alternatively, specify them in Game.ini under the heading [ModInstaller] and with one mod per line in the format: ModIDS=<value>",
-        "Keywords": "auto,managed,mods,automanagedmods",
+        "Description": "Sets whether and how mods specifed under Mods List are downloaded, updated and installed. AMP manages = AMP manages mods when the server is updated (can overcome failures with ARK's system, especially on Windows, but may be slower). ARK manages = the ARK server manages mods when the server is started",
+        "Keywords": "auto,managed,mods,management,mode,automanagedmods",
         "FieldName": "automanagedmods",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
+        "InputType": "enum",
         "ParamFieldName": "automanagedmods",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "-automanagedmods ",
+        "DefaultValue": "",
         "EnumValues": {
-            "False": "",
-            "True": "-automanagedmods "
+            "": "Manual",
+            " ": "AMP manages",
+            "-automanagedmods ": "ARK manages"
         }
     },
     {
         "DisplayName": "Mods List",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Comma-separated and ordered list of IDs of mods to load (map mods will not load unless named as a \"Custom\" map under Custom Map Name). ONE LINE ONLY! Mod files must be in ShooterGame/Content/Mods. If \"Automatically Manage Mods\" is enabled, the mods listed will be installed by the server",
+        "Description": "Comma-separated and ordered list of IDs of mods to load (map mods will not load unless named as a \"Custom\" map under Custom Map Name). ONE LINE ONLY! Mod files must be in ShooterGame/Content/Mods (either manually or via Mod Management Mode)",
         "Keywords": "load,mods,gamemodids,activemods",
         "FieldName": "GameModIds",
         "InputType": "Textarea",
