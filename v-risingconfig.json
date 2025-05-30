@@ -2168,10 +2168,10 @@
         "Suffix": "players"
     },
     {
-        "DisplayName": "Server FPS",
+        "DisplayName": "Target Server FPS",
         "Category": "V Rising:stadia_controller",
         "Subcategory": "Host:dns:7",
-        "Description": "Maximum Server FPS when idle",
+        "Description": "Target FPS for server.",
         "Keywords": "server, fps",
         "FieldName": "ServerFps",
         "InputType": "number",
@@ -2179,6 +2179,37 @@
         "ParamFieldName": "ServerFps",
         "DefaultValue": "30",
         "IncludeInCommandLine": false,
+        "Suffix": "FPS"
+    },
+    {
+        "DisplayName": "Lower Server FPS When Empty",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Host:dns:7",
+        "Description": "Run the server at a lower framerate target when no players are logged in. Requires v1.0 or higher.",
+        "Keywords": "server,fps,lower,empty,idle",
+        "FieldName": "LowerFPSWhenEmpty",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "lowerFPSWhenEmpty",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Target Server FPS When Empty",
+        "Category": "V Rising:stadia_controller",
+        "Subcategory": "Host:dns:7",
+        "Description": "Set the framerate target for when Lower FPS When Empty is active. Requires v1.0 or higher.",
+        "Keywords": "server,fps,lower,empty,idle,target,framerate,value",
+        "FieldName": "LowerFPSWhenEmptyValue",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "lowerFPSWhenEmptyValue",
+        "DefaultValue": "15",
+        "IncludeInCommandLine": true,
         "Suffix": "FPS"
     },
     {
@@ -2458,7 +2489,7 @@
         "DisplayName": "BepInEx Version",
         "Category": "Updates",
         "Subcategory": "Runtime Configuration:build:3",
-        "Description": "Sets the [BepInEx version](https://thunderstore.io/c/v-rising/p/BepInEx/BepInExPack_V_Rising/versions/) to install. Blank = latest. NOTE: Update the server after switching versions!",
+        "Description": "Sets the [BepInEx version](https://thunderstore.io/c/v-rising/p/BepInEx/BepInExPack_V_Rising/versions/) to install. Empty = latest. NOTE: Update the server after switching versions!",
         "Keywords": "install,bepinex,version",
         "FieldName": "BepInExVersion",
         "InputType": "text",
