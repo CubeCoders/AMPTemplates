@@ -42,6 +42,15 @@
         "SkipOnFailure": false
     },
     {
+        "UpdateStageName": "Account.db Backup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}Data/Account.db.bak",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Data/Account.db",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "GithubRelease",
@@ -97,5 +106,14 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
         "UpdateSourceArgs": "{{$FullBaseDir}}MHServerEmu"
+    },
+    {
+        "UpdateStageName": "Account.db Restore",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}Data/Account.db",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Data/Account.db.bak",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
     }
 ]
