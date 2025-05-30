@@ -44,9 +44,24 @@
     {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "Crypto137/MHServerEmu",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "BuildStream",
+        "UpdateSourceConditionValue": "stable",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
         "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $BaseUrl=\\\"https://nightly.link/Crypto137/MHServerEmu/workflows/nightly-release-windows-x64/master\\\"; $null = (Invoke-WebRequest -Uri \\\"${BaseUrl}?preview\\\" -UseBasicParsing).Content -match 'href=\\\"[^\\\"]*(MHServerEmu-nightly-[^\\\"]*-windows-x64\\.zip)\\\"'; $FileName = $matches[1]; Invoke-WebRequest -UseBasicParsing -Uri \\\"${BaseUrl}/${FileName}\\\" -OutFile 'nightly.zip'\"",
+        "UpdateSourceConditionSetting": "BuildStream",
+        "UpdateSourceConditionValue": "nightly",
         "SkipOnFailure": false
     },
     {
@@ -59,7 +74,18 @@
     },
     {
         "UpdateStageName": "Server Extract",
-        "UpdateSourcePlatform": "All",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "nightly.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "BuildStream",
+        "UpdateSourceConditionValue": "nightly"
+    },
+    {
+        "UpdateStageName": "Server Extract",
+        "UpdateSourcePlatform": "Linux",
         "UpdateSource": "ExtractArchive",
         "UpdateSourceData": "nightly.zip",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
