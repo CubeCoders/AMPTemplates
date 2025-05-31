@@ -14,6 +14,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Server Name",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "SessionName",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "SessionSettings.SessionName",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "MOTD",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -22,9 +36,23 @@
         "FieldName": "MOTDMessage",
         "InputType": "text",
         "IsFlagArgument": false,
-        "ParamFieldName": "MessageOfTheDay.Message",
+        "ParamFieldName": "Message",
         "IncludeInCommandLine": false,
         "DefaultValue": "Welcome to ARK!",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "MOTD",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "MOTDMessage",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "MessageOfTheDay.Message",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -36,10 +64,25 @@
         "FieldName": "MOTDDuration",
         "InputType": "number",
         "IsFlagArgument": false,
-        "ParamFieldName": "MessageOfTheDay.Duration",
+        "ParamFieldName": "Duration",
         "IncludeInCommandLine": false,
         "DefaultValue": "20",
         "Placeholder": "20",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "MOTD Duration",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "MOTDDuration",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "MessageOfTheDay.Duration",
+        "IncludeInCommandLine": false,
         "Suffix": "seconds",
         "EnumValues": {}
     },
@@ -202,6 +245,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Server Password",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "ServerPassword",
+        "InputType": "password",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.ServerPassword",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable Player Whitelist",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -210,12 +267,29 @@
         "FieldName": "exclusivejoin",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "exclusivejoin",
+        "ParamFieldName": "UseExclusiveList",
         "IncludeInCommandLine": false,
         "DefaultValue": "",
         "EnumValues": {
-            "False": "",
-            "True": "-exclusivejoin "
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Player Whitelist",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "exclusivejoin",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.UseExclusiveList",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
         }
     },
     {
@@ -247,6 +321,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Spectator Password",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "SpectatorPassword",
+        "InputType": "password",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.SpectatorPassword",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Player Limit",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -264,6 +352,22 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Player Limit",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$MaxUsers",
+        "InputType": "number",
+        "MinValue": "1",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "/Script/Engine.GameSession.MaxPlayers",
+        "IncludeInCommandLine": false,
+        "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "MultiHome IP Binding",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -273,6 +377,20 @@
         "InputType": "hidden",
         "IsFlagArgument": false,
         "ParamFieldName": "MultiHome",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "MultiHome IP Binding",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "MultiHome",
+        "InputType": "hidden",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "SessionSettings.MultiHome",
         "IncludeInCommandLine": false,
         "EnumValues": {}
     },
@@ -384,10 +502,24 @@
         "FieldName": "BanListURL",
         "InputType": "text",
         "IsFlagArgument": false,
-        "ParamFieldName": "ServerSettings.BanListURL",
+        "ParamFieldName": "BanListURL",
         "IncludeInCommandLine": false,
         "DefaultValue": "http://arkdedicated.com/banlist.txt",
         "Placeholder": "http://arkdedicated.com/banlist.txt",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Banlist URL",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "BanListURL",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.BanListURL",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -402,6 +534,23 @@
         "ParamFieldName": "AdminLogging",
         "IncludeInCommandLine": true,
         "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Admin Logging In Chat",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AdminLogging",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AdminLogging",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -442,6 +591,22 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Kick Idle Players Period",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "KickIdlePlayersPeriod",
+        "InputType": "number",
+        "MinValue": "1",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.KickIdlePlayersPeriod",
+        "IncludeInCommandLine": false,
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Auto Save Period",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -456,6 +621,23 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "15.0",
         "Placeholder": "15.0",
+        "Suffix": "minutes",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Auto Save Period",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AutoSavePeriodMinutes",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "9000000",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AutoSavePeriodMinutes",
+        "IncludeInCommandLine": false,
         "Suffix": "minutes",
         "EnumValues": {}
     },
@@ -546,6 +728,24 @@
         }
     },
     {
+        "DisplayName": "Enable PvE / Disable PvP",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "serverPVE",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.serverPVE",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Enable Offline Raiding Prevention",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -557,6 +757,23 @@
         "ParamFieldName": "PreventOfflinePvP",
         "IncludeInCommandLine": true,
         "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Offline Raiding Prevention",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PreventOfflinePvP",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PreventOfflinePvP",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -579,6 +796,21 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Offline Raiding Prevention Interval",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PreventOfflinePvPInterval",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PreventOfflinePvPInterval",
+        "IncludeInCommandLine": false,
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable Hardcore Mode",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -590,6 +822,23 @@
         "ParamFieldName": "serverHardcore",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Hardcore Mode",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "serverHardcore",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.serverHardcore",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -646,6 +895,22 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Difficulty Offset",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DifficultyOffset",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "1",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DifficultyOffset",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable Crosshair",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -657,6 +922,23 @@
         "ParamFieldName": "ServerCrosshair",
         "IncludeInCommandLine": true,
         "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Crosshair",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "ServerCrosshair",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.ServerCrosshair",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -680,6 +962,23 @@
         }
     },
     {
+        "DisplayName": "Disable HUD",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "serverForceNoHud",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.serverForceNoHud",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "Truue": "True"
+        }
+    },
+    {
         "DisplayName": "Show Player On Map",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -697,6 +996,23 @@
         }
     },
     {
+        "DisplayName": "Show Player On Map",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "ShowMapPlayerLocation",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.ShowMapPlayerLocation",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Allow Third Person View",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -705,9 +1021,26 @@
         "FieldName": "AllowThirdPersonPlayer",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "allowThirdPersonPlayer",
+        "ParamFieldName": "AllowThirdPersonPlayer",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Third Person View",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AllowThirdPersonPlayer",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AllowThirdPersonPlayer",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -723,8 +1056,25 @@
         "InputType": "checkbox",
         "IsFlagArgument": false,
         "ParamFieldName": "ShowFloatingDamageText",
-        "IncludeInCommandLine": true,
+        "IncludeInCommandLine": false,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Show Floating Damage Text",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "ShowFloatingDamageText",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.ShowFloatingDamageText",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -748,6 +1098,23 @@
         }
     },
     {
+        "DisplayName": "Prevent Spawn Animation",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PreventSpawnAnimations",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PreventSpawnAnimations",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Disable Creature Mate Boost",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -759,6 +1126,23 @@
         "ParamFieldName": "PreventMateBoost",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Disable Creature Mate Boost",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PreventMateBoost",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PreventMateBoost",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -782,6 +1166,23 @@
         }
     },
     {
+        "DisplayName": "Enable Hit Markers",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AllowHitMarkers",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AllowHitMarkers",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Maximum Tamed Creatures",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -794,6 +1195,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "4000",
         "Placeholder": "4000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Tamed Creatures",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "MaxTamedDinos",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.MaxTamedDinos",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -812,6 +1227,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Maximum Personal Tamed Creatures",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "MaxPersonalTamedDinos",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.MaxPersonalTamedDinos",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Maximum Tribute Creatures",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -824,6 +1253,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "20",
         "Placeholder": "20",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Tribute Creatures",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "MaxTributeDinos",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.MaxTributeDinos",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -842,6 +1285,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Maximum Structures",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "TheMaxStructuresInRange",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.TheMaxStructuresInRange",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Maximum Tribute Items",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -857,6 +1314,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Maximum Tribute Items",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "MaxTributeItems",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.MaxTributeItems",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Maximum Players In Tribe",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -866,10 +1337,25 @@
         "InputType": "number",
         "MinValue": "0",
         "IsFlagArgument": false,
-        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.MaxNumberOfPlayersInTribe",
+        "ParamFieldName": "MaxNumberOfPlayersInTribe",
         "IncludeInCommandLine": false,
         "DefaultValue": "0",
         "Placeholder": "0",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Players In Tribe",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "MaxNumberOfPlayersInTribe",
+        "InputType": "number",
+        "MinValue": "0",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.MaxNumberOfPlayersInTribe",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -890,6 +1376,23 @@
         }
     },
     {
+        "DisplayName": "Prevent Tribe Alliances",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PreventTribeAlliances",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PreventTribeAlliances",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Disable PvP Friendly Fire",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -898,9 +1401,26 @@
         "FieldName": "bDisableFriendlyFire",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bDisableFriendlyFire",
+        "ParamFieldName": "bDisableFriendlyFire",
         "IncludeInCommandLine": false,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Disable PvP Friendly Fire",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "bDisableFriendlyFire",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bDisableFriendlyFire",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -915,9 +1435,26 @@
         "FieldName": "bPvEDisableFriendlyFire",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bPvEDisableFriendlyFire",
+        "ParamFieldName": "bPvEDisableFriendlyFire",
         "IncludeInCommandLine": false,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Disable PvE Friendly Fire",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "bPvEDisableFriendlyFire",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bPvEDisableFriendlyFire",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -941,6 +1478,23 @@
         }
     },
     {
+        "DisplayName": "Enable PvP Gamma",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "EnablePVPGamma",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.EnablePVPGamma",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Disable PvE Gamma",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -958,6 +1512,23 @@
         }
     },
     {
+        "DisplayName": "Disable PvE Gamma",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DisablePVEGamma",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DisablePVEGamma",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Notify Player Join",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -966,9 +1537,26 @@
         "FieldName": "AlwaysNotifyPlayerJoined",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "ServerSettings.AlwaysNotifyPlayerJoined",
+        "ParamFieldName": "AlwaysNotifyPlayerJoined",
         "IncludeInCommandLine": false,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Notify Player Join",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AlwaysNotifyPlayerJoined",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AlwaysNotifyPlayerJoined",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -983,9 +1571,26 @@
         "FieldName": "alwaysNotifyPlayerLeft",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "alwaysNotifyPlayerLeft",
+        "ParamFieldName": "AlwaysNotifyPlayerLeft",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Notify Player Leave",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "alwaysNotifyPlayerLeft",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AlwaysNotifyPlayerLeft",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1009,6 +1614,23 @@
         }
     },
     {
+        "DisplayName": "Enable Global Voice Chat",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "globalVoiceChat",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.globalVoiceChat",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Enable Proximity Chat",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -1017,9 +1639,26 @@
         "FieldName": "proximityChat",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "proximityChat",
+        "ParamFieldName": "ProximityChat",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Proximity Chat",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "proximityChat",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.ProximityChat",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1034,9 +1673,26 @@
         "FieldName": "AllowCaveBuildingPVE",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "ServerSettings.AllowCaveBuildingPVE",
+        "ParamFieldName": "AllowCaveBuildingPVE",
         "IncludeInCommandLine": false,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow PvE Cave Building",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AllowCaveBuildingPVE",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AllowCaveBuildingPVE",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1060,20 +1716,54 @@
         }
     },
     {
+        "DisplayName": "Allow PvE Flyer Carry",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AllowFlyerCarryPvE",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AllowFlyerCarryPvE",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Allow Flyer Speed Levelling",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
         "Description": "If set, flyers can have their movement speed levelled up",
         "Keywords": "flyer,movement,speed,level,up,allowflyerspeedleveling",
-        "FieldName": "AllowFlyerSpeedLeveling",
+        "FieldName": "bAllowFlyerSpeedLeveling",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "AllowFlyerSpeedLeveling",
+        "ParamFieldName": "bAllowFlyerSpeedLeveling",
         "IncludeInCommandLine": false,
-        "DefaultValue": "",
+        "DefaultValue": "False",
         "EnumValues": {
-            "False": "",
-            "True": "-AllowFlyerSpeedLeveling "
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Flyer Speed Levelling",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "bAllowFlyerSpeedLeveling",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bAllowFlyerSpeedLeveling",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
         }
     },
     {
@@ -1162,6 +1852,22 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Force Wild Creature Respawn At Interval",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "ServerAutoForceRespawnWildDinosInterval",
+        "InputType": "number",
+        "MinValue": "0",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.ServerAutoForceRespawnWildDinosInterval",
+        "IncludeInCommandLine": false,
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Disable Tek Railgun",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -1187,9 +1893,26 @@
         "FieldName": "bDisableLootCrates",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bDisableLootCrates",
+        "ParamFieldName": "bDisableLootCrates",
         "IncludeInCommandLine": false,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Disable Loot Crates",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "bDisableLootCrates",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bDisableLootCrates",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1205,10 +1928,25 @@
         "InputType": "number",
         "MinValue": "0",
         "IsFlagArgument": false,
-        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.ResourceNoReplenishRadiusPlayers",
+        "ParamFieldName": "ResourceNoReplenishRadiusPlayers",
         "IncludeInCommandLine": false,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Radius For No Resource Replenish",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "ResourceNoReplenishRadiusPlayers",
+        "InputType": "number",
+        "MinValue": "0",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.ResourceNoReplenishRadiusPlayers",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1221,10 +1959,25 @@
         "InputType": "number",
         "MinValue": "0",
         "IsFlagArgument": false,
-        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.ResourceNoReplenishRadiusStructures",
+        "ParamFieldName": "ResourceNoReplenishRadiusStructures",
         "IncludeInCommandLine": false,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Structure Radius For No Resource Replenish",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "ResourceNoReplenishRadiusStructures",
+        "InputType": "number",
+        "MinValue": "0",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.ResourceNoReplenishRadiusStructures",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1239,6 +1992,23 @@
         "ParamFieldName": "DisableDinoDecayPvE",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Disable PvE Creature Decay",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DisableDinoDecayPvE",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DisableDinoDecayPvE",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1262,6 +2032,23 @@
         }
     },
     {
+        "DisplayName": "Enable PvP Creature Decay",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PvPDinoDecay",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PvPDinoDecay",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Enable Passive Defence Damage",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -1270,6 +2057,24 @@
         "FieldName": "bPassiveDefensesDamageRiderlessDinos",
         "InputType": "checkbox",
         "IsFlagArgument": false,
+        "ParamFieldName": "bPassiveDefensesDamageRiderlessDinos",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Passive Defence Damage",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "bPassiveDefensesDamageRiderlessDinos",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
         "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bPassiveDefensesDamageRiderlessDinos",
         "IncludeInCommandLine": false,
         "DefaultValue": "False",
@@ -1296,6 +2101,23 @@
         }
     },
     {
+        "DisplayName": "Prevent Diseases",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PreventDiseases",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PreventDiseases",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Disable Permanent Diseases",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -1307,6 +2129,23 @@
         "ParamFieldName": "NonPermanentDiseases",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Disable Permanent Diseases",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "NonPermanentDiseases",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.NonPermanentDiseases",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1330,6 +2169,23 @@
         }
     },
     {
+        "DisplayName": "Allow Care By Anyone",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AllowAnyoneBabyImprintCuddle",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AllowAnyoneBabyImprintCuddle",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Disable Imprint Creature Buff",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -1341,6 +2197,23 @@
         "ParamFieldName": "DisableImprintDinoBuff",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Disable Imprint Creature Buff",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DisableImprintDinoBuff",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DisableImprintDinoBuff",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1364,6 +2237,23 @@
         }
     },
     {
+        "DisplayName": "Destroy Unconnected Water Pipes",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DestroyUnconnectedWaterPipes",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DestroyUnconnectedWaterPipes",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Minimum Creature Re-upload Interval",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -1381,6 +2271,22 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Minimum Creature Re-upload Interval",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "MinimumDinoReuploadInterval",
+        "InputType": "number",
+        "MinValue": "0",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.MinimumDinoReuploadInterval",
+        "IncludeInCommandLine": false,
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Auto Destroy Decayed Creatures",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -1392,6 +2298,23 @@
         "ParamFieldName": "AutoDestroyDecayedDinos",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Auto Destroy Decayed Creatures",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AutoDestroyDecayedDinos",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AutoDestroyDecayedDinos",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1415,6 +2338,23 @@
         }
     },
     {
+        "DisplayName": "Optimize Harvest Amount Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "UseOptimizedHarvestingHealth",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.UseOptimizedHarvestingHealth",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Force Flyer Explosives",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -1426,6 +2366,23 @@
         "ParamFieldName": "ForceFlyerExplosives",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Force Flyer Explosives",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "ForceFlyerExplosives",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.ForceFlyerExplosives",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1449,6 +2406,23 @@
         }
     },
     {
+        "DisplayName": "Allow Multiple Attached C4",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AllowMultipleAttachedC4",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AllowMultipleAttachedC4",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Allow Flying Stamina Recovery",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -1460,6 +2434,23 @@
         "ParamFieldName": "AllowFlyingStaminaRecovery",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Flying Stamina Recovery",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AllowFlyingStaminaRecovery",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AllowFlyingStaminaRecovery",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1483,6 +2474,23 @@
         }
     },
     {
+        "DisplayName": "Disable Weather Fog",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DisableWeatherFog",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DisableWeatherFog",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Enable Random Supply Crate Points",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -1494,6 +2502,23 @@
         "ParamFieldName": "RandomSupplyCratePoints",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Random Supply Crate Points",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "RandomSupplyCratePoints",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.RandomSupplyCratePoints",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1517,6 +2542,23 @@
         }
     },
     {
+        "DisplayName": "Allow Foreign Creature Downloads on Aberration",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "CrossARKAllowForeignDinoDownloads",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.CrossARKAllowForeignDinoDownloads",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Day/Night Cycle Speed Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1527,6 +2569,22 @@
         "IsFlagArgument": false,
         "ParamFieldName": "DayCycleSpeedScale",
         "IncludeInCommandLine": true,
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Day/Night Cycle Speed Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DayCycleSpeedScale",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DayCycleSpeedScale",
+        "IncludeInCommandLine": false,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
         "EnumValues": {}
@@ -1547,6 +2605,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Day Time Speed Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DayTimeSpeedScale",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DayTimeSpeedScale",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Night Time Speed Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1559,6 +2631,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Night Time Speed Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "NightTimeSpeedScale",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.NightTimeSpeedScale",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1577,6 +2663,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "XP Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "XPMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.XPMultiplier",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Player Food Drain Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1589,6 +2689,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Food Drain Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PlayerCharacterFoodDrainMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PlayerCharacterFoodDrainMultiplier",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1607,6 +2721,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Player Water Drain Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PlayerCharacterWaterDrainMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PlayerCharacterWaterDrainMultiplier",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Player Health Recovery Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1619,6 +2747,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Health Recovery Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PlayerCharacterHealthRecoveryMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PlayerCharacterHealthRecoveryMultiplier",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1637,6 +2779,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Player Stamina Drain Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PlayerCharacterStaminaDrainMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PlayerCharacterStaminaDrainMultiplier",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Player Damage Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1649,6 +2805,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Damage Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PlayerDamageMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PlayerDamageMultiplier",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1667,6 +2837,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Player Resistance Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PlayerResistanceMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PlayerResistanceMultiplier",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Creature Food Drain Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1679,6 +2863,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Creature Food Drain Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DinoCharacterFoodDrainMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DinoCharacterFoodDrainMultiplier",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1697,6 +2895,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Creature Health Recovery Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DinoCharacterHealthRecoveryMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DinoCharacterHealthRecoveryMultiplier",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Creature Stamina Drain Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1709,6 +2921,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Creature Stamina Drain Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DinoCharacterStaminaDrainMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DinoCharacterStaminaDrainMultiplier",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1727,6 +2953,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Creature Damage Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DinoDamageMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DinoDamageMultiplier",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Creature Resistance Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1739,6 +2979,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Creature Resistance Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DinoResistanceMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DinoResistanceMultiplier",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1757,6 +3011,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Creature Spawn Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DinoCountMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DinoCountMultiplier",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "PvE Creature Decay Period Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1769,6 +3037,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "PvE Creature Decay Period Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PvEDinoDecayPeriodMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PvEDinoDecayPeriodMultiplier",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1787,6 +3069,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Structure Damage Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "StructureDamageMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.StructureDamageMultiplier",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Structure Resistance Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1799,6 +3095,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Structure Resistance Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "StructureResistanceMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.StructureResistanceMultiplier",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1817,6 +3127,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "PvE Structure Decay Period Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PvEStructureDecayPeriodMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PvEStructureDecayPeriodMultiplier",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Maximum Platform Structures Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1829,6 +3153,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Platform Structures Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PerPlatformMaxStructuresMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PerPlatformMaxStructuresMultiplier",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1847,6 +3185,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Auto Structure Destruction Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AutoDestroyOldStructuresMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AutoDestroyOldStructuresMultiplier",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Harvest Amount Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1859,6 +3211,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Harvest Amount Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "HarvestAmountMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.HarvestAmountMultiplier",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1877,6 +3243,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Harvest Health Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "HarvestHealthMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.HarvestHealthMultiplier",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Resources Respawn Period Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1889,6 +3269,20 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Resources Respawn Period Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "ResourcesRespawnPeriodMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.ResourcesRespawnPeriodMultiplier",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1907,6 +3301,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Creature Taming Speed Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "TamingSpeedMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.TamingSpeedMultiplier",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Oxygen Swim Speed Multiplier",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Multipliers:tune:3",
@@ -1919,6 +3327,19 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Oxygen Swim Speed Multiplier",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "OxygenSwimSpeedStatMultiplier",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "ServerSettings.OxygenSwimSpeedStatMultiplier",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1973,6 +3394,23 @@
         }
     },
     {
+        "DisplayName": "Auto Destroy Core Structures Only",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "OnlyAutoDestroyCoreStructures",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.OnlyAutoDestroyCoreStructures",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Only Auto Destroy Unsnapped Core Structures",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Structures:home:4",
@@ -1984,6 +3422,23 @@
         "ParamFieldName": "OnlyDecayUnsnappedCoreStructures",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Only Auto Destroy Unsnapped Core Structures",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "OnlyDecayUnsnappedCoreStructures",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.OnlyDecayUnsnappedCoreStructures",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -2007,6 +3462,23 @@
         }
     },
     {
+        "DisplayName": "Disable PvE Structure Decay",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DisableStructureDecayPvE",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.DisableStructureDecayPvE",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Enable PvP Structure Decay",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Structures:home:4",
@@ -2018,6 +3490,23 @@
         "ParamFieldName": "PvPStructureDecay",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable PvP Structure Decay",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PvPStructureDecay",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PvPStructureDecay",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -2041,6 +3530,23 @@
         }
     },
     {
+        "DisplayName": "Fast Decay Unsnapped Core Structures",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "FastDecayUnsnappedCoreStructures",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.FastDecayUnsnappedCoreStructures",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Structure Damage Repair Cooldown",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Structures:home:4",
@@ -2049,10 +3555,25 @@
         "FieldName": "StructureDamageRepairCooldown",
         "InputType": "number",
         "IsFlagArgument": false,
-        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.StructureDamageRepairCooldown",
+        "ParamFieldName": "StructureDamageRepairCooldown",
         "IncludeInCommandLine": false,
         "DefaultValue": "180",
         "Placeholder": "180",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Structure Damage Repair Cooldown",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "StructureDamageRepairCooldown",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.StructureDamageRepairCooldown",
+        "IncludeInCommandLine": false,
         "Suffix": "seconds",
         "EnumValues": {}
     },
@@ -2065,10 +3586,24 @@
         "FieldName": "MaxPlatformSaddleStructureLimit",
         "InputType": "number",
         "IsFlagArgument": false,
-        "ParamFieldName": "ServerSettings.MaxPlatformSaddleStructureLimit",
+        "ParamFieldName": "MaxPlatformSaddleStructureLimit",
         "IncludeInCommandLine": false,
         "DefaultValue": "100",
         "Placeholder": "100",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Platform Saddle Limit",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "MaxPlatformSaddleStructureLimit",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.MaxPlatformSaddleStructureLimit",
+        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -2087,6 +3622,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Platform Saddle Cost",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PersonalTamedDinosSaddleStructureCost",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PersonalTamedDinosSaddleStructureCost",
+        "IncludeInCommandLine": false,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Override Structure Platform Prevention",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Structures:home:4",
@@ -2098,6 +3647,23 @@
         "ParamFieldName": "OverrideStructurePlatformPrevention",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Override Structure Platform Prevention",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "OverrideStructurePlatformPrevention",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.OverrideStructurePlatformPrevention",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -2121,6 +3687,23 @@
         }
     },
     {
+        "DisplayName": "Disable Building In Rich Resource Areas",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "EnableExtraStructurePreventionVolumes",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.EnableExtraStructurePreventionVolumes",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Allow Crate Spawns On Structures",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Structures:home:4",
@@ -2132,6 +3715,23 @@
         "ParamFieldName": "AllowCrateSpawnsOnTopOfStructures",
         "IncludeInCommandLine": true,
         "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Crate Spawns On Structures",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "AllowCrateSpawnsOnTopOfStructures",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.AllowCrateSpawnsOnTopOfStructures",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -2155,6 +3755,23 @@
         }
     },
     {
+        "DisplayName": "Allow PvE Structures At Supply Drops",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PvEAllowStructuresAtSupplyDrops",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PvEAllowStructuresAtSupplyDrops",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Disable Structure Placement Collision",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Structures:home:4",
@@ -2163,6 +3780,24 @@
         "FieldName": "bDisableStructurePlacementCollision",
         "InputType": "checkbox",
         "IsFlagArgument": false,
+        "ParamFieldName": "bDisableStructurePlacementCollision",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Disable Structure Placement Collision",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Structures:home:4",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "bDisableStructurePlacementCollision",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
         "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bDisableStructurePlacementCollision",
         "IncludeInCommandLine": false,
         "DefaultValue": "False",
@@ -2217,6 +3852,23 @@
         }
     },
     {
+        "DisplayName": "Prevent Character Download",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Clusters:share:5",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "noTributeDownloads",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.noTributeDownloads",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Prevent Survivor Download",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Clusters:share:5",
@@ -2228,6 +3880,23 @@
         "ParamFieldName": "PreventDownloadSurvivors",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Prevent Survivor Download",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Clusters:share:5",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PreventDownloadSurvivors",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PreventDownloadSurvivors",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -2251,6 +3920,23 @@
         }
     },
     {
+        "DisplayName": "Prevent Item Download",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Clusters:share:5",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PreventDownloadItems",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PreventDownloadItems",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Prevent Creature Download",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Clusters:share:5",
@@ -2262,6 +3948,23 @@
         "ParamFieldName": "PreventDownloadDinos",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Prevent Creature Download",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Clusters:share:5",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PreventDownloadDinos",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PreventDownloadDinos",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -2285,6 +3988,23 @@
         }
     },
     {
+        "DisplayName": "Prevent Survivor Upload",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Clusters:share:5",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PreventUploadSurvivors",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PreventUploadSurvivors",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Prevent Item Upload",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Clusters:share:5",
@@ -2302,6 +4022,23 @@
         }
     },
     {
+        "DisplayName": "Prevent Item Upload",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Clusters:share:5",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PreventUploadItems",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PreventUploadItems",
+        "IncludeInCommandLine": false,
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Prevent Creature Upload",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Clusters:share:5",
@@ -2313,6 +4050,23 @@
         "ParamFieldName": "PreventUploadDinos",
         "IncludeInCommandLine": true,
         "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Prevent Creature Upload",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Clusters:share:5",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "PreventUploadDinos",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "Hidden": true,
+        "ParamFieldName": "ServerSettings.PreventUploadDinos",
+        "IncludeInCommandLine": false,
         "EnumValues": {
             "False": "False",
             "True": "True"
