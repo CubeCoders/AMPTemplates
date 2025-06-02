@@ -42,15 +42,6 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Config.ini Backup",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CopyFilePath",
-        "UpdateSourceData": "{{$FullBaseDir}}Config.ini.bak",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Config.ini",
-        "OverwriteExistingFiles": true,
-        "SkipOnFailure": true
-    },
-    {
         "UpdateStageName": "Account.db Backup",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CopyFilePath",
@@ -117,12 +108,12 @@
         "UpdateSourceArgs": "{{$FullBaseDir}}MHServerEmu"
     },
     {
-        "UpdateStageName": "Config.ini Restore",
+        "UpdateStageName": "Config.ini Copy",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CopyFilePath",
-        "UpdateSourceData": "{{$FullBaseDir}}Config.ini",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Config.ini.bak",
-        "OverwriteExistingFiles": true,
+        "UpdateSourceData": "{{$FullBaseDir}}ConfigOverride.ini",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Config.ini",
+        "OverwriteExistingFiles": false,
         "SkipOnFailure": true
     },
     {
