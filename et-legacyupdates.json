@@ -1,0 +1,141 @@
+[
+    {
+        "UpdateStageName": "Client Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}client"
+    },
+    {
+        "UpdateStageName": "7-Zip Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "7-Zip Installer Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://7-zip.org/a/7z2407-x64.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "7-Zip Console Tool Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.7-zip.org/a/7zr.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd et-legacy\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
+        "SkipOnFailure": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; (Invoke-WebRequest -Uri \\\"https://www.etlegacy.com/download\\\" -UseBasicParsing).Content -match 'data-href=\\\"([^\\\"]+)\\\"[^>]*>Win64 archive' | Out-Null; $DOWNLOAD_URL = $matches[1]; Invoke-WebRequest -UseBasicParsing -Uri $DOWNLOAD_URL -OutFile 'et-legacy.zip'\"",
+        "UpdateSourceConditionSetting": "ServerVersion",
+        "UpdateSourceConditionValue": "x86_64",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; (Invoke-WebRequest -Uri \\\"https://www.etlegacy.com/download\\\" -UseBasicParsing).Content -match 'data-href=\\\"([^\\\"]+)\\\"[^>]*>Win32 archive' | Out-Null; $DOWNLOAD_URL = $matches[1]; Invoke-WebRequest -UseBasicParsing -Uri $DOWNLOAD_URL -OutFile 'et-legacy.zip'\"",
+        "UpdateSourceConditionSetting": "ServerVersion",
+        "UpdateSourceConditionValue": "i386",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "et-legacy.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'et-legacy'; $directory = Get-ChildItem -Directory -Filter \\\"etlegacy-*\\\"; Rename-Item $directory.FullName -NewName \\\"etl\\\"; @('etl_server.cfg', 'legacy.cfg') | ForEach-Object { if (Test-Path \\\"server/etmain/$_\\\") { Remove-Item -Path \\\"etl/etmain/$_\\\" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null } }; Copy-Item -Path 'etl/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'etl' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd et-legacy && DOWNLOAD_URL=$(wget -qO- \\\"https://www.etlegacy.com/download\\\" | sed -n \\\"s/.*data-href=\\\\\\\"\\([^\\\\\\\"]*\\)\\\\\\\"[^>]*>x86_64 archive.*/\\1/p\\\"); wget -qO et-legacy.tar.gz $DOWNLOAD_URL && tar -xzf et-legacy.tar.gz >/dev/null 2>&1 && mv etlegacy-* etl && for file in etl_server.cfg legacy.cfg; do [ -e \\\"server/etmain/$file\\\" ] && rm -f \\\"etl/etmain/$file\\\" >/dev/null 2>&1; done; \\cp -rf etl/* server/ >/dev/null 2>&1 && rm -rf etl >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "ServerVersion",
+        "UpdateSourceConditionValue": "x86_64",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd et-legacy && DOWNLOAD_URL=$(wget -qO- \\\"https://www.etlegacy.com/download\\\" | sed -n \\\"s/.*data-href=\\\\\\\"\\([^\\\\\\\"]*\\)\\\\\\\"[^>]*>i386 archive.*/\\1/p\\\"); wget -qO et-legacy.tar.gz $DOWNLOAD_URL && tar -xzf et-legacy.tar.gz >/dev/null 2>&1 && mv etlegacy-* etl && for file in etl_server.cfg legacy.cfg; do [ -e \\\"server/etmain/$file\\\" ] && rm -f \\\"etl/etmain/$file\\\" >/dev/null 2>&1; done; \\cp -rf etl/* server/ >/dev/null 2>&1 && rm -rf etl >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "ServerVersion",
+        "UpdateSourceConditionValue": "i386",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Client Files Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn.splashdamage.com/downloads/games/wet/WolfET_2_60b_custom.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}client",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "DisableWETDownload",
+        "UpdateSourceConditionValue": "false"
+    },
+    {
+        "UpdateStageName": "Client Files Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'et-legacy'; & 7-Zip\\7z.exe x -y -aoa client\\WolfET_2_60b_custom.exe -oclient etmain\\* | Out-Null; Copy-Item -Path 'client/etmain/pak*.pk3' -Destination 'server/etmain/' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'client' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceConditionSetting": "DisableWETDownload",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Client Files Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn.splashdamage.com/downloads/games/wet/et260b.x86_full.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}client",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "DisableWETDownload",
+        "UpdateSourceConditionValue": "false"
+    },
+    {
+        "UpdateStageName": "Client Files Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd et-legacy/client && chmod +x ./*.x86_keygen_V03.run && ./*.x86_keygen_V03.run --tar xvf ./etmain/ >/dev/null 2>&1 && cd .. && \\cp -rf client/etmain/pak*.pk3 server/etmain/ >/dev/null 2>&1 && rm -rf client >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "DisableWETDownload",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
+    }
+]
