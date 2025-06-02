@@ -12,6 +12,18 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "SPT-AKI Server Port",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$ServerPort",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "$.server.SPT.http.port",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "NAT Punch Server Port",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -36,6 +48,18 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "AKI Backend Port",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$ServerPort",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "$.server.SPT.http.backendPort",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "AKI Binding IP",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -48,6 +72,18 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "AKI Binding IP",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$ApplicationIPBinding",
+        "InputType": "text",
+        "Hidden": true,
+        "ParamFieldName": "$.server.SPT.http.ip",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "AKI Backend IP",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -57,6 +93,18 @@
         "InputType": "text",
         "Hidden": true,
         "ParamFieldName": "$.backendIp",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "AKI Backend IP",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$ApplicationIPBinding",
+        "InputType": "text",
+        "Hidden": true,
+        "ParamFieldName": "$.server.SPT.http.backendIp",
         "EnumValues": {}
     },
     {
@@ -123,7 +171,7 @@
         "DisplayName": "Blacklisted Items",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets a list of item template IDs that cannot be sent. Requires 3.9+",
+        "Description": "Sets a list of item template IDs that cannot be sent. Requires SPT-AKI 3.9+",
         "Keywords": "blacklist,item,template,blacklistedItems",
         "FieldName": "blacklistedItems",
         "InputType": "list",
@@ -136,7 +184,7 @@
         "DisplayName": "Force Save On Death",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, saving will be forced upon death, preventing ALT+F4 cheese. Requires 3.9+",
+        "Description": "If set, saving will be forced upon death, preventing ALT+F4 cheese. Requires SPT-AKI 3.9+",
         "Keywords": "force,save,death,forceSaveOnDeath",
         "FieldName": "forceSaveOnDeath",
         "InputType": "checkbox",
@@ -151,7 +199,7 @@
         "DisplayName": "Required Mods",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets a list of required mods on the server. If enabled, always include standard SPT mods: com.SPT.custom, com.SPT.singleplayer, com.SPT.core, com.SPT.debugging, com.fika.core, com.bepis.bepinex.configurationmanager. Requires 3.9+",
+        "Description": "Sets a list of required mods on the server. If enabled, always include standard SPT mods: com.SPT.custom, com.SPT.singleplayer, com.SPT.core, com.SPT.debugging, com.fika.core, com.bepis.bepinex.configurationmanager. Requires SPT-AKI 3.9+",
         "Keywords": "mods,required,mods.required",
         "FieldName": "mods_required",
         "InputType": "list",
@@ -164,7 +212,7 @@
         "DisplayName": "Optional Mods",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets a list of mods that are allowed in addition to Required Mods. Requires 3.9+",
+        "Description": "Sets a list of mods that are allowed in addition to Required Mods. Requires SPT-AKI 3.9+",
         "Keywords": "mods,optional,mods.optional",
         "FieldName": "mods_optional",
         "InputType": "list",
@@ -177,7 +225,7 @@
         "DisplayName": "Enable Inertia",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, intertia will be enabled. Requires 3.9+",
+        "Description": "If set, intertia will be enabled. Requires SPT-AKI 3.9+",
         "Keywords": "enable,use,inertia,useInertia",
         "FieldName": "useInertia",
         "InputType": "checkbox",
@@ -192,12 +240,72 @@
         "DisplayName": "Enable Shared Quest Progression",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, quest progression in raid will be shared. Requires 3.9+",
+        "Description": "If set, quest progression in raid will be shared. Requires SPT-AKI 3.9+",
         "Keywords": "shared,quest,progression,raid,sharedQuestProgression",
         "FieldName": "sharedQuestProgression",
         "InputType": "checkbox",
         "ParamFieldName": "$.client.sharedQuestProgression",
         "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Allow Editing Raid Settings",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, clients can modify the raid settings before starting a raid",
+        "Keywords": "client,edit,raid,settings,canEditRaidSettings",
+        "FieldName": "canEditRaidSettings",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.client.canEditRaidSettings",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Transits",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, transits will be enabled",
+        "Keywords": "client,transits,enable,enableTransits",
+        "FieldName": "enableTransits",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.client.enableTransits",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Anyone Can Start Raid",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, anyone can click 'START RAID'. Requires Fika 2.4.0+",
+        "Keywords": "client,start,raid,anyoneCanStartRaid",
+        "FieldName": "anyoneCanStartRaid",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.client.anyoneCanStartRaid",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Disable Chat Bots",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, chat bots will not be disabled. Requires Fika 2.4.0+",
+        "Keywords": "spt,chat,bots,disable,disableSPTChatBots",
+        "FieldName": "disableSPTChatBots",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.server.SPT.disableSPTChatBots",
+        "DefaultValue": "true",
         "EnumValues": {
             "False": "false",
             "True": "true"
@@ -222,7 +330,7 @@
         "DisplayName": "Allow Editing Raid Settings",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, raid settings can be edited. Requires 3.10+",
+        "Description": "If set, raid settings can be edited. Requires SPT-AKI 3.10+",
         "Keywords": "client,edit,raid,settings,canEditRaidSettings",
         "FieldName": "canEditRaidSettings",
         "InputType": "checkbox",
@@ -267,7 +375,7 @@
         "DisplayName": "Session Timeout",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets how long the server waits for a keepalive ping from a client until the session is considered crashed. Requires 3.9+",
+        "Description": "Sets how long the server waits for a keepalive ping from a client until the session is considered crashed. Requires SPT-AKI 3.9+",
         "Keywords": "session,timeout,keepalive,crash,sessionTimeout",
         "FieldName": "sessionTimeout",
         "InputType": "number",
@@ -282,7 +390,7 @@
         "DisplayName": "Enable Dev Profiles",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, dev profiles will be able to be created. Requires 3.9+",
+        "Description": "If set, dev profiles will be able to be created. Requires SPT-AKI 3.9+",
         "Keywords": "dev,profile,create,show,showDevProfile",
         "FieldName": "showDevProfile",
         "InputType": "checkbox",
@@ -297,7 +405,7 @@
         "DisplayName": "Enable Non-Standard Profiles",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, non-standard EFT profiles will be able to be created. Requires 3.9+",
+        "Description": "If set, non-standard EFT profiles will be able to be created. Requires SPT-AKI 3.9+",
         "Keywords": "non-standard,standard,profile,create,show,showNonStandardProfile",
         "FieldName": "showNonStandardProfile",
         "InputType": "checkbox",
@@ -309,10 +417,25 @@
         }
     },
     {
+        "DisplayName": "Log Client Mods In Console",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, all mods of a client connecting will be printed in the console. Requires Fika 2.4.0+",
+        "Keywords": "log,client,mods,console,logClientModsInConsole",
+        "FieldName": "logClientModsInConsole",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.server.logClientModsInConsole",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
         "DisplayName": "Enable NAT Punching",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, the NAT punch server will be installed when the Tarkov server is updated and enabled when it is started. Requires 3.9+ on Windows, 3.10+ on Linux",
+        "Description": "If set, the NAT punch server will be installed when the Tarkov server is updated and enabled when it is started. Requires SPT-AKI 3.9+ on Windows, 3.10+ on Linux",
         "Keywords": "nat,punching,server,natPunchServer.enable",
         "FieldName": "natPunchServer_enable",
         "InputType": "checkbox",
@@ -327,7 +450,7 @@
         "DisplayName": "NAT Punching Amount",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the NAT punching amount. Requires 3.9+",
+        "Description": "Sets the NAT punching amount. Requires SPT-AKI 3.9+",
         "Keywords": "nat,punching,introduce,amount,natPunchServer.natIntroduceAmount",
         "FieldName": "natPunchServer_natIntroduceAmount",
         "InputType": "number",
@@ -337,28 +460,28 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Dedicated Client Profiles Amount",
+        "DisplayName": "Headless Client Profiles Amount",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the number of dedicated profiles to generate automatically, one per [dedicated client](https://github.com/project-fika/Fika-Dedicated)",
-        "Keywords": "profiles,amount,dedicated",
+        "Description": "Sets the number of headless profiles to generate automatically, one per [headless client](https://github.com/project-fika/Fika-Headless)",
+        "Keywords": "profiles,amount,headless",
         "FieldName": "dedicated_profiles_amount",
         "InputType": "number",
         "MinValue": "0",
-        "ParamFieldName": "$.dedicated.profiles.amount",
+        "ParamFieldName": "$.headless.profiles.amount",
         "DefaultValue": "0",
         "Placeholder": "0",
         "EnumValues": {}
     },
     {
-        "DisplayName": "Generate Scripts For Dedicated Clients",
+        "DisplayName": "Generate Scripts For Headless Clients",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, a startup script will be automatically generated for each dedicated client profile. Required unless you know what you are doing",
-        "Keywords": "scripts,generate,dedicated",
+        "Description": "If set, a startup script will be automatically generated for each headless client profile. Required unless you know what you are doing",
+        "Keywords": "scripts,generate,headless",
         "FieldName": "dedicated_scripts_generate",
         "InputType": "checkbox",
-        "ParamFieldName": "$.dedicated.scripts.generate",
+        "ParamFieldName": "$.headless.scripts.generate",
         "DefaultValue": "true",
         "EnumValues": {
             "False": "false",
@@ -366,23 +489,52 @@
         }
     },
     {
-        "DisplayName": "Connection IP For Dedicated Clients",
+        "DisplayName": "Connection IP For Headless Clients",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the IP the dedicated client should connect to. Set to 127.0.0.1 if local",
-        "Keywords": "forceIp,ip,dedicated",
+        "Description": "Sets the IP the headless client should connect to. Set to 127.0.0.1 if local",
+        "Keywords": "forceIp,ip,headless",
         "FieldName": "dedicated_scripts_forceIp",
         "InputType": "text",
-        "ParamFieldName": "$.dedicated.scripts.forceIp",
+        "ParamFieldName": "$.headless.scripts.forceIp",
         "DefaultValue": "",
         "Placeholder": "127.0.0.1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Set Headless Client Level To Average Of Lobby",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the level of headless clients will be set to the average level of the lobby. Requires Fika 2.4.0+",
+        "Keywords": "headless,level,average,lobby,setLevelToAverageOfLobby",
+        "FieldName": "headless_setLevelToAverageOfLobby",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.headless.setLevelToAverageOfLobby",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Restart Headless Clients After Amount Of Raids",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the number of raids after which the headless client will restart. Set to 0 to disable. Requires Fika 2.4.0+",
+        "Keywords": "headless,restart,raids,restartAfterAmountOfRaids",
+        "FieldName": "headless_restartAfterAmountOfRaids",
+        "InputType": "number",
+        "ParamFieldName": "$.headless.restartAfterAmountOfRaids",
+        "DefaultValue": "0",
+        "MinValue": "0",
+        "Placeholder": "0",
         "EnumValues": {}
     },
     {
         "DisplayName": "Enable Launcher Background",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, the launcher background will be enabled. Requires 3.10+",
+        "Description": "If set, the launcher background will be enabled. Requires SPT-AKI 3.10+",
         "Keywords": "background,launcher,enable",
         "FieldName": "background_enable",
         "InputType": "checkbox",
@@ -397,7 +549,7 @@
         "DisplayName": "Enable Launcher Background Easter Egg",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, the launcher background easter egg will be enabled. Requires 3.10+",
+        "Description": "If set, the launcher background easter egg will be enabled. Requires SPT-AKI 3.10+",
         "Keywords": "background,launcher,easteregg",
         "FieldName": "background_easteregg",
         "InputType": "checkbox",
