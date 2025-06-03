@@ -36,23 +36,9 @@
         "FieldName": "MOTDMessage",
         "InputType": "text",
         "IsFlagArgument": false,
-        "ParamFieldName": "Message",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "Welcome to ARK!",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "MOTD",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "MOTDMessage",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "Hidden": true,
         "ParamFieldName": "MessageOfTheDay.Message",
         "IncludeInCommandLine": false,
+        "DefaultValue": "Welcome to ARK!",
         "EnumValues": {}
     },
     {
@@ -64,25 +50,10 @@
         "FieldName": "MOTDDuration",
         "InputType": "number",
         "IsFlagArgument": false,
-        "ParamFieldName": "Duration",
+        "ParamFieldName": "MessageOfTheDay.Duration",
         "IncludeInCommandLine": false,
         "DefaultValue": "20",
         "Placeholder": "20",
-        "Suffix": "seconds",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "MOTD Duration",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "MOTDDuration",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "Hidden": true,
-        "ParamFieldName": "MessageOfTheDay.Duration",
-        "IncludeInCommandLine": false,
         "Suffix": "seconds",
         "EnumValues": {}
     },
@@ -268,29 +239,12 @@
         "FieldName": "exclusivejoin",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "UseExclusiveList",
+        "ParamFieldName": "exclusivejoin",
         "IncludeInCommandLine": false,
         "DefaultValue": "",
         "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
-    },
-    {
-        "DisplayName": "Enable Player Whitelist",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "exclusivejoin",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "Hidden": true,
-        "ParamFieldName": "ServerSettings.UseExclusiveList",
-        "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
+            "False": "",
+            "True": "-exclusivejoin "
         }
     },
     {
@@ -360,12 +314,10 @@
         "Keywords": "",
         "FieldName": "$MaxUsers",
         "InputType": "number",
-        "MinValue": "1",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "/Script/Engine.GameSession.MaxPlayers",
         "IncludeInCommandLine": false,
-        "Suffix": "players",
         "EnumValues": {}
     },
     {
@@ -387,12 +339,13 @@
         "Subcategory": "Server:dns:1",
         "Description": "",
         "Keywords": "",
-        "FieldName": "MultiHome",
-        "InputType": "hidden",
+        "FieldName": "$ApplicationIPBinding",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "SessionSettings.MultiHome",
         "IncludeInCommandLine": false,
+        "ExcludeFromImport": true,
         "EnumValues": {}
     },
     {
@@ -503,24 +456,10 @@
         "FieldName": "BanListURL",
         "InputType": "text",
         "IsFlagArgument": false,
-        "ParamFieldName": "BanListURL",
+        "ParamFieldName": "ServerSettings.BanListURL",
         "IncludeInCommandLine": false,
         "DefaultValue": "http://arkdedicated.com/banlist.txt",
         "Placeholder": "http://arkdedicated.com/banlist.txt",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Banlist URL",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "BanListURL",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "Hidden": true,
-        "ParamFieldName": "ServerSettings.BanListURL",
-        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -547,15 +486,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "AdminLogging",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.AdminLogging",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Kick Idle Players",
@@ -599,12 +535,10 @@
         "Keywords": "",
         "FieldName": "KickIdlePlayersPeriod",
         "InputType": "number",
-        "MinValue": "1",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.KickIdlePlayersPeriod",
         "IncludeInCommandLine": false,
-        "Suffix": "seconds",
         "EnumValues": {}
     },
     {
@@ -633,13 +567,10 @@
         "Keywords": "",
         "FieldName": "AutoSavePeriodMinutes",
         "InputType": "number",
-        "MinValue": "0",
-        "MaxValue": "9000000",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.AutoSavePeriodMinutes",
         "IncludeInCommandLine": false,
-        "Suffix": "minutes",
         "EnumValues": {}
     },
     {
@@ -770,15 +701,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PreventOfflinePvP",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PreventOfflinePvP",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Offline Raiding Prevention Interval",
@@ -808,7 +736,6 @@
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PreventOfflinePvPInterval",
         "IncludeInCommandLine": false,
-        "Suffix": "seconds",
         "EnumValues": {}
     },
     {
@@ -835,15 +762,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "serverHardcore",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
-        "ParamFieldName": "ServerSettings.serverHardcore",
+        "ParamFieldName": "ServerSettings.ServerHardcore",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Override Official Difficulty",
@@ -903,8 +827,6 @@
         "Keywords": "",
         "FieldName": "DifficultyOffset",
         "InputType": "number",
-        "MinValue": "0",
-        "MaxValue": "1",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.DifficultyOffset",
@@ -935,15 +857,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "ServerCrosshair",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.ServerCrosshair",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Disable HUD",
@@ -969,15 +888,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "serverForceNoHud",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
-        "ParamFieldName": "ServerSettings.serverForceNoHud",
+        "ParamFieldName": "ServerSettings.ServerForceNoHUD",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "Truue": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Show Player On Map",
@@ -1003,15 +919,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "ShowMapPlayerLocation",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.ShowMapPlayerLocation",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Allow Third Person View",
@@ -1037,15 +950,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "AllowThirdPersonPlayer",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.AllowThirdPersonPlayer",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Show Floating Damage Text",
@@ -1057,7 +967,7 @@
         "InputType": "checkbox",
         "IsFlagArgument": false,
         "ParamFieldName": "ShowFloatingDamageText",
-        "IncludeInCommandLine": false,
+        "IncludeInCommandLine": true,
         "DefaultValue": "False",
         "EnumValues": {
             "False": "False",
@@ -1071,15 +981,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "ShowFloatingDamageText",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.ShowFloatingDamageText",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Prevent Spawn Animation",
@@ -1105,15 +1012,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PreventSpawnAnimations",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PreventSpawnAnimations",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Disable Creature Mate Boost",
@@ -1139,15 +1043,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PreventMateBoost",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PreventMateBoost",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Enable Hit Markers",
@@ -1173,15 +1074,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "AllowHitMarkers",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.AllowHitMarkers",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Maximum Tamed Creatures",
@@ -1338,25 +1236,10 @@
         "InputType": "number",
         "MinValue": "0",
         "IsFlagArgument": false,
-        "ParamFieldName": "MaxNumberOfPlayersInTribe",
+        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.MaxNumberOfPlayersInTribe",
         "IncludeInCommandLine": false,
         "DefaultValue": "0",
         "Placeholder": "0",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Maximum Players In Tribe",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "MaxNumberOfPlayersInTribe",
-        "InputType": "number",
-        "MinValue": "0",
-        "IsFlagArgument": false,
-        "Hidden": true,
-        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.MaxNumberOfPlayersInTribe",
-        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1383,15 +1266,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PreventTribeAlliances",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PreventTribeAlliances",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Disable PvP Friendly Fire",
@@ -1402,26 +1282,9 @@
         "FieldName": "bDisableFriendlyFire",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "bDisableFriendlyFire",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "False",
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
-    },
-    {
-        "DisplayName": "Disable PvP Friendly Fire",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "bDisableFriendlyFire",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "Hidden": true,
         "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bDisableFriendlyFire",
         "IncludeInCommandLine": false,
+        "DefaultValue": "False",
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1436,26 +1299,9 @@
         "FieldName": "bPvEDisableFriendlyFire",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "bPvEDisableFriendlyFire",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "False",
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
-    },
-    {
-        "DisplayName": "Disable PvE Friendly Fire",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "bPvEDisableFriendlyFire",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "Hidden": true,
         "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bPvEDisableFriendlyFire",
         "IncludeInCommandLine": false,
+        "DefaultValue": "False",
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1485,15 +1331,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "EnablePVPGamma",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.EnablePVPGamma",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Disable PvE Gamma",
@@ -1519,15 +1362,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "DisablePVEGamma",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.DisablePVEGamma",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Notify Player Join",
@@ -1538,26 +1378,9 @@
         "FieldName": "AlwaysNotifyPlayerJoined",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "AlwaysNotifyPlayerJoined",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "False",
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
-    },
-    {
-        "DisplayName": "Notify Player Join",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "AlwaysNotifyPlayerJoined",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "Hidden": true,
         "ParamFieldName": "ServerSettings.AlwaysNotifyPlayerJoined",
         "IncludeInCommandLine": false,
+        "DefaultValue": "False",
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1587,15 +1410,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "alwaysNotifyPlayerLeft",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.AlwaysNotifyPlayerLeft",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Enable Global Voice Chat",
@@ -1621,15 +1441,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "globalVoiceChat",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.globalVoiceChat",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Enable Proximity Chat",
@@ -1655,15 +1472,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "proximityChat",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.ProximityChat",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Allow PvE Cave Building",
@@ -1674,26 +1488,9 @@
         "FieldName": "AllowCaveBuildingPVE",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "AllowCaveBuildingPVE",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "False",
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
-    },
-    {
-        "DisplayName": "Allow PvE Cave Building",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "AllowCaveBuildingPVE",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "Hidden": true,
         "ParamFieldName": "ServerSettings.AllowCaveBuildingPVE",
         "IncludeInCommandLine": false,
+        "DefaultValue": "False",
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1723,15 +1520,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "AllowFlyerCarryPvE",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.AllowFlyerCarryPvE",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Allow Flyer Speed Levelling",
@@ -1739,32 +1533,15 @@
         "Subcategory": "Gameplay:joystick:2",
         "Description": "If set, flyers can have their movement speed levelled up",
         "Keywords": "flyer,movement,speed,level,up,allowflyerspeedleveling",
-        "FieldName": "bAllowFlyerSpeedLeveling",
+        "FieldName": "AllowFlyerSpeedLeveling",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "bAllowFlyerSpeedLeveling",
+        "ParamFieldName": "AllowFlyerSpeedLeveling",
         "IncludeInCommandLine": false,
-        "DefaultValue": "False",
+        "DefaultValue": "",
         "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
-    },
-    {
-        "DisplayName": "Allow Flyer Speed Levelling",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "bAllowFlyerSpeedLeveling",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "Hidden": true,
-        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bAllowFlyerSpeedLeveling",
-        "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
+            "False": "",
+            "True": "-AllowFlyerSpeedLeveling "
         }
     },
     {
@@ -1860,12 +1637,10 @@
         "Keywords": "",
         "FieldName": "ServerAutoForceRespawnWildDinosInterval",
         "InputType": "number",
-        "MinValue": "0",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.ServerAutoForceRespawnWildDinosInterval",
         "IncludeInCommandLine": false,
-        "Suffix": "seconds",
         "EnumValues": {}
     },
     {
@@ -1894,26 +1669,9 @@
         "FieldName": "bDisableLootCrates",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "bDisableLootCrates",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "False",
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
-    },
-    {
-        "DisplayName": "Disable Loot Crates",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "bDisableLootCrates",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "Hidden": true,
         "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bDisableLootCrates",
         "IncludeInCommandLine": false,
+        "DefaultValue": "False",
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1929,25 +1687,10 @@
         "InputType": "number",
         "MinValue": "0",
         "IsFlagArgument": false,
-        "ParamFieldName": "ResourceNoReplenishRadiusPlayers",
+        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.ResourceNoReplenishRadiusPlayers",
         "IncludeInCommandLine": false,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Player Radius For No Resource Replenish",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "ResourceNoReplenishRadiusPlayers",
-        "InputType": "number",
-        "MinValue": "0",
-        "IsFlagArgument": false,
-        "Hidden": true,
-        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.ResourceNoReplenishRadiusPlayers",
-        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -1960,25 +1703,10 @@
         "InputType": "number",
         "MinValue": "0",
         "IsFlagArgument": false,
-        "ParamFieldName": "ResourceNoReplenishRadiusStructures",
+        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.ResourceNoReplenishRadiusStructures",
         "IncludeInCommandLine": false,
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Structure Radius For No Resource Replenish",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "ResourceNoReplenishRadiusStructures",
-        "InputType": "number",
-        "MinValue": "0",
-        "IsFlagArgument": false,
-        "Hidden": true,
-        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.ResourceNoReplenishRadiusStructures",
-        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -2005,15 +1733,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "DisableDinoDecayPvE",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.DisableDinoDecayPvE",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Enable PvP Creature Decay",
@@ -2039,15 +1764,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PvPDinoDecay",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PvPDinoDecay",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Enable Passive Defence Damage",
@@ -2058,24 +1780,6 @@
         "FieldName": "bPassiveDefensesDamageRiderlessDinos",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "bPassiveDefensesDamageRiderlessDinos",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "False",
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
-    },
-    {
-        "DisplayName": "Enable Passive Defence Damage",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "bPassiveDefensesDamageRiderlessDinos",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "Hidden": true,
         "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bPassiveDefensesDamageRiderlessDinos",
         "IncludeInCommandLine": false,
         "DefaultValue": "False",
@@ -2108,15 +1812,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PreventDiseases",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PreventDiseases",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Disable Permanent Diseases",
@@ -2142,15 +1843,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "NonPermanentDiseases",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.NonPermanentDiseases",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Allow Care By Anyone",
@@ -2176,15 +1874,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "AllowAnyoneBabyImprintCuddle",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.AllowAnyoneBabyImprintCuddle",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Disable Imprint Creature Buff",
@@ -2210,15 +1905,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "DisableImprintDinoBuff",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.DisableImprintDinoBuff",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Destroy Unconnected Water Pipes",
@@ -2244,15 +1936,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "DestroyUnconnectedWaterPipes",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.DestroyUnconnectedWaterPipes",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Minimum Creature Re-upload Interval",
@@ -2279,12 +1968,10 @@
         "Keywords": "",
         "FieldName": "MinimumDinoReuploadInterval",
         "InputType": "number",
-        "MinValue": "0",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.MinimumDinoReuploadInterval",
         "IncludeInCommandLine": false,
-        "Suffix": "seconds",
         "EnumValues": {}
     },
     {
@@ -2311,15 +1998,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "AutoDestroyDecayedDinos",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.AutoDestroyDecayedDinos",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Optimize Harvest Amount Multiplier",
@@ -2345,15 +2029,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "UseOptimizedHarvestingHealth",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.UseOptimizedHarvestingHealth",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Force Flyer Explosives",
@@ -2379,15 +2060,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "ForceFlyerExplosives",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.ForceFlyerExplosives",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Allow Multiple Attached C4",
@@ -2413,15 +2091,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "AllowMultipleAttachedC4",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.AllowMultipleAttachedC4",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Allow Flying Stamina Recovery",
@@ -2447,15 +2122,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "AllowFlyingStaminaRecovery",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.AllowFlyingStaminaRecovery",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Disable Weather Fog",
@@ -2481,15 +2153,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "DisableWeatherFog",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.DisableWeatherFog",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Enable Random Supply Crate Points",
@@ -2515,15 +2184,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "RandomSupplyCratePoints",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.RandomSupplyCratePoints",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Allow Foreign Creature Downloads on Aberration",
@@ -2549,15 +2215,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "CrossARKAllowForeignDinoDownloads",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.CrossARKAllowForeignDinoDownloads",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Day/Night Cycle Speed Multiplier",
@@ -2586,8 +2249,6 @@
         "Hidden": true,
         "ParamFieldName": "ServerSettings.DayCycleSpeedScale",
         "IncludeInCommandLine": false,
-        "DefaultValue": "1.000000",
-        "Placeholder": "1.000000",
         "EnumValues": {}
     },
     {
@@ -3401,15 +3062,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "OnlyAutoDestroyCoreStructures",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.OnlyAutoDestroyCoreStructures",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Only Auto Destroy Unsnapped Core Structures",
@@ -3435,15 +3093,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "OnlyDecayUnsnappedCoreStructures",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.OnlyDecayUnsnappedCoreStructures",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Disable PvE Structure Decay",
@@ -3469,15 +3124,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "DisableStructureDecayPvE",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.DisableStructureDecayPvE",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Enable PvP Structure Decay",
@@ -3503,15 +3155,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PvPStructureDecay",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PvPStructureDecay",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Fast Decay Unsnapped Core Structures",
@@ -3537,15 +3186,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "FastDecayUnsnappedCoreStructures",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.FastDecayUnsnappedCoreStructures",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Structure Damage Repair Cooldown",
@@ -3556,25 +3202,10 @@
         "FieldName": "StructureDamageRepairCooldown",
         "InputType": "number",
         "IsFlagArgument": false,
-        "ParamFieldName": "StructureDamageRepairCooldown",
+        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.StructureDamageRepairCooldown",
         "IncludeInCommandLine": false,
         "DefaultValue": "180",
         "Placeholder": "180",
-        "Suffix": "seconds",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Structure Damage Repair Cooldown",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Structures:home:4",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "StructureDamageRepairCooldown",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "Hidden": true,
-        "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.StructureDamageRepairCooldown",
-        "IncludeInCommandLine": false,
         "Suffix": "seconds",
         "EnumValues": {}
     },
@@ -3587,24 +3218,10 @@
         "FieldName": "MaxPlatformSaddleStructureLimit",
         "InputType": "number",
         "IsFlagArgument": false,
-        "ParamFieldName": "MaxPlatformSaddleStructureLimit",
+        "ParamFieldName": "ServerSettings.MaxPlatformSaddleStructureLimit",
         "IncludeInCommandLine": false,
         "DefaultValue": "100",
         "Placeholder": "100",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Maximum Platform Saddle Limit",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Structures:home:4",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "MaxPlatformSaddleStructureLimit",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "Hidden": true,
-        "ParamFieldName": "ServerSettings.MaxPlatformSaddleStructureLimit",
-        "IncludeInCommandLine": false,
         "EnumValues": {}
     },
     {
@@ -3660,15 +3277,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "OverrideStructurePlatformPrevention",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.OverrideStructurePlatformPrevention",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Disable Building In Rich Resource Areas",
@@ -3694,15 +3308,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "EnableExtraStructurePreventionVolumes",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.EnableExtraStructurePreventionVolumes",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Allow Crate Spawns On Structures",
@@ -3728,15 +3339,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "AllowCrateSpawnsOnTopOfStructures",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.AllowCrateSpawnsOnTopOfStructures",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Allow PvE Structures At Supply Drops",
@@ -3762,15 +3370,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PvEAllowStructuresAtSupplyDrops",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PvEAllowStructuresAtSupplyDrops",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Disable Structure Placement Collision",
@@ -3781,24 +3386,6 @@
         "FieldName": "bDisableStructurePlacementCollision",
         "InputType": "checkbox",
         "IsFlagArgument": false,
-        "ParamFieldName": "bDisableStructurePlacementCollision",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "False",
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
-    },
-    {
-        "DisplayName": "Disable Structure Placement Collision",
-        "Category": "ARK SE:stadia_controller",
-        "Subcategory": "Structures:home:4",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "bDisableStructurePlacementCollision",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "Hidden": true,
         "ParamFieldName": "/Script/ShooterGame.ShooterGameMode.bDisableStructurePlacementCollision",
         "IncludeInCommandLine": false,
         "DefaultValue": "False",
@@ -3859,15 +3446,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "noTributeDownloads",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.noTributeDownloads",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Prevent Survivor Download",
@@ -3893,15 +3477,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PreventDownloadSurvivors",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PreventDownloadSurvivors",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Prevent Item Download",
@@ -3927,15 +3508,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PreventDownloadItems",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PreventDownloadItems",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Prevent Creature Download",
@@ -3961,15 +3539,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PreventDownloadDinos",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PreventDownloadDinos",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Prevent Survivor Upload",
@@ -3995,15 +3570,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PreventUploadSurvivors",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PreventUploadSurvivors",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Prevent Item Upload",
@@ -4029,15 +3601,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PreventUploadItems",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PreventUploadItems",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Prevent Creature Upload",
@@ -4063,15 +3632,12 @@
         "Description": "",
         "Keywords": "",
         "FieldName": "PreventUploadDinos",
-        "InputType": "checkbox",
+        "InputType": "text",
         "IsFlagArgument": false,
         "Hidden": true,
         "ParamFieldName": "ServerSettings.PreventUploadDinos",
         "IncludeInCommandLine": false,
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
+        "EnumValues": {}
     },
     {
         "DisplayName": "Download Backup Exclusion Files",
