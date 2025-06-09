@@ -46,12 +46,18 @@
         "UpdateSourceConditionValue": "DownloadURL"
     },
     {
+        "UpdateStageName": "Create Bun Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}bun"
+    },
+    {
         "UpdateStageName": "Bun Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- wget -qO- https://api.github.com/repos/oven-sh/bun/releases/latest | jq -r .tag_name | sed \\\"s/^bun-//\\\"); https://builds.dotnet.microsoft.com/dotnet/release-metadata/{{DotnetRelease}}/releases.json | jq -r \\\".[\\\\\\\"latest-sdk\\\\\\\"]\\\"); fi && if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi && wget -qO bun.zip https://github.com/oven-sh/bun/releases/bun-$BunVersion/download/bun-linux-x64.zip && echo \\\"Bun v$BunVersion downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://api.github.com/repos/oven-sh/bun/releases/latest | jq -r .tag_name | sed \\\"s/^bun-//\\\") && if command -v bun-app-runner/bun/bin/bin >/dev/null 2>&1; then export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun-app-runner/bun/bin/bin upgrade && exit 0; fi; fi; if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi; wget -qO bun.zip https://github.com/oven-sh/bun/releases/bun-$BunVersion/download/bun-linux-x64.zip && echo \\\"Bun v$BunVersion downloaded\\\"\"",
         "SkipOnFailure": false
     },
     {
@@ -60,7 +66,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/{{DotnetRelease}}/releases.json | jq -r \\\".[\\\\\\\"latest-sdk\\\\\\\"]\\\"); fi && if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi && wget -qO bun.zip https://github.com/oven-sh/bun/releases/bun-$BunVersion/download/bun-linux-aarch64.zip && echo \\\".Bun $BunVersion installed\\\"\"",
+        "UpdateSourceArgs": "-c \"BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://api.github.com/repos/oven-sh/bun/releases/latest | jq -r .tag_name | sed \\\"s/^bun-//\\\") && if command -v bun-app-runner/bun/bin/bin >/dev/null 2>&1; then export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun-app-runner/bun/bin/bin upgrade && exit 0; fi; fi; if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi; wget -qO bun.zip https://github.com/oven-sh/bun/releases/bun-$BunVersion/download/bun-linux-aarch64.zip && echo \\\"Bun v$BunVersion downloaded\\\"\"",
         "SkipOnFailure": false
     },
     {
@@ -68,7 +74,17 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $BunVersion='{{BunVersion}}'; if ([string]::IsNullOrWhiteSpace($BunVersion)) { $BunVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/release-metadata/{{DotnetRelease}}/releases.json).\\\"latest-sdk\\\" }; if ($BunVersion -notmatch '^v\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid .NET SDK version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://github.com/oven-sh/bun/releases/bun-$BunVersion/download/bun-windows-x64.zip -OutFile 'bun.zip'; if ($?) { Write-Output \\\"Bun v$BunVersion installed\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $BunVersion='{{BunVersion}}'; if ([string]::IsNullOrWhiteSpace($BunVersion)) { $BunVersion=(Invoke-RestMethod -UseBasicParsing -Uri \\\"https://api.github.com/repos/oven-sh/bun/releases/latest\\\").tag_name -replace '^bun-', ''); if ($BunVersion -notmatch '^v\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid .NET SDK version format specified\\\"; exit 1 }; Invoke-RestMethod -UseBasicParsing -Uri https://github.com/oven-sh/bun/releases/bun-$BunVersion/download/bun-windows-x64.zip -OutFile 'bun.zip'; if ($?) { Write-Output \\\"Bun v$BunVersion downloaded\\\" }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Bun Extract",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "bun.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}bun",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
         "SkipOnFailure": false
     },
     {
