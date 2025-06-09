@@ -102,7 +102,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd bun-app-runner/app/{{ApplicationLocation}} && export BUN_INSTALL=\\\"{{$FullRootDir}}bun\\\"; export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun install {{BunPackages}} {{BunInstallArgs}}\"",
+        "UpdateSourceArgs": "-c \"cd bun-app-runner/app/{{ApplicationLocation}} && export BUN_INSTALL=\\\"{{$FullRootDir}}bun\\\"; export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun add {{BunPackages}} {{BunInstallArgs}}\"",
         "UpdateSourceConditionSetting": "BunInstallType",
         "UpdateSourceConditionValue": "specify",
         "SkipOnFailure": false
@@ -112,7 +112,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'bun-app-runner'; $env:PATH = \\\"{{$FullRootDir}}bun\\bin;\\\" + $env:PATH; & bun install {{BunPackages}} {{BunInstallArgs}}",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'bun-app-runner'; $env:PATH = \\\"{{$FullRootDir}}bun\\bin;\\\" + $env:PATH; & bun add {{BunPackages}} {{BunInstallArgs}}",
         "UpdateSourceConditionSetting": "BunInstallType",
         "UpdateSourceConditionValue": "specify",
         "SkipOnFailure": false
