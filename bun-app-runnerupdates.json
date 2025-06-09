@@ -49,7 +49,7 @@
         "UpdateStageName": "Create Bun Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullRootDir}}bun"
+        "UpdateSourceArgs": "{{$FullRootDir}}bun/bin"
     },
     {
         "UpdateStageName": "Bun Download",
@@ -57,7 +57,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd bun-app-runner && BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://api.github.com/repos/oven-sh/bun/releases/latest | jq -r .tag_name | sed \\\"s/^bun-//\\\") && if command -v bun/bin/bun >/dev/null 2>&1; then export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun/bin/bun upgrade && exit 0; fi; fi; if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi; wget -qO bun.zip https://github.com/oven-sh/bun/releases/download/bun-$BunVersion/bun-linux-x64.zip && unzip -qo bun.zip -d bun >/dev/null 2>&1 && chmod +x bun/bin/bun && rm -f bun.zip && echo \\\"Bun v$BunVersion installed\\\"\"",
+        "UpdateSourceArgs": "-c \"cd bun-app-runner && BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://api.github.com/repos/oven-sh/bun/releases/latest | jq -r .tag_name | sed \\\"s/^bun-//\\\") && if command -v bun/bin/bun >/dev/null 2>&1; then export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun/bin/bun upgrade && exit 0; fi; fi; if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi; wget -qO bun.zip https://github.com/oven-sh/bun/releases/download/bun-$BunVersion/bun-linux-x64.zip && unzip -oqd bun/bin bun.zip >/dev/null 2>&1 && mv bun/bin/bun-linux-x64/bun bun/bin/bun && chmod +x bun/bin/bun && rm -rf bun/bin/bun-linux-x64 bun.zip && echo \\\"Bun v$BunVersion installed\\\"\"",
         "SkipOnFailure": false
     },
     {
@@ -66,7 +66,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd bun-app-runner && BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://api.github.com/repos/oven-sh/bun/releases/latest | jq -r .tag_name | sed \\\"s/^bun-//\\\") && if command -v bun/bin/bun >/dev/null 2>&1; then export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun/bin/bun upgrade && exit 0; fi; fi; if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi; wget -qO bun.zip https://github.com/oven-sh/bun/releases/download/bun-$BunVersion/bun-linux-aarch64.zip && unzip -qo bun.zip -d bun >/dev/null 2>&1 && chmod +x bun/bin/bun && rm -f bun.zip && echo \\\"Bun v$BunVersion installed\\\"\"",
+        "UpdateSourceArgs": "-c \"cd bun-app-runner && BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://api.github.com/repos/oven-sh/bun/releases/latest | jq -r .tag_name | sed \\\"s/^bun-//\\\") && if command -v bun/bin/bun >/dev/null 2>&1; then export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun/bin/bun upgrade && exit 0; fi; fi; if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi; wget -qO bun.zip https://github.com/oven-sh/bun/releases/download/bun-$BunVersion/bun-linux-aarch64.zip && unzip -oqd bun/bin bun.zip >/dev/null 2>&1 && mv bun/bin/bun-linux-aarch64/bun bun/bin/bun && chmod +x bun/bin/bun && rm -rf bun/bin/bun-linux-aarch64 bun.zip && echo \\\"Bun v$BunVersion installed\\\"\"",
         "SkipOnFailure": false
     },
     {
