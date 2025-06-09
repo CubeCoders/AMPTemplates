@@ -57,7 +57,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://api.github.com/repos/oven-sh/bun/releases/latest | jq -r .tag_name | sed \\\"s/^bun-//\\\") && if command -v bun-app-runner/bun/bin/bin >/dev/null 2>&1; then export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun-app-runner/bun/bin/bin upgrade && exit 0; fi; fi; if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi; wget -qO bun.zip https://github.com/oven-sh/bun/releases/bun-$BunVersion/download/bun-linux-x64.zip && echo \\\"Bun v$BunVersion downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://api.github.com/repos/oven-sh/bun/releases/latest | jq -r .tag_name | sed \\\"s/^bun-//\\\") && if command -v bun-app-runner/bun/bin/bun >/dev/null 2>&1; then export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun-app-runner/bun/bin/bun upgrade && exit 0; fi; fi; if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi; wget -qO bun.zip https://github.com/oven-sh/bun/releases/bun-$BunVersion/download/bun-linux-x64.zip && echo \\\"Bun v$BunVersion downloaded\\\"\"",
         "SkipOnFailure": false
     },
     {
@@ -66,7 +66,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://api.github.com/repos/oven-sh/bun/releases/latest | jq -r .tag_name | sed \\\"s/^bun-//\\\") && if command -v bun-app-runner/bun/bin/bin >/dev/null 2>&1; then export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun-app-runner/bun/bin/bin upgrade && exit 0; fi; fi; if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi; wget -qO bun.zip https://github.com/oven-sh/bun/releases/bun-$BunVersion/download/bun-linux-aarch64.zip && echo \\\"Bun v$BunVersion downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://api.github.com/repos/oven-sh/bun/releases/latest | jq -r .tag_name | sed \\\"s/^bun-//\\\") && if command -v bun-app-runner/bun/bin/bun >/dev/null 2>&1; then export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun-app-runner/bun/bin/bun upgrade && exit 0; fi; fi; if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi; wget -qO bun.zip https://github.com/oven-sh/bun/releases/bun-$BunVersion/download/bun-linux-aarch64.zip && echo \\\"Bun v$BunVersion downloaded\\\"\"",
         "SkipOnFailure": false
     },
     {
@@ -88,6 +88,12 @@
         "SkipOnFailure": false
     },
     {
+        "UpdateStageName": "Make Server Executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullRootDir}}bun/bin/bun"
+    },
+    {
         "UpdateStageName": "Install Bun Packages",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
@@ -101,8 +107,8 @@
         "UpdateStageName": "Install Bun Packages",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd bun-app-runner\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}bun;%PATH%\" && bun install {{BunPackages}} {{BunInstallArgs}}",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'bun-app-runner'; set \"PATH={{$FullRootDir}}bun;%PATH%\" && bun install {{BunPackages}} {{BunInstallArgs}}",
         "UpdateSourceConditionSetting": "BunInstallType",
         "UpdateSourceConditionValue": "specify",
         "SkipOnFailure": false
