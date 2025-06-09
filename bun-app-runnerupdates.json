@@ -1,0 +1,140 @@
+[
+    {
+        "UpdateStageName": "App Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd bun-app-runner && rm -rf srv >/dev/null 2>&1; DownloadSource=\\\"{{DownloadSource}}\\\"; DownloadBranch=\\\"{{DownloadBranch}}\\\"; [[ -n \\\"{{DownloadUsername}}\\\" ]] && DownloadUrl=\\\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\\\" || DownloadUrl=\\\"$DownloadSource\\\"; [ ! -d app/.git ] && { echo \\\"Installing the app\\\" && git clone \\\"$DownloadUrl\\\" srv >/dev/null && \\cp -r srv/. app/ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && cd app && [ -z \\\"$DownloadBranch\\\" ] && DownloadBranch=$(git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); git checkout $DownloadBranch --force >/dev/null && git pull >/dev/null && echo \\\"App installed\\\"; } || { echo \\\"Updating the app\\\" && cd app && git remote set-url origin \\\"$DownloadUrl\\\" >/dev/null && [ -z \\\"$DownloadBranch\\\" ] && DownloadBranch=$(git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); git checkout $DownloadBranch --force >/dev/null && git pull >/dev/null && echo \\\"App updated\\\"; }\"",
+        "UpdateSourceConditionSetting": "DownloadType",
+        "UpdateSourceConditionValue": "GitRepo",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "App Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd bun-app-runner; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $DownloadSource = \\\"{{DownloadSource}}\\\"; $DownloadBranch = \\\"{{DownloadBranch}}\\\"; if (![string]::IsNullOrEmpty(\\\"{{DownloadUsername}}\\\")) { $DownloadUrl = $DownloadSource -replace \\\"https://\\\", \\\"https://{{DownloadUsername}}:{{DownloadPassword}}@\\\" } else { $DownloadUrl = \\\"$DownloadSource\\\" }; if (-Not (Test-Path app/.git)) { Write-Output \\\"Installing the app\\\"; git clone \\\"$DownloadUrl\\\" srv 1> $null; Copy-Item srv/* app/ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; cd app; if ([string]::IsNullOrEmpty($DownloadBranch)) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git checkout --force $DownloadBranch 1> $null; if ($?) { git pull 1> $null }; if ($?) { Write-Output \\\"App installed\\\" } } else { Write-Output \\\"Updating the app\\\"; cd app; git remote set-url origin \\\"$DownloadUrl\\\" 1> $null; if ([string]::IsNullOrEmpty($DownloadBranch)) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git checkout --force $DownloadBranch 1> $null; if ($?) { git pull 1> $null }; if ($?) { Write-Output \\\"App updated\\\" } }\"",
+        "UpdateSourceConditionSetting": "DownloadType",
+        "UpdateSourceConditionValue": "GitRepo",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "App Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "{{DownloadSource}}",
+        "UpdateSourceData": "{{DownloadFilename}}",
+        "UpdateSourceVersion": "{{DownloadVersion}}",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "DownloadType",
+        "UpdateSourceConditionValue": "GithubRelease"
+    },
+    {
+        "UpdateStageName": "App Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "{{DownloadSource}}",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "DownloadType",
+        "UpdateSourceConditionValue": "DownloadURL"
+    },
+    {
+        "UpdateStageName": "Bun Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/{{DotnetRelease}}/releases.json | jq -r \\\".[\\\\\\\"latest-sdk\\\\\\\"]\\\"); fi && if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi && wget -qO bun.zip https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip && echo \\\"Bun v$BunVersion downloaded\\\"\"",
+        "UpdateSourceConditionSetting": "DisableDotnetDownload",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Bun Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"BunVersion=\\\"{{BunVersion}}\\\" && if [[ -z \\\"$BunVersion\\\" ]]; then BunVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/{{DotnetRelease}}/releases.json | jq -r \\\".[\\\\\\\"latest-sdk\\\\\\\"]\\\"); fi && if [[ ! \\\"$BunVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Bun version format specified\\\" && exit 1; fi && wget -qO bun.zip https://github.com/oven-sh/bun/releases/$BunVersion/download/bun-linux-aarch64.zip && echo \\\".Bun $BunVersion downloaded\\\"\"",
+        "UpdateSourceConditionSetting": "DisableDotnetDownload",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Bun Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $BunVersion='{{BunVersion}}'; if ([string]::IsNullOrWhiteSpace($BunVersion)) { $BunVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/release-metadata/{{DotnetRelease}}/releases.json).\\\"latest-sdk\\\" }; if ($BunVersion -notmatch '^v\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid .NET SDK version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://github.com/oven-sh/bun/releases/$BunVersion/download/bun-windows-x64.zip -OutFile 'bun.zip'; if ($?) { Write-Output \\\"Bun v$BunVersion downloaded\\\" }\"",
+        "UpdateSourceConditionSetting": "DisableDotnetDownload",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install Bun Packages",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd bun-app-runner/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun install {{BunPackages}} {{BunInstallArgs}}\"",
+        "UpdateSourceConditionSetting": "BunInstallType",
+        "UpdateSourceConditionValue": "specify",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install Bun Packages",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd bun-app-runner\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}bun;%PATH%\" && bun install {{BunPackages}} {{BunInstallArgs}}",
+        "UpdateSourceConditionSetting": "BunInstallType",
+        "UpdateSourceConditionValue": "specify",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install Bun Packages",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd bun-app-runner/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun install {{BunInstallArgs}}\"",
+        "UpdateSourceConditionSetting": "BunInstallType",
+        "UpdateSourceConditionValue": "install",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install Bun Packages",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd bun-app-runner\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}bun;%PATH%\" && bun install {{BunInstallArgs}}",
+        "UpdateSourceConditionSetting": "BunInstallType",
+        "UpdateSourceConditionValue": "install",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Run App Setup Command",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd bun-app-runner/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && {{AppSetupCommands}}\"",
+        "UpdateSourceConditionSetting": "RunAppSetupCommands",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Run App Setup Command",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd bun-app-runner\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}bun;%PATH%\" && {{AppSetupCommands}}",
+        "UpdateSourceConditionSetting": "RunAppSetupCommands",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    }
+]
