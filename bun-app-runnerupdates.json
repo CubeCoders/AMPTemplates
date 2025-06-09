@@ -74,7 +74,26 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'bun-app-runner'; $ProgressPreference='SilentlyContinue'; $BunVersion='{{BunVersion}}'; if ([string]::IsNullOrWhiteSpace($BunVersion)) { $BunVersion=(Invoke-RestMethod -UseBasicParsing -Uri \\\"https://api.github.com/repos/oven-sh/bun/releases/latest\\\").tag_name -replace '^bun-', ''); if (Test-Path 'bun/bin/bun.exe') { & bun/bin/bun.exe --upgrade; exit 0 } }; if ($BunVersion -notmatch '^v\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid Bun version format specified\\\"; exit 1 }; Invoke-RestMethod -UseBasicParsing -Uri https://github.com/oven-sh/bun/releases/bun-$BunVersion/download/bun-windows-x64.zip -OutFile 'bun.zip'; if ($?) { Expand-Archive -Path \\\"bun.zip\\\" -DestinationPath \\\"bun\\\" -Force *> $null; Remove-Item \\\"bun.zip\\\"; Write-Output \\\"Bun v$BunVersion installed\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'bun-app-runner'; $ProgressPreference='SilentlyContinue'; $BunVersion='{{BunVersion}}'; if ([string]::IsNullOrWhiteSpace($BunVersion)) { $BunVersion=(Invoke-RestMethod -UseBasicParsing -Uri \\\"https://api.github.com/repos/oven-sh/bun/releases/latest\\\").tag_name -replace '^bun-', ''); if (Test-Path 'bun/bin/bun.exe') { & bun/bin/bun.exe upgrade; exit 0 } }; if ($BunVersion -notmatch '^v\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid Bun version format specified\\\"; exit 1 }; Invoke-RestMethod -UseBasicParsing -Uri https://github.com/oven-sh/bun/releases/bun-$BunVersion/download/bun-windows-x64.zip -OutFile 'bun.zip'; if ($?) { Expand-Archive -Path \\\"bun.zip\\\" -DestinationPath \\\"bun\\\" -Force *> $null; Remove-Item \\\"bun.zip\\\"; Write-Output \\\"Bun v$BunVersion installed\\\" }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install Bun Packages",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd bun-app-runner/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun install {{BunInstallArgs}}\"",
+        "UpdateSourceConditionSetting": "BunInstallType",
+        "UpdateSourceConditionValue": "install",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install Bun Packages",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'bun-app-runner'; $env:Path = \\\"{{$FullRootDir}}bun\\bin;\\\" + $env:Path; & bun install {{BunInstallArgs}}",
+        "UpdateSourceConditionValue": "install",
         "SkipOnFailure": false
     },
     {
@@ -92,29 +111,9 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'bun-app-runner'; set \"PATH={{$FullRootDir}}bun;%PATH%\" && bun install {{BunPackages}} {{BunInstallArgs}}",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'bun-app-runner'; $env:Path = \\\"{{$FullRootDir}}bun\\bin;\\\" + $env:Path; & bun install {{BunPackages}} {{BunInstallArgs}}",
         "UpdateSourceConditionSetting": "BunInstallType",
         "UpdateSourceConditionValue": "specify",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Install Bun Packages",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd bun-app-runner/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}bun/bin:$PATH\\\" && bun install {{BunInstallArgs}}\"",
-        "UpdateSourceConditionSetting": "BunInstallType",
-        "UpdateSourceConditionValue": "install",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Install Bun Packages",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd bun-app-runner\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}bun;%PATH%\" && bun install {{BunInstallArgs}}",
-        "UpdateSourceConditionSetting": "BunInstallType",
-        "UpdateSourceConditionValue": "install",
         "SkipOnFailure": false
     },
     {
