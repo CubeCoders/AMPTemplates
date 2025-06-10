@@ -3,14 +3,16 @@
         "UpdateStageName": "Client Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullRootDir}}client"
+        "UpdateSourceArgs": "{{$FullRootDir}}client",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "7-Zip Directory Creation",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
-        "OneShot": true
+        "OneShot": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "7-Zip Installer Download",
@@ -19,7 +21,8 @@
         "UpdateSourceData": "https://7-zip.org/a/7z2407-x64.exe",
         "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
         "OverwriteExistingFiles": true,
-        "OneShot": true
+        "OneShot": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "7-Zip Console Tool Download",
@@ -28,7 +31,8 @@
         "UpdateSourceData": "https://www.7-zip.org/a/7zr.exe",
         "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
         "OverwriteExistingFiles": true,
-        "OneShot": true
+        "OneShot": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "7-Zip Installation",
@@ -36,7 +40,7 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
         "UpdateSourceArgs": "/C cd et-legacy\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
-        "SkipOnFailure": true,
+        "SkipOnFailure": false,
         "OneShot": true
     },
     {
@@ -66,7 +70,8 @@
         "UpdateSourceData": "et-legacy.zip",
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Installation",
@@ -126,7 +131,8 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "DisableWETDownload",
-        "UpdateSourceConditionValue": "false"
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Client Files Installation",
