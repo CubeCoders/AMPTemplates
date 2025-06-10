@@ -4,7 +4,8 @@
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "619960",
-        "UpdateSourceArgs": "619910"
+        "UpdateSourceArgs": "619910",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config Template Download",
@@ -12,13 +13,15 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/jc3mpserverconfig.json",
         "UpdateSourceTarget": "../",
-        "OverwriteExistingFiles": "true"
+        "OverwriteExistingFiles": "true",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Packages Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}packages"
+        "UpdateSourceArgs": "{{$FullBaseDir}}packages",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Download Default Packages",
@@ -29,7 +32,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}packages",
         "UnzipUpdateSource": "true",
         "OverwriteExistingFiles": "true",
-        "DeleteAfterExtract": "true"
+        "DeleteAfterExtract": "true",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "chat-master Extract",

@@ -15,7 +15,8 @@
         "UpdateSourceArgs": "BeamMP/BeamMP-Server",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": false,
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "BeamMP Download",
@@ -26,7 +27,8 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": false,
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "BeamMP Download",
@@ -37,21 +39,24 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": false,
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Set Executable Flag",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
         "UpdateSourceArgs": "{{$FullBaseDir}}BeamMP-Server.{{ServerVersion}}.x86_64",
-        "UpdateSourceArch": "x86_64"
+        "UpdateSourceArch": "x86_64",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Set Executable Flag",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
         "UpdateSourceArgs": "{{$FullBaseDir}}BeamMP-Server.{{ServerVersion}}.arm64",
-        "UpdateSourceArch": "aarch64"
+        "UpdateSourceArch": "aarch64",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Binary Symlink Creation",
@@ -78,6 +83,7 @@
         "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/beammpServerConfig.toml",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UpdateSourceArgs": "ServerConfig.toml",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     }
 ]

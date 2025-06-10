@@ -5,7 +5,8 @@
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "882430",
         "UpdateSourceArgs": "719890",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Game.ini File Download",
@@ -14,13 +15,15 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/beasts-of-bermudagame.ini",
         "UpdateSourceArgs": "Game.ini",
         "UpdateSourceTarget": "{{$FullBaseDir}}WindowsServer/BeastsOfBermuda/Saved/Config/WindowsServer",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Initialise Wine",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\""
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
     }
 ]
