@@ -8,18 +8,18 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Create Config Directory",
+        "UpdateStageName": "Start Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Config"
+        "UpdateSource": "StartApplication"
     },
     {
-        "UpdateStageName": "ServerConfig.txt Download",
+        "UpdateStageName": "Wait For Server Start",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://github.com/Greelan/AMPTemplates/raw/dev/survive-the-nightsserverconfig.txt",
-        "UpdateSourceTarget": "{{$FullBaseDir}}Config",
-        "UpdateSourceArgs": "ServerConfig.txt",
-        "OverwriteExistingFiles": false
+        "UpdateSource": "WaitForStartupComplete"
+    },
+    {
+        "UpdateStageName": "Stop Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ShutdownApplication"
     }
 ]
