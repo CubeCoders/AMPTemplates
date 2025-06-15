@@ -13,7 +13,8 @@
         "UpdateStageName": "Create Plutonium Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Plutonium"
+        "UpdateSourceArgs": "{{$FullBaseDir}}Plutonium",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Plutonium Updater Download",
@@ -57,7 +58,8 @@
         "UpdateStageName": "Create Config Download Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullRootDir}}configs"
+        "UpdateSourceArgs": "{{$FullRootDir}}configs",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Plutonium Config Files Download",
@@ -75,7 +77,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"\\cp -r -n ./call-of-dutybo1/configs/T5ServerConfigs-master/localappdata/Plutonium/storage/t5/* ./call-of-dutybo1/server/Plutonium/storage/t5 >/dev/null 2>&1 && rm -rf ./call-of-dutybo1/configs/\"",
+        "UpdateSourceArgs": "-c \"\\cp -r -n ./call-of-dutybo1/configs/T5ServerConfig-master/localappdata/Plutonium/storage/t5/* ./call-of-dutybo1/server/Plutonium/storage/t5 >/dev/null 2>&1 && rm -rf ./call-of-dutybo1/configs/\"",
         "SkipOnFailure": false
     },
     {
@@ -83,14 +85,15 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C robocopy call-of-dutybo1\\configs\\T5ServerConfigs-master\\localappdata\\Plutonium\\storage\\t5 call-of-dutybo1\\server\\Plutonium\\storage\\t5 /E /XC /XN /XO > NUL 2>&1 & @if %ERRORLEVEL% GTR 7 (exit /b %ERRORLEVEL%) else (rd /S /Q call-of-dutybo1\\configs)",
+        "UpdateSourceArgs": "/C robocopy call-of-dutybo1\\configs\\T5ServerConfig-master\\localappdata\\Plutonium\\storage\\t5 call-of-dutybo1\\server\\Plutonium\\storage\\t5 /E /XC /XN /XO > NUL 2>&1 & @if %ERRORLEVEL% GTR 7 (exit /b %ERRORLEVEL%) else (rd /S /Q call-of-dutybo1\\configs)",
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create mods Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Plutonium/storage/t5/mods"
+        "UpdateSourceArgs": "{{$FullBaseDir}}Plutonium/storage/t5/mods",
+        "SkipOnFailure": true
     },
     {
         "UpdateStageName": "Initialise Wine",
