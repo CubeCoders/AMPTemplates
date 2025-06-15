@@ -55,6 +55,47 @@
         }
     },
     {
+        "DisplayName": "Server Description",
+        "Category": "SCUM:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the description of the server shown in the server browser. Not currently used?",
+        "Keywords": "description,ServerDescription",
+        "FieldName": "ServerDescription",
+        "InputType": "text",
+        "ParamFieldName": "General.scum.ServerDescription",
+        "DefaultValue": "Server Description",
+        "Placeholder": "Server Description",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Banner URL",
+        "Category": "SCUM:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the URL for the server banner image shown in the server browser. Not currently used?",
+        "Keywords": "banner,url,ServerBannerUrl",
+        "FieldName": "ServerBannerUrl",
+        "InputType": "text",
+        "ParamFieldName": "General.scum.ServerBannerUrl",
+        "DefaultValue": "",
+        "Placeholder": "https://example.com/banner.png",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Playstyle",
+        "Category": "SCUM:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the playstyle of the server shown in the server browser. Not currently used?",
+        "Keywords": "playstyle,ServerPlaystyle,PVE,PVP",
+        "FieldName": "ServerPlaystyle",
+        "InputType": "enum",
+        "ParamFieldName": "General.scum.ServerPlaystyle",
+        "DefaultValue": "PVE",
+        "EnumValues": {
+            "PVE": "PVE",
+            "PVP": "PVP"
+        }
+    },
+    {
         "DisplayName": "Welcome Message",
         "Category": "SCUM:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -91,9 +132,54 @@
         "MinValue": "10",
         "MaxValue": "720",
         "ParamFieldName": "General.scum.MessageOfTheDayCooldown",
-        "DefaultValue": "10",
-        "Placeholder": "10",
+        "DefaultValue": "10.000000",
+        "Placeholder": "10.000000",
         "Suffix": "minutes",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Delete Inactive Users",
+        "Category": "SCUM:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, users who have been inactive for a specified number of days will be deleted",
+        "Keywords": "delete,inactive,users,DeleteInactiveUsers",
+        "FieldName": "DeleteInactiveUsers",
+        "InputType": "checkbox",
+        "ParamFieldName": "General.scum.DeleteInactiveUsers",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "True": "1",
+            "False": "0"
+        }
+    },
+    {
+        "DisplayName": "Delete Banned Users",
+        "Category": "SCUM:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, banned users will be deleted",
+        "Keywords": "delete,banned,users,DeleteBannedUsers",
+        "FieldName": "DeleteBannedUsers",
+        "InputType": "checkbox",
+        "ParamFieldName": "General.scum.DeleteBannedUsers",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "True": "1",
+            "False": "0"
+        }
+    },
+    {
+        "DisplayName": "Days Since Last Login To Become Inactive",
+        "Category": "SCUM:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the number of days since last login before a user is considered inactive",
+        "Keywords": "days,inactive,lastlogin,DaysSinceLastLoginToBecomeInactive",
+        "FieldName": "DaysSinceLastLoginToBecomeInactive",
+        "InputType": "number",
+        "MinValue": "1",
+        "ParamFieldName": "General.scum.DaysSinceLastLoginToBecomeInactive",
+        "DefaultValue": "180",
+        "Placeholder": "180",
+        "Suffix": "days",
         "EnumValues": {}
     },
     {
@@ -116,7 +202,7 @@
         "Category": "SCUM:stadia_controller",
         "Subcategory": "Server:dns:1",
         "Description": "Sets the maximum server tick rate. Increasing this may result in higher load and poor performance",
-        "Keywords": "server,tickrate,max",
+        "Keywords": "server,tickrate,tick,rate,max,maximum,MaxServerTickRate",
         "FieldName": "MaxServerTickRate",
         "InputType": "number",
         "MinValue": "5",
