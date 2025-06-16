@@ -1,8 +1,8 @@
 Meta.DisplayName=Astroneer
 Meta.Description=Astroneer Dedicated Server
 Meta.OS=Windows, Linux
-Meta.AarchSupport=Unknown
-Meta.Arch=x86_64
+Meta.AarchSupport=Emulated
+Meta.Arch=All
 Meta.Author=Greelan, Tueem
 Meta.URL=https://store.steampowered.com/app/361420/ASTRONEER/
 Meta.DisplayImageSource=steam:361420
@@ -11,17 +11,17 @@ Meta.ConfigManifest=astroneerconfig.json
 Meta.MetaConfigManifest=astroneermetaconfig.json
 Meta.ConfigRoot=astroneer.kvp
 Meta.MinAMPVersion=2.5.0.4
-Meta.SpecificDockerImage=cubecoders/ampbase:wine8
+Meta.SpecificDockerImage=
 Meta.DockerRequired=False
 Meta.DockerBaseReadOnly=False
-Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
-Meta.ContainerPolicyReason=Astroneer requires Wine to run on Linux. Using a container avoids the need to install this dependency on the host.
+Meta.ContainerPolicy=Supported
+Meta.ContainerPolicyReason=
 Meta.ExtraSetupStepsURI=
 Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=1.2
+Meta.ConfigVersion=3
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
 Meta.AppConfigId=2a9f3285-5adc-4574-8a5b-d6ef39e8b7a0
@@ -29,15 +29,15 @@ App.DisplayName=Astroneer
 App.RootDir=./astroneer/
 App.BaseDirectory=./astroneer/728470/
 App.SteamWorkshopDownloadLocation=
-App.ExecutableWin=728470/Astro/Binaries/Win64/AstroServer-Win64-Shipping.exe
-App.ExecutableLinux=/usr/bin/wine
+App.ExecutableWin=728470\Astro\Binaries\Win64\AstroServer-Win64-Shipping.exe
+App.ExecutableLinux=.proton/proton
 App.WorkingDir=728470/Astro/Binaries/Win64
-App.LinuxCommandLineArgs="./AstroServer-Win64-Shipping.exe" -ini:Engine:[SystemSettings]:net.AllowEncryption=False
+App.LinuxCommandLineArgs=runinprefix "{{$FullBaseDir}}Astro/Binaries/Win64/AstroServer-Win64-Shipping.exe"
 App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} Port={{$ApplicationPort1}} ConsolePort={{$RemoteAdminPort}} {{$FormattedArgs}} -log
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"361420","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
+App.EnvironmentVariables={"SteamAppId":"361420","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullBaseDir}}.steam/steam","HOME":"{{$FullBaseDir}}"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
@@ -75,7 +75,7 @@ App.SteamUpdateAnonymousLogin=True
 App.SteamForceLoginPrompt=False
 App.RapidStartup=False
 App.DumpFullChildProcessTree=False
-App.MonitorChildProcessName=^.*AstroServer-Win64-Shipping\.exe.*Port={{$ApplicationPort1}}.*$
+App.MonitorChildProcessName=^.*{{$WineBaseDir}}Astro\\Binaries\\Win64\\AstroServer-Win64-Shipping\.exe.*Port={{$ApplicationPort1}}.*$
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=Immediate
