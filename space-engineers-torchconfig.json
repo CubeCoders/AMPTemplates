@@ -71,6 +71,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Torch Autostart",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:9",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "TorchConfig_Autostart",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/Autostart",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Server Release Stream",
         "Category": "Updates",
         "Subcategory": "Steam Downloads:download",
@@ -2707,23 +2721,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Enable Autostart",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Defines if the Torch server should automatically start upon startup.",
-        "Keywords": "Autostart,Torch,Start,Server",
-        "FieldName": "TorchConfig_Autostart",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/Autostart",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "true",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
         "DisplayName": "Restart On Crash",
         "Category": "Space Engineers:stadia_controller",
         "Subcategory": "Torch:mode_heat:9",
@@ -2894,7 +2891,7 @@
         "DisplayName": "Chat Name",
         "Category": "Space Engineers:stadia_controller",
         "Subcategory": "Torch:mode_heat:9",
-        "Description": "Defines what the name of the server should be.",
+        "Description": "Defines the name for server chat (such as from broadcasts).",
         "Keywords": "Chat,Name,Chat Name,Torch,Server",
         "FieldName": "TorchConfig_ChatName",
         "InputType": "text",
@@ -2909,16 +2906,20 @@
         "DisplayName": "Chat Color",
         "Category": "Space Engineers:stadia_controller",
         "Subcategory": "Torch:mode_heat:9",
-        "Description": "Defines what color should the name of the server be.",
+        "Description": "Defines the color for server chat (such as from broadcasts).",
         "Keywords": "Chat,Color,ChatColor,Torch,Server",
         "FieldName": "TorchConfig_ChatColor",
-        "InputType": "text",
+        "InputType": "enum",
         "IsFlagArgument": false,
         "ParamFieldName": "/TorchConfig/ChatColor",
         "IncludeInCommandLine": false,
         "DefaultValue": "Red",
-        "Placeholder": "Red",
-        "EnumValues": {}
+        "EnumValues": {
+            "Red": "Red (default)",
+            "Blue": "Blue",
+            "White": "White",
+            "Green": "Green"
+        }
     },
     {
         "DisplayName": "Enable Whitelist",
@@ -2941,7 +2942,7 @@
         "DisplayName": "UGC Service Type",
         "Category": "Space Engineers:stadia_controller",
         "Subcategory": "Torch:mode_heat:9",
-        "Description": "Changes the network type of the Torch server. If using crossplay, set to EOS. Otherwise, set to Steam.",
+        "Description": "Changes the service for downloading mods. If using crossplay, set to EOS. Otherwise, set to Steam.",
         "Keywords": "Network,UgcServiceType,Crossplay,Steam,Torch,Server",
         "FieldName": "TorchConfig_UgcServiceType",
         "InputType": "enum",
@@ -2958,7 +2959,7 @@
         "DisplayName": "Branch Name",
         "Category": "Space Engineers:stadia_controller",
         "Subcategory": "Torch:mode_heat:9",
-        "Description": "Determines what Torch Branch to receive, and updates to get. Use with caution.",
+        "Description": "Determines what Torch branch to use. Exercise caution if changing this from 'master'.",
         "Keywords": "Branch,BranchName,Torch,Server",
         "FieldName": "TorchConfig_BranchName",
         "InputType": "enum",
@@ -2968,17 +2969,17 @@
         "DefaultValue": "master",
         "EnumValues": {
             "master": "Master (default)",
-            "publicbeta": "Public Beta",
+            "publicbeta": "Public beta",
             "staging": "Staging",
             "dev": "Dev"
         }
     },
     {
-        "DisplayName": "Enable Asserts",
+        "DisplayName": "Enable Assert Logging",
         "Category": "Space Engineers:stadia_controller",
         "Subcategory": "Torch:mode_heat:9",
-        "Description": "Determines if Assert Logging should be enabled in the Torch server.",
-        "Keywords": "Assert,Logging,Torch,Server,EnableAsserts",
+        "Description": "Enables Keen's assert logging.",
+        "Keywords": "Keen,Assert,Logging,Torch,Server,EnableAsserts",
         "FieldName": "TorchConfig_EnableAsserts",
         "InputType": "checkbox",
         "IsFlagArgument": false,
@@ -2994,7 +2995,7 @@
         "DisplayName": "Send Logs To Keen",
         "Category": "Space Engineers:stadia_controller",
         "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables ending server logs to Keen Software House.",
+        "Description": "Enables sending debug data and logs to Keen on crash.",
         "Keywords": "Keen,Logs,Send,Torch,Server,SendLogsToKeen",
         "FieldName": "TorchConfig_SendLogsToKeen",
         "InputType": "checkbox",
@@ -3011,7 +3012,7 @@
         "DisplayName": "Delete Mini Dumps",
         "Category": "Space Engineers:stadia_controller",
         "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables deleting minidumps.",
+        "Description": "Enables deleting minidumps after they are created.",
         "Keywords": "Delete,Mini,Dumps,DeleteMiniDumps,Torch,Server",
         "FieldName": "TorchConfig_DeleteMiniDumps",
         "InputType": "checkbox",
@@ -3023,5 +3024,20 @@
             "True": "true",
             "False": "false"
         }
+    },
+    {
+        "DisplayName": "Game Server Login Token (GSLT)",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:9",
+        "Description": "Sets a [Steam Game Server Login Token](https://steamcommunity.com/dev/managegameservers) for the server, to allow routing of players to the server if you have a dynamic IP. Use app ID 244850 when generating the token",
+        "Keywords": "steam,server,login,token,gslt,logintoken",
+        "FieldName": "logintoken",
+        "InputType": "password",
+        "ParamFieldName": "logintoken",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "6544F7E034119F113526E96474F559AH",
+        "EnumValues": {}
     }
 ]
