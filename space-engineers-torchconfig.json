@@ -58,7 +58,7 @@
     {
         "DisplayName": "Torch Instance Name",
         "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
+        "Subcategory": "Torch:mode_heat:-1",
         "Description": "",
         "Keywords": "",
         "FieldName": "TorchConfig_InstanceName",
@@ -73,7 +73,7 @@
     {
         "DisplayName": "Torch No GUI",
         "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
+        "Subcategory": "Torch:mode_heat:-1",
         "Description": "",
         "Keywords": "",
         "FieldName": "TorchConfig_NoGui",
@@ -88,7 +88,7 @@
     {
         "DisplayName": "Torch Autostart",
         "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
+        "Subcategory": "Torch:mode_heat:-1",
         "Description": "",
         "Keywords": "",
         "FieldName": "TorchConfig_Autostart",
@@ -103,7 +103,7 @@
     {
         "DisplayName": "Torch Console",
         "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
+        "Subcategory": "Torch:mode_heat:-1",
         "Description": "",
         "Keywords": "",
         "FieldName": "TorchConfig_IndependentConsole",
@@ -114,6 +114,326 @@
         "DefaultValue": "true",
         "EnumValues": {},
         "Hidden": true
+    },
+    {
+        "DisplayName": "Restart On Crash",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Enables automatic restart of the server if it encounters a crash.",
+        "Keywords": "Restart,Crash,Torch,Server",
+        "FieldName": "TorchConfig_RestartOnCrash",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/RestartOnCrash",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Restart On Game Update",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Enables automatic restart of the server if an update to Space Engineers is detected.",
+        "Keywords": "Restart,Update,Torch,RestartOnGameUpdate",
+        "FieldName": "TorchConfig_RestartOnGameUpdate",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/RestartOnGameUpdate",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Game Update Restart Delay",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Defines how long Torch waits to restart the server if a game update is detected. Restart On Game Update must be enabled.",
+        "Keywords": "Restart,Update,Delay,Torch,GameUpdateRestartDelayMins",
+        "FieldName": "TorchConfig_GameUpdateRestartDelayMins",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/GameUpdateRestartDelayMins",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "5",
+        "Placeholder": "5",
+        "Suffix": "minutes",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Torch Updates",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Enables automatic updates to Torch.",
+        "Keywords": "TorchUpdates,Update,Torch,Server",
+        "FieldName": "TorchConfig_GetTorchUpdates",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/GetTorchUpdates",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Enable Plugin Updates",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Enables automatic update of plugins.",
+        "Keywords": "Plugins,Plugin,Updates,Update,Torch,Server",
+        "FieldName": "TorchConfig_GetPluginUpdates",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/GetPluginUpdates",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Bypass Is Reloadable Flag",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Enables bypassing the reloadable flag on plugins, force enabling the plugin reload system.",
+        "Keywords": "Plugins,Reloadable,Reload,Bypass,Torch,BypassIsReloadableFlag",
+        "FieldName": "TorchConfig_BypassIsReloadableFlag",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/BypassIsReloadableFlag",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Watchdog Timeout",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "If the server is frozen, Torch will wait the number of seconds specified before it kills the instance.",
+        "Keywords": "Watchdog,Timeout,TickTimeout,Torch,Server",
+        "FieldName": "TorchConfig_TickTimeout",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/TickTimeout",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "60",
+        "Placeholder": "60",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Plugins List",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Space-separated list of GUIDs of [Torch plugins](https://torchapi.com/plugins) to install, update and load when Torch starts. Alternatively, configure the list in Torch.cfg.",
+        "Keywords": "plugins",
+        "FieldName": "plugins",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "plugins",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "cbfdd6ab-4cda-4544-a201-f73efa3d46c0 f9470106-fad3-468f-ad60-82371c4764d3",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Load Local Plugins",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Enables the loading of plugins from disk only. Ignores the Plugins List. Should only be used for development purposes.",
+        "Keywords": "Local,Plugins,LocalPlugins,Torch,Server",
+        "FieldName": "TorchConfig_LocalPlugins",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/LocalPlugins",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Disconnect On Restart",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Enables rejected all clients to the main menu when the server restarts, to prevent auto rejoin.",
+        "Keywords": "Disconnect,Restart,DisconnectOnRestart,Torch,Server",
+        "FieldName": "TorchConfig_DisconnectOnRestart",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/DisconnectOnRestart",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Chat Name",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Defines the name for server chat (such as from broadcasts).",
+        "Keywords": "Chat,Name,Chat Name,Torch,Server",
+        "FieldName": "TorchConfig_ChatName",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/ChatName",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "Server",
+        "Placeholder": "Server",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Chat Color",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Defines the color for server chat (such as from broadcasts).",
+        "Keywords": "Chat,Color,ChatColor,Torch,Server",
+        "FieldName": "TorchConfig_ChatColor",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/ChatColor",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "Red",
+        "EnumValues": {
+            "Red": "Red (default)",
+            "Blue": "Blue",
+            "White": "White",
+            "Green": "Green"
+        }
+    },
+    {
+        "DisplayName": "Enable Whitelist",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Enables the whitelist on the server. To add people to the whitelist in-game, run: !whitelist add <steamid/username>",
+        "Keywords": "Whitelist,Players,Torch,EnableWhitelist",
+        "FieldName": "TorchConfig_EnableWhitelist",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/EnableWhitelist",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "UGC Service Type",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Changes the service for downloading mods. If using crossplay, set to EOS. Otherwise, set to Steam.",
+        "Keywords": "Network,UgcServiceType,Crossplay,Steam,Torch,Server",
+        "FieldName": "TorchConfig_UgcServiceType",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/UgcServiceType",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "Steam",
+        "EnumValues": {
+            "Steam": "Steam (default)",
+            "EOS": "EOS"
+        }
+    },
+    {
+        "DisplayName": "Branch Name",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Determines what Torch branch to use. Exercise caution if changing this from 'master'.",
+        "Keywords": "Branch,BranchName,Torch,Server",
+        "FieldName": "TorchConfig_BranchName",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/BranchName",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "master",
+        "EnumValues": {
+            "master": "Master (default)",
+            "publicbeta": "Public beta",
+            "staging": "Staging",
+            "dev": "Dev"
+        }
+    },
+    {
+        "DisplayName": "Enable Assert Logging",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Enables Keen's assert logging.",
+        "Keywords": "Keen,Assert,Logging,Torch,EnableAsserts",
+        "FieldName": "TorchConfig_EnableAsserts",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/EnableAsserts",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Send Logs To Keen",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Enables sending debug data and logs to Keen on crash.",
+        "Keywords": "Keen,Logs,Send,Torch,SendLogsToKeen",
+        "FieldName": "TorchConfig_SendLogsToKeen",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/SendLogsToKeen",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Delete Mini Dumps",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Enables deleting minidumps after they are created.",
+        "Keywords": "Delete,Mini,Dumps,DeleteMiniDumps,Torch,Server",
+        "FieldName": "TorchConfig_DeleteMiniDumps",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/TorchConfig/DeleteMiniDumps",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Game Server Login Token (GSLT)",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "Torch:mode_heat:-1",
+        "Description": "Sets a [Steam Game Server Login Token](https://steamcommunity.com/dev/managegameservers) for the server, to allow routing of players to the server if you have a dynamic IP. Use app ID 244850 when generating the token",
+        "Keywords": "steam,server,login,token,gslt,logintoken",
+        "FieldName": "logintoken",
+        "InputType": "password",
+        "ParamFieldName": "logintoken",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "6544F7E034119F113526E96474F559AH",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Server Release Stream",
@@ -2735,325 +3055,5 @@
             "True": "true",
             "False": "false"
         }
-    },
-    {
-        "DisplayName": "Restart On Crash",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables automatic restart of the server if it encounters a crash.",
-        "Keywords": "Restart,Crash,Torch,Server",
-        "FieldName": "TorchConfig_RestartOnCrash",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/RestartOnCrash",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "false",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
-        "DisplayName": "Restart On Game Update",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables automatic restart of the server if an update to Space Engineers is detected.",
-        "Keywords": "Restart,Update,Torch,RestartOnGameUpdate",
-        "FieldName": "TorchConfig_RestartOnGameUpdate",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/RestartOnGameUpdate",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "false",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
-        "DisplayName": "Game Update Restart Delay",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Defines how long Torch waits to restart the server if a game update is detected. Restart On Game Update must be enabled.",
-        "Keywords": "Restart,Update,Delay,Torch,GameUpdateRestartDelayMins",
-        "FieldName": "TorchConfig_GameUpdateRestartDelayMins",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/GameUpdateRestartDelayMins",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "5",
-        "Placeholder": "5",
-        "Suffix": "minutes",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Enable Torch Updates",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables automatic updates to Torch.",
-        "Keywords": "TorchUpdates,Update,Torch,Server",
-        "FieldName": "TorchConfig_GetTorchUpdates",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/GetTorchUpdates",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "true",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
-        "DisplayName": "Enable Plugin Updates",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables automatic update of plugins.",
-        "Keywords": "Plugins,Plugin,Updates,Update,Torch,Server",
-        "FieldName": "TorchConfig_GetPluginUpdates",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/GetPluginUpdates",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "true",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
-        "DisplayName": "Bypass Is Reloadable Flag",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables bypassing the reloadable flag on plugins, force enabling the plugin reload system.",
-        "Keywords": "Plugins,Reloadable,Reload,Bypass,Torch,BypassIsReloadableFlag",
-        "FieldName": "TorchConfig_BypassIsReloadableFlag",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/BypassIsReloadableFlag",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "false",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
-        "DisplayName": "Watchdog Timeout",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "If the server is frozen, Torch will wait the number of seconds specified before it kills the instance.",
-        "Keywords": "Watchdog,Timeout,TickTimeout,Torch,Server",
-        "FieldName": "TorchConfig_TickTimeout",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/TickTimeout",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "60",
-        "Placeholder": "60",
-        "Suffix": "seconds",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Plugins List",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Space-separated list of GUIDs of [Torch plugins](https://torchapi.com/plugins) to install, update and load when Torch starts. Alternatively, configure the list in Torch.cfg.",
-        "Keywords": "plugins",
-        "FieldName": "plugins",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "ParamFieldName": "plugins",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "",
-        "Placeholder": "cbfdd6ab-4cda-4544-a201-f73efa3d46c0 f9470106-fad3-468f-ad60-82371c4764d3",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Load Local Plugins",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables the loading of plugins from disk only. Ignores the Plugins List. Should only be used for development purposes.",
-        "Keywords": "Local,Plugins,LocalPlugins,Torch,Server",
-        "FieldName": "TorchConfig_LocalPlugins",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/LocalPlugins",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "false",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
-        "DisplayName": "Disconnect On Restart",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables rejected all clients to the main menu when the server restarts, to prevent auto rejoin.",
-        "Keywords": "Disconnect,Restart,DisconnectOnRestart,Torch,Server",
-        "FieldName": "TorchConfig_DisconnectOnRestart",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/DisconnectOnRestart",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "false",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
-        "DisplayName": "Chat Name",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Defines the name for server chat (such as from broadcasts).",
-        "Keywords": "Chat,Name,Chat Name,Torch,Server",
-        "FieldName": "TorchConfig_ChatName",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/ChatName",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "Server",
-        "Placeholder": "Server",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Chat Color",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Defines the color for server chat (such as from broadcasts).",
-        "Keywords": "Chat,Color,ChatColor,Torch,Server",
-        "FieldName": "TorchConfig_ChatColor",
-        "InputType": "enum",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/ChatColor",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "Red",
-        "EnumValues": {
-            "Red": "Red (default)",
-            "Blue": "Blue",
-            "White": "White",
-            "Green": "Green"
-        }
-    },
-    {
-        "DisplayName": "Enable Whitelist",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables the whitelist on the server. To add people to the whitelist in-game, run: !whitelist add <steamid/username>",
-        "Keywords": "Whitelist,Players,Torch,EnableWhitelist",
-        "FieldName": "TorchConfig_EnableWhitelist",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/EnableWhitelist",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "false",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
-        "DisplayName": "UGC Service Type",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Changes the service for downloading mods. If using crossplay, set to EOS. Otherwise, set to Steam.",
-        "Keywords": "Network,UgcServiceType,Crossplay,Steam,Torch,Server",
-        "FieldName": "TorchConfig_UgcServiceType",
-        "InputType": "enum",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/UgcServiceType",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "Steam",
-        "EnumValues": {
-            "Steam": "Steam (default)",
-            "EOS": "EOS"
-        }
-    },
-    {
-        "DisplayName": "Branch Name",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Determines what Torch branch to use. Exercise caution if changing this from 'master'.",
-        "Keywords": "Branch,BranchName,Torch,Server",
-        "FieldName": "TorchConfig_BranchName",
-        "InputType": "enum",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/BranchName",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "master",
-        "EnumValues": {
-            "master": "Master (default)",
-            "publicbeta": "Public beta",
-            "staging": "Staging",
-            "dev": "Dev"
-        }
-    },
-    {
-        "DisplayName": "Enable Assert Logging",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables Keen's assert logging.",
-        "Keywords": "Keen,Assert,Logging,Torch,EnableAsserts",
-        "FieldName": "TorchConfig_EnableAsserts",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/EnableAsserts",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "false",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
-        "DisplayName": "Send Logs To Keen",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables sending debug data and logs to Keen on crash.",
-        "Keywords": "Keen,Logs,Send,Torch,SendLogsToKeen",
-        "FieldName": "TorchConfig_SendLogsToKeen",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/SendLogsToKeen",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "false",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
-        "DisplayName": "Delete Mini Dumps",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Enables deleting minidumps after they are created.",
-        "Keywords": "Delete,Mini,Dumps,DeleteMiniDumps,Torch,Server",
-        "FieldName": "TorchConfig_DeleteMiniDumps",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/TorchConfig/DeleteMiniDumps",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "true",
-        "EnumValues": {
-            "True": "true",
-            "False": "false"
-        }
-    },
-    {
-        "DisplayName": "Game Server Login Token (GSLT)",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "Torch:mode_heat:9",
-        "Description": "Sets a [Steam Game Server Login Token](https://steamcommunity.com/dev/managegameservers) for the server, to allow routing of players to the server if you have a dynamic IP. Use app ID 244850 when generating the token",
-        "Keywords": "steam,server,login,token,gslt,logintoken",
-        "FieldName": "logintoken",
-        "InputType": "password",
-        "ParamFieldName": "logintoken",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "",
-        "Placeholder": "6544F7E034119F113526E96474F559AH",
-        "EnumValues": {}
     }
 ]
