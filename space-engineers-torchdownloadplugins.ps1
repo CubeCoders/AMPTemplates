@@ -47,7 +47,7 @@ foreach ($guid in $guids) {
         Invoke-WebRequest -Uri "https://torchapi.com/plugin/download/$cleanGuid" -OutFile $tempFile -UseBasicParsing
         if (Test-Path $tempFile) {
             Move-Item -Force -Path $tempFile -Destination $targetPath
-            Write-Output "Saved: $targetPath"
+            Write-Output "Saved: Plugins/$filename"
         } else {
             Write-Output "Download succeeded but file not found: $filename"
         }

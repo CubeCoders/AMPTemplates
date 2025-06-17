@@ -45,7 +45,7 @@ for guid in "$@"; do
   if wget -qO "$tempDir/$filename" "https://torchapi.com/plugin/download/$cleanGuid"; then
     if [[ -f "$tempDir/$filename" ]]; then
       mv -f "$tempDir/$filename" "$targetPath" >/dev/null 2>&1
-      echo "Saved: $targetPath"
+      echo "Saved: Plugins/$filename"
     else
       echo "Download succeeded but file not found: $filename"
     fi
