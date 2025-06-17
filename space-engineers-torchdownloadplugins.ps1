@@ -31,10 +31,11 @@ foreach ($guid in $guids) {
         continue
     }
 
+    $pluginName = [System.IO.Path]::GetFileNameWithoutExtension($filename)
     $targetPath = Join-Path $pluginsDir $filename
 
     if ((Test-Path $targetPath) -and $overwrite -ne "true" -and $cleanGuid -ne "5c14d8ea-7032-4db1-a2e6-9134ef6cb8d9") {
-        Write-Output "Skipping existing: $filename"
+        Write-Output "Existing plugin $pluginName skipped"
         continue
     }
 
@@ -47,7 +48,7 @@ foreach ($guid in $guids) {
         Invoke-WebRequest -Uri "https://torchapi.com/plugin/download/$cleanGuid" -OutFile $tempFile -UseBasicParsing
         if (Test-Path $tempFile) {
             Move-Item -Force -Path $tempFile -Destination $targetPath
-            Write-Output "Saved: Plugins/$filename"
+            Write-Output "Plugin $pluginName downloaded"
         } else {
             Write-Output "Download succeeded but file not found: $filename"
         }
@@ -58,4 +59,4 @@ foreach ($guid in $guids) {
 
 # Final cleanup
 Remove-Item -Recurse -Force -Path $tempDir -ErrorAction SilentlyContinue
-Write-Output "Plugins downloaded"
+Write-Output "Done"

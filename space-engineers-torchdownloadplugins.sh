@@ -31,10 +31,11 @@ for guid in "$@"; do
     continue
   fi
 
+  pluginName="${filename%.zip}"
   targetPath="$pluginsDir/$filename"
 
   if [[ -f "$targetPath" && "$overwrite" != "true" && "$cleanGuid" != "5c14d8ea-7032-4db1-a2e6-9134ef6cb8d9" ]]; then
-    echo "Skipping existing: $filename"
+    echo "Existing plugin $pluginName skipped"
     continue
   fi
 
@@ -45,7 +46,7 @@ for guid in "$@"; do
   if wget -qO "$tempDir/$filename" "https://torchapi.com/plugin/download/$cleanGuid"; then
     if [[ -f "$tempDir/$filename" ]]; then
       mv -f "$tempDir/$filename" "$targetPath" >/dev/null 2>&1
-      echo "Saved: Plugins/$filename"
+      echo "Plugin $pluginName downloaded"
     else
       echo "Download succeeded but file not found: $filename"
     fi
@@ -56,5 +57,5 @@ done
 
 # Final cleanup
 rm -rf "$tempDir" >/dev/null 2>&1
-echo "Plugins downloaded"
+echo "Done"
 exit 0
