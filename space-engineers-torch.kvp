@@ -36,7 +36,7 @@ App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=298740
 App.LinuxCommandLineArgs=-a wine "{{$FullBaseDir}}Torch.Server.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} {{AutomaticUpdates}} -nogui -console -autostart -instancename Server -instancepath "{{$FullBaseDir}}servers" -plugins "5c14d8ea-7032-4db1-a2e6-9134ef6cb8d9 {{plugins}}" {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} -instancename Server -instancepath "{{$FullBaseDir}}servers" -noupdate -autostart -nogui -plugins "5c14d8ea-7032-4db1-a2e6-9134ef6cb8d9 {{plugins}}" -console {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"SteamAppId":"244850","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"mscoree=n,b;mshtml=n,b"}
@@ -78,7 +78,7 @@ App.TelnetLoginFormat={0}
 App.TelnetNewLineType=Default
 App.TailLogFilePath=server.log
 App.UpdateSources=@IncludeJson[space-engineers-torchupdates.json]
-App.PreStartStages=[]
+App.PreStartStages=@IncludeJson[space-engineers-torchstart.json]
 App.UserActions=[]
 App.ForceUpdate=False
 App.ForceUpdateReason=
