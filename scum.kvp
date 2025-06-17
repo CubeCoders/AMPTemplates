@@ -1,12 +1,12 @@
 Meta.DisplayName=SCUM
 Meta.Description=SCUM Dedicated Server
-Meta.OS=
+Meta.OS=Windows, Linux
 Meta.AarchSupport=Unknown
 Meta.Arch=x86_64
 Meta.Author=Greelan
 Meta.URL=https://scum.game/
 Meta.DisplayImageSource=steam:513710
-Meta.EndpointURIFormat=steam://connect/{ip}:{GenericModule.App.Ports.$QueryPort}
+Meta.EndpointURIFormat=steam://connect/{ip}:{GenericModule.App.Ports.$ClientPort}
 Meta.ConfigManifest=scumconfig.json
 Meta.MetaConfigManifest=scummetaconfig.json
 Meta.ConfigRoot=scum.kvp
@@ -29,14 +29,14 @@ Meta.ImportableExtensions=[]
 Meta.AppIsMultiIPAware=True
 App.DisplayName=SCUM
 App.RootDir=./scum/
-App.BaseDirectory=./scum/911460/
+App.BaseDirectory=./scum/3792580/
 App.SteamWorkshopDownloadLocation=
-App.ExecutableWin=911460\SCUM\Binaries\Win64\SCUMServer.exe
+App.ExecutableWin=3792580\SCUM\Binaries\Win64\SCUMServer.exe
 App.ExecutableLinux=.proton/proton
-App.WorkingDir=911460
+App.WorkingDir=3792580
 App.LinuxCommandLineArgs=runinprefix "{{$FullBaseDir}}SCUM/Binaries/Win64/SCUMServer.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} SCUM -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{MultiHome}}{{$FormattedArgs}} -stdout -FullStdOutLogOutput
+App.CommandLineArgs={{$PlatformArgs}} SCUM -Port={{$ServerPort}} -MaxPlayers={{$MaxUsers}} {{MultiHome}}{{$FormattedArgs}} -stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"SteamAppId":"513710","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullBaseDir}}.steam/steam","HOME":"{{$FullBaseDir}}"}
@@ -56,10 +56,10 @@ App.SupportsIPv6=False
 App.ApplicationIPBinding=0.0.0.0
 App.Ports=@IncludeJson[scumports.json]
 App.AdminPortRef=0
-App.PrimaryApplicationPortRef=GamePort
-App.UniversalSleepApplicationUDPPortRef=GamePort
-App.UniversalSleepSteamQueryPortRef=QueryPort
-App.MaxUsers=20
+App.PrimaryApplicationPortRef=ServerPort
+App.UniversalSleepApplicationUDPPortRef=0
+App.UniversalSleepSteamQueryPortRef=0
+App.MaxUsers=64
 App.UseRandomAdminPassword=True
 App.PersistRandomPassword=True
 App.RemoteAdminPassword=
@@ -86,7 +86,7 @@ App.RapidStartup=False
 App.SmartExcludeExemptions=["*.cfg","*.conf","*.config","*.ini","*.json","*.xml","*.properties","*.kvp","*.yml","*.yaml","*.toml","*.lua"]
 App.SmartExcludeSupported=True
 App.DumpFullChildProcessTree=False
-App.MonitorChildProcessName=^.*{{$WineBaseDir}}SCUM\\Binaries\\Win64\\SCUMServer\.exe.*-Port={{$GamePort}}.*$
+App.MonitorChildProcessName=^.*{{$WineBaseDir}}SCUM\\Binaries\\Win64\\SCUMServer\.exe.*-Port={{$ServerPort}}.*$
 App.MonitorDirectChildOnly=False
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
