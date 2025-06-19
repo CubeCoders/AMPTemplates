@@ -6,7 +6,8 @@
         "UpdateSourceData": "https://repo.opencollab.dev/api/maven/latest/file/maven-snapshots/cn/nukkit/nukkit/1.0-SNAPSHOT?extension=jar",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UpdateSourceArgs": "nukkit.jar",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Remove Old Java Directory",
@@ -35,7 +36,8 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "JavaVersionWindows",
-        "UpdateSourceConditionValue": "java\\bin\\java.exe"
+        "UpdateSourceConditionValue": "java\\bin\\java.exe",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Java Download",
@@ -49,7 +51,8 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "JavaVersionLinux",
-        "UpdateSourceConditionValue": "java/bin/java"
+        "UpdateSourceConditionValue": "java/bin/java",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Java Download",
@@ -63,7 +66,8 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "JavaVersionLinux",
-        "UpdateSourceConditionValue": "java/bin/java"
+        "UpdateSourceConditionValue": "java/bin/java",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Pause Update Stages",
@@ -77,9 +81,9 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
         "UpdateSourceArgs": "/C move .\\nukkit\\jdk* .\\nukkit\\java > NUL 2>&1",
-        "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "JavaVersionWindows",
-        "UpdateSourceConditionValue": "java\\bin\\java.exe"
+        "UpdateSourceConditionValue": "java\\bin\\java.exe",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Rename New Java Directory",
@@ -87,8 +91,8 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"mv ./nukkit/jdk* ./nukkit/java >/dev/null 2>&1 && chmod +x ./nukkit/java/bin/java\"",
-        "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "JavaVersionLinux",
-        "UpdateSourceConditionValue": "java/bin/java"
+        "UpdateSourceConditionValue": "java/bin/java",
+        "SkipOnFailure": false
     }
 ]

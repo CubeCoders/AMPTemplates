@@ -3,14 +3,16 @@
         "UpdateStageName": "Setup Directory Creation",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullRootDir}}setup"
+        "UpdateSourceArgs": "{{$FullRootDir}}setup",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "7-Zip Directory Creation",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
-        "OneShot": true
+        "OneShot": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "7-Zip Installer Download",
@@ -19,7 +21,8 @@
         "UpdateSourceData": "https://7-zip.org/a/7z2407-x64.exe",
         "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
         "OverwriteExistingFiles": true,
-        "OneShot": true
+        "OneShot": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "7-Zip Console Tool Download",
@@ -28,7 +31,8 @@
         "UpdateSourceData": "https://www.7-zip.org/a/7zr.exe",
         "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
         "OverwriteExistingFiles": true,
-        "OneShot": true
+        "OneShot": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "7-Zip Installation",
@@ -36,8 +40,8 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
         "UpdateSourceArgs": "/C cd mtasa\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
-        "SkipOnFailure": true,
-        "OneShot": true
+        "OneShot": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
@@ -46,7 +50,8 @@
         "UpdateSourceData": "https://mirror-cdn.multitheftauto.com/mtasa/main/mtasa-1.6.exe",
         "UpdateSourceArgs": "mtasa.exe",
         "UpdateSourceTarget": "{{$FullRootDir}}setup",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Installation",
@@ -64,7 +69,8 @@
         "UpdateSourceData": "https://linux.multitheftauto.com/dl/multitheftauto_linux_x64.tar.gz",
         "UpdateSourceArgs": "mtasa.tar.gz",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
@@ -74,7 +80,8 @@
         "UpdateSourceData": "https://linux.multitheftauto.com/dl/multitheftauto_linux_arm64.tar.gz",
         "UpdateSourceArgs": "mtasa.tar.gz",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Extract",
@@ -100,7 +107,8 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://linux.multitheftauto.com/dl/baseconfig.tar.gz",
         "UpdateSourceTarget": "{{$FullBaseDir}}mods/deathmatch",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Default Config Files Extract",
@@ -114,7 +122,8 @@
         "UpdateStageName": "Create Resources Directory",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}mods/deathmatch/resources"
+        "UpdateSourceArgs": "{{$FullBaseDir}}mods/deathmatch/resources",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Default Resources Download",
@@ -124,6 +133,7 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}mods/deathmatch/resources",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     }
 ]
