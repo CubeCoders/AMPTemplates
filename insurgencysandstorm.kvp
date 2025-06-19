@@ -21,7 +21,7 @@ Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=1.3
+Meta.ConfigVersion=4
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
 Meta.AppConfigId=684b4b01-ddbc-4079-9e76-1520c61fb487
@@ -93,10 +93,10 @@ App.ApplicationReadyMode=RegexMatch
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^.*LogSession\: Display\: OnCreateSessionComplete\:.*Result: \(1\)$
-Console.UserJoinRegex=^LogEOSAntiCheat\: Display\: ServerRegisterClient\: Client\: \((?<userid>.+?)\) Result\: \(EOS_Success\)$
-Console.UserLeaveRegex=^LogOnlineSession\: Warning\: STEAM \(NWI\): Player (?<userid>.+?) is not part of session \(GameSession\)$
-Console.UserChatRegex=^LogChat\: Display\: .*\((?<userid>.+?)\) .*\: (?<message>.+)$
+Console.AppReadyRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogSession: Display: OnCreateSessionComplete:.*Result: \(1\)$
+Console.UserJoinRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogNet: Login request: \?Name=(?<username>.+?) userId: SteamNWI:(?<userid>.+) platform: SteamNWI$
+Console.UserLeaveRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogNet: UChannel::Close: Sending CloseBunch\. ChIndex == \d+\. Name: \[UChannel\] ChIndex: \d+, Closing: \d+ \[UNetConnection\] RemoteAddr: \d+\.\d+\.\d+\.\d+\:\d+, Name: IpConnection_\d+, Driver: GameNetDriver IpNetDriver_\d+\, IsServer: YES, PC: INSPlayerController_\d+, Owner: INSPlayerController_\d+, UniqueId: SteamNWI:(?<userid>.+)$
+Console.UserChatRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogChat: Display: (?<username>.+?)\((?<userid>.+)\) .*Chat: (?<message>.+)$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
 Console.PreConnectRegex=
 Console.ConnectIPRegex=

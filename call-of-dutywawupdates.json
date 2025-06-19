@@ -6,13 +6,15 @@
         "UpdateSourceData": "10090",
         "UpdateSourceArgs": "10090",
         "UpdateSourceTarget": "{{$FullBaseDir}}T4",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Plutonium Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Plutonium"
+        "UpdateSourceArgs": "{{$FullBaseDir}}Plutonium",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Plutonium Updater Download",
@@ -22,7 +24,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Plutonium Installation",
@@ -56,7 +59,8 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://raw.githubusercontent.com/xerxes-at/T4ServerConfigs/main/main/server.cfg",
         "UpdateSourceTarget": "{{$FullBaseDir}}T4/main",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Zombies Config File Download",
@@ -64,7 +68,8 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://raw.githubusercontent.com/xerxes-at/T4ServerConfigs/main/main/server_zm.cfg",
         "UpdateSourceTarget": "{{$FullBaseDir}}T4/main",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create mods Directory",
