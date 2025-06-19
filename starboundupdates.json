@@ -1,32 +1,72 @@
 [
     {
-        "UpdateStageName": "SteamCMD Download",
+        "UpdateStageName": "Starbound Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "211820",
-        "UpdateSourceArgs": "211820"
+        "UpdateSourceArgs": "211820",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Create Logs Directory",
+        "UpdateStageName": "Storage Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "./starbound/211820/storage",
-        "OverwriteExistingFiles": false
+        "UpdateSourceArgs": "{{$FullBaseDir}}storage",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config File Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/starbound_server.config",
-        "UpdateSourceTarget": "{{$FullBaseDir}}storage/",
-        "OverwriteExistingFiles": false
+        "UpdateSourceArgs": "starbound_server.config",
+        "UpdateSourceTarget": "{{$FullBaseDir}}storage",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Create Symlink",
+        "UpdateStageName": "Working Directory Symlink Creation",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/ln",
-        "UpdateSourceArgs": "-s \"{{$FullBaseDir}}linux\" \"{{$FullBaseDir}}win64\"",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd starbound/211820 && rm -f win64 >/dev/null 2>&1; ln -sf linux win64 >/dev/null 2>&1\"",
         "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Modscript Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/starboundmanagemods.sh",
+        "UpdateSourceArgs": "managemods.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Manage Mods",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "./managemods.sh",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Modscript Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/starboundmanagemods.ps1",
+        "UpdateSourceArgs": "managemods.ps1",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Manage Mods",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -File \"managemods.ps1\"",
+        "SkipOnFailure": true
     }
 ]
