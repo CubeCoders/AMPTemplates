@@ -8,7 +8,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "TShock Server Download",
@@ -20,7 +21,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "TShock Server Download",
@@ -32,7 +34,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "TShock Server Unpack",
@@ -56,7 +59,8 @@
         "UpdateStageName": "Create TShock Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}tshock"
+        "UpdateSourceArgs": "{{$FullBaseDir}}tshock",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Config File Download",
@@ -65,13 +69,15 @@
         "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/tshockserverconfig.json",
         "UpdateSourceArgs": "config.json",
         "UpdateSourceTarget": "{{$FullBaseDir}}tshock",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Dotnet Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}dotnet"
+        "UpdateSourceArgs": "{{$FullBaseDir}}dotnet",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "ASP.NET Core Runtime Download",
@@ -128,6 +134,7 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UpdateSourceConditionSetting": "backupExclude",
         "UpdateSourceConditionValue": "true",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": true
     }
 ]

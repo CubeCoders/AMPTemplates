@@ -6,13 +6,15 @@
         "UpdateSourceData": "1829350",
         "UpdateSourceArgs": "1604030",
         "UpdateSourceVersion": "{{ReleaseStream}}",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Data Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}save-data/Settings"
+        "UpdateSourceArgs": "{{$FullBaseDir}}save-data/Settings",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Game Config File Copy",
@@ -20,7 +22,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}save-data/Settings/ServerHostSettings.json",
         "UpdateSourceArgs": "{{$FullBaseDir}}VRisingServer_Data/StreamingAssets/Settings/ServerHostSettings.json",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Game Config File Copy",
@@ -28,7 +31,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}save-data/Settings/ServerGameSettings.json",
         "UpdateSourceArgs": "{{$FullBaseDir}}VRisingServer_Data/StreamingAssets/Settings/ServerGameSettings.json",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "BepInEx Download",
@@ -107,7 +111,8 @@
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
         "OverwriteExistingFiles": true,
         "UpdateSourceConditionSetting": "BepInExEnabled",
-        "UpdateSourceConditionValue": "true"
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Install Windows Components",
