@@ -385,7 +385,7 @@ try {
                     Remove-Item -LiteralPath $zipFilePath -Force
                 }
                 $ProgressPreference = "SilentlyContinue"
-								[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+				[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
                 Invoke-WebRequest -UseBasicParsing -Uri $zipUrl -OutFile $zipFilePath
                 Add-Type -AssemblyName System.IO.Compression.FileSystem
                 [System.IO.Compression.ZipFile]::ExtractToDirectory($zipFilePath, $perlInstallRoot)
