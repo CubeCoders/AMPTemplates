@@ -24,13 +24,15 @@
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "1110390",
-        "UpdateSourceArgs": "304930"
+        "UpdateSourceArgs": "304930",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Servers/Unturned/Server"
+        "UpdateSourceArgs": "{{$FullBaseDir}}Servers/Unturned/Server",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Main Config File Download",
@@ -39,7 +41,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/unturnedconfigfile.dat",
         "UpdateSourceArgs": "Commands.dat",
         "UpdateSourceTarget": "{{$FullBaseDir}}Servers/Unturned/Server/",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Workshop Config File Download",
@@ -47,7 +50,8 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/unturnedworkshopconfig.json",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Copy Rocket Directory",
@@ -76,21 +80,25 @@
         "OverwriteExistingFiles": true,
         "UpdateSourceConditionSetting": "OpenMod",
         "UpdateSourceConditionValue": "true",
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Start Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "StartApplication"
+        "UpdateSource": "StartApplication",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Wait For Server Start",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "WaitForStartupComplete"
+        "UpdateSource": "WaitForStartupComplete",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Stop Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "ShutdownApplication"
+        "UpdateSource": "ShutdownApplication",
+        "SkipOnFailure": false
     }
 ]
