@@ -26,7 +26,8 @@
         "UpdateSourceData": "2394010",
         "UpdateSourceArgs": "1623730",
         "ForceDownloadPlatform": "Windows",
-        "UpdateSourceVersion": "public"
+        "UpdateSourceVersion": "public",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "SteamCMD Component Download",
@@ -34,7 +35,8 @@
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "1007",
         "UpdateSourceTarget": "2394010/Pal/Binaries/Win64",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config Template Download",
@@ -43,7 +45,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/palworld10templatesettings.ini",
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UpdateSourceArgs": "AMP_PalWorldSettings.ini",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Initialise Wine",
@@ -64,15 +67,8 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "InstallUE4SS",
-        "UpdateSourceConditionValue": "true"
-    },
-    {
-        "UpdateStageName": "Create E4SS_Signatures Directory",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Pal/Binaries/Win64/E4SS_Signatures",
-        "UpdateSourceConditionSetting": "InstallUE4SS",
-        "UpdateSourceConditionValue": "true"
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "UE4SS Download",
@@ -84,14 +80,7 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "InstallUE4SS",
-        "UpdateSourceConditionValue": "experimental"
-    },
-    {
-        "UpdateStageName": "Create E4SS_Signatures Directory",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Pal/Binaries/Win64/E4SS_Signatures",
-        "UpdateSourceConditionSetting": "InstallUE4SS",
-        "UpdateSourceConditionValue": "experimental"
+        "UpdateSourceConditionValue": "experimental",
+        "SkipOnFailure": false
     }
 ]
