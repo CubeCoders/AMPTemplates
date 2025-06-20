@@ -33,7 +33,8 @@
         "UpdateSourceVersion": "{{PMMPVersion}}",
         "UpdateSourceData": "PocketMine-MP.phar",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "PocketMine-MP Installation",
@@ -41,7 +42,6 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cd pocketmine-mp && PMMPVersion=\\\"{{PMMPVersion}}\\\" && if [[ -z \\\"$PMMPVersion\\\" ]]; then wget -q -O - https://get.pmmp.io | bash -s - ; elif [[ ! \\\"$PMMPVersion\\\" =~ ^([0-9]+(?:\\.[0-9]+)?(?:-(alpha|beta))?|alpha|beta|stable)$ ]]; then echo \\\"Invalid PocketMine-MP version format specified\\\" && exit 1; else wget -q -O - https://get.pmmp.io | bash -s - -v $PMMPVersion; fi\"",
-        "SkipOnFailure": false,
-        "OneShot": true
+        "SkipOnFailure": false
     }
 ]

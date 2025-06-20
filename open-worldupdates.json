@@ -3,13 +3,15 @@
         "UpdateStageName": "Create Dotnet Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}dotnet"
+        "UpdateSourceArgs": "{{$FullBaseDir}}dotnet",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Data Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Data"
+        "UpdateSourceArgs": "{{$FullBaseDir}}Data",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "ASP.NET Core Runtime Download",
@@ -67,7 +69,8 @@
         "UpdateSourceVersion": "{{ReleaseVersion}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Open World Download",
@@ -80,7 +83,8 @@
         "UpdateSourceArch": "x86_64",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Open World Download",
@@ -93,7 +97,8 @@
         "UpdateSourceArch": "aarch64",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Pause Update Stages",
@@ -106,7 +111,8 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C xcopy /E /Y /I open-world\\win-x64\\* open-world\\server\\ && rmdir /Q /S open-world\\win-x64\\"
+        "UpdateSourceArgs": "/C xcopy /E /Y /I open-world\\win-x64\\* open-world\\server\\ && rmdir /Q /S open-world\\win-x64\\",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Move Server Files",
@@ -133,21 +139,25 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/open-worldserverconfig.json",
         "UpdateSourceArgs": "Config.json",
         "UpdateSourceTarget": "{{$FullBaseDir}}Data",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Start Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "StartApplication"
+        "UpdateSource": "StartApplication",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Wait For Server Start",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "WaitForStartupComplete"
+        "UpdateSource": "WaitForStartupComplete",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Stop Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "ShutdownApplication"
+        "UpdateSource": "ShutdownApplication",
+        "SkipOnFailure": false
     }
 ]

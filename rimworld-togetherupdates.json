@@ -3,13 +3,15 @@
         "UpdateStageName": "Create Core Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Core"
+        "UpdateSourceArgs": "{{$FullBaseDir}}Core",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Dotnet Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Dotnet"
+        "UpdateSourceArgs": "{{$FullBaseDir}}Dotnet",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "ASP.NET Core Runtime Download",
@@ -67,7 +69,8 @@
         "UpdateSourceVersion": "{{ReleaseVersion}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Rimworld Together Download",
@@ -80,7 +83,8 @@
         "UpdateSourceArch": "x86_64",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Rimworld Together Download",
@@ -93,13 +97,15 @@
         "UpdateSourceArch": "aarch64",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Set Executable Flag",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullBaseDir}}GameServer"
+        "UpdateSourceArgs": "{{$FullBaseDir}}GameServer",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "ServerConfig.json File Download",
@@ -108,21 +114,25 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/rimworld-togetherserverconfig.json",
         "UpdateSourceArgs": "ServerConfig.json",
         "UpdateSourceTarget": "{{$FullBaseDir}}Core",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Start Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "StartApplication"
+        "UpdateSource": "StartApplication",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Wait For Server Start",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "WaitForStartupComplete"
+        "UpdateSource": "WaitForStartupComplete",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Stop Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "ShutdownApplication"
+        "UpdateSource": "ShutdownApplication",
+        "SkipOnFailure": false
     }
 ]

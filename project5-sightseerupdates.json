@@ -4,21 +4,24 @@
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "655780",
-        "UpdateSourceArgs": "655780"
+        "UpdateSourceArgs": "655780",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create ServerConfig Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullBaseDir}}ServerConfig",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Ban File",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateFile",
         "UpdateSourceArgs": "{{$FullBaseDir}}ServerConfig/ban.txt",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": true
     },
     {
         "UpdateStageName": "Pause Update Stages",
@@ -29,16 +32,19 @@
     {
         "UpdateStageName": "Start Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "StartApplication"
+        "UpdateSource": "StartApplication",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Wait For Server Start",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "WaitForStartupComplete"
+        "UpdateSource": "WaitForStartupComplete",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Stop Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "ShutdownApplication"
+        "UpdateSource": "ShutdownApplication",
+        "SkipOnFailure": false
     }
 ]
