@@ -4,14 +4,25 @@
         "Port": 7777,
         "Ref": "GamePort",
         "Name": "Game Port",
-        "Description": "Port for game traffic"
-    },
-    {
-        "Protocol": "Both",
-        "Port": 7778,
-        "Ref": "ReservedPort",
-        "Name": "Reserved Port",
-        "Description": "Reserved port"
+        "Description": "Port for game traffic",
+        "ChildPorts": [
+            {
+                "Protocol": "Both",
+                "Port": 7778,
+                "Offset": 1,
+                "Ref": "ReservedPort",
+                "Name": "Reserved Port",
+                "Description": "Reserved port"
+            },
+            {
+                "Protocol": "Both",
+                "Port": 7780,
+                "Offset": 3,
+                "Ref": "StatsPort",
+                "Name": "Stats Port",
+                "Description": "Port for stats traffic"
+            }
+        ]
     },
     {
         "Protocol": "Both",
@@ -19,13 +30,6 @@
         "Ref": "RCONPort",
         "Name": "RCON Port",
         "Description": "Port for RCON traffic"
-    },
-    {
-        "Protocol": "Both",
-        "Port": 7780,
-        "Ref": "StatsPort",
-        "Name": "Stats Port",
-        "Description": "Port for stats traffic"
     },
     {
         "Protocol": "UDP",
