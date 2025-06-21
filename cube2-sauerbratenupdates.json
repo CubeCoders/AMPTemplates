@@ -13,7 +13,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'sauerbraten'; Write-Output \\\"Installing/updating server\\\";Invoke-WebRequest -UseBasicParsing -UserAgent \\\"Wget/1.21.4\\\" -Uri 'https://sourceforge.net/projects/sauerbraten/files/latest/download' -OutFile 'sauerbraten.exe'; Start-Process -FilePath './sauerbraten.exe' -ArgumentList \\\"/S /D={{$FullRootDir}}\\\\\" -Wait -NoNewWindow; if ($?) { Write-Output \\\"Server installed/updated\\\"; Remove-Item -Path 'sauerbraten.exe' -Force -ErrorAction SilentlyContinue | Out-Null }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'sauerbraten'; Write-Output \\\"Installing/updating server\\\";Invoke-WebRequest -UseBasicParsing -UserAgent \\\"Wget/1.21.4\\\" -Uri 'https://sourceforge.net/projects/sauerbraten/files/latest/download' -OutFile 'sauerbraten.exe'; Start-Process -FilePath './sauerbraten.exe' -ArgumentList \\\"/S /D={{$FullRootDir}}\\\\\" -Wait -NoNewWindow; if ($?) { Write-Output \\\"Server installed/updated\\\"; Remove-Item -Path 'sauerbraten.exe' -Force -ErrorAction SilentlyContinue | Out-Null }\"",
         "SkipOnFailure": false
     },
     {
