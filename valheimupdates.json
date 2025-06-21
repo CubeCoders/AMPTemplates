@@ -75,7 +75,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $BepInExVersion='{{bepinex_version}}'; if ([string]::IsNullOrWhiteSpace($BepInExVersion)) { $BepInExVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://thunderstore.io/api/v1/package-metrics/denikson/BepInExPack_Valheim).latest_version }; if ($BepInExVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid BepInEx version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://gcdn.thunderstore.io/live/repository/packages/denikson-BepInExPack_Valheim-$BepInExVersion.zip -OutFile 'BepInEx.zip'; if ($?) { Write-Output \\\"BepInEx v$BepInExVersion downloaded\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $BepInExVersion='{{bepinex_version}}'; if ([string]::IsNullOrWhiteSpace($BepInExVersion)) { $BepInExVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://thunderstore.io/api/v1/package-metrics/denikson/BepInExPack_Valheim).latest_version }; if ($BepInExVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid BepInEx version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://gcdn.thunderstore.io/live/repository/packages/denikson-BepInExPack_Valheim-$BepInExVersion.zip -OutFile 'BepInEx.zip'; if ($?) { Write-Output \\\"BepInEx v$BepInExVersion downloaded\\\" }\"",
         "UpdateSourceConditionSetting": "bepinex_install",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
