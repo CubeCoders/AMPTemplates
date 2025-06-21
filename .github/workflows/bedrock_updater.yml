@@ -61,9 +61,5 @@ jobs:
       run: |
         echo "$currentDownloadURLs" | jq --indent 4 '.' > minecraft-bedrockdownloadurl.json
         git add minecraft-bedrockdownloadurl.json
-        if git diff-index --quiet HEAD --; then
-          echo "No changes to commit"
-        else
-          git commit -m "Update Bedrock download URLs"
-          git push
-        fi
+        git commit -m "Update Bedrock download URLs"
+        git push
