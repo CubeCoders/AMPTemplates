@@ -110,7 +110,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Invoke-WebRequest -UseBasicParsing -Uri https://wizards.cdn.spacestation14.com/fork/wizards/version/{{SpecificBuildVersion}}/SS14.Server_win-x64.zip -OutFile 'SS14.Server.zip'; if ($?) { Write-Output \\\"Space Station 14 build {{SpecificBuildVersion}} downloaded\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -UseBasicParsing -Uri https://wizards.cdn.spacestation14.com/fork/wizards/version/{{SpecificBuildVersion}}/SS14.Server_win-x64.zip -OutFile 'SS14.Server.zip'; if ($?) { Write-Output \\\"Space Station 14 build {{SpecificBuildVersion}} downloaded\\\" }\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "specificversion",
         "SkipOnFailure": false
