@@ -44,7 +44,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'gitea'; $latestVersion=((Invoke-WebRequest -UseBasicParsing -Uri 'https://dl.gitea.com/gitea/version.json').Content | ConvertFrom-Json).latest.version; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://dl.gitea.com/gitea/${latestVersion}/gitea-${latestVersion}-windows-4.0-amd64.exe\\\" -OutFile 'gitea.exe'; if ($?) { Write-Output \\\"Gitea v${latestVersion} installed\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'gitea'; $latestVersion=((Invoke-WebRequest -UseBasicParsing -Uri 'https://dl.gitea.com/gitea/version.json').Content | ConvertFrom-Json).latest.version; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://dl.gitea.com/gitea/${latestVersion}/gitea-${latestVersion}-windows-4.0-amd64.exe\\\" -OutFile 'gitea.exe'; if ($?) { Write-Output \\\"Gitea v${latestVersion} installed\\\" }\"",
         "UpdateSourceConditionSetting": "ServerStream",
         "UpdateSourceConditionValue": "latest",
         "SkipOnFailure": false

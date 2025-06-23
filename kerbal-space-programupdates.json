@@ -12,7 +12,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $DotnetVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/release-metadata/5.0/releases.json).\\\"latest-runtime\\\"; if ($?) { Invoke-WebRequest -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/Runtime/$DotnetVersion/dotnet-runtime-$DotnetVersion-win-x64.zip -OutFile 'dotnet.zip' }; if ($?) { Write-Output \\\".NET Runtime v$DotnetVersion downloaded\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $DotnetVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/release-metadata/5.0/releases.json).\\\"latest-runtime\\\"; if ($?) { Invoke-WebRequest -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/Runtime/$DotnetVersion/dotnet-runtime-$DotnetVersion-win-x64.zip -OutFile 'dotnet.zip' }; if ($?) { Write-Output \\\".NET Runtime v$DotnetVersion downloaded\\\" }\"",
         "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "release"

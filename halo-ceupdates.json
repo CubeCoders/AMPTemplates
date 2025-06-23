@@ -55,7 +55,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'halo-ce'; (Invoke-RestMethod -UseBasicParsing -Uri 'https://halomaps.org/hce/detail.cfm?fid=410') -match 'name=\\\"hash\\\" value=\\\"(?<Hash>[A-Fa-f0-9]+)\\\"' | Out-Null; $CURRENT_HASH = $matches['Hash']; Invoke-WebRequest -UseBasicParsing -Uri 'https://halomaps.org/hce/detail.cfm#top' -Method Post -Body @{ fid = \\\"410\\\"; action = \\\"dl\\\"; hash = \\\"$CURRENT_HASH\\\" } -OutFile 'haloce.exe'; & 7-Zip\\7z.exe x -y -aoa haloce.exe -oserver maps\\* | Out-Null; Remove-Item -Path 'haloce.exe' -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'halo-ce'; (Invoke-RestMethod -UseBasicParsing -Uri 'https://halomaps.org/hce/detail.cfm?fid=410') -match 'name=\\\"hash\\\" value=\\\"(?<Hash>[A-Fa-f0-9]+)\\\"' | Out-Null; $CURRENT_HASH = $matches['Hash']; Invoke-WebRequest -UseBasicParsing -Uri 'https://halomaps.org/hce/detail.cfm#top' -Method Post -Body @{ fid = \\\"410\\\"; action = \\\"dl\\\"; hash = \\\"$CURRENT_HASH\\\" } -OutFile 'haloce.exe'; & 7-Zip\\7z.exe x -y -aoa haloce.exe -oserver maps\\* | Out-Null; Remove-Item -Path 'haloce.exe' -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure": false
     },
     {
@@ -71,7 +71,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'halo-ce/server'; Invoke-WebRequest -UseBasicParsing -Uri 'https://www.elitegameservers.net/sapp/downloads/sapp_ce.zip' -OutFile 'sapp_ce.zip'; & ..\\7-Zip\\7z.exe x -y -aoa sapp_ce.zip | Out-Null; Remove-Item -Path 'sapp_ce.zip' -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'halo-ce/server'; Invoke-WebRequest -UseBasicParsing -Uri 'https://www.elitegameservers.net/sapp/downloads/sapp_ce.zip' -OutFile 'sapp_ce.zip'; & ..\\7-Zip\\7z.exe x -y -aoa sapp_ce.zip | Out-Null; Remove-Item -Path 'sapp_ce.zip' -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure": false
     },
     {
