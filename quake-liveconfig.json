@@ -85,6 +85,19 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Disable Idle Exit Timeout",
+        "Category": "Quake Live:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "sv_idleExit",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "sv_idleExit",
+        "DefaultValue": "0",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Server Name",
         "Category": "Quake Live:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -100,7 +113,7 @@
         "DisplayName": "Server Tags",
         "Category": "Quake Live:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets a comma-separated list of server tags that give additional information about the server in the server browser",
+        "Description": "Sets a comma-separated list of server tags that give additional information about the server in the server browser. Will automatically include gametype and some gameplay modifications",
         "Keywords": "tags,sv_tags",
         "FieldName": "sv_tags",
         "InputType": "text",
@@ -124,6 +137,34 @@
             "1": "LAN server",
             "2": "Internet server (default)"
         }
+    },
+    {
+        "DisplayName": "Allow Master Server Query Response",
+        "Category": "Quake Live:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled the server will be able to respond to queries. Disable this to stop the server from appearing in the server browser (affects LAN browser too)",
+        "Keywords": "master,server,query,response,sv_master",
+        "FieldName": "sv_master",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_master",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Server Startup Command",
+        "Category": "Quake Live:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the command to run when the server finishes initializing. Use 'startRandomMap' to start a random map or specify a map and mode such as 'map campgrounds ffa' (factory is required)",
+        "Keywords": "server,startup,command,serverstartup",
+        "FieldName": "serverstartup",
+        "InputType": "text",
+        "ParamFieldName": "serverstartup",
+        "DefaultValue": "startRandomMap",
+        "Placeholder": "startRandomMap",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Server Password",
@@ -288,8 +329,50 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Flood Protection Threshold",
+        "Category": "Quake Live:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the threshold for kicking players when they reach a certain number of commands. The count decreases by 1 every second",
+        "Keywords": "flood,protect,threshold",
+        "FieldName": "sv_floodprotect",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "sv_floodprotect",
+        "DefaultValue": "10",
+        "Placeholder": "10",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Flood Protection Maximum Count",
+        "Category": "Quake Live:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the maximum userinfo flood counter level before kicking the player",
+        "Keywords": "flood,protect,max,count,g_floodprot_maxcount",
+        "FieldName": "g_floodprot_maxcount",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "g_floodprot_maxcount",
+        "DefaultValue": "10",
+        "Placeholder": "10",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Flood Protection Decay Interval",
+        "Category": "Quake Live:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the interval for decreasing the userinfo flood counter by 1",
+        "Keywords": "flood,protect,decay,interval,g_floodprot_decay",
+        "FieldName": "g_floodprot_decay",
+        "InputType": "number",
+        "ParamFieldName": "g_floodprot_decay",
+        "DefaultValue": "1000",
+        "Placeholder": "1000",
+        "Suffix": "milliseconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Vote Flags",
-        "Category": "Game:stadia_controller",
+        "Category": "Quake Live:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
         "Description": "Sets the flags for voting options. See server.cfg for the value for each option",
         "Keywords": "vote,flags,g_voteFlags",
