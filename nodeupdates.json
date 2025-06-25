@@ -1,0 +1,156 @@
+[
+    {
+        "UpdateStageName": "App Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd node-server && rm -rf srv >/dev/null 2>&1; DownloadSource=\\\"{{DownloadSource}}\\\"; DownloadBranch=\\\"{{DownloadBranch}}\\\"; [[ -n \\\"{{DownloadUsername}}\\\" ]] && DownloadUrl=\\\"${DownloadSource/https:\\/\\//https:\\/\\/{{DownloadUsername}}:{{DownloadPassword}}@}\\\" || DownloadUrl=\\\"$DownloadSource\\\"; [ ! -d app/.git ] && { echo \\\"Installing the app\\\" && git clone \\\"$DownloadUrl\\\" srv >/dev/null && \\cp -r srv/. app/ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && cd app && [ -z \\\"$DownloadBranch\\\" ] && DownloadBranch=$(git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); git checkout $DownloadBranch --force >/dev/null && git pull >/dev/null && echo \\\"App installed\\\"; } || { echo \\\"Updating the app\\\" && cd app && git remote set-url origin \\\"$DownloadUrl\\\" >/dev/null && [ -z \\\"$DownloadBranch\\\" ] && DownloadBranch=$(git symbolic-ref refs/remotes/origin/HEAD | sed \\\"s|.*/||\\\"); git checkout $DownloadBranch --force >/dev/null && git pull >/dev/null && echo \\\"App updated\\\"; }\"",
+        "UpdateSourceConditionSetting": "DownloadType",
+        "UpdateSourceConditionValue": "GitRepo",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "App Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd node-server; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $DownloadSource = \\\"{{DownloadSource}}\\\"; $DownloadBranch = \\\"{{DownloadBranch}}\\\"; if (![string]::IsNullOrEmpty(\\\"{{DownloadUsername}}\\\")) { $DownloadUrl = $DownloadSource -replace \\\"https://\\\", \\\"https://{{DownloadUsername}}:{{DownloadPassword}}@\\\" } else { $DownloadUrl = \\\"$DownloadSource\\\" }; if (-Not (Test-Path app/.git)) { Write-Output \\\"Installing the app\\\"; git clone \\\"$DownloadUrl\\\" srv 1> $null; Copy-Item srv/* app/ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; cd app; if ([string]::IsNullOrEmpty($DownloadBranch)) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git checkout --force $DownloadBranch 1> $null; if ($?) { git pull 1> $null }; if ($?) { Write-Output \\\"App installed\\\" } } else { Write-Output \\\"Updating the app\\\"; cd app; git remote set-url origin \\\"$DownloadUrl\\\" 1> $null; if ([string]::IsNullOrEmpty($DownloadBranch)) { $DownloadBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace '.*/' }; git checkout --force $DownloadBranch 1> $null; if ($?) { git pull 1> $null }; if ($?) { Write-Output \\\"App updated\\\" } }\"",
+        "UpdateSourceConditionSetting": "DownloadType",
+        "UpdateSourceConditionValue": "GitRepo",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "App Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "{{DownloadSource}}",
+        "UpdateSourceData": "{{DownloadFilename}}",
+        "UpdateSourceVersion": "{{DownloadVersion}}",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "DownloadType",
+        "UpdateSourceConditionValue": "GithubRelease",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "App Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "{{DownloadSource}}",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "DownloadType",
+        "UpdateSourceConditionValue": "DownloadURL",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"NodeVersion=\\\"{{NodeVersion}}\\\"; cd node-server && if [[ -x node/bin/node ]]; then InstalledVersion=$(node/bin/node --version); else InstalledVersion=\\\"\\\"; fi; [[ -z \\\"$NodeVersion\\\" ]] && NodeVersion=\\\"v$(wget -qO- https://endoflife.date/api/v1/products/nodejs/releases/{{NodeRelease}} | jq -r \\\".result.latest.name\\\")\\\"; if [[ ! \\\"$NodeVersion\\\" =~ ^v(0|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24)\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Node.js version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$NodeVersion\\\" ]]; then echo \\\"Node.js $NodeVersion already installed. Skipping\\\" && exit 0; else [[ -f node.tar.gz ]] && rm -f node.tar.gz >/dev/null 2>&1; wget -qO node.tar.gz https://nodejs.org/download/release/$NodeVersion/node-$NodeVersion-linux-x64.tar.gz || { echo \\\"Download failed from the Node.js CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; rm -rf node/* >/dev/null 2>&1 && tar -xzf node.tar.gz -C node --strip-components=1 >/dev/null 2>&1 && rm -f node.tar.gz >/dev/null 2>&1 && echo \\\"Node.js $NodeVersion downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"NodeVersion=\\\"{{NodeVersion}}\\\"; cd node-server && if [[ -x node/bin/node ]]; then InstalledVersion=$(node/bin/node --version); else InstalledVersion=\\\"\\\"; fi; [[ -z \\\"$NodeVersion\\\" ]] && NodeVersion=\\\"v$(wget -qO- https://endoflife.date/api/v1/products/nodejs/releases/{{NodeRelease}} | jq -r \\\".result.latest.name\\\")\\\"; if [[ ! \\\"$NodeVersion\\\" =~ ^v(4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24)\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Node.js version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$NodeVersion\\\" ]]; then echo \\\"Node.js $NodeVersion already installed. Skipping\\\" && exit 0; else [[ -f node.tar.gz ]] && rm -f node.tar.gz >/dev/null 2>&1; wget -qO node.tar.gz https://nodejs.org/download/release/$NodeVersion/node-$NodeVersion-linux-arm64.tar.gz || { echo \\\"Download failed from the Node.js CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; rm -rf node/* >/dev/null 2>&1 && tar -xzf node.tar.gz -C node --strip-components=1 >/dev/null 2>&1 && rm -f node.tar.gz >/dev/null 2>&1 && echo \\\"Node.js $NodeVersion downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $NodeVersion='{{NodeVersion}}'; Set-Location -Path 'node-server'; if (Test-Path 'node/node.exe') { $InstalledVersion =  & node/node.exe --version } else { $InstalledVersion = '' }; if ( [string]::IsNullOrWhiteSpace($NodeVersion) ) { $NodeVersion = 'v' + ((Invoke-RestMethod -UseBasicParsing -Uri \\\"https://endoflife.date/api/v1/products/nodejs/releases/{{NodeRelease}}\\\").result.latest.name) }; if ( $NodeVersion -notmatch '^v(4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24)\\.\\d+\\.\\d+$' ) { Write-Output 'Invalid Node.js version format specified'; exit 1 } elseif ( $InstalledVersion -eq $NodeVersion ) { Write-Output \\\"Node.js $NodeVersion already installed. Skipping\\\"; exit 0 } else { if ( Test-Path node.zip ) { Remove-Item node.zip -Force -ErrorAction SilentlyContinue *> $null }; try { Invoke-WebRequest -UseBasicParsing -Uri https://nodejs.org/download/release/$NodeVersion/node-$NodeVersion-win-x64.zip -OutFile node.zip -ErrorAction Stop } catch { Write-Output \\\"Download failed from the Node.js CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; Expand-Archive -Path \\\"node.zip\\\" -DestinationPath \\\".\\\" -Force *> $null; if ( Test-Path node.zip ) { Remove-Item node.zip -Force -ErrorAction SilentlyContinue *> $null }; if (Test-Path \\\"node-*\\\") { Remove-Item -Recurse -Force node -ErrorAction SilentlyContinue *> $null; Get-ChildItem -Directory | Where-Object { $_.Name -like \\\"node-*\\\" } | Rename-Item -NewName \\\"node\\\" *> $null; Write-Output \\\"Node.js $NodeVersion downloaded\\\" } }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install npm Packages",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd node-server/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm install {{NpmPackages}}\"",
+        "UpdateSourceConditionSetting": "NpmInstallType",
+        "UpdateSourceConditionValue": "specify",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install npm Packages",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd node-server\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && npm install {{NpmPackages}}",
+        "UpdateSourceConditionSetting": "NpmInstallType",
+        "UpdateSourceConditionValue": "specify",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install npm Packages",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd node-server/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm install\"",
+        "UpdateSourceConditionSetting": "NpmInstallType",
+        "UpdateSourceConditionValue": "npmi",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install npm Packages",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd node-server\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && npm install",
+        "UpdateSourceConditionSetting": "NpmInstallType",
+        "UpdateSourceConditionValue": "npmi",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install npm Packages",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd node-server/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm ci\"",
+        "UpdateSourceConditionSetting": "NpmInstallType",
+        "UpdateSourceConditionValue": "npmci",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install npm Packages",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd node-server\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && npm ci",
+        "UpdateSourceConditionSetting": "NpmInstallType",
+        "UpdateSourceConditionValue": "npmci",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Run App Setup Command",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd node-server/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && {{AppSetupCommands}}\"",
+        "UpdateSourceConditionSetting": "RunAppSetupCommands",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Run App Setup Command",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd node-server\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && {{AppSetupCommands}}",
+        "UpdateSourceConditionSetting": "RunAppSetupCommands",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    }
+]
