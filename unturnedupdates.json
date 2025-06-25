@@ -4,7 +4,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd U3DS/1110390 && rm -rf Modules/OpenMod.Unturned Servers/Unturned/OpenMod >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd U3DS/1110390 && rm -rf Modules/OpenMod.Unturned \\\"Servers/{{ServerID}}/OpenMod\\\" >/dev/null 2>&1\"",
         "UpdateSourceConditionSetting": "OpenMod",
         "UpdateSourceConditionValue": "false",
         "SkipOnFailure": true
@@ -14,7 +14,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd U3DS\\1110390 && rd /S /Q Modules\\OpenMod.Unturned Servers\\Unturned\\OpenMod > NUL 2>&1",
+        "UpdateSourceArgs": "/C cd U3DS\\1110390 && rd /S /Q Modules\\OpenMod.Unturned \"Servers\\{{ServerID}}\\OpenMod\" > NUL 2>&1",
         "UpdateSourceConditionSetting": "OpenMod",
         "UpdateSourceConditionValue": "false",
         "SkipOnFailure": true
@@ -31,7 +31,7 @@
         "UpdateStageName": "Config Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Servers/Unturned/Server",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Servers/{{ServerID}}/Server",
         "SkipOnFailure": false
     },
     {
@@ -40,7 +40,7 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/unturnedconfigfile.dat",
         "UpdateSourceArgs": "Commands.dat",
-        "UpdateSourceTarget": "{{$FullBaseDir}}Servers/Unturned/Server/",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Servers/{{ServerID}}/Server/",
         "OverwriteExistingFiles": false,
         "SkipOnFailure": false
     },
