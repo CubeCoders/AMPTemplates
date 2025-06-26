@@ -58,8 +58,13 @@ jobs:
     - name: Update minecraft-bedrockdownloadurl.json
       if: steps.check_updates.outputs.update_needed == 'true'
       working-directory: AMPTemplates
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        currentDownloadURLs: ${{ env.currentDownloadURLs }}
       run: |
         echo "$currentDownloadURLs" | jq --indent 4 '.' > minecraft-bedrockdownloadurl.json
         git add minecraft-bedrockdownloadurl.json
         git commit -m "Update Bedrock download URLs"
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
         git push
+
