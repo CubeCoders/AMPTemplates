@@ -49,19 +49,32 @@
         }
     },
     {
+        "DisplayName": "Node.js Release Stream",
+        "Category": "Foundry Virtual Tabletop:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the Node.js release stream from which to install the latest version, unless a specific version is specified under Node.js Version. Minimum v18 required, v20 recommended. Update the server after changing this setting",
+        "Keywords": "node,nodejs,release,stream,NodeRelease",
+        "FieldName": "NodeRelease",
+        "InputType": "enum",
+        "ParamFieldName": "NodeRelease",
+        "DefaultValue": "20",
+        "EnumValues": {
+            "22": "22 - LTS",
+            "20": "20 - LTS (default)",
+            "18": "18 - LTS"
+        }
+    },
+    {
         "DisplayName": "Node.js Version",
         "Category": "Foundry Virtual Tabletop:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the [Node.js release version](https://nodejs.org/download/release/) to install to run the server. Minimum v18.x required, v20.x recommended. NOTE: Specify a numbered version like v18.16.0, rather than any \"latest\" version",
-        "Keywords": "node,nodejs,version",
+        "Description": "Sets the [Node.js version](https://nodejs.org/download/release/) to install. Format: v20.19.0. Minimum v18.x required, v20.x recommended. Empty = latest version for the release stream specified under Node.js Release Stream. Update the server after changing this setting",
+        "Keywords": "node,nodejs,version,NodeVersion",
         "FieldName": "NodeVersion",
         "InputType": "text",
-        "IsFlagArgument": false,
         "ParamFieldName": "NodeVersion",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "v20.19.0",
+        "DefaultValue": "",
         "Placeholder": "v20.19.0",
-        "Required": true,
         "EnumValues": {}
     },
     {
