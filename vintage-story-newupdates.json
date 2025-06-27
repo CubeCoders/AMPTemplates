@@ -1,32 +1,16 @@
 [
     {
-        "UpdateStageName": "Delete Server Directory",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"rm -rf {{$FullBaseDir}}server >/dev/null 2>&1\"",
-        "SkipOnFailure": true
-    },
-    {
-        "UpdateStageName": "Delete Server Directory",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C del /Q /F {{$FullBaseDir}}server > NUL 2>&1",
-        "SkipOnFailure": true
+        "UpdateStageName": "Server Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}server",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Dotnet Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullBaseDir}}dotnet",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Server Directory Creation",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}server",
         "SkipOnFailure": false
     },
     {
@@ -78,9 +62,19 @@
     {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"ServerVersion=\\\"{{ServerVersion}}\\\" && ServerReleaseStream=\\\"{{ServerReleaseStream}}\\\" && if [[ -z \\\"$ServerVersion\\\" ]]; then if [[ \\\"$ServerReleaseStream\\\" == \\\"pre\\\" ]]; then echo \\\"No Vintage Story preview version specified\\\" && exit 1; else ServerVersion=$(wget -qO- https://api.vintagestory.at/latest${ServerReleaseStream}.txt); fi; fi; if [[ ! \\\"$ServerVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+(-rc\\.[0-9]+|-pre\\.[0-9]+)?$ ]]; then echo \\\"Invalid Vintage Story version format specified\\\" && exit 1; fi && wget -qO vs_server.tar.gz https://{{ServerDownloadSource}}/$ServerReleaseStream/vs_server_linux-x64_$ServerVersion.tar.gz && echo \\\"Vintage Story v$ServerVersion downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"ServerVersion=\\\"{{ServerVersion}}\\\"; ServerReleaseStream=\\\"{{ServerReleaseStream}}\\\"; export DOTNET_ROOT=\\\"{{$FullRootDir}}dotnet\\\"; cd vintage-story && if [[ -x server/VintagestoryServer ]]; then InstalledVersion=$(server/VintagestoryServer --version | xargs); else InstalledVersion=\\\"\\\"; fi; if [[ -z \\\"$ServerVersion\\\" ]]; then if [[ \\\"$ServerReleaseStream\\\" == \\\"pre\\\" ]]; then echo \\\"No Vintage Story preview version specified\\\" && exit 1; else ServerVersion=$(wget -qO- https://api.vintagestory.at/latest${ServerReleaseStream}.txt); fi; fi; if [[ ! \\\"$ServerVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+(-rc\\.[0-9]+|-pre\\.[0-9]+)?$ ]]; then echo \\\"Invalid Vintage Story version format specified\\\" && exit 1; elif [[ \\\"$ServerVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+-rc\\.[0-9]+$ ]]; then ServerReleaseStream=\\\"unstable\\\"; elif [[ \\\"$ServerVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+-pre\\.[0-9]+$ ]]; then ServerReleaseStream=\\\"pre\\\"; else ServerReleaseStream=\\\"stable\\\"; fi; if [[ \\\"$InstalledVersion\\\" == \\\"$ServerVersion\\\" ]]; then echo \\\"Vintage Story $ServerVersion already installed. Skipping\\\" && exit 0; else [[ -f vs_server.tar.gz ]] && rm -f vs_server.tar.gz >/dev/null 2>&1; wget -qO vs_server.tar.gz https://{{ServerDownloadSource}}/$ServerReleaseStream/vs_server_linux-x64_$ServerVersion.tar.gz || { echo \\\"Download failed from the Vintage Story CDN. This is a fault with the CDN, not AMP. Try an alternative CDN. Aborting\\\"; exit 1; }; rm -rf server/* >/dev/null 2>&1 && tar -xzf vs_server.tar.gz -C server >/dev/null 2>&1 && rm -f vs_server.tar.gz >/dev/null 2>&1 && echo \\\"Vintage Story $ServerVersion downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"ServerVersion=\\\"{{ServerVersion}}\\\"; ServerReleaseStream=\\\"{{ServerReleaseStream}}\\\"; export DOTNET_ROOT=\\\"{{$FullRootDir}}dotnet\\\"; cd vintage-story && if [[ -z \\\"$ServerVersion\\\" ]]; then if [[ \\\"$ServerReleaseStream\\\" == \\\"pre\\\" ]]; then echo \\\"No Vintage Story preview version specified\\\" && exit 1; else ServerVersion=$(wget -qO- https://api.vintagestory.at/latest${ServerReleaseStream}.txt); fi; fi; if [[ ! \\\"$ServerVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+(-rc\\.[0-9]+|-pre\\.[0-9]+)?$ ]]; then echo \\\"Invalid Vintage Story version format specified\\\" && exit 1; elif [[ \\\"$ServerVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+-rc\\.[0-9]+$ ]]; then ServerReleaseStream=\\\"unstable\\\"; elif [[ \\\"$ServerVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+-pre\\.[0-9]+$ ]]; then ServerReleaseStream=\\\"pre\\\"; else ServerReleaseStream=\\\"stable\\\"; fi; [[ -f vs_server.tar.gz ]] && rm -f vs_server.tar.gz >/dev/null 2>&1; wget -qO vs_server.tar.gz https://{{ServerDownloadSource}}/$ServerReleaseStream/vs_server_linux-x64_$ServerVersion.tar.gz || { echo \\\"Download failed from the Vintage Story CDN. This is a fault with the CDN, not AMP. Try an alternative CDN. Aborting\\\"; exit 1; }; [[ -f vs_experimentalserver.tar.gz ]] && rm -f vs_experimentalserver.tar.gz >/dev/null 2>&1; ExpDownloadURL=$(wget -qO- \\\"https://api.github.com/repos/anegostudios/VintagestoryServerArm64/releases\\\" | jq -r \\\".[] | select(.name == \\\\\\\"{{ExperimentalServerVersion}}\\\\\\\") | .assets[].browser_download_url\\\") && wget -qO vs_experimentalserver.tar.gz $ExpDownloadURL || { echo \\\"Download failed for the Experimental Vintage Story. Aborting\\\"; exit 1; }; rm -rf server/* >/dev/null 2>&1 && tar -xzf vs_server.tar.gz -C server >/dev/null 2>&1 && rm -f vs_server.tar.gz >/dev/null 2>&1 && echo \\\"Vintage Story $ServerVersion downloaded\\\" && rm -rf server/VintageStoryServer{,.deps.json,.dll,.pdb,.runtimeconfig.json} vintage-story/server/Lib >/dev/null 2>&1 && tar -xzf vs_experimentalserver.tar.gz -C server >/dev/null 2>&1 && rm -f vs_experimentalserver.tar.gz >/dev/null 2>&1 && echo \\\"Experimental Vintage Story v{{ExperimentalServerVersion}} downloaded\\\"\"",
         "SkipOnFailure": false
     },
     {
@@ -88,47 +82,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $ServerVersion='{{ServerVersion}}'; $ServerReleaseStream='{{ServerReleaseStream}}'; if ([string]::IsNullOrWhiteSpace($ServerVersion)) { if ($ServerReleaseStream -eq 'pre') { Write-Output \\\"No Vintage Story preview version specified\\\"; exit 1 } else { $ServerVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://api.vintagestory.at/latest${ServerReleaseStream}.txt) } }; if ($ServerVersion -notmatch '^\\d+\\.\\d+\\.\\d+(-rc\\.\\d+|-pre\\.\\d+)?$') { Write-Output \\\"Invalid Vintage Story version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://{{ServerDownloadSource}}/$ServerReleaseStream/vs_server_win-x64_$ServerVersion.zip -OutFile 'vs_server.zip'; if ($?) { Write-Output \\\"Vintage Story v$ServerVersion downloaded\\\" }\"",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Server Extract",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "ExtractArchive",
-        "UpdateSourceData": "vs_server.tar.gz",
-        "UpdateSourceTarget": "{{$FullBaseDir}}server",
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Server Extract",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "ExtractArchive",
-        "UpdateSourceData": "vs_server.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}server",
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Experimental Server Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSourceArch": "aarch64",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"DownloadURL=$(wget -qO- \\\"https://api.github.com/repos/anegostudios/VintagestoryServerArm64/releases\\\" | jq -r \\\".[] | select(.name == \\\\\\\"{{ExperimentalServerVersion}}\\\\\\\") | .assets[].browser_download_url\\\") && wget -qO vs_experimentalserver.tar.gz $DownloadURL && echo \\\"Experimental Vintage Story v{{ExperimentalServerVersion}} downloaded\\\" && rm -rf vintage-story/server/VintageStoryServer{,.deps.json,.dll,.pdb,.runtimeconfig.json} vintage-story/server/Lib >/dev/null 2>&1\"",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Experimental Server Extract",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSourceArch": "aarch64",
-        "UpdateSource": "ExtractArchive",
-        "UpdateSourceData": "vs_experimentalserver.tar.gz",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $env:DOTNET_ROOT='{{$FullRootDir}}dotnet'; $ServerVersion='{{ServerVersion}}'; $ServerReleaseStream='{{ServerReleaseStream}}'; Set-Location -Path 'vintage-story'; if (Test-Path 'server/VintagestoryServer.exe') { $InstalledVersion =  (& server/VintagestoryServer.exe --version).Trim() } else { $InstalledVersion = '' }; if ( [string]::IsNullOrWhiteSpace($ServerVersion) ) { if ($ServerReleaseStream -eq 'pre') { Write-Output \\\"No Vintage Story preview version specified\\\"; exit 1 } else { $ServerVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://api.vintagestory.at/latest${ServerReleaseStream}.txt) } }; if ( $ServerVersion -notmatch '^\\d+\\.\\d+\\.\\d+(-rc\\.\\d+|-pre\\.\\d+)?$') { Write-Output \\\"Invalid Vintage Story version format specified\\\"; exit 1 } elseif ( $ServerVersion -match '^\\d+\\.\\d+\\.\\d+-rc\\.\\d+$') { $ServerReleaseStream='unstable' } elseif ( $ServerVersion -match '^\\d+\\.\\d+\\.\\d+-pre\\.\\d+$') { $ServerReleaseStream='pre' } else { $ServerReleaseStream='stable' }; if ( $InstalledVersion -eq $ServerVersion ) { Write-Output \\\"Vintage Story $ServerVersion already installed. Skipping\\\"; exit 0 } else { if ( Test-Path vs_server.zip ) { Remove-Item vs_server.zip -Force -ErrorAction SilentlyContinue *> $null }; try { Invoke-WebRequest -UseBasicParsing -Uri https://{{ServerDownloadSource}}/$ServerReleaseStream/vs_server_win-x64_$ServerVersion.zip -OutFile vs_server.zip -ErrorAction Stop } catch { Write-Output \\\"Download failed from the Vintage Story CDN. This is a fault with the CDN, not AMP. Try an alternative CDN. Aborting\\\"; exit 1; }; Remove-Item -Path 'server/*' -Recurse -Force -ErrorAction SilentlyContinue; Expand-Archive -Path \\\"vs_server.zip\\\" -DestinationPath \\\"server\\\" -Force *> $null; if ( Test-Path vs_server.zip ) { Remove-Item vs_server.zip -Force -ErrorAction SilentlyContinue *> $null }; Write-Output \\\"Vintage Story $ServerVersion downloaded\\\" }\"",
         "SkipOnFailure": false
     },
     {
