@@ -1,14 +1,74 @@
 [
     {
-        "UpdateStageName": "Server Download",
+        "UpdateStageName": "7-Zip Directory Creation",
         "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "7-Zip Installer Download",
+        "UpdateSourcePlatform": "Windows",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://github.com/STJr/Kart-Public/releases/download/v1.6/srb2kart-v16-Installer.exe",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "UpdateSourceArgs": "srb2kart.zip",
-        "UnzipUpdateSource": true,
+        "UpdateSourceData": "https://7-zip.org/a/7z2407-x64.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "7-Zip Console Tool Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.7-zip.org/a/7zr.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd srb2kart\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
+        "SkipOnFailure": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "7-Zip Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.7-zip.org/a/7z2407-linux-x64.tar.xz",
+        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "7-Zip Files Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd srb2kart/7-Zip && tar -xf 7z2407-linux-x64.tar.xz && rm -f 7z2407-linux-x64.tar.xz\"",
+        "SkipOnFailure": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'srb2kart/server'; Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/STJr/Kart-Public/releases/download/v1.6/srb2kart-v16-Installer.exe' -OutFile 'srb2kart.zip'; & ..\\7-Zip\\7z.exe x -y -aoa srb2kart.zip | Out-Null; Remove-Item -Path 'srb2kart.zip' -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd srb2kart/server && wget -qO srb2kart.zip https://github.com/STJr/Kart-Public/releases/download/v1.6/srb2kart-v16-Installer.exe && ../7-Zip/7zzs x -y -aoa srb2kart.zip >/dev/null 2>&1 && rm -f srb2kart.zip >/dev/null 2>&1\"",
         "SkipOnFailure": false
     },
     {
