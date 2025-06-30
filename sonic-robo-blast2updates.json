@@ -1,6 +1,14 @@
 [
     {
         "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location - Path 'srb2/server'; Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/STJr/SRB2/releases/latest').assets | Where-Object { $_.browser_download_url -match 'SRB2-v.*-Full\\.zip$' })[0].browser_download_url -OutFile 'srb2.zip'; if ($?) { }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://github.com/STJr/SRB2/releases/download/SRB2_release_2.2.15/SRB2-v2215-Full.zip",
