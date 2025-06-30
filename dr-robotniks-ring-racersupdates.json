@@ -1,0 +1,58 @@
+[
+    {
+        "UpdateStageName": "7-Zip Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'ring-racers/7-Zip'; if (Test-Path '7z.exe') { exit 0 } else { Invoke-WebRequest -UseBasicParsing -Uri 'https://7-zip.org/a/7z2409-x64.exe' -OutFile '7z-installer.exe' }; if ($?) { Invoke-WebRequest -UseBasicParsing -Uri 'https://www.7-zip.org/a/7zr.exe' -OutFile '7zr.exe' }; if ($?) { & ./7zr.exe x -y -aoa 7z-installer.exe *> $null 2>&1; Remove-Item -Path '7z-installer.exe' -Force -ErrorAction SilentlyContinue | Out-Null }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ring-racers/7-Zip && [[ -x 7zzs ]] && exit 0 || { wget -qO 7z.tar.xz https://www.7-zip.org/a/7z2409-linux-x64.tar.xz && tar -xf 7z.tar.xz >/dev/null 2>&1 && rm -f 7z.tar.xz >/dev/null 2>&1; }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'ring-racers/server'; Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/KartKrewDev/RingRacers/releases/latest').assets | Where-Object { $_.browser_download_url -match 'Dr\\.Robotnik\\.s-Ring-Racers-v.*-Installer\\.exe$' })[0].browser_download_url -OutFile 'rrinstaller.exe'; & ../7-Zip/7z.exe x -y -aoa rrinstaller.exe | Out-Null; Remove-Item -Path 'rrinstaller.exe' -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ring-racers/server && DownloadURL=$(wget -qO- https://api.github.com/repos/KartKrewDev/RingRacers/releases/latest | grep browser_download_url | cut -d\\\\\\\" -f4 | grep Dr\\.Robotnik\\.s-Ring-Racers-v.*-Installer\\.exe$) && wget -qO rrinstaller.exe $DownloadURL && ../7-Zip/7zzs x -y -aoa rrinstaller.exe >/dev/null 2>&1 && rm -f rrinstaller.exe >/dev/null 2>&1\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Config File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/dr-robotniks-ring-racersringserv.cfg",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "ringserv.cfg",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win32 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
+    }
+]
