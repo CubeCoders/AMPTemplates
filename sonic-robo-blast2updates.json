@@ -4,7 +4,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location - Path 'srb2/server'; Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/STJr/SRB2/releases/latest').assets | Where-Object { $_.browser_download_url -match 'SRB2-v.*-Full\\.zip$' })[0].browser_download_url -OutFile 'srb2.zip'; if ($?) { Expand-Archive -Path \\\"srb2.zip\\\" -DestinationPath \\\".\\\" -Force *> $null; if ( Test-Path srb2.zip ) { Remove-Item srb2.zip -Force -ErrorAction SilentlyContinue *> $null } }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location - Path 'srb2/server'; Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/STJr/SRB2/releases/latest').assets | Where-Object { $_.browser_download_url -match 'SRB2-v.*-Full\\.zip$' })[0].browser_download_url -OutFile 'srb2.zip'; if ($?) { Expand-Archive -Path \\\"srb2.zip\\\" -DestinationPath \\\".\\\" -Force *> $null; if (Test-Path srb2.zip) { Remove-Item srb2.zip -Force -ErrorAction SilentlyContinue *> $null } }\"",
         "SkipOnFailure": false
     },
     {
