@@ -241,7 +241,7 @@
         "DisplayName": "Admins",
         "Category": "Arma Reforger:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets a whitelist of Identity IDs and/or SteamIDs of server admins. Listed admins won't need to use the Admin Password. Format is \"ID\",\"ID\"",
+        "Description": "Sets a whitelist of IdentityIDs and/or SteamIDs of server admins. Maximum 20 IDs. Listed admins won't need to use the Admin Password, and those listed by IdentityID can use the priority queue to join the server. Format is \"ID\",\"ID\"",
         "Keywords": "admin,admins,whitelist",
         "FieldName": "admins",
         "InputType": "text",
@@ -331,7 +331,7 @@
         "DisplayName": "Navmesh Streaming Mode",
         "Category": "Arma Reforger:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the navmesh streamimg mode. Navmesh streaming will be enabled or disabled on relevant navmesh components and disabled components will be loaded into memory. If \"Disable specific components\" is selected, specify them under Disabled Navmesh Components",
+        "Description": "Sets the navmesh streamimg mode. Enabled components will be streamed, disabled components will be loaded into memory (slightly increasing performance, significantly increasing memory use). If \"Disable specific components\" is selected, specify them under Disabled Navmesh Components",
         "Keywords": "disable,navmesh,streaming,disableNavmeshStreaming",
         "FieldName": "disableNavmeshStreaming12",
         "InputType": "enum",
@@ -368,6 +368,40 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Mod Verification",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, the server will verify the integrity of all installed mods. If any corrupted mods are found, the server will shut down and log the corrupted files",
+        "Keywords": "addons,mods,verify,verification,addonsVerify",
+        "FieldName": "addonsVerify",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "addonsVerify",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-addonsVerify "
+        }
+    },
+    {
+        "DisplayName": "Enable Mod Repair",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, the server will verify the integrity of all installed mods. If any corrupted mods are found, they will be repaired automatically. If the repair fails, the server will shut down",
+        "Keywords": "addons,mods,repair,addonsRepair",
+        "FieldName": "addonsRepair",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "addonsRepair",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-addonsRepair "
+        }
     },
     {
         "DisplayName": "Player Save Period",
@@ -441,11 +475,11 @@
         "DisplayName": "Minimum Grass Distance",
         "Category": "Arma Reforger:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the server's minimum grass distance",
+        "Description": "Sets the server's minimum grass distance. 0 = no distance forced. Otherwise minimum 50, maximum 150",
         "Keywords": "minimum,grass,distance,servermingrassdistance",
         "FieldName": "serverMinGrassDistance",
         "InputType": "number",
-        "MinValue": "50",
+        "MinValue": "0",
         "MaxValue": "150",
         "IsFlagArgument": false,
         "ParamFieldName": "game.gameProperties.serverMinGrassDistance",
@@ -504,6 +538,45 @@
         "EnumValues": {
             "False": "false",
             "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Freeze Check Period",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the time period to forcefully crash on application freeze. 0 = completely disable detection",
+        "Keywords": "freeze,check,freezeCheck",
+        "FieldName": "freezeCheck",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "600",
+        "IsFlagArgument": false,
+        "ParamFieldName": "freezeCheck",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "300",
+        "Placeholder": "300",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Freeze Check Override",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Overrides the server's behaviour when a freeze is detected",
+        "Keywords": "freeze,check,freezeCheckMode",
+        "FieldName": "freezeCheckMode",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "freezeCheckMode",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Do not override (default)",
+            "crash": "Force crash",
+            "minidump": "Generate minidump and keep running (Windows only)",
+            "kill": "Force kill (no data collection)"
         }
     },
     {
