@@ -11,36 +11,14 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
-        "OneShot": true,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "7-Zip Installer Download",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://7-zip.org/a/7z2407-x64.exe",
-        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles": true,
-        "OneShot": true,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "7-Zip Console Tool Download",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://www.7-zip.org/a/7zr.exe",
-        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles": true,
-        "OneShot": true,
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "7-Zip Installation",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd mtasa\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
-        "OneShot": true,
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'mtasa/7-Zip'; if (Test-Path '7z.exe') { exit 0 } else { Invoke-WebRequest -UseBasicParsing -Uri 'https://7-zip.org/a/7z2409-x64.exe' -OutFile '7z-installer.exe' }; if ($?) { Invoke-WebRequest -UseBasicParsing -Uri 'https://www.7-zip.org/a/7zr.exe' -OutFile '7zr.exe' }; if ($?) { & ./7zr.exe x -y -aoa 7z-installer.exe *> $null 2>&1; Remove-Item -Path '7z-installer.exe' -Force -ErrorAction SilentlyContinue | Out-Null }\"",
         "SkipOnFailure": false
     },
     {

@@ -32,28 +32,19 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "7-Zip Download",
+        "UpdateStageName": "7-Zip Installation",
         "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://www.7-zip.org/a/7zr.exe",
-        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'pre-fortress2/7-Zip'; if (Test-Path '7zr.exe') { exit 0 } else { Invoke-WebRequest -UseBasicParsing -Uri 'https://www.7-zip.org/a/7zr.exe' -OutFile '7zr.exe' }\"",
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "7-Zip Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://www.7-zip.org/a/7z2301-linux-x64.tar.xz",
-        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles": true,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "7-Zip Files Extract",
+        "UpdateStageName": "7-Zip Installation",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd ./pre-fortress2/7-Zip && tar -xf 7z2301-linux-x64.tar.xz >/dev/null 2>&1 && rm -f 7z2301-linux-x64.tar.xz\"",
+        "UpdateSourceArgs": "-c \"cd pre-fortress2/7-Zip && [[ -x 7zzs ]] && exit 0 || { wget -qO 7z.tar.xz https://www.7-zip.org/a/7z2409-linux-x64.tar.xz && tar -xf 7z.tar.xz >/dev/null 2>&1 && rm -f 7z.tar.xz >/dev/null 2>&1; }\"",
         "SkipOnFailure": false
     },
     {
