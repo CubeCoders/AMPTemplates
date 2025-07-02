@@ -36,7 +36,7 @@ App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=1237970
 App.LinuxCommandLineArgs=-a wine "{{$FullBaseDir}}NorthstarLauncher.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -dedicated -multiple -profile="R2Northstar" -port {{$ServerPort}} -softwared3d11 -maxplayersplaylist +setplaylist {{setplaylist}} +setplaylistvaroverrides "max_players {{$MaxUsers}}" {{$FormattedArgs}} +net_compresspackets_minsize 64 +net_compresspackets 1 +spewlog_enable 0 +sv_maxrate 127000
+App.CommandLineArgs={{$PlatformArgs}} -dedicated -multiple -profile="{{profile}}" -port {{$ServerPort}} -softwared3d11 -maxplayersplaylist +setplaylist {{setplaylist}} +setplaylistvaroverrides "max_players {{$MaxUsers}}" {{$FormattedArgs}} +net_compresspackets_minsize 64 +net_compresspackets 1 +spewlog_enable 0 +sv_maxrate 127000
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"SteamAppId":"1237970","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"d3d11=n;d3d9="}
