@@ -1,0 +1,60 @@
+[
+    {
+        "UpdateStageName": "TeamSpeak 6 Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/teamspeak/teamspeak6-server/releases/latest",
+        "UpdateSourceArgs": "$.assets[1].browser_download_url",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "ServerStream",
+        "UpdateSourceConditionValue": "latest",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "TeamSpeak 6 Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/teamspeak/teamspeak6-server/releases/latest",
+        "UpdateSourceArgs": "$.assets[0].browser_download_url",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "ServerStream",
+        "UpdateSourceConditionValue": "latest",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "TeamSpeak 3 Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/teamspeak/teamspeak6-server/releases/download/v{{SpecificServerVersion}}/teamspeak-server_win64-v{{SpecificServerVersion}}.zip",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "ServerStream",
+        "UpdateSourceConditionValue": "specificversion",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "TeamSpeak 3 Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/teamspeak/teamspeak6-server/releases/download/v{{SpecificServerVersion}}/teamspeak-server_linux_amd64-v{{SpecificServerVersion}}.tar.bz2",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "ServerStream",
+        "UpdateSourceConditionValue": "specificversion",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Working Directory Replacement",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ts6; rm -rf teamspeak3-server_win64 >/dev/null 2>&1; ln -s teamspeak3-server_linux_amd64 teamspeak3-server_win64\"",
+        "SkipOnFailure": false
+    }
+]
