@@ -36,7 +36,7 @@ App.ExecutableLinux=3796810/NWX/Binaries/Linux/NWXServer-Linux-Shipping
 App.WorkingDir=3796810
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} NWX -port={{$GamePort}} -statusPort={{$StatusPort}} -multihome={{$ApplicationIPBinding}} -ini:ServerSettings:[/Script/NWX.NWXServerSettings]:Password={{Password}} -ini:ServerSettings:[/Script/NWX.NWXServerSettings]:AdminPassword={{AdminPassword}} -ini:Game:[/Script/Engine.GameSession]:MaxPlayers={{$MaxUsers}} -ini:ServerSettings:[/Script/NWX.NWXServerSettings]:StartingDifficulty={{StartingDifficulty}} {{$FormattedArgs}} {{EnableCheats}}-stdout -FullStdOutLogOutput
+App.CommandLineArgs={{$PlatformArgs}} NWX -port={{$GamePort}} -statusPort={{$StatusPort}} -multihome={{$ApplicationIPBinding}} -ini:Engine:[HTTPServer.Listeners]:+ListenerOverrides=(Port={{$StatusPort}},BindAddress={{$ApplicationIPBinding}}) -ini:ServerSettings:[/Script/NWX.NWXServerSettings]:Password={{Password}} -ini:ServerSettings:[/Script/NWX.NWXServerSettings]:AdminPassword={{AdminPassword}} -ini:Game:[/Script/Engine.GameSession]:MaxPlayers={{$MaxUsers}} -ini:ServerSettings:[/Script/NWX.NWXServerSettings]:StartingDifficulty={{StartingDifficulty}} {{$FormattedArgs}} {{EnableCheats}}-stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1928980"}
