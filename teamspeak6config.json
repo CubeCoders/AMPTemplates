@@ -94,8 +94,8 @@
         "IncludeInCommandLine": true,
         "DefaultValue": "0",
         "EnumValues": {
-            "True": "1",
-            "False": "0"
+            "False": "0",
+            "True": "1"
         }
     },
     {
@@ -107,6 +107,22 @@
         "FieldName": "no-default-virtual-server",
         "InputType": "checkbox",
         "ParamFieldName": "no-default-virtual-server",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "No Permission Update",
+        "Category": "TeamSpeak 6:stadia_controller",
+        "Subcategory": "Database:database:2",
+        "Description": "If set, disables automatic permission updates in the database",
+        "Keywords": "database,permission,update,no-permission-update",
+        "FieldName": "no-permission-update",
+        "InputType": "checkbox",
+        "ParamFieldName": "no-permission-update",
         "IncludeInCommandLine": true,
         "DefaultValue": "0",
         "EnumValues": {
@@ -128,6 +144,69 @@
         "EnumValues": {
             "mariadb": "MariaDB/MySQL",
             "sqlite3": "SQLite3"
+        }
+    },
+    {
+        "DisplayName": "SQL Path",
+        "Category": "TeamSpeak 6:stadia_controller",
+        "Subcategory": "Database:database:2",
+        "Description": "Sets the directory path to the SQL folder containing the SQL queries executed by the server",
+        "Keywords": "database,sql,path,db-sql-path",
+        "FieldName": "db-sql-path",
+        "InputType": "text",
+        "ParamFieldName": "db-sql-path",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "sql",
+        "Placeholder": "sql",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "SQL Create Path",
+        "Category": "TeamSpeak 6:stadia_controller",
+        "Subcategory": "Database:database:2",
+        "Description": "Sets the path relative to the SQL Path where to load the database creation scripts from",
+        "Keywords": "database,sql,create,path,db-sql-create-path",
+        "FieldName": "db-sql-create-path",
+        "InputType": "text",
+        "ParamFieldName": "db-sql-create-path",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "create_sqlite",
+        "EnumValues": {
+            "create_mariadb": "MariaDB/MySQL",
+            "create_sqlite": "SQLite3"
+        }
+    },
+    {
+        "DisplayName": "Client Keep Period",
+        "Category": "TeamSpeak 6:stadia_controller",
+        "Subcategory": "Database:database:2",
+        "Description": "Sets the period to keep clients in the database",
+        "Keywords": "database,client,keep,days,db-client-keep-days",
+        "FieldName": "db-client-keep-days",
+        "InputType": "number",
+        "MinValue": "1",
+        "ParamFieldName": "db-client-keep-days",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "30",
+        "Placeholder": "30",
+        "Suffix": "days",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Skip Database Integrity Check",
+        "Category": "TeamSpeak 6:stadia_controller",
+        "Subcategory": "Database:database:2",
+        "Description": "If set, skips the database integrity check when opening the database. SQLite only",
+        "Keywords": "database,integrity,check,skip,db-skip-integrity-check",
+        "FieldName": "db-skip-integrity-check",
+        "InputType": "checkbox",
+        "ParamFieldName": "db-skip-integrity-check",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "True": "1",
+            "False": "0"
         }
     },
     {
@@ -160,6 +239,38 @@
         "SkipIfEmpty": true,
         "DefaultValue": "3306",
         "Placeholder": "3306",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Database Socket",
+        "Category": "TeamSpeak 6:stadia_controller",
+        "Subcategory": "Database:database:2",
+        "Description": "Sets the socket to use for the database connection",
+        "Keywords": "database,socket,db-socket",
+        "FieldName": "db-socket",
+        "InputType": "text",
+        "ParamFieldName": "db-socket",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "/var/run/mysqld/mysqld.sock",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Database Timeout",
+        "Category": "TeamSpeak 6:stadia_controller",
+        "Subcategory": "Database:database:2",
+        "Description": "Sets the timeout for the database connection",
+        "Keywords": "database,timeout,db-timeout",
+        "FieldName": "db-timeout",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "432000",
+        "ParamFieldName": "db-timeout",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "10",
+        "Placeholder": "10",
+        "Suffix": "seconds",
         "EnumValues": {}
     },
     {
@@ -219,6 +330,22 @@
         "DefaultValue": "10",
         "Placeholder": "10",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Log Database Queries",
+        "Category": "TeamSpeak 6:stadia_controller",
+        "Subcategory": "Database:database:2",
+        "Description": "If set, logs database queries.",
+        "Keywords": "database,log,queries,db-log-queries",
+        "FieldName": "db-log-queries",
+        "InputType": "checkbox",
+        "ParamFieldName": "db-log-queries",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "True": "1",
+            "False": "0"
+        }
     },
     {
         "DisplayName": "Enable HTTP Query Interface",
