@@ -42,25 +42,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\" && if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/6.0/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi && if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid ASP.NET Core Runtime version format specified\\\" && exit 1; fi && wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-linux-x64.tar.gz && echo \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\"\"",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "ASP.NET Core Runtime Extract",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "ExtractArchive",
-        "UpdateSourceData": "dotnet.tar.gz",
-        "UpdateSourceTarget": "{{$FullBaseDir}}Dotnet",
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Copy Dotnet Libraries",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\" && if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/6.0/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi && \\cp -rf \\\"{{$FullBaseDir}}Dotnet/shared/Microsoft.AspNetCore.App/$DotnetVersion/\\\"* \\\"{{$FullBaseDir}}bin/Linux64_Shipping_Server/\\\"\"",
+        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\"; cd \\\"{{$FullBaseDir}}\\\" && if [[ -x Dotnet/dotnet ]]; then InstalledVersion=$(Dotnet/dotnet --list-runtimes | sed -n \\\"s/^Microsoft\\.AspNetCore\\.App \\([0-9.]*\\) .*/\\1/p\\\" | head -n1); else InstalledVersion=\\\"\\\"; fi; if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/6.0/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi; if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid ASP.NET Core Runtime version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$DotnetVersion\\\" ]]; then echo \\\"ASP.NET Core Runtime v$DotnetVersion already installed. Skipping download\\\"; else [[ -f dotnet.tar.gz ]] && rm -f dotnet.tar.gz >/dev/null 2>&1; wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-linux-x64.tar.gz || { echo \\\"Download failed from the Microsoft CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; rm -rf Dotnet/* >/dev/null 2>&1 && tar -xzf dotnet.tar.gz -C Dotnet >/dev/null 2>&1 && rm -f dotnet.tar.gz >/dev/null 2>&1 && echo \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\"; fi; \\cp -rf \\\"{{$FullBaseDir}}Dotnet/shared/Microsoft.AspNetCore.App/$DotnetVersion/\\\"* \\\"{{$FullBaseDir}}bin/Linux64_Shipping_Server/\\\"\"",
         "SkipOnFailure": false
     }
 ]
