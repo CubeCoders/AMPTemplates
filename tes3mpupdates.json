@@ -21,5 +21,13 @@
         "OverwriteExistingFiles": false,
         "DeleteAfterExtract": true,
         "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "User Data Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C mkdir \"%UserProfile%\\Documents\\My Games\\OpenMW\" > NUL 2>&1 & rd /S /Q \"{{$FullBaseDir}}OpenMW\" > NUL 2>&1 & mklink /J \"{{$FullBaseDir}}OpenMW\" \"%UserProfile%\\Documents\\My Games\\OpenMW\" > NUL 2>&1",
+        "SkipOnFailure": false
     }
 ]
