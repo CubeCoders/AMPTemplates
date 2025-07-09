@@ -9,6 +9,22 @@
         "SkipOnFailure": false
     },
     {
+        "UpdateStageName": "Create Config Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Astro/Saved/Config/WindowsServer"
+    },
+    {
+        "UpdateStageName": "Server Config Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/astroneerastroserversettings.ini",
+        "UpdateSourceArgs": "AstroServerSettings.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Astro/Saved/Config/WindowsServer",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
         "UpdateStageName": "Proton GE Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
