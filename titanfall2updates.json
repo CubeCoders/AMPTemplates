@@ -66,19 +66,19 @@
         "SkipOnFailure": false
     },
     {
+        "UpdateStageName": "Build nswrap",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"mkdir -p titanfall2/1237970/nswrap && cd titanfall2/1237970/nswrap && [[ -f nswrap.c ]] && rm -rf nswrap.c; wget -q https://raw.githubusercontent.com/pg9182/nsdockerwine2/refs/heads/master/nswrap/nswrap.c && gcc -Wall -Wextra nswrap.c -o nswrap >/dev/null\"",
+        "SkipOnFailure": false
+    },
+    {
         "UpdateStageName": "Initialise Wine",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "UpdateSourceArgs": "-c \"unset DISPLAY WAYLAND_DISPLAY; export WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\\\"mscoree,mshtml,winemenubuilder.exe=\\\"; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; rm -rf $WINEPREFIX; /usr/bin/wineboot --init; /usr/bin/wine reg add \\\"HKCU\\Software\\Wine\\\" /v \\\"Version\\\" /t REG_SZ /d \\\"win10\\\" /f; /usr/bin/wine reg add \\\"HKCU\\Software\\Wine\\Drivers\\\" /v \\\"Audio\\\" /t REG_SZ /d \\\"\\\" /f; /usr/bin/wine reg add \\\"HKCU\\Software\\Wine\\WineDbg\\\" /v \\\"ShowCrashDialog\\\" /t REG_DWORD /d 0 /f; /usr/bin/wine reg add \\\"HKCU\\Software\\Wine\\Drivers\\\" /v \\\"Graphics\\\" /t REG_SZ /d \\\"null\\\" /f; /usr/bin/wine reg add \\\"HKCU\\Software\\Wine\\DllOverrides\\\" /v \\\"mscoree\\\" /t REG_SZ /d \\\"\\\" /f; /usr/bin/wine reg add \\\"HKCU\\Software\\Wine\\DllOverrides\\\" /v \\\"mshtml\\\" /t REG_SZ /d \\\"\\\" /f; /usr/bin/wine reg add \\\"HKCU\\Software\\Wine\\DllOverrides\\\" /v \\\"winemenubuilder\\\" /t REG_SZ /d \\\"\\\" /f; /usr/bin/wine reg add \\\"HKCU\\Software\\Wine\\DllOverrides\\\" /v \\\"d3d11\\\" /t REG_SZ /d \\\"native\\\" /f; /usr/bin/wineboot --shutdown --force; /usr/bin/wineboot --kill --force\"",
         "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Disable Prefix Sound",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd titanfall2 && [[ -f winetricks ]] && rm -f winetricks; wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20250102/src/winetricks && chmod +x winetricks; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; export WINEARCH=win64; ./winetricks sound=disabled > winescript_log.txt 2>&1\"",
-        "SkipOnFailure": true
     }
 ]
