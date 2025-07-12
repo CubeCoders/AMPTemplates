@@ -1,5 +1,14 @@
 [
     {
+        "UpdateStageName": "tes3mp-server-default.cfg Backup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}tes3mp-server-default.cfg.bak",
+        "UpdateSourceArgs": "{{$FullBaseDir}}tes3mp-server-default.cfg",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
         "UpdateStageName": "TES3MP Download",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "FetchURL",
@@ -29,5 +38,14 @@
         "UpdateSourceData": "cmd.exe",
         "UpdateSourceArgs": "/C mkdir \"%UserProfile%\\Documents\\My Games\\OpenMW\" > NUL 2>&1 & rd /S /Q \"{{$FullBaseDir}}OpenMW\" > NUL 2>&1 & mklink /J \"{{$FullBaseDir}}OpenMW\" \"%UserProfile%\\Documents\\My Games\\OpenMW\" > NUL 2>&1",
         "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "tes3mp-server-default.cfg Restore",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}tes3mp-server-default.cfg",
+        "UpdateSourceArgs": "{{$FullBaseDir}}tes3mp-server-default.cfg.bak",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
     }
 ]
