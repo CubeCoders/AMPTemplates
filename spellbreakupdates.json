@@ -20,7 +20,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd spellbreak && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm install itchio-downloader >/dev/null && npx itchio-downloader --url https://sbcommunity.itch.io/spellbreak-community-version --downloadDirectory \\\"./server\\\" >/dev/null && cd server && unzip -oq spellbreak-community-version-server-windows.zip >/dev/null 2>&1 && rm -f spellbreak-community-version-server-windows.zip\"",
+        "UpdateSourceArgs": "-c \"cd spellbreak && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm install itchio-downloader >/dev/null && npx itchio-downloader --url \\\"https://sbcommunity.itch.io/spellbreak-community-version\\\" --downloadDirectory \\\"./server\\\" >/dev/null && cd server && unzip -oq spellbreak-community-version-server-windows.zip >/dev/null 2>&1 && rm -f spellbreak-community-version-server-windows.zip\"",
         "SkipOnFailure": false
     },
     {
@@ -28,7 +28,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'spellbreak'; $env:PATH='{{$FullRootDir}}node;' + $env:PATH; & node ./node/node_modules/npm/bin/npm-cli.js install itchio-downloader 1> $null; & node ./node/node_modules/npm/bin/npx-cli.js itchio-downloader --url https://sbcommunity.itch.io/spellbreak-community-version --downloadDirectory \\\"./server\\\" 1> $null; Set-Location -Path 'server'; Expand-Archive -Path \\\"spellbreak-community-version-server-windows.zip\\\" -DestinationPath \\\".\\\" -Force *> $null; Remove-Item spellbreak-community-version-server-windows.zip -Force -ErrorAction SilentlyContinue *> $null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'spellbreak'; $env:PATH='{{$FullRootDir}}node;' + $env:PATH; & node ./node/node_modules/npm/bin/npm-cli.js install itchio-downloader 1> $null; & node ./node/node_modules/npm/bin/npx-cli.js itchio-downloader --url \\\"https://sbcommunity.itch.io/spellbreak-community-version\\\" --downloadDirectory \\\"./server\\\" 1> $null; Set-Location -Path 'server'; Expand-Archive -Path \\\"spellbreak-community-version-server-windows.zip\\\" -DestinationPath \\\".\\\" -Force *> $null; Remove-Item spellbreak-community-version-server-windows.zip -Force -ErrorAction SilentlyContinue *> $null\"",
         "SkipOnFailure": false
     },
     {
