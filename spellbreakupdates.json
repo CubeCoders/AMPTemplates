@@ -1,13 +1,35 @@
 [
     {
-        "UpdateStageName": "Server Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://itchio-mirror.cb031a832f44726753d6267436f3b414.r2.cloudflarestorage.com/build/674368/2598010-archive-default?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=3edfcce40115d057d0b5606758e7e9ee%2F20250712%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250712T080011Z&X-Amz-Expires=60&X-Amz-SignedHeaders=host&X-Amz-Signature=fbea6b5ea10d910c864ab4419174cce2ef68cb8c29211679695c373c0bb6e7cb",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"NodeVersion=\\\"v18.20.8\\\"; cd spellbreak && if [[ -x node/bin/node ]]; then exit 0; else [[ -f node.tar.gz ]] && rm -f node.tar.gz >/dev/null 2>&1; wget -qO node.tar.gz https://nodejs.org/download/release/$NodeVersion/node-$NodeVersion-linux-x64.tar.gz || { echo \\\"Download failed from the Node.js CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; mkdir -p node && rm -rf node/* >/dev/null 2>&1 && tar -xzf node.tar.gz -C node --strip-components=1 >/dev/null 2>&1 && rm -f node.tar.gz >/dev/null 2>&1 && echo \\\"Node.js $NodeVersion downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $NodeVersion='v18.20.8'; Set-Location -Path 'spellbreak'; if (Test-Path 'node/node.exe') { exit 0 } else { if ( Test-Path node.zip ) { Remove-Item node.zip -Force -ErrorAction SilentlyContinue *> $null }; try { Invoke-WebRequest -UseBasicParsing -Uri https://nodejs.org/download/release/$NodeVersion/node-$NodeVersion-win-x64.zip -OutFile node.zip -ErrorAction Stop } catch { Write-Output \\\"Download failed from the Node.js CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; Expand-Archive -Path \\\"node.zip\\\" -DestinationPath \\\".\\\" -Force *> $null; if ( Test-Path node.zip ) { Remove-Item node.zip -Force -ErrorAction SilentlyContinue *> $null }; if (Test-Path \\\"node-*\\\") { Remove-Item -Recurse -Force node -ErrorAction SilentlyContinue *> $null; Get-ChildItem -Directory | Where-Object { $_.Name -like \\\"node-*\\\" } | Rename-Item -NewName \\\"node\\\" *> $null; Write-Output \\\"Node.js $NodeVersion downloaded\\\" } }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Spellbreak Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd spellbreak && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && npm install itchio-downloader >/dev/null && npx itchio-downloader --only-matching \\\"server\\\" --output \\\"./server\\\" >/dev/null && cd server && unzip -oq spellbreak-community-version-server-windows.zip >/dev/null 2>&1 && rm -f spellbreak-community-version-server-windows.zip\"",
+        "SkipOnFailure": false
+    }
+    {
+        "UpdateStageName": "Spellbreak Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'spellbreak'; $env:PATH='{{$FullRootDir}}node;' + $env:PATH; & node ./node/node_modules/npm/bin/npm-cli.js install itchio-downloader 1> $null; & node ./node/node_modules/npm/bin/npx-cli.js itchio-downloader --only-matching \\\"server\\\" --output \\\"./server\\\" 1> $null; Set-Location -Path 'server'; Expand-Archive -Path \\\"spellbreak-community-version-server-windows.zip\\\" -DestinationPath \\\".\\\" -Force *> $null; Remove-Item spellbreak-community-version-server-windows.zip -Force -ErrorAction SilentlyContinue *> $null\"",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Initialise Wine",
