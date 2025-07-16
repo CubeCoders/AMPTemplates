@@ -6,7 +6,8 @@
         "UpdateSourceArgs": "pminten/totemarts-patcher-cli",
         "UpdateSourceData": "tapatcher.exe",
         "UpdateSourceTarget": "{{$FullRootDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Patcher Download",
@@ -15,7 +16,8 @@
         "UpdateSourceArgs": "pminten/totemarts-patcher-cli",
         "UpdateSourceData": "tapatcher",
         "UpdateSourceTarget": "{{$FullRootDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Xdelta Download",
@@ -27,7 +29,7 @@
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
-        "OneShot": true
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Renegade X Download",
@@ -50,7 +52,8 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\""
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Winescript Download",
@@ -59,14 +62,16 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/renegadexwinescript.sh",
         "UpdateSourceArgs": "winescript.sh",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Install Windows Components",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "./winescript.sh"
+        "UpdateSourceArgs": "./winescript.sh",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Start Server",

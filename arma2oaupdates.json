@@ -7,7 +7,8 @@
         "UpdateSourceArgs": "33930",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UpdateSourceVersion": "{{GameBranch}}",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Arma 2 OA Client Download",
@@ -17,7 +18,8 @@
         "UpdateSourceArgs": "33930",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UpdateSourceVersion": "{{GameBranch}}",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
@@ -26,7 +28,8 @@
         "UpdateSourceData": "33935",
         "UpdateSourceArgs": "33930",
         "UpdateSourceVersion": "{{ServerBranch}}",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Config Template Download",
@@ -35,7 +38,8 @@
         "UpdateSourceData": "https://github.com/Greelan/AMPTemplates/raw/dev/arma2oaserver.cfg",
         "UpdateSourceArgs": "AMP_server.cfg",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Basic Config File Download",
@@ -44,28 +48,32 @@
         "UpdateSourceData": "https://github.com/Greelan/AMPTemplates/raw/dev/arma2oabasic.cfg",
         "UpdateSourceArgs": "basic.cfg",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Server Parameters File",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateFile",
         "UpdateSourceArgs": "{{$FullBaseDir}}parameters.txt",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Headless Client Parameters File",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateFile",
         "UpdateSourceArgs": "{{$FullBaseDir}}hc_parameters.txt",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Initialise Wine",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\""
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Disable Prefix Sound",
@@ -82,7 +90,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/arma2oamanagemods.sh",
         "UpdateSourceArgs": "managemods.sh",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Manage Mods",
@@ -99,7 +108,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/arma2oamanagemods.ps1",
         "UpdateSourceArgs": "managemods.ps1",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Manage Mods",

@@ -21,7 +21,8 @@
         "UpdateStageName": "Create Lip Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullRootDir}}lip"
+        "UpdateSourceArgs": "{{$FullRootDir}}lip",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Lip Download",
@@ -32,7 +33,8 @@
         "UpdateSourceTarget": "{{$FullRootDir}}lip",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Installation",
@@ -47,7 +49,8 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\""
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Winescript Download",
@@ -56,7 +59,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/Greelan/AMPTemplates/dev/levilaminawinescript.sh",
         "UpdateSourceArgs": "winescript.sh",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Install Windows Components",

@@ -3,7 +3,8 @@
         "UpdateStageName": "Create Download Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullRootDir}}srv"
+        "UpdateSourceArgs": "{{$FullRootDir}}srv",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
@@ -13,7 +14,8 @@
         "UpdateSourceTarget": "{{$FullRootDir}}srv",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Installation",
@@ -37,7 +39,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}AMP_Battle.txt",
         "UpdateSourceArgs": "{{$FullBaseDir}}Sample_Battle.txt",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Sample_Capture_the_Flag.txt Copy",
@@ -45,7 +48,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}AMP_Capture_the_Flag.txt",
         "UpdateSourceArgs": "{{$FullBaseDir}}Sample_Capture_the_Flag.txt",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Sample_Conquest.txt Copy",
@@ -53,7 +57,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}AMP_Conquest.txt",
         "UpdateSourceArgs": "{{$FullBaseDir}}Sample_Conquest.txt",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Sample_Deathmatch.txt Copy",
@@ -61,7 +66,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}AMP_Deathmatch.txt",
         "UpdateSourceArgs": "{{$FullBaseDir}}Sample_Deathmatch.txt",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Sample_Duel.txt Copy",
@@ -69,7 +75,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}AMP_Duel.txt",
         "UpdateSourceArgs": "{{$FullBaseDir}}Sample_Duel.txt",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Sample_Fight_and_Destroy.txt Copy",
@@ -77,7 +84,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}AMP_Fight_and_Destroy.txt",
         "UpdateSourceArgs": "{{$FullBaseDir}}Sample_Fight_and_Destroy.txt",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Sample_Invasion.txt Copy",
@@ -85,7 +93,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}AMP_Invasion.txt",
         "UpdateSourceArgs": "{{$FullBaseDir}}Sample_Invasion.txt",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Sample_Siege.txt Copy",
@@ -93,7 +102,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}AMP_Siege.txt",
         "UpdateSourceArgs": "{{$FullBaseDir}}Sample_Siege.txt",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Sample_Team_Deathmatch.txt Copy",
@@ -101,13 +111,15 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}AMP_Team_Deathmatch.txt",
         "UpdateSourceArgs": "{{$FullBaseDir}}Sample_Team_Deathmatch.txt",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Initialise Wine",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\""
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
     }
 ]
