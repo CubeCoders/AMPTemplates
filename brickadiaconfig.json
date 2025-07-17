@@ -13,21 +13,48 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Initial Map",
+        "DisplayName": "Server Start Mode",
         "Category": "Brickadia:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the map to start the server on",
-        "Keywords": "server,initial,map",
-        "FieldName": "Map",
+        "Description": "Sets the server start mode: Start the server with an empty world created on the specified Environment; or Start the server with the specified existing World Save",
+        "Keywords": "server,start,mode,environment,world",
+        "FieldName": "StartMode",
         "InputType": "enum",
-        "ParamFieldName": "Map",
-        "DefaultValue": "/Game/Maps/Plate/Plate",
+        "ParamFieldName": "StartMode",
+        "DefaultValue": "-environment={{Environment}}",
         "EnumValues": {
-            "/Game/Maps/Plate/Plate": "Plate (default)",
-            "/Game/Maps/Terrain/Peaks": "Peaks",
-            "/Game/Maps/Studio/Studio": "Studio",
-            "/Game/Maps/Space/Space": "Space"
+            "-environment={{Environment}}": "Load empty world",
+            "-world={{World}}": "Load specified world"
         }
+    },
+    {
+        "DisplayName": "Environment",
+        "Category": "Brickadia:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the environment to start the server on, if the Start Mode is set to 'Load empty world'",
+        "Keywords": "server,initial,map,environment",
+        "FieldName": "Environment",
+        "InputType": "enum",
+        "ParamFieldName": "Environment",
+        "DefaultValue": "Plate",
+        "EnumValues": {
+            "Plate": "Plate (default)",
+            "Peaks": "Peaks",
+            "Studio": "Studio",
+            "Space": "Space"
+        }
+    },
+    {
+        "DisplayName": "World Save",
+        "Category": "Brickadia:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the name of the world save to load when starting the server, if the Start Mode is set to 'Load specified world'",
+        "Keywords": "server,world,save,file",
+        "FieldName": "World",
+        "InputType": "text",
+        "ParamFieldName": "World",
+        "DefaultValue": "",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Player Limit",
