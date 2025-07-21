@@ -3,7 +3,7 @@ New-Item -Path $pluginsDir -ItemType Directory -Force | Out-Null
 
 # First arg controls overwrite
 $overwrite = $args[0]
-$guids = $args[1] -split '\s+'
+$guids = $args[1..($args.Count - 1)] | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
 
 # Temp dir for downloads
 $tempDir = Join-Path $env:TEMP ("torch_" + [guid]::NewGuid().ToString())
