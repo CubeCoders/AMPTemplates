@@ -4,7 +4,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "UpdateSourceArgs": "-c \"export XDG_RUNTIME_DIR=/tmp/xdg_runtime_amp; export WINEARCH=win64 WINEDEBUG=-all; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; /usr/bin/wineboot --init --update; /usr/bin/wine reg add \\\"HKLM\\System\\CurrentControlSet\\Control\\FileSystem\\\" /v \\\"LongPathsEnabled\\\" /t REG_DWORD /d 1 /f; /usr/bin/wineboot --shutdown --force; /usr/bin/wineboot --kill --force\"",
         "SkipOnFailure": false
     },
     {
