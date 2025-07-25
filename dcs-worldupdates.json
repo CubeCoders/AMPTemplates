@@ -80,7 +80,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"export XDG_RUNTIME_DIR=/tmp/xdg_runtime_amp; export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; cd dcs-world/server/DCSWorld/bin && mv -f DCS_updater.exe DCS_updater_initial.exe && echo \\\"\\\" && echo \\\"Installing/updating DCS World. This may take a while ...\\\" && WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wine DCS_updater_initial.exe --quiet update & while pgrep -a wine | grep -F \\\"DCS_updater_initial.exe\\\" >/dev/null >/dev/null; do sleep 10; done && /usr/bin/wineboot --shutdown --force; /usr/bin/wineboot --kill --force; mv -f DCS_updater_initial.exe DCS_updater.exe\"",
+        "UpdateSourceArgs": "-c \"export XDG_RUNTIME_DIR=/tmp/xdg_runtime_amp; export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; export WINEARCH=win64 WINEDEBUG=-all; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; cd dcs-world/server/DCSWorld/bin && mv -f DCS_updater.exe DCS_updater_initial.exe && echo \\\"\\\" && echo \\\"Installing/updating DCS World. This may take a while ...\\\" && /usr/bin/wine DCS_updater_initial.exe --quiet update & while pgrep -f \\\"{{$WineBaseDir}}DCSWorld\\bin\\DCS_updater_initial.exe\\\" >/dev/null; do sleep 10; done && /usr/bin/wineboot --shutdown --force; /usr/bin/wineboot --kill --force; mv -f DCS_updater_initial.exe DCS_updater.exe\"",
         "SkipOnFailure": false
     },
     {
