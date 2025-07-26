@@ -53,7 +53,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullRootDir}}.wine/drive_c/users/amp/Saved Games/DCS.dcs_serverrelease\\\" >/dev/null 2>&1; cd dcs-world/server && rm -f Saves && ln -sf \\\"../.wine/drive_c/users/amp/Saved Games/DCS.dcs_serverrelease\\\" ./Saves >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullRootDir}}.wine/drive_c/users/amp/Saved Games/DCS\\\" >/dev/null 2>&1; cd dcs-world/server && rm -f Saves && ln -sf \\\"../.wine/drive_c/users/amp/Saved Games/DCS\\\" ./Saves >/dev/null 2>&1\"",
         "SkipOnFailure": false
     },
     {
@@ -61,7 +61,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$savedGames = [Environment]::GetFolderPath('SavedGames'); $savesDir = Join-Path $savedGames 'DCS.dcs_serverrelease'; New-Item -ItemType Directory -Path $newDir -Force | Out-Null; cmd /c mklink /J \\\"{{$FullBaseDir}}Saves\\\" \\\"$savesDir\\\"\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$savedGames = [Environment]::GetFolderPath('SavedGames'); $savesDir = Join-Path $savedGames 'DCS'; New-Item -ItemType Junction -Path \\\"{{$FullBaseDir}}Saves\\\" -Target \\\"$savesDir\\\" -Force | Out-Null\"",
         "SkipOnFailure": false
     },
     {
@@ -88,7 +88,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'dcs-world/server/DCSWorld/bin'; Rename-Item -Path 'DCS_updater.exe' -NewName 'DCS_updater_initial.exe'; Write-Host \\\"\\\"; Write-Host \\\"Installing/updating DCS World. This may take a while ...\\\"; & ./DCS_updater_initial.exe --quiet update; Rename-Item -Path 'DCS_updater_initial.exe' -NewName 'DCS_updater.exe'\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'dcs-world/server/DCSWorld/bin'; Rename-Item -Path 'DCS_updater.exe' -NewName 'DCS_updater_initial.exe' -Force -ErrorAction SilentlyContinue | Out-Null; Write-Host \\\"\\\"; Write-Host \\\"Installing/updating DCS World. This may take a while ...\\\"; Start-Process -FilePath 'DCS_updater_initial.exe' -ArgumentList '--quiet update' -WindowStyle Hidden; while (Get-Process -Name 'DCS_updater_initial' -ErrorAction SilentlyContinue) { Start-Sleep -Seconds 10 }; Rename-Item -Path 'DCS_updater_initial.exe' -NewName 'DCS_updater.exe' -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure": false
     }
 ]
