@@ -61,7 +61,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$UserProfile = [Environment]::GetFolderPath('UserProfile'); $SavesDir = Join-Path $UserProfile 'Saved Games\\DCS'; New-Item -ItemType Junction -Path \\\"{{$FullBaseDir}}Saves\\\" -Target \\\"$SavesDir\\\" -Force | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$UserProfile = [Environment]::GetFolderPath('UserProfile'); $SavesDir = Join-Path $UserProfile 'Saved Games\\DCS'; New-Item -Path $SavesDir -ItemType Directory -Force | Out-Null; New-Item -ItemType Junction -Path \\\"{{$FullBaseDir}}Saves\\\" -Target \\\"$ScavesDir\\\" -Force | Out-Null\"",
         "SkipOnFailure": false
     },
     {
