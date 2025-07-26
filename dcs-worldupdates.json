@@ -88,7 +88,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'dcs-world/server/DCSWorld/bin'; Rename-Item -Path 'DCS_updater.exe' -NewName 'DCS_updater_initial.exe' -Force -ErrorAction SilentlyContinue | Out-Null; Write-Host \\\"\\\"; Write-Host \\\"Installing/updating DCS World. This may take a while ...\\\"; Start-Process -FilePath 'DCS_updater_initial.exe' -ArgumentList '--quiet update' -WindowStyle Hidden; while (Get-Process -Name 'DCS_updater_initial' -ErrorAction SilentlyContinue) { Start-Sleep -Seconds 10 }; Rename-Item -Path 'DCS_updater_initial.exe' -NewName 'DCS_updater.exe' -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'dcs-world/server/DCSWorld/bin'; Rename-Item -Path 'DCS_updater.exe' -NewName 'DCS_updater_initial.exe' -Force -ErrorAction SilentlyContinue | Out-Null; Write-Host \\\"\\\"; Write-Host \\\"Installing/updating DCS World. This may take a while ...\\\"; Start-Process -FilePath 'DCS_updater_initial.exe' -ArgumentList '--quiet update' -Wait -WindowStyle Hidden; Start-Sleep -Seconds 5; Rename-Item -Path 'DCS_updater_initial.exe' -NewName 'DCS_updater.exe' -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure": false
     }
 ]
