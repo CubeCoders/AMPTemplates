@@ -36,6 +36,18 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Artwork Webserver Binding",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$ApplicationIPBinding",
+        "InputType": "text",
+        "Hidden": true,
+        "ParamFieldName": "$.artwork.web_server_bind",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable Logging",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -74,7 +86,84 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Make Server Public",
+        "DisplayName": "Server Website",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the website people can visit to gain more information about the server",
+        "Keywords": "website,server,info",
+        "FieldName": "website",
+        "InputType": "text",
+        "ParamFieldName": "$.website",
+        "DefaultValue": "open.mp",
+        "Placeholder": "open.mp",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Discord Invite",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the address of the server discord that appears in the omp launcher",
+        "Keywords": "discord,invite,discord.invite",
+        "FieldName": "discord.invite",
+        "InputType": "text",
+        "ParamFieldName": "$.discord.invite",
+        "DefaultValue": "https://discord.gg/samp",
+        "Placeholder": "https://discord.gg/samp",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Light Banner URL",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the URL address for the server's light banner that appears in the omp launcher",
+        "Keywords": "banners,light,url,banners.light",
+        "FieldName": "banners.light",
+        "InputType": "text",
+        "ParamFieldName": "$.banners.light",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Dark Banner URL",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the URL address for the server's dark banner that appears in the omp launcher",
+        "Keywords": "banners,dark,url,banners.dark",
+        "FieldName": "banners.dark",
+        "InputType": "text",
+        "ParamFieldName": "$.banners.dark",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Logo URL",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the URL address for server's logo that appears in the omp launcher and discord status",
+        "Keywords": "logo,server,url",
+        "FieldName": "logo",
+        "InputType": "text",
+        "ParamFieldName": "$.logo",
+        "DefaultValue": "",
+        "EnumValues": {}
+    }
+    {
+        "DisplayName": "Announce To Masterlist",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will be announced to open.mp masterlist",
+        "Keywords": "announce,masterlist",
+        "FieldName": "announce",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.announce",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Server Query",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Server:dns:1",
         "Description": "If set, the server's information will be displayed in the server browser",
@@ -98,6 +187,22 @@
         "InputType": "password",
         "ParamFieldName": "$.password",
         "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Limit",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum number of players that may connect to the server at one time",
+        "Keywords": "max,maximum,players,limit,max_players",
+        "FieldName": "$MaxUsers",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "1000",
+        "ParamFieldName": "$.max_players",
+        "DefaultValue": "50",
+        "Placeholder": "50",
+        "Suffix": "players",
         "EnumValues": {}
     },
     {
@@ -128,30 +233,15 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Player Limit",
+        "DisplayName": "RCON Allow Teleport",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the maximum number of players that may connect to the server at one time",
-        "Keywords": "max,maximum,players,limit,max_players",
-        "FieldName": "$MaxUsers",
-        "InputType": "number",
-        "MinValue": "1",
-        "ParamFieldName": "$.max_players",
-        "DefaultValue": "50",
-        "Placeholder": "50",
-        "Suffix": "players",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Announce",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Toggles if the server should be announced to open.mp masterlist. Set to 'true' to enable or 'false' to disable",
-        "Keywords": "announce,masterlist",
-        "FieldName": "announce",
+        "Description": "If set, RCON admins will be teleported to their waypoint when they set one",
+        "Keywords": "rcon,allow,teleport,allow_teleport,rcon.allow_teleport",
+        "FieldName": "rcon.allow_teleport",
         "InputType": "checkbox",
-        "ParamFieldName": "$.announce",
-        "DefaultValue": "true",
+        "ParamFieldName": "$.rcon.allow_teleport",
+        "DefaultValue": "false",
         "EnumValues": {
             "False": "false",
             "True": "true"
@@ -160,9 +250,9 @@
     {
         "DisplayName": "Custom Models CDN",
         "Category": "open.mp:stadia_controller",
-        "Subcategory": "Artwork",
-        "Description": "An http address for a remote model server",
-        "Keywords": "artwork,cdn",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets an http address for a remote model server",
+        "Keywords": "artwork,cdn,artwork.cdn",
         "FieldName": "artwork.cdn",
         "InputType": "text",
         "ParamFieldName": "$.artwork.cdn",
@@ -172,21 +262,24 @@
     {
         "DisplayName": "Enable Custom Models",
         "Category": "open.mp:stadia_controller",
-        "Subcategory": "Artwork",
-        "Description": "Toggles if the server uses custom models from the /models folder. Set to 'true' to enable or 'false' to disable",
-        "Keywords": "artwork,enable,models",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will use custom models from the 'models' directory, or an alternative path specified under Custom Models Path",
+        "Keywords": "artwork,enable,models,artwork.enable",
         "FieldName": "artwork.enable",
         "InputType": "checkbox",
         "ParamFieldName": "$.artwork.enable",
         "DefaultValue": "true",
-        "EnumValues": {}
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
     },
     {
         "DisplayName": "Custom Models Path",
         "Category": "open.mp:stadia_controller",
-        "Subcategory": "Artwork",
-        "Description": "The path where the custom models are located",
-        "Keywords": "artwork,models,path",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets a custom path where custom models are located, as an alternative to the default 'models' directory",
+        "Keywords": "artwork,models,path,models_path,artwork.models_path",
         "FieldName": "artwork.models_path",
         "InputType": "text",
         "ParamFieldName": "$.artwork.models_path",
@@ -194,16 +287,42 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Custom Models Web Server Bind",
+        "DisplayName": "Plugins",
         "Category": "open.mp:stadia_controller",
-        "Subcategory": "Artwork",
-        "Description": "",
-        "Keywords": "artwork,web,server,bind",
-        "FieldName": "artwork.web_server_bind",
-        "InputType": "text",
-        "ParamFieldName": "$.artwork.web_server_bind",
-        "DefaultValue": "",
-        "ReadOnly": true,
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the .dll or .so files in the 'plugins' directory that the server should use to run as plugins. Plugins are scripts which are designed to enhance gamemodes and filterscripts. Don't include the file extension",
+        "Keywords": "pawn,legacy,plugins,legacy_plugins,pawn.legacy_plugins",
+        "FieldName": "pawn.legacy_plugins",
+        "InputType": "list",
+        "ParamFieldName": "$.pawn.legacy_plugins",
+        "DefaultValue": "[]",
+        "Special": "array:text",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Gamemodes",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the .amx files in the 'gamemodes' directory that the server should use to run as gamemode. Don't include the file extension",
+        "Keywords": "pawn,main,scripts,main_scripts,pawn.main_scripts",
+        "FieldName": "pawn.main_scripts",
+        "InputType": "list",
+        "ParamFieldName": "$.pawn.main_scripts",
+        "DefaultValue": "[\"test 1\"]",
+        "Special": "array:text",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Pawn Filterscripts",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the .amx files in the 'filterscripts' directory that the server should use to run as filterscripts. Filterscripts are scripts that run in the background of your gamemode, adding extras without editing the gamemode. Don't include the file extension",
+        "Keywords": "pawn,side,scripts,side_scripts,pawn.side_scripts",
+        "FieldName": "pawn.side_scripts",
+        "InputType": "list",
+        "ParamFieldName": "$.pawn.side_scripts",
+        "DefaultValue": "[]",
+        "Special": "array:text",
         "EnumValues": {}
     },
     {
@@ -215,21 +334,6 @@
         "FieldName": "chat_input_filter",
         "InputType": "checkbox",
         "ParamFieldName": "$.chat_input_filter",
-        "DefaultValue": "true",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
-        "DisplayName": "Enable Query",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Toggles if the server information should be displayed in the server browser. Set to 'true' to enable or 'false' to disable. Players can still join a server that has disabled querying, but the server browser will not display any information",
-        "Keywords": "query,server,information",
-        "FieldName": "enable_query",
-        "InputType": "checkbox",
-        "ParamFieldName": "$.enable_query",
         "DefaultValue": "true",
         "EnumValues": {
             "False": "false",
@@ -772,16 +876,18 @@
         }
     },
     {
-        "DisplayName": "Maximum Bots",
+        "DisplayName": "Bot Limit",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "The maximum amount of NPCs your server can hold. By changing this number you can alter how many of the player slots can be used by NPCs",
+        "Description": "Sets the maximum amount of NPCs the server can hold. Affects how many of the player slots can be used by NPCs",
         "Keywords": "npcs,players,max,bots,max_bots",
         "FieldName": "max_bots",
         "InputType": "number",
+        "MinValue": "0",
         "ParamFieldName": "$.max_bots",
         "DefaultValue": "0",
         "Placeholder": "0",
+        "Suffix": "bots",
         "EnumValues": {}
     },
     {
@@ -1046,60 +1152,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Pawn Legacy Plugins",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Pawn",
-        "Description": "The .dll or .so file in the /plugins folder, the server should use to run as a plugin. Plugins are scripts which are designed to enhance gamemodes and filterscripts",
-        "Keywords": "pawn,legacy,plugins",
-        "FieldName": "pawn.legacy_plugins",
-        "InputType": "list",
-        "ParamFieldName": "$.pawn.legacy_plugins",
-        "DefaultValue": "[]",
-        "Special": "array:text",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Pawn Main Scripts",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Pawn",
-        "Description": "The .amx file in the /gamemodes folder, the server should use to run as a gamemode",
-        "Keywords": "pawn,main,scripts",
-        "FieldName": "pawn.main_scripts",
-        "InputType": "list",
-        "ParamFieldName": "$.pawn.main_scripts",
-        "DefaultValue": "[\"test 1\"]",
-        "Special": "array:text",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Pawn Side Scripts",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Pawn",
-        "Description": "The .amx file in the /filterscripts folder, the server should use to run as a filterscript. Filterscripts are scripts that run in the background of your gamemode. They are there to add extras to the server without editing the gamemode. It is very useful if you want to carry a specific property to more than one gamemode",
-        "Keywords": "pawn,side,scripts",
-        "FieldName": "pawn.side_scripts",
-        "InputType": "list",
-        "ParamFieldName": "$.pawn.side_scripts",
-        "DefaultValue": "[]",
-        "Special": "array:text",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "RCON Allow Teleport",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "RCON",
-        "Description": "Determine whether RCON admins will be teleported to their waypoint when they set one",
-        "Keywords": "rcon,allow,teleport,allow_teleport",
-        "FieldName": "rcon.allow_teleport",
-        "InputType": "checkbox",
-        "ParamFieldName": "$.rcon.allow_teleport",
-        "DefaultValue": "false",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
         "DisplayName": "Sleep",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -1127,65 +1179,5 @@
             "False": "false",
             "True": "true"
         }
-    },
-    {
-        "DisplayName": "Website",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "The website people can visit to gain more information about the server",
-        "Keywords": "website,server,info",
-        "FieldName": "website",
-        "InputType": "text",
-        "ParamFieldName": "$.website",
-        "DefaultValue": "open.mp",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Discord Invite",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "The address of your server discord that appears in the omp launcher",
-        "Keywords": "discord,invite",
-        "FieldName": "discord.invite",
-        "InputType": "text",
-        "ParamFieldName": "$.discord.invite",
-        "DefaultValue": "https://discord.gg/samp",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Light Banner URL",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Your server's light banner URL address that appears in the omp launcher",
-        "Keywords": "banners,light,url",
-        "FieldName": "banners.light",
-        "InputType": "text",
-        "ParamFieldName": "$.banners.light",
-        "DefaultValue": "",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Dark Banner URL",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Your server's dark banner URL address that appears in the omp launcher",
-        "Keywords": "banners,dark,url",
-        "FieldName": "banners.dark",
-        "InputType": "text",
-        "ParamFieldName": "$.banners.dark",
-        "DefaultValue": "",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Server Logo URL",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Your server's logo URL address that appears in the omp launcher and discord status",
-        "Keywords": "logo,server,url",
-        "FieldName": "logo",
-        "InputType": "text",
-        "ParamFieldName": "$.logo",
-        "DefaultValue": "",
-        "EnumValues": {}
     }
 ]
