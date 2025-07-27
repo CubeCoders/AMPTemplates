@@ -146,7 +146,7 @@
         "ParamFieldName": "$.logo",
         "DefaultValue": "",
         "EnumValues": {}
-    }
+    },
     {
         "DisplayName": "Announce To Masterlist",
         "Category": "open.mp:stadia_controller",
@@ -334,6 +334,35 @@
         "FieldName": "chat_input_filter",
         "InputType": "checkbox",
         "ParamFieldName": "$.chat_input_filter",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Sleep Period",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets how long the main open.mp and raknet networking thread will 'sleep' idly during each sync cycle. Higher values decrease server processing, but reduce sync quality, and vice versa. Don't change this unless your player count is very high and you have server fps stability issues",
+        "Keywords": "sleep,networking,thread",
+        "FieldName": "sleep",
+        "InputType": "number",
+        "ParamFieldName": "$.sleep",
+        "DefaultValue": "5.0",
+        "Placeholder": "5.0",
+        "Suffix": "milliseconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Use Dynamic Ticks",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "dynticks config is basically for keeping your server's tickrate at a constant count by using CPU more to cover the gap if there's any drop. It is calculated using provided sleep value so if sleep is 5, constant tick count would be 1000 / 5 = 200 ticks per second. open.mp modifies internal sleep value on the fly based on each tick's code execution time, just to keep it steady at 200 ticks, and lower sleep means more CPU usage (which is not a massive difference if server code is written well)",
+        "Keywords": "dynamic,ticks,use_dyn_ticks",
+        "FieldName": "use_dyn_ticks",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.use_dyn_ticks",
         "DefaultValue": "true",
         "EnumValues": {
             "False": "false",
@@ -1150,34 +1179,5 @@
         "DefaultValue": "30000",
         "Placeholder": "30000",
         "EnumValues": {}
-    },
-    {
-        "DisplayName": "Sleep",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "The time in milliseconds the main open.mp and raknet networking thread will 'sleep' idly during each sync cycle. Higher values decrease server processing, but reduce sync quality. Lower values increase server processing, but improve sync quality. It is not advisable to change this value unless your player count is very high and you have server fps stability issues",
-        "Keywords": "sleep,networking,thread",
-        "FieldName": "sleep",
-        "InputType": "number",
-        "ParamFieldName": "$.sleep",
-        "DefaultValue": "5.0",
-        "Placeholder": "5.0",
-        "Suffix": "milliseconds",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Use Dynamic Ticks",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "dynticks config is basically for keeping your server's tickrate at a constant count by using CPU more to cover the gap if there's any drop. It is calculated using provided sleep value so if sleep is 5, constant tick count would be 1000 / 5 = 200 ticks per second. open.mp modifies internal sleep value on the fly based on each tick's code execution time, just to keep it steady at 200 ticks, and lower sleep means more CPU usage (which is not a massive difference if server code is written well)",
-        "Keywords": "dynamic,ticks,use_dyn_ticks",
-        "FieldName": "use_dyn_ticks",
-        "InputType": "checkbox",
-        "ParamFieldName": "$.use_dyn_ticks",
-        "DefaultValue": "true",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
     }
 ]
