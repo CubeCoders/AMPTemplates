@@ -326,21 +326,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Chat Input Filter",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Toggles the chat input filter. Disable it to use of chars like % in the chat. You can also use the ToggleChatTextReplacement function",
-        "Keywords": "chat,input,filter",
-        "FieldName": "chat_input_filter",
-        "InputType": "checkbox",
-        "ParamFieldName": "$.chat_input_filter",
-        "DefaultValue": "true",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
         "DisplayName": "Sleep Period",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -370,11 +355,23 @@
         }
     },
     {
+        "DisplayName": "Language",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the language that appears in the server browser. Players can use this to filter servers by language in the server browser",
+        "Keywords": "language,server,browser",
+        "FieldName": "language",
+        "InputType": "text",
+        "ParamFieldName": "$.language",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Allow Interior Weapons",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Toggles whether the usage of weapons in interiors is allowed or not. 'true' to enable weapons in interiors, 'false' to disable",
-        "Keywords": "game,allow,interior,weapons",
+        "Description": "If set, the usage of weapons in interiors will be allowed",
+        "Keywords": "game,allow,interior,weapons,allow_interior_weapons,game.allow_interior_weapons",
         "FieldName": "game.allow_interior_weapons",
         "InputType": "checkbox",
         "ParamFieldName": "$.game.allow_interior_weapons",
@@ -385,11 +382,26 @@
         }
     },
     {
+        "DisplayName": "Enable Chat Radius",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, enables the Chat Radius",
+        "Keywords": "game,use,chat,radius,enable_chat_radius,game.enable_chat_radius",
+        "FieldName": "game.use_chat_radius",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.game.use_chat_radius",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
         "DisplayName": "Chat Radius",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
         "Description": "Set a radius limitation for the chat. Only players at a certain distance from the player will see their message in the chat. Also changes the distance at which a player can see other players on the map at the same distance",
-        "Keywords": "game,chat,radius,chat_radius",
+        "Keywords": "game,chat,radius,chat_radius,game.chat_radius",
         "FieldName": "game.chat_radius",
         "InputType": "number",
         "ParamFieldName": "$.game.chat_radius",
@@ -398,11 +410,26 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Chat Input Filter",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, the chat input filter will be enabled. Disable this setting to allow use of chars like % in the chat",
+        "Keywords": "chat,input,filter,chat_input_filter",
+        "FieldName": "chat_input_filter",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.chat_input_filter",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
         "DisplayName": "Death Drop Amount",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
         "Description": "",
-        "Keywords": "game,death,drop,amount",
+        "Keywords": "game,death,drop,amount,death_drop_amount,game.death_drop_amount",
         "FieldName": "game.death_drop_amount",
         "InputType": "number",
         "ParamFieldName": "$.game.death_drop_amount",
@@ -414,8 +441,8 @@
         "DisplayName": "Gravity",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "The global gravity that the server uses",
-        "Keywords": "game,gravity",
+        "Description": "Sets the global gravity that the server uses",
+        "Keywords": "game,gravity,game.gravity",
         "FieldName": "game.gravity",
         "InputType": "number",
         "ParamFieldName": "$.game.gravity",
@@ -427,49 +454,52 @@
         "DisplayName": "Group Player Objects",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Per-player and global objects share an ID pool in SA:MP. If an ID was 'assigned' to players each player could have a unique object with that ID, but if you created the maximum global objects you couldn't then create any per-player objects. If player objects grouping is enabled the server will try to find an already used player object slot by another player",
-        "Keywords": "game,group,player,objects",
+        "Description": "If set, the server will try to find a player object slot already used by another player. Since per-player and global objects share an ID pool, if unique object IDs were assigned to each player, per-player objects could not be created once the maximum global objects were reached",
+        "Keywords": "game,group,player,objects,group_player_objects,game.group_player_objects",
         "FieldName": "game.group_player_objects",
         "InputType": "checkbox",
         "ParamFieldName": "$.game.group_player_objects",
         "DefaultValue": "false",
-        "EnumValues": {}
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
     },
     {
         "DisplayName": "Lag Compensation Mode",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "0: Fully disable lag compensation. 1: Fully enable lag compensation. 2: Enable position-only lag compensation. This means player rotation won't be lag compensated for",
-        "Keywords": "game,lag,compensation,mode",
+        "Description": "Sets the lag compensation mode. 'Enable position-only' means player rotation won't be lag compensated for",
+        "Keywords": "game,lag,compensation,mode,lag_compensation_mode,game.lag_compensation_mode",
         "FieldName": "game.lag_compensation_mode",
-        "InputType": "number",
+        "InputType": "enum",
         "ParamFieldName": "$.game.lag_compensation_mode",
         "DefaultValue": "1",
-        "Placeholder": "1",
-        "ReadOnly": true,
-        "Rule": true,
-        "EnumValues": {}
+        "EnumValues": {
+            "0": "Fully disable",
+            "1": "Fully enable (default)",
+            "2": "Enable position-only"
+        }
     },
     {
-        "DisplayName": "Map",
+        "DisplayName": "Mapname Display",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "The mapname that appears in the server browser. This can be anything, e.g. My Stunt Map",
-        "Keywords": "game,map",
+        "Description": "Sets the mapname that appears in the server browser. This can be anything",
+        "Keywords": "game,map,game.map",
         "FieldName": "game.map",
         "InputType": "text",
         "ParamFieldName": "$.game.map",
         "DefaultValue": "",
-        "ReadOnly": true,
-        "Rule": true,
+        "Placeholder": "My Stunt Map",
         "EnumValues": {}
     },
     {
-        "DisplayName": "Mode",
+        "DisplayName": "Gamemode Display",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "The mode that will be shown in the server browser. Using SetGameModeText has the same effect and overrides the value used in config.json. If you have multiple gamemodes that require different gamemode texts, use that function",
-        "Keywords": "game,mode",
+        "Description": "Sets the gamemode that will be shown in the server browser. If the server has multiple gamemodes that require different gamemode texts, use [the SetGameModeText function](https://open.mp/docs/scripting/functions/SetGameModeText), which overrides this setting",
+        "Keywords": "game,mode,gamemode,game.mode",
         "FieldName": "game.mode",
         "InputType": "text",
         "ParamFieldName": "$.game.mode",
@@ -480,8 +510,8 @@
         "DisplayName": "Nametag Draw Radius",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Set the maximum distance to display the names of players",
-        "Keywords": "game,nametag,draw,radius",
+        "Description": "Sets the maximum distance to display the names of players",
+        "Keywords": "game,nametag,draw,radius,nametag_draw_radius,game.nametag_draw_radius",
         "FieldName": "game.nametag_draw_radius",
         "InputType": "number",
         "ParamFieldName": "$.game.nametag_draw_radius",
@@ -493,8 +523,8 @@
         "DisplayName": "Player Marker Draw Radius",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Set the marker radius for all players",
-        "Keywords": "game,player,marker,draw,radius",
+        "Description": "Sets the marker radius for all players",
+        "Keywords": "game,player,marker,draw,radius,player_marker_draw_radius,game.player_marker_draw_radius",
         "FieldName": "game.player_marker_draw_radius",
         "InputType": "number",
         "ParamFieldName": "$.game.player_marker_draw_radius",
@@ -506,21 +536,24 @@
         "DisplayName": "Player Marker Mode",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "0: Marker mode off. 1: Marker mode global. 2: Marker mode streamed",
-        "Keywords": "game,player,marker,mode",
+        "Description": "Sets the [player marker mode](https://open.mp/docs/scripting/resources/markermodes)",
+        "Keywords": "game,player,marker,mode,player_marker_mode,game.player_marker_mode",
         "FieldName": "game.player_marker_mode",
-        "InputType": "number",
+        "InputType": "enum",
         "ParamFieldName": "$.game.player_marker_mode",
         "DefaultValue": "1",
-        "Placeholder": "1",
-        "EnumValues": {}
+        "EnumValues": {
+            "0": "Off",
+            "1": "Global (default)",
+            "2": "Streamed"
+        }
     },
     {
-        "DisplayName": "Time",
+        "DisplayName": "Global Time",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "The global time that the server uses and will be shown in the server browser",
-        "Keywords": "game,time",
+        "Description": "Sets the global time that the server uses and that will be shown in the server browser",
+        "Keywords": "game,time,global,time.global",
         "FieldName": "game.time",
         "InputType": "number",
         "ParamFieldName": "$.game.time",
@@ -532,27 +565,11 @@
         "DisplayName": "Use All Animations",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Allow use of the animations missing from some versions. 'true' to enable all animations, 'false' to disable",
-        "Keywords": "game,use,all,animations",
+        "Description": "If set, allows use of the animations missing from some versions",
+        "Keywords": "game,use,all,animations,use_all_animations,game.use_all_animations",
         "FieldName": "game.use_all_animations",
         "InputType": "checkbox",
         "ParamFieldName": "$.game.use_all_animations",
-        "DefaultValue": "false",
-        "ReadOnly": true,
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
-        "DisplayName": "Use Chat Radius",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "Enable/Disable chat radius",
-        "Keywords": "game,use,chat,radius",
-        "FieldName": "game.use_chat_radius",
-        "InputType": "checkbox",
-        "ParamFieldName": "$.game.use_chat_radius",
         "DefaultValue": "false",
         "EnumValues": {
             "False": "false",
@@ -563,28 +580,12 @@
         "DisplayName": "Use Entry Exit Markers",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Enable/Disable all the interior entrances and exits in the game (the yellow arrows at doors)",
-        "Keywords": "game,use,entry,exit,markers",
+        "Description": "If set, enables all the interior entrances and exits in the game (the yellow arrows at doors)",
+        "Keywords": "game,use,entry,exit,markers,use_entry_exit_markers,game.use_entry_exit_markers",
         "FieldName": "game.use_entry_exit_markers",
         "InputType": "checkbox",
         "ParamFieldName": "$.game.use_entry_exit_markers",
         "DefaultValue": "true",
-        "ReadOnly": true,
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
-        "DisplayName": "Use Instagib",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "Instagib is an old configurable variable that is not available in SA-MP client anymore. Instagib is basically instakill or instant kill, enables one shot one kill feature in game (it's not available at the moment because SA-MP removed this on client side)",
-        "Keywords": "game,use,instagib",
-        "FieldName": "game.use_instagib",
-        "InputType": "checkbox",
-        "ParamFieldName": "$.game.use_instagib",
-        "DefaultValue": "false",
         "EnumValues": {
             "False": "false",
             "True": "true"
@@ -594,8 +595,8 @@
         "DisplayName": "Use Manual Engine and Lights",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Control vehicle engines and lights. 'false' prevents the game automatically turning the engine on/off when players enter/exit vehicles and headlights automatically coming on when it is dark",
-        "Keywords": "game,use,manual,engine,lights",
+        "Description": "If set, engines will be automatically turned on/off when players enter/exit vehicles, and headlights will automatically come on when it is dark",
+        "Keywords": "game,use,manual,engine,lights,use_manual_engine_and_lights",
         "FieldName": "game.use_manual_engine_and_lights",
         "InputType": "checkbox",
         "ParamFieldName": "$.game.use_manual_engine_and_lights",
@@ -743,18 +744,6 @@
         "ParamFieldName": "$.game.weather",
         "DefaultValue": "10",
         "Placeholder": "10",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Language",
-        "Category": "open.mp:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "The language that appears in the server browser. Players can use this to filter servers by language in the server browser",
-        "Keywords": "language,server,browser",
-        "FieldName": "language",
-        "InputType": "text",
-        "ParamFieldName": "$.language",
-        "DefaultValue": "",
         "EnumValues": {}
     },
     {
