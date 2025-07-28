@@ -667,7 +667,7 @@
         }
     },
     {
-        "DisplayName": "Use Stunt Bonuses",
+        "DisplayName": "Enable Stunt Bonuses",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
         "Description": "If set, enables stunt bonuses for all players, so that players will receive monetary rewards when performing a stunt in a vehicle (such as a wheelie)",
@@ -682,10 +682,10 @@
         }
     },
     {
-        "DisplayName": "Use Vehicle Friendly Fire",
+        "DisplayName": "Enable Vehicle Friendly Fire",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Enable friendly fire for team vehicles. Players will be unable to damage teammates' vehicles",
+        "Description": "If set, enables friendly fire for team vehicles. Players will be unable to damage teammates' vehicles",
         "Keywords": "game,use,vehicle,friendly,fire,use_vehicle_friendly_fire",
         "FieldName": "game.use_vehicle_friendly_fire",
         "InputType": "checkbox",
@@ -700,45 +700,53 @@
         "DisplayName": "Use Zone Names",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Allows to turn on zone / area names such as the 'Vinewood' or 'Doherty' text at the bottom-right of the screen as they enter the area",
-        "Keywords": "game,use,zone,names,use_zone_names",
+        "Description": "If set, turns on zone/area names, such as the 'Vinewood' or 'Doherty' text at the bottom-right of the screen, as players enter the area",
+        "Keywords": "game,use,zone,names,use_zone_names,game.use_zone_names",
         "FieldName": "game.use_zone_names",
         "InputType": "checkbox",
         "ParamFieldName": "$.game.use_zone_names",
         "DefaultValue": "false",
-        "EnumValues": {}
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
     },
     {
         "DisplayName": "Validate Animations",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Validate animations for the players",
-        "Keywords": "game,validate,animations,validate_animations",
+        "Description": "If set, validates animations for the players",
+        "Keywords": "game,validate,animations,validate_animations,game.validate_animations",
         "FieldName": "game.validate_animations",
         "InputType": "checkbox",
         "ParamFieldName": "$.game.validate_animations",
         "DefaultValue": "true",
-        "EnumValues": {}
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
     },
     {
         "DisplayName": "Vehicle Respawn Time",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Set vehicles respawn time in milliseconds. (Default 10 seconds)",
-        "Keywords": "game,vehicle,respawn,time,vehicle_respawn_time",
+        "Description": "Sets the vehicle respawn time",
+        "Keywords": "game,vehicle,respawn,time,vehicle_respawn_time,game.vehicle_respawn_time",
         "FieldName": "game.vehicle_respawn_time",
         "InputType": "number",
+        "MinValue": "0",
         "ParamFieldName": "$.game.vehicle_respawn_time",
         "DefaultValue": "10000",
         "Placeholder": "10000",
+        "Suffix": "milliseconds",
         "EnumValues": {}
     },
     {
-        "DisplayName": "Weather",
+        "DisplayName": "Global Weather",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "The global weather that the server uses and will be shown in the server browser",
-        "Keywords": "game,weather",
+        "Description": "Sets the global weather that the server uses and that will be shown in the server browser",
+        "Keywords": "game,weather,global,game.weather",
         "FieldName": "game.weather",
         "InputType": "number",
         "ParamFieldName": "$.game.weather",
