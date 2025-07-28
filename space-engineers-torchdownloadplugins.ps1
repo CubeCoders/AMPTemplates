@@ -11,6 +11,9 @@ New-Item -Path $tempDir -ItemType Directory -Force | Out-Null
 
 Write-Output "Downloading plugins"
 
+$ProgressPreference='SilentlyContinue'
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 # Loop through each provided GUID
 foreach ($guid in $guids) {
     $cleanGuid = $guid -replace '[{}\s]', ''
