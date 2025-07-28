@@ -36,5 +36,11 @@
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cd openmp/server && for file in config.json bans.json; do [ -e \\\"$file\\\" ] && rm -f \\\"Server/$file\\\" >/dev/null 2>&1; done; \\cp -rf Server/* ./ >/dev/null 2>&1 && rm -rf Server >/dev/null 2>&1\"",
         "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create plugins Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}plugins"
     }
 ]

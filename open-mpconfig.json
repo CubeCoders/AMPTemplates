@@ -363,7 +363,7 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Plugins",
+        "DisplayName": "Legacy Plugins",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Server:dns:1",
         "Description": "Sets the .dll or .so files in the 'plugins' directory that the server should use to run as plugins. Plugins are scripts which are designed to enhance gamemodes and filterscripts. Don't include the file extension",
@@ -379,17 +379,17 @@
         "DisplayName": "Gamemodes",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the .amx files in the 'gamemodes' directory that the server should use to run as gamemode. Don't include the file extension",
+        "Description": "Sets the .amx files in the 'gamemodes' directory that the server should use to run as gamemodes. Don't include the file extension",
         "Keywords": "pawn,main,scripts,main_scripts,pawn.main_scripts",
         "FieldName": "pawn.main_scripts",
         "InputType": "list",
         "ParamFieldName": "$.pawn.main_scripts",
-        "DefaultValue": "[\"test 1\"]",
+        "DefaultValue": "[\"gungame 1\"]",
         "Special": "array:text",
         "EnumValues": {}
     },
     {
-        "DisplayName": "Pawn Filterscripts",
+        "DisplayName": "Filterscripts",
         "Category": "open.mp:stadia_controller",
         "Subcategory": "Server:dns:1",
         "Description": "Sets the .amx files in the 'filterscripts' directory that the server should use to run as filterscripts. Filterscripts are scripts that run in the background of your gamemode, adding extras without editing the gamemode. Don't include the file extension",
@@ -398,6 +398,19 @@
         "InputType": "list",
         "ParamFieldName": "$.pawn.side_scripts",
         "DefaultValue": "[]",
+        "Special": "array:text",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Component Exclusions",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the .dll or .so files in the 'components' directory that the server should not load. Don't include the file extension",
+        "Keywords": "component,exclusions,exclude",
+        "FieldName": "exclude",
+        "InputType": "list",
+        "ParamFieldName": "$.exclude",
+        "DefaultValue": "[\"Fixes\"]",
         "Special": "array:text",
         "EnumValues": {}
     },
@@ -1207,5 +1220,35 @@
         "Placeholder": "1000",
         "Suffix": "milliseconds",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable LAN Mode",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Network:lan:4",
+        "Description": "If set, the server will operate in LAN mode",
+        "Keywords": "network,lan,mode,use_lan_mode,network.use_lan_mode",
+        "FieldName": "network.use_lan_mode",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.network.use_lan_mode",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Use open.mp Encryption",
+        "Category": "open.mp:stadia_controller",
+        "Subcategory": "Network:lan:4",
+        "Description": "If set, enables open.mp encryption for network traffic",
+        "Keywords": "network,encryption,omp,use_omp_encryption,network.use_omp_encryption",
+        "FieldName": "network.use_omp_encryption",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.network.use_omp_encryption",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
     }
 ]
