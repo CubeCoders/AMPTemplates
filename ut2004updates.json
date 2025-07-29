@@ -12,7 +12,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd ut2004; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $DownloadUrl = \\\"https://github.com/IceOfWraith/UT2004.git\\\"; if (-Not (Test-Path .git)) { Write-Output \\\"Installing the server\\\"; git clone \\\"$DownloadUrl\\\" srv 1> $null; Copy-Item srv/* ./ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; if ($?) { Write-Output \\\"Server installed\\\" } } else { Write-Output \\\"Updating the server\\\"; git fetch --all 1> $null; if ($?) { git pull 1> $null }; if ($?) { Write-Output \\\"Server updated\\\" } }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd ut2004; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $DownloadUrl = \\\"https://github.com/IceOfWraith/UT2004.git\\\"; if (-Not (Test-Path .git)) { Write-Output \\\"Installing the server\\\"; git clone \\\"$DownloadUrl\\\" srv 1> $null; Copy-Item srv/* ./ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; if ($?) { Write-Output \\\"Server installed\\\" } } else { Write-Output \\\"Updating the server\\\"; git fetch --all 1> $null; if ($LASTEXITCODE -eq 0) { git pull 1> $null }; if ($LASTEXITCODE -eq 0) { Write-Output \\\"Server updated\\\" } }\"",
         "SkipOnFailure": false
     },
     {
