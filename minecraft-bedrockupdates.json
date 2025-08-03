@@ -20,30 +20,27 @@
     {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $DOWNLOAD_URL=((Invoke-WebRequest -UseBasicParsing -Uri 'https://www.minecraft.net/en-us/download/server/bedrock' -TimeoutSec 15).Links | ? class -match 'btn' | ? href -match 'bin-win/bedrock-server' | select -ExpandProperty href); if (-not $DOWNLOAD_URL -or $DOWNLOAD_URL -eq '') { $DOWNLOAD_URL=((Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/minecraft-bedrockdownloadurl.json').Content | ConvertFrom-Json).Release.Windows }; Invoke-WebRequest -UseBasicParsing -Uri $DOWNLOAD_URL -OutFile 'bedrock_server.zip'\"",
-        "UpdateSourceConditionSetting": "ServerStream",
-        "UpdateSourceConditionValue": "release-latest",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Server Extract",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "ExtractArchive",
-        "UpdateSourceData": "bedrock_server.zip",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://net-secondary.web.minecraft-services.net/api/v1.0/download/links",
+        "UpdateSourceArgs": "$.result.links[0].downloadUrl",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "ServerStream",
-        "UpdateSourceConditionValue": "release-latest"
+        "UpdateSourceConditionValue": "release-latest",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd Minecraft && DOWNLOAD_URL=$(timeout 15s wget -qO- --user-agent=\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.$((1 + RANDOM % 4000)).212 Safari/537.36\\\" https://www.minecraft.net/en-us/download/server/bedrock | grep -o \\\"https://[^\\\\\\\"]*/bin-linux/bedrock-server-[^\\\\\\\"]*\\\"); [[ -z $DOWNLOAD_URL || ! -n $DOWNLOAD_URL ]] && DOWNLOAD_URL=$(wget -qO- https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/minecraft-bedrockdownloadurl.json | jq -r \\\".Release.Linux\\\"); wget -qO bedrock_server.zip --user-agent=\\\"CubeCoders/AMP_DLM\\\" $DOWNLOAD_URL && unzip -qo bedrock_server.zip && rm -rf bedrock_server.zip\"",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://net-secondary.web.minecraft-services.net/api/v1.0/download/links",
+        "UpdateSourceArgs": "$.result.links[1].downloadUrl",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "ServerStream",
         "UpdateSourceConditionValue": "release-latest",
         "SkipOnFailure": false
@@ -51,30 +48,27 @@
     {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $DOWNLOAD_URL=((Invoke-WebRequest -UseBasicParsing -Uri 'https://www.minecraft.net/en-us/download/server/bedrock' -TimeoutSec 15).Links | ? class -match 'btn' | ? href -match 'bin-win-preview/bedrock-server' | select -ExpandProperty href); if (-not $DOWNLOAD_URL -or $DOWNLOAD_URL -eq '') { $DOWNLOAD_URL=((Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/minecraft-bedrockdownloadurl.json').Content | ConvertFrom-Json).Preview.Windows }; Invoke-WebRequest -UseBasicParsing -Uri $DOWNLOAD_URL -OutFile 'bedrock_server.zip'\"",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://net-secondary.web.minecraft-services.net/api/v1.0/download/links",
+        "UpdateSourceArgs": "$.result.links[2].downloadUrl",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "ServerStream",
         "UpdateSourceConditionValue": "preview-latest",
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Server Extract",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "ExtractArchive",
-        "UpdateSourceData": "bedrock_server.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
-        "UpdateSourceConditionSetting": "ServerStream",
-        "UpdateSourceConditionValue": "preview-latest"
-    },
-    {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd Minecraft && DOWNLOAD_URL=$(timeout 15s wget -qO- --user-agent=\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.$((1 + RANDOM % 4000)).212 Safari/537.36\\\" https://www.minecraft.net/en-us/download/server/bedrock | grep -o \\\"https://[^\\\\\\\"]*/bin-linux-preview/bedrock-server-[^\\\\\\\"]*\\\") [[ -z $DOWNLOAD_URL || ! -n $DOWNLOAD_URL ]] && DOWNLOAD_URL=$(wget -qO- https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/minecraft-bedrockdownloadurl.json | jq -r \\\".Preview.Linux\\\"); wget -qO bedrock_server.zip --user-agent=\\\"CubeCoders/AMP_DLM\\\" $DOWNLOAD_URL && unzip -qo bedrock_server.zip && rm -rf bedrock_server.zip\"",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://net-secondary.web.minecraft-services.net/api/v1.0/download/links",
+        "UpdateSourceArgs": "$.result.links[3].downloadUrl",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "ServerStream",
         "UpdateSourceConditionValue": "preview-latest",
         "SkipOnFailure": false
@@ -89,7 +83,8 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "ServerStream",
-        "UpdateSourceConditionValue": "release-specificversion"
+        "UpdateSourceConditionValue": "release-specificversion",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
@@ -113,7 +108,8 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "ServerStream",
-        "UpdateSourceConditionValue": "preview-specificversion"
+        "UpdateSourceConditionValue": "preview-specificversion",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
@@ -125,13 +121,15 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "ServerStream",
-        "UpdateSourceConditionValue": "preview-specificversion"
+        "UpdateSourceConditionValue": "preview-specificversion",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Make Server Executable",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullBaseDir}}bedrock_server"
+        "UpdateSourceArgs": "{{$FullBaseDir}}bedrock_server",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Allowlist.json Restore",

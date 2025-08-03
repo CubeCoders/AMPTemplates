@@ -4,7 +4,8 @@
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "1026340",
-        "UpdateSourceArgs": "602960"
+        "UpdateSourceArgs": "602960",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Directory Creation",
@@ -27,6 +28,33 @@
         "OverwriteExistingFiles": false,
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/barotraumaserversettings.xml",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "UpdateSourceArgs": "serversettings.xml"
+        "UpdateSourceArgs": "serversettings.xml",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install LuaCsForBarotrauma",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/evilfactory/LuaCsForBarotrauma/releases/download/latest/luacsforbarotrauma_patch_windows_server.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallLuaCsForBarotrauma",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install LuaCsForBarotrauma",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/evilfactory/LuaCsForBarotrauma/releases/download/latest/luacsforbarotrauma_patch_linux_server.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallLuaCsForBarotrauma",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     }
 ]

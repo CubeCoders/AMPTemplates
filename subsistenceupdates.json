@@ -6,14 +6,16 @@
         "UpdateSourceData": "1362640",
         "UpdateSourceArgs": "418030",
         "ForceDownloadPlatform": "Windows",
-        "UpdateSourceVersion": "{{ServerBranch}}"
+        "UpdateSourceVersion": "{{ServerBranch}}",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Initialise Wine",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\""
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Winescript Download",
@@ -22,19 +24,22 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/subsistencewinescript.sh",
         "UpdateSourceArgs": "winescript.sh",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Install Windows Components",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "./winescript.sh"
+        "UpdateSourceArgs": "./winescript.sh",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Start Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "StartApplication"
+        "UpdateSource": "StartApplication",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Pause Update Stages",
@@ -45,6 +50,7 @@
     {
         "UpdateStageName": "Stop Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "ShutdownApplication"
+        "UpdateSource": "ShutdownApplication",
+        "SkipOnFailure": false
     }
 ]

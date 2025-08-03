@@ -5,7 +5,8 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://launcher-cdn.alderongames.com/AlderonGamesCmd-Win64.exe",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "AlderonGamesCmd Download",
@@ -13,13 +14,15 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://launcher-cdn.alderongames.com/AlderonGamesCmd-Linux-x64",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Make AlderonGamesCmd Executable",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullInstanceDir}}AlderonGamesCmd-Linux-x64"
+        "UpdateSourceArgs": "{{$FullInstanceDir}}AlderonGamesCmd-Linux-x64",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
@@ -42,14 +45,16 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullBaseDir}}PathOfTitans/Saved/Config/WindowsServer",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Saved Directory",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullBaseDir}}PathOfTitans/Saved/Config/LinuxServer",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Commands.ini",
@@ -57,7 +62,8 @@
         "UpdateSource": "CreateFile",
         "UpdateSourceData": "",
         "UpdateSourceArgs": "{{$FullBaseDir}}PathOfTitans/Saved/Config/WindowsServer/Commands.ini",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": true
     },
     {
         "UpdateStageName": "Create Commands.ini",
@@ -65,6 +71,7 @@
         "UpdateSource": "CreateFile",
         "UpdateSourceData": "",
         "UpdateSourceArgs": "{{$FullBaseDir}}PathOfTitans/Saved/Config/LinuxServer/Commands.ini",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": true
     }
 ]

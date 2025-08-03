@@ -4,14 +4,17 @@
         "Port": 27015,
         "Ref": "ApplicationPort1",
         "Name": "Game Port",
-        "Description": "Port for game traffic"
-    },
-    {
-        "Protocol": "Both",
-        "Port": 27016,
-        "Ref": "QueryPort",
-        "Name": "Query Port",
-        "Description": "Port for query traffic"
+        "Description": "Port for game traffic",
+        "ChildPorts": [
+            {
+                "Protocol": "Both",
+                "Port": 27016,
+                "Offset": 1,
+                "Ref": "QueryPort",
+                "Name": "Query Port",
+                "Description": "Port for query traffic"
+            }
+        ]
     },
     {
         "Protocol": "TCP",

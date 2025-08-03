@@ -17,7 +17,7 @@
         "DisplayName": "Server Download URL",
         "Category": "Foundry Virtual Tabletop:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the full URL to download the server from. [Login](https://foundryvtt.com/) to obtain a current timed URL, then update the server before the timeout. NOTE: Make sure to select the \"Linux/NodeJS\" version",
+        "Description": "Sets the full URL to download the server from. [Login](https://foundryvtt.com/) to obtain a current timed URL, then update the server before the timeout. NOTE: Make sure to select the \"Node.js\" version",
         "Keywords": "download,url",
         "FieldName": "DownloadURL",
         "InputType": "text",
@@ -30,19 +30,51 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Server Version",
+        "Category": "Foundry Virtual Tabletop:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the version of the server that is installed, which determines the appropriate application to run",
+        "Keywords": "server,application,app",
+        "FieldName": "app",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "app",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Required": true,
+        "EnumValues": {
+            "": "--Please select--",
+            "main.js": "Version 13 and above",
+            "resources/app/main.js": "Version 12 and below"
+        }
+    },
+    {
+        "DisplayName": "Node.js Release Stream",
+        "Category": "Foundry Virtual Tabletop:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the Node.js release stream from which to install the latest version, unless a specific version is specified under Node.js Version. Minimum v18 required, v20 recommended. Update the server after changing this setting",
+        "Keywords": "node,nodejs,release,stream,NodeRelease",
+        "FieldName": "NodeRelease",
+        "InputType": "enum",
+        "ParamFieldName": "NodeRelease",
+        "DefaultValue": "20",
+        "EnumValues": {
+            "22": "22 - LTS",
+            "20": "20 - LTS (default)",
+            "18": "18 - LTS"
+        }
+    },
+    {
         "DisplayName": "Node.js Version",
         "Category": "Foundry Virtual Tabletop:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the [Node.js release version](https://nodejs.org/download/release/) to install to run the server. Minimum v16.x required. NOTE: Specify a numbered version like v18.16.0, rather than any \"latest\" version",
-        "Keywords": "node,nodejs,version",
+        "Description": "Sets the [Node.js version](https://nodejs.org/download/release/) to install. Format: v20.19.0. Minimum v18.x required, v20.x recommended. Empty = latest version for the release stream specified under Node.js Release Stream. Update the server after changing this setting",
+        "Keywords": "node,nodejs,version,NodeVersion",
         "FieldName": "NodeVersion",
         "InputType": "text",
-        "IsFlagArgument": false,
         "ParamFieldName": "NodeVersion",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "v18.16.0",
-        "Placeholder": "v18.16.0",
-        "Required": true,
+        "DefaultValue": "",
+        "Placeholder": "v20.19.0",
         "EnumValues": {}
     },
     {

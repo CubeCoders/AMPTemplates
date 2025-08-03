@@ -12,7 +12,9 @@
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "376030",
-        "UpdateSourceArgs": "346110"
+        "UpdateSourceArgs": "346110",
+        "UpdateSourceVersion": "{{ServerBranch}}",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "SteamCMD Directory Creation",
@@ -26,6 +28,50 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"ln -sf {{$FullRootDir}}steamcmd.sh {{$FullRootDir}}linux32 ~/Steam/steamapps {{$FullBaseDir}}Engine/Binaries/ThirdParty/SteamCMD/Linux/\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Modscript Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/ark-semanagemods.sh",
+        "UpdateSourceArgs": "managemods.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "automanagedmods",
+        "UpdateSourceConditionValue": " ",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Manage Mods",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "./managemods.sh \\\"{{GameModIds}}\\\"",
+        "UpdateSourceConditionSetting": "automanagedmods",
+        "UpdateSourceConditionValue": " ",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Modscript Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/ark-semanagemods.ps1",
+        "UpdateSourceArgs": "managemods.ps1",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "automanagedmods",
+        "UpdateSourceConditionValue": " ",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Manage Mods",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -File \"managemods.ps1\" \"{{GameModIds}}\"",
+        "UpdateSourceConditionSetting": "automanagedmods",
+        "UpdateSourceConditionValue": " ",
         "SkipOnFailure": false
     },
     {

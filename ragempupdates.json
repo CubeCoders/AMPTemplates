@@ -4,7 +4,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd ragemp; $baseURL = 'https://cdn.rage.mp/updater/prerelease_server/'; $xmlURL = 'https://cdn.rage.mp/updater/prerelease_server/data.xml?item=All'; [xml]$data = (New-Object System.Net.WebClient).DownloadString($xmlURL); foreach ($file in $data.SelectNodes('//file[contains(text(), \\\"server-files\\\")]')) { $filePath = $file.InnerText; if ($filePath -eq 'server-files\\linux_x64.tar.gz') { continue }; $downloadURL = $baseURL + ($filePath -replace '\\\\', '/'); $localFilePath = Join-Path -Path $PWD -ChildPath $filePath; $localDir = [System.IO.Path]::GetDirectoryName($localFilePath); if (-not (Test-Path -Path $localDir)) { New-Item -ItemType Directory -Path $localDir -Force | Out-Null }; Invoke-WebRequest -Uri $downloadURL -OutFile $localFilePath | Out-Null }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; cd ragemp; $baseURL = 'https://cdn.rage.mp/updater/prerelease_server/'; $xmlURL = 'https://cdn.rage.mp/updater/prerelease_server/data.xml?item=All'; [xml]$data = (New-Object System.Net.WebClient).DownloadString($xmlURL); foreach ($file in $data.SelectNodes('//file[contains(text(), \\\"server-files\\\")]')) { $filePath = $file.InnerText; if ($filePath -eq 'server-files\\linux_x64.tar.gz') { continue }; $downloadURL = $baseURL + ($filePath -replace '\\\\', '/'); $localFilePath = Join-Path -Path $PWD -ChildPath $filePath; $localDir = [System.IO.Path]::GetDirectoryName($localFilePath); if (-not (Test-Path -Path $localDir)) { New-Item -ItemType Directory -Path $localDir -Force | Out-Null }; Invoke-WebRequest -Uri $downloadURL -OutFile $localFilePath | Out-Null }\"",
         "SkipOnFailure": false
     },
     {
@@ -19,7 +19,8 @@
         "UpdateStageName": "Resources Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}dotnet/resources"
+        "UpdateSourceArgs": "{{$FullBaseDir}}dotnet/resources",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config File Download",
@@ -28,6 +29,7 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/ragempconf.json",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UpdateSourceArgs": "conf.json",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     }
 ]

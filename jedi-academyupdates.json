@@ -5,13 +5,15 @@
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "6020",
         "UpdateSourceTarget": "{{$FullRootDir}}client",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Base Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}base"
+        "UpdateSourceArgs": "{{$FullBaseDir}}base",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Client File Copy",
@@ -38,7 +40,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "OpenJK Download",
@@ -49,7 +52,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server.cfg Download",
@@ -58,6 +62,7 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/jedi-academyserver.cfg",
         "UpdateSourceArgs": "server.cfg",
         "UpdateSourceTarget": "{{$FullBaseDir}}base",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     }
 ]

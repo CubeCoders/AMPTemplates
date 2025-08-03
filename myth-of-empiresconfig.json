@@ -183,8 +183,9 @@
         "ParamFieldName": "Map",
         "DefaultValue": "LargeTerrain_Central_Main",
         "EnumValues": {
-            "LargeTerrain_Central_Main": "Central Mainland (default)",
-            "LargeTerrain_Central2_Main": "Eastern Island (Dongzhou)"
+            "LargeTerrain_Central_Main": "Zhongzhou (default)",
+            "LargeTerrain_Central2_Main": "Dongzhou",
+            "LargeTerrain_Desert_Main": "Xizhou"
         }
     },
     {
@@ -268,7 +269,7 @@
         "DisplayName": "Out IP Address",
         "Category": "Myth of Empires:stadia_controller",
         "Subcategory": "Basic:settings:1",
-        "Description": "Sets the 'OutAddress' IP parameter. Usually this should be set to 'Public IP'. However, for purely LAN servers, the 'Server IP Address' may need to be used - make sure this is set to an actual IP under Security and Privacy, and not 0.0.0.0",
+        "Description": "Sets the 'OutAddress' IP parameter. Usually this should be set to 'Public IP'. However, for purely LAN servers, the 'Application IP Binding' may need to be used - make sure this is set to an actual IP for the instance, and not 0.0.0.0",
         "Keywords": "out,ip,address,public,outaddress",
         "FieldName": "OutAddress",
         "InputType": "enum",
@@ -276,7 +277,7 @@
         "DefaultValue": "{{$ExternalIP}}",
         "EnumValues": {
             "{{$ExternalIP}}": "Public IP",
-            "{{$ApplicationIPBinding}}": "Server IP Address"
+            "{{$ApplicationIPBinding}}": "Application IP Binding"
         }
     },
     {
@@ -756,31 +757,16 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Proton GE Release (Linux)",
+        "DisplayName": "Proton GE Release Version (Linux)",
         "Category": "Updates",
         "Subcategory": "Runtime Configuration:build:3",
-        "Description": "Sets the Proton GE release build to install on Linux. If \"Specific version\" is selected, the version must be set under Specific Proton GE Release Version. Update the server after changing this setting",
-        "Keywords": "proton,release,latest,specific",
-        "FieldName": "ProtonRelease",
-        "InputType": "enum",
-        "ParamFieldName": "ProtonRelease",
-        "DefaultValue": "latest",
-        "EnumValues": {
-            "latest": "Latest (default)",
-            "specificversion": "Specific version"
-        }
-    },
-    {
-        "DisplayName": "Specific Proton GE Release Version",
-        "Category": "Updates",
-        "Subcategory": "Runtime Configuration:build:3",
-        "Description": "Sets the [release version](https://github.com/GloriousEggroll/proton-ge-custom/releases) for a specific Proton GE release build to install, if \"Specific version\" is selected under Proton GE Release. Example: GE-Proton8-32",
-        "Keywords": "proton,release,specific,version",
+        "Description": "Sets the Proton GE [release version](https://github.com/GloriousEggroll/proton-ge-custom/releases) to install. Empty = latest. Example: GE-Proton9-1",
+        "Keywords": "proton,release,version",
         "FieldName": "SpecificReleaseVersion",
         "InputType": "text",
         "ParamFieldName": "SpecificReleaseVersion",
         "DefaultValue": "",
-        "Placeholder": "GE-Proton8-32",
+        "Placeholder": "GE-Proton9-1",
         "EnumValues": {}
     }
 ]

@@ -4,7 +4,8 @@
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "232250",
-        "UpdateSourceArgs": "440"
+        "UpdateSourceArgs": "440",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server.cfg Template File Download",
@@ -13,31 +14,52 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/team-fortress2server.cfg",
         "UpdateSourceArgs": "AMP_server.cfg",
         "UpdateSourceTarget": "{{$FullRootDir}}",
-        "OverwriteExistingFiles": true
-    },
-    {
-        "UpdateStageName": "Metamod Download",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://mms.alliedmods.net/mmsdrop/{{ModBranch}}/mmsource-{{ModBranch}}.0-git{{MetamodBuild}}-windows.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}tf",
-        "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
-        "UpdateSourceConditionSetting": "InstallMod",
-        "UpdateSourceConditionValue": "true"
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Metamod Download",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://mms.alliedmods.net/mmsdrop/{{ModBranch}}/mmsource-{{ModBranch}}.0-git{{MetamodBuild}}-linux.tar.gz",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"MetamodBuild=\\\"{{MetamodBuild}}\\\" && ModBranch=\\\"{{ModBranch}}\\\" && if [[ -z \\\"$MetamodBuild\\\" ]]; then LatestMetamodFile=$(wget -qO- https://mms.alliedmods.net/mmsdrop/$ModBranch/mmsource-latest-linux) && wget -qO metamod.tar.gz https://mms.alliedmods.net/mmsdrop/$ModBranch/$LatestMetamodFile && echo \\\"Latest Metamod $ModBranch build downloaded\\\"; elif [[ ! \\\"$MetamodBuild\\\" =~ ^[0-9]+$ ]]; then echo \\\"Invalid Metamod build version format specified\\\" && exit 1; else wget -qO metamod.tar.gz https://mms.alliedmods.net/mmsdrop/$ModBranch/mmsource-$ModBranch.0-git$MetamodBuild-linux.tar.gz && echo \\\"Metamod $ModBranch build $MetamodBuild downloaded\\\"; fi\"",
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Metamod Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $MetamodBuild='{{MetamodBuild}}'; $ModBranch='{{ModBranch}}'; if ([string]::IsNullOrWhiteSpace($MetamodBuild)) { $LatestMetamodFile=(Invoke-RestMethod -UseBasicParsing -Uri https://mms.alliedmods.net/mmsdrop/$ModBranch/mmsource-latest-windows); Invoke-WebRequest -UseBasicParsing -Uri https://mms.alliedmods.net/mmsdrop/$ModBranch/$LatestMetamodFile -OutFile 'metamod.zip'; if ($?) { Write-Output \\\"Latest Metamod $ModBranch build downloaded\\\"; } } elseif ($MetamodBuild -notmatch '^\\d+$') { Write-Output \\\"Invalid Metamod build version format specified\\\"; exit 1; } else { Invoke-WebRequest -UseBasicParsing -Uri https://mms.alliedmods.net/mmsdrop/$ModBranch/mmsource-$ModBranch.0-git$MetamodBuild-windows.zip -OutFile 'metamod.zip'; if ($?) { Write-Output \\\"Metamod $ModBranch build $MetamodBuild downloaded\\\"; } }\"",
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Metamod Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "metamod.tar.gz",
         "UpdateSourceTarget": "{{$FullBaseDir}}tf",
-        "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "InstallMod",
-        "UpdateSourceConditionValue": "true"
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Metamod Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "metamod.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}tf",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "SourceMod Download Directory Creation",
@@ -45,31 +67,52 @@
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullBaseDir}}sm",
         "UpdateSourceConditionSetting": "InstallMod",
-        "UpdateSourceConditionValue": "true"
-    },
-    {
-        "UpdateStageName": "SourceMod Download",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://sm.alliedmods.net/smdrop/{{SourceModBranch}}/sourcemod-{{SourceModBranch}}.0-git{{SourceModVersion}}-windows.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}sm",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
-        "UpdateSourceConditionSetting": "InstallMod",
-        "UpdateSourceConditionValue": "true"
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "SourceMod Download",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://sm.alliedmods.net/smdrop/{{SourceModBranch}}/sourcemod-{{SourceModBranch}}.0-git{{SourceModVersion}}-linux.tar.gz",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"SourceModVersion=\\\"{{SourceModVersion}}\\\" && SourceModBranch=\\\"{{SourceModBranch}}\\\" && if [[ -z \\\"$SourceModVersion\\\" ]]; then LatestSourceModFile=$(wget -qO- https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-latest-linux) && wget -qO sourcemod.tar.gz https://sm.alliedmods.net/smdrop/$SourceModBranch/$LatestSourceModFile && echo \\\"Latest SourceMod $SourceModBranch build downloaded\\\"; elif [[ ! \\\"$SourceModVersion\\\" =~ ^[0-9]+$ ]]; then echo \\\"Invalid SourceMod build version format specified\\\" && exit 1; else wget -qO sourcemod.tar.gz https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-$SourceModBranch.0-git$SourceModVersion-linux.tar.gz && echo \\\"SourceMod $SourceModBranch build $SourceModVersion downloaded\\\"; fi\"",
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SourceMod Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $SourceModVersion='{{SourceModVersion}}'; $SourceModBranch='{{SourceModBranch}}'; if ([string]::IsNullOrWhiteSpace($SourceModVersion)) { $LatestSourceModFile=(Invoke-RestMethod -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-latest-windows); Invoke-WebRequest -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/$LatestSourceModFile -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"Latest SourceMod $SourceModBranch build downloaded\\\"; } } elseif ($SourceModVersion -notmatch '^\\d+$') { Write-Output \\\"Invalid SourceMod build version format specified\\\"; exit 1; } else { Invoke-WebRequest -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-$SourceModBranch.0-git$SourceModVersion-windows.zip -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"SourceMod $SourceModBranch build $SourceModVersion downloaded\\\"; } }\"",
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SourceMod Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "sourcemod.tar.gz",
         "UpdateSourceTarget": "{{$FullBaseDir}}sm",
-        "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "InstallMod",
-        "UpdateSourceConditionValue": "true"
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SourceMod Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "sourcemod.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}sm",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallMod",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "SourceMod Installation",
