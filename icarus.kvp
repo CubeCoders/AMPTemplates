@@ -9,27 +9,28 @@ Meta.EndpointURIFormat=steam://connect/{ip}:{GenericModule.App.Ports.$QueryPort}
 Meta.ConfigManifest=icarusconfig.json
 Meta.MetaConfigManifest=icarusmetaconfig.json
 Meta.ConfigRoot=icarus.kvp
-Meta.MinAMPVersion=2.5.0.4
-Meta.SpecificDockerImage=cubecoders/ampbase:wine8
-Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
-Meta.ContainerPolicyReason=The server requires Wine 7 (or later) to run on Linux. Using a container avoids the need to install this dependency on the host.
+Meta.MinAMPVersion=2.6.0.8
+Meta.SpecificDockerImage=
+Meta.ContainerPolicy=Supported
+Meta.ContainerPolicyReason=
 Meta.ExtraSetupStepsURI=
 Meta.Prerequisites=[]
 Meta.ConfigReleaseState=NotSpecified
-Meta.ConfigVersion=1.2
+Meta.ConfigVersion=4
 Meta.AppConfigId=630a4794-6466-4de6-956d-91393d6f48e1
+Meta.AppIsMultiIPAware=False
 App.DisplayName=Icarus
 App.RootDir=./icarus/
 App.BaseDirectory=./icarus/2089300/
 App.ExecutableWin=2089300/Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe
-App.ExecutableLinux=/usr/bin/wine
+App.ExecutableLinux=.proton/proton
 App.WorkingDir=2089300
-App.LinuxCommandLineArgs="./Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe" Icarus -ini:Engine:[OnlineSubsystemSteam]:AsyncTaskTimeout={{AsyncTaskTimeout}}
+App.LinuxCommandLineArgs=runinprefix "{{$FullBaseDir}}Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe" Icarus -ini:Engine:[OnlineSubsystemSteam]:AsyncTaskTimeout={{AsyncTaskTimeout}}
 App.WindowsCommandLineArgs=Icarus
-App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} {{StartupMode}}{{$FormattedArgs}} -stdout -FullStdOutLogOutput
+App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} {{StartupMode}}{{$FormattedArgs}} -log=Icarus.log
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1149460","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1149460","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullBaseDir}}.steam/steam","HOME":"{{$FullBaseDir}}"}
 App.CommandLineParameterFormat=-{0}="{1}"
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
@@ -50,13 +51,14 @@ App.MaxUsers=8
 App.UseRandomAdminPassword=False
 App.PersistRandomPassword=False
 App.RemoteAdminPassword=Password123
-App.AdminMethod=STDIO
+App.AdminMethod=TailLogFile
 App.AdminLoginTransform=None
 App.RCONConnectDelaySeconds=5
 App.RCONConnectRetrySeconds=5
 App.RCONHeartbeatMinutes=0
 App.RCONHeartbeatCommand=ping
 App.TelnetLoginFormat={0}
+App.TailLogFilePath={{$FullBaseDir}}Icarus/Saved/Logs/Icarus.log
 App.UpdateSources=@IncludeJson[icarusupdates.json]
 App.Compatibility=None
 App.SteamUpdateAnonymousLogin=True

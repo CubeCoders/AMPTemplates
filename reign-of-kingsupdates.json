@@ -1,74 +1,78 @@
 [
     {
-        "UpdateStageName":"Remove uMod/Oxide",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd rok\\381690 && del /Q /F Oxide.Compiler.exe ROK_Data\\Managed\\Oxide* > NUL 2>&1 && rd /S /Q oxide > NUL 2>&1",
-        "UpdateSourceConditionSetting":"InstalluMod",
-        "UpdateSourceConditionValue":"false",
-        "SkipOnFailure":true
+        "UpdateStageName": "Remove uMod/Oxide",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd rok\\381690 && del /Q /F Oxide.Compiler.exe ROK_Data\\Managed\\Oxide* > NUL 2>&1 && rd /S /Q oxide > NUL 2>&1",
+        "UpdateSourceConditionSetting": "InstalluMod",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"Remove uMod/Oxide",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd rok/381690 && rm -rf Oxide.Compiler.exe ROK_Data/Managed/Oxide* oxide >/dev/null 2>&1\"",
-        "UpdateSourceConditionSetting":"InstalluMod",
-        "UpdateSourceConditionValue":"false",
-        "SkipOnFailure":true
+        "UpdateStageName": "Remove uMod/Oxide",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd rok/381690 && rm -rf Oxide.Compiler.exe ROK_Data/Managed/Oxide* oxide >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "InstalluMod",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"SteamCMD Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"381690",
-        "UpdateSourceArgs":"344760",
-        "ForceDownloadPlatform":"Windows"
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "381690",
+        "UpdateSourceArgs": "344760",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Create Config Directory",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullBaseDir}}Configuration"
+        "UpdateStageName": "Create Config Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Configuration",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"ServerSettings.cfg File Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/reign-of-kingsserversettings.cfg",
-        "UpdateSourceArgs":"ServerSettings.cfg",
-        "UpdateSourceTarget":"{{$FullBaseDir}}Configuration",
-        "OverwriteExistingFiles":false
+        "UpdateStageName": "ServerSettings.cfg File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/reign-of-kingsserversettings.cfg",
+        "UpdateSourceArgs": "ServerSettings.cfg",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Configuration",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"uMod/Oxide Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"GithubRelease",
-        "UpdateSourceArgs":"OxideMod/Oxide.ReignOfKings",
-        "UpdateSourceData":"Oxide.ReignOfKings.zip",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":true,
-        "OverwriteExistingFiles":true,
-        "DeleteAfterExtract":true,
-        "UpdateSourceConditionSetting":"InstalluMod",
-        "UpdateSourceConditionValue":"true"
+        "UpdateStageName": "uMod/Oxide Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "OxideMod/Oxide.ReignOfKings",
+        "UpdateSourceData": "Oxide.ReignOfKings.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstalluMod",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Initialise Wine",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Install Mono",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd rok && wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && chmod +x winetricks; wget -q -N https://dl.winehq.org/wine/wine-mono/8.1.0/wine-mono-8.1.0-x86.msi; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; export WINEARCH=win64; /usr/bin/wine msiexec /i wine-mono-8.1.0-x86.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "Install Mono",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd rok && [[ -f winetricks ]] && rm -f winetricks; wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20250102/src/winetricks && chmod +x winetricks; wget -q -N https://dl.winehq.org/wine/wine-mono/8.1.0/wine-mono-8.1.0-x86.msi; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; export WINEARCH=win64; /usr/bin/wine msiexec /i wine-mono-8.1.0-x86.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log\"",
+        "SkipOnFailure": false
     }
 ]

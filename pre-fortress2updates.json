@@ -1,108 +1,106 @@
 [
     {
-        "UpdateStageName":"Delete Old PF2 Files",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"rm -rf \\\"{{$FullBaseDir}}pf2/\\\"pf2_misc_*.vpk \\\"{{$FullBaseDir}}\\\"pf2/custom/07hotfix_patch_*.vpk >/dev/null 2>&1\"",
-        "SkipOnFailure":true
+        "UpdateStageName": "Delete Old PF2 Files",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullBaseDir}}pf2/\\\"pf2_misc_*.vpk \\\"{{$FullBaseDir}}\\\"pf2/custom/07hotfix_patch_*.vpk >/dev/null 2>&1\"",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"Delete Old PF2 Files",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C del /Q /F \"{{$FullBaseDir}}pf2\\\"pf2_misc_*.vpk \"{{$FullBaseDir}}\"pf2\\custom\\07hotfix_patch_*.vpk > NUL 2>&1",
-        "SkipOnFailure":true
+        "UpdateStageName": "Delete Old PF2 Files",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C del /Q /F \"{{$FullBaseDir}}pf2\\\"pf2_misc_*.vpk \"{{$FullBaseDir}}\"pf2\\custom\\07hotfix_patch_*.vpk > NUL 2>&1",
+        "SkipOnFailure": true
     },
     {
-        "UpdateStageName":"Source SDK Base 2013 Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"SteamCMD",
-        "UpdateSourceData":"244310",
-        "UpdateSourceArgs":"243750",
-        "UpdateSourceTarget":"{{$FullBaseDir}}"
+        "UpdateStageName": "Source SDK Base 2013 Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "244310",
+        "UpdateSourceArgs": "243750",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"7-Zip Directory Creation",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"CreateDirectory",
-        "UpdateSourceArgs":"{{$FullRootDir}}7-Zip"
+        "UpdateStageName": "7-Zip Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"7-Zip Download",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.7-zip.org/a/7zr.exe",
-        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip"
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'pre-fortress2/7-Zip'; if (Test-Path '7zr.exe') { exit 0 } else { Invoke-WebRequest -UseBasicParsing -Uri 'https://www.7-zip.org/a/7zr.exe' -OutFile '7zr.exe' }\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"7-Zip Download",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://www.7-zip.org/a/7z2301-linux-x64.tar.xz",
-        "UpdateSourceTarget":"{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd pre-fortress2/7-Zip && [[ -x 7zzs ]] && exit 0 || { wget -qO 7z.tar.xz https://www.7-zip.org/a/7z2409-linux-x64.tar.xz && tar -xf 7z.tar.xz >/dev/null 2>&1 && rm -f 7z.tar.xz >/dev/null 2>&1; }\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"7-Zip Files Extract",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd ./pre-fortress2/7-Zip && tar -xf 7z2301-linux-x64.tar.xz >/dev/null 2>&1 && rm -f 7z2301-linux-x64.tar.xz\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "PF2 Files Download 1",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/Pre-Fortress-2/pf2/releases/latest",
+        "UpdateSourceArgs": "$.assets.[0].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"PF2 Files Download 1",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURLFromJQ",
-        "UpdateSourceData":"https://api.github.com/repos/Pre-Fortress-2/pf2/releases/latest",
-        "UpdateSourceArgs":"$.assets.[0].browser_download_url",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":false,
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "PF2 Files Download 2",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/Pre-Fortress-2/pf2/releases/latest",
+        "UpdateSourceArgs": "$.assets.[1].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"PF2 Files Download 2",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURLFromJQ",
-        "UpdateSourceData":"https://api.github.com/repos/Pre-Fortress-2/pf2/releases/latest",
-        "UpdateSourceArgs":"$.assets.[1].browser_download_url",
-        "UpdateSourceTarget":"{{$FullBaseDir}}",
-        "UnzipUpdateSource":false,
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "PF2 Files Extract",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd pre-fortress2\\server && ..\\7-Zip\\7zr.exe x -y pf2_*.7z.001 > NUL 2>&1 && del /Q /F pf2_*.7z.*",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"PF2 Files Extract",
-        "UpdateSourcePlatform":"Windows",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"cmd.exe",
-        "UpdateSourceArgs":"/C cd pre-fortress2\\server && ..\\7-Zip\\7zr.exe x -y pf2_*.7z.001 > NUL 2>&1 && del /Q /F pf2_*.7z.*",
-        "SkipOnFailure":false
+        "UpdateStageName": "PF2 Files Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ./pre-fortress2/server && ../7-Zip/7zzs x -y pf2_*.7z.001 >/dev/null 2>&1 && rm -f pf2_*.7z.*\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"PF2 Files Extract",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd ./pre-fortress2/server && ../7-Zip/7zzs x -y pf2_*.7z.001 >/dev/null 2>&1 && rm -f pf2_*.7z.*\"",
-        "SkipOnFailure":false
+        "UpdateStageName": "Binary Symlinks and Deletion",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ./pre-fortress2/server/bin && ln -sf datacache_srv.so datacache.so && ln -sf dedicated_srv.so dedicated.so && ln -sf engine_srv.so engine.so && ln -sf materialsystem_srv.so materialsystem.so && ln -sf replay_srv.so replay.so && ln -sf scenefilecache_srv.so scenefilecache.so && ln -sf shaderapiempty_srv.so shaderapiempty.so && ln -sf soundemittersystem_srv.so soundemittersystem.so && ln -sf studiorender_srv.so studiorender.so && ln -sf vphysics_srv.so vphysics.so && rm -f libstdc++.so.6 && cd ../pf2/bin && ln -sf server.so server_srv.so\"",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName":"Binary Symlinks and Deletion",
-        "UpdateSourcePlatform":"Linux",
-        "UpdateSource":"Executable",
-        "UpdateSourceData":"/bin/bash",
-        "UpdateSourceArgs":"-c \"cd ./pre-fortress2/server/bin && ln -sf datacache_srv.so datacache.so && ln -sf dedicated_srv.so dedicated.so && ln -sf engine_srv.so engine.so && ln -sf materialsystem_srv.so materialsystem.so && ln -sf replay_srv.so replay.so && ln -sf scenefilecache_srv.so scenefilecache.so && ln -sf shaderapiempty_srv.so shaderapiempty.so && ln -sf soundemittersystem_srv.so soundemittersystem.so && ln -sf studiorender_srv.so studiorender.so && ln -sf vphysics_srv.so vphysics.so && rm -f libstdc++.so.6 && cd ../pf2/bin && ln -sf server.so server_srv.so\"",
-        "SkipOnFailure":false
-    },
-    {
-        "UpdateStageName":"Server.cfg Template File Download",
-        "UpdateSourcePlatform":"All",
-        "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/pre-fortress2server.cfg",
-        "UpdateSourceArgs":"AMP_server.cfg",
-        "UpdateSourceTarget":"{{$FullRootDir}}",
-        "OverwriteExistingFiles":true
+        "UpdateStageName": "Server.cfg Template File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/pre-fortress2server.cfg",
+        "UpdateSourceArgs": "AMP_server.cfg",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     }
 ]

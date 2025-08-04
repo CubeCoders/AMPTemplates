@@ -26,15 +26,15 @@
     },
     {
         "DisplayName": "Server Password",
-        "Description": "Password that clients must supply in order to connect. NOTE: Minimum password length is 5 characters & Password can't be in the server name. Default Password: 12345",
+        "Description": "Password that clients must supply in order to connect. NOTE: Unless a mod is used to remove the need for a password, the server requires a password that is at least 5 characters long and that is not included in the server name. Default: 12345.",
         "FieldName": "ServerPassword",
         "InputType": "password",
         "Category": "Valheim:stadia_controller",
         "Subcategory": "General:dns:1",
         "ParamFieldName": "password",
         "IncludeInCommandLine": false,
-        "Required": true,
-        "DefaultValue": "12345"
+        "DefaultValue": "12345",
+        "Placeholder": "12345"
     },
     {
         "DisplayName": "Server is Public",
@@ -276,6 +276,23 @@
         }
     },
     {
+        "DisplayName": "Custom Fire Hazards Modifier",
+        "Category": "Valheim:stadia_controller",
+        "Subcategory": "General:dns:1",
+        "Description": "If set, fire will spread realistically.",
+        "Keywords": "setkey,fire,hazards",
+        "FieldName": "fire",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "fire"
+        }
+    },
+    {
         "DisplayName": "Banned Players",
         "Description": "A list of Steam64 IDs for players that are banned [Find a Steam64 ID](https://steamidfinder.com/)",
         "FieldName": "BannedPlayers",
@@ -318,7 +335,7 @@
         "DisplayName": "Install BepInEx",
         "Category": "Updates",
         "Subcategory": "Runtime Configuration:build:3",
-        "Description": "Installs BepInEx. Standalone - DO NOT use with the Install Valheim Plus option. You must also select the \"BepInEx Version\" in the next field. NOTE: Update the server after enabling this option.",
+        "Description": "If set, BepInEx will be installed when the server is updated. Configure \"BepInEx Version\" accordingly. Standalone - DO NOT use with the Install Valheim Plus option. NOTE: Update the server after enabling this option.",
         "Keywords": "Install,BepInEx",
         "FieldName": "bepinex_install",
         "InputType": "checkbox",
@@ -335,14 +352,14 @@
         "DisplayName": "BepInEx Version",
         "Category": "Updates",
         "Subcategory": "Runtime Configuration:build:3",
-        "Description": "The version of BepInEx to download. You can find the latest version on [Thunderstore.io](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/). NOTE: Update the server after editing this option.",
+        "Description": "Sets the [BepInEx version](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/versions/) to install. Empty = latest. NOTE: Update the server after switching versions!",
         "Keywords": "Install,BepInEx,version",
         "FieldName": "bepinex_version",
         "InputType": "text",
         "IsFlagArgument": false,
         "ParamFieldName": "bepinex_version",
         "IncludeInCommandLine": false,
-        "DefaultValue": "5.4.2202",
+        "DefaultValue": "",
         "Placeholder": "5.4.2202",
         "EnumValues": {}
     },
@@ -350,7 +367,7 @@
         "DisplayName": "Install Valheim Plus",
         "Category": "Updates",
         "Subcategory": "Runtime Configuration:build:3",
-        "Description": "Installs Valheim Plus. Includes BepInEx. NOTE: Update the server after enabling this option.",
+        "Description": "Installs [Valheim Plus](https://github.com/Grantapher/ValheimPlus). Includes BepInEx. NOTE: Update the server after enabling this option.",
         "Keywords": "Install,Valheim,Plus",
         "FieldName": "valheim_plus_install",
         "InputType": "checkbox",
@@ -4305,12 +4322,12 @@
         "Subcategory": "Server:dns:3",
         "Description": "Maximum Concurrent Players on the server.",
         "Keywords": "Server,Max,Player,Count",
-        "FieldName": "Server.maxPlayers",
+        "FieldName": "$MaxUsers",
         "InputType": "number",
         "IsFlagArgument": false,
         "ParamFieldName": "Server.maxPlayers",
         "IncludeInCommandLine": false,
-        "DefaultValue": "4",
+        "DefaultValue": "10",
         "EnumValues": {},
         "Suffix": "players"
     },
