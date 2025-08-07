@@ -7,10 +7,37 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Server Download",
+        "UpdateStageName": "Main Server Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://download.taleworlds.com/mb_warband_dedicated_1174.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}srv",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Main Server Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'mountbladewarband'; Copy-Item -Path 'srv/mb_warband_dedicated_1174/Mount&Blade Warband Dedicated/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'srv' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Main Server Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd mountbladewarband && \\cp -rf \\\"srv/mb_warband_dedicated_1174/Mount&Blade Warband Dedicated/\\\"* server/ >/dev/null 2>&1; rm -rf srv >/dev/null 2>&1\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "DLC Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://download.taleworlds.com/mb_warband_napoleonic_wars_dedicated_1174_nw_1210.zip",
         "UpdateSourceTarget": "{{$FullRootDir}}srv",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
@@ -22,7 +49,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'mountbladewarband'; Copy-Item -Path 'srv/mb_warband_dedicated_1174/Mount&Blade Warband Dedicated/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'srv' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'mountbladewarband'; Copy-Item -Path 'srv/mb_warband_napoleonic_wars_dedicated_1174_nw_1210/Mount&Blade Warband Napoleonic Wars Dedicated/*' -Destination 'server' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'srv' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure": false
     },
     {
@@ -30,7 +57,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd mountbladewarband && \\cp -rf \\\"srv/mb_warband_dedicated_1174/Mount&Blade Warband Dedicated/\\\"* server/ >/dev/null 2>&1; rm -rf srv >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd mountbladewarband && \\cp -rf \\\"srv/mb_warband_napoleonic_wars_dedicated_1174_nw_1210/Mount&Blade Warband Napoleonic Wars Dedicated/\\\"* server/ >/dev/null 2>&1; rm -rf srv >/dev/null 2>&1\"",
         "SkipOnFailure": false
     },
     {
@@ -111,6 +138,87 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}AMP_Team_Deathmatch.txt",
         "UpdateSourceArgs": "{{$FullBaseDir}}Sample_Team_Deathmatch.txt",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "NW_Sample_Battle.txt Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}AMP_NW_Battle.txt",
+        "UpdateSourceArgs": "{{$FullBaseDir}}NW_Sample_Battle.txt",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "NW_Sample_Capture_the_Flag.txt Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}AMP_NW_Capture_the_Flag.txt",
+        "UpdateSourceArgs": "{{$FullBaseDir}}NW_Sample_Capture_the_Flag.txt",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "NW_Sample_Commander_Battle.txt Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}AMP_NW_Commander_Battle.txt",
+        "UpdateSourceArgs": "{{$FullBaseDir}}NW_Sample_Commander_Battle.txt",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "NW_Sample_Conquest.txt Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}AMP_NW_Conquest.txt",
+        "UpdateSourceArgs": "{{$FullBaseDir}}NW_Sample_Conquest.txt",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "NW_Sample_Deathmatch.txt Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}AMP_NW_Deathmatch.txt",
+        "UpdateSourceArgs": "{{$FullBaseDir}}NW_Sample_Deathmatch.txt",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "NW_Sample_Duel.txt Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}AMP_NW_Duel.txt",
+        "UpdateSourceArgs": "{{$FullBaseDir}}NW_Sample_Duel.txt",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "NW_Sample_King_of_the_Hill.txt Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}AMP_NW_King_of_the_Hill.txt",
+        "UpdateSourceArgs": "{{$FullBaseDir}}NW_Sample_King_of_the_Hill.txt",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "NW_Sample_Siege.txt Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}AMP_NW_Siege.txt",
+        "UpdateSourceArgs": "{{$FullBaseDir}}NW_Sample_Siege.txt",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "NW_Sample_Team_Deathmatch.txt Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}AMP_NW_Team_Deathmatch.txt",
+        "UpdateSourceArgs": "{{$FullBaseDir}}NW_Sample_Team_Deathmatch.txt",
         "OverwriteExistingFiles": false,
         "SkipOnFailure": false
     },
