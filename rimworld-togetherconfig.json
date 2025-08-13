@@ -66,14 +66,30 @@
         }
     },
     {
-        "DisplayName": "Public Server Endpoint",
+        "DisplayName": "Public Endpoint Address Selection Mode",
         "Category": "Rimworld Together:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the public endpoint address (IP or domain) for the server, as used by the server browser",
-        "Keywords": "public,endpoint,address,PublicEndPoint",
+        "Description": "Sets whether and how the public endpoint address (IP or domain) for the server, as used by the server browser, is set. If 'Address manually set' is selected, specify the desired public endpoint address under Manual Public Endpoint Address",
+        "Keywords": "public,ip,endpoint,address,PublicEndPoint",
         "FieldName": "PublicEndPoint",
-        "InputType": "text",
+        "InputType": "enum",
         "ParamFieldName": "$.PublicEndPoint",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "IP automatically set by Rimworld Together (default)",
+            "{{$ExternalIP}}": "IP automatically set by AMP",
+            "{{ManualPublicEndPoint}}": "Address manually set"
+        }
+    },
+    {
+        "DisplayName": "Manual Public Endpoint Address",
+        "Category": "Rimworld Together:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the public endpoint address (IP or domain) for the server, if 'Address manually set' is selected as the Public Endpoint Address Selection Mode",
+        "Keywords": "manual,public,ip,endpoint,address,PublicEndPoint",
+        "FieldName": "ManualPublicEndPoint",
+        "InputType": "text",
+        "ParamFieldName": "ManualPublicEndPoint",
         "DefaultValue": "",
         "EnumValues": {}
     },
