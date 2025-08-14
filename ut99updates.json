@@ -59,7 +59,7 @@
         "UpdateStageName": "OldUnreal Patch Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469c/OldUnreal-UTPatch469c-Linux-amd64.tar.bz2",
+        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469c/OldUnreal-UTPatch469c-Linux-x86.tar.bz2",
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
@@ -72,7 +72,20 @@
         "UpdateStageName": "OldUnreal Patch Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469d/OldUnreal-UTPatch469d-Linux-amd64.tar.bz2",
+        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469c/OldUnreal-UTPatch469c-Linux-amd64.tar.bz2",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "PatchVersion",
+        "UpdateSourceConditionValue": "469c64",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "OldUnreal Patch Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469d/OldUnreal-UTPatch469d-Linux-x86.tar.bz2",
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
@@ -82,36 +95,23 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Copy OldUnreal Patch Files",
+        "UpdateStageName": "OldUnreal Patch Download",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"\\cp -Rf ./ut-server/System64/* ./ut-server/System >/dev/null 2>&1\"",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469d/OldUnreal-UTPatch469d-Linux-amd64.tar.bz2",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "PatchVersion",
-        "UpdateSourceConditionValue": "469c",
+        "UpdateSourceConditionValue": "469d64",
         "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Copy OldUnreal Patch Files",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"\\cp -Rf ./ut-server/System64/* ./ut-server/System >/dev/null 2>&1\"",
-        "UpdateSourceConditionSetting": "PatchVersion",
-        "UpdateSourceConditionValue": "469d",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Pause Update Stages",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Pause",
-        "UpdateSourceArgs": "2"
     },
     {
         "UpdateStageName": "Set Executable Flag",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullBaseDir}}System/ucc-bin",
+        "UpdateSourceArgs": "{{$FullBaseDir}}System{{ServerExecutable}}/ucc-bin",
         "SkipOnFailure": false
     },
     {
@@ -120,7 +120,7 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/ut99UnrealTournament.ini",
         "UpdateSourceArgs": "_AMP_UnrealTournament.ini",
-        "UpdateSourceTarget": "{{$FullRootDir}}System/",
+        "UpdateSourceTarget": "{{$FullBaseDir}}System",
         "OverwriteExistingFiles": false,
         "SkipOnFailure": false
     }

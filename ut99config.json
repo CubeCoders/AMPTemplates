@@ -329,24 +329,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "OldUnreal Patch Version",
-        "Category": "Unreal Tournament 99:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the OldUnreal patch version to apply to the server. Update the server after changing this setting!",
-        "Keywords": "oldunreal,patch,version",
-        "FieldName": "PatchVersion",
-        "InputType": "enum",
-        "IsFlagArgument": false,
-        "ParamFieldName": "PatchVersion",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "469d",
-        "EnumValues": {
-            "469b": "469b",
-            "469c": "469c",
-            "469d": "469d (Default)"
-        }
-    },
-    {
         "DisplayName": "Redirection URL",
         "Category": "Unreal Tournament 99:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -857,5 +839,40 @@
         "Placeholder": "0",
         "Suffix": "minutes",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "OldUnreal Patch Version",
+        "Category": "Updates",
+        "Subcategory": "Runtime Configuration:build:3",
+        "Description": "Sets the OldUnreal patch version to apply to the server. Also set the Server Executable for Linux accordingly. Update the server after changing this setting!",
+        "Keywords": "oldunreal,patch,version",
+        "FieldName": "PatchVersion",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "PatchVersion",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "469d",
+        "EnumValues": {
+            "469b": "469b - 32 bit",
+            "469c": "469c - 32 bit",
+            "469c64": "469c - 64 bit (Linux only)",
+            "469d": "469d - 32 bit (default)",
+            "469d64": "469d - 64 bit (Linux only)"
+        }
+    },
+    {
+        "DisplayName": "Server Executable (Linux)",
+        "Category": "Updates",
+        "Subcategory": "Runtime Configuration:build:3",
+        "Description": "Sets whether to run the 32 bit or 64 bit version of the server executable on Linux. The appropriate OldUnreal Patch Version must also be installed",
+        "Keywords": "server,executable,32bit,64bit",
+        "FieldName": "ServerExecutable",
+        "InputType": "enum",
+        "ParamFieldName": "ServerExecutable",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "32 bit (default)",
+            "64": "64 bit"
+        }
     }
 ]
