@@ -14,7 +14,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all XDG_RUNTIME_DIR=/tmp /usr/bin/wineboot --init\"",
         "SkipOnFailure": false
     },
     {
@@ -22,7 +22,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd battlebit-remastered && wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && chmod +x winetricks; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; export WINEARCH=win64; ./winetricks sound=disabled > winescript_log.txt 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd battlebit-remastered && wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && chmod +x winetricks; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; export WINEARCH=win64; export XDG_RUNTIME_DIR=/tmp; ./winetricks sound=disabled > winescript_log.txt 2>&1\"",
         "SkipOnFailure": true
     }
 ]

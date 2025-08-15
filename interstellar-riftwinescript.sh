@@ -16,6 +16,7 @@ export WINEPREFIX="$SCRIPTDIR/interstellar-rift/.wine"
 export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
+export XDG_RUNTIME_DIR=/tmp
 
 wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 chmod +x winetricks
