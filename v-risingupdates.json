@@ -91,7 +91,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDLLOVERRIDES=\\\"mscoree,mshtml=\\\" WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDLLOVERRIDES=\\\"mscoree,mshtml=\\\" WINEDEBUG=-all XDG_RUNTIME_DIR=/tmp /usr/bin/wineboot --init\"",
         "SkipOnFailure": false
     },
     {
@@ -99,7 +99,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd v-rising && [[ -f winetricks ]] && rm -f winetricks; wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20250102/src/winetricks && chmod +x winetricks; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; export WINEARCH=win64; ./winetricks sound=disabled > winescript_log.txt 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd v-rising && [[ -f winetricks ]] && rm -f winetricks; wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20250102/src/winetricks && chmod +x winetricks; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; export WINEARCH=win64; export XDG_RUNTIME_DIR=/tmp; ./winetricks sound=disabled > winescript_log.txt 2>&1\"",
         "SkipOnFailure": true
     },
     {

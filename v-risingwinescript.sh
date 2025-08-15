@@ -17,6 +17,7 @@ export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
+export XDG_RUNTIME_DIR=/tmp
 
 # Get Wine major version
 WINE_VERSION=$(/usr/bin/wine --version | grep -oP '\d+' | head -1)
