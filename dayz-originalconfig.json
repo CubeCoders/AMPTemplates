@@ -296,7 +296,7 @@
         "DisplayName": "Server/RCON IP Binding",
         "Category": "DayZ:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If required, you can change the binding of the server and BattlEye RCON by changing the 'Server IP Address' setting under Security and Privacy. NOTE: The IP must be reachable by AMP, otherwise AMP's console won't work",
+        "Description": "If required, you can change the binding of the server and BattlEye RCON by changing the Application IP Binding for this instance. NOTE: The IP must be reachable by AMP, otherwise AMP's console won't work",
         "Keywords": "ip,binding",
         "FieldName": "ip",
         "InputType": "hidden",
@@ -456,6 +456,23 @@
         "Placeholder": "250",
         "Suffix": "milliseconds",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable RPT File Logging",
+        "Category": "DayZ:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, enables all log messages in the server RPT file. Generally preferable to keep enabled, however some mods will stop the server from starting if this is set",
+        "Keywords": "enable,logs,logging,rpt,dologs",
+        "FieldName": "doLogs",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "doLogs",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "-doLogs ",
+        "EnumValues": {
+            "False": "",
+            "True": "-doLogs "
+        }
     },
     {
         "DisplayName": "Additional Server Startup Parameters",
@@ -835,10 +852,27 @@
         }
     },
     {
+        "DisplayName": "Enable Speed Hack Detection",
+        "Category": "DayZ:stadia_controller",
+        "Subcategory": "Miscellaneous:tune:3",
+        "Description": "If set, enables speed hack detection. Set the level of detection under \"Speed Hack Detection Level\"",
+        "Keywords": "speed,hack,detection,speedhackdetection",
+        "FieldName": "EnableSpeedHackDetection",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "EnableSpeedHackDetection",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "speedhackDetection = {{speedhackDetection}};",
+        "EnumValues": {
+            "False": "",
+            "True": "speedhackDetection = {{speedhackDetection}};"
+        }
+    },
+    {
         "DisplayName": "Speed Hack Detection Level",
         "Category": "DayZ:stadia_controller",
         "Subcategory": "Miscellaneous:tune:3",
-        "Description": "Sets the speed back detection level. 1 = strict, 10 = benevolent",
+        "Description": "Sets the speed back detection level. 1 = strict, 10 = benevolent. \"Speed Hack Detection\" must be enabled for this to take effect",
         "Keywords": "speed,hack,detection,level,speedhackdetection",
         "FieldName": "speedhackDetection",
         "InputType": "number",

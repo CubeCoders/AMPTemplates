@@ -6,14 +6,16 @@
         "UpdateSourceData": "298740",
         "UpdateSourceArgs": "244850",
         "UpdateSourceVersion": "{{Stream}}",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Config Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullBaseDir}}servers",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Base Config Download",
@@ -22,7 +24,8 @@
         "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/space-engineers-dedicated.cfg",
         "UpdateSourceTarget": "{{$FullBaseDir}}servers",
         "UpdateSourceArgs": "SpaceEngineers-Dedicated.cfg",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Mods Workaround 1",
@@ -30,7 +33,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}DedicatedServer64/steamclient64.dll",
         "UpdateSourceArgs": "{{$FullBaseDir}}steamclient64.dll",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Mods Workaround 2",
@@ -38,7 +42,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}DedicatedServer64/tier0_s64.dll",
         "UpdateSourceArgs": "{{$FullBaseDir}}tier0_s64.dll",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Mods Workaround 3",
@@ -46,7 +51,8 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}DedicatedServer64/vstdlib_s64.dll",
         "UpdateSourceArgs": "{{$FullBaseDir}}vstdlib_s64.dll",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Initialise Wine",
@@ -63,7 +69,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/space-engineers-genericwinescript.sh",
         "UpdateSourceArgs": "winescript.sh",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Install Windows Components",

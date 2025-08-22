@@ -7,7 +7,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
@@ -17,7 +18,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Files Copy",
@@ -39,7 +41,8 @@
         "UpdateStageName": "Create User Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}user"
+        "UpdateSourceArgs": "{{$FullBaseDir}}user",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Serverconfig.cfg File Download",
@@ -48,7 +51,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/teeworldsserverconfig.cfg",
         "UpdateSourceArgs": "serverconfig.cfg",
         "UpdateSourceTarget": "{{$FullBaseDir}}user",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Storage.cfg File",
@@ -56,6 +60,7 @@
         "UpdateSource": "CreateFile",
         "UpdateSourceData": "add_path user\nadd_path $DATADIR\nadd_path $CURRENTDIR",
         "UpdateSourceArgs": "{{$FullBaseDir}}storage.cfg",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     }
 ]

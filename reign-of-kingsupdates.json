@@ -25,13 +25,15 @@
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "381690",
         "UpdateSourceArgs": "344760",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Config Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Configuration"
+        "UpdateSourceArgs": "{{$FullBaseDir}}Configuration",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "ServerSettings.cfg File Download",
@@ -40,7 +42,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/reign-of-kingsserversettings.cfg",
         "UpdateSourceArgs": "ServerSettings.cfg",
         "UpdateSourceTarget": "{{$FullBaseDir}}Configuration",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "uMod/Oxide Download",
@@ -53,7 +56,8 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "InstalluMod",
-        "UpdateSourceConditionValue": "true"
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Initialise Wine",

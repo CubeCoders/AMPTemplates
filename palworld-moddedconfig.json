@@ -37,6 +37,32 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Enable UE4SS Console",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "ConsoleEnabled",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "Debug.ConsoleEnabled",
+        "DefaultValue": "1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Disable UE4SS GUI Console",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "GuiConsoleEnabled",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "Debug.GuiConsoleEnabled",
+        "DefaultValue": "0",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Server Name",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -877,8 +903,8 @@
         "InputType": "number",
         "MinValue": "0",
         "ParamFieldName": "ChatPostLimitPerMinute",
-        "DefaultValue": "10",
-        "Placeholder": "10",
+        "DefaultValue": "30",
+        "Placeholder": "30",
         "EnumValues": {}
     },
     {
@@ -1321,26 +1347,58 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Equipment Durability Damage Rate",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the equipment durability loss multiplier",
+        "Keywords": "equipment,durability,loss,multiplier,damage,rate,EquipmentDurabilityDamageRate",
+        "FieldName": "EquipmentDurabilityDamageRate",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "EquipmentDurabilityDamageRate",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Item Container Force Mark Dirty Interval",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the interval for force sync when open the container",
+        "Keywords": "interval,force,sync,open,container,mark,dirty,ItemContainerForceMarkDirtyInterval",
+        "FieldName": "ItemContainerForceMarkDirtyInterval",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "ItemContainerForceMarkDirtyInterval",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Install UE Scripting System",
         "Category": "Updates",
         "Subcategory": "Runtime Configuration:build:3",
-        "Description": "If an installation option is selected, the [Unreal Engine 4/5 Scripting System](https://github.com/UE4SS-RE/RE-UE4SS) will be installed when the server is updated, allowing the server to be modded. Also set the UE4SS Experimental Build Version if relevant",
-        "Keywords": "install,ue4ss,unreal,engine,scripting,system",
+        "Description": "If an installation option is selected, the selected build of the Unreal Engine 4/5 Scripting System will be installed from either the [UE4SS-RE repo](https://github.com/UE4SS-RE/RE-UE4SS) or the [Okaetsu forked repo](https://github.com/Okaetsu/RE-UE4SS) when the server is updated, allowing the server to be modded. Also set the Specific UE4SS-RE Experimental Build Version if relevant",
+        "Keywords": "install,ue4ss,unreal,engine,scripting,system,ue4ss-re,okaetsu,modding,experimental",
         "FieldName": "InstallUE4SS",
         "InputType": "enum",
         "ParamFieldName": "InstallUE4SS",
-        "DefaultValue": "true",
+        "DefaultValue": "experimental-palworld",
         "EnumValues": {
-            "false": "Do not install",
-            "true": "Install release build (default)",
-            "experimental": "Install experimental build"
+            "": "Do nothing",
+            "false": "Remove UE4SS files",
+            "true": "Install latest UE4SS-RE release build",
+            "experimental-latest": "Install latest UE4SS-RE experimental build",
+            "experimental-palworld": "Install latest Okaetsu experimental build (default)",
+            "experimental": "Install specific UE4SS-RE experimental build"
         }
     },
     {
-        "DisplayName": "UE4SS Experimental Build Version",
+        "DisplayName": "Specific UE4SS-RE Experimental Build Version",
         "Category": "Updates",
         "Subcategory": "Runtime Configuration:build:3",
-        "Description": "If \"Install experimental build\" is selected under Install UE Scripting System, sets the [relevant version](https://github.com/UE4SS-RE/RE-UE4SS/releases/tag/experimental) to install. Example: v3.0.1-137-g6867a08",
+        "Description": "If \"Install specific UE4SS-RE experimental build\" is selected under Install UE Scripting System, sets the [relevant UE4SS-RE version](https://github.com/UE4SS-RE/RE-UE4SS/releases/tag/experimental) to install. Example: v3.0.1-137-g6867a08",
         "Keywords": "ue4ss,unreal,engine,scripting,system,experimental",
         "FieldName": "UE4SSExperimentalVersion",
         "InputType": "text",

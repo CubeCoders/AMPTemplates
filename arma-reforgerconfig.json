@@ -84,20 +84,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Public IP Binding",
-        "Category": "Arma Reforger:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "$ExternalIP",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "Hidden": true,
-        "ParamFieldName": "publicAddress",
-        "IncludeInCommandLine": false,
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "RCON Permission",
         "Category": "Arma Reforger:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -207,10 +193,37 @@
         }
     },
     {
+        "DisplayName": "Public IP Selection Mode",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets whether AMP should automatically select the public IP advertised for the server, or whether it should use the IP set under Server Public IP",
+        "Keywords": "public,ip,address,publicAddress",
+        "FieldName": "publicAddress",
+        "InputType": "enum",
+        "ParamFieldName": "publicAddress",
+        "DefaultValue": "{{$ExternalIP}}",
+        "EnumValues": {
+            "{{$ExternalIP}}": "Automatic (default)",
+            "{{ManualPublicIP}}": "Manual"
+        }
+    },
+    {
+        "DisplayName": "Server Public IP",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the public IP advertised for the server, if \"Manual\" is selected as the Public IP Selection Mode. Useful if the host network has multiple public IPs, or the server is behind a public proxy",
+        "Keywords": "manual,public,ip,publicAddress",
+        "FieldName": "ManualPublicIP",
+        "InputType": "text",
+        "ParamFieldName": "ManualPublicIP",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable Crossplay",
         "Category": "Arma Reforger:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If enabled, crossplay between PC and Xbox clients, or between PC, Xbox and PlayStation clients, will be possible. Set Supported Crossplay Platforms to specify which platforms are supported",
+        "Description": "If enabled, crossplay between PC, Xbox and PlayStation clients will be possible",
         "Keywords": "crossplay,pc,xbox,playstation,psn,crossplatform",
         "FieldName": "crossPlatform",
         "InputType": "checkbox",
@@ -221,24 +234,6 @@
         "EnumValues": {
             "False": "false",
             "True": "true"
-        }
-    },
-    {
-        "DisplayName": "Supported Crossplay Platforms",
-        "Category": "Arma Reforger:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the platforms supported for crossplay. Enable Crossplay must be set for Xbox/PlayStation to be supported",
-        "Keywords": "crossplay,pc,xbox,playstation,psn,supportedPlatforms",
-        "FieldName": "supportedPlatforms",
-        "InputType": "enum",
-        "IsFlagArgument": false,
-        "ParamFieldName": "game.supportedPlatforms",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "\"PLATFORM_PC\", \"PLATFORM_XBL\", \"PLATFORM_PSN\"",
-        "EnumValues": {
-            "\"PLATFORM_PC\"": "PC only (Enable Crossplay must be disabled)",
-            "\"PLATFORM_PC\", \"PLATFORM_XBL\"": "PC and Xbox (modded server only)",
-            "\"PLATFORM_PC\", \"PLATFORM_XBL\", \"PLATFORM_PSN\"": "PC, Xbox and PlayStation (vanilla server only)"
         }
     },
     {
@@ -259,7 +254,7 @@
         "DisplayName": "Admins",
         "Category": "Arma Reforger:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets a whitelist of Identity IDs and/or SteamIDs of server admins. Listed admins won't need to use the Admin Password. Format is \"ID\",\"ID\"",
+        "Description": "Sets a whitelist of IdentityIDs and/or SteamIDs of server admins. Maximum 20 IDs. Listed admins won't need to use the Admin Password, and those listed by IdentityID can use the priority queue to join the server. Format is \"ID\",\"ID\"",
         "Keywords": "admin,admins,whitelist",
         "FieldName": "admins",
         "InputType": "text",
@@ -349,7 +344,7 @@
         "DisplayName": "Navmesh Streaming Mode",
         "Category": "Arma Reforger:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the navmesh streamimg mode. Navmesh streaming will be enabled or disabled on relevant navmesh components and disabled components will be loaded into memory. If \"Disable specific components\" is selected, specify them under Disabled Navmesh Components",
+        "Description": "Sets the navmesh streamimg mode. Enabled components will be streamed, disabled components will be loaded into memory (slightly increasing performance, significantly increasing memory use). If \"Disable specific components\" is selected, specify them under Disabled Navmesh Components",
         "Keywords": "disable,navmesh,streaming,disableNavmeshStreaming",
         "FieldName": "disableNavmeshStreaming12",
         "InputType": "enum",
@@ -386,6 +381,40 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Mod Verification",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, the server will verify the integrity of all installed mods. If any corrupted mods are found, the server will shut down and log the corrupted files",
+        "Keywords": "addons,mods,verify,verification,addonsVerify",
+        "FieldName": "addonsVerify",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "addonsVerify",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-addonsVerify "
+        }
+    },
+    {
+        "DisplayName": "Enable Mod Repair",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, the server will verify the integrity of all installed mods. If any corrupted mods are found, they will be repaired automatically. If the repair fails, the server will shut down",
+        "Keywords": "addons,mods,repair,addonsRepair",
+        "FieldName": "addonsRepair",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "addonsRepair",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-addonsRepair "
+        }
     },
     {
         "DisplayName": "Player Save Period",
@@ -459,11 +488,11 @@
         "DisplayName": "Minimum Grass Distance",
         "Category": "Arma Reforger:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the server's minimum grass distance",
+        "Description": "Sets the server's minimum grass distance. 0 = no distance forced. Otherwise minimum 50, maximum 150",
         "Keywords": "minimum,grass,distance,servermingrassdistance",
         "FieldName": "serverMinGrassDistance",
         "InputType": "number",
-        "MinValue": "50",
+        "MinValue": "0",
         "MaxValue": "150",
         "IsFlagArgument": false,
         "ParamFieldName": "game.gameProperties.serverMinGrassDistance",
@@ -522,6 +551,45 @@
         "EnumValues": {
             "False": "false",
             "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Freeze Check Period",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the time period to forcefully crash on application freeze. 0 = completely disable detection",
+        "Keywords": "freeze,check,freezeCheck",
+        "FieldName": "freezeCheck",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "600",
+        "IsFlagArgument": false,
+        "ParamFieldName": "freezeCheck",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "300",
+        "Placeholder": "300",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Freeze Check Override",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Overrides the server's behaviour when a freeze is detected",
+        "Keywords": "freeze,check,freezeCheckMode",
+        "FieldName": "freezeCheckMode",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "freezeCheckMode",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Do not override (default)",
+            "crash": "Force crash",
+            "minidump": "Generate minidump and keep running (Windows only)",
+            "kill": "Force kill (no data collection)"
         }
     },
     {
@@ -691,7 +759,7 @@
         "DisplayName": "Join Queue Limit",
         "Category": "Arma Reforger:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the limit for how many people can be in the server's join queue at one time. 0 = no limit",
+        "Description": "Sets the limit for how many people can be in the server's join queue at one time. 0 = queue disabled",
         "Keywords": "joinQueue,join,queue,maximum,size,maxSize",
         "FieldName": "maxSize",
         "InputType": "number",

@@ -441,7 +441,7 @@
         "DisplayName": "Crossplay Enabled",
         "Category": "7 Days to Die:skull",
         "Subcategory": "Server:dns",
-        "Description": "Enables/Disables crossplay. Crossplay servers will only be found in searches and joinable if sanctions are not ignored, and have a default or fewer player slot count. Only applies to server version 1.2 and above.",
+        "Description": "Enables/Disables crossplay. Server Max Player Count must be no more than 8, EAC must be enabled, and Ignore EOS Sanctions must be disabled. See [crossplay requirements](https://7daystodie.com/crossplay-server-requirements/). Only applies to server version 2.0 and above.",
         "Keywords": "crossplay,Enabled,ServerAllowCrossplay",
         "FieldName": "ServerAllowCrossplay",
         "InputType": "checkbox",
@@ -602,7 +602,7 @@
         "DisplayName": "Game Name",
         "Category": "7 Days to Die:skull",
         "Subcategory": "Gameplay:joystick",
-        "Description": "Whatever you want the game name to be (letters, numbers, spaces, underscores, dashes and periods only). This affects the save game name as well as the seed used when placing decoration (trees etc) in the world. It does not control the generic layout of the world if creating an RWG world.`",
+        "Description": "Whatever you want the game name to be (letters, numbers, spaces, underscores, dashes and periods only). This affects the save game name as well as the seed used when placing decoration (trees etc) in the world. It does not control the generic layout of the world if creating an RWG world.",
         "Keywords": "Game,Name,GameName",
         "FieldName": "GameName",
         "InputType": "text",
@@ -785,6 +785,39 @@
         "Suffix": "hours"
     },
     {
+        "DisplayName": "Biome Progression",
+        "Category": "7 Days to Die:skull",
+        "Subcategory": "Gameplay:joystick",
+        "Description": "Enable/disable biome hazards and loot stage caps to promote biome progression. Loot stage caps are increased by completing biome challenges. Only applies to server version 2.0 and above.",
+        "Keywords": "Biome,Progression,BiomeProgression",
+        "FieldName": "BiomeProgression",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/ServerSettings/property[@name='BiomeProgression']/@value",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Storm Frequency",
+        "Category": "7 Days to Die:skull",
+        "Subcategory": "Gameplay:joystick",
+        "Description": "Adjusts the frequency of storms. 0 turns them off. Vanilla values: 0, 50, 100, 150, 200, 300, 400, 500. Only applies to server version 2.0 and above.",
+        "Keywords": "Storm,Frequency,StormFreq",
+        "FieldName": "StormFreq",
+        "InputType": "number",
+        "MinValue": "0",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/ServerSettings/property[@name='StormFreq']/@value",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "100",
+        "Placeholder": "100",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Death Penalty",
         "Category": "7 Days to Die:skull",
         "Subcategory": "Gameplay:joystick",
@@ -871,6 +904,24 @@
         "DefaultValue": "45",
         "EnumValues": {},
         "Suffix": "days"
+    },
+    {
+        "DisplayName": "Allow Spawn Near Friend",
+        "Category": "7 Days to Die:skull",
+        "Subcategory": "Gameplay:joystick",
+        "Description": "Whether new players joining the server for the first time can select to join near any friend playing at the same time. Only applies to server version 2.0 and above.",
+        "Keywords": "Allow,Spawn,Near,Friend,AllowSpawnNearFriend",
+        "FieldName": "AllowSpawnNearFriend",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/ServerSettings/property[@name='AllowSpawnNearFriend']/@value",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2",
+        "EnumValues": {
+            "0": "Disabled",
+            "1": "Always",
+            "2": "Only near friends in forest biome (default)"
+        }
     },
     {
         "DisplayName": "Allow Spawn Near Backpack",
@@ -1496,10 +1547,10 @@
         "EnumValues": {
             "public": "Public (default)",
             "latest_experimental": "Experimental",
+            "v2.2": "Version 2.2",
+            "v2.1": "Version 2.1",
+            "v2.0": "Version 2.0",
             "v1.4": "Version 1.4",
-            "v1.3": "Version 1.3",
-            "v1.2": "Version 1.2",
-            "v1.1": "Version 1.1",
             "alpha21.2": "Alpha 21.2",
             "alpha21.1": "Alpha 21.1",
             "alpha20.7": "Alpha 20.7",

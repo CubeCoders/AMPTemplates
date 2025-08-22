@@ -3,7 +3,8 @@
         "UpdateStageName": "Userraw Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}userraw"
+        "UpdateSourceArgs": "{{$FullBaseDir}}userraw",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Mods Directory Creation",
@@ -17,34 +18,37 @@
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "10190",
         "UpdateSourceArgs": "10190",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "AlterWare Launcher Download",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "GithubRelease",
-        "UpdateSourceArgs": "mxve/alterware-launcher",
-        "UpdateSourceData": "alterware-launcher.exe",
+        "UpdateSourceArgs": "iw4x/launcher",
+        "UpdateSourceData": "iw4x-launcher.exe",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "AlterWare Launcher Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "GithubRelease",
-        "UpdateSourceArgs": "mxve/alterware-launcher",
-        "UpdateSourceData": "alterware-launcher-x86_64-unknown-linux-gnu.tar.gz",
+        "UpdateSourceArgs": "iw4x/launcher",
+        "UpdateSourceData": "iw4x-launcher-x86_64-unknown-linux-gnu.tar.gz",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Client Installation",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd call-of-dutymw2\\10190 && .\\alterware-launcher.exe iw4x --update --skip-launcher-update --bonus --force",
+        "UpdateSourceArgs": "/C cd call-of-dutymw2\\10190 && .\\iw4x-launcher.exe --update --skip-self-update --force --path=\"{{$FullBaseDir}}\"",
         "SkipOnFailure": false
     },
     {
@@ -52,7 +56,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd ./call-of-dutymw2/10190 && ./alterware-launcher iw4x --update --skip-launcher-update --bonus --force\"",
+        "UpdateSourceArgs": "-c \"cd ./call-of-dutymw2/10190 && ./iw4x-launcher --update --skip-self-update --force --path=\\\"{{$FullBaseDir}}\\\"\"",
         "SkipOnFailure": false
     },
     {
@@ -62,14 +66,15 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/call-of-dutymw2server.cfg",
         "UpdateSourceArgs": "server.cfg",
         "UpdateSourceTarget": "{{$FullBaseDir}}userraw",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Initialise Wine",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win32 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win32 WINEDEBUG=-all /usr/bin/wineboot --init\"",
         "SkipOnFailure": false
     },
     {
