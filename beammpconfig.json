@@ -1,22 +1,14 @@
 [
     {
-        "DisplayName": "Linux Server Version",
+        "DisplayName": "Server Installation Configuration",
         "Category": "BeamMP:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the server version to install on Linux, based on the host system. Use \"Debian 12\" if using AMP's Docker. NOTE: Update the server after changing this setting",
-        "Keywords": "server,version",
-        "FieldName": "ServerVersion",
-        "InputType": "enum",
-        "IsFlagArgument": false,
-        "ParamFieldName": "ServerVersion",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "debian.12",
-        "EnumValues": {
-            "debian.12": "Debian 12 (default)",
-            "debian.11": "Debian 11",
-            "ubuntu.22.04": "Ubuntu 22.04",
-            "ubuntu.20.04": "Ubuntu 20.04"
-        }
+        "Description": "IMPORTANT: See the Updates tab for configuration options for installation of the server",
+        "Keywords": "",
+        "FieldName": "ServerInstall",
+        "InputType": "hidden",
+        "ParamFieldName": "ServerInstall",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Auth Key",
@@ -256,6 +248,52 @@
         "EnumValues": {
             "True": "true",
             "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Server Release Stream",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Sets whether to install the latest release version, or a pre-release version as specified under Server Pre-release Version. Update the server after changing this setting",
+        "Keywords": "server,version,release,pre-release",
+        "FieldName": "ServerVersion",
+        "InputType": "enum",
+        "ParamFieldName": "ServerVersion",
+        "DefaultValue": "release",
+        "EnumValues": {
+            "release": "Latest release (default)",
+            "prerelease": "Pre-release"
+        }
+    },
+    {
+        "DisplayName": "Server Pre-Release Version",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Sets the [server pre-release version](https://github.com/BeamMP/BeamMP-Server/releases) to install. Use the full tag name, for example: v3.8.5. Update the server after changing this setting",
+        "Keywords": "server,version,pre-release",
+        "FieldName": "ServerPrereleaseVersion",
+        "InputType": "text",
+        "ParamFieldName": "ServerPrereleaseVersion",
+        "DefaultValue": "",
+        "Placeholder": "v3.8.5",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Linux Server Build",
+        "Category": "BeamMP:stadia_controller",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Sets the server build to install on Linux, based on the host system. Use 'Debian 12' if using AMP's Docker. The Server Release Stream, and Server Pre-release Version if relevant, must also be set accordingly. Update the server after changing this setting",
+        "Keywords": "server,version",
+        "FieldName": "ServerVersion",
+        "InputType": "enum",
+        "ParamFieldName": "ServerVersion",
+        "DefaultValue": "debian.12",
+        "EnumValues": {
+            "debian.12": "Debian 12 (default)",
+            "debian.11": "Debian 11",
+            "ubuntu.24.04": "Ubuntu 24.04 (pre-release only)",
+            "ubuntu.22.04": "Ubuntu 22.04",
+            "ubuntu.20.04": "Ubuntu 20.04 (release only)"
         }
     }
 ]
