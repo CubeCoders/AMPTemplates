@@ -44,7 +44,7 @@ wget -q -O "$WINEPREFIX/mono.msi" "$MONO_URL"
 /usr/bin/wine msiexec /i "$WINEPREFIX/mono.msi" /qn /quiet /norestart /log "$WINEPREFIX/mono_install.log"
 
 # Install vcrun2022 only if Wine version is not 10
-if [[ "$WINE_VERSION" -ne 10 ]]; then
+if [[ "$WINE_VERSION" != "10" ]]; then
   ./winetricks -q vcrun2022 > winescript_log.txt 2>&1
 fi
 
