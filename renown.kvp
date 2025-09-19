@@ -1,84 +1,65 @@
-Meta.DisplayName=Renown
-Meta.Description=For running the Renown Server by RDBK Studios
-Meta.Arch=x86_64
-Meta.Author=TheCatDied - Made with AMP Config Generator
-Meta.URL=https://renown.fandom.com/wiki/Community_Server_Hosting_-_Linux#Engine.ini_Body:
-Meta.MinAMPVersion=2.4.6.6
-Meta.SpecificDockerImage=
-Meta.DockerRequired=False
-Meta.ContainerPolicy=Supported
-Meta.ContainerPolicyReason=
-Meta.Prerequsites=[]
-Meta.EndpointURIFormat=steam://connect/{ip}/{GenericModule.App.ApplicationPort2}
-Meta.AppConfigId=3a94e6c8-e0f9-4008-afc8-903c7e37da2b
-App.AdminMethod=SourceRCON
-App.HasReadableConsole=true
-App.HasWritableConsole=true
+# ==== BASIC DISPLAY / PATHS ====
 App.DisplayName=Renown
-App.CommandLineArgs=-PORT {{ApplicationPort1}} -QUERYPORT {{ApplicationPort2}} -BeaconPort {{ApplicationPort3}} -RCONPort {{$RemoteAdminPort}} -RCONPassword "{{$RemoteAdminPassword}}" -ServerName "{{ServerName}}" -MaxPlayers {{MaxPlayers}} -Region "{{Region}}" -MOTD "{{MOTD}}" -ini:Engine:[EpicOnlineServices]:DedicatedServerClientId={{EOS_CLIENT_ID}} -ini:Engine:[EpicOnlineServices]:DedicatedServerClientSecret={{EOS_CLIENT_SECRET}}
-App.WindowsCommandLineArgs=
+App.RootDir=./renown/
+# SteamCMD puts the app under 1512690 — keep that as the working dir
+App.WorkingDir=1512690
+
+# ==== EXECUTABLE (LINUX NATIVE) ====
+# Matches what you confirmed on disk:
+# __VDS__RenownTest01/renown/1512690/Renown_Combat/Binaries/Linux/Renown_CombatServer-Linux-Shipping
+App.ExecutableLinux=renown/1512690/Renown_Combat/Binaries/Linux/Renown_CombatServer-Linux-Shipping
+
+# ==== COMMAND LINE ====
+# We pass ports/RCON/EOS explicitly (no {{$FormattedArgs}} needed)
+App.CommandLineArgs=-PORT {{$ApplicationPort1}} -QUERYPORT {{$ApplicationPort2}} -BeaconPort {{$ApplicationPort3}} -RCONPort {{$RemoteAdminPort}} -RCONPassword "{{$RemoteAdminPassword}}" -ServerName "{{$ServerName}}" -MaxPlayers {{$MaxPlayers}} -Region "{{$Region}}" -MOTD "{{$MOTD}}" -ini:Engine:[EpicOnlineServices]:DedicatedServerClientId={{EOS Client ID}} -ini:Engine:[EpicOnlineServices]:DedicatedServerClientSecret={{EOS Client Secret}}
+
+# If you later decide to use {{$FormattedArgs}} for extra settings, AMP will format them like this:
 App.CommandLineParameterFormat=-{0} "{1}"
 App.CommandLineParameterDelimiter= 
-App.RapidStartup=false
-App.ApplicationReadyMode=Immediate
+
+# ==== START/STOP BEHAVIOUR ====
 App.ExitMethod=String
 App.ExitString=DoExit
 App.ExitTimeout=30
-App.ExitFile=app_exit.lck
-App.SupportsLiveSettingsChanges=False
-App.LiveSettingChangeCommandFormat=set {0} "{1}"
-App.ApplicationIPBinding=0.0.0.0
+App.RapidStartup=False
+App.ApplicationReadyMode=Immediate
+
+# ==== CONSOLE / RCON ====
+App.HasReadableConsole=True
+App.HasWriteableConsole=True
+App.AdminMethod=SourceRCON
 App.AdminPortRef=RemoteAdminPort
-App.UniversalSleepApplicationUDPPortRef=GamePort1
-App.PrimaryApplicationPortRef=GamePort1
-App.UniversalSleepSteamQueryPortRef=SteamQueryPort
-App.MaxUsers=8
 App.UseRandomAdminPassword=True
-App.RemoteAdminPassword=
-App.AdminLoginTransform=None
 App.RCONConnectDelaySeconds=30
 App.RCONConnectRetrySeconds=15
 App.RCONHeartbeatCommand=ping
 App.RCONHeartbeatMinutes=0
-App.TelnetLoginFormat={0}
-App.SteamUpdateAnonymousLogin=True
-App.SteamForceLoginPrompt=False
-App.SupportsUniversalSleep=False
-App.WakeupMode=Any
+
+# ==== PORT REFS (so AMP knows which is “main game” etc.) ====
+App.PrimaryApplicationPortRef=MainGamePort
+App.UniversalSleepApplicationUDPPortRef=MainGamePort
+App.UniversalSleepSteamQueryPortRef=SteamQueryPort
+
+# ==== ENV / LIBRARIES ====
+# Add server’s linux64 folder to LD_LIBRARY_PATH and tell UE4 the appid.
+# {{$FullWorkingDir}} expands to renown/1512690 at runtime.
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullWorkingDir}}/linux64:$LD_LIBRARY_PATH","SteamAppId":"1512690"}
+
+# ==== MISC ====
+App.DisplayName=Renown
+App.SupportsLiveSettingsChanges=False
+App.LiveSettingChangeCommandFormat=set {0} "{1}"
 App.TemplateMatchRegex={{(\$?[\w]+)}}
-App.MonitorChildProcess=False
-App.MonitorChildProcessWaitMs=1000
-App.MonitorChildProcessName=
 App.Compatibility=None
-App.SteamWorkshopDownloadLocation={{$FullBaseDir}}undefined
-Console.FilterMatchRegex=
-Console.FilterMatchReplacement=
+
+# ==== PATHS FOR OTHER PLUGIN FILES ====
+# These @IncludeJson filenames should match the JSON files that sit next to this .kvp
+App.Ports=@IncludeJson[renownports.json]
+App.UpdateSources=@IncludeJson[renownupdates.json]
+
+# ==== OPTIONAL CONSOLE FILTERS / EVENTS (safe defaults) ====
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
-Console.SuppressLogAtStart=False
-Console.ActivateLogRegex=
-Console.UserActions={}
-Console.SleepMode=False
-Console.SleepOnStart=False
-Console.SleepDelayMinutes=5
-Console.DozeDelay=2
-Console.AutoRetryCount=5
-Console.SleepStartThresholdSeconds=25
 Console.AppReadyRegex=^$
 Console.UserJoinRegex=^$
 Console.UserLeaveRegex=^$
 Console.UserChatRegex=^$
-Meta.OS=2
-Meta.ConfigManifest=renownconfig.json
-Meta.MetaConfigManifest=renownmetaconfig.json
-Meta.ConfigRoot=renown.kvp
-App.RootDir=./renown/
-Meta.DisplayImageSource=url:
-App.BaseDirectory=./renown/serverfiles/
-App.WorkingDir=serverfiles
-App.ExecutableWin=serverfiles\
-App.ExecutableLinux=serverfiles/renown/1512690/Renown_Combat/Binaries/Linux/Renown_CombatServer-Linux-Shipping
-App.LinuxCommandLineArgs=
-App.Ports=@IncludeJson[renownports.json]
-App.UpdateSources=@IncludeJson[renownupdates.json]
-App.EnvironmentVariables={"LD_LIBRARY_PATH": "{{$FullBaseDir}}linux64:{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%", "WINEPREFIX": "{{$FullRootDir}}.wine", "WINEARCH": "win64", "WINEDEBUG": "-all"}
