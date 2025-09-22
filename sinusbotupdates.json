@@ -1,12 +1,5 @@
 [
     {
-        "UpdateStageName": "Create data Directory",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}data",
-        "SkipOnFailure": false
-    },
-    {
         "UpdateStageName": "Create Text-To-Speech Directory",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "CreateDirectory",
@@ -28,15 +21,6 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Create TS3 Plugins Directory",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}TeamSpeak3-Client-linux_amd64/plugins",
-        "UpdateSourceConditionSetting": "BotMode",
-        "UpdateSourceConditionValue": "./TeamSpeak3-Client-linux_amd64/ts3client_linux_amd64",
-        "SkipOnFailure": false
-    },
-    {
         "UpdateStageName": "Download SinusBot",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "FetchURL",
@@ -44,14 +28,6 @@
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Configure SinusBot",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd sinusbot && chmod 755 sinusbot && mv scripts default_scripts && ln -s data/private.dat private.dat\"",
         "SkipOnFailure": false
     },
     {
@@ -83,13 +59,6 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Set Executable Flag",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullBaseDir}}yt-dlp/yt-dlp",
-        "SkipOnFailure": false
-    },
-    {
         "UpdateStageName": "Remove TeamSpeak 3 Client",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
@@ -116,7 +85,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd sinusbot && chmod 755 TeamSpeak3-Client-linux_amd64-*.run && yes | ./TeamSpeak3-Client-linux_amd64-*.run && rm -rf TeamSpeak3-Client-linux_amd64-*.run data/ts3 TeamSpeak3-Client-linux_amd64/xcbglintegrations/libqxcb-glx-integration.so && \\cp -f plugin/libsoundbot_plugin.so TeamSpeak3-Client-linux_amd64/plugins\"",
+        "UpdateSourceArgs": "-c \"cd sinusbot && chmod 755 TeamSpeak3-Client-linux_amd64-*.run && yes | ./TeamSpeak3-Client-linux_amd64-*.run && rm -rf TeamSpeak3-Client-linux_amd64-*.run data/ts3 TeamSpeak3-Client-linux_amd64/xcbglintegrations/libqxcb-glx-integration.so && mkdir -p TeamSpeak3-Client-linux_amd64/plugins && \\cp -f plugin/libsoundbot_plugin.so TeamSpeak3-Client-linux_amd64/plugins\"",
         "UpdateSourceConditionSetting": "BotMode",
         "UpdateSourceConditionValue": "./TeamSpeak3-Client-linux_amd64/ts3client_linux_amd64",
         "SkipOnFailure": false
@@ -129,6 +98,14 @@
         "UpdateSourceArgs": "config.ini",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Make Binaries Executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd sinusbot && chmod 755 sinusbot yt-dlp/yt-dlp\"",
         "SkipOnFailure": false
     }
 ]
