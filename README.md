@@ -8,6 +8,8 @@ You can also use the online configurator at https://config.getamp.sh/ to help wi
 
 *There is a much more robust version of the [online configuration tool](https://iceofwraith.github.io/GenericConfigGen/) that is still in beta. This should provide much better results than the above even so. If you have any feedback, please contact IceOfWraith in the CubeCoders Discord.
 
+**The online configurator can be used as a starting point for making templates. However, it will not generally produce a fully functioning template. Templates produced using the generator can be deployed for personal use but will not be accepted into the CubeCoders repository.**
+
 # Sharing Templates
 Right now the following restrictions apply to templates that may be publicly shared via this repository (some of these will be relaxed over time):
 
