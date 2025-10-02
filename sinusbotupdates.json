@@ -21,19 +21,10 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Create TS3 Plugins Directory",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}TeamSpeak3-Client-linux_amd64/plugins",
-        "UpdateSourceConditionSetting": "BotMode",
-        "UpdateSourceConditionValue": "./TeamSpeak3-Client-linux_amd64/ts3client_linux_amd64",
-        "SkipOnFailure": false
-    },
-    {
         "UpdateStageName": "Download SinusBot",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://www.sinusbot.com/dl/sinusbot.current.tar.bz2",
+        "UpdateSourceData": "https://michael.frie.se/sinusbot-1.1f-amd64.tar.bz2",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
@@ -80,8 +71,9 @@
     {
         "UpdateStageName": "Download TeamSpeak 3 Client",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://files.teamspeak-services.com/releases/client/3.5.6/TeamSpeak3-Client-linux_amd64-3.5.6.run",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://teamspeak.com/versions/client.json",
+        "UpdateSourceArgs": "$['linux']['x86_64']['mirrors']['teamspeak.com']",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "OverwriteExistingFiles": true,
         "UpdateSourceConditionSetting": "BotMode",
@@ -93,7 +85,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd sinusbot && chmod 755 TeamSpeak3-Client-linux_amd64-*.run && yes | ./TeamSpeak3-Client-linux_amd64-*.run && rm -rf TeamSpeak3-Client-linux_amd64-*.run data/ts3 TeamSpeak3-Client-linux_amd64/xcbglintegrations/libqxcb-glx-integration.so && \\cp -f plugin/libsoundbot_plugin.so TeamSpeak3-Client-linux_amd64/plugins\"",
+        "UpdateSourceArgs": "-c \"cd sinusbot && chmod 755 TeamSpeak3-Client-linux_amd64-*.run && yes | ./TeamSpeak3-Client-linux_amd64-*.run && rm -rf TeamSpeak3-Client-linux_amd64-*.run data/ts3 TeamSpeak3-Client-linux_amd64/xcbglintegrations/libqxcb-glx-integration.so && mkdir -p TeamSpeak3-Client-linux_amd64/plugins && \\cp -f plugin/libsoundbot_plugin.so TeamSpeak3-Client-linux_amd64/plugins\"",
         "UpdateSourceConditionSetting": "BotMode",
         "UpdateSourceConditionValue": "./TeamSpeak3-Client-linux_amd64/ts3client_linux_amd64",
         "SkipOnFailure": false
