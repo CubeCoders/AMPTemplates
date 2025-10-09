@@ -3395,10 +3395,25 @@
         }
     },
     {
+        "DisplayName": "Enable Cluster",
+        "Category": "ARK SE:stadia_controller",
+        "Subcategory": "Clusters:share:5",
+        "Description": "If set, the use of a server cluster will be enabled. Requires Cluster Directory Override and Cluster ID to be set",
+        "Keywords": "cluster,enable",
+        "FieldName": "EnableCluster",
+        "InputType": "checkbox",
+        "ParamFieldName": "EnableCluster",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-ClusterDirOverride=\"{{ClusterDirOverride}}\" -clusterid={{clusterid}} "
+        }
+    },
+    {
         "DisplayName": "Cluster Directory Override",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Clusters:share:5",
-        "Description": "Sets the path to a shared cluster directory for a server cluster. The cluster directory must be accessible to all cluster servers. If the server is in Docker, the directory must be mounted in the container",
+        "Description": "Sets the path to a shared cluster directory for a server cluster. The cluster directory must be accessible to all cluster servers. If the server is in Docker, the directory must be mounted in the container. Requires Enable Cluster to be set",
         "Keywords": "cluster,directory,override,clusterdiroverride",
         "FieldName": "ClusterDirOverride",
         "InputType": "text",
@@ -3412,7 +3427,7 @@
         "DisplayName": "Cluster ID",
         "Category": "ARK SE:stadia_controller",
         "Subcategory": "Clusters:share:5",
-        "Description": "Sets the cluster ID for a server cluster. The cluster ID must be the same on all servers in the cluster",
+        "Description": "Sets the cluster ID for a server cluster. The cluster ID must be the same on all servers in the cluster. Requires Enable Cluster to be set",
         "Keywords": "cluster,id,clusterid",
         "FieldName": "clusterid",
         "InputType": "text",
