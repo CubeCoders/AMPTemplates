@@ -32,9 +32,19 @@
     {
         "UpdateStageName": "Download MongoDB",
         "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"MongoDBRelease=\\\"{{ServerVersion}}\\\"; MongoDBVersion=\\\"{{CustomServerVersion}}\\\"; cd mongodb && if [[ -x mongodb/bin/mongod ]]; then InstalledVersion=$(mongodb/bin/mongod --version | grep \\\"^db version v\\\" | sed \\\"s/^db version v\\([0-9][0-9]*\\.[0-9][0-9]*\\.[0-9][0-9]*\\)/\\1/\\\"); else InstalledVersion=\\\"\\\"; fi; [[ -z \\\"$MongoDBVersion\\\" ]] && MongoDBVersion=$(wget -qO- \\\"https://endoflife.date/api/v1/products/mongodb/releases/$MongoDBRelease\\\" | jq -r \\\".result.latest.name\\\"); if [[ ! \\\"$MongoDBVersion\\\" =~ ^(7|8)\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid MongoDB version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$MongoDBVersion\\\" ]]; then echo \\\"MongoDB v$MongoDBVersion already installed. Skipping\\\" && exit 0; else [[ -f mongodb.tar.gz ]] && rm -f mongodb.tar.gz >/dev/null 2>&1; wget -qO mongodb.tar.gz https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-debian12-$MongoDBVersion.tgz || { echo \\\"Download failed from the MongoDB CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; mkdir -p mongodb && rm -rf mongodb/* >/dev/null 2>&1 && tar -xzf mongodb.tar.gz -C mongodb --strip-components=1 >/dev/null 2>&1 && rm -f mongodb.tar.gz >/dev/null 2>&1 && echo \\\"MongoDB v$MongoDBVersion downloaded\\\"; fi\"",
+        "UpdateSourceArgs": "-c \"MongoDBRelease=\\\"{{ServerVersion}}\\\"; MongoDBVersion=\\\"{{CustomServerVersion}}\\\"; cd mongodb && if [[ -x mongodb/bin/mongod ]]; then InstalledVersion=$(mongodb/bin/mongod --version | grep \\\"^db version v\\\" | sed \\\"s/^db version v\\([0-9][0-9]*\\.[0-9][0-9]*\\.[0-9][0-9]*\\)/\\1/\\\"); else InstalledVersion=\\\"\\\"; fi; [[ -z \\\"$MongoDBVersion\\\" ]] && MongoDBVersion=$(wget -qO- \\\"https://endoflife.date/api/v1/products/mongodb/releases/$MongoDBRelease\\\" | jq -r \\\".result.latest.name\\\"); if [[ ! \\\"$MongoDBVersion\\\" =~ ^(7|8)\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid MongoDB version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$MongoDBVersion\\\" ]]; then echo \\\"MongoDB v$MongoDBVersion already installed. Skipping\\\" && exit 0; else [[ -f mongodb.tar.gz ]] && rm -f mongodb.tar.gz >/dev/null 2>&1; wget -qO mongodb.tar.gz https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2404-$MongoDBVersion.tgz || { echo \\\"Download failed from the MongoDB CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; mkdir -p mongodb && rm -rf mongodb/* >/dev/null 2>&1 && tar -xzf mongodb.tar.gz -C mongodb --strip-components=1 >/dev/null 2>&1 && rm -f mongodb.tar.gz >/dev/null 2>&1 && echo \\\"MongoDB v$MongoDBVersion downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Download MongoDB",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"MongoDBRelease=\\\"{{ServerVersion}}\\\"; MongoDBVersion=\\\"{{CustomServerVersion}}\\\"; cd mongodb && if [[ -x mongodb/bin/mongod ]]; then InstalledVersion=$(mongodb/bin/mongod --version | grep \\\"^db version v\\\" | sed \\\"s/^db version v\\([0-9][0-9]*\\.[0-9][0-9]*\\.[0-9][0-9]*\\)/\\1/\\\"); else InstalledVersion=\\\"\\\"; fi; [[ -z \\\"$MongoDBVersion\\\" ]] && MongoDBVersion=$(wget -qO- \\\"https://endoflife.date/api/v1/products/mongodb/releases/$MongoDBRelease\\\" | jq -r \\\".result.latest.name\\\"); if [[ ! \\\"$MongoDBVersion\\\" =~ ^(7|8)\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid MongoDB version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$MongoDBVersion\\\" ]]; then echo \\\"MongoDB v$MongoDBVersion already installed. Skipping\\\" && exit 0; else [[ -f mongodb.tar.gz ]] && rm -f mongodb.tar.gz >/dev/null 2>&1; wget -qO mongodb.tar.gz https://fastdl.mongodb.org/linux/mongodb-linux-aarch64-ubuntu2404-$MongoDBVersion.tgz || { echo \\\"Download failed from the MongoDB CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; mkdir -p mongodb && rm -rf mongodb/* >/dev/null 2>&1 && tar -xzf mongodb.tar.gz -C mongodb --strip-components=1 >/dev/null 2>&1 && rm -f mongodb.tar.gz >/dev/null 2>&1 && echo \\\"MongoDB v$MongoDBVersion downloaded\\\"; fi\"",
         "SkipOnFailure": false
     },
     {
@@ -48,9 +58,19 @@
     {
         "UpdateStageName": "Download MongoDB Shell",
         "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cd mongodb && if [[ -x mongosh/bin/mongosh ]]; then InstalledVersion=$(mongosh/bin/mongosh --version); else InstalledVersion=\\\"\\\"; fi; LatestVersion=$(wget -qO- \\\"https://api.github.com/repos/mongodb-js/mongosh/releases/latest\\\" | jq -r \\\".name\\\") && if [[ \\\"$InstalledVersion\\\" == \\\"$LatestVersion\\\" ]]; then echo \\\"MongoDB Shell v$LatestVersion already installed. Skipping\\\" && exit 0; else [[ -f mongosh.tar.gz ]] && rm -f mongosh.tar.gz >/dev/null 2>&1; wget -qO mongosh.tar.gz https://downloads.mongodb.com/compass/mongosh-$LatestVersion-linux-x64-openssl3.tgz || { echo \\\"Download failed from the MongoDB CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; mkdir -p mongosh && rm -rf mongosh/* >/dev/null 2>&1 && tar -xzf mongosh.tar.gz -C mongosh --strip-components=1 >/dev/null 2>&1 && rm -f mongosh.tar.gz >/dev/null 2>&1 && echo \\\"MongoDB Shell v$LatestVersion downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Download MongoDB Shell",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd mongodb && if [[ -x mongosh/bin/mongosh ]]; then InstalledVersion=$(mongosh/bin/mongosh --version); else InstalledVersion=\\\"\\\"; fi; LatestVersion=$(wget -qO- \\\"https://api.github.com/repos/mongodb-js/mongosh/releases/latest\\\" | jq -r \\\".name\\\") && if [[ \\\"$InstalledVersion\\\" == \\\"$LatestVersion\\\" ]]; then echo \\\"MongoDB Shell v$LatestVersion already installed. Skipping\\\" && exit 0; else [[ -f mongosh.tar.gz ]] && rm -f mongosh.tar.gz >/dev/null 2>&1; wget -qO mongosh.tar.gz https://downloads.mongodb.com/compass/mongosh-$LatestVersion-linux-arm64-openssl3.tgz || { echo \\\"Download failed from the MongoDB CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; mkdir -p mongosh && rm -rf mongosh/* >/dev/null 2>&1 && tar -xzf mongosh.tar.gz -C mongosh --strip-components=1 >/dev/null 2>&1 && rm -f mongosh.tar.gz >/dev/null 2>&1 && echo \\\"MongoDB Shell v$LatestVersion downloaded\\\"; fi\"",
         "SkipOnFailure": false
     },
     {
