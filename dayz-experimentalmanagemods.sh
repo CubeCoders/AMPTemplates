@@ -42,6 +42,9 @@ if [ -d "$workshopDir" ]; then
       fi
     fi
 
+    # Sanitise modName
+    modName=$(echo "$modName" | tr '/' '-' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+
     if [ "$ModDirFormat" = "false" ]; then
       # Remove @name symlinks
       rm -f "./@$modName" >/dev/null 2>&1

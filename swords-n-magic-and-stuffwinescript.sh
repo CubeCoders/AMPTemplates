@@ -17,6 +17,7 @@ export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
+export XDG_RUNTIME_DIR=/tmp
 
 [[ -f winetricks ]] && rm -f winetricks
 wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20250102/src/winetricks

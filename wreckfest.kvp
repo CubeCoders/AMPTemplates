@@ -11,7 +11,7 @@ Meta.ConfigManifest=wreckfestconfig.json
 Meta.MetaConfigManifest=wreckfestmetaconfig.json
 Meta.ConfigRoot=wreckfest.kvp
 Meta.MinAMPVersion=2.6.0.8
-Meta.SpecificDockerImage=cubecoders/ampbase:wine
+Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
 Meta.DockerRequired=False
 Meta.DockerBaseReadOnly=False
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
@@ -38,7 +38,7 @@ App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} -s server_config=server_config.cfg --save-dir={{$FullBaseDir}}saved -server_set game_port={{$GamePort}} steam_port={{$SteamPort}} query_port={{$QueryPort}} {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"228380","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"228380","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","XDG_RUNTIME_DIR":"/tmp"}
 App.CommandLineParameterFormat={0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
@@ -110,5 +110,5 @@ Limits.SleepMode=True
 Limits.SleepOnStart=False
 Limits.SleepDelayMinutes=5
 Limits.DozeDelay=2
-Limits.AutoRetryCount=5
+Limits.AutoRetryCount=2
 Limits.SleepStartThresholdSeconds=25

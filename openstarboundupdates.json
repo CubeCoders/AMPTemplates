@@ -16,7 +16,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "GithubRelease",
         "UpdateSourceArgs": "OpenStarbound/OpenStarbound",
-        "UpdateSourceData": "OpenStarbound-Linux-Server.zip",
+        "UpdateSourceData": "OpenStarbound-Linux-Clang-Server.zip",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
@@ -44,14 +44,16 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}assets/packed.pak",
         "UpdateSourceArgs": "{{$FullRootDir}}211820/assets/packed.pak",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Storage Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullBaseDir}}storage",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config File Download",
@@ -60,7 +62,8 @@
         "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/openstarbound_server.config",
         "UpdateSourceArgs": "starbound_server.config",
         "UpdateSourceTarget": "{{$FullBaseDir}}storage",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Working Directory Symlink Creation",
@@ -77,7 +80,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/openstarboundmanagemods.sh",
         "UpdateSourceArgs": "managemods.sh",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Manage Mods",
@@ -94,7 +98,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/openstarboundmanagemods.ps1",
         "UpdateSourceArgs": "managemods.ps1",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Manage Mods",

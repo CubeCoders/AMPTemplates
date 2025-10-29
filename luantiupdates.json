@@ -7,7 +7,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Luanti Copy",
@@ -29,13 +30,15 @@
         "UpdateStageName": "Games Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}games"
+        "UpdateSourceArgs": "{{$FullBaseDir}}games",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Mods Directory Creation",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}mods"
+        "UpdateSourceArgs": "{{$FullBaseDir}}mods",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Game Config File Copy",
@@ -43,6 +46,7 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "{{$FullBaseDir}}minetest.conf",
         "UpdateSourceArgs": "{{$FullBaseDir}}minetest.conf.example",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     }
 ]

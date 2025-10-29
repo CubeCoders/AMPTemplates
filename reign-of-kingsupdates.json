@@ -25,13 +25,15 @@
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "381690",
         "UpdateSourceArgs": "344760",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Config Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Configuration"
+        "UpdateSourceArgs": "{{$FullBaseDir}}Configuration",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "ServerSettings.cfg File Download",
@@ -40,7 +42,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/reign-of-kingsserversettings.cfg",
         "UpdateSourceArgs": "ServerSettings.cfg",
         "UpdateSourceTarget": "{{$FullBaseDir}}Configuration",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "uMod/Oxide Download",
@@ -53,14 +56,15 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "InstalluMod",
-        "UpdateSourceConditionValue": "true"
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Initialise Wine",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all XDG_RUNTIME_DIR=/tmp /usr/bin/wineboot --init --update\"",
         "SkipOnFailure": false
     },
     {
@@ -68,7 +72,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd rok && [[ -f winetricks ]] && rm -f winetricks; wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20250102/src/winetricks && chmod +x winetricks; wget -q -N https://dl.winehq.org/wine/wine-mono/8.1.0/wine-mono-8.1.0-x86.msi; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; export WINEARCH=win64; /usr/bin/wine msiexec /i wine-mono-8.1.0-x86.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log\"",
+        "UpdateSourceArgs": "-c \"cd rok && [[ -f winetricks ]] && rm -f winetricks; wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20250102/src/winetricks && chmod +x winetricks; wget -q -N https://dl.winehq.org/wine/wine-mono/8.1.0/wine-mono-8.1.0-x86.msi; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; export WINEARCH=win64; export XDG_RUNTIME_DIR=/tmp; /usr/bin/wine msiexec /i wine-mono-8.1.0-x86.msi /qn /quiet /norestart /log $WINEPREFIX/mono_install.log\"",
         "SkipOnFailure": false
     }
 ]

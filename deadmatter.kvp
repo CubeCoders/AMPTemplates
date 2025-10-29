@@ -11,7 +11,7 @@ Meta.ConfigManifest=deadmatterconfig.json
 Meta.MetaConfigManifest=deadmattermetaconfig.json
 Meta.ConfigRoot=deadmatter.kvp
 Meta.MinAMPVersion=2.5.0.4
-Meta.SpecificDockerImage=cubecoders/ampbase:wine8
+Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
 Meta.DockerRequired=False
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
 Meta.ContainerPolicyReason=The server requires Wine to run on Linux. Using a container avoids the need to install this dependency on the host.
@@ -36,7 +36,7 @@ App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} DeadMatter -stdout -FullStdOutLogOutput -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{$FormattedArgs}} {{hardcore}}{{heartbeat}}{{EnableVehiclesOnDedicated}}-Wait
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"SteamAppId":"2184150","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
+App.EnvironmentVariables={"SteamAppId":"2184150","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","XDG_RUNTIME_DIR":"/tmp"}
 App.CommandLineParameterFormat=-{0}="{1}"
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
