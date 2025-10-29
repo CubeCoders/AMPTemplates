@@ -21,6 +21,8 @@ export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
+export XDG_RUNTIME_DIR=/tmp
+
 ./winetricks -q vcrun2022 >> winescript_log.txt 2>&1
 rm -rf ~/.cache/winetricks
 

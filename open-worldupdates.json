@@ -3,13 +3,15 @@
         "UpdateStageName": "Create Dotnet Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}dotnet"
+        "UpdateSourceArgs": "{{$FullBaseDir}}dotnet",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Data Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Data"
+        "UpdateSourceArgs": "{{$FullBaseDir}}Data",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "ASP.NET Core Runtime Download",
@@ -17,7 +19,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\" && if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/3.1/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi && if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid ASP.NET Core Runtime version format specified\\\" && exit 1; fi && wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-linux-x64.tar.gz && echo \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\"; cd \\\"{{$FullBaseDir}}\\\" && if [[ -x dotnet/dotnet ]]; then InstalledVersion=$(dotnet/dotnet --list-runtimes | sed -n \\\"s/^Microsoft\\.AspNetCore\\.App \\([0-9.]*\\) .*/\\1/p\\\" | head -n1); else InstalledVersion=\\\"\\\"; fi; if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/3.1/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi; if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid ASP.NET Core Runtime version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$DotnetVersion\\\" ]]; then echo \\\"ASP.NET Core Runtime v$DotnetVersion already installed. Skipping\\\" && exit 0; else [[ -f dotnet.tar.gz ]] && rm -f dotnet.tar.gz >/dev/null 2>&1; wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-linux-x64.tar.gz || { echo \\\"Download failed from the Microsoft CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; rm -rf dotnet/* >/dev/null 2>&1 && tar -xzf dotnet.tar.gz -C dotnet >/dev/null 2>&1 && rm -f dotnet.tar.gz >/dev/null 2>&1 && echo \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\"; fi\"",
         "SkipOnFailure": false
     },
     {
@@ -26,7 +28,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\" && if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/3.1/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi && if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid ASP.NET Core Runtime version format specified\\\" && exit 1; fi && wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-linux-arm64.tar.gz && echo \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\"; cd \\\"{{$FullBaseDir}}\\\" && if [[ -x dotnet/dotnet ]]; then InstalledVersion=$(dotnet/dotnet --list-runtimes | sed -n \\\"s/^Microsoft\\.AspNetCore\\.App \\([0-9.]*\\) .*/\\1/p\\\" | head -n1); else InstalledVersion=\\\"\\\"; fi; if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/3.1/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi; if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid ASP.NET Core Runtime version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$DotnetVersion\\\" ]]; then echo \\\"ASP.NET Core Runtime v$DotnetVersion already installed. Skipping\\\" && exit 0; else [[ -f dotnet.tar.gz ]] && rm -f dotnet.tar.gz >/dev/null 2>&1; wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-linux-arm64.tar.gz || { echo \\\"Download failed from the Microsoft CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; rm -rf dotnet/* >/dev/null 2>&1 && tar -xzf dotnet.tar.gz -C dotnet >/dev/null 2>&1 && rm -f dotnet.tar.gz >/dev/null 2>&1 && echo \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\"; fi\"",
         "SkipOnFailure": false
     },
     {
@@ -34,27 +36,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $DotnetVersion='{{DotnetVersion}}'; if ([string]::IsNullOrWhiteSpace($DotnetVersion)) { $DotnetVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/release-metadata/3.1/releases.json).\\\"latest-runtime\\\" }; if ($DotnetVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid ASP.NET Core Runtime version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-win-x64.zip -OutFile 'dotnet.zip'; if ($?) { Write-Output \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\" }\"",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "ASP.NET Core Runtime Extract",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "ExtractArchive",
-        "UpdateSourceData": "dotnet.tar.gz",
-        "UpdateSourceTarget": "{{$FullBaseDir}}dotnet",
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "ASP.NET Core Runtime Extract",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "ExtractArchive",
-        "UpdateSourceData": "dotnet.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}dotnet",
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $DotnetVersion='{{DotnetVersion}}'; Set-Location -Path '{{$FullBaseDir}}'; if (Test-Path 'dotnet/dotnet.exe') { $InstalledVersion = (& dotnet/dotnet.exe --list-runtimes | Where-Object { $_ -like 'Microsoft.AspNetCore.App*' } | Select-Object -First 1).Split()[1] } else { $InstalledVersion = '' }; if ( [string]::IsNullOrWhiteSpace($DotnetVersion) ) { $DotnetVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/release-metadata/3.1/releases.json).\\\"latest-runtime\\\" }; if ($DotnetVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid ASP.NET Core Runtime version format specified\\\"; exit 1 } elseif ( $InstalledVersion -eq $DotnetVersion ) { Write-Output \\\"ASP.NET Core Runtime v$DotnetVersion already installed. Skipping\\\"; exit 0 } else { if ( Test-Path dotnet.zip ) { Remove-Item dotnet.zip -Force -ErrorAction SilentlyContinue *> $null }; try { Invoke-WebRequest -UseBasicParsing -Uri https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-win-x64.zip -OutFile dotnet.zip -ErrorAction Stop } catch { Write-Output \\\"Download failed from the Microsoft CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; Remove-Item -Path 'dotnet/*' -Recurse -Force -ErrorAction SilentlyContinue; Expand-Archive -Path \\\"dotnet.zip\\\" -DestinationPath \\\"dotnet\\\" -Force *> $null; if ( Test-Path dotnet.zip ) { Remove-Item dotnet.zip -Force -ErrorAction SilentlyContinue *> $null }; Write-Output \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\" }\"",
         "SkipOnFailure": false
     },
     {
@@ -67,7 +49,8 @@
         "UpdateSourceVersion": "{{ReleaseVersion}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Open World Download",
@@ -80,7 +63,8 @@
         "UpdateSourceArch": "x86_64",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Open World Download",
@@ -93,7 +77,8 @@
         "UpdateSourceArch": "aarch64",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Pause Update Stages",
@@ -106,14 +91,15 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C xcopy /E /Y /I open-world\\win-x64\\* open-world\\server\\ && rmdir /Q /S open-world\\win-x64\\"
+        "UpdateSourceArgs": "/C xcopy /E /Y /I open-world\\win-x64\\* open-world\\server\\ > NUL 2>&1 && rmdir /Q /S open-world\\win-x64\\ > NUL 2>&1",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Move Server Files",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"\\cp -rf ./open-world/linux-x64/* ./open-world/server/ && chmod +x ./open-world/server/OpenWorldServer ; rm -rf ./open-world/linux-x64/\"",
+        "UpdateSourceArgs": "-c \"\\cp -rf ./open-world/linux-x64/* ./open-world/server/ >/dev/null 2>&1 && chmod +x ./open-world/server/OpenWorldServer ; rm -rf ./open-world/linux-x64/ >/dev/null 2>&1\"",
         "UpdateSourceArch": "x86_64",
         "SkipOnFailure": false
     },
@@ -122,7 +108,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"\\cp -rf ./open-world/linux-arm64/* ./open-world/server/ && chmod +x ./open-world/server/OpenWorldServer ; rm -rf ./open-world/linux-arm64/\"",
+        "UpdateSourceArgs": "-c \"\\cp -rf ./open-world/linux-arm64/* ./open-world/server/ >/dev/null 2>&1 && chmod +x ./open-world/server/OpenWorldServer ; rm -rf ./open-world/linux-arm64/ >/dev/null 2>&1\"",
         "UpdateSourceArch": "aarch64",
         "SkipOnFailure": false
     },
@@ -133,21 +119,25 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/open-worldserverconfig.json",
         "UpdateSourceArgs": "Config.json",
         "UpdateSourceTarget": "{{$FullBaseDir}}Data",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Start Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "StartApplication"
+        "UpdateSource": "StartApplication",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Wait For Server Start",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "WaitForStartupComplete"
+        "UpdateSource": "WaitForStartupComplete",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Stop Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "ShutdownApplication"
+        "UpdateSource": "ShutdownApplication",
+        "SkipOnFailure": false
     }
 ]

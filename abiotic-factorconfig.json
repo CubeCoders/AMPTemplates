@@ -42,6 +42,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Admin Password",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the password for players to become a whitelisted admin in-game. Default is no password (disabled). Recommended for console users, as manual admin whitelisting is only supported for Steam",
+        "Keywords": "admin,password,AdminPassword",
+        "FieldName": "AdminPassword",
+        "InputType": "password",
+        "ParamFieldName": "AdminPassword",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Player Limit",
         "Category": "Abiotic Factor:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -58,6 +72,25 @@
         "Placeholder": "6",
         "Suffix": "players",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Crossplay Mode",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets whether to allow crossplay or to limit the server to a specific platform",
+        "Keywords": "crossplay,playstation,pc,xbox,PlatformLimited",
+        "FieldName": "PlatformLimited",
+        "InputType": "enum",
+        "ParamFieldName": "PlatformLimited",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Enable crossplay (default)",
+            "PC": "Disable crossplay - PC only",
+            "Playstation": "Disable crossplay - Playstation only",
+            "Xbox": "Disable crossplay - Xbox only"
+        }
     },
     {
         "DisplayName": "Use CPU Performance Threads",
@@ -102,6 +135,36 @@
         "EnumValues": {
             "False": "",
             "True": "-NoAsyncLoadingThread "
+        }
+    },
+    {
+        "DisplayName": "LAN Only",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will be run as LAN only, which allows the server to be found in-game using the server browser set to LAN Only. Port 14001 must be accessible for server discovery to work",
+        "Keywords": "lan,only,LANOnly",
+        "FieldName": "LANOnly",
+        "InputType": "checkbox",
+        "ParamFieldName": "LANOnly",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-LANOnly "
+        }
+    },
+    {
+        "DisplayName": "Use Local IPs",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, allows the server to bind to local IPs as well as the Application IP Binding, assuming the Application IP Binding does not otherwise do this. Use with care, as enabling this setting may cause port conflicts",
+        "Keywords": "use,local,ips,UseLocalIPs",
+        "FieldName": "UseLocalIPs",
+        "InputType": "checkbox",
+        "ParamFieldName": "UseLocalIPs",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-UseLocalIPs "
         }
     },
     {
@@ -287,7 +350,7 @@
         "DisplayName": "Enemy Deployable Damage Multiplier",
         "Category": "Abiotic Factor:stadia_controller",
         "Subcategory": "Sandbox:joystick:2",
-        "Description": "Sets how much damage enemies do to deployables, as a multiplier of their damage. Lower will make bases more impervious to enemy attacks. 0 = enemies may get stuck or be unable to threaten player bases properly. Minimum 0.1",
+        "Description": "Sets how much damage enemies do to deployables, as a multiplier of their damage. Lower will make bases more resistant to enemy attacks. Minimum 0.1",
         "Keywords": "enemy,deployable,damage,multiplier,bases,threaten,EnemyDeployableDamageMultiplier",
         "FieldName": "EnemyDeployableDamageMultiplier",
         "InputType": "number",
@@ -608,6 +671,21 @@
         }
     },
     {
+        "DisplayName": "Allow Character Reset",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, allows players to reset their jobs, skills, and traits later in the game. Disabling removes the ability for scientists to change their mind",
+        "Keywords": "character,reset,jobs,skills,traits,AllowCharacterReset",
+        "FieldName": "AllowCharacterReset",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.AllowCharacterReset",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Restrict Containers",
         "Category": "Abiotic Factor:stadia_controller",
         "Subcategory": "Sandbox:joystick:2",
@@ -635,5 +713,36 @@
         "DefaultValue": "5",
         "Placeholder": "5",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Bridge Supports Level",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "Bridges require a certain amount of support by default. To let bridges work with less or no additional support (besides the initial location the bridge is placed), change this setting accordingly",
+        "Keywords": "bridge,supports,BridgeSupports",
+        "FieldName": "BridgeSupports",
+        "InputType": "enum",
+        "ParamFieldName": "SandboxSettings.BridgeSupports",
+        "DefaultValue": "2",
+        "EnumValues": {
+            "0": "No support required",
+            "1": "Less support required",
+            "2": "Default support"
+        }
+    },
+    {
+        "DisplayName": "Allow Home Worlds",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, Home Worlds can be used in the world. If disabled, access (for all scientists) to Home World portal worlds will be restricted. This includes free or DLC Home Worlds, such as Torii",
+        "Keywords": "home,worlds,allow,access,HomeWorlds",
+        "FieldName": "HomeWorlds",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.HomeWorlds",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
     }
 ]

@@ -3,13 +3,15 @@
         "UpdateStageName": "Server Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}server"
+        "UpdateSourceArgs": "{{$FullBaseDir}}server",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Data Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}data"
+        "UpdateSourceArgs": "{{$FullBaseDir}}data",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
@@ -20,60 +22,33 @@
         "UpdateSourceArgs": "FoundryVTT.zip",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
-    },
-    {
-        "UpdateStageName": "Node.js Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-linux-x64.tar.gz",
-        "UpdateSourceArch": "x86_64",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": true
-    },
-    {
-        "UpdateStageName": "Node.js Extract",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd foundry-vtt && rm -Rf node >/dev/null 2>&1 && tar xf node-{{NodeVersion}}-linux-x64.tar.gz && mv node-{{NodeVersion}}-linux-x64 node && rm node-{{NodeVersion}}-linux-x64.tar.gz\"",
-        "UpdateSourceArch": "x86_64",
+        "DeleteAfterExtract": true,
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Node.js Download",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-linux-arm64.tar.gz",
-        "UpdateSourceArch": "aarch64",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": true
-    },
-    {
-        "UpdateStageName": "Node.js Extract",
-        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd foundry-vtt && rm -Rf node >/dev/null 2>&1 && tar xf node-{{NodeVersion}}-linux-arm64.tar.gz && mv node-{{NodeVersion}}-linux-arm64 node && rm node-{{NodeVersion}}-linux-arm64.tar.gz\"",
+        "UpdateSourceArgs": "-c \"NodeVersion=\\\"{{NodeVersion}}\\\"; cd foundry-vtt && if [[ -x node/bin/node ]]; then InstalledVersion=$(node/bin/node --version); else InstalledVersion=\\\"\\\"; fi; [[ -z \\\"$NodeVersion\\\" ]] && NodeVersion=\\\"v$(wget -qO- https://endoflife.date/api/v1/products/nodejs/releases/{{NodeRelease}} | jq -r \\\".result.latest.name\\\")\\\"; if [[ ! \\\"$NodeVersion\\\" =~ ^v(18|20|22)\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Node.js version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$NodeVersion\\\" ]]; then echo \\\"Node.js $NodeVersion already installed. Skipping\\\" && exit 0; else [[ -f node.tar.gz ]] && rm -f node.tar.gz >/dev/null 2>&1; wget -qO node.tar.gz https://nodejs.org/download/release/$NodeVersion/node-$NodeVersion-linux-x64.tar.gz || { echo \\\"Download failed from the Node.js CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; mkdir -p node && rm -rf node/* >/dev/null 2>&1 && tar -xzf node.tar.gz -C node --strip-components=1 >/dev/null 2>&1 && rm -f node.tar.gz >/dev/null 2>&1 && echo \\\"Node.js $NodeVersion downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Linux",
         "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"NodeVersion=\\\"{{NodeVersion}}\\\"; cd foundry-vtt && if [[ -x node/bin/node ]]; then InstalledVersion=$(node/bin/node --version); else InstalledVersion=\\\"\\\"; fi; [[ -z \\\"$NodeVersion\\\" ]] && NodeVersion=\\\"v$(wget -qO- https://endoflife.date/api/v1/products/nodejs/releases/{{NodeRelease}} | jq -r \\\".result.latest.name\\\")\\\"; if [[ ! \\\"$NodeVersion\\\" =~ ^v(18|20|22)\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Node.js version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$NodeVersion\\\" ]]; then echo \\\"Node.js $NodeVersion already installed. Skipping\\\" && exit 0; else [[ -f node.tar.gz ]] && rm -f node.tar.gz >/dev/null 2>&1; wget -qO node.tar.gz https://nodejs.org/download/release/$NodeVersion/node-$NodeVersion-linux-arm64.tar.gz || { echo \\\"Download failed from the Node.js CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; mkdir -p node && rm -rf node/* >/dev/null 2>&1 && tar -xzf node.tar.gz -C node --strip-components=1 >/dev/null 2>&1 && rm -f node.tar.gz >/dev/null 2>&1 && echo \\\"Node.js $NodeVersion downloaded\\\"; fi\"",
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Node.js Download",
         "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://nodejs.org/download/release/{{NodeVersion}}/node-{{NodeVersion}}-win-x64.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
-    },
-    {
-        "UpdateStageName": "Node.js Extract",
-        "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd foundry-vtt & rmdir /S /Q node > NUL 2>&1 & rename node-{{NodeVersion}}-win-x64 node",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $NodeVersion='{{NodeVersion}}'; Set-Location -Path 'foundry-vtt'; if (Test-Path 'node/node.exe') { $InstalledVersion =  & node/node.exe --version } else { $InstalledVersion = '' }; if ( [string]::IsNullOrWhiteSpace($NodeVersion) ) { $NodeVersion = 'v' + ((Invoke-RestMethod -UseBasicParsing -Uri \\\"https://endoflife.date/api/v1/products/nodejs/releases/{{NodeRelease}}\\\").result.latest.name) }; if ( $NodeVersion -notmatch '^v(18|20|22)\\.\\d+\\.\\d+$' ) { Write-Output 'Invalid Node.js version format specified'; exit 1 } elseif ( $InstalledVersion -eq $NodeVersion ) { Write-Output \\\"Node.js $NodeVersion already installed. Skipping\\\"; exit 0 } else { if ( Test-Path node.zip ) { Remove-Item node.zip -Force -ErrorAction SilentlyContinue *> $null }; try { Invoke-WebRequest -UseBasicParsing -Uri https://nodejs.org/download/release/$NodeVersion/node-$NodeVersion-win-x64.zip -OutFile node.zip -ErrorAction Stop } catch { Write-Output \\\"Download failed from the Node.js CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; Expand-Archive -Path \\\"node.zip\\\" -DestinationPath \\\".\\\" -Force *> $null; if ( Test-Path node.zip ) { Remove-Item node.zip -Force -ErrorAction SilentlyContinue *> $null }; if (Test-Path \\\"node-*\\\") { Remove-Item -Recurse -Force node -ErrorAction SilentlyContinue *> $null; Get-ChildItem -Directory | Where-Object { $_.Name -like \\\"node-*\\\" } | Rename-Item -NewName \\\"node\\\" *> $null; Write-Output \\\"Node.js $NodeVersion downloaded\\\" } }\"",
         "SkipOnFailure": false
     }
 ]

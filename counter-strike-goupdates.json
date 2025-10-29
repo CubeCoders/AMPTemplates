@@ -4,7 +4,8 @@
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "740",
-        "UpdateSourceArgs": "730"
+        "UpdateSourceArgs": "730",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Remove Old Library",
@@ -21,7 +22,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/counter-strike-goserver.cfg",
         "UpdateSourceArgs": "AMP_server.cfg",
         "UpdateSourceTarget": "{{$FullRootDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Metamod Download",
@@ -36,7 +38,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $MetamodBuild='{{MetamodBuild}}'; $ModBranch='{{ModBranch}}'; if ([string]::IsNullOrWhiteSpace($MetamodBuild)) { $LatestMetamodFile=(Invoke-RestMethod -UseBasicParsing -Uri https://mms.alliedmods.net/mmsdrop/$ModBranch/mmsource-latest-windows); Invoke-WebRequest -UseBasicParsing -Uri https://mms.alliedmods.net/mmsdrop/$ModBranch/$LatestMetamodFile -OutFile 'metamod.zip'; if ($?) { Write-Output \\\"Latest Metamod $ModBranch build downloaded\\\"; } } elseif ($MetamodBuild -notmatch '^\\d+$') { Write-Output \\\"Invalid Metamod build version format specified\\\"; exit 1; } else { Invoke-WebRequest -UseBasicParsing -Uri https://mms.alliedmods.net/mmsdrop/$ModBranch/mmsource-$ModBranch.0-git$MetamodBuild-windows.zip -OutFile 'metamod.zip'; if ($?) { Write-Output \\\"Metamod $ModBranch build $MetamodBuild downloaded\\\"; } }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $MetamodBuild='{{MetamodBuild}}'; $ModBranch='{{ModBranch}}'; if ([string]::IsNullOrWhiteSpace($MetamodBuild)) { $LatestMetamodFile=(Invoke-RestMethod -UseBasicParsing -Uri https://mms.alliedmods.net/mmsdrop/$ModBranch/mmsource-latest-windows); Invoke-WebRequest -UseBasicParsing -Uri https://mms.alliedmods.net/mmsdrop/$ModBranch/$LatestMetamodFile -OutFile 'metamod.zip'; if ($?) { Write-Output \\\"Latest Metamod $ModBranch build downloaded\\\"; } } elseif ($MetamodBuild -notmatch '^\\d+$') { Write-Output \\\"Invalid Metamod build version format specified\\\"; exit 1; } else { Invoke-WebRequest -UseBasicParsing -Uri https://mms.alliedmods.net/mmsdrop/$ModBranch/mmsource-$ModBranch.0-git$MetamodBuild-windows.zip -OutFile 'metamod.zip'; if ($?) { Write-Output \\\"Metamod $ModBranch build $MetamodBuild downloaded\\\"; } }\"",
         "SkipOnFailure": false
     },
     {
@@ -63,7 +65,8 @@
         "UpdateStageName": "SourceMod Download Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}sm"
+        "UpdateSourceArgs": "{{$FullBaseDir}}sm",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "SourceMod Download",
@@ -78,7 +81,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $SourceModVersion='{{SourceModVersion}}'; $SourceModBranch='{{SourceModBranch}}'; if ([string]::IsNullOrWhiteSpace($SourceModVersion)) { $LatestSourceModFile=(Invoke-RestMethod -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-latest-windows); Invoke-WebRequest -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/$LatestSourceModFile -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"Latest SourceMod $SourceModBranch build downloaded\\\"; } } elseif ($SourceModVersion -notmatch '^\\d+$') { Write-Output \\\"Invalid SourceMod build version format specified\\\"; exit 1; } else { Invoke-WebRequest -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-$SourceModBranch.0-git$SourceModVersion-windows.zip -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"SourceMod $SourceModBranch build $SourceModVersion downloaded\\\"; } }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $SourceModVersion='{{SourceModVersion}}'; $SourceModBranch='{{SourceModBranch}}'; if ([string]::IsNullOrWhiteSpace($SourceModVersion)) { $LatestSourceModFile=(Invoke-RestMethod -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-latest-windows); Invoke-WebRequest -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/$LatestSourceModFile -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"Latest SourceMod $SourceModBranch build downloaded\\\"; } } elseif ($SourceModVersion -notmatch '^\\d+$') { Write-Output \\\"Invalid SourceMod build version format specified\\\"; exit 1; } else { Invoke-WebRequest -UseBasicParsing -Uri https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-$SourceModBranch.0-git$SourceModVersion-windows.zip -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"SourceMod $SourceModBranch build $SourceModVersion downloaded\\\"; } }\"",
         "SkipOnFailure": false
     },
     {
@@ -133,7 +136,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}csgo",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "NoLobbyReservation Gamedata Download",
@@ -143,7 +147,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}csgo/addons/sourcemod/gamedata",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "NoLobbyReservation Scripting Download",
@@ -153,6 +158,7 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}csgo/addons/sourcemod/scripting",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     }
 ]

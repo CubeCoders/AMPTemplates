@@ -9,8 +9,8 @@ Meta.EndpointURIFormat=steam://connect/{ip}:{GenericModule.App.Ports.$QueryPort}
 Meta.ConfigManifest=ark-seminapiconfig.json
 Meta.MetaConfigManifest=ark-seminapimetaconfig.json
 Meta.ConfigRoot=ark-seminapi.kvp
-Meta.MinAMPVersion=2.5.0.14
-Meta.SpecificDockerImage=cubecoders/ampbase:wine8
+Meta.MinAMPVersion=2.5.1.8
+Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
 Meta.DockerRequired=False
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
 Meta.ContainerPolicyReason=The server requires Wine 8 (or higher), Xvfb and cabextract to install and run on Linux. Using a container avoids the need to install these dependencies on the host.
@@ -19,11 +19,11 @@ Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=5
+Meta.ConfigVersion=7
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
 Meta.AppConfigId=902f0fa7-da27-4d83-9899-e962b57c115e
-Meta.AppIsMultiIPAware=True
+Meta.AppIsMultiIPAware=False
 App.DisplayName=ARK: Survival Evolved
 App.RootDir=./arkse/
 App.BaseDirectory=./arkse/376030/
@@ -33,10 +33,10 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=376030/ShooterGame/Binaries/Win64
 App.LinuxCommandLineArgs=./ShooterGameServer.exe
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} {{Map}}?listen?Port={{$GamePort}}?QueryPort={{$QueryPort}}?RCONEnabled=True?RCONServerGameLogBuffer=600?RCONPort={{$RCONPort}}?MultiHome={{$ApplicationIPBinding}}?{{$FormattedArgs}}{{CustomOptions}}?ServerAdminPassword={{$RemoteAdminPassword}} {{automanagedmods}}{{exclusivejoin}}{{BattlEye}}{{crossplay}}{{epiconly}}{{UseVivox}}{{UseDynamicConfig}}{{insecure}}{{EnableIdlePlayerKick}}{{NoHangDetection}}{{NoTransferFromFiltering}}{{AllowFlyerSpeedLeveling}}{{ForceAllowCaveFlyers}}{{nodinos}}{{PreventHibernation}}{{ForceRespawnDinos}}{{DisableRailgunPVP}}{{UseStructureStasisGrid}}{{AutoDestroyStructures}} -ActiveEvent={{ActiveEvent}} -PublicIPForEpic={{PublicIPForEpic}} -culture={{culture}} -ClusterDirOverride="{{ClusterDirOverride}}" -clusterid={{clusterid}} {{CustomFlags}} -servergamelog
+App.CommandLineArgs={{$PlatformArgs}} {{Map}}?listen?Port={{$GamePort}}?QueryPort={{$QueryPort}}?RCONEnabled=True?RCONServerGameLogBuffer=600?RCONPort={{$RCONPort}}?MultiHome={{$ApplicationIPBinding}}?{{$FormattedArgs}}{{CustomOptions}}?ServerAdminPassword={{$RemoteAdminPassword}} {{automanagedmods}}{{exclusivejoin}}{{BattlEye}}{{crossplay}}{{epiconly}}{{UseVivox}}{{UseDynamicConfig}}{{insecure}}{{EnableIdlePlayerKick}}{{NoHangDetection}}{{NoTransferFromFiltering}}{{AllowFlyerSpeedLeveling}}{{ForceAllowCaveFlyers}}{{nodinos}}{{PreventHibernation}}{{ForceRespawnDinos}}{{DisableRailgunPVP}}{{UseStructureStasisGrid}}{{AutoDestroyStructures}} -ActiveEvent={{ActiveEvent}} -PublicIPForEpic={{PublicIPForEpic}} -culture={{culture}} {{EnableCluster}}{{CustomFlags}} -servergamelog
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"SteamAppId":"346110","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"version.dll=n,b"}
+App.EnvironmentVariables={"SteamAppId":"346110","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"version.dll=n,b","XDG_RUNTIME_DIR":"/tmp"}
 App.CommandLineParameterFormat={0}={1}
 App.CommandLineParameterDelimiter=?
 App.ExitMethod=String

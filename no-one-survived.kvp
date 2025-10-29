@@ -11,7 +11,7 @@ Meta.ConfigManifest=no-one-survivedconfig.json
 Meta.MetaConfigManifest=no-one-survivedmetaconfig.json
 Meta.ConfigRoot=no-one-survived.kvp
 Meta.MinAMPVersion=2.5.0.4
-Meta.SpecificDockerImage=cubecoders/ampbase:wine8
+Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
 Meta.DockerRequired=False
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
 Meta.ContainerPolicyReason=The server requires Wine 7 (or later) to run on Linux. Using a container avoids the need to install this dependency on the host.
@@ -23,7 +23,7 @@ Meta.ConfigVersion=4
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
 Meta.AppConfigId=8ee4dcd5-e3e4-486a-9272-9070c9b32606
-Meta.AppIsMultiIPAware=True
+Meta.AppIsMultiIPAware=False
 App.DisplayName=No One Survived
 App.RootDir=./no-one-survived/
 App.BaseDirectory=./no-one-survived/2329680/
@@ -36,7 +36,7 @@ App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} WRSH -server -stdout -FullStdOutLogOutput -Port={{$GamePort}} -QueryPort={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1963370","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1963370","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","XDG_RUNTIME_DIR":"/tmp"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE

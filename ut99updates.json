@@ -7,7 +7,8 @@
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Base Server Download",
@@ -17,7 +18,8 @@
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Bonus Packs Download",
@@ -27,7 +29,8 @@
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "OldUnreal Patch Download",
@@ -37,7 +40,8 @@
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "OldUnreal Patch Download",
@@ -61,7 +65,21 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "PatchVersion",
-        "UpdateSourceConditionValue": "469c"
+        "UpdateSourceConditionValue": "469c",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "OldUnreal Patch Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469c/OldUnreal-UTPatch469c-Linux-x86.tar.bz2",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "PatchVersion",
+        "UpdateSourceConditionValue": "469c32",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "OldUnreal Patch Download",
@@ -73,39 +91,28 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "PatchVersion",
-        "UpdateSourceConditionValue": "469d"
-    },
-    {
-        "UpdateStageName": "Copy OldUnreal Patch Files",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"\\cp -Rf ./ut-server/System64/* ./ut-server/System >/dev/null 2>&1\"",
-        "UpdateSourceConditionSetting": "PatchVersion",
-        "UpdateSourceConditionValue": "469c",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Copy OldUnreal Patch Files",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"\\cp -Rf ./ut-server/System64/* ./ut-server/System >/dev/null 2>&1\"",
-        "UpdateSourceConditionSetting": "PatchVersion",
         "UpdateSourceConditionValue": "469d",
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Pause Update Stages",
+        "UpdateStageName": "OldUnreal Patch Download",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Pause",
-        "UpdateSourceArgs": "2"
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469d/OldUnreal-UTPatch469d-Linux-x86.tar.bz2",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "PatchVersion",
+        "UpdateSourceConditionValue": "469d32",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Set Executable Flag",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullBaseDir}}System/ucc-bin"
+        "UpdateSourceArgs": "{{$FullBaseDir}}System{{ServerExecutable}}/ucc-bin",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Config Download",
@@ -113,7 +120,8 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/ut99UnrealTournament.ini",
         "UpdateSourceArgs": "_AMP_UnrealTournament.ini",
-        "UpdateSourceTarget": "{{$FullRootDir}}System/",
-        "OverwriteExistingFiles": false
+        "UpdateSourceTarget": "{{$FullBaseDir}}System",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     }
 ]
