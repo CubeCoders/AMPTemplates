@@ -5,7 +5,8 @@
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "374040",
         "UpdateSourceArgs": "374040",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Extract",
@@ -30,14 +31,15 @@
         "UpdateSourceData": "https://github.com/CubeCoders/AMPTemplates/raw/main/portal-knightsserver_config.json",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UpdateSourceArgs": "server_config.json",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Initialise Wine",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all XDG_RUNTIME_DIR=/tmp /usr/bin/wineboot --init\"",
         "SkipOnFailure": false
     }
 ]

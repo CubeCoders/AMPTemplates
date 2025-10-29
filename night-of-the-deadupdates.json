@@ -5,7 +5,8 @@
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "1420710",
         "UpdateSourceArgs": "1377380",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "SteamCMD Component Download",
@@ -13,13 +14,15 @@
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "1007",
         "UpdateSourceTarget": "{{$FullBaseDir}}LF/Binaries/Win64",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}LF/Saved/Config"
+        "UpdateSourceArgs": "{{$FullBaseDir}}LF/Saved/Config",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "ServerSettings.ini Copy",
@@ -35,7 +38,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all XDG_RUNTIME_DIR=/tmp /usr/bin/wineboot --init\"",
         "SkipOnFailure": false
     }
 ]

@@ -3,19 +3,22 @@
         "UpdateStageName": "Server Directory Creation",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}server"
+        "UpdateSourceArgs": "{{$FullBaseDir}}server",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "AppImage Directory Creation",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}appimage"
+        "UpdateSourceArgs": "{{$FullBaseDir}}appimage",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Support Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Support"
+        "UpdateSourceArgs": "{{$FullBaseDir}}Support",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "OpenRA Red Alert Download",
@@ -32,7 +35,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $CURRENT_VERSION=(Invoke-RestMethod -UseBasicParsing -Uri 'https://www.openra.net/versions.json').release; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://github.com/OpenRA/OpenRA/releases/download/${CURRENT_VERSION}/OpenRA-${CURRENT_VERSION}-x64-winportable.zip\\\" -OutFile 'OpenRA.zip'; if ($?) { Write-Output \\\"OpenRA version $CURRENT_VERSION downloaded\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $CURRENT_VERSION=(Invoke-RestMethod -UseBasicParsing -Uri 'https://www.openra.net/versions.json').release; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://github.com/OpenRA/OpenRA/releases/download/${CURRENT_VERSION}/OpenRA-${CURRENT_VERSION}-x64-winportable.zip\\\" -OutFile 'OpenRA.zip'; if ($?) { Write-Output \\\"OpenRA version $CURRENT_VERSION downloaded\\\" }\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "release",
         "SkipOnFailure": false
@@ -52,7 +55,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $CURRENT_VERSION=(Invoke-RestMethod -UseBasicParsing -Uri 'https://www.openra.net/versions.json').playtest; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://github.com/OpenRA/OpenRA/releases/download/${CURRENT_VERSION}/OpenRA-${CURRENT_VERSION}-x64-winportable.zip\\\" -OutFile 'OpenRA.zip'; if ($?) { Write-Output \\\"OpenRA version $CURRENT_VERSION downloaded\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $CURRENT_VERSION=(Invoke-RestMethod -UseBasicParsing -Uri 'https://www.openra.net/versions.json').playtest; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://github.com/OpenRA/OpenRA/releases/download/${CURRENT_VERSION}/OpenRA-${CURRENT_VERSION}-x64-winportable.zip\\\" -OutFile 'OpenRA.zip'; if ($?) { Write-Output \\\"OpenRA version $CURRENT_VERSION downloaded\\\" }\"",
         "UpdateSourceConditionSetting": "ServerBuild",
         "UpdateSourceConditionValue": "playtest",
         "SkipOnFailure": false
@@ -64,7 +67,8 @@
         "UpdateSourceData": "OpenRA.zip",
         "UpdateSourceTarget": "{{$FullBaseDir}}server",
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "OpenRA Red Alert Extract",

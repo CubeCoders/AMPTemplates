@@ -11,7 +11,7 @@ Meta.ConfigManifest=rising-storm2-vietnamconfig.json
 Meta.MetaConfigManifest=rising-storm2-vietnammetaconfig.json
 Meta.ConfigRoot=rising-storm2-vietnam.kvp
 Meta.MinAMPVersion=2.5.0.4
-Meta.SpecificDockerImage=cubecoders/ampbase:wine8
+Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
 Meta.DockerRequired=False
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
 Meta.ContainerPolicyReason=The server requires Wine 8 and Xvfb to run on Linux. Using a container avoids the need to install these dependencies on the host.
@@ -24,7 +24,7 @@ Meta.AppConfigId=e5c0aab3-7731-42d1-bb89-fa06a2741fc0
 Meta.ConfigVersion=3
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
-Meta.AppIsMultiIPAware=True
+Meta.AppIsMultiIPAware=False
 App.DisplayName=Rising Storm 2: Vietnam
 App.RootDir=./rs2vietnam/
 App.BaseDirectory=./rs2vietnam/418480/
@@ -37,7 +37,7 @@ App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} {{ServerMap}}?AdminName={{AdminName}}?AdminPassword={{AdminPassword}}?MaxPlayers={{$MaxUsers}}?Difficulty={{Difficulty}}?{{$FormattedArgs}}{{CustomServerOptions}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -WebAdminPort={{$WebAdminPort}} -MultiHome={{$ApplicationIPBinding}} {{CustomServerSwitches}} -stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"SteamAppId":"418460","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
+App.EnvironmentVariables={"SteamAppId":"418460","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","XDG_RUNTIME_DIR":"/tmp"}
 App.CommandLineParameterFormat={0}={1}
 App.CommandLineParameterDelimiter=?
 App.ExitMethod=OS_CLOSE

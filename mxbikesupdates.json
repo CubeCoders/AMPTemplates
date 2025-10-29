@@ -5,62 +5,28 @@
         "UpdateSource": "CreateDirectory",
         "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
         "UpdateSourceConditionSetting": "DownloadSource",
-        "UpdateSourceConditionValue": "standalone"
-    },
-    {
-        "UpdateStageName": "7-Zip Installer Download",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://7-zip.org/a/7z2407-x64.exe",
-        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles": true,
-        "OneShot": true,
-        "UpdateSourceConditionSetting": "DownloadSource",
-        "UpdateSourceConditionValue": "standalone"
-    },
-    {
-        "UpdateStageName": "7-Zip Console Tool Download",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://www.7-zip.org/a/7zr.exe",
-        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles": true,
-        "OneShot": true,
-        "UpdateSourceConditionSetting": "DownloadSource",
-        "UpdateSourceConditionValue": "standalone"
+        "UpdateSourceConditionValue": "standalone",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "7-Zip Installation",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd mxbikes\\7-Zip && 7zr.exe x -y -aoa 7z2407-x64.exe > NUL 2>&1",
-        "SkipOnFailure": true,
-        "OneShot": true,
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'mxbikes/7-Zip'; if (Test-Path '7z.exe') { exit 0 } else { Invoke-WebRequest -UseBasicParsing -Uri 'https://7-zip.org/a/7z2409-x64.exe' -OutFile '7z-installer.exe' }; if ($?) { Invoke-WebRequest -UseBasicParsing -Uri 'https://www.7-zip.org/a/7zr.exe' -OutFile '7zr.exe' }; if ($?) { & ./7zr.exe x -y -aoa 7z-installer.exe *> $null 2>&1; Remove-Item -Path '7z-installer.exe' -Force -ErrorAction SilentlyContinue | Out-Null }\"",
         "UpdateSourceConditionSetting": "DownloadSource",
-        "UpdateSourceConditionValue": "standalone"
-    },
-    {
-        "UpdateStageName": "7-Zip Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://www.7-zip.org/a/7z2301-linux-x64.tar.xz",
-        "UpdateSourceTarget": "{{$FullRootDir}}7-Zip",
-        "OverwriteExistingFiles": true,
-        "OneShot": true,
-        "UpdateSourceConditionSetting": "DownloadSource",
-        "UpdateSourceConditionValue": "standalone"
+        "UpdateSourceConditionValue": "standalone",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "7-Zip Installation",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd ./mxbikes/7-Zip && tar -xf 7z2301-linux-x64.tar.xz >/dev/null 2>&1 && rm -f 7z2301-linux-x64.tar.xz\"",
-        "SkipOnFailure": false,
-        "OneShot": true,
+        "UpdateSourceArgs": "-c \"cd mxbikes/7-Zip && [[ -x 7zzs ]] && exit 0 || { wget -qO 7z.tar.xz https://www.7-zip.org/a/7z2409-linux-x64.tar.xz && tar -xf 7z.tar.xz >/dev/null 2>&1 && rm -f 7z.tar.xz >/dev/null 2>&1; }\"",
         "UpdateSourceConditionSetting": "DownloadSource",
-        "UpdateSourceConditionValue": "standalone"
+        "UpdateSourceConditionValue": "standalone",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "MX Bikes Download",
@@ -68,19 +34,19 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cd mxbikes/server && ServerDownloadMirror=\\\"{{ServerDownloadMirror}}\\\"; if [ \\\"$ServerDownloadMirror\\\" = \\\"MXB-Mods.com\\\" ]; then DownloadLink=$(wget -qO- \\\"https://betas.mxb-mods.com/\\\" | grep -o \\\"files/mxbikes[^\\\\\\\"]*\\.exe\\\" | head -n 1) && wget --header=\\\"Referer: https://betas.mxb-mods.com/download/\\\" -qO mxbikes-beta.exe \\\"https://betas.mxb-mods.com/$DownloadLink\\\"; else DownloadLink=$(wget -qO- \\\"https://www.mx-bikes.com/?page=downloads\\\" | grep -o \\\"downloads/mxbikes[^\\\\\\\"]*\\.exe\\\" | head -n 1) && wget -qO mxbikes-beta.exe \\\"https://www.mx-bikes.com/$DownloadLink\\\"; fi\"",
-        "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "DownloadSource",
-        "UpdateSourceConditionValue": "standalone"
+        "UpdateSourceConditionValue": "standalone",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "MX Bikes Download",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'mxbikes/server'; $ServerDownloadMirror='{{ServerDownloadMirror}}'; if ($ServerDownloadMirror -eq 'MXB-Mods.com') { $html = Invoke-WebRequest -UseBasicParsing -Uri 'https://betas.mxb-mods.com/'; $DownloadLink = ($html.Links | Where-Object href -like 'files/mxbikes*.exe')[0].href; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://betas.mxb-mods.com/$DownloadLink\\\" -OutFile 'mxbikes-beta.exe' -Headers @{ Referer = 'https://betas.mxb-mods.com/download/' } } else { $html = Invoke-WebRequest -UseBasicParsing -Uri 'https://www.mx-bikes.com/?page=downloads'; $DownloadLink = ($html.Links | Where-Object href -like 'downloads/mxbikes*.exe')[0].href; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://www.mx-bikes.com/$DownloadLink\\\" -OutFile 'mxbikes-beta.exe' }\"",
-        "SkipOnFailure": false,
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'mxbikes/server'; $ServerDownloadMirror='{{ServerDownloadMirror}}'; if ($ServerDownloadMirror -eq 'MXB-Mods.com') { $html = Invoke-WebRequest -UseBasicParsing -Uri 'https://betas.mxb-mods.com/'; $DownloadLink = ($html.Links | Where-Object href -like 'files/mxbikes*.exe')[0].href; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://betas.mxb-mods.com/$DownloadLink\\\" -OutFile 'mxbikes-beta.exe' -Headers @{ Referer = 'https://betas.mxb-mods.com/download/' } } else { $html = Invoke-WebRequest -UseBasicParsing -Uri 'https://www.mx-bikes.com/?page=downloads'; $DownloadLink = ($html.Links | Where-Object href -like 'downloads/mxbikes*.exe')[0].href; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://www.mx-bikes.com/$DownloadLink\\\" -OutFile 'mxbikes-beta.exe' }\"",
         "UpdateSourceConditionSetting": "DownloadSource",
-        "UpdateSourceConditionValue": "standalone"
+        "UpdateSourceConditionValue": "standalone",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "MX Bikes Installation",
@@ -88,9 +54,9 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
         "UpdateSourceArgs": "/C cd mxbikes\\server && ..\\7-Zip\\7z.exe x -y mxbikes-beta.exe > NUL 2>&1 && del /Q /F mxbikes-beta.exe",
-        "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "DownloadSource",
-        "UpdateSourceConditionValue": "standalone"
+        "UpdateSourceConditionValue": "standalone",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "MX Bikes Installation",
@@ -98,9 +64,9 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cd ./mxbikes/server && ../7-Zip/7zzs x -y mxbikes-beta.exe >/dev/null 2>&1 && rm -f mxbikes-beta.exe\"",
-        "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "DownloadSource",
-        "UpdateSourceConditionValue": "standalone"
+        "UpdateSourceConditionValue": "standalone",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "MX Bikes Game Files Download",
@@ -111,7 +77,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "ForceDownloadPlatform": "Windows",
         "UpdateSourceConditionSetting": "DownloadSource",
-        "UpdateSourceConditionValue": "steam"
+        "UpdateSourceConditionValue": "steam",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "MX Bikes Server Patch Download",
@@ -121,19 +88,22 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "OverwriteExistingFiles": true,
         "UpdateSourceConditionSetting": "DownloadSource",
-        "UpdateSourceConditionValue": "steam"
+        "UpdateSourceConditionValue": "steam",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Results Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}results"
+        "UpdateSourceArgs": "{{$FullBaseDir}}results",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Replays Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}replays"
+        "UpdateSourceArgs": "{{$FullBaseDir}}replays",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config File Download",
@@ -142,28 +112,31 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/mxbikesdedicated.ini",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UpdateSourceArgs": "dedicated.ini",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Whitelist.txt Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateFile",
         "UpdateSourceData": "",
-        "UpdateSourceArgs": "{{$FullBaseDir}}whitelist.txt"
+        "UpdateSourceArgs": "{{$FullBaseDir}}whitelist.txt",
+        "SkipOnFailure": true
     },
     {
         "UpdateStageName": "Blacklist.txt Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateFile",
         "UpdateSourceData": "",
-        "UpdateSourceArgs": "{{$FullBaseDir}}blacklist.txt"
+        "UpdateSourceArgs": "{{$FullBaseDir}}blacklist.txt",
+        "SkipOnFailure": true
     },
     {
         "UpdateStageName": "Initialise Wine",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all XDG_RUNTIME_DIR=/tmp /usr/bin/wineboot --init\"",
         "SkipOnFailure": false
     }
 ]
