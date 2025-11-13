@@ -21,7 +21,7 @@ Meta.Prerequsites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=2
+Meta.ConfigVersion=3
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
 Meta.AppConfigId=a530b939-e389-494a-95df-efa1d0e90d9f
@@ -36,10 +36,10 @@ App.ExecutableLinux=.proton/proton
 App.WorkingDir=3937860
 App.LinuxCommandLineArgs=runinprefix "{{$FullBaseDir}}BoatGame/Binaries/Win64/BoatGameServer-Win64-Shipping.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} BoatGame -Port={{$GamePort}} -log=BoatGame.log {{$FormattedArgs}} {{CustomArgs}}
+App.CommandLineArgs={{$PlatformArgs}} BoatGame -Port={{$GamePort}} -log=BoatGame.log -LoggingInShippingEnabled=true {{$FormattedArgs}} {{CustomArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"SteamAppId":"2686630","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullBaseDir}}.steam/steam","HOME":"{{$FullBaseDir}}","XDG_RUNTIME_DIR":"/tmp"}
+App.EnvironmentVariables={"SteamAppId":"2686630","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullBaseDir}}.steam/steam","HOME":"{{$FullBaseDir}}","XDG_RUNTIME_DIR":"/tmp","EOS_OVERRIDE_HOST_IP":"{{EOS_OVERRIDE_HOST_IP}}"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
@@ -93,9 +93,9 @@ App.TemplateMatchRegex={{(!?(?<Platform>Linux|Windows|All):)?(?<Value>\$?[\w]+)}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^(?:\[[\d\.]+-[\d\.]+:\d+\]\[[\d ]+\])?LogInit: Display: Engine is initialized\. Leaving FEngineLoop::Init\(\)$
-Console.UserJoinRegex=^(?:\[[\d\.]+-[\d\.]+:\d+\]\[[\d ]+\])?$
-Console.UserLeaveRegex=^(?:\[[\d\.]+-[\d\.]+:\d+\]\[[\d ]+\])?$
+Console.AppReadyRegex=^\[[\d\.]+-[\d\.]+:\d+\]\[[\d ]+\]LogCommonSession: OnStartSessionComplete\(SessionName: GameSession, bWasSuccessful: 1\)$
+Console.UserJoinRegex=^\[[\d\.]+-[\d\.]+:\d+\]\[[\d ]+\]LogNet: Login request: \?Name=(?<username>.+?) userId: RedpointEOS:(?<userid>.+?) platform: RedpointEOS$
+Console.UserLeaveRegex=^\[[\d\.]+-[\d\.]+:\d+\]\[[\d ]+\]LogNet: UChannel::Close: Sending CloseBunch\.(?:.+?) UniqueId: RedpointEOS:(?<userid>.+?)$
 Console.UserChatRegex=^(?:\[[\d\.]+-[\d\.]+:\d+\]\[[\d ]+\])?$
 Console.UpdateAvailableRegex=^\[\d\d:\d\d:\d\d\] \[INFO\] A new server update is available! v[\d\.]+.$
 Console.MetricsRegex=
