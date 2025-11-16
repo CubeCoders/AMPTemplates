@@ -1,31 +1,48 @@
 [
     {
-        "UpdateStageName": "Base Server Download",
+        "UpdateStageName": "7-Zip Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Installation",
         "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "http://www.ut-files.com/index.php?dir=Entire_Server_Download/&file=utserver436final.zip",
-        "UpdateSourceTarget": "{{$FullRootDir}}",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'ut-server/7-Zip'; if (Test-Path '7z.exe') { exit 0 } else { Invoke-WebRequest -UseBasicParsing -Uri 'https://7-zip.org/a/7z2409-x64.exe' -OutFile '7z-installer.exe' }; if ($?) { Invoke-WebRequest -UseBasicParsing -Uri 'https://www.7-zip.org/a/7zr.exe' -OutFile '7zr.exe' }; if ($?) { & ./7zr.exe x -y -aoa 7z-installer.exe *> $null 2>&1; Remove-Item -Path '7z-installer.exe' -Force -ErrorAction SilentlyContinue | Out-Null }\"",
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Base Server Download",
+        "UpdateStageName": "7-Zip Installation",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "http://www.ut-files.com/index.php?dir=Entire_Server_Download/&file=ut-server-linux-436.tar.gz",
-        "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ut-server/7-Zip && [[ -x 7zzs ]] && exit 0 || { wget -qO 7z.tar.xz https://www.7-zip.org/a/7z2409-linux-x64.tar.xz && tar -xf 7z.tar.xz >/dev/null 2>&1 && rm -f 7z.tar.xz >/dev/null 2>&1; }\"",
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Bonus Packs Download",
+        "UpdateStageName": "Base Server Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'ut-server'; Invoke-WebRequest -UseBasicParsing -Uri https://archive.org/download/ut-goty/UT_GOTY_CD1.iso -OutFile 'UT_GOTY_CD1.iso'; if ($?) { & ./7-Zip/7z.exe x -y UT_GOTY_CD1.iso *> $null; Remove-Item 'UT_GOTY_CD1.iso' -Force *> $null }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Base Server Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ut-server && wget -q https://archive.org/download/ut-goty/UT_GOTY_CD1.iso && ./7-Zip/7zzs x -y UT_GOTY_CD1.iso >/dev/null && rm -f UT_GOTY_CD1.iso >/dev/null 2>&1\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Bonus Pack 4 Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/IceOfWraith/UT99-BonusPacks/main/ut99bonuspacks.zip",
+        "UpdateSourceData": "https://unreal-archive-files.eu-central-1.linodeobjects.com/patches-updates/Unreal%20Tournament/Bonus%20Packs/utbonuspack4-zip.zip",
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
@@ -36,11 +53,52 @@
         "UpdateStageName": "OldUnreal Patch Download",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v{{PatchVersion}}/OldUnreal-UTPatch{{PatchVersion}}-Windows.zip",
+        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469b/OldUnreal-UTPatch469b-Windows.zip",
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "PatchVersion",
+        "UpdateSourceConditionValue": "469b",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "OldUnreal Patch Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469c/OldUnreal-UTPatch469c-Windows.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "PatchVersion",
+        "UpdateSourceConditionValue": "469c",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "OldUnreal Patch Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469d/OldUnreal-UTPatch469d-Windows.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "PatchVersion",
+        "UpdateSourceConditionValue": "469d",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "OldUnreal Patch Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v469e/OldUnreal-UTPatch469e-Windows-x86.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "PatchVersion",
+        "UpdateSourceConditionValue": "469e",
         "SkipOnFailure": false
     },
     {
@@ -148,6 +206,22 @@
         "UpdateSourceArgs": "_AMP_UnrealTournament.ini",
         "UpdateSourceTarget": "{{$FullBaseDir}}System",
         "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Map Decompression",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'ut-server/Maps'; Get-ChildItem -Filter '*.unr.uz' | % { $mapname = $_.BaseName; & ../System/UCC.exe decompress $_.FullName *> $null; $src = Join-Path ../System $mapname; if (Test-Path -LiteralPath $src) { Move-Item -LiteralPath $src -Destination . -Force *> $null; Remove-Item -LiteralPath $_.FullName -Force *> $null } }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Map Decompression",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ut-server/Maps && for file in *.unr.uz; do mapname=\\\"${file%.uz}\\\"; ../System{{ServerExecutable}}/ucc-bin decompress \\\"${PWD}/${file}\\\" -nohomedir >/dev/null 2>&1; if [ -e \\\"../System{{ServerExecutable}}/${mapname}\\\" ]; then mv -f \\\"../System{{ServerExecutable}}/${mapname}\\\" . >/dev/null 2>&1 && rm -f \\\"${file}\\\" >/dev/null 2>&1; fi; done\"",
         "SkipOnFailure": false
     }
 ]
