@@ -2,23 +2,17 @@
     {
         "UpdateStageName": "Base Server Download",
         "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "http://www.ut-files.com/index.php?dir=Entire_Server_Download/&file=utserver436final.zip",
-        "UpdateSourceTarget": "{{$FullRootDir}}",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'ut-server'; Invoke-WebRequest -UseBasicParsing -Uri http://www.ut-files.com/Entire_Server_Download/utserver436final.zip -OutFile 'utserver436final.zip'; if ($?) { Expand-Archive -Path 'utserver436final.zip' -DestinationPath './' -Force *> $null; Remove-Item 'utserver436final.zip' -Force *> $null }\"",
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Base Server Download",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "http://www.ut-files.com/index.php?dir=Entire_Server_Download/&file=ut-server-linux-436.tar.gz",
-        "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ut-server && wget -q https://www.ut-files.com/Entire_Server_Download/ut-server-linux-436.tar.gz && tar -xzf ut-server-linux-436.tar.gz --strip-components=1 >/dev/null 2>&1 && rm -f ut-server-linux-436.tar.gz >/dev/null 2>&1\"",
         "SkipOnFailure": false
     },
     {
