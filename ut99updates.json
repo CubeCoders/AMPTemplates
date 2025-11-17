@@ -27,7 +27,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'ut-server'; Invoke-WebRequest -UseBasicParsing -Uri https://archive.org/download/ut-goty/UT_GOTY_CD1.iso -OutFile 'UT_GOTY_CD1.iso'; if ($?) { & ./7-Zip/7z.exe x -y UT_GOTY_CD1.iso *> $null; Remove-Item 'UT_GOTY_CD1.iso' -Force *> $null }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'ut-server'; Invoke-WebRequest -UseBasicParsing -Uri https://archive.org/download/ut-goty/UT_GOTY_CD1.iso -OutFile 'UT_GOTY_CD1.iso'; if ($?) { & ./7-Zip/7z.exe x -y -aoa UT_GOTY_CD1.iso '-x!Autorun.inf' '-x!Setup.exe' '-x!DirectX7' '-x!DirectX7/*' '-x!GameSpy' '-x!GameSpy/*' '-x!Microsoft' '-x!Microsoft/*' '-x!System400' '-x!System400/*' '-x!System/*.est' '-x!System/*.frt' '-x!System/*.itt' *> $null; Remove-Item 'UT_GOTY_CD1.iso' -Force *> $null }\"",
         "SkipOnFailure": false
     },
     {
@@ -35,7 +35,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd ut-server && wget -q https://archive.org/download/ut-goty/UT_GOTY_CD1.iso && ./7-Zip/7zzs x -y UT_GOTY_CD1.iso >/dev/null && rm -f UT_GOTY_CD1.iso >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd ut-server && wget -q https://archive.org/download/ut-goty/UT_GOTY_CD1.iso && ./7-Zip/7zzs x -y -aoa UT_GOTY_CD1.iso '-x!Autorun.inf' '-x!Setup.exe' '-x!DirectX7' '-x!DirectX7/*' '-x!GameSpy' '-x!GameSpy/*' '-x!Microsoft' '-x!Microsoft/*' '-x!System400' '-x!System400/*' '-x!System/*.est' '-x!System/*.frt' '-x!System/*.itt' >/dev/null && rm -f UT_GOTY_CD1.iso >/dev/null 2>&1\"",
         "SkipOnFailure": false
     },
     {
