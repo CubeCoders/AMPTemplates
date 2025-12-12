@@ -183,7 +183,7 @@
         "DisplayName": "Difficulty Level",
         "Category": "Abiotic Factor:stadia_controller",
         "Subcategory": "Sandbox:joystick:2",
-        "Description": "When creating a new world save, sets (for all players) how many enemies may be present in some areas, how aggressive they are, and how fast they react in combat",
+        "Description": "When creating a new world save, sets (for all players) how many enemies may be present in some areas, how aggressive they are, and how fast they react in combat. Overridden to Apocalyptic if Hardcore Mode is enabled",
         "Keywords": "game,difficulty,level,GameDifficulty",
         "FieldName": "GameDifficulty",
         "InputType": "enum",
@@ -193,6 +193,21 @@
             "1": "Normal",
             "2": "Hard",
             "3": "Apocalyptic"
+        }
+    },
+    {
+        "DisplayName": "Enable Hardcore Mode",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, characters only have one life and difficulty is forced to Apocalyptic",
+        "Keywords": "hardcore,apocalyptic,HardcoreMode",
+        "FieldName": "HardcoreMode",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.HardcoreMode",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
         }
     },
     {
@@ -255,6 +270,24 @@
         "DefaultValue": "1.0",
         "Placeholder": "1.0",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Weather Frequency",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "Sets how often weather events are triggered. Even frequent weather still requires the correct progression to trigger, however",
+        "Keywords": "weather,frequency,WeatherFrequency",
+        "FieldName": "WeatherFrequency",
+        "InputType": "enum",
+        "ParamFieldName": "SandboxSettings.WeatherFrequency",
+        "DefaultValue": "3",
+        "EnumValues": {
+            "1": "Never",
+            "2": "Infrequent",
+            "3": "Normal",
+            "4": "Frequent",
+            "5": "Daily"
+        }
     },
     {
         "DisplayName": "Sink Refill Rate",
@@ -320,7 +353,7 @@
         "DisplayName": "Enemy Health Multiplier",
         "Category": "Abiotic Factor:stadia_controller",
         "Subcategory": "Sandbox:joystick:2",
-        "Description": "Sets themu ltiplier for enemy health. Lower will make enemies easier to kill, higher will mean enemies will take more damage to kill. Minimum 0.75",
+        "Description": "Sets the multiplier for enemy health. Lower will make enemies easier to kill, higher will mean enemies will take more damage to kill. Minimum 0.75",
         "Keywords": "enemy,health,multiplier,damage,EnemyHealthMultiplier",
         "FieldName": "EnemyHealthMultiplier",
         "InputType": "number",
@@ -357,21 +390,6 @@
         "MinValue": "0",
         "MaxValue": "5",
         "ParamFieldName": "SandboxSettings.EnemyDeployableDamageMultiplier",
-        "DefaultValue": "1.0",
-        "Placeholder": "1.0",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Detection Speed Multiplier",
-        "Category": "Abiotic Factor:stadia_controller",
-        "Subcategory": "Sandbox:joystick:2",
-        "Description": "Sets how fast enemies detect players. Above 1 will mean enemies will detect players faster than normal. Minimum 0.1",
-        "Keywords": "detection,speed,multiplier,enemies,players,DetectionSpeedMultiplier",
-        "FieldName": "DetectionSpeedMultiplier",
-        "InputType": "number",
-        "MinValue": "0",
-        "MaxValue": "3",
-        "ParamFieldName": "SandboxSettings.DetectionSpeedMultiplier",
         "DefaultValue": "1.0",
         "Placeholder": "1.0",
         "EnumValues": {}
@@ -449,6 +467,36 @@
         "ParamFieldName": "SandboxSettings.ContinenceSpeedMultiplier",
         "DefaultValue": "1.0",
         "Placeholder": "1.0",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Detection Speed Multiplier",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "Sets how fast enemies detect players. Above 1 will mean enemies will detect players faster than normal. Minimum 0.1",
+        "Keywords": "detection,speed,multiplier,enemies,players,DetectionSpeedMultiplier",
+        "FieldName": "DetectionSpeedMultiplier",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "3",
+        "ParamFieldName": "SandboxSettings.DetectionSpeedMultiplier",
+        "DefaultValue": "1.0",
+        "Placeholder": "1.0",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Bonus Perk Points",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "Determines how many additional perk points are available on top of the points given by each selected job",
+        "Keywords": "bonus,perk,points,perks,BonusPerkPoints",
+        "FieldName": "BonusPerkPoints",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "99",
+        "ParamFieldName": "SandboxSettings.BonusPerkPoints",
+        "DefaultValue": "0",
+        "Placeholder": "0",
         "EnumValues": {}
     },
     {
@@ -621,21 +669,6 @@
         }
     },
     {
-        "DisplayName": "Enable Global Recipe Unlocks",
-        "Category": "Abiotic Factor:stadia_controller",
-        "Subcategory": "Sandbox:joystick:2",
-        "Description": "If set, all players will share the same recipe list instead of unlocking recipes individually",
-        "Keywords": "global,recipe,unlocks,list,GlobalRecipeUnlocks",
-        "FieldName": "GlobalRecipeUnlocks",
-        "InputType": "checkbox",
-        "ParamFieldName": "SandboxSettings.GlobalRecipeUnlocks",
-        "DefaultValue": "False",
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
-    },
-    {
         "DisplayName": "First Time Starting Weapon",
         "Category": "Abiotic Factor:stadia_controller",
         "Subcategory": "Sandbox:joystick:2",
@@ -671,21 +704,6 @@
         }
     },
     {
-        "DisplayName": "Allow Character Reset",
-        "Category": "Abiotic Factor:stadia_controller",
-        "Subcategory": "Sandbox:joystick:2",
-        "Description": "If set, allows players to reset their jobs, skills, and traits later in the game. Disabling removes the ability for scientists to change their mind",
-        "Keywords": "character,reset,jobs,skills,traits,AllowCharacterReset",
-        "FieldName": "AllowCharacterReset",
-        "InputType": "checkbox",
-        "ParamFieldName": "SandboxSettings.AllowCharacterReset",
-        "DefaultValue": "True",
-        "EnumValues": {
-            "False": "False",
-            "True": "True"
-        }
-    },
-    {
         "DisplayName": "Restrict Containers",
         "Category": "Abiotic Factor:stadia_controller",
         "Subcategory": "Sandbox:joystick:2",
@@ -694,7 +712,7 @@
         "FieldName": "StorageByTag",
         "InputType": "checkbox",
         "ParamFieldName": "SandboxSettings.StorageByTag",
-        "DefaultValue": "False",
+        "DefaultValue": "True",
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -715,10 +733,25 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Allow Character Reset",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, allows players to reset their jobs, skills, and traits later in the game. Disabling removes the ability for scientists to change their mind",
+        "Keywords": "character,reset,jobs,skills,traits,AllowCharacterReset",
+        "FieldName": "AllowCharacterReset",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.AllowCharacterReset",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Bridge Supports Level",
         "Category": "Abiotic Factor:stadia_controller",
         "Subcategory": "Sandbox:joystick:2",
-        "Description": "Bridges require a certain amount of support by default. To let bridges work with less or no additional support (besides the initial location the bridge is placed), change this setting accordingly",
+        "Description": "Bridges require two supports by default. When lowered, bridges will work with less or 0 additional support (besides the initial location the bridge is placed)",
         "Keywords": "bridge,supports,BridgeSupports",
         "FieldName": "BridgeSupports",
         "InputType": "enum",
@@ -726,8 +759,8 @@
         "DefaultValue": "2",
         "EnumValues": {
             "0": "No support required",
-            "1": "Less support required",
-            "2": "Default support"
+            "1": "One support required",
+            "2": "Two supports required (default)"
         }
     },
     {
@@ -743,6 +776,114 @@
         "EnumValues": {
             "False": "False",
             "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Invisible Radiation",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, radiation will not show any screen effect, requiring Geiger Counters to track radiation",
+        "Keywords": "radiation,invisible,geiger,InvisibleRadiation",
+        "FieldName": "InvisibleRadiation",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.InvisibleRadiation",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Base Inventory Size",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "Sets the default inventory size when no backpack is equipped",
+        "Keywords": "inventory,base,size,backpack,BaseInventorySize",
+        "FieldName": "BaseInventorySize",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "42",
+        "ParamFieldName": "SandboxSettings.BaseInventorySize",
+        "DefaultValue": "12",
+        "Placeholder": "12",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Tainted Sink Water",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, sink (or similar) drinkable water sources will instead be tainted water",
+        "Keywords": "tainted,water,sink,TaintedSinkWater",
+        "FieldName": "TaintedSinkWater",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.TaintedSinkWater",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Radiation Deals Damage",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, radiation will actively deal damage to health",
+        "Keywords": "radiation,damage,health,RadiationDealsDamage",
+        "FieldName": "RadiationDealsDamage",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.RadiationDealsDamage",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Player Furniture Destruction",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, player-built furniture will be destroyed when it reaches zero durability",
+        "Keywords": "furniture,destruction,durability,PlayerFurnitureDestruction",
+        "FieldName": "PlayerFurnitureDestruction",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.PlayerFurnitureDestruction",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Iron Mode",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, enables Iron Mode (additional restrictions when Hardcore is enabled). Requires Hardcore Mode to be enabled to take effect",
+        "Keywords": "iron,mode,hardcore,AllowIronMode",
+        "FieldName": "AllowIronMode",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.AllowIronMode",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enemy Accuracy Level",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "Determines how accurate enemies are, on average",
+        "Keywords": "enemy,accuracy,aim,EnemyAccuracy",
+        "FieldName": "EnemyAccuracy",
+        "InputType": "enum",
+        "ParamFieldName": "SandboxSettings.EnemyAccuracy",
+        "DefaultValue": "2",
+        "EnumValues": {
+            "0": "Pathetic",
+            "1": "Low",
+            "2": "Default",
+            "3": "High",
+            "4": "Precise"
         }
     }
 ]
