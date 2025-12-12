@@ -94,6 +94,45 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Server Login Screen Image",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the image to be displayed on the server login screen. Requires b42",
+        "Keywords": "image,login,ServerImageLoginScreen",
+        "FieldName": "ServerImageLoginScreen",
+        "InputType": "text",
+        "ParamFieldName": "ServerImageLoginScreen",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Loading Screen Image",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the image to be displayed on the loading screen. Requires b42",
+        "Keywords": "image,loading,ServerImageLoadingScreen",
+        "FieldName": "ServerImageLoadingScreen",
+        "InputType": "text",
+        "ParamFieldName": "ServerImageLoadingScreen",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Icon Image",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the server icon image. Requires b42",
+        "Keywords": "image,icon,ServerImageIcon",
+        "FieldName": "ServerImageIcon",
+        "InputType": "text",
+        "ParamFieldName": "ServerImageIcon",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Server Password",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -121,6 +160,22 @@
         "SkipIfEmpty": true,
         "DefaultValue": "",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Hide Admins In Player List",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, admins will be hidden in the player list. Requires b42",
+        "Keywords": "admins,hide,playerlist,HideAdminsInPlayerList",
+        "FieldName": "HideAdminsInPlayerList",
+        "InputType": "checkbox",
+        "ParamFieldName": "HideAdminsInPlayerList",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
     },
     {
         "DisplayName": "RCON Password",
@@ -453,6 +508,51 @@
         }
     },
     {
+        "DisplayName": "Enable Username Disguises",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, players can disguise their username in-game. Requires b42",
+        "Keywords": "username,disguise,UsernameDisguises",
+        "FieldName": "UsernameDisguises",
+        "InputType": "checkbox",
+        "ParamFieldName": "UsernameDisguises",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Hide Disguised Username",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, disguised usernames are hidden from certain UI elements. Requires b42",
+        "Keywords": "username,hide,disguise,HideDisguisedUserName",
+        "FieldName": "HideDisguisedUserName",
+        "InputType": "checkbox",
+        "ParamFieldName": "HideDisguisedUserName",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Switch Zombies Ownership Each Update",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, zombies may switch ownership between players on each update. Requires b42",
+        "Keywords": "zombies,ownership,switch,SwitchZombiesOwnershipEachUpdate",
+        "FieldName": "SwitchZombiesOwnershipEachUpdate",
+        "InputType": "checkbox",
+        "ParamFieldName": "SwitchZombiesOwnershipEachUpdate",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
         "DisplayName": "Maximum Accounts Per User",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -501,6 +601,22 @@
         }
     },
     {
+        "DisplayName": "Disable Scoreboard",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, the scoreboard will be disabled. Requires b42",
+        "Keywords": "scoreboard,disable,DisableScoreboard",
+        "FieldName": "DisableScoreboard",
+        "InputType": "checkbox",
+        "ParamFieldName": "DisableScoreboard",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
         "DisplayName": "Pause When Empty",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -521,15 +637,15 @@
         "DisplayName": "Ping Limit",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the ping limit before a player is kicked from the server. 100 = disabled",
+        "Description": "Sets the ping limit before a player is kicked from the server. To disable, set to 100 (b41) or 0 (b42)",
         "Keywords": "ping,limit,PingLimit",
         "FieldName": "PingLimit",
         "InputType": "number",
-        "MinValue": "100",
+        "MinValue": "0",
         "MaxValue": "2147483647",
         "ParamFieldName": "PingLimit",
-        "DefaultValue": "400",
-        "Placeholder": "400",
+        "DefaultValue": "100",
+        "Placeholder": "100",
         "Suffix": "milliseconds",
         "EnumValues": {}
     },
@@ -684,6 +800,23 @@
         }
     },
     {
+        "DisplayName": "Multiplayer Statistics Period",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the multiplayer update period. 0 = disabled. Requires b42",
+        "Keywords": "multiplayer,statistics,period,MultiplayerStatisticsPeriod",
+        "FieldName": "MultiplayerStatisticsPeriod",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "10",
+        "ParamFieldName": "MultiplayerStatisticsPeriod",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "1",
+        "Placeholder": "1",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Additional Java Startup Parameters",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -834,6 +967,36 @@
         }
     },
     {
+        "DisplayName": "Log PvP To Admin Chat",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, PvP events will be posted to the admin chat. Requires b42",
+        "Keywords": "pvp,log,admin,chat,PVPLogToolChat",
+        "FieldName": "PVPLogToolChat",
+        "InputType": "checkbox",
+        "ParamFieldName": "PVPLogToolChat",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Log PvP To File",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, PvP events will be written to the server log file. Requires b42",
+        "Keywords": "pvp,log,file,PVPLogToolFile",
+        "FieldName": "PVPLogToolFile",
+        "InputType": "checkbox",
+        "ParamFieldName": "PVPLogToolFile",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
         "DisplayName": "Enable PvP Toggle (Safety System)",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -900,6 +1063,23 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "3",
         "Placeholder": "3",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "PvP Disconnect Delay",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the delay before a disconnected player's PvP safety is removed. Requires b42",
+        "Keywords": "safety,disconnect,delay,SafetyDisconnectDelay",
+        "FieldName": "SafetyDisconnectDelay",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "60",
+        "ParamFieldName": "SafetyDisconnectDelay",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "60",
+        "Placeholder": "60",
         "Suffix": "seconds",
         "EnumValues": {}
     },
@@ -1052,7 +1232,7 @@
         "DisplayName": "Minutes Per Book Page",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the number of in-game minutes it takes to read one page of a book",
+        "Description": "Sets the number of in-game minutes it takes to read one page of a book. Requires b41",
         "Keywords": "minutes,book,page,MinutesPerPage",
         "FieldName": "MinutesPerPage",
         "InputType": "number",
@@ -1070,7 +1250,7 @@
         "DisplayName": "Minimum Period for Loot Respawn",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the in-game hours after which all containers that have been looted at least once will respawn loot. 0 = never. Loot respawn is not impacted by visibility or subsequent looting",
+        "Description": "Sets the in-game hours after which all containers that have been looted at least once will respawn loot. 0 = never. Loot respawn is not impacted by visibility or subsequent looting. Requires b41",
         "Keywords": "loot,respawn,HoursForLootRespawn",
         "FieldName": "HoursForLootRespawn",
         "InputType": "number",
@@ -1088,7 +1268,7 @@
         "DisplayName": "Maximum Items for Loot Respawn",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the maximum number of items that containers can hold to be allowed to respawn. If the number of items is less than or equal to the number set, loot will respawn",
+        "Description": "Sets the maximum number of items that containers can hold to be allowed to respawn. If the number of items is less than or equal to the number set, loot will respawn. Requires b41",
         "Keywords": "loot,respawn,maximum,MaxItemsForLootRespawn",
         "FieldName": "MaxItemsForLootRespawn",
         "InputType": "number",
@@ -1122,12 +1302,29 @@
         "DisplayName": "Construction Prevents Respawn",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If enabled, items will not respawn in buildings that players have barricaded or built in",
+        "Description": "If enabled, items will not respawn in buildings that players have barricaded or built in. Requires b41",
         "Keywords": "loot,respawn,construction,ConstructionPreventsLootRespawn",
         "FieldName": "ConstructionPreventsLootRespawn",
         "InputType": "checkbox",
         "IsFlagArgument": false,
         "ParamFieldName": "ConstructionPreventsLootRespawn",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "True": "true",
+            "False": "false"
+        }
+    },
+    {
+        "DisplayName": "Safehouse Prevents Respawn",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, items will not respawn in buildings that players have claimed as a safehouse. Requires b42",
+        "Keywords": "loot,respawn,safehouse,SafehousePreventsLootRespawn",
+        "FieldName": "SafehousePreventsLootRespawn",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "SafehousePreventsLootRespawn",
         "IncludeInCommandLine": false,
         "DefaultValue": "true",
         "EnumValues": {
@@ -1318,6 +1515,39 @@
         }
     },
     {
+        "DisplayName": "Disable Disguises In Safehouse",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, disguises will be disabled while inside a safehouse. Requires b42",
+        "Keywords": "safehouse,disguise,disable,SafehouseDisableDisguises",
+        "FieldName": "SafehouseDisableDisguises",
+        "InputType": "checkbox",
+        "ParamFieldName": "SafehouseDisableDisguises",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Maximum Safezone Size",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the maximum allowed safezone size. Requires b42",
+        "Keywords": "safezone,size,MaxSafezoneSize",
+        "FieldName": "MaxSafezoneSize",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "2147483647",
+        "ParamFieldName": "MaxSafezoneSize",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "20000",
+        "Placeholder": "20000",
+        "Suffix": "tiles",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Allow Sledgehammer Destruction",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -1352,10 +1582,61 @@
         }
     },
     {
+        "DisplayName": "War Start Delay",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the time before the war starts. Requires b42",
+        "Keywords": "war,start,delay,WarStartDelay",
+        "FieldName": "WarStartDelay",
+        "InputType": "number",
+        "MinValue": "60",
+        "MaxValue": "2147483647",
+        "ParamFieldName": "WarStartDelay",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "600",
+        "Placeholder": "600",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "War Duration",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the war duration. Requires b42",
+        "Keywords": "war,duration,WarDuration",
+        "FieldName": "WarDuration",
+        "InputType": "number",
+        "MinValue": "60",
+        "MaxValue": "2147483647",
+        "ParamFieldName": "WarDuration",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "3600",
+        "Placeholder": "3600",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "War Safehouse Hit Points",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the safehouse hit points limit. Requires b42",
+        "Keywords": "war,safehouse,hitpoints,WarSafehouseHitPoints",
+        "FieldName": "WarSafehouseHitPoints",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "2147483647",
+        "ParamFieldName": "WarSafehouseHitPoints",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "3",
+        "Placeholder": "3",
+        "Suffix": "hits",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Kick Fast Players",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If enabled, players that appear to be moving faster than is possible will be kicked. May be buggy - use with caution",
+        "Description": "If enabled, players that appear to be moving faster than is possible will be kicked. May be buggy - use with caution. Requires b41",
         "Keywords": "kick,fast,players,KickFastPlayers",
         "FieldName": "KickFastPlayers",
         "InputType": "checkbox",
@@ -1434,12 +1715,12 @@
         "DisplayName": "Allow Knock Down",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, players can be knocked down",
+        "Description": "If set, players can be knocked down. Activating this setting may cause visual desynchronization of player positions",
         "Keywords": "knocked,down,KnockedDownAllowed",
         "FieldName": "KnockedDownAllowed",
         "InputType": "checkbox",
         "ParamFieldName": "KnockedDownAllowed",
-        "DefaultValue": "true",
+        "DefaultValue": "false",
         "EnumValues": {
             "False": "false",
             "True": "true"
@@ -1485,6 +1766,22 @@
         "InputType": "checkbox",
         "ParamFieldName": "SneakModeHideFromOtherPlayers",
         "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Ultra Speed Does Not Affect Animals",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, the Ultra Speed effect will not apply to animals. Requires b42",
+        "Keywords": "ultra,speed,animals,UltraSpeedDoesnotAffectToAnimals",
+        "FieldName": "UltraSpeedDoesnotAffectToAnimals",
+        "InputType": "checkbox",
+        "ParamFieldName": "UltraSpeedDoesnotAffectToAnimals",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
         "EnumValues": {
             "False": "false",
             "True": "true"
@@ -1583,6 +1880,70 @@
         }
     },
     {
+        "DisplayName": "Disable Vehicle Towing",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, vehicle towing will be disabled. Requires b42",
+        "Keywords": "towing,vehicle,DisableVehicleTowing",
+        "FieldName": "DisableVehicleTowing",
+        "InputType": "checkbox",
+        "ParamFieldName": "DisableVehicleTowing",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Disable Trailer Towing",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, trailer towing will be disabled. Requires b42",
+        "Keywords": "towing,trailer,DisableTrailerTowing",
+        "FieldName": "DisableTrailerTowing",
+        "InputType": "checkbox",
+        "ParamFieldName": "DisableTrailerTowing",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Disable Burnt Vehicle Towing",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, burnt vehicles cannot be towed. Requires b42",
+        "Keywords": "towing,burnt,DisableBurntTowing",
+        "FieldName": "DisableBurntTowing",
+        "InputType": "checkbox",
+        "ParamFieldName": "DisableBurntTowing",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Use Physics Hit Reactions",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, physics-based hit reactions are used. Requires b42",
+        "Keywords": "physics,hit,reaction,UsePhysicsHitReaction",
+        "FieldName": "UsePhysicsHitReaction",
+        "InputType": "checkbox",
+        "ParamFieldName": "UsePhysicsHitReaction",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
         "DisplayName": "Enable Global Chat",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Communication:chat:3",
@@ -1610,6 +1971,40 @@
         "ParamFieldName": "ChatStreams",
         "DefaultValue": "s,r,a,w,y,sh,f,all",
         "Placeholder": "s,r,a,w,y,sh,f,all",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Chat Message Character Limit",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Communication:chat:3",
+        "Description": "Sets the maximum characters allowed per chat message. Requires b42",
+        "Keywords": "chat,message,limit,ChatMessageCharacterLimit",
+        "FieldName": "ChatMessageCharacterLimit",
+        "InputType": "number",
+        "MinValue": "64",
+        "MaxValue": "1024",
+        "ParamFieldName": "ChatMessageCharacterLimit",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "200",
+        "Placeholder": "200",
+        "Suffix": "characters",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Chat Message Slow Mode Time",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Communication:chat:3",
+        "Description": "Sets the time between sending chat messages when slow mode is enabled. Requires b42",
+        "Keywords": "chat,slowmode,time,ChatMessageSlowModeTime",
+        "FieldName": "ChatMessageSlowModeTime",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "30",
+        "ParamFieldName": "ChatMessageSlowModeTime",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "3",
+        "Placeholder": "3",
+        "Suffix": "seconds",
         "EnumValues": {}
     },
     {
@@ -1681,7 +2076,7 @@
         "FieldName": "DisableRadioStaff",
         "InputType": "checkbox",
         "ParamFieldName": "DisableRadioStaff",
-        "DefaultValue": "true",
+        "DefaultValue": "false",
         "EnumValues": {
             "False": "false",
             "True": "true"
@@ -1763,9 +2158,67 @@
         }
     },
     {
+        "DisplayName": "Bad Word List File",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Communication:chat:3",
+        "Description": "Sets the path to a file with the list of words to be prohibited. One word per line. Requires b42",
+        "Keywords": "badword,list,file,BadWordListFile",
+        "FieldName": "BadWordListFile",
+        "InputType": "text",
+        "ParamFieldName": "BadWordListFile",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Good Word List File",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Communication:chat:3",
+        "Description": "Sets the path to a file with words that are allowed even if they contain bad words. One word per line. Requires b42",
+        "Keywords": "goodword,list,file,GoodWordListFile",
+        "FieldName": "GoodWordListFile",
+        "InputType": "text",
+        "ParamFieldName": "GoodWordListFile",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Bad Word Policy",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Communication:chat:3",
+        "Description": "Sets the action to take when a bad word is detected. Requires b42",
+        "Keywords": "badword,policy,BadWordPolicy",
+        "FieldName": "BadWordPolicy",
+        "InputType": "enum",
+        "ParamFieldName": "BadWordPolicy",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "3",
+        "EnumValues": {
+            "1": "Ban",
+            "2": "Kick",
+            "3": "Record in database (default)",
+            "4": "Mute"
+        }
+    },
+    {
+        "DisplayName": "Bad Word Replacement",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Communication:chat:3",
+        "Description": "Sets the symbol or text that replaces a detected bad word. Requires b42",
+        "Keywords": "badword,replacement,BadWordReplacement",
+        "FieldName": "BadWordReplacement",
+        "InputType": "text",
+        "ParamFieldName": "BadWordReplacement",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "[HIDDEN]",
+        "Placeholder": "[HIDDEN]",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable Discord Integration",
         "Category": "Project Zomboid:stadia_controller",
-        "Subcategory": "Discord:forum:4",
+        "Subcategory": "Discord and Slack:forum:4",
         "Description": "If enabled, allows global text chat integration with a Discord channel. Requires a valid bot token to be set under \"Discord Token\"",
         "Keywords": "discord,DiscordEnable",
         "FieldName": "DiscordEnable",
@@ -1782,7 +2235,7 @@
     {
         "DisplayName": "Discord Token",
         "Category": "Project Zomboid:stadia_controller",
-        "Subcategory": "Discord:forum:4",
+        "Subcategory": "Discord and Slack:forum:4",
         "Description": "Sets the bot token to access the Discord servers",
         "Keywords": "discord,token,DiscordToken",
         "FieldName": "DiscordToken",
@@ -1796,7 +2249,7 @@
     {
         "DisplayName": "Discord Channel",
         "Category": "Project Zomboid:stadia_controller",
-        "Subcategory": "Discord:forum:4",
+        "Subcategory": "Discord and Slack:forum:4",
         "Description": "Sets the name of the Discord channel to integrate with. Use \"Discord ID\" if this does not work",
         "Keywords": "discord,channel,DiscordChannel",
         "FieldName": "DiscordChannel",
@@ -1810,7 +2263,7 @@
     {
         "DisplayName": "Discord Channel ID",
         "Category": "Project Zomboid:stadia_controller",
-        "Subcategory": "Discord:forum:4",
+        "Subcategory": "Discord and Slack:forum:4",
         "Description": "Sets the ID of the Discord channel to integrate with. Use this if \"Discord Channel\" does not work",
         "Keywords": "discord,channel,id,DiscordChannelID",
         "FieldName": "DiscordChannelID",
@@ -1820,6 +2273,19 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "",
         "Placeholder": "475182341782896651",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Slack Incoming Webhook URL",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Discord and Slack:forum:4",
+        "Description": "Sets the Slack incoming webhook URL for posting messages to a Slack channel. Requires b42",
+        "Keywords": "slack,webhook,webhookurl,WebhookAddress",
+        "FieldName": "WebhookAddress",
+        "InputType": "url",
+        "ParamFieldName": "WebhookAddress",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
         "EnumValues": {}
     },
     {
@@ -1843,7 +2309,7 @@
         "DisplayName": "Selected Beta Branch",
         "Category": "Updates",
         "Subcategory": "Steam Downloads:download",
-        "Description": "[Beta branch](https://steamdb.info/app/380870/depots/) to install. Requires \"Enable Beta Branch\" to be enabled. Set any required password under \"Beta Password\". NOTE: Update the server after switching branches!",
+        "Description": "Sets the [beta branch](https://steamdb.info/app/380870/depots/) to install. Requires \"Enable Beta Branch\" to be enabled. Set any required password under \"Beta Password\". NOTE: Update the server after switching branches!",
         "Keywords": "beta,branch",
         "FieldName": "BetaBranch",
         "InputType": "text",
@@ -1851,7 +2317,7 @@
         "ParamFieldName": "",
         "IncludeInCommandLine": false,
         "DefaultValue": "",
-        "Placeholder": "",
+        "Placeholder": "unstable",
         "EnumValues": {}
     }
 ]
