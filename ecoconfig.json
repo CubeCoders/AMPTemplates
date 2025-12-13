@@ -221,14 +221,30 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Server Remote Address",
+        "DisplayName": "Remote Address Selection Mode",
         "Category": "Eco:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Public/external IP-address and port number needed to reach the server. Can be a domain name, but still has to have the external game server port. Examples \"10.1.1.1:3000\", \"gs2.play.eco:3000\".",
-        "Keywords": "ip,binding,domain,remote,address",
+        "Description": "Sets whether and how the public/external endpoint address (IP:port or domain:port) for the server, as used by the server browser, is set. If 'Address manually set' is selected, specify the desired public/external endpoint address under Manual Remote Address",
+        "Keywords": "remote,address,public,external,ip,RemoteAddress",
         "FieldName": "RemoteAddress",
-        "InputType": "text",
+        "InputType": "enum",
         "ParamFieldName": "RemoteAddress",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Address automatically set by Eco (default)",
+            "{{$ExternalIP}}:{{$ApplicationPort1}}": "Address automatically set by AMP",
+            "{{ManualRemoteAddress}}": "Address manually set"
+        }
+    },
+    {
+        "DisplayName": "Manual Remote Address",
+        "Category": "Eco:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the public/external endpoint address (IP:port or domain:port) for the server, if 'Address manually set' is selected as the Remote Address Selection Mode",
+        "Keywords": "manual,remote,address,public,external,ip,RemoteAddress",
+        "FieldName": "ManualRemoteAddress",
+        "InputType": "text",
+        "ParamFieldName": "ManualRemoteAddress",
         "DefaultValue": "",
         "EnumValues": {}
     },
