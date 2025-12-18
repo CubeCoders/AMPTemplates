@@ -331,6 +331,33 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Enable Mods",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the mods listed under Active Mods List will be enabled on the server, if they are installed. Mods can be downloaded from the Steam Workshop under Updates>Steam Workshop, or installed manually in the 'Mods/Workshop' folder",
+        "Keywords": "mods,workshop,items,bGlobalEnableMod",
+        "FieldName": "bGlobalEnableMod",
+        "InputType": "checkbox",
+        "ParamFieldName": "bGlobalEnableMod",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Active Mods List",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "List of mods to enable on the server. Example: ActiveModList=PalSync. One mod per line. Use the PackageName of each mod from the mod's Info.json file. [More information](https://docs.palworldgame.com/settings-and-operation/mod#enabling-mods-via-palmodsettingsini). Requires the mods to be installed, and Enable Mods to be set",
+        "Keywords": "mods,workshop,items,ActiveModList",
+        "FieldName": "ActiveModList",
+        "InputType": "Textarea",
+        "ParamFieldName": "ActiveModList",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable World Backup",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -1387,38 +1414,6 @@
         "ParamFieldName": "ItemCorruptionMultiplier",
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Install UE Scripting System",
-        "Category": "Updates",
-        "Subcategory": "Runtime Configuration:build:3",
-        "Description": "If an installation option is selected, the selected build of the Unreal Engine 4/5 Scripting System will be installed from either the [UE4SS-RE repo](https://github.com/UE4SS-RE/RE-UE4SS) or the [Okaetsu forked repo](https://github.com/Okaetsu/RE-UE4SS) when the server is updated, allowing the server to be modded. Also set the Specific UE4SS-RE Experimental Build Version if relevant",
-        "Keywords": "install,ue4ss,unreal,engine,scripting,system,ue4ss-re,okaetsu,modding,experimental",
-        "FieldName": "InstallUE4SS",
-        "InputType": "enum",
-        "ParamFieldName": "InstallUE4SS",
-        "DefaultValue": "experimental-palworld",
-        "EnumValues": {
-            "": "Do nothing",
-            "false": "Remove UE4SS files",
-            "true": "Install latest UE4SS-RE release build",
-            "experimental-latest": "Install latest UE4SS-RE experimental build",
-            "experimental-palworld": "Install latest Okaetsu experimental build (default)",
-            "experimental": "Install specific UE4SS-RE experimental build"
-        }
-    },
-    {
-        "DisplayName": "Specific UE4SS-RE Experimental Build Version",
-        "Category": "Updates",
-        "Subcategory": "Runtime Configuration:build:3",
-        "Description": "If \"Install specific UE4SS-RE experimental build\" is selected under Install UE Scripting System, sets the [relevant UE4SS-RE version](https://github.com/UE4SS-RE/RE-UE4SS/releases/tag/experimental) to install. Example: v3.0.1-137-g6867a08",
-        "Keywords": "ue4ss,unreal,engine,scripting,system,experimental",
-        "FieldName": "UE4SSExperimentalVersion",
-        "InputType": "text",
-        "ParamFieldName": "UE4SSExperimentalVersion",
-        "DefaultValue": "v3.0.1-137-g6867a08",
-        "Placeholder": "v3.0.1-137-g6867a08",
         "EnumValues": {}
     }
 ]
