@@ -1,12 +1,35 @@
 [
     {
-        "UpdateStageName": "Fika-Dedicated Download",
-        "UpdateSourcePlatform": "All",
+        "UpdateStageName": "Fika-Dedicated Download (Windows)",
+        "UpdateSourcePlatform": "Windows",
         "UpdateSource": "GithubRelease",
         "UpdateSourceArgs": "project-fika/Fika-Dedicated",
-        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UpdateSourceData": "fika-dedicated-windows.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "Fika-Dedicated Download (Linux)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "project-fika/Fika-Dedicated",
+        "UpdateSourceData": "fika-dedicated-linux.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "Make Executable (Linux)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Fika.Dedicated"
+    },
+    {
+        "UpdateStageName": "Server Startup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "StartApplication"
     }
 ]
