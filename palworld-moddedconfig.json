@@ -318,6 +318,36 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Allow Client Mods",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Allow players with mods enabled to join the server.",
+        "Keywords": "allow,client,mod,bAllowClientMod",
+        "FieldName": "bAllowClientMod",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowClientMod",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Show Join/Leave Messages",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Show in-game messages when players join/leave.",
+        "Keywords": "show,join,left,leave,message,bIsShowJoinLeftMessage",
+        "FieldName": "bIsShowJoinLeftMessage",
+        "InputType": "checkbox",
+        "ParamFieldName": "bIsShowJoinLeftMessage",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+	},
+	{
         "DisplayName": "Crossplay Platforms",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -696,6 +726,21 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Guild Rejoin Cooldown",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the cooldown in minutes before a player can rejoin a guild.",
+        "Keywords": "guild,rejoin,cooldown,minutes,GuildRejoinCooldownMinutes",
+        "FieldName": "GuildRejoinCooldownMinutes",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "GuildRejoinCooldownMinutes",
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "Suffix": "minutes",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Egg Hatching Time",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -786,6 +831,36 @@
         }
     },
     {
+        "DisplayName": "Display PVP Items In Bases",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, shows the number of PvP-exclusive items in each base on the map.",
+        "Keywords": "display,pvp,item,number,world,map,base,camp,bDisplayPvPItemNumOnWorldMap_BaseCamp",
+        "FieldName": "bDisplayPvPItemNumOnWorldMap_BaseCamp",
+        "InputType": "checkbox",
+        "ParamFieldName": "bDisplayPvPItemNumOnWorldMap_BaseCamp",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Display PVP Items On Players",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, shows player locations and the number of PvP-exclusive items on the map.",
+        "Keywords": "display,pvp,item,number,world,map,player,bDisplayPvPItemNumOnWorldMap_Player",
+        "FieldName": "bDisplayPvPItemNumOnWorldMap_Player",
+        "InputType": "checkbox",
+        "ParamFieldName": "bDisplayPvPItemNumOnWorldMap_Player",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Enable Death Penalty Pickup",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -825,6 +900,21 @@
         "InputType": "checkbox",
         "ParamFieldName": "bEnableFastTravel",
         "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Fast Travel Only Base Camps",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, restricts fast travel to between bases only.",
+        "Keywords": "fast,travel,enable,only,base,camp,bEnableFastTravelOnlyBaseCamp",
+        "FieldName": "bEnableFastTravelOnlyBaseCamp",
+        "InputType": "checkbox",
+        "ParamFieldName": "bEnableFastTravelOnlyBaseCamp",
+        "DefaultValue": "False",
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1008,6 +1098,136 @@
             "False": "False",
             "True": "True"
         }
+    },
+    {
+        "DisplayName": "Allow Stat Allocation - Attack",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, allow allocating stat points to Attack.",
+        "Keywords": "allow,enhanced,stat,attack,bAllowEnhanceStat_Attack",
+        "FieldName": "bAllowEnhanceStat_Attack",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowEnhanceStat_Attack",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Stat Allocation - Health",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, allow allocating stat points to Health.",
+        "Keywords": "allow,enhanced,stat,health,bAllowEnhanceStat_Health",
+        "FieldName": "bAllowEnhanceStat_Health",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowEnhanceStat_Health",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Stat Allocation - Stamina",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, allow allocating stat points to Stamina.",
+        "Keywords": "allow,enhanced,stat,stamina,bAllowEnhanceStat_Stamina",
+        "FieldName": "bAllowEnhanceStat_Stamina",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowEnhanceStat_Stamina",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Stat Allocation - Weight",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, allow allocating stat points to Weight.",
+        "Keywords": "allow,enhanced,stat,weight,bAllowEnhanceStat_Weight",
+        "FieldName": "bAllowEnhanceStat_Weight",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowEnhanceStat_Weight",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Stat Allocation - Work Speed",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, allow allocating stat points to Work Speed.",
+        "Keywords": "allow,enhanced,stat,work,speed,bAllowEnhanceStat_WorkSpeed",
+        "FieldName": "bAllowEnhanceStat_WorkSpeed",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowEnhanceStat_WorkSpeed",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Additional Drop Item In PVP",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, players will drop a special item when killed while PvP is enabled. \"Additional Drop Item In PVP Item ID\" and \"Additional Drop Item In PVP Amount\" must also be set.",
+        "Keywords": "additional,drop,item,when,player,killing,pvp,mode,bAdditionalDropItemWhenPlayerKillingInPvPMode",
+        "FieldName": "bAdditionalDropItemWhenPlayerKillingInPvPMode",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAdditionalDropItemWhenPlayerKillingInPvPMode",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Additional Drop Item In PVP Item ID",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If \"Enable Additional Drop Item In PVP\" is set, the ID of the item to drop.",
+        "Keywords": "additional,drop,item,number,player,killing,pvp,mode,AdditionalDropItemWhenPlayerKillingInPvPMode",
+        "FieldName": "AdditionalDropItemWhenPlayerKillingInPvPMode",
+        "InputType": "text",
+        "ParamFieldName": "AdditionalDropItemWhenPlayerKillingInPvPMode",
+        "DefaultValue": "PlayerDropItem",
+        "Placeholder": "PlayerDropItem",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional Drop Item In PVP Amount",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If \"Enable Additional Drop Item In PVP\" is set, the quantity of the item to drop.",
+        "Keywords": "additional,drop,item,number,player,killing,pvp,mode,AdditionalDropItemNumWhenPlayerKillingInPvPMode",
+        "FieldName": "AdditionalDropItemNumWhenPlayerKillingInPvPMode",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "AdditionalDropItemNumWhenPlayerKillingInPvPMode",
+        "DefaultValue": "1",
+        "Placeholder": "1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Deny Technology List",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Disable specific technologies by specifying [Technology IDs](https://docs.palworldgame.com/settings-and-operation/technologyids). Must follow the exact format: \"ItemID1\", \"ItemID2\"",
+        "Keywords": "deny,technology,list,DenyTechnologyList",
+        "FieldName": "DenyTechnologyList",
+        "InputType": "text",
+        "ParamFieldName": "DenyTechnologyList",
+        "DefaultValue": "",
+        "Placeholder": "\"PALBOX\", \"RepairBench\"",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Day Time Speed Rate",
@@ -1416,6 +1636,50 @@
         "Placeholder": "1.000000",
         "EnumValues": {}
     },
+    {
+        "DisplayName": "Block Respawn Time",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Cooldown in seconds before you can respawn after death.",
+        "Keywords": "block,respawn,time,BlockRespawnTime",
+        "FieldName": "BlockRespawnTime",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "BlockRespawnTime",
+        "DefaultValue": "5.000000",
+        "Placeholder": "5.000000",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Respawn Penalty Time Scale",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Multiplier applied to the respawn cooldown.",
+        "Keywords": "respawn,penalty,time,scale,RespawnPenaltyTimeScale",
+        "FieldName": "RespawnPenaltyTimeScale",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "RespawnPenaltyTimeScale",
+        "DefaultValue": "2.000000",
+        "Placeholder": "2.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Respawn Penalty Duration Threshold",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Survival-time threshold in seconds for applying the respawn cooldown multiplier set by \"Respawn Penalty Time Scale\" on a subsequent death.",
+        "Keywords": "respawn,penalty,duration,threshold,RespawnPenaltyDurationThreshold",
+        "FieldName": "RespawnPenaltyDurationThreshold",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "RespawnPenaltyDurationThreshold",
+        "DefaultValue": "0.000000",
+        "Placeholder": "0.000000",
+        "Suffix": "seconds",
+        "EnumValues": {}
+	},
     {
         "DisplayName": "Install UE Scripting System",
         "Category": "Updates",
