@@ -582,74 +582,16 @@
         "ParamFieldName": "AllowedCharacters",
         "EnumValues": {}
     },
-        {
+    {
         "DisplayName": "Dinosaur Enabling",
         "Category": "Path of Titans:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If desired, you can disable specific dinosaurs allowing all others still, by specifying the list of disallowed dinosaurs in Additional iGameSession Settings as per [these instructions](https://hosting.pathoftitans.wiki/guide/dinosaurs). Format is \"DisallowedCharacters=DinosaurName\" (don't include quotes or + at the beginning). One dinosaur per line",
-        "Keywords": "disable,dinosaurs,allowed,characters,allowedcharacters,disallowedcharacters",
+        "Description": "If desired, all dinosaurs except certain listed dinosaurs can be allowed on the server, by specifying the list of disallowed dinosaurs in Additional iGameSession Settings as per [these instructions](https://hosting.pathoftitans.wiki/guide/dinosaurs). Format is \"DisallowedCharacters=DinosaurName\" (don't include quotes or + at the beginning). One dinosaur per line",
+        "Keywords": "enable,dinosaurs,disallowed,characters,disallowedcharacters",
         "FieldName": "DisallowedCharacters",
         "InputType": "hidden",
         "ParamFieldName": "DisallowedCharacters",
         "EnumValues": {}
-    },
-    {
-        "DisplayName": "Enable Well Rested buff",
-        "Category": "Path of Titans:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "Enables or disables the Well Rested buff. Defaults to true.",
-        "Keywords": "rested,wellrested,buff",
-        "FieldName": "bServerWellRestedBuff",
-        "InputType": "checkbox",
-        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerWellRestedBuff",
-        "DefaultValue": "true",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
-        "DisplayName": "Server Respawn Time",
-        "Category": "Path of Titans:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "Amount of time (in minutes) a player must be alive before they can use the /respawn command to kill their dinosaur and respawn. It's suggested to keep this number relatively high to avoid players piling up corpses on your server and causing issues. Defaults to 45 minutes.",
-        "Keywords": "respawn,respawntime",
-        "FieldName": "ServerRespawnTime",
-        "InputType": "number",
-        "ParamFieldName": "/Script/PathOfTitans.IGameSession.ServerRespawnTime",
-        "DefaultValue": "45",
-        "Placeholder": "45",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Enable Perma Death",
-        "Category": "Path of Titans:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, Activates permanent death on the server. Deceased characters will show up as corpses on the Character Selection Menu.",
-        "Keywords": "death,permadeath",
-        "FieldName": "bPermaDeath",
-        "InputType": "checkbox",
-        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bPermaDeath",
-        "DefaultValue": "false",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
-        "DisplayName": "Enable Death Info",
-        "Category": "Path of Titans:stadia_controller",
-        "Subcategory": "Gameplay:joystick:2",
-        "Description": "Displays a textbox on the Character Select Screen that provides info about your dead character when bPermaDeath is enabled.",
-        "Keywords": "death,deathinfo",
-        "FieldName": "bDeathInfo",
-        "InputType": "checkbox",
-        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bDeathInfo",
-        "DefaultValue": "false",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
     },
     {
         "DisplayName": "Enable Water Quality System",
@@ -823,6 +765,21 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Respawn Period",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets how long a player must be alive before they can use the '/respawn' command to kill their dinosaur and respawn. Keep relatively high to avoid players piling up corpses on the server and causing issues",
+        "Keywords": "respawn,respawntime,serverrespawntime",
+        "FieldName": "ServerRespawnTime",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.ServerRespawnTime",
+        "DefaultValue": "45",
+        "Placeholder": "45",
+        "Suffix": "minutes",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable Home Caves",
         "Category": "Path of Titans:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -831,6 +788,21 @@
         "FieldName": "bServerHomeCaves",
         "InputType": "checkbox",
         "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerHomeCaves",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Well Rested Buff",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, enables the Well Rested buff",
+        "Keywords": "rested,wellrested,buff,bserverwellrestedbuff",
+        "FieldName": "bServerWellRestedBuff",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerWellRestedBuff",
         "DefaultValue": "true",
         "EnumValues": {
             "False": "false",
@@ -1276,5 +1248,35 @@
         "Placeholder": "50000",
         "Suffix": "metres",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Perma Death",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, activates permanent death on the server. Deceased characters will show up as corpses on the Character Selection Menu",
+        "Keywords": "death,permadeath,permanent,bpermadeath",
+        "FieldName": "bPermaDeath",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bPermaDeath",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Death Info",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, displays a textbox on the Character Select Screen that provides info about a dead character when Perma Death is enabled",
+        "Keywords": "death,deathinfo,permadeath,bdeathinfo",
+        "FieldName": "bDeathInfo",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bDeathInfo",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
     }
 ]
