@@ -418,6 +418,33 @@
         }
     },
     {
+        "DisplayName": "Public IP Selection Mode",
+        "Category": "ARK SA:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets whether ARK should automatically select the public IP advertised for the server, or whether it should use the IP set under Server Public IP",
+        "Keywords": "public,ip,ServerIP",
+        "FieldName": "ServerIP",
+        "InputType": "enum",
+        "ParamFieldName": "ServerIP",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Automatic (default)",
+            "-ServerIP={{ManualServerIP}} ": "Manual"
+        }
+    },
+    {
+        "DisplayName": "Server Public IP",
+        "Category": "ARK SA:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the public IP advertised for the server, if \"Manual\" is selected as the Public IP Selection Mode. Useful if the host network has multiple public IPs, or the server is behind a public proxy",
+        "Keywords": "manual,public,ip,serverip",
+        "FieldName": "ManualServerIP",
+        "InputType": "text",
+        "ParamFieldName": "ManualServerIP",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Custom Command Line Flags",
         "Category": "ARK SA:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -441,35 +468,6 @@
         "ParamFieldName": "CustomOptions",
         "DefaultValue": "",
         "Placeholder": "?ClampItemStats=True?NewYear1UTC=1672592400",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Use Alternate Public IP",
-        "Category": "ARK SA:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Enables the Alternate Public IP option for the server",
-        "Keywords": "alternate,public,ip,address",
-        "FieldName": "UseAlternatePublicIP",
-        "InputType": "checkbox",
-        "ParamFieldName": "UseAlternatePublicIP",
-        "DefaultValue": "",
-        "EnumValues": {
-            "False": "",
-            "True": "-ServerIP={{ServerIP}}"
-        }
-    },
-    {
-        "DisplayName": "Alternate Public IP",
-        "Category": "ARK SA:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "If the server is behind a NAT or firewall, set the public IP address here to allow it to be accessed correctly",
-        "Keywords": "alternate,public,ip,address",
-        "FieldName": "ServerIP",
-        "InputType": "text",
-        "ParamFieldName": "ServerIP",
-        "DefaultValue": "",
-        "IncludeInCommandLine": false,
-        "Placeholder": "0.0.0.0",
         "EnumValues": {}
     },
     {
