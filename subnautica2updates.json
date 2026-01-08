@@ -68,9 +68,7 @@
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
-        "SkipOnFailure": false,
-        "UpdateSourceConditionSetting": "Status",
-        "UpdateSourceConditionValue": "disabled"
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Nitrox Download",
@@ -83,9 +81,7 @@
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
-        "SkipOnFailure": false,
-        "UpdateSourceConditionSetting": "Status",
-        "UpdateSourceConditionValue": "disabled"
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Nitrox Download",
@@ -97,83 +93,14 @@
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
-        "SkipOnFailure": false,
-        "UpdateSourceConditionSetting": "Status",
-        "UpdateSourceConditionValue": "disabled"
-    },
-    {
-        "UpdateStageName": "Nitrox Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSourceArch": "x86_64",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://github.com/user-attachments/files/24390547/Nitrox.1.8.0.1.-.Linux.x64.-.with.data-path.fix.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}Nitrox",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Nitrox Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSourceArch": "aarch64",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://github.com/user-attachments/files/24390592/Nitrox.1.8.0.1.-.Linux.arm.-.with.data-path.fix.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}Nitrox",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Nitrox Download",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://github.com/user-attachments/files/24390587/Nitrox.1.8.0.1.-.Win.x64.-.with.data-path.fix.zip",
-        "UpdateSourceTarget": "{{$FullBaseDir}}Nitrox",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Make Server Executable",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Nitrox/NitroxServer-Subnautica",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Nitrox/Nitrox.Server.Subnautica",
         "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Nitrox Installation",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSourceArch": "x86_64",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd subnautica/264710/Nitrox && \\cp -rf linux-x64/* ./ >/dev/null 2>&1; rm -rf linux-x64 >/dev/null 2>&1; chmod +x NitroxServer-Subnautica\"",
-        "SkipOnFailure": false,
-        "UpdateSourceConditionSetting": "Status",
-        "UpdateSourceConditionValue": "disabled"
-    },
-    {
-        "UpdateStageName": "Nitrox Installation",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSourceArch": "aarch64",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd subnautica/264710/Nitrox && \\cp -rf linux-arm64/* ./ >/dev/null 2>&1; rm -rf linux-arm64 >/dev/null 2>&1; chmod +x NitroxServer-Subnautica\"",
-        "SkipOnFailure": false,
-        "UpdateSourceConditionSetting": "Status",
-        "UpdateSourceConditionValue": "disabled"
-    },
-    {
-        "UpdateStageName": "Nitrox Installation",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'subnautica/264710/Nitrox'; Copy-Item -Path 'win-x64/*' -Destination './' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'win-x64' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
-        "SkipOnFailure": false,
-        "UpdateSourceConditionSetting": "Status",
-        "UpdateSourceConditionValue": "disabled"
     },
     {
         "UpdateStageName": "Create NitroxData Directory",
