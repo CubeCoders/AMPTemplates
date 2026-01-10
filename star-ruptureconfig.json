@@ -1,5 +1,100 @@
 [
     {
+        "DisplayName": "Session Name",
+        "Category": "StarRupture:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the save game session name, as stored in 'StarRupture/Saved/SaveGames'. Maximum 20 characters",
+        "Keywords": "session,name,save,game,sessionname",
+        "FieldName": "SessionName",
+        "InputType": "text",
+        "ParamFieldName": "$.SessionName",
+        "DefaultValue": "MySaveGame",
+        "Placeholder": "MySaveGame",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Save Game Interval",
+        "Category": "StarRupture:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the server's auto-save interval",
+        "Keywords": "save,game,interval,auto,seconds,savegameinterval",
+        "FieldName": "SaveGameInterval",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "$.SaveGameInterval",
+        "DefaultValue": "300",
+        "Placeholder": "300",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Start New Game",
+        "Category": "StarRupture:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, creates a new world when the server starts",
+        "Keywords": "start,new,game,world,create,startnewgame",
+        "FieldName": "StartNewGame",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.StartNewGame",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Load Saved Game",
+        "Category": "StarRupture:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, loads an existing save game when the server starts, as specified under Save Game Name",
+        "Keywords": "load,saved,game,existing,save,loadsavedgame",
+        "FieldName": "LoadSavedGame",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.LoadSavedGame",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Save Game Name",
+        "Category": "StarRupture:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the save file name to load when Load Saved Game is enabled",
+        "Keywords": "save,game,name,file,load,savegamename",
+        "FieldName": "SaveGameName",
+        "InputType": "text",
+        "ParamFieldName": "$.SaveGameName",
+        "DefaultValue": "AutoSave0.sav",
+        "Placeholder": "AutoSave0.sav",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Admin Password Hash",
+        "Category": "StarRupture:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the hash of the server's admin password. Generate the hash [here](https://starrupture-utilities.com/passwords/). Empty = no admin password",
+        "Keywords": "admin,password,hash,adminpassword",
+        "FieldName": "adminpassword",
+        "InputType": "password",
+        "ParamFieldName": "adminpassword",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Password Hash",
+        "Category": "StarRupture:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the hash of the server's player password. Generate the hash [here](https://starrupture-utilities.com/passwords/). Empty = no player password",
+        "Keywords": "player,password,hash,playerpassword",
+        "FieldName": "playerpassword",
+        "InputType": "password",
+        "ParamFieldName": "playerpassword",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable MultiHome (Windows)",
         "Category": "StarRupture:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -18,7 +113,7 @@
         "DisplayName": "Public IP Selection Mode",
         "Category": "StarRupture:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets whether the server or AMP should automatically select the public IP advertised for the server, or whether it should use the IP set under Server Public IP",
+        "Description": "Sets whether the server or AMP should automatically select the public IP advertised for the server, or whether it should use the IP set under Server Public IP. Experimental",
         "Keywords": "public,ip,address,eos,override,host,EOS_OVERRIDE_HOST_IP",
         "FieldName": "EOS_OVERRIDE_HOST_IP",
         "InputType": "enum",
