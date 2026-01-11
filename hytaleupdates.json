@@ -1,0 +1,35 @@
+[
+    {
+        "UpdateStageName": "Download Hytale Downloader",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://downloader.hytale.com/hytale-downloader.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Run Downloader (Windows)",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "hytale-downloader.exe",
+        "UpdateSourceArgs": "",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Make Downloader Executable (Linux)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/chmod",
+        "UpdateSourceArgs": "+x ./hytale-downloader",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Run Downloader (Linux)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "./hytale-downloader",
+        "UpdateSourceArgs": "",
+        "SkipOnFailure": false
+    }
+]
