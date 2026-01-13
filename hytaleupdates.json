@@ -9,7 +9,7 @@
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "UpdateSourceConditionSetting": "disable-server-download",
-        "UpdateSourceConditionValue": "true",
+        "UpdateSourceConditionValue": "false",
         "SkipOnFailure": false
     },
     {
@@ -19,7 +19,7 @@
         "UpdateSource": "SetExecutableFlag",
         "UpdateSourceArgs": "{{$FullRootDir}}hytale-downloader-linux-amd64",
         "UpdateSourceConditionSetting": "disable-server-download",
-        "UpdateSourceConditionValue": "true",
+        "UpdateSourceConditionValue": "false",
         "SkipOnFailure": false
     },
     {
@@ -40,7 +40,7 @@
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && ./hytale-downloader-linux-amd64 {{ServerChannel}} && zipfile=$(ls -1 [0-9][0-9][0-9][0-9].[0-9][0-9].[0-9][0-9]-[0-9a-fA-F]*.zip 2>/dev/null) && unzip -o \\\"$zipfile\\\" && rm -f \\\"$zipfile\\\"\"",
         "UpdateSourceConditionSetting": "disable-server-download",
-        "UpdateSourceConditionValue": "true",
+        "UpdateSourceConditionValue": "false",
         "SkipOnFailure": false
     },
     {
@@ -61,7 +61,7 @@
         "UpdateSourceData": "powershell.exe",
         "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path '{{$FullRootDir}}'; & ./hytale-downloader-windows-amd64.exe {{ServerChannel}}; $zipfile = Get-ChildItem -File | Where-Object { $_.Name -match '^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}-[0-9a-fA-F]+\\.zip$' }; Expand-Archive -LiteralPath $zipfile.FullName -DestinationPath . -Force; Remove-Item -LiteralPath $zipfile.FullName -Force\"",
         "UpdateSourceConditionSetting": "disable-server-download",
-        "UpdateSourceConditionValue": "true",
+        "UpdateSourceConditionValue": "false",
         "SkipOnFailure": false
     },
     {
