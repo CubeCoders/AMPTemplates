@@ -41,6 +41,7 @@
         "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && ./hytale-downloader-linux-amd64 {{ServerChannel}} || { echo \\\"Download failed from the Hytale CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; sleep 1 && zipfile=$(ls -1t [0-9][0-9][0-9][0-9].[0-9][0-9].[0-9][0-9]-[0-9a-fA-F]*.zip 2>/dev/null | head -n1) && if [[ -n \\\"$zipfile\\\" ]]; then unzip -oq \\\"$zipfile\\\" && rm -f \\\"$zipfile\\\" >/dev/null 2>&1; fi\"",
         "UpdateSourceConditionSetting": "disable-server-download",
         "UpdateSourceConditionValue": "false",
+        "ProcessToolOutput": true,
         "SkipOnFailure": false
     },
     {
@@ -52,6 +53,7 @@
         "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && ./hytale-downloader-linux-arm64 {{ServerChannel}} || { echo \\\"Download failed from the Hytale CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; sleep 1 && zipfile=$(ls -1t [0-9][0-9][0-9][0-9].[0-9][0-9].[0-9][0-9]-[0-9a-fA-F]*.zip 2>/dev/null | head -n1) && if [[ -n \\\"$zipfile\\\" ]]; then unzip -oq \\\"$zipfile\\\" && rm -f \\\"$zipfile\\\" >/dev/null 2>&1; fi\"",
         "UpdateSourceConditionSetting": "Status",
         "UpdateSourceConditionValue": "disabled",
+        "ProcessToolOutput": true,
         "SkipOnFailure": false
     },
     {
@@ -62,6 +64,7 @@
         "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path '{{$FullRootDir}}'; try { & ./hytale-downloader-windows-amd64.exe {{ServerChannel}} } catch { Write-Output \\\"Download failed from the Hytale CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; Start-Sleep -Seconds 1; $zipfile = Get-ChildItem -File | Where-Object { $_.Name -match '^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}-[0-9a-fA-F]+\\.zip$' } | Sort-Object LastWriteTime -Descending | Select-Object -First 1; if ($zipfile) { Expand-Archive -LiteralPath $zipfile.FullName -DestinationPath . -Force 2> $null; Remove-Item -LiteralPath $zipfile.FullName -Force -ErrorAction SilentlyContinue *> $null }\"",
         "UpdateSourceConditionSetting": "disable-server-download",
         "UpdateSourceConditionValue": "false",
+        "ProcessToolOutput": true,
         "SkipOnFailure": false
     },
     {
