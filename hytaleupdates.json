@@ -108,5 +108,46 @@
         "UpdateSourceConditionSetting": "JavaVersionWindows",
         "UpdateSourceConditionValue": "java\\bin\\java.exe",
         "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Performance Saver Plugin Config Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}mods/Nitrado_PerformanceSaver",
+        "UpdateSourceConditionSetting": "performance-saver-install",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Performance Saver Plugin Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd hytale/Server/mods && wget -qO nitrado-performance-saver.jar $(wget -qO- https://api.github.com/repos/nitrado/hytale-plugin-performance-saver/releases/latest | grep browser_download_url | cut -d\\\\\\\" -f4 | grep -E \\\"nitrado-performance-saver.*\\.jar\\\") && echo \\\"Latest Nitrado Performance Saver plugin downloaded\\\"\"",
+        "UpdateSourceConditionSetting": "performance-saver-install",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Performance Saver Plugin Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'hytale/Server/mods'; Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/nitrado/hytale-plugin-performance-saver/releases/latest').assets | Where-Object { $_.browser_download_url -like '*nitrado-performance-saver*.jar' }).browser_download_url -OutFile 'nitrado-performance-saver.jar'; if ($?) { Write-Output \\\"Latest Nitrado Performance Saver plugin downloaded\\\" }\"",
+        "UpdateSourceConditionSetting": "performance-saver-install",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Default Performance Saver plugin config.json File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/hytaleperformancesaverconfig.json",
+        "UpdateSourceArgs": "config.json",
+        "UpdateSourceTarget": "{{$FullBaseDir}}mods/Nitrado_PerformanceSaver",
+        "OverwriteExistingFiles": false,
+        "UpdateSourceConditionSetting": "performance-saver-install",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
     }
 ]
