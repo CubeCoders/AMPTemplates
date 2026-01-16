@@ -147,7 +147,7 @@ fi
 # Check to see if the SHA already matches
 if [ -f $FILENAME ]; then
     echo "Checking the checksum of the existing file, $FILENAME"
-    echo "$SHA256 $FILENAME" | sha256sum --check --status
+    shasum -sc -a 256 <<< "$SHA256  $FILENAME"
     if [[ $? -eq 0 ]]; then
         echo "Latest Hytale $PATCHLINE version $VERSION already installed. Skipping"
         exit 0
@@ -160,7 +160,7 @@ echo "downloading latest (\"$PATCHLINE\" patchline) to \"$FILENAME\""
 curl -o "$FILENAME" -X GET $ZIP_DOWNLOAD_URL
 
 echo validating checksum...
-echo "$SHA256 $FILENAME" | sha256sum --check --status
+shasum -sc -a 256 <<< "$SHA256  $FILENAME"
 if [[ $? -ne 0 ]]; then
     echo "SHA256 of the downloaded file does not match!" >&2
     rm $FILENAME
