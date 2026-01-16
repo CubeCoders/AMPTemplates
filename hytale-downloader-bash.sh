@@ -114,7 +114,7 @@ ACCESS_TOKEN=$(jq -r .access_token <<< $CREDENTIALS)
 
 # Get Version Info
 VERSION_URL=$(
-    curl -s -X GET "https://account-data.hytale.com/game-assets/version/release.json" \
+    curl -s -X GET "https://account-data.hytale.com/game-assets/version/$PATCHLINE.json" \
         -H "Authorization: Bearer $ACCESS_TOKEN" \
         | jq -r .url
 )
@@ -144,8 +144,6 @@ if [[ -v FILENAME_OVERRIDE ]]; then
     FILENAME=$FILENAME_OVERRIDE
 fi
 
-echo "downloading latest (\"$PATCHLINE\" patchline) to \"$FILENAME\""
-
 # Check to see if the SHA already matches
 if [ -f $FILENAME ]; then
     echo "$SHA256 $FILENAME" | sha256sum --check --status
@@ -154,6 +152,8 @@ if [ -f $FILENAME ]; then
         exit 0
     fi
 fi
+
+echo "downloading latest (\"$PATCHLINE\" patchline) to \"$FILENAME\""
 
 curl -o "$FILENAME" -X GET $ZIP_DOWNLOAD_URL
 
