@@ -1,0 +1,18 @@
+[
+    {
+        "UpdateStageName": "Move Assets.zip",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && if [[ -f ./Assets.zip ]]; then mv -f ./Assets.zip ./Server/Assets.zip >/dev/null 2>&1; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Move Assets.zip",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path '{{$FullRootDir}}'; if (Test-Path -LiteralPath './Assets.zip' -PathType Leaf) { Move-Item -LiteralPath './Assets.zip' -Destination './Server/Assets.zip' -Force -ErrorAction SilentlyContinue *> $null }\"",
+        "SkipOnFailure": false
+    }
+]

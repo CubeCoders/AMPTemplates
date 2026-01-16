@@ -21,7 +21,7 @@ Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=7
+Meta.ConfigVersion=8
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
 Meta.AppConfigId=36d2e805-a54d-4a40-acc9-c101c720ae05
@@ -36,7 +36,7 @@ App.ExecutableLinux={{JavaVersionLinux}}
 App.WorkingDir=Server
 App.LinuxCommandLineArgs=
 App.WindowsCommandLineArgs=
-App.CommandLineArgs=-Xms{{MinMemory}}M -Xmx{{MaxMemory}}M {{EnableAOTCache}}{{JavaArgs}} -Dterminal.jline=false -Dterminal.ansi=true -jar HytaleServer.jar --assets ../Assets.zip --bind {{$ApplicationIPBinding}}:{{$ServerPort}} --backup-dir ./backups {{accept-early-plugins}}{{allow-op}}{{backup}}{{disable-sentry}}{{$FormattedArgs}} {{CustomArgs}}
+App.CommandLineArgs=-Xms{{MinMemory}}M -Xmx{{MaxMemory}}M {{EnableAOTCache}}{{JavaArgs}} -Dterminal.jline=false -Dterminal.ansi=true -jar HytaleServer.jar --assets ./Assets.zip --bind {{$ApplicationIPBinding}}:{{$ServerPort}} --backup-dir ./backups {{accept-early-plugins}}{{allow-op}}{{backup}}{{disable-sentry}}{{$FormattedArgs}} {{CustomArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"HYTALE_SERVER_SESSION_TOKEN":"{{session-token}}","HYTALE_SERVER_IDENTITY_TOKEN":"{{identity-token}}"}
@@ -79,7 +79,7 @@ App.TelnetLoginFormat={0}
 App.TelnetNewLineType=Default
 App.TailLogFilePath=server.log
 App.UpdateSources=@IncludeJson[hytaleupdates.json]
-App.PreStartStages=[]
+App.PreStartStages=@IncludeJson[hytalestart.json]
 App.CommandTriggers={"^Token Source: Not authenticated$":"/auth login device","^\\[.+?\\]\\s+\\[HytaleServer]\\s+No server tokens configured. Use \\/auth login to authenticate.$":"/auth login device","^To persist credentials, run: \\/auth persistence <type>$":"/auth persistence Encrypted"}
 App.UserActions=[]
 App.ForceUpdate=False
