@@ -1,7 +1,15 @@
 #!/bin/bash
-# This script requires curl, jq, and sha256sum
+# This script requires curl, jq, and shasum
 # Currently, the only supported CLI flags are:
 # -download-path, -patchline, and -print-version
+
+# Dependency checks
+for DEP in curl jq shasum; do
+    if ! command -v "$DEP" &> /dev/null; then
+        echo "Please install the \"$DEP\" package" >&2
+        exit 1
+    fi
+done
 
 PATCHLINE="release"
 while [ "$#" -gt 0 ]; do
@@ -147,8 +155,7 @@ fi
 # Check to see if the SHA already matches
 if [ -f $FILENAME ]; then
     echo "Checking the checksum of the existing file, $FILENAME"
-    shasum -sc -a 256 <<< "$SHA256  $FILENAME"
-    if [[ $? -eq 0 ]]; then
+    if shasum -sc -a 256 <<< "$SHA256  $FILENAME"; then
         echo "Latest Hytale $PATCHLINE version $VERSION already installed. Skipping"
         exit 0
     fi
@@ -157,11 +164,10 @@ fi
 
 echo "downloading latest (\"$PATCHLINE\" patchline) to \"$FILENAME\""
 
-curl -o "$FILENAME" -X GET $ZIP_DOWNLOAD_URL
+curl --progress-bar -o "$FILENAME" -X GET $ZIP_DOWNLOAD_URL
 
 echo validating checksum...
-shasum -sc -a 256 <<< "$SHA256  $FILENAME"
-if [[ $? -ne 0 ]]; then
+if ! shasum -sc -a 256 <<< "$SHA256  $FILENAME"; then
     echo "SHA256 of the downloaded file does not match!" >&2
     rm $FILENAME
     exit 1
