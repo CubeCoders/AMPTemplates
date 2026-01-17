@@ -14,23 +14,16 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Make Hytale Downloader CLI Executable",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSourceArch": "x86_64",
-        "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullRootDir}}hytale-downloader-linux-amd64",
-        "UpdateSourceConditionSetting": "disable-server-download",
-        "UpdateSourceConditionValue": "false",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Make Hytale Downloader CLI Executable",
+        "UpdateStageName": "Hytale Downloader Script Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSourceArch": "aarch64",
-        "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullRootDir}}hytale-downloader-linux-arm64",
-        "UpdateSourceConditionSetting": "Status",
-        "UpdateSourceConditionValue": "disabled",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/hytaledownloaderscript.sh",
+        "UpdateSourceArgs": "hytale-downloader-linux-arm64.sh",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "disable-server-download",
+        "UpdateSourceConditionValue": "false",
         "SkipOnFailure": false
     },
     {
@@ -39,7 +32,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && LatestVersion=$(timeout 5 ./hytale-downloader-linux-amd64 -patchline {{ServerBuildChannel}} -print-version -skip-update-check); if [[ ! \\\"$LatestVersion\\\" =~ ^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}-[a-fA-F0-9]+$ ]]; then LatestVersion=\\\"\\\"; fi; [[ -f ./Server/.installedversion ]] && { InstalledVersion=\\\"$(cat ./Server/.installedversion 2>/dev/null)\\\"; if [[ \\\"$InstalledVersion\\\" =~ ^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}-[a-fA-F0-9]+$ ]] && [[ \\\"$InstalledVersion\\\" == \\\"$LatestVersion\\\" ]]; then echo \\\"Latest Hytale {{ServerBuildChannel}} version $LatestVersion already installed. Skipping\\\"; exit 0; fi; }; ./hytale-downloader-linux-amd64 -patchline {{ServerBuildChannel}} -download-path ./server.zip || { echo \\\"Download failed from the Hytale CDN. This is a fault with the CDN or the download, not AMP. Aborting\\\"; exit 1; }; sleep 1 && if [[ -f ./server.zip ]]; then [[ -z \\\"${LatestVersion:-}\\\" ]] && LatestVersion=$(timeout 5 ./hytale-downloader-linux-amd64 -patchline {{ServerBuildChannel}} -print-version -skip-update-check); unzip -oq ./server.zip && sleep 1 && mv -f ./Assets.zip ./Server/Assets.zip >/dev/null 2>&1 && printf \\\"%s\\\" \\\"$LatestVersion\\\" > ./Server/.installedversion && rm -f ./server.zip >/dev/null 2>&1; fi\"",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && chmod +x ./hytale-downloader-linux-amd64 && LatestVersion=$(timeout 5 ./hytale-downloader-linux-amd64 -patchline {{ServerBuildChannel}} -print-version -skip-update-check); if [[ ! \\\"$LatestVersion\\\" =~ ^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}-[a-fA-F0-9]+$ ]]; then LatestVersion=\\\"\\\"; fi; [[ -f ./Server/.installedversion ]] && { InstalledVersion=\\\"$(cat ./Server/.installedversion 2>/dev/null)\\\"; if [[ \\\"$InstalledVersion\\\" =~ ^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}-[a-fA-F0-9]+$ ]] && [[ \\\"$InstalledVersion\\\" == \\\"$LatestVersion\\\" ]]; then echo \\\"Latest Hytale {{ServerBuildChannel}} version $LatestVersion already installed. Skipping\\\"; exit 0; fi; }; ./hytale-downloader-linux-amd64 -patchline {{ServerBuildChannel}} -download-path ./server.zip || { echo \\\"Download failed from the Hytale CDN. This is a fault with the CDN or the download, not AMP. Aborting\\\"; exit 1; }; sleep 1 && if [[ -f ./server.zip ]]; then [[ -z \\\"${LatestVersion:-}\\\" ]] && LatestVersion=$(timeout 5 ./hytale-downloader-linux-amd64 -patchline {{ServerBuildChannel}} -print-version -skip-update-check); unzip -oq ./server.zip && sleep 1 && mv -f ./Assets.zip ./Server/Assets.zip >/dev/null 2>&1 && printf \\\"%s\\\" \\\"$LatestVersion\\\" > ./Server/.installedversion && rm -f ./server.zip >/dev/null 2>&1; fi\"",
         "UpdateSourceConditionSetting": "disable-server-download",
         "UpdateSourceConditionValue": "false",
         "ProcessToolOutput": true,
@@ -51,9 +44,9 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && LatestVersion=$(timeout 5 ./hytale-downloader-linux-arm64 -patchline {{ServerBuildChannel}} -print-version -skip-update-check); if [[ ! \\\"$LatestVersion\\\" =~ ^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}-[a-fA-F0-9]+$ ]]; then LatestVersion=\\\"\\\"; fi; [[ -f ./Server/.installedversion ]] && { InstalledVersion=\\\"$(cat ./Server/.installedversion 2>/dev/null)\\\"; if [[ \\\"$InstalledVersion\\\" =~ ^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}-[a-fA-F0-9]+$ ]] && [[ \\\"$InstalledVersion\\\" == \\\"$LatestVersion\\\" ]]; then echo \\\"Latest Hytale {{ServerBuildChannel}} version $LatestVersion already installed. Skipping\\\"; exit 0; fi; }; ./hytale-downloader-linux-arm64 -patchline {{ServerBuildChannel}} -download-path ./server.zip || { echo \\\"Download failed from the Hytale CDN. This is a fault with the CDN or the download, not AMP. Aborting\\\"; exit 1; }; sleep 1 && if [[ -f ./server.zip ]]; then [[ -z \\\"${LatestVersion:-}\\\" ]] && LatestVersion=$(timeout 5 ./hytale-downloader-linux-arm64 -patchline {{ServerBuildChannel}} -print-version -skip-update-check); unzip -oq ./server.zip && sleep 1 && mv -f ./Assets.zip ./Server/Assets.zip >/dev/null 2>&1 && printf \\\"%s\\\" \\\"$LatestVersion\\\" > ./Server/.installedversion && rm -f ./server.zip >/dev/null 2>&1; fi\"",
-        "UpdateSourceConditionSetting": "Status",
-        "UpdateSourceConditionValue": "disabled",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && chmod +x ./hytale-downloader-linux-arm64.sh && LatestVersion=$(timeout 5 ./hytale-downloader-linux-arm64.sh -patchline {{ServerBuildChannel}} -print-version); if [[ ! \\\"$LatestVersion\\\" =~ ^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}-[a-fA-F0-9]+$ ]]; then LatestVersion=\\\"\\\"; fi; [[ -f ./Server/.installedversion ]] && { InstalledVersion=\\\"$(cat ./Server/.installedversion 2>/dev/null)\\\"; if [[ \\\"$InstalledVersion\\\" =~ ^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}-[a-fA-F0-9]+$ ]] && [[ \\\"$InstalledVersion\\\" == \\\"$LatestVersion\\\" ]]; then echo \\\"Latest Hytale {{ServerBuildChannel}} version $LatestVersion already installed. Skipping\\\"; exit 0; fi; }; ./hytale-downloader-linux-arm64.sh -patchline {{ServerBuildChannel}} -download-path ./server.zip || { echo \\\"Download failed from the Hytale CDN. This is a fault with the CDN or the download, not AMP. Aborting\\\"; exit 1; }; sleep 1 && if [[ -f ./server.zip ]]; then [[ -z \\\"${LatestVersion:-}\\\" ]] && LatestVersion=$(timeout 5 ./hytale-downloader-linux-arm64.sh -patchline {{ServerBuildChannel}} -print-version); unzip -oq ./server.zip && sleep 1 && mv -f ./Assets.zip ./Server/Assets.zip >/dev/null 2>&1 && printf \\\"%s\\\" \\\"$LatestVersion\\\" > ./Server/.installedversion && rm -f ./server.zip >/dev/null 2>&1; fi\"",
+        "UpdateSourceConditionSetting": "disable-server-download",
+        "UpdateSourceConditionValue": "false",
         "ProcessToolOutput": true,
         "SkipOnFailure": false
     },
