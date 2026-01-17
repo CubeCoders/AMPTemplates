@@ -173,7 +173,7 @@
         "DisplayName": "Enable Automatic Backups",
         "Category": "Hytale:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If set, the server's automatic backups system will be enabled. Backups will be stored in the 'backups' directory. This is separate from AMP's own backup system",
+        "Description": "If set, the server's automatic backups system will be enabled. Backups will be stored in the directory set under Automatic Backup Directory. This is separate from AMP's own backup system, which uses the 'Backups' directory by default",
         "Keywords": "backup,automatic,enable",
         "FieldName": "backup",
         "InputType": "checkbox",
@@ -185,10 +185,24 @@
         }
     },
     {
-        "DisplayName": "Backup Frequency",
+        "DisplayName": "Automatic Backup Directory",
         "Category": "Hytale:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the backup interval for the server's backup system, if enabled",
+        "Description": "Sets the directory where the server's automatic backups will be stored. Specify either an absolute path or a path relative to the server's base directory",
+        "Keywords": "backup,directory,automatic,backup-dir",
+        "FieldName": "backup-dir",
+        "InputType": "text",
+        "ParamFieldName": "backup-dir",
+        "DefaultValue": "./autobackups",
+        "Placeholder": "./autobackups",
+        "Required": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Automatic Backup Frequency",
+        "Category": "Hytale:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the backup interval for the server's automatic backup system, if enabled",
         "Keywords": "backup,frequency,backup-frequency",
         "FieldName": "backup-frequency",
         "InputType": "number",
@@ -202,7 +216,7 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Maximum Backup Count",
+        "DisplayName": "Maximum Automatic Backup Count",
         "Category": "Hytale:stadia_controller",
         "Subcategory": "Server:dns:1",
         "Description": "Sets the maximum number of backups to keep when automatic backups are enabled. Older backups will be deleted when this limit is reached",
@@ -381,20 +395,20 @@
         "Subcategory": "Server Updates:build:-1",
         "Description": "Sets the build channel from which to download the server. Update the server after changing this setting",
         "Keywords": "server,version,build,channel,patchline,release,pre-release",
-        "FieldName": "ServerChannel",
+        "FieldName": "ServerBuildChannel",
         "InputType": "enum",
-        "ParamFieldName": "ServerChannel",
-        "DefaultValue": "",
+        "ParamFieldName": "ServerBuildChannel",
+        "DefaultValue": "release",
         "EnumValues": {
-            "": "Release channel (default)",
-            "-patchline pre-release": "Pre-release channel"
+            "release": "Release channel (default)",
+            "pre-release": "Pre-release channel"
         }
     },
     {
         "DisplayName": "Disable Server Download",
         "Category": "Updates",
         "Subcategory": "Server Updates:build:-1",
-        "Description": "If set, the server files will not be automatically downloaded when the server is updated. The server files (Assets.zip and the Server directory) must be manually transferred from the Hytale launcher files to the 'hytale' directory in the instance datastore (accessed from the ADS File Manager or SFTP)",
+        "Description": "If set, the server files will not be automatically downloaded when the server is updated. The server files (Assets.zip and the contents of the Server directory) must be manually transferred from the Hytale launcher files to the 'hytale/Server' directory in the instance datastore (the base directory in the instance's File Manager or SFTP)",
         "Keywords": "disable,server,download,manual,disable-server-download",
         "FieldName": "disable-server-download",
         "InputType": "checkbox",
