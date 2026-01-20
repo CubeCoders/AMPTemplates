@@ -11,6 +11,7 @@ for DEP in curl jq shasum; do
     fi
 done
 
+# Parse args
 PATCHLINE="release"
 while [ "$#" -gt 0 ]; do
     ARG=$1
@@ -31,19 +32,53 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
+# Set up error messages
+ERR_PRINT_VERSION="error printing version"
+ERR_FETCHING_MANIFEST="error fetching manifest: could not get signed URL for manifest: could not get signed URL"
+ERR_FORBIDDEN="$ERR_FETCHING_MANIFEST: HTTP status: 403 Forbidden"
+ERR_OAUTH="$ERR_FETCHING_MANIFEST: Get \"https://account-data.hytale.com/game-assets/version/$PATCHLINE.json\": oauth2"
+
+# Prepend -print-version error
+if [[ $PRINT_VERSION = "true" ]]; then
+    ERR_FORBIDDEN="$ERR_PRINT_VERSION: $ERR_FORBIDDEN"
+    ERR_OAUTH="$ERR_PRINT_VERSION: $ERR_OAUTH"
+fi
+
 
 if [ -f .hytale-downloader-credentials.json ]; then
     CREDENTIALS=$(cat .hytale-downloader-credentials.json)
 
+    # Default to 0 if expires_at is not present (as Golang would)
+    EXPIRES_AT=$(jq .expires_at <<< $CREDENTIALS)
+    if [[ $? -ne 0 || $EXPIRES_AT = "null" || -z $EXPIRES_AT ]]; then
+        EXPIRES_AT=0
+    fi
+
     # Check expires_at and ensure refresh token is still valid
-    if [ `jq -r .expires_at <<< $CREDENTIALS` -lt `date +%s` ]; then
+    if [ $EXPIRES_AT -lt `date +%s` ]; then
+        # Throw OAuth error if refresh token is empty or not present
+        CRED_REFRESH_TOKEN=$(jq -r .refresh_token <<< $CREDENTIALS)
+        if [[ $? -ne 0 || $CRED_REFRESH_TOKEN = "null" || -z $CRED_REFRESH_TOKEN ]]; then
+            echo "$ERR_OAUTH: token expired and refresh token is not set" >&2
+            exit 1
+        fi
+
         REFRESH_RESPONSE=$(
             curl -s -X POST "https://oauth.accounts.hytale.com/oauth2/token" \
                 -H "Content-Type: application/x-www-form-urlencoded" \
                 -d "client_id=hytale-downloader" \
                 -d "grant_type=refresh_token" \
-                -d "refresh_token=$(jq -r .refresh_token <<< $CREDENTIALS)"
+                -d "refresh_token=$CRED_REFRESH_TOKEN"
         )
+        
+        # Check response for errors
+        if [[ $REFRESH_RESPONSE == *"\"error\":"* ]]; then
+            ERROR=$(jq -r .error <<< $REFRESH_RESPONSE)
+            ERROR_DESCRIPTION=$(jq -r .error_description <<< $REFRESH_RESPONSE)
+            echo "$ERR_OAUTH: \"$ERROR\" \"$ERROR_DESCRIPTION\"" >&2
+            exit 1
+        fi
+
         CREDENTIALS=$(jq -c -n "{
             \"access_token\": \"$(jq -r .access_token <<< $REFRESH_RESPONSE)\",
             \"refresh_token\": \"$(jq -r .refresh_token <<< $REFRESH_RESPONSE)\",
@@ -51,10 +86,9 @@ if [ -f .hytale-downloader-credentials.json ]; then
             \"branch\": \"$PATCHLINE\"
         }")
         
-        # Exit if things went sideways with jq
+        # Fallback if error wasn't caught
         if [[ $? -ne 0 ]]; then
             echo "Error occured while parsing refresh response" >&2
-            rm .hytale-downloader-credentials.json
             exit 1
         fi
     fi
@@ -83,8 +117,8 @@ else
 
     # Poll for Token
     TRIES=0
-    RESPONSE="error"
-    while [[ $RESPONSE == *"error"* ]]; do
+    RESPONSE="\"error\":\"authorization_pending\""
+    while [[ $RESPONSE == *"\"error\":\"authorization_pending\""* ]]; do
         sleep $INTERVAL
         RESPONSE=$(
             curl -s -X POST "https://oauth.accounts.hytale.com/oauth2/token" \
@@ -99,6 +133,15 @@ else
             exit 1
         fi
     done
+
+    # Check response for errors
+    if [[ $RESPONSE == *"\"error\":"* ]]; then
+        ERROR=$(jq -r .error <<< $RESPONSE)
+        ERROR_DESCRIPTION=$(jq -r .error_description <<< $RESPONSE)
+        echo "$ERR_OAUTH: \"$ERROR\" \"$ERROR_DESCRIPTION\"" >&2
+        exit 1
+    fi
+    
 
     # Convert credentials to downloader's format
     CREDENTIALS=$(jq -c -n "{
@@ -120,17 +163,50 @@ echo $CREDENTIALS > .hytale-downloader-credentials.json
 
 ACCESS_TOKEN=$(jq -r .access_token <<< $CREDENTIALS)
 
-# Get Version Info
-VERSION_URL=$(
-    curl -s -X GET "https://account-data.hytale.com/game-assets/version/$PATCHLINE.json" \
-        -H "Authorization: Bearer $ACCESS_TOKEN" \
-        | jq -r .url
-)
-VERSION_INFO=$(curl -s -X GET $VERSION_URL)
+# Throw early if access_token cannot be read
+# TODO: attempt a refresh and return ERR_FORBIDDEN if that still doesn't work
+if [[ $? -ne 0 || -z $ACCESS_TOKEN ]]; then
+    echo $ERR_FORBIDDEN >&2
+    exit 1
+fi
 
-VERSION=$(jq -r .version <<< $VERSION_INFO)
-DOWNLOAD_URL=$(jq -r .download_url <<< $VERSION_INFO)
-SHA256=$(jq -r .sha256 <<< $VERSION_INFO)
+
+# Get URL to version manifest
+VERSION_URL_RES=$(
+    curl -s -X GET "https://account-data.hytale.com/game-assets/version/$PATCHLINE.json" \
+        -H "Authorization: Bearer $ACCESS_TOKEN"
+)
+
+# Check response for invalid access_token or invalid patchline responses
+if [[ $VERSION_URL_RES == "invalid token" || $VERSION_URL_RES == "no access to patchline" ]]; then
+    echo $ERR_FORBIDDEN >&2
+    exit 1
+fi
+
+
+# Parse patchline JSON URL
+PATCHLINE_JSON_URL=$(jq -r .url <<< $VERSION_URL_RES)
+if [[ $? -ne 0 ]]; then
+    echo "\"url\" property not found in patchline URL query" >&2
+    exit 1
+fi
+
+# Grab patchline JSON
+PATCHLINE_JSON=$(curl -s -X GET $PATCHLINE_JSON_URL)
+
+VERSION=$(jq -r .version <<< $PATCHLINE_JSON)
+
+# If the version parse fails, the others probably will as well
+if [[ $? -ne 0 ]]; then
+    echo "\"version\" property not found in patchline JSON." >&2
+    echo "Request response for debugging purposes:"
+    echo $PATCHLINE_JSON
+    exit 1
+fi
+
+DOWNLOAD_URL=$(jq -r .download_url <<< $PATCHLINE_JSON)
+SHA256=$(jq -r .sha256 <<< $PATCHLINE_JSON)
+
 
 # Check if the downloader should exit early and print the version
 if [[ $PRINT_VERSION = "true" ]]; then
@@ -138,11 +214,17 @@ if [[ $PRINT_VERSION = "true" ]]; then
     exit 0
 fi
 
+
 # Get Download URL
 ZIP_DOWNLOAD_URL=$(
     curl -s -X GET "https://account-data.hytale.com/game-assets/$DOWNLOAD_URL" \
         -H "Authorization: Bearer $ACCESS_TOKEN" | jq -r .url
 )
+
+if [[ $ZIP_DOWNLOAD_URL == "invalid token" ]]; then
+    echo $ERR_FORBIDDEN >&2
+    exit 1
+fi
 
 
 FILENAME="$VERSION.zip"
@@ -154,7 +236,7 @@ fi
 
 # Check to see if the SHA already matches
 if [ -f $FILENAME ]; then
-    echo "Verifying the checksum of the existing file, $FILENAME"
+    echo "Validating the checksum of the existing file, $FILENAME"
     if shasum -sc -a 256 <<< "$SHA256  $FILENAME"; then
         echo "Latest Hytale $PATCHLINE version $VERSION already installed. Skipping"
         exit 0
