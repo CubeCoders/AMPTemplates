@@ -4,7 +4,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && if [[ ! -f ./Assets.zip ]] && [[ -f ./Server/Assets.zip ]]; then mv -f ./Server/Assets.zip ./Assets.zip >/dev/null 2>&1; fi\"",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && if [[ ! -f ./Assets.zip ]] && [[ -f ./Server/Assets.zip ]]; then mv -f ./Server/Assets.zip ./Assets.zip >/dev/null 2>&1; fi && if [[ -f ./Assets.zip ]] && [[ -f ./Server/Assets.zip ]]; then rm -f ./Server/Assets.zip >/dev/null 2>&1; fi\"",
         "SkipOnFailure": false
     },
     {
@@ -12,7 +12,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path '{{$FullRootDir}}'; if (-not (Test-Path -LiteralPath './Assets.zip' -PathType Leaf) -and (Test-Path -LiteralPath './Server/Assets.zip' -PathType Leaf)) { Move-Item -LiteralPath './Server/Assets.zip' -Destination './Assets.zip' -Force -ErrorAction SilentlyContinue *> $null }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path '{{$FullRootDir}}'; if (-not (Test-Path -LiteralPath './Assets.zip' -PathType Leaf) -and (Test-Path -LiteralPath './Server/Assets.zip' -PathType Leaf)) { Move-Item -LiteralPath './Server/Assets.zip' -Destination './Assets.zip' -Force -ErrorAction SilentlyContinue *> $null }; if ((Test-Path -LiteralPath './Assets.zip' -PathType Leaf) -and (Test-Path -LiteralPath './Server/Assets.zip' -PathType Leaf)) { Remove-Item -LiteralPath './Server/Assets.zip' -Force -ErrorAction SilentlyContinue *> $null }\"",
         "SkipOnFailure": false
     }
 ]
