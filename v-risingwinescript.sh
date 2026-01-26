@@ -29,6 +29,7 @@ case "$WINE_VERSION" in
   10|11) MONO_VERSION="10.4.1" ;;
   *)
     echo "Unsupported Wine version: $WINE_VERSION"
+    exec 6>&-
     kill $XVFB_PID
     exit 1
     ;;
