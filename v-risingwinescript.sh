@@ -26,9 +26,10 @@ WINE_VERSION=$(/usr/bin/wine --version | grep -oP '\d+' | head -1)
 case "$WINE_VERSION" in
   8) MONO_VERSION="8.1.0" ;;
   9) MONO_VERSION="9.4.0" ;;
-  10) MONO_VERSION="10.2.0" ;;
+  10|11) MONO_VERSION="10.4.1" ;;
   *)
     echo "Unsupported Wine version: $WINE_VERSION"
+    exec 6>&-
     kill $XVFB_PID
     exit 1
     ;;
@@ -43,8 +44,8 @@ MONO_URL="https://dl.winehq.org/wine/wine-mono/${MONO_VERSION}/wine-mono-${MONO_
 wget -q -O "$WINEPREFIX/mono.msi" "$MONO_URL"
 /usr/bin/wine msiexec /i "$WINEPREFIX/mono.msi" /qn /quiet /norestart /log "$WINEPREFIX/mono_install.log"
 
-# Install vcrun2022 only if Wine version is not 10
-if [[ "$WINE_VERSION" != "10" ]]; then
+# Install vcrun2022 only if Wine version is not 10 or 11
+if [[ ! "$WINE_VERSION" =~ ^(10|11)$ ]]; then
   ./winetricks -q vcrun2022 > winescript_log.txt 2>&1
 fi
 
