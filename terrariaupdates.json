@@ -4,16 +4,39 @@
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/terrariaserverconfig.txt",
-        "UpdateSourceTarget": "serverfiles",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
         "OverwriteExistingFiles": false,
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "SteamCMD Terraria",
+        "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "105600",
-        "UpdateSourceTarget": "serverfiles",
+        "UpdateSourceArgs": "105600",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "steam",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd Terraria && mkdir -p srv >/dev/null && rm -rf ./srv/* >/dev/null 2>&1 && LatestDownload=$(wget -qO- https://terraria.org/api/get/dedicated-servers-names | jq -r \\\".[0]\\\") && [[ -f server.zip ]] && rm -f server.zip >/dev/null 2>&1; wget -qO server.zip \\\"https://terraria.org/api/download/pc-dedicated-server/$LatestDownload\\\" || { echo \\\"Download failed from the Terraria API. This is a fault with the API, not AMP. Aborting\\\"; exit 1; }; unzip -qo server.zip -d ./srv >/dev/null 2>&1 && rm -f server.zip >/dev/null 2>&1 && \\cp -rf ./srv/*/Linux/. ./serverfiles/ >/dev/null 2>&1 && rm -rf ./srv >/dev/null 2>&1 && chmod +x ./serverfiles/TerrariaServer ./serverfiles/TerrariaServer.bin.x86_64 >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "standalone",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'Terraria'; if (-not (Test-Path -LiteralPath 'srv' -PathType Container)) { New-Item -ItemType Directory -Path 'srv' *> $null } else { Remove-Item -Recurse -Force 'srv\\*' -ErrorAction SilentlyContinue *> $null }; $LatestDownload = (Invoke-RestMethod -UseBasicParsing -Uri 'https://terraria.org/api/get/dedicated-servers-names')[0]; Remove-Item -LiteralPath 'server.zip' -Force -ErrorAction SilentlyContinue *> $null; try { Invoke-WebRequest -UseBasicParsing -Uri (\\\"https://terraria.org/api/download/pc-dedicated-server/$LatestDownload\\\") -OutFile 'server.zip' -ErrorAction Stop } catch { Write-Output 'Download failed from the Terraria API. This is a fault with the API, not AMP. Aborting'; exit 1 }; Expand-Archive -Path 'server.zip' -DestinationPath 'srv' -Force *> $null; Remove-Item -LiteralPath 'server.zip' -Force -ErrorAction SilentlyContinue *> $null; Copy-Item -Path 'srv\\*\\Windows\\*' -Destination '.\\serverfiles' -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item -Recurse -Force 'srv' -ErrorAction SilentlyContinue *> $null\"",
+        "UpdateSourceConditionSetting": "DownloadSource",
+        "UpdateSourceConditionValue": "standalone",
         "SkipOnFailure": false
     },
     {
