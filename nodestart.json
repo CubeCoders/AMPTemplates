@@ -1,0 +1,22 @@
+[
+    {
+        "UpdateStageName": "Run App Pre-start Commands",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd node-server/app/{{ApplicationLocation}} && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && {{AppPrestartCommands}}\"",
+        "UpdateSourceConditionSetting": "RunAppPrestartCommands",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Run App Pre-start Commands",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd node-server\\app\\{{ApplicationLocation}} && set \"PATH={{$FullRootDir}}node;%PATH%\" && {{AppPrestartCommands}}",
+        "UpdateSourceConditionSetting": "RunAppPrestartCommands",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    }
+]
