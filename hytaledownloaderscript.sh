@@ -246,7 +246,7 @@ fi
 
 echo "downloading latest (\"$PATCHLINE\" patchline) to \"$FILENAME\""
 
-curl --progress-bar -o "$FILENAME" -X GET $ZIP_DOWNLOAD_URL
+curl --progress-bar --stderr /dev/stdout -o "$FILENAME" -X GET $ZIP_DOWNLOAD_URL
 
 echo validating checksum...
 if ! shasum -sc -a 256 <<< "$SHA256  $FILENAME"; then
