@@ -1,17 +1,5 @@
 [
     {
-        "DisplayName": "Public Port",
-        "Category": "Palworld:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "$GamePort",
-        "InputType": "number",
-        "Hidden": true,
-        "ParamFieldName": "PublicPort",
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "RCON Port",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -188,6 +176,35 @@
         "FieldName": "ManualPublicIP",
         "InputType": "text",
         "ParamFieldName": "ManualPublicIP",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Public Port Selection Mode",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets whether the public port advertised for the server should be the same as the Game Port, or whether it should be the custom port set under Server Public Port",
+        "Keywords": "public,port,publicport",
+        "FieldName": "PublicPort",
+        "InputType": "enum",
+        "ParamFieldName": "PublicPort",
+        "DefaultValue": "{{$GamePort}}",
+        "EnumValues": {
+            "{{$GamePort}}": "Use Game Port (default)",
+            "{{CustomPublicPort}}": "Use custom port"
+        }
+    },
+    {
+        "DisplayName": "Server Public Port",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the public port advertised for the server, if \"Use custom port\" is selected as the Public Port Selection Mode",
+        "Keywords": "custom,public,port,publicport",
+        "FieldName": "CustomPublicPort",
+        "InputType": "number",
+        "MinValue": "1024",
+        "MaxValue": "65535",
+        "ParamFieldName": "CustomPublicPort",
         "DefaultValue": "",
         "EnumValues": {}
     },
