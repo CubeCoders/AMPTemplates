@@ -13,7 +13,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"wget -q -N https://fna.flibitijibibo.com/archive/fnalibs.tar.bz2 && tar -xf fnalibs.tar.bz2 -C ./staxel/405710/bin/ lib64/ && rm -f fnalibs.tar.bz2\"",
+        "UpdateSourceArgs": "-c \"cd staxel/405710 && mkdir -p fnalibs && wget -qO fnalibs.zip https://nightly.link/FNA-XNA/fnalibs-dailies/workflows/ci/main/fnalibs.zip || { echo \\\"Download of latest fnalibs failed from GitHub. Aborting\\\"; exit 1; }; unzip -qo fnalibs.zip -d fnalibs && \\cp -a fnalibs/lib64 bin/ >/dev/null 2>&1 && rm -rf fnalibs fnalibs.zip >/dev/null 2>&1\"",
         "SkipOnFailure": false
     }
 ]
