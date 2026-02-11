@@ -1,5 +1,31 @@
 [
     {
+        "DisplayName": "Disable UE4SS Console",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "Debug.ConsoleEnabled",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "Debug.ConsoleEnabled",
+        "DefaultValue": "0",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Disable UE4SS GUI Console",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "GuiConsoleEnabled",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "Debug.GuiConsoleEnabled",
+        "DefaultValue": "0",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Server Name",
         "Category": "Abiotic Factor:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -165,6 +191,21 @@
         "EnumValues": {
             "False": "",
             "True": "-UseLocalIPs "
+        }
+    },
+    {
+        "DisplayName": "Enable UE4SS UObject Listeners",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, UObject listeners will be created in GUObjectArray to create a fast cache for use instead of iterating GUObjectArray. Recommended to keep disabled for UE4SS mods to avoid crashes",
+        "Keywords": "ue4ss,uobject,listeners,bUseUObjectArrayCache",
+        "FieldName": "bUseUObjectArrayCache",
+        "InputType": "checkbox",
+        "ParamFieldName": "General.bUseUObjectArrayCache",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
         }
     },
     {
@@ -884,6 +925,22 @@
             "2": "Default",
             "3": "High",
             "4": "Precise"
+        }
+    },
+    {
+        "DisplayName": "Install UE Scripting System",
+        "Category": "Updates",
+        "Subcategory": "Runtime Configuration:build:3",
+        "Description": "Sets the action to take when the server is updated. If the installation option is selected, the latest build of the [igromanru experimental Unreal Engine 4/5 Scripting System](https://github.com/igromanru/AF-UE4SS) will be installed, allowing the server to be modded",
+        "Keywords": "install,ue4ss,unreal,engine,scripting,system,igromanru,modding",
+        "FieldName": "InstallUE4SS",
+        "InputType": "enum",
+        "ParamFieldName": "InstallUE4SS",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Do nothing (default)",
+            "false": "Remove UE4SS files",
+            "true": "Install latest igromanru build"
         }
     }
 ]
