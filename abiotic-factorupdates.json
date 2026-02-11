@@ -1,5 +1,25 @@
 [
     {
+        "UpdateStageName": "Remove UE4SS",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location 'abiotic-factor/2857200/AbioticFactor/Binaries/Win64'; Remove-Item 'dwmapi.dll','version.dll','ue4ss' -Recurse -Force -ErrorAction SilentlyContinue *> $null\"",
+        "UpdateSourceConditionSetting": "InstallUE4SS",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Remove UE4SS",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ./abiotic-factor/2857200/AbioticFactor/Binaries/Win64 && rm -rf dwmapi.dll version.dll ue4ss >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "InstallUE4SS",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": true
+    },
+    {
         "UpdateStageName": "Abiotic Factor Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
@@ -31,6 +51,51 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all XDG_RUNTIME_DIR=/tmp /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "UE4SS Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/igromanru/AF-UE4SS/releases/latest",
+        "UpdateSourceArgs": "$.assets.[1].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}AbioticFactor/Binaries/Win64",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallUE4SS",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "UE4SS version.dll Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/igromanru/AF-UE4SS/refs/heads/master/version.dll",
+        "UpdateSourceTarget": "{{$FullBaseDir}}AbioticFactor/Binaries/Win64",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "InstallUE4SS",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Remove UE4SS dwmapi.dll",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location 'abiotic-factor/2857200/AbioticFactor/Binaries/Win64'; Remove-Item 'dwmapi.dll' -Force -ErrorAction SilentlyContinue *> $null\"",
+        "UpdateSourceConditionSetting": "InstallUE4SS",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Remove UE4SS dwmapi.dll",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ./abiotic-factor/2857200/AbioticFactor/Binaries/Win64 && rm -f dwmapi.dll >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "InstallUE4SS",
+        "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
     }
 ]
