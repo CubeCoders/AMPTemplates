@@ -9,43 +9,37 @@
     },
     {
         "UpdateStageName": "Config Directory Creation",
-        "UpdateSourcePlatform": "All",
+        "UpdateSourcePlatform": "Windows",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "./insurgencysandstorm/581330/Insurgency/Saved/Config/WindowsServer",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Insurgency/Saved/Config/WindowsServer",
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config Directory Creation",
-        "UpdateSourcePlatform": "All",
+        "UpdateSourcePlatform": "Linux",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "./insurgencysandstorm/581330/Insurgency/Saved/Config/LinuxServer",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Insurgency/Saved/Config/LinuxServer",
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Base Config Download",
-        "UpdateSourcePlatform": "All",
+        "UpdateSourcePlatform": "Windows",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/InsurgencySS_Game.ini",
-        "UpdateSourceTarget": "./",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/insurgencysandstormgame.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Insurgency/Saved/Config/WindowsServer",
+        "UpdateSourceArgs": "Game.ini",
         "UnzipUpdateSource": false,
         "OverwriteExistingFiles": false,
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Config File Copy",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CopyFilePath",
-        "UpdateSourceData": "./insurgencysandstorm/581330/Insurgency/Saved/Config/WindowsServer/Game.ini",
-        "UpdateSourceArgs": "./insurgencysandstorm/InsurgencySS_Game.ini",
-        "OverwriteExistingFiles": false,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Config File Copy",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CopyFilePath",
-        "UpdateSourceData": "./insurgencysandstorm/581330/Insurgency/Saved/Config/LinuxServer/Game.ini",
-        "UpdateSourceArgs": "./insurgencysandstorm/InsurgencySS_Game.ini",
+        "UpdateStageName": "Base Config Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/insurgencysandstormgame.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Insurgency/Saved/Config/LinuxServer",
+        "UpdateSourceArgs": "Game.ini",
+        "UnzipUpdateSource": false,
         "OverwriteExistingFiles": false,
         "SkipOnFailure": false
     }
