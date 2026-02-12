@@ -2,7 +2,7 @@
     {
         "DisplayName": "GSP Server Session Token",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Server Settings:dns:1",
         "Description": "",
         "Keywords": "",
         "FieldName": "session-token",
@@ -16,7 +16,7 @@
     {
         "DisplayName": "GSP Server Identity Token",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Server Settings:dns:1",
         "Description": "",
         "Keywords": "",
         "FieldName": "identity-token",
@@ -30,8 +30,8 @@
     {
         "DisplayName": "Server Name",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the server name shown to players",
+        "Subcategory": "Server Settings:dns:1",
+        "Description": "Sets the server name shown to players in the server browser",
         "Keywords": "server,name,servername,display",
         "FieldName": "ServerName",
         "InputType": "text",
@@ -43,11 +43,11 @@
     {
         "DisplayName": "Server MOTD",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the message of the day (MOTD) shown to players on join",
+        "Subcategory": "Server Settings:dns:1",
+        "Description": "Sets the message of the day (MOTD) shown to players on join. Supports multiple lines",
         "Keywords": "motd,message,day,welcome",
         "FieldName": "MOTD",
-        "InputType": "text",
+        "InputType": "Textarea",
         "ParamFieldName": "$.MOTD",
         "DefaultValue": "",
         "EnumValues": {}
@@ -55,8 +55,8 @@
     {
         "DisplayName": "Server Password",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the password required to join the server. Default is no password",
+        "Subcategory": "Server Settings:dns:1",
+        "Description": "Sets the password required to join the server. Leave empty for a public server",
         "Keywords": "server,password",
         "FieldName": "Password",
         "InputType": "password",
@@ -67,12 +67,13 @@
     {
         "DisplayName": "Player Limit",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the maximum number of players that can connect to the server at one time",
+        "Subcategory": "Server Settings:dns:1",
+        "Description": "Sets the maximum number of players that can connect to the server at one time. Higher values require more RAM and CPU",
         "Keywords": "players,maxplayers,concurrent,max,maximum,limit",
-        "FieldName": "$MaxUsers",
+        "FieldName": "\$MaxUsers",
         "InputType": "number",
         "MinValue": "1",
+        "MaxValue": "200",
         "ParamFieldName": "$.MaxPlayers",
         "DefaultValue": "100",
         "Placeholder": "100",
@@ -80,83 +81,10 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "World Name",
-        "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the name of the world to load, or to create if it does not exist. Worlds are stored in 'universe/worlds'",
-        "Keywords": "world,name,spawn",
-        "FieldName": "Defaults.World",
-        "InputType": "text",
-        "ParamFieldName": "$.Defaults.World",
-        "DefaultValue": "default",
-        "Placeholder": "default",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Game Mode",
-        "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the default game mode for new players",
-        "Keywords": "gamemode,default,mode,adventure,creative",
-        "FieldName": "Defaults.GameMode",
-        "InputType": "enum",
-        "ParamFieldName": "$.Defaults.GameMode",
-        "DefaultValue": "Adventure",
-        "EnumValues": {
-            "Adventure": "Adventure (default)",
-            "Creative": "Creative"
-        }
-    },
-    {
-        "DisplayName": "Maximum View Radius",
-        "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets how far players can see. Recommended to limit to 12 for both performance and gameplay. Higher values will significantly increase RAM usage",
-        "Keywords": "view,render,radius,chunks,MaxViewRadius",
-        "FieldName": "MaxViewRadius",
-        "InputType": "number",
-        "MinValue": "1",
-        "ParamFieldName": "$.MaxViewRadius",
-        "DefaultValue": "12",
-        "Placeholder": "12",
-        "Suffix": "chunks",
-        "EnumValues": {}
-    },
-    {
-        "DisplayName": "Accept Early Plugins",
-        "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "If set, the server will accept early plugins. Note that loading early plugins is unsupported and may cause stability issues",
-        "Keywords": "plugins,early,accept-early-plugins",
-        "FieldName": "accept-early-plugins",
-        "InputType": "checkbox",
-        "ParamFieldName": "accept-early-plugins",
-        "DefaultValue": "",
-        "EnumValues": {
-            "False": "",
-            "True": "--accept-early-plugins "
-        }
-    },
-    {
-        "DisplayName": "Allow Op Command",
-        "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "If set, any player will be allowed to use the '/op' command to make themselves or another player an operator on the server",
-        "Keywords": "op,allow-op,operator",
-        "FieldName": "allow-op",
-        "InputType": "checkbox",
-        "ParamFieldName": "allow-op",
-        "DefaultValue": "",
-        "EnumValues": {
-            "False": "",
-            "True": "--allow-op "
-        }
-    },
-    {
         "DisplayName": "Authentication Mode",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the server's authentication mode. 'Offline' mode allows players to connect without authentication",
+        "Subcategory": "Server Settings:dns:1",
+        "Description": "Sets the server's authentication mode. 'Authenticated' requires players to log in with their Hytale account. 'Offline' allows players to connect without authentication. 'Insecure' is for development only",
         "Keywords": "auth,authentication,authenticated,offline,auth-mode",
         "FieldName": "auth-mode",
         "InputType": "enum",
@@ -170,9 +98,127 @@
         }
     },
     {
+        "DisplayName": "World Name",
+        "Category": "Hytale:stadia_controller",
+        "Subcategory": "World and Gameplay:public:2",
+        "Description": "Sets the name of the world to load, or to create if it does not exist. Worlds are stored in 'universe/worlds'",
+        "Keywords": "world,name,spawn",
+        "FieldName": "Defaults.World",
+        "InputType": "text",
+        "ParamFieldName": "$.Defaults.World",
+        "DefaultValue": "default",
+        "Placeholder": "default",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Game Mode",
+        "Category": "Hytale:stadia_controller",
+        "Subcategory": "World and Gameplay:public:2",
+        "Description": "Sets the default game mode for new players joining the server",
+        "Keywords": "gamemode,default,mode,adventure,creative",
+        "FieldName": "Defaults.GameMode",
+        "InputType": "enum",
+        "ParamFieldName": "$.Defaults.GameMode",
+        "DefaultValue": "Adventure",
+        "EnumValues": {
+            "Adventure": "Adventure (default)",
+            "Creative": "Creative"
+        }
+    },
+    {
+        "DisplayName": "Maximum View Radius",
+        "Category": "Hytale:stadia_controller",
+        "Subcategory": "Network and Security:security:3",
+        "Description": "Sets how far players can see in chunks. Recommended to limit to 12 for both performance and gameplay. Higher values will significantly increase RAM and bandwidth usage",
+        "Keywords": "view,render,radius,chunks,MaxViewRadius",
+        "FieldName": "MaxViewRadius",
+        "InputType": "number",
+        "MinValue": "1",
+        "ParamFieldName": "$.MaxViewRadius",
+        "DefaultValue": "12",
+        "Placeholder": "12",
+        "Suffix": "chunks",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Local Compression",
+        "Category": "Hytale:stadia_controller",
+        "Subcategory": "Network and Security:security:3",
+        "Description": "If set, local network compression will be enabled. Recommended for public/internet-facing servers to reduce bandwidth usage at the cost of slightly increased CPU usage",
+        "Keywords": "compression,network,local,LocalCompressionEnabled",
+        "FieldName": "LocalCompressionEnabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.LocalCompressionEnabled",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Allow Op Command",
+        "Category": "Hytale:stadia_controller",
+        "Subcategory": "Network and Security:security:3",
+        "Description": "If set, any player will be allowed to use the '/op' command to make themselves or another player an operator on the server. WARNING: This allows any player to gain full admin access",
+        "Keywords": "op,allow-op,operator",
+        "FieldName": "allow-op",
+        "InputType": "checkbox",
+        "ParamFieldName": "allow-op",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--allow-op "
+        }
+    },
+    {
+        "DisplayName": "Accept Early Plugins",
+        "Category": "Hytale:stadia_controller",
+        "Subcategory": "Network and Security:security:3",
+        "Description": "If set, the server will accept early plugins. Note that loading early plugins is unsupported and may cause stability issues. Only enable this if you know what you are doing",
+        "Keywords": "plugins,early,accept-early-plugins",
+        "FieldName": "accept-early-plugins",
+        "InputType": "checkbox",
+        "ParamFieldName": "accept-early-plugins",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--accept-early-plugins "
+        }
+    },
+    {
+        "DisplayName": "Disable Sentry Crash Reporting",
+        "Category": "Hytale:stadia_controller",
+        "Subcategory": "Network and Security:security:3",
+        "Description": "If set, the server's Sentry crash reporting will be disabled. This should be set during plugin development to avoid excessive crash reporting to Hypixel Studios",
+        "Keywords": "sentry,crash,reporting,disable-sentry",
+        "FieldName": "disable-sentry",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-sentry",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--disable-sentry "
+        }
+    },
+    {
+        "DisplayName": "Display Debug Tags",
+        "Category": "Hytale:stadia_controller",
+        "Subcategory": "Network and Security:security:3",
+        "Description": "If set, raw temporary tags will be displayed in strings. This should remain disabled for production servers and is only useful for debugging",
+        "Keywords": "debug,tags,display,tmp,DisplayTmpTagsInStrings",
+        "FieldName": "DisplayTmpTagsInStrings",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.DisplayTmpTagsInStrings",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
         "DisplayName": "Enable Automatic Backups",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Backup Settings:backup:4",
         "Description": "If set, the server's automatic backups system will be enabled. Backups will be stored in the directory set under Automatic Backup Directory. This is separate from AMP's own backup system, which uses the 'Backups' directory by default",
         "Keywords": "backup,automatic,enable",
         "FieldName": "backup",
@@ -187,7 +233,7 @@
     {
         "DisplayName": "Automatic Backup Directory",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Backup Settings:backup:4",
         "Description": "Sets the directory where the server's automatic backups will be stored. Specify either an absolute path or a path relative to the Server directory",
         "Keywords": "backup,directory,automatic,backup-dir",
         "FieldName": "backup-dir",
@@ -201,7 +247,7 @@
     {
         "DisplayName": "Automatic Backup Frequency",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Backup Settings:backup:4",
         "Description": "Sets the backup interval for the server's automatic backup system, if enabled",
         "Keywords": "backup,frequency,backup-frequency",
         "FieldName": "backup-frequency",
@@ -218,7 +264,7 @@
     {
         "DisplayName": "Maximum Automatic Backup Count",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Backup Settings:backup:4",
         "Description": "Sets the maximum number of backups to keep when automatic backups are enabled. Older backups will be deleted when this limit is reached",
         "Keywords": "backup,maximum,count,backup-max-count",
         "FieldName": "backup-max-count",
@@ -232,40 +278,10 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Enable Local Compression",
-        "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "If set, local network compression will be enabled",
-        "Keywords": "compression,network,local,LocalCompressionEnabled",
-        "FieldName": "LocalCompressionEnabled",
-        "InputType": "checkbox",
-        "ParamFieldName": "$.LocalCompressionEnabled",
-        "DefaultValue": "false",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
-        "DisplayName": "Disable Sentry Crash Reporting",
-        "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "If set, the server's Sentry crash reporting will be disabled. This should be set during plugin development to avoid excessive crash reporting",
-        "Keywords": "sentry,crash,reporting,disable-sentry",
-        "FieldName": "disable-sentry",
-        "InputType": "checkbox",
-        "ParamFieldName": "disable-sentry",
-        "DefaultValue": "",
-        "EnumValues": {
-            "False": "",
-            "True": "--disable-sentry "
-        }
-    },
-    {
         "DisplayName": "Custom Command Line Arguments",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Specifies any command line arguments to pass to the server (NOT arguments to run Java wth). Arguments must be preceded with --",
+        "Subcategory": "Custom Arguments:terminal:5",
+        "Description": "Specifies any command line arguments to pass to the server (NOT arguments to run Java with). Arguments must be preceded with --",
         "Keywords": "command,line,arguments,jar,CustomArgs",
         "FieldName": "CustomArgs",
         "InputType": "text",
@@ -276,8 +292,8 @@
     {
         "DisplayName": "Java Version",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Java and Memory:code:2",
-        "Description": "Sets the Java version to run the server with. Minimum Java 25 required. The version must be accessible to AMP. For \"Specific system version\", also set Specific System Java Version. For \"Specific instance version\", also set Specific Instance Java Version. Ensure the version is compatible with the server",
+        "Subcategory": "Java and Memory:code:6",
+        "Description": "Sets the Java version to run the server with. Minimum Java 25 required",
         "Keywords": "java,version,JavaVersion",
         "FieldName": "JavaVersion",
         "InputType": "enum",
@@ -292,8 +308,8 @@
     {
         "DisplayName": "Specific System Java Version",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Java and Memory:code:2",
-        "Description": "Sets the full path to the Java executable on the system, if \"Specific system version\" is selected under Java Version",
+        "Subcategory": "Java and Memory:code:6",
+        "Description": "Sets the full path to the Java executable on the system, if Specific system version is selected under Java Version",
         "Keywords": "java,version,system,SpecificJavaVersion",
         "FieldName": "SpecificJavaVersion",
         "InputType": "text",
@@ -304,8 +320,8 @@
     {
         "DisplayName": "Specific Instance Java Version",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Java and Memory:code:2",
-        "Description": "Sets the Eclipse Temurin Java version to install in the instance to run the server with, if \"Specific instance version\" is selected under Java Version. Useful for using a Java version that is not installed on the system or in AMP's Docker image (if using AMP's Docker). Update the server after changing this setting",
+        "Subcategory": "Java and Memory:code:6",
+        "Description": "Sets the Eclipse Temurin Java version to install in the instance. Update the server after changing this setting",
         "Keywords": "java,version,instance,SpecificInstanceJavaVersion",
         "FieldName": "SpecificInstanceJavaVersion",
         "InputType": "enum",
@@ -319,8 +335,8 @@
     {
         "DisplayName": "Maximum Memory",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Java and Memory:code:2",
-        "Description": "Sets Java's maximum heap size",
+        "Subcategory": "Java and Memory:code:6",
+        "Description": "Sets Java's maximum heap size. Recommended minimum of 4096 MB. For servers with more than 20 players or a large view radius, 8192 MB or more is recommended",
         "Keywords": "maximum,memory,heap",
         "FieldName": "MaxMemory",
         "InputType": "number",
@@ -334,22 +350,22 @@
     {
         "DisplayName": "Minimum Memory",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Java and Memory:code:2",
-        "Description": "Sets Java's minimum heap size",
+        "Subcategory": "Java and Memory:code:6",
+        "Description": "Sets Java's minimum heap size. Recommended to set equal to Maximum Memory for best performance. Hytale servers require a minimum of 4 GB RAM",
         "Keywords": "minimum,memory,heap",
         "FieldName": "MinMemory",
         "InputType": "number",
         "ParamFieldName": "MinMemory",
         "IncludeInCommandLine": false,
-        "DefaultValue": "512",
-        "Placeholder": "512",
+        "DefaultValue": "2048",
+        "Placeholder": "2048",
         "Suffix": "MB",
         "EnumValues": {}
     },
     {
         "DisplayName": "Enable AOT Cache",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Java and Memory:code:2",
+        "Subcategory": "Java and Memory:code:6",
         "Description": "If set, enables the pre-trained AOT cache (HytaleServer.aot) that improves boot times by skipping JIT warmup. See [JEP-514](https://openjdk.org/jeps/514)",
         "Keywords": "aot,cache,boot,time,jit,warmup",
         "FieldName": "EnableAOTCache",
@@ -364,8 +380,8 @@
     {
         "DisplayName": "Additional Java Arguments",
         "Category": "Hytale:stadia_controller",
-        "Subcategory": "Java and Memory:code:2",
-        "Description": "Specifies any [command line arguments](https://www.baeldung.com/jvm-parameters) to run Java with that are not otherwise set by AMP (NOT options passed to the server jar)",
+        "Subcategory": "Java and Memory:code:6",
+        "Description": "Specifies any command line arguments to run Java with that are not otherwise set by AMP (NOT options passed to the server jar)",
         "Keywords": "command,line,arguments,args,java,JavaArgs",
         "FieldName": "JavaArgs",
         "InputType": "text",
@@ -392,7 +408,7 @@
         "DisplayName": "Disable Server Download",
         "Category": "Updates",
         "Subcategory": "Server Updates:build:-1",
-        "Description": "If set, the server files will not be automatically downloaded when the server is updated. The server files (Assets.zip and the Server directory) must be manually transferred from the Hytale launcher files to the 'hytale' directory in the instance datastore (the base directory in the instance's File Manager or SFTP)",
+        "Description": "If set, the server files will not be automatically downloaded when the server is updated",
         "Keywords": "disable,server,download,manual,disable-server-download",
         "FieldName": "disable-server-download",
         "InputType": "checkbox",
@@ -408,7 +424,7 @@
         "DisplayName": "Install Performance Saver Plugin",
         "Category": "Updates",
         "Subcategory": "Server Updates:build:-1",
-        "Description": "If set, the [Nitrado Performance Saver plugin](https://github.com/nitrado/hytale-plugin-performance-saver) will be installed when the server is updated. Configure the plugin in 'mods/Nitrado_PerformanceSaver/config.json' after installation",
+        "Description": "If set, the Nitrado Performance Saver plugin will be installed when the server is updated",
         "Keywords": "install,performance,saver,plugin,performance-saver-install",
         "FieldName": "performance-saver-install",
         "InputType": "checkbox",
