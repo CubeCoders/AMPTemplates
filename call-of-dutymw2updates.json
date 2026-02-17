@@ -40,9 +40,15 @@
         "UpdateSourceData": "https://api.github.com/repos/iw4x/launcher/releases/latest",
         "UpdateSourceArgs": "$.assets[0].browser_download_url",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "IW4x Launcher Extract",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd {{$FullBaseDir}} && tar -xJf launcher*.tar.xz --strip-components=1 >/dev/null && rm -f launcher*.tar.xz\"",
         "SkipOnFailure": false
     },
     {
