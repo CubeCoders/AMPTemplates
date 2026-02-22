@@ -1,0 +1,67 @@
+[    
+    {
+        "UpdateStageName": "Create Config Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}config",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Download Linux Binary (x86_64)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/Pumpkin-MC/Pumpkin/releases/download/nightly/pumpkin-X64-Linux",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "pumpkin",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": false
+    },
+    {
+        "UpdateStageName": "Download Linux Binary (ARM64)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/Pumpkin-MC/Pumpkin/releases/download/nightly/pumpkin-ARM64-Linux",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "pumpkin",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": false
+    },
+    {
+        "UpdateStageName": "Make Binary Executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/chmod",
+        "UpdateSourceArgs": "+x {{$FullBaseDir}}pumpkin",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Download Windows Binary",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/Pumpkin-MC/Pumpkin/releases/download/nightly/pumpkin-X64-Windows.exe",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "Pumpkin.exe",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": false
+    },
+        {
+        "UpdateStageName": "Download Config File",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/clovertortoise/AMPTemplates/pumpkin-template/pumpkinConfig.toml",
+        "UpdateSourceTarget": "{{$FullBaseDir}}config",
+        "UpdateSourceArgs": "configuration.toml",
+        "OverwriteExistingFiles": false
+    },
+        {
+        "UpdateStageName": "Download Features File",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/clovertortoise/AMPTemplates/pumpkin-template/pumpkinFeatures.toml",
+        "UpdateSourceTarget": "{{$FullBaseDir}}config",
+        "UpdateSourceArgs": "features.toml",
+        "OverwriteExistingFiles": false
+    }
+]
