@@ -15,21 +15,6 @@
         "Hidden": true
     },
     {
-        "DisplayName": "Remote API Binding IP",
-        "Category": "Space Engineers:stadia_controller",
-        "Subcategory": "General:settings:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "$ApplicationIPBinding",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "ParamFieldName": "/MyConfigDedicated/RemoteApiIP",
-        "ExcludeFromImport": true,
-        "IncludeInCommandLine": false,
-        "EnumValues": {},
-        "Hidden": true
-    },
-    {
         "DisplayName": "Server Port",
         "Category": "Space Engineers:stadia_controller",
         "Subcategory": "General:settings:1",
@@ -583,7 +568,7 @@
         "DisplayName": "Enable Remote API",
         "Category": "Space Engineers:stadia_controller",
         "Subcategory": "General:settings:1",
-        "Description": "Enable/Disable the remote API to manage the server from a browser. ***Does not work in AMP on Windows in service mode***",
+        "Description": "Enable/Disable the remote API to manage the server from a browser. NOTE: Does not work in AMP on Windows in service mode, unless DedicaterServer64\\AllowRemoteHttp.bat is first run with administrative privileges with the following arguments: the Remote API Port value (such as 8777) and \"NT AUTHORITY\\NETWORK SERVICE\"",
         "Keywords": "Remote,API,Enabled,RemoteApiEnabled",
         "FieldName": "RemoteApiEnabled",
         "InputType": "checkbox",
@@ -606,6 +591,21 @@
         "InputType": "password",
         "IsFlagArgument": false,
         "ParamFieldName": "/MyConfigDedicated/RemoteSecurityKey",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Remote API Binding IP",
+        "Category": "Space Engineers:stadia_controller",
+        "Subcategory": "General:settings:1",
+        "Description": "The IP address to bind the Remote API to. Empty = all IPs. Set to a specific IP if desired - do not set specifically to 0.0.0.0 or the Remote API will not work.",
+        "Keywords": "Remote,API,IP,RemoteApiIP",
+        "FieldName": "RemoteApiIP",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "/MyConfigDedicated/RemoteApiIP",
+        "ExcludeFromImport": false,
         "IncludeInCommandLine": false,
         "DefaultValue": "",
         "EnumValues": {}
