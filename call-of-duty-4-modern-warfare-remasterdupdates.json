@@ -1,0 +1,63 @@
+[
+    {
+        "UpdateStageName": "Main Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}main"
+    },
+    {
+        "UpdateStageName": "Mods Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}mods"
+    },
+    {
+        "UpdateStageName": "Steam Game Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "393100",
+        "UpdateSourceArgs": "393100",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "ForceDownloadPlatform": "Windows",
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "H1-Mod Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceData": "h1-mod.exe",
+        "UpdateSourceArgs": "auroramod/h1-mod",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Config File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/Draakoor/AMPTemplates/refs/heads/main/call-of-duty-4-modern-warfare-remasterdserver.cfg",
+        "UpdateSourceArgs": "server.cfg",
+        "UpdateSourceTarget": "{{$FullBaseDir}}main",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "MWR Cleaner Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/skkuull/cod-files-cleaner/releases/download/v1.1/mwr-files-cleaner.exe",
+        "UpdateSourceArgs": "mwr-files-cleaner.exe",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Run MWR Cleaner",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd call-of-duty-4-modern-warfare-remasterd\\393100 && .\\mwr-files-cleaner.exe",
+        "SkipOnFailure": true,
+        "OneShot": true
+    }
+]

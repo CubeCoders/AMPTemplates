@@ -1,0 +1,86 @@
+[
+    {
+        "UpdateStageName": "Main Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}main"
+    },
+    {
+        "UpdateStageName": "Scripts Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}user_scripts/mp"
+    },
+    {
+        "UpdateStageName": "Mods Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}mods"
+    },
+    {
+        "UpdateStageName": "Steam Game Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "393100",
+        "UpdateSourceArgs": "393100",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "ForceDownloadPlatform": "Windows",
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Config File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/Draakoor/AMPTemplates/refs/heads/dev/horizon-mw-call-of-duty-modern-warfare-2-multiplayer-resmasteredserver.cfg",
+        "UpdateSourceArgs": "server.cfg",
+        "UpdateSourceTarget": "{{$FullBaseDir}}main",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Botscript File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/Draakoor/AMPTemplates/refs/heads/dev/horizon-mw-call-of-duty-modern-warfare-2-multiplayer-resmasteredauto_bots.gsc",
+        "UpdateSourceArgs": "auto_bots.gsc",
+        "UpdateSourceTarget": "{{$FullBaseDir}}user_scripts/mp",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "MWR Cleaner Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/skkuull/cod-files-cleaner/releases/download/v1.1/mwr-files-cleaner.exe",
+        "UpdateSourceArgs": "mwr-files-cleaner.exe",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": false,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Run MWR Cleaner",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd horizon-mw-call-of-duty-modern-warfare-2-multiplayer-resmastered\\393100 && .\\mwr-files-cleaner.exe",
+        "SkipOnFailure": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Update Script Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/Draakoor/AMPTemplates/refs/heads/dev/horizon-mw-call-of-duty-modern-warfare-2-multiplayer-resmasteredserver.py",
+        "UpdateSourceArgs": "updater.py",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Run Updater",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd horizon-mw-call-of-duty-modern-warfare-2-multiplayer-resmastered\\393100 && python .\\updater.py",
+        "SkipOnFailure": false
+    }
+]
