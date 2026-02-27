@@ -1,10 +1,19 @@
 [
     {
+        "UpdateStageName": "UT2004.ini Backup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}System/UT2004.ini.bak",
+        "UpdateSourceArgs": "{{$FullBaseDir}}System/UT2004.ini",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
         "UpdateStageName": "Server Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd ut2004 && rm -rf srv >/dev/null 2>&1; DownloadUrl=\\\"https://github.com/IceOfWraith/UT2004.git\\\"; [ ! -d .git ] && { echo \\\"Installing the server\\\" && git clone \\\"$DownloadUrl\\\" srv >/dev/null && \\cp -r srv/. ./ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && echo \\\"Server installed\\\"; } || { echo \\\"Updating the server\\\" && git fetch --all >/dev/null && git pull >/dev/null && echo \\\"Server updated\\\"; }\"",
+        "UpdateSourceArgs": "-c \"cd ut2004 && rm -rf srv >/dev/null 2>&1; DownloadUrl=\\\"https://github.com/IceOfWraith/UT2004.git\\\"; Branch=\\\"oldunreal\\\"; [ ! -d .git ] && { echo \\\"Installing the server\\\" && git clone -b $Branch --single-branch \\\"$DownloadUrl\\\" srv >/dev/null && \\cp -r srv/. ./ >/dev/null 2>&1 && rm -rf srv >/dev/null 2>&1 && echo \\\"Server installed\\\"; } || { echo \\\"Updating the server\\\" && git fetch origin $Branch >/dev/null 2>&1 && git checkout $Branch --force >/dev/null 2>&1 && git pull >/dev/null; for f in Bonuspack.u Gui2K4.u Gameplay.u Ipdrv.u Skaarjpack.u StreamLineFX.u UT2K4Assault.u UT2K4AssaultFull.u XVoting.u xWebAdmin.u; do [[ -f \\\"System/$f\\\" ]] && rm -f -- \\\"System/$f\\\" >/dev/null 2>&1; done; for d in Manual Web_Default Win32_Serverstart_GUI; do [[ -d \\\"$d\\\" ]] && rm -rf -- \\\"$d\\\" >/dev/null 2>&1; done; echo \\\"Server updated\\\"; }\"",
         "SkipOnFailure": false
     },
     {
@@ -12,7 +21,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd ut2004; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $DownloadUrl = \\\"https://github.com/IceOfWraith/UT2004.git\\\"; if (-Not (Test-Path .git)) { Write-Output \\\"Installing the server\\\"; git clone \\\"$DownloadUrl\\\" srv 1> $null; Copy-Item srv/* ./ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; if ($?) { Write-Output \\\"Server installed\\\" } } else { Write-Output \\\"Updating the server\\\"; git fetch --all 1> $null; if ($LASTEXITCODE -eq 0) { git pull 1> $null }; if ($LASTEXITCODE -eq 0) { Write-Output \\\"Server updated\\\" } }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; cd ut2004; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; $DownloadUrl = 'https://github.com/IceOfWraith/UT2004.git'; $Branch = 'oldunreal'; if (-Not (Test-Path .git)) { Write-Output \\\"Installing the server\\\"; git clone -b $Branch --single-branch \\\"$DownloadUrl\\\" srv 1> $null; Copy-Item srv/* ./ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item srv -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; if ($?) { Write-Output \\\"Server installed\\\" } } else { Write-Output \\\"Updating the server\\\"; git fetch origin $Branch *> $null; git checkout $Branch --force *> $null; git pull 1> $null; @('Manual', 'Web_Default', 'Win32_Serverstart_GUI') | ForEach-Object { $dir = \\\"$_\\\"; if (Test-Path $dir) { Remove-Item $dir -Recurse -Force -ErrorAction SilentlyContinue } }; Write-Output \\\"Server updated\\\" }\"",
         "SkipOnFailure": false
     },
     {
@@ -22,17 +31,59 @@
         "UpdateSourceArgs": "2"
     },
     {
-        "UpdateStageName": "Set Executable Flag",
+        "UpdateStageName": "UT2004.ini Restore",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}System/UT2004.ini",
+        "UpdateSourceArgs": "{{$FullBaseDir}}System/UT2004.ini.bak",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Show Update Instructions",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullBaseDir}}System/ucc-bin-linux-amd64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"if grep -qx \\\"ServerActors=IpDrv.MasterServerUplink\\\" ut2004/System/UT2004.ini; then echo \\\"Warning: Server configuration outdated. Please update System/UT2004.ini according to these instructions: https://github.com/OldUnreal/UT2004Patches?tab=readme-ov-file#updating-existing-server-installations\\\"; fi\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Show Update Instructions",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"if (Select-String -Path ut2004/System/UT2004.ini -SimpleMatch 'ServerActors=IpDrv.MasterServerUplink' -Quiet) { Write-Output 'Warning: Server configuration outdated. Please update System/UT2004.ini according to these instructions: https://github.com/OldUnreal/UT2004Patches?tab=readme-ov-file#updating-existing-server-installations' }\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "OldUnreal Patch Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/OldUnreal/UT2004Patches/releases/latest",
+        "UpdateSourceArgs": "$.assets.[0].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "OldUnreal Patch Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/OldUnreal/UT2004Patches/releases/latest",
+        "UpdateSourceArgs": "$.assets.[2].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Set Executable Flag",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullBaseDir}}System/ucc-bin",
+        "UpdateSourceArgs": "{{$FullBaseDir}}System/UCC",
         "SkipOnFailure": false
     }
 ]
