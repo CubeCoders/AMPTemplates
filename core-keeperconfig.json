@@ -181,17 +181,34 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Activate Content Bundles",
+        "DisplayName": "Content Bundles Activation",
         "Category": "Core Keeper:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets a comma-separated list of new content bundles to activate for the current world, if not already active. Activation is irreversible. Bundles can be specified by names or numbers. See ARGUMENTS.txt for available bundles",
+        "Description": "Sets whether and how new content bundles should be activated for the current world. Activation is irreversible. If 'Activate specific bundles' is selected, configure Specific Content Bundles To Activate accordingly",
+        "Keywords": "activate,content,bundle,bundles,activatecontent,activateallcontent",
+        "FieldName": "ContentBundlesActivation",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "ContentBundlesActivation",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+                "": "Don't activate any bundles (default)",
+                "-activateallcontent ": "Activate all available bundles",
+                "-activatecontent \"{{activatecontent}}\" ": "Activate specific bundles"
+        }
+    },
+    {
+        "DisplayName": "Specific Content Bundles To Activate",
+        "Category": "Core Keeper:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets a comma-separated list of new content bundles to activate for the current world, if 'Activate specific bundles' is selected under Content Bundles Activation. See ARGUMENTS.txt for available bundles",
         "Keywords": "activate,content,bundle,bundles,activatecontent",
         "FieldName": "activatecontent",
         "InputType": "text",
         "IsFlagArgument": false,
         "ParamFieldName": "activatecontent",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
+        "IncludeInCommandLine": false,
         "DefaultValue": "",
         "Placeholder": "GiantCicadaBossDungeon,GuaranteedOases",
         "EnumValues": {}
