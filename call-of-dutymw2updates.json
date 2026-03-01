@@ -24,9 +24,17 @@
     {
         "UpdateStageName": "IW4x Launcher Download",
         "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURLFromJQ",
-        "UpdateSourceData": "https://api.github.com/repos/iw4x/launcher/releases/latest",
-        "UpdateSourceArgs": "$.assets[1].browser_download_url",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/iw4x/launcher/releases/download/v1.1.6/iw4x-launcher.exe",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "IW4x Launcher Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/iw4x/launcher/releases/download/v1.1.6/iw4x-launcher-x86_64-unknown-linux-gnu.tar.gz",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
@@ -34,45 +42,20 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "IW4x Launcher Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURLFromJQ",
-        "UpdateSourceData": "https://api.github.com/repos/iw4x/launcher/releases/latest",
-        "UpdateSourceArgs": "$.assets[0].browser_download_url",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": true,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "IW4x Launcher Extract",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd {{$FullBaseDir}} && tar -xJf launcher*.tar.xz --strip-components=1 >/dev/null && rm -f launcher*.tar.xz\"",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "IW4x Launcher Move",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path '{{$FullBaseDir}}'; if ($dir = Get-ChildItem -Directory -Filter 'launcher-*-x86_64-windows' | Select-Object -First 1) { $exe = Join-Path $dir.FullName 'iw4x-launcher.exe'; if (Test-Path $exe) { Move-Item $exe $PWD -Force *>$null }; Remove-Item $dir.FullName -Recurse -Force *>$null }\"",
-        "SkipOnFailure": false
-    },
-    {
         "UpdateStageName": "Client Installation",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path '{{$FullBaseDir}}'; & ./iw4x-launcher.exe --update --no-self-update --force --path=\\\"{{$FullBaseDir}}\\\"\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path '{{$FullBaseDir}}'; & ./iw4x-launcher.exe --update --skip-self-update --force --path=\\\"{{$FullBaseDir}}\\\"\"",
         "SkipOnFailure": false
     },
+
     {
         "UpdateStageName": "Client Installation",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd ./call-of-dutymw2/10190 && chmod +x iw4x-launcher && ./iw4x-launcher --update --no-self-update --force --path=\\\"{{$FullBaseDir}}\\\"\"",
+        "UpdateSourceArgs": "-c \"cd ./call-of-dutymw2/10190 && chmod +x iw4x-launcher && ./iw4x-launcher --update --skip-self-update --force --path=\\\"{{$FullBaseDir}}\\\"\"",
         "SkipOnFailure": false
     },
     {
