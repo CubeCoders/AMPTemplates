@@ -37,7 +37,7 @@ esac
 
 # Setup winetricks and install Mono
 [[ -f winetricks ]] && rm -f winetricks
-wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20250102/src/winetricks
+wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20260125/src/winetricks
 chmod +x winetricks
 
 MONO_URL="https://dl.winehq.org/wine/wine-mono/${MONO_VERSION}/wine-mono-${MONO_VERSION}-x86.msi"
