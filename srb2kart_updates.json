@@ -1,0 +1,36 @@
+[
+    {
+        "UpdateStageName": "Fetching Assets",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/STJr/Kart-Public/releases/download/v1.6/AssetsLinuxOnly.zip",
+        "UpdateSourceArgs": "",
+        "UpdateSourceTarget": "",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Copy linux binary",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "./srb2kart/srb2kartlinux.exe",
+        "UpdateSourceArgs": "/srb2kartlinux.exe",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Make game executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/usr/bin/chmod",
+        "UpdateSourceArgs": "+x srb2kart/srb2kartlinux.exe",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    }
+]
