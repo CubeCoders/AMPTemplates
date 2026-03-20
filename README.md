@@ -10,6 +10,8 @@ You can also use the online configurator at https://config.getamp.sh/ to help wi
 
 **The online configurator can be used as a starting point for making templates. However, it will not generally produce a fully functioning template. Templates produced using the generator can be deployed for personal use but will not be accepted into the CubeCoders repository.**
 
+**AI generated configurations will not be accepted in this repo.**
+
 # Sharing Templates
 Right now the following restrictions apply to templates that may be publicly shared via this repository (some of these will be relaxed over time):
 
