@@ -1,0 +1,44 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "4019830",
+        "UpdateSourceArgs": "1374490",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Windows Config Directory",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}RSDragonwilds/Saved/Config/WindowsServer",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Linux Config Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}RSDragonwilds/Saved/Config/LinuxServer",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "DedicatedServer.ini Download (Windows)",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/runescape-dragonwildsserversettings.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}RSDragonwilds/Saved/Config/WindowsServer",
+        "UpdateSourceArgs": "DedicatedServer.ini",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "DedicatedServer.ini Download (Linux)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/runescape-dragonwildsserversettings.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}RSDragonwilds/Saved/Config/LinuxServer",
+        "UpdateSourceArgs": "DedicatedServer.ini",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
