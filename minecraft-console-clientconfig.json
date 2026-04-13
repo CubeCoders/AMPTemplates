@@ -17,19 +17,19 @@
     "Category": "Minecraft Console Client",
     "Description": "Minecraft server hostname or IP address.",
     "Keywords": "server,host,ip,address",
-    "FieldName": "MCC_ServerIP",
+    "FieldName": "MCC_ServerHost",
     "InputType": "text",
     "DefaultValue": "",
     "IsFlagArgument": false,
-    "ParamFieldName": "MCC_ServerIP",
+    "ParamFieldName": "MCC_ServerHost",
     "IncludeInCommandLine": false,
     "EnumValues": {}
   },
   {
     "DisplayName": "Server Port",
     "Category": "Minecraft Console Client",
-    "Description": "Minecraft server port.",
-    "Keywords": "port,minecraft",
+    "Description": "Minecraft server port. Leave as default for normal servers.",
+    "Keywords": "server,port,minecraft",
     "FieldName": "MCC_ServerPort",
     "InputType": "number",
     "DefaultValue": "25565",
@@ -39,10 +39,43 @@
     "EnumValues": {}
   },
   {
+    "DisplayName": "Account Type",
+    "Category": "Minecraft Console Client",
+    "Description": "Account type used by MCC.",
+    "Keywords": "account,type,microsoft,mojang,yggdrasil",
+    "FieldName": "MCC_AccountType",
+    "InputType": "select",
+    "DefaultValue": "microsoft",
+    "IsFlagArgument": false,
+    "ParamFieldName": "MCC_AccountType",
+    "IncludeInCommandLine": false,
+    "EnumValues": {
+      "Microsoft": "microsoft",
+      "Mojang": "mojang",
+      "Yggdrasil": "yggdrasil"
+    }
+  },
+  {
+    "DisplayName": "Sign-in Method",
+    "Category": "Minecraft Console Client",
+    "Description": "Microsoft account sign-in method.",
+    "Keywords": "signin,method,mcc,browser,auth",
+    "FieldName": "MCC_Method",
+    "InputType": "select",
+    "DefaultValue": "mcc",
+    "IsFlagArgument": false,
+    "ParamFieldName": "MCC_Method",
+    "IncludeInCommandLine": false,
+    "EnumValues": {
+      "MCC Device Code": "mcc",
+      "Browser": "browser"
+    }
+  },
+  {
     "DisplayName": "Minecraft Version",
     "Category": "Minecraft Console Client",
-    "Description": "Minecraft version string or auto if you want MCC to detect it.",
-    "Keywords": "version,minecraft,protocol",
+    "Description": "Use auto or specify a version like 1.21.1.",
+    "Keywords": "minecraft,version,protocol,auto",
     "FieldName": "MCC_MinecraftVersion",
     "InputType": "text",
     "DefaultValue": "auto",
@@ -52,32 +85,67 @@
     "EnumValues": {}
   },
   {
-    "DisplayName": "Bot Owners",
-    "Category": "Minecraft Console Client",
-    "Description": "Comma-separated list of bot owner names.",
-    "Keywords": "owners,admins,bot",
-    "FieldName": "MCC_BotOwners",
-    "InputType": "text",
-    "DefaultValue": "",
-    "IsFlagArgument": false,
-    "ParamFieldName": "MCC_BotOwners",
-    "IncludeInCommandLine": false,
-    "EnumValues": {}
-  },
-  {
     "DisplayName": "Enable Sentry",
     "Category": "Minecraft Console Client",
-    "Description": "Enable MCC crash/telemetry reporting.",
-    "Keywords": "sentry,telemetry,crash",
+    "Description": "Enable MCC crash/error reporting.",
+    "Keywords": "sentry,telemetry,crash,reporting",
     "FieldName": "MCC_EnableSentry",
     "InputType": "checkbox",
-    "DefaultValue": "false",
+    "DefaultValue": "true",
     "IsFlagArgument": false,
     "ParamFieldName": "MCC_EnableSentry",
     "IncludeInCommandLine": false,
     "EnumValues": {
-      "False": "false",
-      "True": "true"
+      "Disabled": "false",
+      "Enabled": "true"
+    }
+  },
+  {
+    "DisplayName": "Log To File",
+    "Category": "Minecraft Console Client",
+    "Description": "Write MCC logs to a file.",
+    "Keywords": "logging,log,file",
+    "FieldName": "MCC_LogToFile",
+    "InputType": "checkbox",
+    "DefaultValue": "false",
+    "IsFlagArgument": false,
+    "ParamFieldName": "MCC_LogToFile",
+    "IncludeInCommandLine": false,
+    "EnumValues": {
+      "Disabled": "false",
+      "Enabled": "true"
+    }
+  },
+  {
+    "DisplayName": "Prepend Timestamp",
+    "Category": "Minecraft Console Client",
+    "Description": "Add timestamps to log file messages.",
+    "Keywords": "timestamp,logging,logs,time",
+    "FieldName": "MCC_PrependTimestamp",
+    "InputType": "checkbox",
+    "DefaultValue": "false",
+    "IsFlagArgument": false,
+    "ParamFieldName": "MCC_PrependTimestamp",
+    "IncludeInCommandLine": false,
+    "EnumValues": {
+      "Disabled": "false",
+      "Enabled": "true"
+    }
+  },
+  {
+    "DisplayName": "Enable AutoRelog",
+    "Category": "Minecraft Console Client",
+    "Description": "Automatically reconnect after disconnects.",
+    "Keywords": "autorelog,reconnect,retry",
+    "FieldName": "MCC_AutoRelogEnabled",
+    "InputType": "checkbox",
+    "DefaultValue": "false",
+    "IsFlagArgument": false,
+    "ParamFieldName": "MCC_AutoRelogEnabled",
+    "IncludeInCommandLine": false,
+    "EnumValues": {
+      "Disabled": "false",
+      "Enabled": "true"
     }
   }
 ]
