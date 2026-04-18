@@ -4,7 +4,7 @@
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "740",
-        "UpdateSourceArgs": "730",
+        "UpdateSourceArgs": "4465480",
         "SkipOnFailure": false
     },
     {
@@ -132,7 +132,7 @@
         "UpdateStageName": "NoLobbyReservation Plugin Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "GithubRelease",
-        "UpdateSourceArgs": "vanz666/NoLobbyReservation",
+        "UpdateSourceArgs": "nuxencs/NoLobbyReservation",
         "UpdateSourceTarget": "{{$FullBaseDir}}csgo",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
@@ -143,22 +143,34 @@
         "UpdateStageName": "NoLobbyReservation Gamedata Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/eldoradoel/NoLobbyReservation/master/csgo/addons/sourcemod/gamedata/nolobbyreservation.games.txt",
+        "UpdateSourceData": "https://raw.githubusercontent.com/nuxencs/NoLobbyReservation/refs/heads/master/addons/sourcemod/gamedata/nolobbyreservation.games.txt",
         "UpdateSourceTarget": "{{$FullBaseDir}}csgo/addons/sourcemod/gamedata",
-        "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "NoLobbyReservation Scripting Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/eldoradoel/NoLobbyReservation/master/csgo/addons/sourcemod/scripting/nolobbyreservation.sp",
+        "UpdateSourceData": "https://raw.githubusercontent.com/nuxencs/NoLobbyReservation/refs/heads/master/addons/sourcemod/scripting/nolobbyreservation.sp",
         "UpdateSourceTarget": "{{$FullBaseDir}}csgo/addons/sourcemod/scripting",
-        "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Update steam.inf File",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"if [[ -f csgo/740/csgo/steam.inf ]]; then sed -i \\\"s/^\\s*appID=730\\s*$/appID=4465480/\\\" csgo/740/csgo/steam.inf; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Update steam.inf File",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"if (Test-Path 'csgo\\740\\csgo\\steam.inf') { (Get-Content 'csgo\\740\\csgo\\steam.inf') -replace '^\\s*appID=730\\s*$', 'appID=4465480' | Set-Content 'csgo\\740\\csgo\\steam.inf' }\"",
         "SkipOnFailure": false
     }
 ]

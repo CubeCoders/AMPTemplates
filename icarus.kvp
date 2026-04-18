@@ -5,7 +5,7 @@ Meta.Arch=x86_64
 Meta.Author=Greelan
 Meta.URL=https://surviveicarus.com/
 Meta.DisplayImageSource=steam:1149460
-Meta.EndpointURIFormat=steam://connect/{ip}:{GenericModule.App.Ports.$QueryPort}
+Meta.EndpointURIFormat={ip}:{GenericModule.App.Ports.$QueryPort}
 Meta.ConfigManifest=icarusconfig.json
 Meta.MetaConfigManifest=icarusmetaconfig.json
 Meta.ConfigRoot=icarus.kvp
@@ -16,7 +16,7 @@ Meta.ContainerPolicyReason=
 Meta.ExtraSetupStepsURI=
 Meta.Prerequisites=[]
 Meta.ConfigReleaseState=NotSpecified
-Meta.ConfigVersion=5
+Meta.ConfigVersion=6
 Meta.AppConfigId=630a4794-6466-4de6-956d-91393d6f48e1
 Meta.AppIsMultiIPAware=False
 App.DisplayName=Icarus
@@ -27,7 +27,7 @@ App.ExecutableLinux=.proton/proton
 App.WorkingDir=2089300
 App.LinuxCommandLineArgs=runinprefix "{{$FullBaseDir}}Icarus/Binaries/Win64/IcarusServer-Win64-Shipping.exe" Icarus -ini:Engine:[OnlineSubsystemSteam]:AsyncTaskTimeout={{AsyncTaskTimeout}}
 App.WindowsCommandLineArgs=Icarus
-App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} {{StartupMode}}{{$FormattedArgs}} -log=Icarus.log
+App.CommandLineArgs={{$PlatformArgs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} {{StartupMode}}{{$FormattedArgs}} -log=Icarus.log
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1149460","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullBaseDir}}.steam/steam","HOME":"{{$FullBaseDir}}","XDG_RUNTIME_DIR":"/tmp"}
@@ -68,7 +68,7 @@ App.MonitorChildProcessName=^.*IcarusServer-Win64-Shipping\.exe.*-Port={{$GamePo
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RegexMatch
-Console.FilterMatchRegex=
+Console.FilterMatchRegex=(\e\[(\d+;)*(\d+)?[ABCDHJKfmsu]|\e\[?[?\>\=\da-z]+|ProtonFixes\[\d+\] WARN: Skipping fix execution\. We are probably running a unit test\.)
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^((WARNING|ERROR): Shader.+|Could not find Wine Gecko.*)$
 Console.AppReadyRegex=^\[[\d\.]+-[\d\.:]+\]\[[\d ]+\]LogInit: Display: Game Engine Initialized\.$

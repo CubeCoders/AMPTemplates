@@ -15,7 +15,7 @@ Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
 Meta.DockerRequired=False
 Meta.DockerBaseReadOnly=False
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
-Meta.ContainerPolicyReason=The server requires Wine 8 (or higher), Xvfb and cabextract to install and run on Linux. Using a container avoids the need to install these dependencies on the host.
+Meta.ContainerPolicyReason=The server requires Wine (ideally latest stable from winehq.org), Xvfb and cabextract to install and run on Linux. Using a container avoids the need for you to install these dependencies on the host.
 Meta.ExtraSetupStepsURI=
 Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
@@ -36,7 +36,7 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=1362640/Binaries/Win64
 App.LinuxCommandLineArgs=UDK.exe
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} server coldmap1?steamsockets -Port={{$GamePort}} -ini:UDKEngine:OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.QueryPort={{$QueryPort}} -MultiHome={{$ApplicationIPBinding}} {{$FormattedArgs}}
+App.CommandLineArgs={{$PlatformArgs}} server coldmap1?steamsockets -Port={{$GamePort}} -ini:UDKEngine:OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.QueryPort={{$QueryPort}} {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"418030","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","XDG_RUNTIME_DIR":"/tmp"}

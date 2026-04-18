@@ -93,35 +93,19 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Java Version (Windows)",
+        "DisplayName": "Java Version",
         "Category": "Java App Runner:code",
         "Subcategory": "App:settings:1",
         "Description": "Sets the Java version to run the app with. The version must be accessible to AMP. For \"Specific system version\", also set Specific System Java Version. For \"Specific instance version\", also set Specific Instance Java Version. Ensure the version is compatible with the app",
-        "Keywords": "java,version,JavaVersionWindows",
-        "FieldName": "JavaVersionWindows",
+        "Keywords": "java,version,JavaVersion",
+        "FieldName": "JavaVersion",
         "InputType": "enum",
-        "ParamFieldName": "JavaVersionWindows",
-        "DefaultValue": "$PATH\\java.exe",
+        "ParamFieldName": "JavaVersion",
+        "DefaultValue": "{{Windows:$PATH\\java.exe}}{{Linux:/usr/bin/java}}",
         "EnumValues": {
-            "$PATH\\java.exe": "System default",
+            "{{Windows:$PATH\\java.exe}}{{Linux:/usr/bin/java}}": "System default",
             "{{SpecificJavaVersion}}": "Specific system version",
-            "java\\bin\\java.exe": "Specific instance version"
-        }
-    },
-    {
-        "DisplayName": "Java Version (Linux)",
-        "Category": "Java App Runner:code",
-        "Subcategory": "App:settings:1",
-        "Description": "Sets the Java version to run the app with. The version must be accessible to AMP. For \"Specific system version\", also set Specific System Java Version. For \"Specific instance version\", also set Specific Instance Java Version. Ensure the version is compatible with the app",
-        "Keywords": "java,version,JavaVersionLinux",
-        "FieldName": "JavaVersionLinux",
-        "InputType": "enum",
-        "ParamFieldName": "JavaVersionLinux",
-        "DefaultValue": "/usr/bin/java",
-        "EnumValues": {
-            "/usr/bin/java": "System default",
-            "{{SpecificJavaVersion}}": "Specific system version",
-            "java/bin/java": "Specific instance version"
+            "{{Windows:java\\bin\\java.exe}}{{Linux:java/bin/java}}": "Specific instance version"
         }
     },
     {

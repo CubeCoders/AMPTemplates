@@ -18,7 +18,7 @@ Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=5
+Meta.ConfigVersion=6
 Meta.AppConfigId=c2b4163c-cf2a-4d67-b6bb-5fee166b4d33
 App.DisplayName=Project Zomboid
 App.RootDir=./project-zomboid/
@@ -72,14 +72,15 @@ App.ApplicationReadyMode=RegexMatch
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
-Console.AppReadyRegex=^LOG\s+: Network\s+, \d+>.*> \*+ SERVER STARTED \*+$
-Console.UserJoinRegex=^LOG\s+: Network\s+, \d+>(?:.+?)> \[(?:.+?)\] > ConnectionManager: \[fully-connected\] (?:.+?) steam-id=(?<userid>.+?) (?:.+?) username="(?<username>.+?)" (?:.+?)$
-Console.UserLeaveRegex=^LOG\s+: Network\s+, \d+>.*> Disconnected player "(?<username>.+?)" (?<userid>.+?)$
+Console.AppReadyRegex=^LOG\s+: Network\s+.*> \*+ SERVER STARTED \*+$
+Console.UserJoinRegex=^LOG\s+: (Network\s+.*> ConnectionManager: \[fully-connected\] (?:.+?) steam-id=(?<userid>.+?) (?:.+?) username="(?<username>.+?)" (?:.+?)|Multiplayer\s+.*> connection: guid=(?<userid>.+?) \[fully-connected\] "")$
+Console.UserLeaveRegex=^LOG\s+: (Network\s+.*> Disconnected player "(?<username>.+?)" (?<userid>.+?)|Multiplayer\s+.*> connection: guid=(?<userid>.+?) \[disconnect\] "receive-disconnect")$
 Console.UserChatRegex=^$
 Console.UpdateAvailableRegex=^$
 Console.MetricsRegex=
 Console.SuppressLogAtStart=False
 Console.ActivateLogRegex=
+Console.ConsoleFormatRegex=^(?<type>\w+)\s*:\s(?<source>\w+)\s+,\s\d+> [\d,]+> (!?\[[\d\- :\.]+\] > )?(?<contents>.+?)$
 Console.UserActions={}
 Limits.SleepMode=True
 Limits.SleepOnStart=False

@@ -62,10 +62,23 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Server Tags",
+        "Category": "Enshrouded:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets optional filter tags for the server that assist searching in the server browser. Available tags are listed in enshrouded_server_readme.txt",
+        "Keywords": "server,filter,tags",
+        "FieldName": "tags",
+        "InputType": "list",
+        "ParamFieldName": "$.tags",
+        "DefaultValue": "[]",
+        "Special": "array:text",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Server Roles",
         "Category": "Enshrouded:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Permissions for groups of players, including passwords to join the server, can be defined via [server roles](https://enshrouded.zendesk.com/hc/en-us/articles/19191581489309-Server-Roles-Configuration) in enshrouded_server.json",
+        "Description": "Permissions for groups of players, including passwords to join the server, can be defined via [server roles](https://enshrouded.zendesk.com/hc/en-us/articles/19191581489309-Server-Roles-Configuration) in enshrouded_server.json. See enshrouded_server_readme.txt for further details",
         "Keywords": "server,roles,password,permissions",
         "FieldName": "ServerRoles",
         "InputType": "hidden",
@@ -86,6 +99,17 @@
         "DefaultValue": "16",
         "Placeholder": "16",
         "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Banned Players",
+        "Category": "Enshrouded:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Players can be permanently banned from the server by accessing the banlist in-game via the Social-tab and adding them there. The banlist can also be edited directly by configuring 'bannedAccounts' in enshrouded_server.json - see enshrouded_server_readme.txt for format details",
+        "Keywords": "banned,players,banlist,bannedAccounts",
+        "FieldName": "banlist",
+        "InputType": "hidden",
+        "ParamFieldName": "banlist",
         "EnumValues": {}
     },
     {
@@ -218,6 +242,22 @@
         }
     },
     {
+        "DisplayName": "Diving Time Factor",
+        "Category": "Enshrouded:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Modifies the initial amount of oxygen for players and therefore the time available underwater. Minimum = 0.25",
+        "Keywords": "diving,time,factor,playerDivingTimeFactor",
+        "FieldName": "playerDivingTimeFactor",
+        "InputType": "number",
+        "MinValue": "0.25",
+        "MaxValue": "2",
+        "ParamFieldName": "$.gameSettings.playerDivingTimeFactor",
+        "DefaultValue": "1",
+        "Placeholder": "1",
+        "MultipleOf": "0.000001",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable Weapon Durability",
         "Category": "Enshrouded:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -336,6 +376,24 @@
             "Rare": "Rare",
             "Normal": "Normal",
             "Often": "Often"
+        }
+    },
+    {
+        "DisplayName": "Fishing Difficulty",
+        "Category": "Enshrouded:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the strength of the fish during the fishing minigame. The stronger a fish is, the longer the minigame will proceed",
+        "Keywords": "fish,fishing,difficulty,fishingDifficulty",
+        "FieldName": "fishingDifficulty",
+        "InputType": "enum",
+        "ParamFieldName": "$.gameSettings.fishingDifficulty",
+        "DefaultValue": "Normal",
+        "EnumValues": {
+            "VeryEasy": "Very easy",
+            "Easy": "Easy",
+            "Normal": "Normal",
+            "Hard": "Hard",
+            "VeryHard": "Very hard"
         }
     },
     {

@@ -13,7 +13,7 @@ Meta.MinAMPVersion=2.5.0.4
 Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
 Meta.DockerRequired=False
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
-Meta.ContainerPolicyReason=The server requires Wine (Wine 9 stable build, and cabextract, for mods) and Xvfb to install and run on Linux. Using a container avoids the need to install these dependencies on the host.
+Meta.ContainerPolicyReason=The server requires Wine (ideally latest stable from winehq.org) and cabextract for mods, and Xvfb to install and run on Linux. Using a container avoids the need for you to install these dependencies on the host.
 Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
@@ -27,7 +27,7 @@ App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=1829350
 App.LinuxCommandLineArgs=-a wine "./VRisingServer.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} -persistentDataPath "{{$FullBaseDir}}save-data" {{LanMode}}
+App.CommandLineArgs={{$PlatformArgs}} -persistentDataPath "{{$FullBaseDir}}save-data" -lanMode {{lanMode}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1604030","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDLLOVERRIDES":"winhttp=n,b","WINEDEBUG":"-all","XDG_RUNTIME_DIR":"/tmp"}

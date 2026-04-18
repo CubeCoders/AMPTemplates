@@ -1,10 +1,10 @@
 [
     {
-        "UpdateStageName": "Working Directory Symlink Removal",
+        "UpdateStageName": "Legacy Working Directory Symlink Removal",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"rm {{$FullBaseDir}}bin/Win64_Shipping_Server >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"[[ -L \\\"{{$FullBaseDir}}bin/Win64_Shipping_Server\\\" ]] && rm \\\"{{$FullBaseDir}}bin/Win64_Shipping_Server\\\" >/dev/null 2>&1\"",
         "SkipOnFailure": true
     },
     {
@@ -13,14 +13,6 @@
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "1863440",
         "UpdateSourceArgs": "261550",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Working Directory Replacement",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullBaseDir}}bin/Win64_Shipping_Server\\\"; cd \\\"{{$FullBaseDir}}bin\\\"; ln -sf Linux64_Shipping_Server Win64_Shipping_Server\"",
         "SkipOnFailure": false
     },
     {

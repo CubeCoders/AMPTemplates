@@ -1,0 +1,143 @@
+[
+    {
+        "UpdateStageName": "server.cfg Backup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}IW5/admin/server.cfg.bak",
+        "UpdateSourceArgs": "{{$FullBaseDir}}IW5/admin/server.cfg",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "default.dspl Backup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}IW5/admin/default.dspl.bak",
+        "UpdateSourceArgs": "{{$FullBaseDir}}IW5/admin/default.dspl",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "42750",
+        "UpdateSourceArgs": "42690",
+        "UpdateSourceTarget": "{{$FullBaseDir}}IW5",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Plutonium Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Plutonium",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Plutonium Updater Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/mxve/plutonium-updater.rs/releases/latest/download/plutonium-updater-x86_64-pc-windows-msvc.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Plutonium Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location 'call-of-dutymw3/server'; & ./plutonium-updater.exe -e \\\"games/t6mp.exe\\\" -e \\\"games/t6zm.exe\\\" -e \\\"games/t5mp.exe\\\" -e \\\"games/t5sp.exe\\\" -e \\\"games/t4mp.exe\\\" -e \\\"games/t4sp.exe\\\" -e \\\"storage/t6\\\" -e \\\"storage/t5\\\" -e \\\"storage/t4\\\" -sfd \\\"{{$FullBaseDir}}Plutonium\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Plutonium Updater Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/mxve/plutonium-updater.rs/releases/latest/download/plutonium-updater-x86_64-unknown-linux-gnu.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Plutonium Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd call-of-dutymw3/server && chmod +x plutonium-updater && ./plutonium-updater -e \\\"games/t6mp.exe\\\" -e \\\"games/t6zm.exe\\\" -e \\\"games/t5mp.exe\\\" -e \\\"games/t5sp.exe\\\" -e \\\"games/t4mp.exe\\\" -e \\\"games/t4sp.exe\\\" -e \\\"storage/t6\\\" -e \\\"storage/t5\\\" -e \\\"storage/t4\\\" -sfd \\\"{{$FullBaseDir}}Plutonium\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Config Download Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}configs",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Plutonium Config Files Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/xerxes-at/IW5ServerConfig/archive/refs/heads/master.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}configs",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Config Files Copy",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"\\cd call-of-dutymw3 && cp -f ./configs/IW5ServerConfig-master/admin/* ./server/IW5/admin >/dev/null 2>&1 && rm -rf ./configs/\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Config Files Copy",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'call-of-dutymw3'; Copy-Item -Path 'configs/IW5ServerConfig-master/admin/*' -Destination 'server/IW5/admin' -Force -ErrorAction SilentlyContinue *> $null; Remove-Item -Path 'configs' -Recurse -Force -ErrorAction SilentlyContinue *> $null\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "server.cfg Restore",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}IW5/admin/server.cfg",
+        "UpdateSourceArgs": "{{$FullBaseDir}}IW5/admin/server.cfg.bak",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "default.dspl Restore",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}IW5/admin/default.dspl",
+        "UpdateSourceArgs": "{{$FullBaseDir}}IW5/admin/default.dspl.bak",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win32 WINEDEBUG=-all XDG_RUNTIME_DIR=/tmp /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Disable Prefix Sound",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd call-of-dutymw3 && wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && chmod +x winetricks; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; export WINEARCH=win32; export XDG_RUNTIME_DIR=/tmp; ./winetricks sound=disabled > winescript_log.txt 2>&1\"",
+        "SkipOnFailure": true
+    }
+]

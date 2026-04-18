@@ -20,7 +20,7 @@ export DISPLAY=:$DPY_NUM
 export XDG_RUNTIME_DIR=/tmp
 
 [[ -f winetricks ]] && rm -f winetricks
-wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20250102/src/winetricks
+wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20260125/src/winetricks
 chmod +x winetricks
 
 PACKAGES="vcrun2022 corefonts dotnet48"
