@@ -32,26 +32,35 @@
       "Browser": "browser"
     }
   },
-
   {
-    "DisplayName": "Enable Sentry",
-    "Category": "Advanced",
-    "Description": "Enable MCC crash/error reporting.",
-    "Keywords": "sentry,telemetry,crash",
-    "FieldName": "MCC_EnableSentry",
-    "InputType": "checkbox",
-    "DefaultValue": "true",
+    "DisplayName": "Account",
+    "Category": "General",
+    "Description": "Whole MCC account value. Example: { Login = \"you@example.com\", Password = \"\" }",
+    "Keywords": "account,login,password,microsoft",
+    "FieldName": "MCC_Account",
+    "InputType": "text",
+    "DefaultValue": "{ Login = \"\", Password = \"\" }",
     "IsFlagArgument": false,
-    "ParamFieldName": "Main.Advanced.EnableSentry",
+    "ParamFieldName": "Main.General.Account",
     "IncludeInCommandLine": false,
-    "EnumValues": {
-      "Disabled": "false",
-      "Enabled": "true"
-    }
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Server",
+    "Category": "General",
+    "Description": "Whole MCC server value. Example: { Host = \"mc.example.com\", Port = 25565 }",
+    "Keywords": "server,host,port,minecraft",
+    "FieldName": "MCC_Server",
+    "InputType": "text",
+    "DefaultValue": "{ Host = \"\" }",
+    "IsFlagArgument": false,
+    "ParamFieldName": "Main.General.Server",
+    "IncludeInCommandLine": false,
+    "EnumValues": {}
   },
   {
     "DisplayName": "Language",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "MCC language code.",
     "Keywords": "language,locale",
     "FieldName": "MCC_Language",
@@ -63,54 +72,8 @@
     "EnumValues": {}
   },
   {
-    "DisplayName": "Load MCC Translation",
-    "Category": "Advanced",
-    "Description": "Load MCC translations when available.",
-    "Keywords": "translation,language",
-    "FieldName": "MCC_LoadMccTranslation",
-    "InputType": "checkbox",
-    "DefaultValue": "true",
-    "IsFlagArgument": false,
-    "ParamFieldName": "Main.Advanced.LoadMccTranslation",
-    "IncludeInCommandLine": false,
-    "EnumValues": {
-      "Disabled": "false",
-      "Enabled": "true"
-    }
-  },
-  {
-    "DisplayName": "Internal Command Char",
-    "Category": "Advanced",
-    "Description": "Command prefix style.",
-    "Keywords": "command,prefix,slash,backslash",
-    "FieldName": "MCC_InternalCmdChar",
-    "InputType": "select",
-    "DefaultValue": "slash",
-    "IsFlagArgument": false,
-    "ParamFieldName": "Main.Advanced.InternalCmdChar",
-    "IncludeInCommandLine": false,
-    "EnumValues": {
-      "None": "none",
-      "Slash": "slash",
-      "Backslash": "backslash"
-    }
-  },
-  {
-    "DisplayName": "Message Cooldown",
-    "Category": "Advanced",
-    "Description": "Minimum interval between sent messages.",
-    "Keywords": "cooldown,message",
-    "FieldName": "MCC_MessageCooldown",
-    "InputType": "number",
-    "DefaultValue": "1.0",
-    "IsFlagArgument": false,
-    "ParamFieldName": "Main.Advanced.MessageCooldown",
-    "IncludeInCommandLine": false,
-    "EnumValues": {}
-  },
-  {
     "DisplayName": "Minecraft Version",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "Use auto or specify a version like 1.21.1.",
     "Keywords": "minecraft,version,protocol,auto",
     "FieldName": "MCC_MinecraftVersion",
@@ -123,7 +86,7 @@
   },
   {
     "DisplayName": "Enable Forge",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "Forge negotiation mode.",
     "Keywords": "forge,modded",
     "FieldName": "MCC_EnableForge",
@@ -140,7 +103,7 @@
   },
   {
     "DisplayName": "Brand Info",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "How MCC identifies itself to the server.",
     "Keywords": "brand,vanilla,mcc",
     "FieldName": "MCC_BrandInfo",
@@ -157,7 +120,7 @@
   },
   {
     "DisplayName": "Show System Messages",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "Show system messages in output.",
     "Keywords": "system,messages",
     "FieldName": "MCC_ShowSystemMessages",
@@ -172,24 +135,8 @@
     }
   },
   {
-    "DisplayName": "Show XP Bar Messages",
-    "Category": "Advanced",
-    "Description": "Show messages displayed above the XP bar.",
-    "Keywords": "xp,bar,messages",
-    "FieldName": "MCC_ShowXPBarMessages",
-    "InputType": "checkbox",
-    "DefaultValue": "true",
-    "IsFlagArgument": false,
-    "ParamFieldName": "Main.Advanced.ShowXPBarMessages",
-    "IncludeInCommandLine": false,
-    "EnumValues": {
-      "Disabled": "false",
-      "Enabled": "true"
-    }
-  },
-  {
     "DisplayName": "Show Chat Links",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "Decode and show links found in chat.",
     "Keywords": "chat,links",
     "FieldName": "MCC_ShowChatLinks",
@@ -205,7 +152,7 @@
   },
   {
     "DisplayName": "Terrain And Movements",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "Enable terrain handling and movement features.",
     "Keywords": "terrain,movement",
     "FieldName": "MCC_TerrainAndMovements",
@@ -221,7 +168,7 @@
   },
   {
     "DisplayName": "Inventory Handling",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "Enable inventory handling.",
     "Keywords": "inventory",
     "FieldName": "MCC_InventoryHandling",
@@ -237,7 +184,7 @@
   },
   {
     "DisplayName": "Entity Handling",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "Enable entity handling.",
     "Keywords": "entity",
     "FieldName": "MCC_EntityHandling",
@@ -253,7 +200,7 @@
   },
   {
     "DisplayName": "Session Cache",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "How to retain session tokens.",
     "Keywords": "session,cache,tokens",
     "FieldName": "MCC_SessionCache",
@@ -270,7 +217,7 @@
   },
   {
     "DisplayName": "Profile Key Cache",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "How to retain profile key data.",
     "Keywords": "profile,key,cache",
     "FieldName": "MCC_ProfileKeyCache",
@@ -287,7 +234,7 @@
   },
   {
     "DisplayName": "Resolve SRV Records",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "SRV lookup mode.",
     "Keywords": "srv,dns",
     "FieldName": "MCC_ResolveSrvRecords",
@@ -304,7 +251,7 @@
   },
   {
     "DisplayName": "Exit On Failure",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "Exit directly when an error occurs.",
     "Keywords": "exit,failure",
     "FieldName": "MCC_ExitOnFailure",
@@ -320,7 +267,7 @@
   },
   {
     "DisplayName": "Timestamps",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "Prepend timestamps to chat messages.",
     "Keywords": "timestamps,chat",
     "FieldName": "MCC_Timestamps",
@@ -336,7 +283,7 @@
   },
   {
     "DisplayName": "Auto Respawn",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "Automatically respawn after death.",
     "Keywords": "respawn",
     "FieldName": "MCC_AutoRespawn",
@@ -352,7 +299,7 @@
   },
   {
     "DisplayName": "Minecraft Realms",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "Enable support for Minecraft Realms.",
     "Keywords": "realms",
     "FieldName": "MCC_MinecraftRealms",
@@ -368,7 +315,7 @@
   },
   {
     "DisplayName": "TCP Timeout",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "TCP connection timeout in seconds.",
     "Keywords": "tcp,timeout",
     "FieldName": "MCC_TcpTimeout",
@@ -381,7 +328,7 @@
   },
   {
     "DisplayName": "Enable Emoji",
-    "Category": "Advanced",
+    "Category": "General",
     "Description": "Enable emoji output.",
     "Keywords": "emoji",
     "FieldName": "MCC_EnableEmoji",
@@ -389,6 +336,51 @@
     "DefaultValue": "true",
     "IsFlagArgument": false,
     "ParamFieldName": "Main.Advanced.EnableEmoji",
+    "IncludeInCommandLine": false,
+    "EnumValues": {
+      "Disabled": "false",
+      "Enabled": "true"
+    }
+  },
+  {
+    "DisplayName": "AutoRelog Enabled",
+    "Category": "General",
+    "Description": "Automatically reconnect after disconnects.",
+    "Keywords": "autorelog,reconnect",
+    "FieldName": "MCC_AutoRelogEnabled",
+    "InputType": "checkbox",
+    "DefaultValue": "false",
+    "IsFlagArgument": false,
+    "ParamFieldName": "ChatBot.AutoRelog.Enabled",
+    "IncludeInCommandLine": false,
+    "EnumValues": {
+      "Disabled": "false",
+      "Enabled": "true"
+    }
+  },
+  {
+    "DisplayName": "AutoRelog Retries",
+    "Category": "General",
+    "Description": "Number of reconnect retries. Use -1 for unlimited.",
+    "Keywords": "autorelog,retries",
+    "FieldName": "MCC_AutoRelogRetries",
+    "InputType": "number",
+    "DefaultValue": "3",
+    "IsFlagArgument": false,
+    "ParamFieldName": "ChatBot.AutoRelog.Retries",
+    "IncludeInCommandLine": false,
+    "EnumValues": {}
+  },
+  {
+    "DisplayName": "Ignore Kick Message",
+    "Category": "General",
+    "Description": "Reconnect regardless of kick message.",
+    "Keywords": "kick,autorelog",
+    "FieldName": "MCC_IgnoreKickMessage",
+    "InputType": "checkbox",
+    "DefaultValue": "false",
+    "IsFlagArgument": false,
+    "ParamFieldName": "ChatBot.AutoRelog.Ignore_Kick_Message",
     "IncludeInCommandLine": false,
     "EnumValues": {
       "Disabled": "false",
@@ -617,51 +609,5 @@
     "ParamFieldName": "Console.General.History_Input_Records",
     "IncludeInCommandLine": false,
     "EnumValues": {}
-  },
-
-  {
-    "DisplayName": "AutoRelog Enabled",
-    "Category": "Auto Relog",
-    "Description": "Automatically reconnect after disconnects.",
-    "Keywords": "autorelog,reconnect",
-    "FieldName": "MCC_AutoRelogEnabled",
-    "InputType": "checkbox",
-    "DefaultValue": "false",
-    "IsFlagArgument": false,
-    "ParamFieldName": "ChatBot.AutoRelog.Enabled",
-    "IncludeInCommandLine": false,
-    "EnumValues": {
-      "Disabled": "false",
-      "Enabled": "true"
-    }
-  },
-  {
-    "DisplayName": "AutoRelog Retries",
-    "Category": "Auto Relog",
-    "Description": "Number of reconnect retries. Use -1 for unlimited.",
-    "Keywords": "autorelog,retries",
-    "FieldName": "MCC_AutoRelogRetries",
-    "InputType": "number",
-    "DefaultValue": "3",
-    "IsFlagArgument": false,
-    "ParamFieldName": "ChatBot.AutoRelog.Retries",
-    "IncludeInCommandLine": false,
-    "EnumValues": {}
-  },
-  {
-    "DisplayName": "Ignore Kick Message",
-    "Category": "Auto Relog",
-    "Description": "Reconnect regardless of kick message.",
-    "Keywords": "kick,autorelog",
-    "FieldName": "MCC_IgnoreKickMessage",
-    "InputType": "checkbox",
-    "DefaultValue": "false",
-    "IsFlagArgument": false,
-    "ParamFieldName": "ChatBot.AutoRelog.Ignore_Kick_Message",
-    "IncludeInCommandLine": false,
-    "EnumValues": {
-      "Disabled": "false",
-      "Enabled": "true"
-    }
   }
 ]
