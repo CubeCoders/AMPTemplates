@@ -1,9 +1,36 @@
 [
     {
+        "DisplayName": "Game Port",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$GamePort",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "$.ServerDescription_Persistent.DirectConnectionServerPort",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Direct Connection IP Binding",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DirectConnectionProxyAddress",
+        "InputType": "text",
+        "Hidden": true,
+        "ParamFieldName": "$.ServerDescription_Persistent.DirectConnectionProxyAddress",
+        "DefaultValue": "0.0.0.0",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Invite Code",
         "Category": "Windrose:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the invite code used to search for the server in-game. Must contain between 1 and 32 alphanumeric characters. Case-sensitive. Empty or not valid = a new invite code will be generated at server start (which can be imported from 'R5/ServerDescription.json' into this setting for persistence)",
+        "Description": "Sets the invite code used to search for the server in-game, if the Connection Mode is set to 'P2P Connection'. Must contain between 1 and 32 alphanumeric characters. Case-sensitive. Empty or not valid = a new invite code will be generated at server start (which can be imported from 'R5/ServerDescription.json' into this setting for persistence)",
         "Keywords": "invite,code,invitecode,search",
         "FieldName": "InviteCode",
         "InputType": "text",
@@ -29,7 +56,7 @@
         "Category": "Windrose:stadia_controller",
         "Subcategory": "Server:dns:1",
         "Description": "Sets the name of the server. Helpful if invite codes look similar",
-        "Keywords": "name,description,server",
+        "Keywords": "name,description,server,ServerName",
         "FieldName": "ServerName",
         "InputType": "text",
         "ParamFieldName": "$.ServerDescription_Persistent.ServerName",
@@ -78,5 +105,37 @@
         "Placeholder": "4",
         "Suffix": "players",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Connection Mode",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the connection mode - either via a P2P connection using the ICE protocol (no ports required), or via a direct port connection on the Game Port",
+        "Keywords": "p2p,relay,connection,service,direct,network,port,UseDirectConnection",
+        "FieldName": "UseDirectConnection",
+        "InputType": "enum",
+        "ParamFieldName": "$.ServerDescription_Persistent.UseDirectConnection",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "false": "P2P Connection (default)",
+            "true": "Direct Port Connection"
+        }
+    },
+    {
+        "DisplayName": "P2P Connection Service Region",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the P2P connection service region to use, if the Connection Mode is set to 'P2P Connection'. 'Automatic selection' is based on latency from the server",
+        "Keywords": "p2p,relay,connection,service,user,selected,automatic,region,UserSelectedRegion",
+        "FieldName": "UserSelectedRegion",
+        "InputType": "enum",
+        "ParamFieldName": "$.ServerDescription_Persistent.UserSelectedRegion",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Automatic selection (default)",
+            "SEA": "SEA",
+            "CIS": "CIS",
+            "EU": "EU and NA"
+        }
     }
 ]
