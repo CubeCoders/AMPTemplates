@@ -1,0 +1,141 @@
+[
+    {
+        "DisplayName": "Game Port",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$GamePort",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "$.ServerDescription_Persistent.DirectConnectionServerPort",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Direct Connection IP Binding",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "DirectConnectionProxyAddress",
+        "InputType": "text",
+        "Hidden": true,
+        "ParamFieldName": "$.ServerDescription_Persistent.DirectConnectionProxyAddress",
+        "DefaultValue": "0.0.0.0",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Invite Code",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the invite code used to search for the server in-game, if the Connection Mode is set to 'P2P Connection'. Must contain between 1 and 32 alphanumeric characters. Case-sensitive. Empty or not valid = a new invite code will be generated at server start (which can be imported from 'R5/ServerDescription.json' into this setting for persistence)",
+        "Keywords": "invite,code,invitecode,search",
+        "FieldName": "InviteCode",
+        "InputType": "text",
+        "ParamFieldName": "$.ServerDescription_Persistent.InviteCode",
+        "DefaultValue": "",
+        "Placeholder": "d6221bb7",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "World Island ID",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the ID of an existing world to load on server start. It must match the ID in that world's 'WorldDescription.json' file. Empty = new world created on start - you MUST import the world ID generated for that world from 'R5/ServerDescription.json' into this setting for that world to load on next start",
+        "Keywords": "world,id,worldId,worldislandid",
+        "FieldName": "WorldIslandId",
+        "InputType": "text",
+        "ParamFieldName": "$.ServerDescription_Persistent.WorldIslandId",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Name",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the name of the server. Helpful if invite codes look similar",
+        "Keywords": "name,description,server,ServerName",
+        "FieldName": "ServerName",
+        "InputType": "text",
+        "ParamFieldName": "$.ServerDescription_Persistent.ServerName",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Password Protection",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the password set under Server Password will be required to join the server",
+        "Keywords": "password,protected,ispasswordprotected",
+        "FieldName": "IsPasswordProtected",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.ServerDescription_Persistent.IsPasswordProtected",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Server Password",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the password required to join the server. Enable Password Protection must be set for this to take effect",
+        "Keywords": "server,password",
+        "FieldName": "Password",
+        "InputType": "password",
+        "ParamFieldName": "$.ServerDescription_Persistent.Password",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Limit",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum number of players allowed on the server at one time. More than 4 players may cause performance issues, particularly when deploying large frigates",
+        "Keywords": "max,player,count,players,limit,maxplayercount",
+        "FieldName": "$MaxUsers",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "10",
+        "ParamFieldName": "$.ServerDescription_Persistent.MaxPlayerCount",
+        "DefaultValue": "4",
+        "Placeholder": "4",
+        "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Connection Mode",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the connection mode - either via a P2P connection using the ICE protocol (no ports required), or via a direct port connection on the Game Port",
+        "Keywords": "p2p,relay,connection,service,direct,network,port,UseDirectConnection",
+        "FieldName": "UseDirectConnection",
+        "InputType": "enum",
+        "ParamFieldName": "$.ServerDescription_Persistent.UseDirectConnection",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "false": "P2P Connection (default)",
+            "true": "Direct Port Connection"
+        }
+    },
+    {
+        "DisplayName": "P2P Connection Service Region",
+        "Category": "Windrose:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the P2P connection service region to use, if the Connection Mode is set to 'P2P Connection'. 'Automatic selection' is based on latency from the server",
+        "Keywords": "p2p,relay,connection,service,user,selected,automatic,region,UserSelectedRegion",
+        "FieldName": "UserSelectedRegion",
+        "InputType": "enum",
+        "ParamFieldName": "$.ServerDescription_Persistent.UserSelectedRegion",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Automatic selection (default)",
+            "SEA": "SEA",
+            "CIS": "CIS",
+            "EU": "EU and NA"
+        }
+    }
+]

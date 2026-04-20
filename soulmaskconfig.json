@@ -64,7 +64,22 @@
         "ParamFieldName": "Map",
         "DefaultValue": "Level01_Main",
         "EnumValues": {
-            "Level01_Main": "Level01_Main"
+            "Level01_Main": "Cloud Mist Forest (default)",
+            "DLC_Level01_Main": "Shifting Sands"
+        }
+    },
+    {
+        "DisplayName": "Custom Game Mode",
+        "Category": "Soulmask:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the game mode to start the server with",
+        "Keywords": "game,mode,custom,survival,tribe,warrior,pvp,customgamemode",
+        "FieldName": "CustomGameMode",
+        "InputType": "enum",
+        "ParamFieldName": "CustomGameMode",
+        "DefaultValue": "?CustomGameMode=0",
+        "EnumValues": {
+            "?CustomGameMode=0": "Survival (default)"
         }
     },
     {
@@ -184,6 +199,63 @@
         "InputType": "text",
         "ParamFieldName": "CustomParameters",
         "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Cluster Mode",
+        "Category": "Soulmask:stadia_controller",
+        "Subcategory": "Clusters:share:2",
+        "Description": "Sets whether and in what mode the server is part of a cluster, allowing cross-server linkage. Each cluster server must have the same Server Password. Cluster character data is stored in 'Saved/Accounts/account.db' on the main cluster server",
+        "Keywords": "cluster,cross,transfer,linkage,mode",
+        "FieldName": "ClusterMode",
+        "InputType": "enum",
+        "ParamFieldName": "ClusterMode",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Standalone - no cluster (default)",
+            "-mainserverport={{$ClusterPort}} -serverid={{serverid}} ": "Main cluster server",
+            "-clientserverconnect={{MainServerIP}}:{{MainServerPort}} -serverid={{serverid}} ": "Child cluster server"
+        }
+    },
+    {
+        "DisplayName": "Cluster Server ID",
+        "Category": "Soulmask:stadia_controller",
+        "Subcategory": "Clusters:share:2",
+        "Description": "Sets the ID of the server within a cluster. Each cluster server (main or child) must have a unique ID. Requires Cluster Mode to be set to the appropriate cluster server mode",
+        "Keywords": "cluster,server,id",
+        "FieldName": "serverid",
+        "InputType": "number",
+        "ParamFieldName": "serverid",
+        "DefaultValue": "{{randomdigits(1)}}",
+        "Placeholder": "1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Main Cluster Server Connection IP",
+        "Category": "Soulmask:stadia_controller",
+        "Subcategory": "Clusters:share:2",
+        "Description": "Sets the IP address of the main cluster server to connect to. Only used for child cluster servers - requires Cluster Mode to be set to 'Child cluster server'",
+        "Keywords": "cluster,main,server,ip",
+        "FieldName": "MainServerIP",
+        "InputType": "text",
+        "ParamFieldName": "MainServerIP",
+        "DefaultValue": "127.0.0.1",
+        "Placeholder": "127.0.0.1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Main Cluster Server Connection Port",
+        "Category": "Soulmask:stadia_controller",
+        "Subcategory": "Clusters:share:2",
+        "Description": "Sets the broadcast port of the main cluster server to connect to (this is the Cluster Broadcast Port on the main cluster server). Only used for child cluster servers - requires Cluster Mode to be set to 'Child cluster server'",
+        "Keywords": "cluster,main,server,port",
+        "FieldName": "MainServerPort",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "65535",
+        "ParamFieldName": "MainServerPort",
+        "DefaultValue": "20000",
+        "Placeholder": "20000",
         "EnumValues": {}
     }
 ]

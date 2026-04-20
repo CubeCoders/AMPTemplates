@@ -74,13 +74,13 @@
         "Subcategory": "Server:dns:1",
         "Description": "Sets the game mode. Configure the relevant config file accordingly - 'Plutonium/storage/t6/dedicated.cfg' for Multiplayer, 'Plutonium/storage/t6/dedicated_zm.cfg' for Zombies",
         "Keywords": "game,mode,gamemode",
-        "FieldName": "GameMode",
+        "FieldName": "GameModeNew",
         "InputType": "enum",
-        "ParamFieldName": "GameMode",
-        "DefaultValue": "t6mp \"{{$FullBaseDir}}T6\" -dedicated +set key {{ServerKey}} +set fs_game \"\" +exec dedicated.cfg",
+        "ParamFieldName": "GameModeNew",
+        "DefaultValue": "t6mp \"{{$FullBaseDir}}T6\" -dedicated +set key {{ServerKey}} +set fs_game \"{{Mod}}\" +exec dedicated.cfg",
         "EnumValues": {
-            "t6mp \"{{$FullBaseDir}}T6\" -dedicated +set key {{ServerKey}} +set fs_game \"\" +exec dedicated.cfg": "Multiplayer (default)",
-            "t6zm \"{{$FullBaseDir}}T6\" -dedicated +set key {{ServerKey}} +set fs_game \"\" +exec dedicated_zm.cfg": "Zombies"
+            "t6mp \"{{$FullBaseDir}}T6\" -dedicated +set key {{ServerKey}} +set fs_game \"{{Mod}}\" +exec dedicated.cfg": "Multiplayer (default)",
+            "t6zm \"{{$FullBaseDir}}T6\" -dedicated +set key {{ServerKey}} +set fs_game \"{{Mod}}\" +exec dedicated_zm.cfg": "Zombies"
         }
     },
     {
@@ -173,6 +173,21 @@
         "ParamFieldName": "map_name",
         "DefaultValue": "mp_dockside",
         "Placeholder": "mp_dockside",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Load Mod",
+        "Category": "Call of Duty Black Ops II:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the mod to load when starting the server, based on the path to the mod in the 'Plutonium/storage/t6' directory",
+        "Keywords": "mods,mod,fs_game",
+        "FieldName": "Mod",
+        "InputType": "text",
+        "ParamFieldName": "Mod",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "mods/modname",
         "EnumValues": {}
     },
     {
