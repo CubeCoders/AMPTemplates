@@ -34,5 +34,93 @@
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init\"",
         "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Windrose+ Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "HumanGenome/WindrosePlus",
+        "UpdateSourceData": "WindrosePlus.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Windrose+ Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -File \"{{$FullBaseDir}}install.ps1\" -GameDir \"{{$FullRootDir}}4129620\"",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "PowerShell Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}\\\"; if [[ -x powershell/pwsh ]]; then InstalledVersion=v$(powershell/pwsh -version | sed \\\"s/PowerShell //\\\"); else InstalledVersion=\\\"\\\"; fi; LatestVersion=$(wget -qO- https://api.github.com/repos/PowerShell/PowerShell/releases/latest | jq -r .tag_name); if [[ -z \\\"$LatestVersion\\\" ]]; then echo \\\"Failed to fetch latest PowerShell version\\\" && exit 1; fi; if [[ \\\"$InstalledVersion\\\" == \\\"$LatestVersion\\\" ]]; then echo \\\"PowerShell $LatestVersion already installed. Skipping\\\" && exit 0; fi; rm -rf powershell; mkdir -p powershell; PwshVersion=${LatestVersion#v}; wget -qO powershell.tar.gz \\\"https://github.com/PowerShell/PowerShell/releases/download/$LatestVersion/powershell-$PwshVersion-linux-x64.tar.gz\\\" || { echo \\\"PowerShell download failed. Aborting\\\"; exit 1; }; tar -xzf powershell.tar.gz -C powershell && rm -f powershell.tar.gz && chmod +x powershell/pwsh && echo \\\"PowerShell $LatestVersion downloaded\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Windrose+ Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"export TEMP=${TMPDIR-/tmp}; cd \\\"{{$FullBaseDir}}\\\" && powershell/pwsh -NoProfile -File ./install.ps1 -GameDir \\\"{{$FullRootDir}}4129620\\\"\"",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Repak Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "trumank/repak",
+        "UpdateSourceData": "repak_cli-x86_64-unknown-linux-gnu.tar.xz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}windrose_plus/tools/bin",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Retoc Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "trumank/retoc",
+        "UpdateSourceData": "retoc_cli-x86_64-unknown-linux-gnu.tar.xz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}windrose_plus/tools/bin",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Repak and Retoc Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}windrose_plus/tools/bin\\\" && tar -xf repak_cli-x86_64-unknown-linux-gnu.tar.xz --strip-components=1 && tar -xf retoc_cli-x86_64-unknown-linux-gnu.tar.xz --strip-components=1 && chmod +x repak retoc && rm -f repak.exe retoc.exe && mv repak repak.exe && mv retoc retoc.exe && rm -f repak_cli-x86_64-unknown-linux-gnu.tar.xz retoc_cli-x86_64-unknown-linux-gnu.tar.xz\"",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Default windrose_plus.json Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/windrosewindrose_plus.json",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "windrose_plus.json",
+        "OverwriteExistingFiles": false,
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     }
 ]

@@ -1,0 +1,68 @@
+[
+    {
+        "UpdateStageName": "Windrose+ PAK Rebuild",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -File \"{{$FullBaseDir}}windrose_plus/tools/WindrosePlus-BuildPak.ps1\" -ServerDir \"{{$FullRootDir}}4129620\"",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Windrose+ PAK Rebuild",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"export TEMP=${TMPDIR-/tmp}; cd \\\"{{$FullBaseDir}}\\\" && powershell/pwsh ./windrose_plus/tools/WindrosePlus-BuildPak.ps1 -ServerDir \\\"{{$FullRootDir}}4129620\\\"\"",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Dashboard Script Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/windroserundashboard.ps1",
+        "UpdateSourceArgs": "rundashboard.ps1",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Dashboard Script Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/windroserundashboard.sh",
+        "UpdateSourceArgs": "rundashboard.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Run Windrose+ Dashboard",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -File ./rundashboard.ps1 {{$HTTPPort}}",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "RunInBackground": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Run Windrose+ Dashboard",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"chmod +x rundashboard.sh; ./rundashboard.sh {{$HTTPPort}} &\"",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "RunInBackground": true,
+        "SkipOnFailure": true
+    }
+]

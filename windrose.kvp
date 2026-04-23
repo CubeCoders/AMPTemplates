@@ -1,9 +1,9 @@
 Meta.DisplayName=Windrose
-Meta.Description=Windrose Dedicated Server
+Meta.Description=Windrose Dedicated Server with Windrose+ option
 Meta.OS=Windows, Linux
 Meta.AarchSupport=Unknown
 Meta.Arch=x86_64
-Meta.Author=Greelan
+Meta.Author=Greelan, DatGuyMcCaully
 Meta.URL=https://windrosecrew.com/
 Meta.DisplayImageSource=url:https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3041230/7e838d87d787735d5d29d72777c5ee55653dfb2b/header.jpg
 Meta.EndpointURIFormat= 
@@ -21,7 +21,7 @@ Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=3
+Meta.ConfigVersion=4
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
 Meta.AppConfigId=719703a2-78d0-45fc-86c7-3d548aba1706
@@ -39,7 +39,7 @@ App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} R5 {{$FormattedArgs}} -stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"SteamAppId":"3041230","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
+App.EnvironmentVariables={"SteamAppId":"3041230","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"dwmapi=n,b"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter=
 App.ExitMethod=OS_CLOSE
@@ -79,7 +79,7 @@ App.TelnetLoginFormat={0}
 App.TelnetNewLineType=Default
 App.TailLogFilePath={{$FullBaseDir}}R5/Saved/Logs/R5.log
 App.UpdateSources=@IncludeJson[windroseupdates.json]
-App.PreStartStages=[]
+App.PreStartStages=@IncludeJson[windrosestart.json]
 App.CommandTriggers={}
 App.UserActions=[]
 App.ForceUpdate=False
@@ -100,7 +100,7 @@ App.ApplicationReadyMode=RegexMatch
 App.QuiesceCommand=
 App.DequiesceCommand=
 App.QuiesceSettleDelayMilliseconds=5
-Console.FilterMatchRegex=(\e\[(\d+;)*(\d+)?[ABCDHJKfmsu]|\e\[?[?\>\=\da-z]+|ProtonFixes\[\d+\] WARN: Skipping fix execution\. We are probably running a unit test\.)
+Console.FilterMatchRegex=\e\[(\d+;)*(\d+)?[ABCDHJKfmsu]|\e\[?[?\>\=\da-z]+
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
 Console.AppReadyRegex=^\[[\d\.]+-[\d\.]+:\d+\]\[[\d ]+\]LogGlobalStatus: UEngine::LoadMap Load map complete.*$
