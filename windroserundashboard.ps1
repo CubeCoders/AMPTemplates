@@ -1,4 +1,4 @@
-# Arguments: [http_port]
+# Arguments: [http_port] (bind_ip)
 
 $serverProcess = "$PSScriptRoot\windrose\4129620\R5\Binaries\Win64\WindroseServer-Win64-Shipping.exe"
 

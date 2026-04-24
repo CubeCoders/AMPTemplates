@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Arguments: [http_port]
+# Arguments: [http_port] (bind_ip)
 
 scriptDir=$(pwd)
 serverProcess="Z:${scriptDir//\//\\}\\windrose\\4129620\\R5\\Binaries\\Win64\\WindroseServer-Win64-Shipping.exe"
