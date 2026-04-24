@@ -16,9 +16,9 @@ if (-not $serverStarted) { exit 0 }
 
 # Start the Windrose+ dashboard
 $dashboardJob = Start-Job -ScriptBlock {
-    param($scriptRoot, $port)
-    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$scriptRoot\windrose\4129620\windrose_plus\server\windrose_plus_server.ps1" -Port $port -GameDir "$scriptRoot\windrose\4129620"
-} -ArgumentList $PSScriptRoot, $args[0]
+    param($scriptRoot, $port, $bindIp)
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$scriptRoot\windrose\4129620\windrose_plus\server\windrose_plus_server.ps1" -Port $port $(if ($bindIp) { "-BindIp", $bindIp }) -GameDir "$scriptRoot\windrose\4129620"
+} -ArgumentList $PSScriptRoot, $args[0], $args[1]
 
 # Exit if dashboard fails to start
 Start-Sleep -Seconds 10

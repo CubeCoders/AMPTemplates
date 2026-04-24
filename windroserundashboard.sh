@@ -23,7 +23,7 @@ fi
 
 # Start the Windrose+ dashboard
 cd ./windrose/4129620
-powershell/pwsh -NoProfile -File "$scriptDir/windrose/4129620/windrose_plus/server/windrose_plus_server.ps1" -Port $1 -GameDir "$scriptDir/windrose/4129620" &
+powershell/pwsh -NoProfile -File "$scriptDir/windrose/4129620/windrose_plus/server/windrose_plus_server.ps1" -Port $1 ${2:+-BindIp "$2"} -GameDir "$scriptDir/windrose/4129620" &
 dashboardPid=$!
 
 # Exit if dashboard fails to start
