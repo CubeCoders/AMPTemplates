@@ -74,8 +74,6 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"SourceModBuild=\\\"{{SourceModVersion}}\\\" && SourceModBranch=\\\"{{SourceModBranch}}\\\" && if [[ -z \\\"$SourceModBuild\\\" ]]; then wget -qO sourcemod.tar.gz \\\"https://sourcemod.net/latest.php?os=linux&version=$SourceModBranch\\\" && echo \\\"Latest SourceMod $SourceModBranch build downloaded\\\" && exit 0; elif [[ ! \\\"$SourceModBuild\\\" =~ ^[0-9]+$ ]]; then echo \\\"Invalid SourceMod build version format specified\\\" && exit 1; fi; if { [[ \\\"$SourceModBranch\\\" == \\\"1.13\\\" ]] && [[ \\\"$SourceModBuild\\\" -ge 7311 ]]; } || { [[ \\\"$SourceModBranch\\\" == \\\"1.12\\\" ]] && [[ \\\"$SourceModBuild\\\" -ge 7225 ]]; }; then DownloadURL=\\\"https://github.com/alliedmodders/sourcemod/releases/download/$SourceModBranch.0.$SourceModBuild/sourcemod-$SourceModBranch.0-git$SourceModBuild-linux.tar.gz\\\"; else DownloadURL=\\\"https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-$SourceModBranch.0-git$SourceModBuild-linux.tar.gz\\\"; fi; wget -qO sourcemod.tar.gz \\\"$DownloadURL\\\" && echo \\\"SourceMod $SourceModBranch build $SourceModBuild downloaded\\\"\"",
-        "UpdateSourceConditionSetting": "InstallMod",
-        "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
     },
     {
@@ -84,8 +82,6 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
         "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $SourceModBuild='{{SourceModVersion}}'; $SourceModBranch='{{SourceModBranch}}'; if ([string]::IsNullOrWhiteSpace($SourceModBuild)) { Invoke-WebRequest -UseBasicParsing -Uri \\\"https://sourcemod.net/latest.php?os=windows&version=$SourceModBranch\\\" -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"Latest SourceMod $SourceModBranch build downloaded\\\"; exit 0 } } elseif ($SourceModBuild -notmatch '^\\d+$') { Write-Output \\\"Invalid SourceMod build version format specified\\\"; exit 1 }; if (($SourceModBranch -eq '1.13' -and [int]$SourceModBuild -ge 7311) -or ($SourceModBranch -eq '1.12' -and [int]$SourceModBuild -ge 7225)) { $DownloadURL = \\\"https://github.com/alliedmodders/sourcemod/releases/download/$SourceModBranch.0.$SourceModBuild/sourcemod-$SourceModBranch.0-git$SourceModBuild-windows.zip\\\" } else { $DownloadURL = \\\"https://sm.alliedmods.net/smdrop/$SourceModBranch/sourcemod-$SourceModBranch.0-git$SourceModBuild-windows.zip\\\" }; Invoke-WebRequest -UseBasicParsing -Uri $DownloadURL -OutFile 'sourcemod.zip'; if ($?) { Write-Output \\\"SourceMod $SourceModBranch build $SourceModBuild downloaded\\\" }\"",
-        "UpdateSourceConditionSetting": "InstallMod",
-        "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
     },
     {
