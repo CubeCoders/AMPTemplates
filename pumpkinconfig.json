@@ -516,14 +516,15 @@
         "Category": "Minecraft:stadia_controller",
         "Subcategory": "World Generation:language:3",
         "Description": "The chunk storage format.",
-        "Keywords": "world,chunk,type,anvil,linear",
+        "Keywords": "world,chunk,type,anvil,linear,pump",
         "FieldName": "world_chunk_type",
         "ParamFieldName": "world.chunk.type",
         "InputType": "enum",
-        "DefaultValue": "anvil",
+        "DefaultValue": "pump",
         "EnumValues": {
-            "anvil": "Anvil (default)",
-            "linear": "Linear"
+            "anvil": "Anvil",
+            "linear": "Linear",
+            "pump": "Pump (default)"
         },
         "IncludeInCommandLine": false
     },
@@ -691,6 +692,22 @@
         "Placeholder": "300",
         "EnumValues": {},
         "Suffix": "seconds",
+        "IncludeInCommandLine": false
+    },
+    {
+        "DisplayName": "Send Recipes",
+        "Category": "Minecraft:stadia_controller",
+        "Subcategory": "Performance:speed:4",
+        "Description": "Whether to send recipe book data to players. Disabling this can significantly improve login performance.",
+        "Keywords": "recipe,send,crafting,send_recipes",
+        "FieldName": "recipe_send_recipes",
+        "ParamFieldName": "recipe.send_recipes",
+        "InputType": "checkbox",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        },
         "IncludeInCommandLine": false
     },
     {
@@ -1082,6 +1099,19 @@
         "IncludeInCommandLine": false
     },
     {
+        "DisplayName": "Blocked Plugin Permissions",
+        "Category": "Minecraft:stadia_controller",
+        "Subcategory": "Security:security:6",
+        "Description": "A list of permissions to block from plugins. Must follow the exact format: ['permission.node', 'another.node']",
+        "Keywords": "plugins,permissions,blocked,blocked_permissions",
+        "FieldName": "plugins_blocked_permissions",
+        "ParamFieldName": "plugins.blocked_permissions",
+        "InputType": "text",
+        "DefaultValue": "[]",
+        "EnumValues": {},
+        "IncludeInCommandLine": false
+    },
+    {
         "DisplayName": "Require Texture Packs",
         "Category": "Minecraft:stadia_controller",
         "Subcategory": "Resource Packs:texture:7",
@@ -1237,16 +1267,15 @@
         "DisplayName": "Logging Color",
         "Category": "Minecraft:stadia_controller",
         "Subcategory": "Logging:receipt:8",
-        "Description": "Whether to print to the console with color.",
-        "Keywords": "logging,color",
         "FieldName": "logging_color",
         "ParamFieldName": "logging.color",
         "InputType": "checkbox",
-        "DefaultValue": "true",
+        "DefaultValue": "false",
         "EnumValues": {
             "False": "false",
             "True": "true"
         },
+        "Hidden": true,
         "IncludeInCommandLine": false
     },
     {
@@ -1318,8 +1347,6 @@
         "DisplayName": "Use TTY",
         "Category": "Minecraft:stadia_controller",
         "Subcategory": "Logging:receipt:8",
-        "Description": "Use TTY for console input.",
-        "Keywords": "tty,console,commands",
         "FieldName": "commands_use_tty",
         "ParamFieldName": "commands.use_tty",
         "InputType": "checkbox",
@@ -1328,6 +1355,7 @@
             "False": "false",
             "True": "true"
         },
+        "Hidden": true,
         "IncludeInCommandLine": false
     },
     {
