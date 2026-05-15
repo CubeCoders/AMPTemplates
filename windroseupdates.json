@@ -1,5 +1,15 @@
 [
     {
+        "UpdateStageName": "Remove Windrose+",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"base='{{$FullBaseDir}}'; win64=\\\"$base/R5/Binaries/Win64\\\"; rm -f \\\"$win64/dwmapi.dll\\\"; rm -rf \\\"$win64/ue4ss/Mods/WindrosePlus\\\"; if [ -f \\\"$win64/ue4ss/Mods/mods.txt\\\" ]; then sed -i '/^[[:space:]]*WindrosePlus[[:space:]]*:/Id' \\\"$win64/ue4ss/Mods/mods.txt\\\"; fi\"",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": true
+    },
+    {
         "UpdateStageName": "Windrose Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
@@ -33,6 +43,53 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Windrose+ Staging Cleanup",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullBaseDir}}.windroseplus_staging\\\" >/dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "UE4SS Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/UE4SS-RE/RE-UE4SS/releases/tags/experimental-latest",
+        "UpdateSourceArgs": "$.assets.[0].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}R5/Binaries/Win64",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Windrose+ Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/HumanGenome/WindrosePlus/releases/download/{{WindrosePlusVersion}}/WindrosePlus.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}.windroseplus_staging",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Windrose+ Apply",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"set -euo pipefail; base='{{$FullBaseDir}}'; win64=\\\"$base/R5/Binaries/Win64\\\"; mods=\\\"$win64/ue4ss/Mods\\\"; src=\\\"$base/.windroseplus_staging\\\"; test -d \\\"$src/WindrosePlus\\\"; mkdir -p \\\"$mods\\\" \\\"$base/windrose_plus_data/logs\\\" \\\"$base/windrose_plus_data/rcon\\\" \\\"$base/windrose_plus/config\\\"; cp -f \\\"$src/UE4SS-settings.ini\\\" \\\"$win64/ue4ss/UE4SS-settings.ini\\\" 2>/dev/null || true; mkdir -p \\\"$mods/WindrosePlus\\\"; rm -rf \\\"$mods/WindrosePlus/Scripts\\\"; cp -a \\\"$src/WindrosePlus/.\\\" \\\"$mods/WindrosePlus/\\\"; mkdir -p \\\"$base/windrose_plus\\\"; rm -rf \\\"$base/windrose_plus/server\\\" \\\"$base/windrose_plus/tools\\\" \\\"$base/windrose_plus/docs\\\"; cp -a \\\"$src/server\\\" \\\"$src/tools\\\" \\\"$src/docs\\\" \\\"$base/windrose_plus/\\\"; cp -f \\\"$src/config/\\\"*.default.ini \\\"$base/windrose_plus/config/\\\" 2>/dev/null || true; touch \\\"$mods/mods.txt\\\"; grep -qiE '^[[:space:]]*WindrosePlus[[:space:]]*:' \\\"$mods/mods.txt\\\" || printf '\\\\nWindrosePlus : 1\\\\n' >> \\\"$mods/mods.txt\\\"; if [ -f \\\"$mods/mods.json\\\" ] && command -v jq >/dev/null 2>&1; then tmp=$(mktemp); jq 'if any(.[]?; .mod_name==\\\"WindrosePlus\\\") then . else . + [{\\\"mod_name\\\":\\\"WindrosePlus\\\",\\\"mod_enabled\\\":true}] end' \\\"$mods/mods.json\\\" > \\\"$tmp\\\" && mv \\\"$tmp\\\" \\\"$mods/mods.json\\\"; fi; if [ ! -f \\\"$base/windrose_plus.json\\\" ]; then pass=$(openssl rand -hex 16 2>/dev/null || tr -d '-' < /proc/sys/kernel/random/uuid); printf '{\\\\n  \\\"server\\\": { \\\"http_port\\\": 8780, \\\"bind_ip\\\": \\\"127.0.0.1\\\" },\\\\n  \\\"rcon\\\": { \\\"enabled\\\": true, \\\"port\\\": 27320, \\\"password\\\": \\\"%s\\\" },\\\\n  \\\"query\\\": { \\\"enabled\\\": true },\\\\n  \\\"livemap\\\": { \\\"enabled\\\": false },\\\\n  \\\"poiscan\\\": { \\\"enabled\\\": false },\\\\n  \\\"multipliers\\\": {},\\\\n  \\\"admin\\\": { \\\"steam_ids\\\": [] },\\\\n  \\\"features\\\": {},\\\\n  \\\"debug\\\": { \\\"log_level\\\": \\\"info\\\" }\\\\n}\\\\n' \\\"$pass\\\" > \\\"$base/windrose_plus.json\\\"; fi; rm -rf \\\"$src\\\"; echo 'Windrose+ installed or refreshed'\"",
+        "UpdateSourceConditionSetting": "InstallWindrosePlus",
+        "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
     }
 ]
