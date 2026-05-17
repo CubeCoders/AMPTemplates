@@ -1,0 +1,492 @@
+[
+    {
+        "DisplayName": "Bind Address",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "bind-addr",
+        "Hidden": true,
+        "InputType": "text",
+        "ParamFieldName": "bind-addr",
+        "DefaultValue": "{{$ApplicationIPBinding}}:{{$ServerPort}}",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Certificate File Path",
+        "Category": "code-server:code",
+        "Subcategory": "Proxy and SSL:lock:2",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "cert",
+        "Hidden": true,
+        "InputType": "text",
+        "ParamFieldName": "cert",
+        "DefaultValue": "false",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Idle Timeout",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "idle-timeout-seconds",
+        "Hidden": true,
+        "InputType": "number",
+        "ParamFieldName": "idle-timeout-seconds",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "0",
+        "ExcludeFromImport": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Web Authentication Mode",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the authentication mode for the web UI. The Web Password or Hashed Web Password must be set if the authentication Mode is set to 'Password'",
+        "Keywords": "auth,authentication,login,mode",
+        "FieldName": "auth",
+        "InputType": "enum",
+        "ParamFieldName": "auth",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "password",
+        "EnumValues": {
+            "password": "Password (default)",
+            "none": "None"
+        }
+    },
+    {
+        "DisplayName": "Web Password",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the password for the code-server web UI. Used when Authentication Mode is set to 'Password', unless the Hashed Web Password is set. Default is a secure random password",
+        "Keywords": "password,auth,login",
+        "FieldName": "password",
+        "InputType": "password",
+        "ParamFieldName": "password",
+        "DefaultValue": "{{newguid()}}",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Hashed Web Password",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the [argon2-hashed password](https://coder.com/docs/code-server/FAQ#can-i-store-my-password-hashed) for the code-server web UI. Don't wrap in quotes. Used when Authentication Mode is set to 'Password', and overrides the plain text Web Password",
+        "Keywords": "password,hashed,auth,login,hashed-password",
+        "FieldName": "hashed-password",
+        "InputType": "password",
+        "ParamFieldName": "hashed-password",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "GitHub Token",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets a GitHub authentication token for GitHub integration features",
+        "Keywords": "github,token,auth,authentication,github-auth",
+        "FieldName": "github-auth",
+        "InputType": "password",
+        "ParamFieldName": "github-auth",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "App Name",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the application name used in the browser title bar and on the login page, and any other strings that use '{{app}}'. Defaults to 'code-server' if nothing is set",
+        "Keywords": "app,name,title,app-name",
+        "FieldName": "app-name",
+        "InputType": "text",
+        "ParamFieldName": "app-name",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "code-server",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Workspace Path",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the path to the workspace directory or a .code-workspace file to be opened on launch. Default is the 'workspace' directory in the instance's root directory",
+        "Keywords": "workspace,path",
+        "FieldName": "WorkspacePath",
+        "InputType": "text",
+        "ParamFieldName": "WorkspacePath",
+        "DefaultValue": "./workspace",
+        "Placeholder": "./workspace",
+        "Required": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Display Language",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the VS Code display language and the language to show on the login page. Specify the [2-letter language code](https://en.wikipedia.org/wiki/IETF_language_tag)",
+        "Keywords": "locale,language,lang",
+        "FieldName": "locale",
+        "InputType": "text",
+        "ParamFieldName": "locale",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "en",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Custom Translations",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the path to a JSON file with custom translations. Merges with default strings and supports all i18n keys",
+        "Keywords": "i18n,translations,language,locale,custom,strings",
+        "FieldName": "i18n",
+        "InputType": "text",
+        "ParamFieldName": "i18n",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "/path/to/i18n.json",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Ignore Last Opened",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the last opened directory or workspace will be ignored in favor of an empty window on launch",
+        "Keywords": "ignore,last,opened,workspace,window,ignore-last-opened",
+        "FieldName": "ignore-last-opened",
+        "InputType": "checkbox",
+        "ParamFieldName": "ignore-last-opened",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--ignore-last-opened "
+        }
+    },
+    {
+        "DisplayName": "Disable Getting Started Override",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the coder/coder override in the Help: Getting Started page will be disabled",
+        "Keywords": "getting,started,welcome,disable-getting-started-override",
+        "FieldName": "disable-getting-started-override",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-getting-started-override",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--disable-getting-started-override "
+        }
+    },
+    {
+        "DisplayName": "Disable Workspace Trust",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the Workspace Trust feature will be disabled",
+        "Keywords": "workspace,trust,disable-workspace-trust",
+        "FieldName": "disable-workspace-trust",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-workspace-trust",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--disable-workspace-trust "
+        }
+    },
+    {
+        "DisplayName": "Disable File Downloads",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, file downloads from code-server will be disabled",
+        "Keywords": "download,file,disable,security,disable-file-downloads",
+        "FieldName": "disable-file-downloads",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-file-downloads",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--disable-file-downloads "
+        }
+    },
+    {
+        "DisplayName": "Disable File Uploads",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, file uploads to code-server will be disabled",
+        "Keywords": "upload,file,disable,security,disable-file-uploads",
+        "FieldName": "disable-file-uploads",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-file-uploads",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--disable-file-uploads "
+        }
+    },
+    {
+        "DisplayName": "Socket Path",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the path to a Unix socket to listen on instead of IP:Port. Empty = disabled",
+        "Keywords": "socket,unix,path,listen",
+        "FieldName": "socket",
+        "InputType": "text",
+        "ParamFieldName": "socket",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "./code-server.sock",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Reconnection Grace Time",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the reconnection grace time. Clients that disconnect for longer than this duration will need to reload the window. Default = 3 hours",
+        "Keywords": "reconnection,grace,time,timeout,disconnect,reconnection-grace-time",
+        "FieldName": "reconnection-grace-time",
+        "InputType": "number",
+        "ParamFieldName": "reconnection-grace-time",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "10800",
+        "Placeholder": "10800",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Disable Telemetry",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, telemetry reporting will be disabled",
+        "Keywords": "telemetry,tracking,privacy,disable-telemetry",
+        "FieldName": "disable-telemetry",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-telemetry",
+        "DefaultValue": "--disable-telemetry ",
+        "EnumValues": {
+            "False": "",
+            "True": "--disable-telemetry "
+        }
+    },
+    {
+        "DisplayName": "Disable Update Check",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the automatic update check will be disabled. Otherwise, code-server checks every 6 hours against the latest GitHub release and then notifies once every week that a new release is available",
+        "Keywords": "update,check,auto,disable-update-check",
+        "FieldName": "disable-update-check",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-update-check",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--disable-update-check "
+        }
+    },
+    {
+        "DisplayName": "Enable Verbose Logging",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, verbose logging output for debugging will be enabled",
+        "Keywords": "verbose,logging,debug,log,vvv",
+        "FieldName": "verbose",
+        "InputType": "checkbox",
+        "ParamFieldName": "verbose",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--verbose "
+        }
+    },
+    {
+        "DisplayName": "Enable Proposed API",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the proposed VS Code API features for extensions will be enabled",
+        "Keywords": "proposed,api,extensions,enable-proposed-api",
+        "FieldName": "enable-proposed-api",
+        "InputType": "checkbox",
+        "ParamFieldName": "enable-proposed-api",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--enable-proposed-api "
+        }
+    },
+    {
+        "DisplayName": "Custom Command Line Arguments",
+        "Category": "code-server:code",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets custom [command line arguments](https://github.com/coder/code-server/blob/main/src/node/cli.ts) for code-server. Don't use arguments already in AMP's settings!",
+        "Keywords": "custom,args,flags,arguments,command,line",
+        "FieldName": "CustomArgs",
+        "InputType": "text",
+        "ParamFieldName": "CustomArgs",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Proxy Domain",
+        "Category": "code-server:code",
+        "Subcategory": "Proxy and SSL:lock:2",
+        "Description": "Sets the [domain used](https://coder.com/docs/code-server/guide#using-a-subdomain) for proxying ports",
+        "Keywords": "proxy,domain,proxy-domain",
+        "FieldName": "proxy-domain",
+        "InputType": "text",
+        "ParamFieldName": "proxy-domain",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "example.com",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Absolute Proxy Base Path",
+        "Category": "code-server:code",
+        "Subcategory": "Proxy and SSL:lock:2",
+        "Description": "Sets the [base path](https://coder.com/docs/code-server/guide#prefixing-absproxyport-with-a-path) to prefix to all absproxy requests. Useful when running behind a reverse proxy on a subpath",
+        "Keywords": "proxy,base,path,reverse,abs-proxy-base-path",
+        "FieldName": "abs-proxy-base-path",
+        "InputType": "text",
+        "ParamFieldName": "abs-proxy-base-path",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "/code-server",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Disable Proxy",
+        "Category": "code-server:code",
+        "Subcategory": "Proxy and SSL:lock:2",
+        "Description": "If set, [domain and path proxy routes](https://coder.com/docs/code-server/FAQ#how-do-i-disable-the-proxy) will be disabled",
+        "Keywords": "proxy,disable,security,disable-proxy",
+        "FieldName": "disable-proxy",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-proxy",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--disable-proxy "
+        }
+    },
+    {
+        "DisplayName": "Trusted Origins",
+        "Category": "code-server:code",
+        "Subcategory": "Proxy and SSL:lock:2",
+        "Description": "Sets trusted origins for which the origin authentication check should be disabled. Useful when behind a reverse proxy that cannot set the origin header",
+        "Keywords": "trusted,origins,reverse,proxy,trusted-origins",
+        "FieldName": "trusted-origins",
+        "InputType": "text",
+        "ParamFieldName": "trusted-origins",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "https://example.com",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Skip Auth Preflight",
+        "Category": "code-server:code",
+        "Subcategory": "Proxy and SSL:lock:2",
+        "Description": "If set, allows preflight requests through the proxy without authentication. Useful when behind a reverse proxy",
+        "Keywords": "auth,preflight,proxy,skip,skip-auth-preflight",
+        "FieldName": "skip-auth-preflight",
+        "InputType": "checkbox",
+        "ParamFieldName": "skip-auth-preflight",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--skip-auth-preflight "
+        }
+    },
+    {
+        "DisplayName": "Cookie Suffix",
+        "Category": "code-server:code",
+        "Subcategory": "Proxy and SSL:lock:2",
+        "Description": "Sets a suffix to add to the cookie. This can prevent a collision of cookies for subdomains, making them explicit",
+        "Keywords": "cookie,suffix,subdomain,session,cookie-suffix",
+        "FieldName": "cookie-suffix",
+        "InputType": "text",
+        "ParamFieldName": "cookie-suffix",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "my-instance",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "SSL Mode",
+        "Category": "code-server:code",
+        "Subcategory": "Proxy and SSL:lock:2",
+        "Description": "Sets whether code-server's internal webserver should use HTTPS. Certificate Path, Certificate Key Path and Certificate Host must be set accordingly. This doesn't affect SSL termination via a reverse proxy",
+        "Keywords": "cert,certificate,ssl,tls,https",
+        "FieldName": "SSLMode",
+        "InputType": "enum",
+        "ParamFieldName": "SSLMode",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Do not use HTTPS (default)",
+            "--cert ": "Generate and use self-signed certificate",
+            "--cert \"{{CertPath}}\" --cert-key \"{{cert-key}}\" ": "Use specified certificate"
+        }
+    },
+    {
+        "DisplayName": "Certificate Path",
+        "Category": "code-server:code",
+        "Subcategory": "Proxy and SSL:lock:2",
+        "Description": "Sets the path to an SSL certificate file (which may be a self-signed certificate). Required when SSL Mode is set to 'Use specified certificate'",
+        "Keywords": "cert,certificate,ssl,tls,https,path",
+        "FieldName": "CertPath",
+        "InputType": "text",
+        "ParamFieldName": "CertPath",
+        "DefaultValue": "",
+        "Placeholder": "/path/to/cert",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Certificate Key Path",
+        "Category": "code-server:code",
+        "Subcategory": "Proxy and SSL:lock:2",
+        "Description": "Sets the path to the certificate key file. Required when SSL Mode is set to 'Use specified certificate'",
+        "Keywords": "cert,key,ssl,tls,https,cert-key",
+        "FieldName": "cert-key",
+        "InputType": "text",
+        "ParamFieldName": "cert-key",
+        "DefaultValue": "",
+        "Placeholder": "/path/to/key",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Certificate Host",
+        "Category": "code-server:code",
+        "Subcategory": "Proxy and SSL:lock:2",
+        "Description": "Sets the hostname to use when the server generates a self-signed certificate. Used when SSL Mode is set to 'Generate and use self-signed certificate'. Defaults to 'localhost' if not set",
+        "Keywords": "cert,host,hostname,ssl,tls,cert-host",
+        "FieldName": "cert-host",
+        "InputType": "text",
+        "ParamFieldName": "cert-host",
+        "DefaultValue": "",
+        "Placeholder": "example.com",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Version",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Sets the [code-server version](https://github.com/coder/code-server/releases) to install. Format: v4.109.5. Empty = latest release",
+        "Keywords": "code-server,version,release",
+        "FieldName": "ServerVersion",
+        "InputType": "text",
+        "ParamFieldName": "ServerVersion",
+        "DefaultValue": "",
+        "Placeholder": "v4.109.5",
+        "EnumValues": {}
+    }
+]
