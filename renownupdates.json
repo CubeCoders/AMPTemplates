@@ -1,52 +1,83 @@
 [
-    {
-        "UpdateStageName": "SteamCMD Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "SteamCMD",
-        "UpdateSourceData": "1512690",
-        "UpdateSourceArgs": "1488310",
-        "UpdateSourceVersion": "{{ServerVersion}}",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "SteamCMD Component Download",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "SteamCMD",
-        "UpdateSourceData": "1007",
-        "UpdateSourceArgs": "1488310",
-        "UpdateSourceTarget": "{{$FullBaseDir}}Renown_Combat/Binaries/Win64",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Create Config Directory",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Renown_Combat/Saved/Config/LinuxServer",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Create Config Directory",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}Renown_Combat/Saved/Config/WindowsServer",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Game.ini Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/renowngame.ini",
-        "UpdateSourceTarget": "{{$FullBaseDir}}Renown_Combat/Saved/Config/LinuxServer",
-        "UpdateSourceArgs": "Game.ini",
-        "OverwriteExistingFiles": false
-    },
-    {
-        "UpdateStageName": "Game.ini Download",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/renowngame.ini",
-        "UpdateSourceTarget": "{{$FullBaseDir}}Renown_Combat/Saved/Config/WindowsServer",
-        "UpdateSourceArgs": "Game.ini",
-        "OverwriteExistingFiles": false
-    }
+  {
+    "UpdateStageName": "SteamCMD Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "SteamCMD",
+    "UpdateSourceData": "1512690",
+    "UpdateSourceArgs": "1488310",
+    "UpdateSourceVersion": "{{ServerVersion}}",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "SteamCMD Component Download",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "SteamCMD",
+    "UpdateSourceData": "1007",
+    "UpdateSourceArgs": "1488310",
+    "UpdateSourceTarget": "{{$FullBaseDir}}Renown_Combat/Binaries/Win64",
+    "SkipOnFailure": false
+  },
+
+  { "UpdateStageName": "Create Config Directory (Linux)", "UpdateSourcePlatform": "Linux", "UpdateSource": "CreateDirectory", "UpdateSourceArgs": "{{$FullBaseDir}}Renown_Combat/Saved/Config/LinuxServer", "SkipOnFailure": false },
+  { "UpdateStageName": "Create Config Directory (Windows)", "UpdateSourcePlatform": "Windows", "UpdateSource": "CreateDirectory", "UpdateSourceArgs": "{{$FullBaseDir}}Renown_Combat/Saved/Config/WindowsServer", "SkipOnFailure": false },
+
+  // ===== Game.ini from your fork (source filename → destination Game.ini)
+  {
+    "UpdateStageName": "Game.ini Download (Linux)",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://raw.githubusercontent.com/HuguesDePayens/AMPTemplates/main/renowngame.ini",
+    "UpdateSourceTarget": "{{$FullBaseDir}}Renown_Combat/Saved/Config/LinuxServer",
+    "UpdateSourceArgs": "Game.ini",
+    "OverwriteExistingFiles": false
+  },
+  {
+    "UpdateStageName": "Game.ini Download (Windows)",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://raw.githubusercontent.com/HuguesDePayens/AMPTemplates/main/renowngame.ini",
+    "UpdateSourceTarget": "{{$FullBaseDir}}Renown_Combat/Saved/Config/WindowsServer",
+    "UpdateSourceArgs": "Game.ini",
+    "OverwriteExistingFiles": false
+  },
+
+  // ===== Engine.ini from your fork (renownengine.ini → Engine.ini)
+  {
+    "UpdateStageName": "Engine.ini Download (Linux)",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://raw.githubusercontent.com/HuguesDePayens/AMPTemplates/main/renownengine.ini",
+    "UpdateSourceTarget": "{{$FullBaseDir}}Renown_Combat/Saved/Config/LinuxServer",
+    "UpdateSourceArgs": "Engine.ini",
+    "OverwriteExistingFiles": false
+  },
+  {
+    "UpdateStageName": "Engine.ini Download (Windows)",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://raw.githubusercontent.com/HuguesDePayens/AMPTemplates/main/renownengine.ini",
+    "UpdateSourceTarget": "{{$FullBaseDir}}Renown_Combat/Saved/Config/WindowsServer",
+    "UpdateSourceArgs": "Engine.ini",
+    "OverwriteExistingFiles": false
+  },
+
+  // ===== GameUserSettings.ini from your fork (renowngameusersettings.ini → GameUserSettings.ini)
+  {
+    "UpdateStageName": "GameUserSettings.ini Download (Linux)",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://raw.githubusercontent.com/HuguesDePayens/AMPTemplates/main/renowngameusersettings.ini",
+    "UpdateSourceTarget": "{{$FullBaseDir}}Renown_Combat/Saved/Config/LinuxServer",
+    "UpdateSourceArgs": "GameUserSettings.ini",
+    "OverwriteExistingFiles": false
+  },
+  {
+    "UpdateStageName": "GameUserSettings.ini Download (Windows)",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://raw.githubusercontent.com/HuguesDePayens/AMPTemplates/main/renowngameusersettings.ini",
+    "UpdateSourceTarget": "{{$FullBaseDir}}Renown_Combat/Saved/Config/WindowsServer",
+    "UpdateSourceArgs": "GameUserSettings.ini",
+    "OverwriteExistingFiles": false
+  }
 ]
