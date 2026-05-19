@@ -1,19 +1,28 @@
 [
     {
-        "_comment": "UserEngine.ini \u2014 single entry. Bgd.* values keep their quotes as-typed by the user (UE5 INI parses quoted strings).",
-        "ConfigFile": "UserEngine.ini",
+        "_comment": "UserEngine.ini - single entry. Bgd.* values keep their quotes as-typed by the user (UE5 INI parses quoted strings).",
+        "ConfigFile": "state/ue5-saved/UserSettings/UserEngine.ini",
         "AutoMap": true,
-        "Importable": true,
+        "Importable": false,
         "ConfigType": "ini",
         "ConfigFormat": "{0}={1}",
         "ConfigFormatRegex": "^(?<key>[^;\\[][^=]*?)\\s*=\\s*(?<value>.*?)\\s*$"
     },
     {
-        "_comment": "UserGame.ini \u2014 UE5 property syntax, unquoted scalars.",
-        "ConfigFile": "UserGame.ini",
+        "_comment": "UserGame.ini - UE5 property syntax, unquoted scalars.",
+        "ConfigFile": "state/ue5-saved/UserSettings/UserGame.ini",
         "AutoMap": true,
-        "Importable": true,
+        "Importable": false,
         "ConfigType": "ini",
+        "ConfigFormat": "{0}={1}",
+        "ConfigFormatRegex": "^(?<key>[^;\\[][^=]*?)\\s*=\\s*(?<value>.*?)\\s*$"
+    },
+    {
+        "_comment": "ondemand.ini - flat key=value file consumed by mock-k8s for the on-demand server pool. Knobs surface in the AMP UI under 'On-Demand Instancing'.",
+        "ConfigFile": "state/ondemand.ini",
+        "AutoMap": true,
+        "Importable": false,
+        "ConfigType": "kvp",
         "ConfigFormat": "{0}={1}",
         "ConfigFormatRegex": "^(?<key>[^;\\[][^=]*?)\\s*=\\s*(?<value>.*?)\\s*$"
     }
