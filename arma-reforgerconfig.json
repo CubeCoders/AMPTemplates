@@ -173,38 +173,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Load Session Save",
-        "Category": "Arma Reforger:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "If enabled, the server will load a previous game session on launch, either as specified under Session Save UUID or, if that setting is empty, the latest save game data for the current scenario on launch",
-        "Keywords": "load,session,save,loadSessionSave",
-        "FieldName": "loadSessionSave",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "loadSessionSave",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "",
-        "EnumValues": {
-            "False": "",
-            "True": "-loadSessionSave {{loadSessionSaveUUID}} "
-        }
-    },
-    {
-        "DisplayName": "Session Save UUID",
-        "Category": "Arma Reforger:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the UUID of a specific save to load, if \"Load Session Save\" is enabled. Leave empty to load the latest save game data for the current scenarioautomatically. The UUID is found inside each save point's meta-info.json file",
-        "Keywords": "session,save,uuid,specific,loadSessionSave",
-        "FieldName": "loadSessionSaveUUID",
-        "InputType": "text",
-        "IsFlagArgument": false,
-        "ParamFieldName": "loadSessionSaveUUID",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "",
-        "Placeholder": "07e8fa26-d5b6-47f6-a19b-641c72ab05bc",
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "Steam Query IP Binding",
         "Category": "Arma Reforger:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -715,6 +683,58 @@
         "Placeholder": "10",
         "Suffix": "minutes",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Save Retention Number",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the number of save points to keep for the current mission, if Auto Save Interval is enabled",
+        "Keywords": "save,retention,saveRetention,persistence",
+        "FieldName": "saveRetention",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "128",
+        "IsFlagArgument": false,
+        "ParamFieldName": "game.gameProperties.persistence.saveRetention",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "10",
+        "Placeholder": "10",
+        "Suffix": "save points",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Load Session Save",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will automatically load the latest available save point on start",
+        "Keywords": "load,session,save,loadSessionSave,persistence",
+        "FieldName": "loadSessionSave2",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "game.gameProperties.persistence.loadSessionSave",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Keep Session Save",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will keep the playthrough save points after the mission is finished",
+        "Keywords": "keep,session,save,keepSessionSave,persistence",
+        "FieldName": "keepSessionSave",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "game.gameProperties.persistence.keepSessionSave",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
     },
     {
         "DisplayName": "Persistence System Hive ID",
