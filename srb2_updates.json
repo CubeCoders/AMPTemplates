@@ -1,0 +1,36 @@
+[
+    {
+        "UpdateStageName": "Fetching Assets",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/STJr/SRB2/releases/download/SRB2_release_2.2.15/SRB2-v2215-Full.zip",
+        "UpdateSourceArgs": "",
+        "UpdateSourceTarget": "",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Copy linux binary",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "./srb2/srb2linux.exe",
+        "UpdateSourceArgs": "/srb2linux.exe",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Make game executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/usr/bin/chmod",
+        "UpdateSourceArgs": "+x srb2/srb2linux.exe",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "DeleteAfterExtract": true,
+        "OneShot": true
+    }
+]
