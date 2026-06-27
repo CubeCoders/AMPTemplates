@@ -1,10 +1,44 @@
 [
     {
-        "UpdateStageName": "SteamCMD Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "SteamCMD",
-        "UpdateSourceData": "244770",
-        "UpdateSourceArgs": "244770",
+        "UpdateStageName": "StarMade Download (Linux)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"BaseURL='http://files-origin.star-made.org/build/{{ReleaseStream}}' && IndexHTML=$(wget -qO- \\\"$BaseURL\\\") && LatestZip=$(echo \\\"$IndexHTML\\\" | grep -o 'starmade-build_[0-9_]*\\.zip' | sort -u | sort -V | tail -n1) && if [[ -z \\\"$LatestZip\\\" ]]; then echo \\\"Could not determine latest StarMade build\\\" && exit 1; fi && echo \\\"Latest build: $LatestZip\\\" && wget -qO starmade-latest.zip \\\"${BaseURL}${LatestZip}\\\" && unzip -oq starmade-latest.zip -d starmade/starmade && rm -f starmade-latest.zip && echo \\\"StarMade $LatestZip downloaded and extracted\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "StarMade Download (Windows)",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$BaseURL = 'http://files-origin.star-made.org/build/{{ReleaseStream}}'; $IndexHTML = (Invoke-WebRequest -Uri $BaseURL -UseBasicParsing).Content; $Matches_ = [regex]::Matches($IndexHTML, 'starmade-build_[0-9_]*\\.zip') | ForEach-Object { $_.Value } | Sort-Object -Unique; $LatestZip = $Matches_ | Sort-Object | Select-Object -Last 1; if (-not $LatestZip) { Write-Error 'Could not determine latest StarMade build'; exit 1 }; Write-Host \\\"Latest build: $LatestZip\\\"; Invoke-WebRequest -Uri ($BaseURL + $LatestZip) -OutFile 'starmade-latest.zip'; Expand-Archive -Path 'starmade-latest.zip' -DestinationPath 'starmade\\\\starmade' -Force; Remove-Item 'starmade-latest.zip'; Write-Host \\\"StarMade $LatestZip downloaded and extracted\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd starmade/ && if [[ -x java/bin/java ]]; then InstalledVersion=$(java/bin/java --version | grep \\\"Temurin-\\\" | head -n1 | sed -n \\\"s/.*Temurin-\\\\([^[:space:]]\\\\+\\\\).*/\\\\1/p\\\"); else InstalledVersion=\\\"\\\"; fi; LatestVersionBuild=$(wget -qO- \\\"https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture=x64&image_type=jdk&os=linux&vendor=eclipse\\\" | jq -r \\\".[0].version.openjdk_version\\\" | sed \\\"s/-LTS$//\\\"); if [[ \\\"$InstalledVersion\\\" == \\\"$LatestVersionBuild\\\" ]]; then echo \\\"Eclipse Temurin Java $LatestVersionBuild already installed. Skipping\\\" && exit 0; else [[ -f java.tar.gz ]] && rm -f java.tar.gz >/dev/null 2>&1; wget -qO java.tar.gz https://api.adoptium.net/v3/binary/latest/21/ga/linux/x64/jdk/hotspot/normal/eclipse || { echo \\\"Download failed from the Eclipse Temurin CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; mkdir -p java && rm -rf java/* >/dev/null 2>&1 && tar -xzf java.tar.gz -C java --strip-components=1 >/dev/null 2>&1 && rm -f java.tar.gz >/dev/null 2>&1 && chmod +x java/bin/java && echo \\\"Eclipse Temurin Java $LatestVersionBuild downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd starmade/ && if [[ -x java/bin/java ]]; then InstalledVersion=$(java/bin/java --version | grep \\\"Temurin-\\\" | head -n1 | sed -n \\\"s/.*Temurin-\\\\([^[:space:]]\\\\+\\\\).*/\\\\1/p\\\"); else InstalledVersion=\\\"\\\"; fi; LatestVersionBuild=$(wget -qO- \\\"https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture=aarch64&image_type=jdk&os=linux&vendor=eclipse\\\" | jq -r \\\".[0].version.openjdk_version\\\" | sed \\\"s/-LTS$//\\\"); if [[ \\\"$InstalledVersion\\\" == \\\"$LatestVersionBuild\\\" ]]; then echo \\\"Eclipse Temurin Java $LatestVersionBuild already installed. Skipping\\\" && exit 0; else [[ -f java.tar.gz ]] && rm -f java.tar.gz >/dev/null 2>&1; wget -qO java.tar.gz https://api.adoptium.net/v3/binary/latest/21/ga/linux/aarch64/jdk/hotspot/normal/eclipse || { echo \\\"Download failed from the Eclipse Temurin CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; mkdir -p java && rm -rf java/* >/dev/null 2>&1 && tar -xzf java.tar.gz -C java --strip-components=1 >/dev/null 2>&1 && rm -f java.tar.gz >/dev/null 2>&1 && chmod +x java/bin/java && echo \\\"Eclipse Temurin Java $LatestVersionBuild downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'starmade'; if (Test-Path 'java/bin/java.exe') { $InstalledVersion = (& java/bin/java.exe --version | Select-String -Pattern 'Temurin-(\\d+(?:\\.\\d+\\.\\d+(?:\\.\\d+)?)?\\+\\d+)' | Select-Object -First 1 | ForEach-Object { $_.Matches[0].Groups[1].Value }) } else { $InstalledVersion = '' }; $LatestVersionBuild = (Invoke-RestMethod -UseBasicParsing -Uri \\\"https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture=x64&image_type=jdk&os=windows&vendor=eclipse\\\")[0].version.openjdk_version -replace '-LTS$', ''; if ( $InstalledVersion -eq $LatestVersionBuild ) { Write-Output \\\"Eclipse Temurin Java $LatestVersionBuild already installed. Skipping\\\"; exit 0 } else { if ( Test-Path java.zip ) { Remove-Item java.zip -Force -ErrorAction SilentlyContinue *> $null }; try { Invoke-WebRequest -UseBasicParsing -Uri https://api.adoptium.net/v3/binary/latest/21/ga/windows/x64/jdk/hotspot/normal/eclipse -OutFile java.zip -ErrorAction Stop } catch { Write-Output \\\"Download failed from the Eclipse Temurin CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; Expand-Archive -Path \\\"java.zip\\\" -DestinationPath \\\".\\\" -Force *> $null; if ( Test-Path java.zip ) { Remove-Item java.zip -Force -ErrorAction SilentlyContinue *> $null }; if (Test-Path \\\"jdk-*\\\") { Remove-Item -Recurse -Force java -ErrorAction SilentlyContinue *> $null; Start-Sleep -Seconds 2; Get-ChildItem -Directory | Where-Object { $_.Name -like \\\"jdk-*\\\" } | Rename-Item -NewName \\\"java\\\" *> $null; Write-Output \\\"Eclipse Temurin Java $LatestVersionBuild downloaded\\\" } }\"",
         "SkipOnFailure": false
     }
 ]
