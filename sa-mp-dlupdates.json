@@ -1,0 +1,58 @@
+[
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://sampforum.blast.hk/files/03DL/samp03DL_svr_R1_win32.zip",
+        "UpdateSourceArgs": "samp.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://sampforum.blast.hk/files/03DL/samp03DLsvr_R1.tar.gz",
+        "UpdateSourceArgs": "samp.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Move Server Files",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"\\cp -rf ./sa-mp/samp03/* ./sa-mp/ && rm -rf ./sa-mp/samp03\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Plugins Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}plugins",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Create Models Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}models",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Server.cfg Template File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/Baldne55/AMPTemplates/main/sa-mp-dlserver.cfg",
+        "UpdateSourceArgs": "AMP_server.cfg",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    }
+]
