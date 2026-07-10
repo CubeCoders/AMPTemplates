@@ -12,6 +12,18 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "REST API Port",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$RESTAPIPort",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "RESTAPIPort",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable RCON",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -230,6 +242,21 @@
         "InputType": "hidden",
         "ParamFieldName": "AdminPassword",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable REST API",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the REST API will be enabled. Requires a new AMP instance as of Palworld 1.0",
+        "Keywords": "rest,api,enabled,RESTAPIEnabled",
+        "FieldName": "RESTAPIEnabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "RESTAPIEnabled",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
     },
     {
         "DisplayName": "Player Limit",
@@ -487,7 +514,7 @@
         "InputType": "text",
         "ParamFieldName": "UserSettings",
         "DefaultValue": "",
-        "Placeholder": "RESTAPIEnabled=True,RESTAPIPort=8212",
+        "Placeholder": "CustomSetting=True,CustomSetting2=1000",
         "EnumValues": {}
     },
     {
@@ -625,6 +652,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Physics Active Drop Item Max Number",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the maximum number of dropped items that can use physics behavior. Set to -1 for unlimited",
+        "Keywords": "maximum,number,physics,active,drop,item,PhysicsActiveDropItemMaxNum",
+        "FieldName": "PhysicsActiveDropItemMaxNum",
+        "InputType": "number",
+        "MinValue": "-1",
+        "ParamFieldName": "PhysicsActiveDropItemMaxNum",
+        "DefaultValue": "-1",
+        "Placeholder": "-1",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "UNKO Drop Items Limit",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -755,6 +796,51 @@
         "DefaultValue": "0",
         "Placeholder": "0",
         "Suffix": "minutes",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Auto Transfer Master Check Interval",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the interval to check the auto transfer master",
+        "Keywords": "auto,transfer,master,check,interval,seconds,AutoTransferMasterCheckIntervalSeconds",
+        "FieldName": "AutoTransferMasterCheckIntervalSeconds",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "AutoTransferMasterCheckIntervalSeconds",
+        "DefaultValue": "3600.000000",
+        "Placeholder": "3600.000000",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Auto Transfer Master Threshold",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the max threshold for auto transfer master",
+        "Keywords": "auto,transfer,master,threshold,days,AutoTransferMasterThresholdDays",
+        "FieldName": "AutoTransferMasterThresholdDays",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "AutoTransferMasterThresholdDays",
+        "DefaultValue": "14",
+        "Placeholder": "14",
+        "Suffix": "days",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Max Guilds Per Frame",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the max guilds per frame",
+        "Keywords": "max,guilds,per,frame,MaxGuildsPerFrame",
+        "FieldName": "MaxGuildsPerFrame",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "MaxGuildsPerFrame",
+        "DefaultValue": "10",
+        "Placeholder": "10",
+        "Suffix": "guilds",
         "EnumValues": {}
     },
     {
@@ -1192,6 +1278,36 @@
         }
     },
     {
+        "DisplayName": "Enable Building Player UI Display",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, creator’s player ID will display on structures.",
+        "Keywords": "enable,building,player,ui,display,bEnableBuildingPlayerUIdDisplay",
+        "FieldName": "bEnableBuildingPlayerUIdDisplay",
+        "InputType": "checkbox",
+        "ParamFieldName": "bEnableBuildingPlayerUIdDisplay",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Building Name Display Cache TTL",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "How long to cache the player name displayed on structures",
+        "Keywords": "building,name,display,cache,ttl,seconds,BuildingNameDisplayCacheTTLSeconds",
+        "FieldName": "BuildingNameDisplayCacheTTLSeconds",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "BuildingNameDisplayCacheTTLSeconds",
+        "DefaultValue": "60",
+        "Placeholder": "60",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Enable Additional Drop Item In PVP",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -1205,6 +1321,49 @@
             "False": "False",
             "True": "True"
         }
+    },
+    {
+        "DisplayName": "Enable Voice Chat",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, enable in-game voice chat",
+        "Keywords": "enable,voice,chat,bEnableVoiceChat",
+        "FieldName": "bEnableVoiceChat",
+        "InputType": "checkbox",
+        "ParamFieldName": "bEnableVoiceChat",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Voice Chat Max Volume Distance",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "The distance between players where they can hear the in-game voice chat at max volume",
+        "Keywords": "voice,chat,max,volume,distance,VoiceChatMaxVolumeDistance",
+        "FieldName": "VoiceChatMaxVolumeDistance",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "VoiceChatMaxVolumeDistance",
+        "DefaultValue": "3000.000000",
+        "Placeholder": "3000.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Voice Chat Zero Volume Distance",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "The distance between players where they can no longer hear the in-game voice chat",
+        "Keywords": "voice,chat,zero,volume,distance,VoiceChatZeroVolumeDistance",
+        "FieldName": "VoiceChatZeroVolumeDistance",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "VoiceChatZeroVolumeDistance",
+        "DefaultValue": "15000.000000",
+        "Placeholder": "15000.000000",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Additional Drop Item In PVP Item ID",
@@ -1634,6 +1793,36 @@
         "InputType": "number",
         "MinValue": "0",
         "ParamFieldName": "ItemContainerForceMarkDirtyInterval",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Data Pal Storage Update Check Tick Interval",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the interval for updating the pal storage",
+        "Keywords": "player,data,pal,storage,update,check,tick,interval,PlayerDataPalStorageUpdateCheckTickInterval",
+        "FieldName": "PlayerDataPalStorageUpdateCheckTickInterval",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "PlayerDataPalStorageUpdateCheckTickInterval",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Monster Farm Action Speed Rate",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the item production speed multiplier from grazing",
+        "Keywords": "monster,farm,action,speed,rate,MonsterFarmActionSpeedRate",
+        "FieldName": "MonsterFarmActionSpeedRate",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "MonsterFarmActionSpeedRate",
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
         "Suffix": "seconds",
