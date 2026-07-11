@@ -1,0 +1,182 @@
+[
+    {
+        "DisplayName": "Server Name",
+        "Category": "The Riftbreaker:stadia_controller",
+        "Subcategory": "Server Settings:dns:1",
+        "Description": "The publicly visible server name shown to players (e.g. in the in-game server browser)",
+        "Keywords": "server,name,servername,hostname",
+        "FieldName": "ServerName",
+        "InputType": "text",
+        "ParamFieldName": "ServerName",
+        "DefaultValue": "AMP Powered Riftbreaker Server",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Password",
+        "Category": "The Riftbreaker:stadia_controller",
+        "Subcategory": "Server Settings:dns:1",
+        "Description": "Password required to connect to the server. Leave blank for no password",
+        "Keywords": "server,password,serverpassword",
+        "FieldName": "ServerPassword",
+        "InputType": "password",
+        "ParamFieldName": "ServerPassword",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "RCON Password",
+        "Category": "The Riftbreaker:stadia_controller",
+        "Subcategory": "Server Settings:dns:1",
+        "Description": "Password for remote console (RCON) commands. Clients must set the same password in-game via 'server_rcon_password' before they can run 'rcon <command>'. Leave blank to disable remote commands. Note: this is the game's own in-game RCON and is not used by AMP's console",
+        "Keywords": "rcon,remote,console,command,password",
+        "FieldName": "RconPassword",
+        "InputType": "password",
+        "ParamFieldName": "RconPassword",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Limit",
+        "Category": "The Riftbreaker:stadia_controller",
+        "Subcategory": "Server Settings:dns:1",
+        "Description": "Maximum number of players allowed on the server. The officially supported maximum is 4 - each additional player can severely impact performance. Increase beyond 4 at your own risk",
+        "Keywords": "max,players,limit,count,slots,server_max_players_count",
+        "FieldName": "$MaxUsers",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "16",
+        "ParamFieldName": "MaxPlayers",
+        "DefaultValue": "4",
+        "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Networking Mode",
+        "Category": "The Riftbreaker:stadia_controller",
+        "Subcategory": "Server Settings:dns:1",
+        "Description": "How players connect. 'Steam Server Browser' uses Steam's relay/P2P networking - it needs only outbound internet access (no port forwarding) and players join from the in-game Multiplayer > Server Browser. 'LAN / Direct Connect' disables Steam networking - players join with connect \"<ip>\" in the game console and the Game Port (6321) must be reachable",
+        "Keywords": "steam,lan,direct,connect,networking,mode,disable_steam,p2p,relay",
+        "FieldName": "DisableSteam",
+        "InputType": "enum",
+        "ParamFieldName": "DisableSteam",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "0": "Steam Server Browser (recommended - no port forwarding)",
+            "1": "LAN / Direct Connect (requires Game Port 6321 open)"
+        }
+    },
+    {
+        "DisplayName": "List In Server Browser",
+        "Category": "The Riftbreaker:stadia_controller",
+        "Subcategory": "Server Settings:dns:1",
+        "Description": "If enabled, the server is publicly listed in the in-game server browser. Disable to keep the server private",
+        "Keywords": "broadcast,public,private,listed,visible,server_broadcast_enabled",
+        "FieldName": "Broadcast",
+        "InputType": "checkbox",
+        "ParamFieldName": "Broadcast",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Pause When Empty",
+        "Category": "The Riftbreaker:stadia_controller",
+        "Subcategory": "Server Settings:dns:1",
+        "Description": "If enabled, the server pauses the game simulation while no players are connected. This prevents your base from being attacked while you are away and resumes automatically when someone joins",
+        "Keywords": "pause,empty,idle,afk,server_pause_game_when_empty",
+        "FieldName": "PauseWhenEmpty",
+        "InputType": "checkbox",
+        "ParamFieldName": "PauseWhenEmpty",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Game Mode / Campaign",
+        "Category": "The Riftbreaker:stadia_controller",
+        "Subcategory": "Game Settings:videogame_asset:2",
+        "Description": "The campaign type to host. Story Campaign is the guided co-op story. Open Campaign and Survival both require a Starting Mission to be selected below. Make sure your Difficulty selection matches the chosen mode",
+        "Keywords": "campaign,mode,story,open,survival,game",
+        "FieldName": "Campaign",
+        "InputType": "enum",
+        "ParamFieldName": "Campaign",
+        "DefaultValue": "mp_story/mp_story",
+        "EnumValues": {
+            "mp_story/mp_story": "Story Campaign (co-op)",
+            "open/open": "Open Campaign (choose a Starting Mission)",
+            "mp_survival/mp_survival": "Survival (choose a Starting Mission)"
+        }
+    },
+    {
+        "DisplayName": "Starting Mission / Biome",
+        "Category": "The Riftbreaker:stadia_controller",
+        "Subcategory": "Game Settings:videogame_asset:2",
+        "Description": "The starting mission/biome. Required for Open Campaign (campaigns/open/...) and Survival (survival/...). Leave as 'None' for the Story Campaign. The prefix must match your Game Mode selection above",
+        "Keywords": "mission,biome,map,starting,start",
+        "FieldName": "Mission",
+        "InputType": "enum",
+        "ParamFieldName": "Mission",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "None - for Story Campaign (default)",
+            "campaigns/open/headquarters_jungle": "Open Campaign: Jungle",
+            "campaigns/open/headquarters_desert": "Open Campaign: Desert",
+            "campaigns/open/headquarters_acid": "Open Campaign: Acid",
+            "campaigns/open/headquarters_ice": "Open Campaign: Ice",
+            "campaigns/open/headquarters_swamp": "Open Campaign: Swamp",
+            "campaigns/open/headquarters_caverns": "Open Campaign: Caverns",
+            "campaigns/open/headquarters_metallic": "Open Campaign: Metallic",
+            "survival/jungle": "Survival: Jungle",
+            "survival/acid": "Survival: Acid",
+            "survival/desert": "Survival: Desert",
+            "survival/magma": "Survival: Magma",
+            "survival/ice": "Survival: Ice",
+            "survival/metallic": "Survival: Metallic",
+            "survival/caverns": "Survival: Caverns",
+            "survival/swamp": "Survival: Swamp",
+            "survival/swamp_lakes": "Survival: Swamp Lakes"
+        }
+    },
+    {
+        "DisplayName": "Difficulty",
+        "Category": "The Riftbreaker:stadia_controller",
+        "Subcategory": "Game Settings:videogame_asset:2",
+        "Description": "The difficulty level. IMPORTANT: pick the entry that matches your Game Mode - Story uses the 'Story:' options, Open Campaign uses the 'Open Campaign:' options, and Survival uses the 'Survival:' options. A mismatched value may be ignored by the game",
+        "Keywords": "difficulty,hard,easy,normal,brutal,coop",
+        "FieldName": "Difficulty",
+        "InputType": "enum",
+        "ParamFieldName": "Difficulty",
+        "DefaultValue": "coop_campaign_brutal",
+        "EnumValues": {
+            "coop_campaign_easy": "Story: Easy",
+            "coop_campaign_normal": "Story: Normal",
+            "coop_campaign_hard": "Story: Hard",
+            "coop_campaign_brutal": "Story: Brutal (default)",
+            "easy": "Open Campaign: Easy",
+            "normal": "Open Campaign: Normal",
+            "hard": "Open Campaign: Hard",
+            "brutal": "Open Campaign: Brutal",
+            "coop_easy": "Survival: Easy",
+            "coop_normal": "Survival: Normal",
+            "coop_hard": "Survival: Hard",
+            "coop_brutal": "Survival: Brutal"
+        }
+    },
+    {
+        "DisplayName": "Additional Server Settings",
+        "Category": "The Riftbreaker:stadia_controller",
+        "Subcategory": "Advanced:build:3",
+        "Description": "Extra config lines added verbatim to config.cfg, one per line, e.g. set autosave_timer \"10\". To load an existing save instead of starting a new game, add a line like set mission_save \"SAVE_NAME\" and set Game Mode/Mission/Difficulty appropriately. See the EXOR Studios dedicated server guide for all available parameters",
+        "Keywords": "additional,custom,advanced,extra,settings,cvars,mission_save",
+        "FieldName": "UserSettings",
+        "InputType": "Textarea",
+        "IsFlagArgument": false,
+        "ParamFieldName": "UserSettings",
+        "DefaultValue": "",
+        "EnumValues": {}
+    }
+]

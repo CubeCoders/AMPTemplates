@@ -1,0 +1,63 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "4114030",
+        "UpdateSourceArgs": "4114030",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Config Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CostcoFanboy/AMPTemplates/main/riftbreakertemplatesettings.cfg",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UpdateSourceArgs": "AMP_config.cfg",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDLLOVERRIDES=\\\"mscoree,mshtml=\\\" WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Winescript Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CostcoFanboy/AMPTemplates/main/riftbreakerwinescript.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "UpdateSourceArgs": "winescript.sh",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install Windows Components",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "./winescript.sh",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Save/Log Link",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C mkdir \"%UserProfile%\\Documents\\The Riftbreaker\" > NUL 2>&1 & rd /S /Q \"{{$FullBaseDir}}userdata\" > NUL 2>&1 & mklink /J \"{{$FullBaseDir}}userdata\" \"%UserProfile%\\Documents\\The Riftbreaker\" > NUL 2>&1",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Create Save/Log Link",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullRootDir}}.wine/drive_c/users/amp/Documents/The Riftbreaker\\\" >/dev/null 2>&1; cd riftbreaker/4114030 && rm -rf userdata >/dev/null 2>&1; ln -sfn \\\"../.wine/drive_c/users/amp/Documents/The Riftbreaker\\\" userdata >/dev/null 2>&1\"",
+        "SkipOnFailure": true
+    }
+]
