@@ -24,19 +24,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Enable RCON",
-        "Category": "Palworld:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "RCONEnabled",
-        "InputType": "text",
-        "Hidden": true,
-        "ParamFieldName": "RCONEnabled",
-        "DefaultValue": "True",
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "Disable UE4SS Console",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -165,29 +152,14 @@
         }
     },
     {
-        "DisplayName": "Public IP Selection Mode",
-        "Category": "Palworld:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets whether AMP should automatically select the public IP advertised for the server, or whether it should use the IP set under Server Public IP",
-        "Keywords": "public,ip,publicip",
-        "FieldName": "PublicIP",
-        "InputType": "enum",
-        "ParamFieldName": "PublicIP",
-        "DefaultValue": "{{$ExternalIP}}",
-        "EnumValues": {
-            "{{$ExternalIP}}": "Automatic (default)",
-            "{{ManualPublicIP}}": "Manual"
-        }
-    },
-    {
         "DisplayName": "Server Public IP",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the public IP advertised for the server, if \"Manual\" is selected as the Public IP Selection Mode. Useful if the host network has multiple public IPs, or the server is behind a public proxy",
-        "Keywords": "manual,public,ip,publicip",
-        "FieldName": "ManualPublicIP",
+        "Description": "Sets the public IP advertised for the server. Useful if the host network has multiple public IPs, or the server is behind a public proxy",
+        "Keywords": "public,ip,publicip",
+        "FieldName": "PublicIP",
         "InputType": "text",
-        "ParamFieldName": "ManualPublicIP",
+        "ParamFieldName": "PublicIP",
         "DefaultValue": "",
         "EnumValues": {}
     },
@@ -242,6 +214,21 @@
         "InputType": "hidden",
         "ParamFieldName": "AdminPassword",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable RCON",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, RCON will be enabled.",
+        "Keywords": "rcon,enabled,RCONEnabled",
+        "FieldName": "RCONEnabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "RCONEnabled",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
     },
     {
         "DisplayName": "Enable REST API",
@@ -357,8 +344,8 @@
         "FieldName": "BanListURL",
         "InputType": "url",
         "ParamFieldName": "BanListURL",
-        "DefaultValue": "https://api.palworldgame.com/api/banlist.txt",
-        "Placeholder": "https://api.palworldgame.com/api/banlist.txt",
+        "DefaultValue": "https://b.palworldgame.com/api/banlist.txt",
+        "Placeholder": "https://b.palworldgame.com/api/banlist.txt",
         "EnumValues": {}
     },
     {
@@ -514,7 +501,7 @@
         "InputType": "text",
         "ParamFieldName": "UserSettings",
         "DefaultValue": "",
-        "Placeholder": "RESTAPIEnabled=True,RESTAPIPort=8212",
+        "Placeholder": "CustomSetting=True,CustomSetting2=1000",
         "EnumValues": {}
     },
     {
@@ -539,12 +526,12 @@
         "FieldName": "DeathPenalty",
         "InputType": "enum",
         "ParamFieldName": "DeathPenalty",
-        "DefaultValue": "All",
+        "DefaultValue": "Item",
         "EnumValues": {
             "None": "Lose nothing",
-            "Item": "Lose items (not equipment)",
+            "Item": "Lose items, not equipment (default)",
             "ItemAndEquipment": "Lose items and equipment",
-            "All": "Lose items, equipment and pals (default)"
+            "All": "Lose items, equipment, and pals"
         }
     },
     {
@@ -853,8 +840,8 @@
         "InputType": "number",
         "MinValue": "0",
         "ParamFieldName": "PalEggDefaultHatchingTime",
-        "DefaultValue": "72.000000",
-        "Placeholder": "72.000000",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
         "Suffix": "hours",
         "EnumValues": {}
     },
@@ -1032,7 +1019,7 @@
         "FieldName": "bIsStartLocationSelectByMap",
         "InputType": "checkbox",
         "ParamFieldName": "bIsStartLocationSelectByMap",
-        "DefaultValue": "True",
+        "DefaultValue": "False",
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -1402,7 +1389,7 @@
         "InputType": "text",
         "ParamFieldName": "DenyTechnologyList",
         "DefaultValue": "",
-        "Placeholder": "\"PALBOX\", \"RepairBench\"",
+        "Placeholder": "(\"PALBOX\", \"RepairBench\")",
         "EnumValues": {}
     },
     {
