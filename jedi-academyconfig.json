@@ -246,6 +246,7 @@
         "FieldName": "UserIDRegex",
         "InputType": "enum",
         "ParamFieldName": "UserIDRegex",
+        "IncludeInCommandLine": false,
         "DefaultValue": "(BOT|(?<userid>(?!NOGUID).+?))",
         "EnumValues": {
             "(BOT|(?<userid>(?!NOGUID).+?))": "Count bots as players and ignore players with no GUID (default)",
@@ -424,11 +425,11 @@
         "Subcategory": "Gameplay:joystick:2",
         "Description": "If set, private dueling between players will be allowed. Otherwise, private dueling will be disabled",
         "Keywords": "private,duel,g_privateduel",
-        "FieldName": "g_privateduel",
+        "FieldName": "g_privateDuel",
         "InputType": "checkbox",
-        "ParamFieldName": "g_privateduel",
+        "ParamFieldName": "g_privateDuel",
         "IncludeInCommandLine": false,
-        "DefaultValue": "0",
+        "DefaultValue": "1",
         "EnumValues": {
             "False": "0",
             "True": "1"
@@ -565,15 +566,17 @@
         "DisplayName": "Allow Voting",
         "Category": "Jedi Knight Academy:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "10 bit bitflag to enable voting, 0 = disable voting, -1 = enable voting no limits. Bit 0 = Capture Limit, Bit 1 = Kick (Include Spec), Bit 2 = Frag Limit, Bit 3 = Do Warmup, Bit 4 = Game Type, Bit 5 = Kick (Exclude Spec), Bit 6 = Current Map, Bit 7 = Restart Map, Bit 8 = Play Next Map, Bit 9 = Time Limit",
+        "Description": "10-bit bitflag controlling which votes players may call. 0 = voting disabled entirely, 1023 = all votes allowed. Bit 0 = Capture Limit, Bit 1 = Kick by Client Number, Bit 2 = Frag Limit, Bit 3 = Do Warmup, Bit 4 = Game Type, Bit 5 = Kick by Name, Bit 6 = Change Map, Bit 7 = Restart Map, Bit 8 = Play Next Map, Bit 9 = Time Limit",
         "Keywords": "vote,voting,g_allowvote",
         "FieldName": "g_allowVote",
-		"InputType": "number",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "1023",
         "ParamFieldName": "g_allowVote",
         "IncludeInCommandLine": false,
-		"minValue": "0",
-		"maxValue": "1023",
-        "DefaultValue": "0"
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Weapon Respawn Time Period",
