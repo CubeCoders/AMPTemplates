@@ -33,12 +33,12 @@ App.SteamWorkshopDownloadLocation=
 App.ExecutableWin=server\FXServer.exe
 App.ExecutableLinux=server/alpine/opt/cfx-server/ld-musl-x86_64.so.1
 App.WorkingDir=server-data
-App.LinuxCommandLineArgs=--library-path "{{$FullBaseDir}}server/alpine/usr/lib/v8/:{{$FullBaseDir}}server/alpine/lib/:{{$FullBaseDir}}server/alpine/usr/lib/" -- "{{$FullBaseDir}}server/alpine/opt/cfx-server/FXServer" +set citizen_dir "{{$FullBaseDir}}server/alpine/opt/cfx-server/citizen/"
-App.WindowsCommandLineArgs=
+App.LinuxCommandLineArgs=export TXHOST_TXA_PORT={{$txAdminPort}} export TXHOST_FXS_PORT={{$ServerPort}} export TXHOST_INTERFACE={$ApplicationIPBinding}} --library-path "{{$FullBaseDir}}server/alpine/usr/lib/v8/:{{$FullBaseDir}}server/alpine/lib/:{{$FullBaseDir}}server/alpine/usr/lib/" -- "{{$FullBaseDir}}server/alpine/opt/cfx-server/FXServer" +set citizen_dir "{{$FullBaseDir}}server/alpine/opt/cfx-server/citizen/"
+App.WindowsCommandLineArgs=set TXHOST_TXA_PORT={{$txAdminPort}} set TXHOST_FXS_PORT={{$ServerPort}} set TXHOST_INTERFACE={$ApplicationIPBinding}}
 App.CommandLineArgs={{$PlatformArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"TXHOST_TXA_PORT":"{{$txAdminPort}}","TXHOST_FXS_PORT":"{{$ServerPort}}","TXHOST_INTERFACE":"{{$ApplicationIPBinding}}"}
+App.EnvironmentVariables=
 App.CommandLineParameterFormat=+{0} {1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
