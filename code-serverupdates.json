@@ -1,0 +1,20 @@
+[
+    {
+        "UpdateStageName": "code-server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"ServerVersion=\\\"{{ServerVersion}}\\\"; cd code-server; mkdir -p server data extensions workspace; if [[ -x server/bin/code-server ]]; then InstalledVersion=$(server/bin/code-server --version | head -n1 | cut -d\\\" \\\" -f1); else InstalledVersion=\\\"\\\"; fi; [[ -z \\\"$ServerVersion\\\" ]] && ServerVersion=$(wget -qO- https://api.github.com/repos/coder/code-server/releases/latest | jq -r .tag_name); VersionNoV=\\\"${ServerVersion#v}\\\"; if [[ ! \\\"$ServerVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid code-server version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$VersionNoV\\\" ]]; then echo \\\"code-server $ServerVersion already installed. Skipping\\\" && exit 0; else [[ -f code-server.tar.gz ]] && rm -f code-server.tar.gz >/dev/null 2>&1; wget -qO code-server.tar.gz https://github.com/coder/code-server/releases/download/$ServerVersion/code-server-$VersionNoV-linux-amd64.tar.gz || { echo \\\"Download failed from GitHub. Aborting\\\"; exit 1; }; rm -rf server/* >/dev/null 2>&1 && tar -xzf code-server.tar.gz -C server --strip-components=1 >/dev/null 2>&1 && rm -f code-server.tar.gz >/dev/null 2>&1 && chmod +x server/bin/code-server && echo \\\"code-server $ServerVersion downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "code-server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"ServerVersion=\\\"{{ServerVersion}}\\\"; cd code-server; mkdir -p server data extensions workspace; if [[ -x server/bin/code-server ]]; then InstalledVersion=$(server/bin/code-server --version | head -n1 | cut -d\\\" \\\" -f1); else InstalledVersion=\\\"\\\"; fi; [[ -z \\\"$ServerVersion\\\" ]] && ServerVersion=$(wget -qO- https://api.github.com/repos/coder/code-server/releases/latest | jq -r .tag_name); VersionNoV=\\\"${ServerVersion#v}\\\"; if [[ ! \\\"$ServerVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid code-server version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$VersionNoV\\\" ]]; then echo \\\"code-server $ServerVersion already installed. Skipping\\\" && exit 0; else [[ -f code-server.tar.gz ]] && rm -f code-server.tar.gz >/dev/null 2>&1; wget -qO code-server.tar.gz https://github.com/coder/code-server/releases/download/$ServerVersion/code-server-$VersionNoV-linux-arm64.tar.gz || { echo \\\"Download failed from GitHub. Aborting\\\"; exit 1; }; rm -rf server/* >/dev/null 2>&1 && tar -xzf code-server.tar.gz -C server --strip-components=1 >/dev/null 2>&1 && rm -f code-server.tar.gz >/dev/null 2>&1 && chmod +x server/bin/code-server && echo \\\"code-server $ServerVersion downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    }
+]

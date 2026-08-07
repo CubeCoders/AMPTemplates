@@ -65,28 +65,6 @@
         "OverwriteExistingFiles": false
     },
     {
-        "UpdateStageName": "First Backup Exclusions Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/exclusions/.backupExclusionsArkSA1",
-        "UpdateSourceArgs": ".backupExclude",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "UpdateSourceConditionSetting": "backupExclude",
-        "UpdateSourceConditionValue": "true",
-        "OverwriteExistingFiles": false
-    },
-    {
-        "UpdateStageName": "Second Backup Exclusions Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/exclusions/.backupExclusionsArkSA2",
-        "UpdateSourceArgs": ".backupExclude",
-        "UpdateSourceTarget": "{{$FullBaseDir}}ShooterGame",
-        "UpdateSourceConditionSetting": "backupExclude",
-        "UpdateSourceConditionValue": "true",
-        "OverwriteExistingFiles": false
-    },
-    {
         "UpdateStageName": "Proton GE Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
@@ -99,7 +77,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && export PATH=\\\"{{$FullRootDir}}.proton/files/bin:$PATH\\\"; export WINEPREFIX=\\\"{{$FullRootDir}}.proton/compatdata/pfx\\\"; export WINEARCH=win64; export XDG_RUNTIME_DIR=/tmp; ./.proton/protonfixes/winetricks sound=disabled > winescript_log.txt 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && export PATH=\\\"{{$FullRootDir}}.proton/files/bin:$PATH\\\"; export WINEPREFIX=\\\"{{$FullRootDir}}.proton/compatdata/pfx\\\"; export WINEARCH=win64; ./.proton/protonfixes/winetricks sound=disabled > winescript_log.txt 2>&1\"",
         "SkipOnFailure": true
     }
 ]
