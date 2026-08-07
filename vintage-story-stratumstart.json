@@ -1,0 +1,22 @@
+[
+    {
+        "UpdateStageName": "Render Nimbus backend config",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"NIMBUS_WRITE_CONFIG='{{NimbusWriteConfig}}' NIMBUS_ENABLED='{{NimbusEnabled}}' NIMBUS_SERVER_ID='{{NimbusServerId}}' NIMBUS_DISPLAY_NAME='{{NimbusDisplayName}}' NIMBUS_PUBLIC_HOST='{{NimbusPublicHost}}' NIMBUS_PUBLIC_PORT='{{NimbusPublicPort}}' NIMBUS_FALLBACK_PORT='{{$ServerPort}}' NIMBUS_TAGS='{{NimbusTags}}' NIMBUS_REGISTRY_URL='{{NimbusRegistryUrl}}' NIMBUS_SHARED_SECRET='{{NimbusSharedSecret}}' NIMBUS_HEARTBEAT='{{NimbusHeartbeatIntervalSeconds}}' NIMBUS_HTTP_TIMEOUT='{{NimbusRegistryHttpTimeoutSeconds}}' NIMBUS_MAINTENANCE='{{NimbusMaintenance}}' NIMBUS_RESERVATION_REQUIRED='{{NimbusReservationRequired}}' NIMBUS_FAIL_CLOSED='{{NimbusFailClosedWhenRegistryUnreachable}}' NIMBUS_ALLOW_SERVER_COMMAND='{{NimbusAllowPlayerServerCommand}}' NIMBUS_TRANSFER_MODE='{{NimbusTransferMode}}' NIMBUS_SEAMLESS_ACK='{{NimbusSeamlessPrepareAckTimeoutSeconds}}' NIMBUS_SHORTCUTS='{{NimbusShortcutCommands}}' bash '{{$FullRootDir}}scripts/write-nimbus-server.sh' '{{$FullRootDir}}data/ModConfig/nimbus-server.json'\"",
+        "UpdateSourceConditionSetting": "NimbusInstall",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Render Nimbus backend config",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$env:NIMBUS_WRITE_CONFIG='{{NimbusWriteConfig}}'; $env:NIMBUS_ENABLED='{{NimbusEnabled}}'; $env:NIMBUS_SERVER_ID='{{NimbusServerId}}'; $env:NIMBUS_DISPLAY_NAME='{{NimbusDisplayName}}'; $env:NIMBUS_PUBLIC_HOST='{{NimbusPublicHost}}'; $env:NIMBUS_PUBLIC_PORT='{{NimbusPublicPort}}'; $env:NIMBUS_FALLBACK_PORT='{{$ServerPort}}'; $env:NIMBUS_TAGS='{{NimbusTags}}'; $env:NIMBUS_REGISTRY_URL='{{NimbusRegistryUrl}}'; $env:NIMBUS_SHARED_SECRET='{{NimbusSharedSecret}}'; $env:NIMBUS_HEARTBEAT='{{NimbusHeartbeatIntervalSeconds}}'; $env:NIMBUS_HTTP_TIMEOUT='{{NimbusRegistryHttpTimeoutSeconds}}'; $env:NIMBUS_MAINTENANCE='{{NimbusMaintenance}}'; $env:NIMBUS_RESERVATION_REQUIRED='{{NimbusReservationRequired}}'; $env:NIMBUS_FAIL_CLOSED='{{NimbusFailClosedWhenRegistryUnreachable}}'; $env:NIMBUS_ALLOW_SERVER_COMMAND='{{NimbusAllowPlayerServerCommand}}'; $env:NIMBUS_TRANSFER_MODE='{{NimbusTransferMode}}'; $env:NIMBUS_SEAMLESS_ACK='{{NimbusSeamlessPrepareAckTimeoutSeconds}}'; $env:NIMBUS_SHORTCUTS='{{NimbusShortcutCommands}}'; & '{{$FullRootDir}}scripts\\write-nimbus-server.ps1' '{{$FullRootDir}}data\\ModConfig\\nimbus-server.json'\"",
+        "UpdateSourceConditionSetting": "NimbusInstall",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    }
+]
