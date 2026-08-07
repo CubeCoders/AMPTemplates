@@ -1,0 +1,68 @@
+[
+    {
+        "UpdateStageName": "Application Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}app",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Dotnet Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}dotnet",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": ".NET SDK Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetSDKVersion}}\\\"; cd \\\"{{$FullBaseDir}}\\\" && if [[ -x dotnet/dotnet ]]; then InstalledVersion=$(dotnet/dotnet --version | xargs); else InstalledVersion=\\\"\\\"; fi; if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/{{DotnetRelease}}/releases.json | jq -r \\\".[\\\\\\\"latest-sdk\\\\\\\"]\\\"); fi; if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid .NET SDK version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$DotnetVersion\\\" ]]; then echo \\\".NET SDK v$DotnetVersion already installed. Skipping\\\" && exit 0; else rm -f dotnet.tar.gz; wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/$DotnetVersion/dotnet-sdk-$DotnetVersion-linux-x64.tar.gz || { echo \\\".NET SDK download failed\\\"; exit 1; }; rm -rf dotnet/* && tar -xzf dotnet.tar.gz -C dotnet && rm -f dotnet.tar.gz && echo \\\".NET SDK v$DotnetVersion downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": ".NET SDK Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; $DotnetVersion='{{DotnetSDKVersion}}'; Set-Location '{{$FullBaseDir}}'; if (Test-Path 'dotnet/dotnet.exe') { $InstalledVersion=(& dotnet/dotnet.exe --version).Trim() } else { $InstalledVersion='' }; if ([string]::IsNullOrWhiteSpace($DotnetVersion)) { $DotnetVersion=(Invoke-RestMethod -UseBasicParsing 'https://builds.dotnet.microsoft.com/dotnet/release-metadata/{{DotnetRelease}}/releases.json').'latest-sdk' }; if ($DotnetVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { throw 'Invalid .NET SDK version format specified' }; if ($InstalledVersion -eq $DotnetVersion) { Write-Output \\\".NET SDK v$DotnetVersion already installed. Skipping\\\"; exit 0 }; Invoke-WebRequest -UseBasicParsing -Uri \\\"https://builds.dotnet.microsoft.com/dotnet/Sdk/$DotnetVersion/dotnet-sdk-$DotnetVersion-win-x64.zip\\\" -OutFile dotnet.zip -ErrorAction Stop; Remove-Item 'dotnet/*' -Recurse -Force -ErrorAction SilentlyContinue; Expand-Archive dotnet.zip dotnet -Force; Remove-Item dotnet.zip -Force; Write-Output \\\".NET SDK v$DotnetVersion downloaded\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Nimbus Proxy Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'; $game='{{ServerVersion}}'.Trim(); if ($game -notmatch '^\\d+\\.\\d+\\.\\d+(-rc\\.\\d+|-pre\\.\\d+)?$') { throw 'Invalid Vintage Story version' }; $requested='{{NimbusVersion}}'.Trim(); if ($requested -and -not $requested.StartsWith('v')) { $requested='v'+$requested }; $releases=Invoke-RestMethod -UseBasicParsing 'https://api.github.com/repos/StratumServer/Nimbus/releases?per_page=100'; if ($requested) { $candidates=@($releases | Where-Object { $_.tag_name -eq $requested -and -not $_.draft }) } else { $candidates=@($releases | Where-Object { -not $_.draft -and -not $_.prerelease }) }; $selected=$null; foreach ($release in $candidates) { try { $readme=Invoke-WebRequest -UseBasicParsing -Uri ('https://raw.githubusercontent.com/StratumServer/Nimbus/'+$release.tag_name+'/README.md') | Select-Object -ExpandProperty Content } catch { continue }; $match=[regex]::Match($readme,'Built and tested against Vintage Story\\s+([0-9]+\\.[0-9]+\\.[0-9]+(?:-rc\\.[0-9]+|-pre\\.[0-9]+)?)',[Text.RegularExpressions.RegexOptions]::IgnoreCase); if ($match.Success -and $match.Groups[1].Value -eq $game) { $selected=$release; break } }; if (-not $selected) { throw \\\"No Nimbus release declares compatibility with Vintage Story $game\\\" }; $assetName='Nimbus-'+$selected.tag_name+'.zip'; $asset=$selected.assets | Where-Object { $_.name -eq $assetName } | Select-Object -First 1; if (-not $asset -or $asset.browser_download_url -notmatch '^https://') { throw \\\"Release asset $assetName was not found\\\" }; Invoke-WebRequest -UseBasicParsing -Uri $asset.browser_download_url -OutFile '{{$FullBaseDir}}nimbus.zip'; Remove-Item '{{$FullBaseDir}}nimbus-temp' -Recurse -Force -ErrorAction SilentlyContinue; Expand-Archive '{{$FullBaseDir}}nimbus.zip' '{{$FullBaseDir}}nimbus-temp' -Force; $source=Get-ChildItem '{{$FullBaseDir}}nimbus-temp' -Directory -Recurse | Where-Object { $_.Name -eq 'Nimbus' } | Select-Object -First 1; if (-not $source -or -not (Test-Path (Join-Path $source.FullName 'Nimbus.Proxy.dll'))) { throw 'Nimbus proxy folder was not found in the release' }; Copy-Item (Join-Path $source.FullName '*') '{{$FullBaseDir}}app' -Recurse -Force; [IO.File]::WriteAllText('{{$FullBaseDir}}.nimbus-version',$selected.tag_name); Remove-Item '{{$FullBaseDir}}nimbus-temp','{{$FullBaseDir}}nimbus.zip' -Recurse -Force; Write-Output (\\\"Nimbus $($selected.tag_name) installed for Vintage Story $game\\\")\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Nimbus Proxy Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"set -euo pipefail; game='{{ServerVersion}}'; requested='{{NimbusVersion}}'; [[ \\\"$game\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+(-rc\\.[0-9]+|-pre\\.[0-9]+)?$ ]] || { echo 'Invalid Vintage Story version'; exit 1; }; [[ -z \\\"$requested\\\" || \\\"$requested\\\" == v* ]] || requested=\\\"v$requested\\\"; releases='{{$FullBaseDir}}nimbus-releases.json'; wget -qO \\\"$releases\\\" 'https://api.github.com/repos/StratumServer/Nimbus/releases?per_page=100'; if [[ -n \\\"$requested\\\" ]]; then tags=\\\"$requested\\\"; else tags=$(jq -r '.[] | select((.draft|not) and (.prerelease|not)) | .tag_name' \\\"$releases\\\"); fi; selected=''; while IFS= read -r tag; do [[ -n \\\"$tag\\\" ]] || continue; readme=$(wget -qO- \\\"https://raw.githubusercontent.com/StratumServer/Nimbus/$tag/README.md\\\" || true); compatible=$(printf '%s' \\\"$readme\\\" | grep -Eio 'Built and tested against Vintage Story[[:space:]]+[0-9]+\\.[0-9]+\\.[0-9]+(-rc\\.[0-9]+|-pre\\.[0-9]+)?' | head -1 | awk '{print $7}'); if [[ \\\"$compatible\\\" == \\\"$game\\\" ]]; then selected=\\\"$tag\\\"; break; fi; done <<< \\\"$tags\\\"; [[ -n \\\"$selected\\\" ]] || { echo \\\"No Nimbus release declares compatibility with Vintage Story $game\\\"; exit 1; }; asset=\\\"Nimbus-$selected.zip\\\"; url=$(jq -r --arg tag \\\"$selected\\\" --arg asset \\\"$asset\\\" '.[] | select(.tag_name==$tag) | .assets[] | select(.name==$asset) | .browser_download_url' \\\"$releases\\\" | head -1); [[ \\\"$url\\\" == https://* ]] || { echo \\\"Release asset $asset was not found\\\"; exit 1; }; wget -qO '{{$FullBaseDir}}nimbus.zip' \\\"$url\\\"; rm -rf '{{$FullBaseDir}}nimbus-temp'; mkdir -p '{{$FullBaseDir}}nimbus-temp'; unzip -qo '{{$FullBaseDir}}nimbus.zip' -d '{{$FullBaseDir}}nimbus-temp'; source_dir=$(find '{{$FullBaseDir}}nimbus-temp' -type d -name Nimbus | head -1); [[ -n \\\"$source_dir\\\" && -f \\\"$source_dir/Nimbus.Proxy.dll\\\" ]] || { echo 'Nimbus proxy folder was not found in the release'; exit 1; }; cp -rf \\\"$source_dir/.\\\" '{{$FullBaseDir}}app/'; printf '%s' \\\"$selected\\\" > '{{$FullBaseDir}}.nimbus-version'; rm -rf '{{$FullBaseDir}}nimbus-temp' '{{$FullBaseDir}}nimbus.zip' \\\"$releases\\\"; echo \\\"Nimbus $selected installed for Vintage Story $game\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Start Nimbus Proxy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "StartApplication",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Wait For Nimbus Proxy Start",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "WaitForStartupComplete",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Stop Nimbus Proxy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ShutdownApplication",
+        "SkipOnFailure": false
+    }
+]
