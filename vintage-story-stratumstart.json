@@ -1,5 +1,21 @@
 [
     {
+        "UpdateStageName": "Repair savegame path",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"bash '{{$FullRootDir}}scripts/fix-serverconfig.sh' '{{$FullRootDir}}data'\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Repair savegame path",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"& '{{$FullRootDir}}scripts\\fix-serverconfig.ps1' '{{$FullRootDir}}data'\"",
+        "SkipOnFailure": false
+    },
+    {
         "UpdateStageName": "Render Nimbus backend config",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
