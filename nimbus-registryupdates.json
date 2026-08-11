@@ -26,7 +26,7 @@
         "UpdateSourceArch":  "x86_64",
         "UpdateSource":  "Executable",
         "UpdateSourceData":  "/bin/bash",
-        "UpdateSourceArgs":  "-c \"set -euo pipefail; root=\u0027{{$FullRootDir}}\u0027; if [ -x \\\"$root/dotnet/dotnet\\\" ] \u0026\u0026 \\\"$root/dotnet/dotnet\\\" --list-runtimes | grep -q \u0027^Microsoft.NETCore.App 10\\.\u0027; then echo \u0027[AMP] .NET 10 runtime already installed\u0027; else tmp=\\\"$(mktemp)\\\"; curl -fsSL https://dot.net/v1/dotnet-install.sh -o \\\"$tmp\\\"; bash \\\"$tmp\\\" --channel 10.0 --runtime dotnet --install-dir \\\"$root/dotnet\\\" --no-path; rm -f \\\"$tmp\\\"; fi\"",
+        "UpdateSourceArgs":  "-c \"set -euo pipefail; root=\u0027{{$FullRootDir}}\u0027; if [ -x \\\"$root/dotnet/dotnet\\\" ] \u0026\u0026 \\\"$root/dotnet/dotnet\\\" --list-runtimes | grep -q \u0027^Microsoft.AspNetCore.App 10\\.\u0027; then echo \u0027[AMP] .NET 10 ASP.NET Core runtime already installed\u0027; else tmp=\\\"$(mktemp)\\\"; curl -fsSL https://dot.net/v1/dotnet-install.sh -o \\\"$tmp\\\"; bash \\\"$tmp\\\" --channel 10.0 --runtime aspnetcore --install-dir \\\"$root/dotnet\\\" --no-path; rm -f \\\"$tmp\\\"; fi\"",
         "SkipOnFailure":  false
     },
     {
@@ -34,7 +34,7 @@
         "UpdateSourcePlatform":  "Windows",
         "UpdateSource":  "Executable",
         "UpdateSourceData":  "powershell.exe",
-        "UpdateSourceArgs":  "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference=\u0027Stop\u0027; $root=\u0027{{$FullRootDir}}\u0027; $dotnet=Join-Path $root \u0027dotnet\\dotnet.exe\u0027; $ready=$false; if (Test-Path -LiteralPath $dotnet) { $ready=[bool]((\u0026 $dotnet --list-runtimes) -match \u0027^Microsoft.NETCore.App 10\\.\u0027) }; if ($ready) { Write-Output \u0027[AMP] .NET 10 runtime already installed\u0027 } else { $script=Join-Path $env:TEMP (\u0027dotnet-install-\u0027+[guid]::NewGuid().ToString(\u0027N\u0027)+\u0027.ps1\u0027); try { Invoke-WebRequest -UseBasicParsing -Uri https://dot.net/v1/dotnet-install.ps1 -OutFile $script; \u0026 $script -Channel 10.0 -Runtime dotnet -InstallDir (Join-Path $root \u0027dotnet\u0027) -NoPath } finally { Remove-Item -LiteralPath $script -Force -ErrorAction SilentlyContinue } }\"",
+        "UpdateSourceArgs":  "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference=\u0027Stop\u0027; $root=\u0027{{$FullRootDir}}\u0027; $dotnet=Join-Path $root \u0027dotnet\\dotnet.exe\u0027; $ready=$false; if (Test-Path -LiteralPath $dotnet) { $ready=[bool]((\u0026 $dotnet --list-runtimes) -match \u0027^Microsoft.AspNetCore.App 10\\.\u0027) }; if ($ready) { Write-Output \u0027[AMP] .NET 10 ASP.NET Core runtime already installed\u0027 } else { $script=Join-Path $env:TEMP (\u0027dotnet-install-\u0027+[guid]::NewGuid().ToString(\u0027N\u0027)+\u0027.ps1\u0027); try { Invoke-WebRequest -UseBasicParsing -Uri https://dot.net/v1/dotnet-install.ps1 -OutFile $script; \u0026 $script -Channel 10.0 -Runtime aspnetcore -InstallDir (Join-Path $root \u0027dotnet\u0027) -NoPath } finally { Remove-Item -LiteralPath $script -Force -ErrorAction SilentlyContinue } }\"",
         "SkipOnFailure":  false
     },
     {
