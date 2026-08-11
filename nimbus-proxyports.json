@@ -1,30 +1,6 @@
 [
-    {
-        "Protocol": "Both",
-        "Name": "Proxy Port",
-        "Description": "The port players connect to. This is the only Nimbus port that has to be reachable from the internet.",
-        "Port": 42420,
-        "Ref": "ServerPort"
-    },
-    {
-        "Protocol": "TCP",
-        "Name": "Embedded Registry Port",
-        "Description": "HTTP port the embedded registry serves on so backends can heartbeat to it. Only needs to be reachable from your backend machines, never from the internet.",
-        "Port": 8765,
-        "Ref": "RegistryPort"
-    },
-    {
-        "Protocol": "TCP",
-        "Name": "Admin Socket Port",
-        "Description": "Line-JSON admin socket used by nimctl and panel integrations. Keep this on loopback unless you set an admin secret.",
-        "Port": 42499,
-        "Ref": "AdminPort"
-    },
-    {
-        "Protocol": "TCP",
-        "Name": "Metrics Port",
-        "Description": "Prometheus metrics and the JSON /status endpoint. Keep this private or set a status API token.",
-        "Port": 42500,
-        "Ref": "MetricsPort"
-    }
+  {"Protocol":"Both","Name":"Player Port","Description":"Public Vintage Story port players connect to","Port":42420,"Ref":"ServerPort"},
+  {"Protocol":"TCP","Name":"Registry Port","Description":"Embedded Registry HTTP endpoint used by backends","Port":8765,"Ref":"RegistryPort"},
+  {"Protocol":"TCP","Name":"Admin Port","Description":"Loopback Nimbus administration endpoint","Port":42499,"Ref":"AdminPort"},
+  {"Protocol":"TCP","Name":"Metrics and Status Port","Description":"Loopback metrics and status endpoint","Port":42500,"Ref":"MetricsPort"}
 ]

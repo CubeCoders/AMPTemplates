@@ -1,18 +1,18 @@
 [
-    {
-        "UpdateStageName": "Render nimbus.registry.toml",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"NR_WRITE='{{RegistryWriteConfig}}' NR_BIND='{{RegistryBindScheme}}:{{$RegistryPort}}' NR_SECRET='{{RegistrySharedSecret}}' NR_ACCEPTED='{{RegistryAcceptedSecrets}}' NR_STALE='{{RegistryBackendStaleSeconds}}' NR_DROP='{{RegistryBackendDropSeconds}}' NR_NONCE='{{RegistryNonceWindowSeconds}}' NR_MAXRESTTL='{{RegistryMaxReservationTtlSeconds}}' NR_LOGHB='{{RegistryLogHeartbeats}}' NR_STATEDIR='{{RegistryStateDir}}' NR_APITOK='{{RegistryApiTokensEnabled}}' NR_APIRATE='{{RegistryApiTokensRateLimitPerMinute}}' NR_APIFWD='{{RegistryApiTokensTrustForwardedProto}}' NR_I_ADVERTISE='{{RegistryAdvertiseOnMasterServer}}' NR_I_MSURL='{{RegistryMasterServerUrl}}' NR_I_HOST='{{RegistryPublicHost}}' NR_I_PORT='{{RegistryPublicPort}}' NR_I_NAME='{{RegistryServerName}}' NR_I_DESC='{{RegistryServerDescription}}' NR_I_URL='{{RegistryServerUrl}}' NR_I_ICON='{{RegistryServerIcon}}' NR_I_VHID='{{RegistryVhIdentifier}}' NR_I_GAMEVER='{{RegistryGameVersion}}' NR_I_MAXPLAYERS='{{RegistryMaxPlayersOverride}}' NR_I_MODSOURCE='{{RegistryModSource}}' NR_I_MODS='{{RegistryExplicitMods}}' NR_I_WHITELISTED='{{RegistryListingWhitelisted}}' NR_I_HASPASSWORD='{{RegistryListingHasPassword}}' NR_I_HB='{{RegistryMasterHeartbeatIntervalSeconds}}' NR_I_PSID='{{RegistryPlaystyleId}}' NR_I_PSLANG='{{RegistryPlaystyleLangCode}}' bash '{{$FullRootDir}}scripts/write-registry-toml.sh' '{{$FullRootDir}}Nimbus.Registry/nimbus.registry.toml'\"",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Render nimbus.registry.toml",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$env:NR_WRITE='{{RegistryWriteConfig}}'; $env:NR_BIND='{{RegistryBindScheme}}:{{$RegistryPort}}'; $env:NR_SECRET='{{RegistrySharedSecret}}'; $env:NR_ACCEPTED='{{RegistryAcceptedSecrets}}'; $env:NR_STALE='{{RegistryBackendStaleSeconds}}'; $env:NR_DROP='{{RegistryBackendDropSeconds}}'; $env:NR_NONCE='{{RegistryNonceWindowSeconds}}'; $env:NR_MAXRESTTL='{{RegistryMaxReservationTtlSeconds}}'; $env:NR_LOGHB='{{RegistryLogHeartbeats}}'; $env:NR_STATEDIR='{{RegistryStateDir}}'; $env:NR_APITOK='{{RegistryApiTokensEnabled}}'; $env:NR_APIRATE='{{RegistryApiTokensRateLimitPerMinute}}'; $env:NR_APIFWD='{{RegistryApiTokensTrustForwardedProto}}'; $env:NR_I_ADVERTISE='{{RegistryAdvertiseOnMasterServer}}'; $env:NR_I_MSURL='{{RegistryMasterServerUrl}}'; $env:NR_I_HOST='{{RegistryPublicHost}}'; $env:NR_I_PORT='{{RegistryPublicPort}}'; $env:NR_I_NAME='{{RegistryServerName}}'; $env:NR_I_DESC='{{RegistryServerDescription}}'; $env:NR_I_URL='{{RegistryServerUrl}}'; $env:NR_I_ICON='{{RegistryServerIcon}}'; $env:NR_I_VHID='{{RegistryVhIdentifier}}'; $env:NR_I_GAMEVER='{{RegistryGameVersion}}'; $env:NR_I_MAXPLAYERS='{{RegistryMaxPlayersOverride}}'; $env:NR_I_MODSOURCE='{{RegistryModSource}}'; $env:NR_I_MODS='{{RegistryExplicitMods}}'; $env:NR_I_WHITELISTED='{{RegistryListingWhitelisted}}'; $env:NR_I_HASPASSWORD='{{RegistryListingHasPassword}}'; $env:NR_I_HB='{{RegistryMasterHeartbeatIntervalSeconds}}'; $env:NR_I_PSID='{{RegistryPlaystyleId}}'; $env:NR_I_PSLANG='{{RegistryPlaystyleLangCode}}';& '{{$FullRootDir}}scripts\\write-registry-toml.ps1' '{{$FullRootDir}}Nimbus.Registry\\nimbus.registry.toml'\"",
-        "SkipOnFailure": false
-    }
+  {
+    "UpdateStageName":"Render Nimbus Registry configuration",
+    "UpdateSourcePlatform":"Linux",
+    "UpdateSource":"Executable",
+    "UpdateSourceData":"/bin/bash",
+    "UpdateSourceArgs":"-c \"NR_BIND_ADDRESS='{{$ApplicationIPBinding}}' NR_REGISTRY_PORT='{{$RegistryPort}}' NR_SHARED_SECRET='{{RegistrySharedSecret}}' NR_ADVERTISE='{{RegistryAdvertise}}' NR_PUBLIC_HOST='{{RegistryPublicHost}}' NR_PUBLIC_PORT='{{RegistryPublicPort}}' NR_SERVER_NAME='{{RegistryServerName}}' NR_SERVER_DESCRIPTION='{{RegistryServerDescription}}' NR_GAME_VERSION='{{RegistryGameVersion}}' NR_HAS_PASSWORD='{{RegistryListingHasPassword}}' NR_WHITELISTED='{{RegistryListingWhitelisted}}' bash '{{$FullRootDir}}scripts/write-registry-toml.sh' '{{$FullRootDir}}Nimbus.Registry/nimbus.registry.toml'\"",
+    "SkipOnFailure":false
+  },
+  {
+    "UpdateStageName":"Render Nimbus Registry configuration",
+    "UpdateSourcePlatform":"Windows",
+    "UpdateSource":"Executable",
+    "UpdateSourceData":"powershell.exe",
+    "UpdateSourceArgs":"-NoProfile -ExecutionPolicy Bypass -Command \"$env:NR_BIND_ADDRESS='{{$ApplicationIPBinding}}'; $env:NR_REGISTRY_PORT='{{$RegistryPort}}'; $env:NR_SHARED_SECRET='{{RegistrySharedSecret}}'; $env:NR_ADVERTISE='{{RegistryAdvertise}}'; $env:NR_PUBLIC_HOST='{{RegistryPublicHost}}'; $env:NR_PUBLIC_PORT='{{RegistryPublicPort}}'; $env:NR_SERVER_NAME='{{RegistryServerName}}'; $env:NR_SERVER_DESCRIPTION='{{RegistryServerDescription}}'; $env:NR_GAME_VERSION='{{RegistryGameVersion}}'; $env:NR_HAS_PASSWORD='{{RegistryListingHasPassword}}'; $env:NR_WHITELISTED='{{RegistryListingWhitelisted}}'; & '{{$FullRootDir}}scripts\\write-registry-toml.ps1' '{{$FullRootDir}}Nimbus.Registry\\nimbus.registry.toml'\"",
+    "SkipOnFailure":false
+  }
 ]
