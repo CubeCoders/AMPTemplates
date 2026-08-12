@@ -1,16 +1,16 @@
 Meta.DisplayName=Windrose
-Meta.Description=Windrose Dedicated Server
+Meta.Description=Windrose Dedicated Server with Windrose+ option
 Meta.OS=Windows, Linux
 Meta.AarchSupport=Unknown
 Meta.Arch=x86_64
-Meta.Author=Greelan
+Meta.Author=Greelan, DatGuyMcCaully
 Meta.URL=https://windrosecrew.com/
 Meta.DisplayImageSource=url:https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3041230/7e838d87d787735d5d29d72777c5ee55653dfb2b/header.jpg
 Meta.EndpointURIFormat= 
 Meta.ConfigManifest=windroseconfig.json
 Meta.MetaConfigManifest=windrosemetaconfig.json
 Meta.ConfigRoot=windrose.kvp
-Meta.MinAMPVersion=2.6.0.0
+Meta.MinAMPVersion=2.8.0.4
 Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
 Meta.DockerRequired=False
 Meta.DockerBaseReadOnly=False
@@ -39,7 +39,7 @@ App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} R5 {{$FormattedArgs}} -stdout -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"SteamAppId":"3041230","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"dwmapi=n,b"}
+App.EnvironmentVariables={"SteamAppId":"3041230","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"dwmapi=n,b","WINDROSEPLUS_DISABLE_MULTIPLIER_PAK":"{{WINDROSEPLUS_DISABLE_MULTIPLIER_PAK}}"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter=
 App.ExitMethod=OS_CLOSE
@@ -79,7 +79,7 @@ App.TelnetLoginFormat={0}
 App.TelnetNewLineType=Default
 App.TailLogFilePath={{$FullBaseDir}}R5/Saved/Logs/R5.log
 App.UpdateSources=@IncludeJson[windroseupdates.json]
-App.PreStartStages=[]
+App.PreStartStages=@IncludeJson[windrosestart.json]
 App.CommandTriggers={}
 App.UserActions=[]
 App.ForceUpdate=False
