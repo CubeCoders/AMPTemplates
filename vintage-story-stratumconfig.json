@@ -1,90 +1,1618 @@
 [
-  {"DisplayName":"Server Port","Category":"Vintage Story:stadia_controller","Subcategory":"Network:dns:1","Description":"Private game port used by Nimbus Proxy.","Keywords":"port,backend","FieldName":"$ServerPort","InputType":"number","Hidden":true,"ParamFieldName":"$.Port","IncludeInCommandLine":false,"DefaultValue":"42420","MinValue":1,"MaxValue":65535,"EnumValues":{}},
-  {"DisplayName":"Player Limit","Category":"Vintage Story:stadia_controller","Subcategory":"Players:group:2","Description":"Maximum simultaneous players on this backend.","Keywords":"players,limit","FieldName":"$MaxUsers","InputType":"number","ParamFieldName":"$.MaxClients","IncludeInCommandLine":false,"DefaultValue":"16","MinValue":1,"MaxValue":1000,"EnumValues":{}},
-  {"DisplayName":"Server Name","Category":"Vintage Story:stadia_controller","Subcategory":"Identity:badge:1","Description":"Name shown by the Vintage Story server.","Keywords":"server,name","FieldName":"VS_ServerName","InputType":"text","ParamFieldName":"$.ServerName","IncludeInCommandLine":false,"DefaultValue":"Vintage Story Server","EnumValues":{}},
-  {"DisplayName":"Server Description","Category":"Vintage Story:stadia_controller","Subcategory":"Identity:badge:1","Description":"Short description shown to players.","Keywords":"server,description","FieldName":"VS_ServerDescription","InputType":"text","ParamFieldName":"$.ServerDescription","IncludeInCommandLine":false,"DefaultValue":"","EnumValues":{}},
-  {"DisplayName":"Welcome Message","Category":"Vintage Story:stadia_controller","Subcategory":"Identity:badge:1","Description":"Message shown after a player joins.","Keywords":"welcome,message","FieldName":"VS_WelcomeMessage","InputType":"text","ParamFieldName":"$.WelcomeMessage","IncludeInCommandLine":false,"DefaultValue":"Welcome, {0}, may you survive well and prosper","EnumValues":{}},
-  {"DisplayName":"Server Password","Category":"Vintage Story:stadia_controller","Subcategory":"Access:lock:3","Description":"Optional password required to join. Leave blank for none.","Keywords":"password,access","FieldName":"VS_Password","InputType":"password","ParamFieldName":"$.Password","IncludeInCommandLine":false,"DefaultValue":"","EnumValues":{}},
-  {"DisplayName":"Whitelist Mode","Category":"Vintage Story:stadia_controller","Subcategory":"Access:lock:3","Description":"Default follows Vintage Story dedicated-server policy.","Keywords":"whitelist,access","FieldName":"VS_WhitelistMode","InputType":"enum","ParamFieldName":"$.WhitelistMode","IncludeInCommandLine":false,"DefaultValue":"0","EnumValues":{"0":"Default (on for dedicated servers)","1":"Off","2":"On"}},
-  {"DisplayName":"Allow PvP","Category":"Vintage Story:stadia_controller","Subcategory":"Rules:gavel:4","Description":"Allow players to damage other players.","Keywords":"pvp,rules","FieldName":"VS_AllowPvP","InputType":"checkbox","ParamFieldName":"$.AllowPvP","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Allow Fire Spread","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"Allow fire to spread between flammable blocks.","Keywords":"world,fire,spread","FieldName":"VS_AllowFireSpread","InputType":"checkbox","ParamFieldName":"$.AllowFireSpread","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Pass Time When Empty","Category":"Vintage Story:stadia_controller","Subcategory":"Rules:gavel:4","Description":"Advance world time while no players are online.","Keywords":"time,empty","FieldName":"VS_PassTimeWhenEmpty","InputType":"checkbox","ParamFieldName":"$.PassTimeWhenEmpty","IncludeInCommandLine":false,"DefaultValue":"false","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"World Name","Category":"World:public","Subcategory":"Identity and Preset:language:1","Description":"Name for a newly created world. Most settings here only apply before the first save is generated.","Keywords":"world,name,setup","FieldName":"VS_WorldName","InputType":"text","ParamFieldName":"$.WorldConfig.WorldName","IncludeInCommandLine":false,"DefaultValue":"A new world","EnumValues":{}},
-  {"DisplayName":"World Seed","Category":"World:public","Subcategory":"Identity and Preset:language:1","Description":"Optional seed for a newly created world. Leave blank for random.","Keywords":"world,seed,setup","FieldName":"VS_WorldSeed","InputType":"text","ParamFieldName":"$.WorldConfig.Seed","IncludeInCommandLine":false,"DefaultValue":"","EnumValues":{}},
-  {"DisplayName":"Base Play Style","Category":"World:public","Subcategory":"Identity and Preset:language:1","Description":"Base preset. Every other visible World Setup value is an explicit override.","Keywords":"world,playstyle,setup","FieldName":"VS_PlayStyle","InputType":"enum","ParamFieldName":"$.WorldConfig.PlayStyle","IncludeInCommandLine":false,"DefaultValue":"surviveandbuild","EnumValues":{"surviveandbuild":"Standard (Survive and Build)","exploration":"Exploration","wildernesssurvival":"Wilderness Survival","creativebuilding":"Creative Building"}},
-  {"DisplayName":"World Height","Category":"World:public","Subcategory":"Identity and Preset:language:1","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_WorldHeight","InputType":"enum","ParamFieldName":"$.WorldConfig.MapSizeY","IncludeInCommandLine":false,"DefaultValue":"256","EnumValues":{"128":"128 blocks","192":"192 blocks","256":"256 blocks (Standard)","384":"384 blocks","448":"448 blocks","512":"512 blocks"}},
-  {"DisplayName":"Allow Falling Blocks","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_AllowFallingBlocks","InputType":"checkbox","ParamFieldName":"$.AllowFallingBlocks","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Game Mode","Category":"World:public","Subcategory":"Player Spawn and Death:favorite:2","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_GameMode","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.gameMode","IncludeInCommandLine":false,"DefaultValue":"survival","EnumValues":{"survival":"Survival","creative":"Creative"}},
-  {"DisplayName":"Player Lives","Category":"World:public","Subcategory":"Player Spawn and Death:favorite:2","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_PlayerLives","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.playerlives","IncludeInCommandLine":false,"DefaultValue":"-1","EnumValues":{"1":"1 life","2":"2 lives","3":"3 lives","4":"4 lives","5":"5 lives","10":"10 lives","20":"20 lives","-1":"Infinite"}},
-  {"DisplayName":"Starting Climate","Category":"World:public","Subcategory":"Player Spawn and Death:favorite:2","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_StartingClimate","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.startingClimate","IncludeInCommandLine":false,"DefaultValue":"temperate","EnumValues":{"hot":"Hot","warm":"Warm","temperate":"Temperate","cool":"Cool","icy":"Icy"}},
-  {"DisplayName":"Random Respawn Radius","Category":"World:public","Subcategory":"Player Spawn and Death:favorite:2","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_SpawnRadius","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.spawnRadius","IncludeInCommandLine":false,"DefaultValue":"50","EnumValues":{"0":"0 blocks","25":"25 blocks","50":"50 blocks","100":"100 blocks","250":"250 blocks","500":"500 blocks","1000":"1,000 blocks","2500":"2,500 blocks","5000":"5,000 blocks","10000":"10,000 blocks"}},
-  {"DisplayName":"Grace Timer","Category":"World:public","Subcategory":"Player Spawn and Death:favorite:2","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_GraceTimer","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.graceTimer","IncludeInCommandLine":false,"DefaultValue":"0","EnumValues":{"0":"None","1":"1 day","2":"2 days","3":"3 days","4":"4 days","5":"5 days","10":"10 days"}},
-  {"DisplayName":"Death Punishment","Category":"World:public","Subcategory":"Player Spawn and Death:favorite:2","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_DeathPunishment","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.deathPunishment","IncludeInCommandLine":false,"DefaultValue":"drop","EnumValues":{"drop":"Drop inventory contents","keep":"Keep inventory contents"}},
-  {"DisplayName":"Dropped-on-Death Item Timer","Category":"World:public","Subcategory":"Player Spawn and Death:favorite:2","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_DroppedItemsTimer","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.droppedItemsTimer","IncludeInCommandLine":false,"DefaultValue":"600","EnumValues":{"300":"5 minutes","600":"10 minutes","1200":"20 minutes","1800":"30 minutes","3600":"60 minutes"}},
-  {"DisplayName":"Seasons","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_Seasons","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.seasons","IncludeInCommandLine":false,"DefaultValue":"enabled","EnumValues":{"enabled":"Enabled","spring":"Always spring","summer":"Always summer","fall":"Always fall","winter":"Always winter"}},
-  {"DisplayName":"Days per Month","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_DaysPerMonth","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.daysPerMonth","IncludeInCommandLine":false,"DefaultValue":"9","EnumValues":{"3":"3 days","6":"6 days","9":"9 days (Standard)","12":"12 days","20":"20 days","30":"30 days"}},
-  {"DisplayName":"True Winters","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_HarshWinters","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.harshWinters","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Block Gravity","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_BlockGravity","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.blockGravity","IncludeInCommandLine":false,"DefaultValue":"sandgravel","EnumValues":{"sandgravel":"Sand and gravel","sandgravelsoil":"Sand, gravel, and soil"}},
-  {"DisplayName":"Cave-ins","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_CaveIns","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.caveIns","IncludeInCommandLine":false,"DefaultValue":"off","EnumValues":{"off":"Disabled","on":"Enabled"}},
-  {"DisplayName":"Fire from Lightning","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_LightningFires","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.lightningFires","IncludeInCommandLine":false,"DefaultValue":"false","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Allow Underground Farming","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_AllowUndergroundFarming","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.allowUndergroundFarming","IncludeInCommandLine":false,"DefaultValue":"false","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Prevent Liquid Source Transport","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_NoLiquidSourceTransport","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.noLiquidSourceTransport","IncludeInCommandLine":false,"DefaultValue":"false","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Player Health Points","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_PlayerHealthPoints","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.playerHealthPoints","IncludeInCommandLine":false,"DefaultValue":"15","EnumValues":{"5":"5 hp","10":"10 hp","15":"15 hp (Standard)","20":"20 hp","25":"25 hp","30":"30 hp"}},
-  {"DisplayName":"Health Regeneration Rate","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_PlayerHealthRegenSpeed","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.playerHealthRegenSpeed","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"Normal (100%)","2":"200%","3":"300%","0.25":"25%","0.5":"50%","0.75":"75%","1.5":"150%"}},
-  {"DisplayName":"Hunger Rate","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_PlayerHungerSpeed","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.playerHungerSpeed","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"Normal (100%)","2":"200%","3":"300%","0.25":"25%","0.5":"50%","0.75":"75%","1.5":"150%"}},
-  {"DisplayName":"Lung Capacity","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_LungCapacity","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.lungCapacity","IncludeInCommandLine":false,"DefaultValue":"40000","EnumValues":{"10000":"10 seconds","20000":"20 seconds","30000":"30 seconds","40000":"40 seconds (Standard)","60000":"60 seconds","120000":"2 minutes","3600000":"1 hour"}},
-  {"DisplayName":"Body Temperature Hardiness","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_BodyTemperatureResistance","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.bodyTemperatureResistance","IncludeInCommandLine":false,"DefaultValue":"0","EnumValues":{"0":"0 °C (Standard)","10":"10 °C","20":"20 °C","-40":"-40 °C","-30":"-30 °C","-20":"-20 °C","-10":"-10 °C"}},
-  {"DisplayName":"Walk Speed","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_PlayerMoveSpeed","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.playerMoveSpeed","IncludeInCommandLine":false,"DefaultValue":"1.5","EnumValues":{"1":"Reduced","2":"Fast","3":"Very fast","0.5":"Slow","1.5":"Normal"}},
-  {"DisplayName":"Creature Hostility","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_CreatureHostility","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.creatureHostility","IncludeInCommandLine":false,"DefaultValue":"aggressive","EnumValues":{"aggressive":"Aggressive","passive":"Passive","off":"Off"}},
-  {"DisplayName":"Creature Strength","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_CreatureStrength","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.creatureStrength","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"Normal (100%)","2":"200%","3":"300%","0.25":"25%","0.5":"50%","0.75":"75%","1.5":"150%"}},
-  {"DisplayName":"Creature Swim Speed","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_CreatureSwimSpeed","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.creatureSwimSpeed","IncludeInCommandLine":false,"DefaultValue":"2","EnumValues":{"1":"100%","2":"200% (Standard)","3":"300%","0.5":"50%","1.5":"150%","2.5":"250%"}},
-  {"DisplayName":"Food Spoilage Rate","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_FoodSpoilSpeed","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.foodSpoilSpeed","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"Normal (100%)","2":"200%","3":"300%","0.25":"25%","0.5":"50%","0.75":"75%","1.5":"150%"}},
-  {"DisplayName":"Tree Sapling Growth Time","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_SaplingGrowthRate","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.saplingGrowthRate","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"Normal (100%)","2":"200%","3":"300%","0.25":"25%","0.5":"50%","0.75":"75%","1.5":"150%"}},
-  {"DisplayName":"Tool Durability","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_ToolDurability","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.toolDurability","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"Normal (100%)","2":"200%","3":"300%","0.25":"25%","0.5":"50%","0.75":"75%","1.5":"150%"}},
-  {"DisplayName":"Tool Mining Speed","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_ToolMiningSpeed","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.toolMiningSpeed","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"Normal (100%)","2":"200%","3":"300%","0.25":"25%","0.5":"50%","0.75":"75%","1.5":"150%"}},
-  {"DisplayName":"Prospecting Pick Node Radius","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_PropickNodeSearchRadius","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.propickNodeSearchRadius","IncludeInCommandLine":false,"DefaultValue":"6","EnumValues":{"0":"Disabled","2":"2 blocks","4":"4 blocks","6":"6 blocks (Standard)","8":"8 blocks"}},
-  {"DisplayName":"Microblock Chiseling","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_MicroblockChiseling","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.microblockChiseling","IncludeInCommandLine":false,"DefaultValue":"stonewood","EnumValues":{"off":"Off","stonewood":"Stone, wood, and bricks","all":"Most cubic blocks"}},
-  {"DisplayName":"Coordinate Overlay","Category":"World:public","Subcategory":"Map and Navigation:map:4","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_AllowCoordinateHud","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.allowCoordinateHud","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"World Map","Category":"World:public","Subcategory":"Map and Navigation:map:4","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_AllowMap","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.allowMap","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Color-accurate World Map","Category":"World:public","Subcategory":"Map and Navigation:map:4","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_ColorAccurateWorldmap","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.colorAccurateWorldmap","IncludeInCommandLine":false,"DefaultValue":"false","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Lore Content","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_LoreContent","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.loreContent","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Clutter Obtainable","Category":"World:public","Subcategory":"Survival Challenges:local_fire_department:3","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_ClutterObtainable","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.clutterObtainable","IncludeInCommandLine":false,"DefaultValue":"ifrepaired","EnumValues":{"ifrepaired":"Only after repair with glue","yes":"Yes, without repair","no":"No"}},
-  {"DisplayName":"Temporal Stability","Category":"World:public","Subcategory":"Temporal Stability:storm:5","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_TemporalStability","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.temporalStability","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Temporal Storms","Category":"World:public","Subcategory":"Temporal Stability:storm:5","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_TemporalStorms","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.temporalStorms","IncludeInCommandLine":false,"DefaultValue":"sometimes","EnumValues":{"off":"Off","veryrare":"Very rare","rare":"Rare","sometimes":"Sometimes (Standard)","often":"Often","veryoften":"Very often"}},
-  {"DisplayName":"Temporal Storm Length","Category":"World:public","Subcategory":"Temporal Stability:storm:5","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_TempstormDurationMul","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.tempstormDurationMul","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"Normal (100%)","2":"200%","3":"300%","0.25":"25%","0.5":"50%","0.75":"75%","1.5":"150%"}},
-  {"DisplayName":"Temporal Rifts","Category":"World:public","Subcategory":"Temporal Stability:storm:5","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_TemporalRifts","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.temporalRifts","IncludeInCommandLine":false,"DefaultValue":"visible","EnumValues":{"off":"Off","invisible":"Invisible","visible":"Visible"}},
-  {"DisplayName":"Temporal Gear Respawn Uses","Category":"World:public","Subcategory":"Temporal Stability:storm:5","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_TemporalGearRespawnUses","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.temporalGearRespawnUses","IncludeInCommandLine":false,"DefaultValue":"20","EnumValues":{"1":"1 use","5":"5 uses","10":"10 uses","20":"20 uses (Standard)","50":"50 uses","100":"100 uses","-1":"Infinite"}},
-  {"DisplayName":"Sleeping During Temporal Storms","Category":"World:public","Subcategory":"Temporal Stability:storm:5","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_TemporalStormSleeping","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.temporalStormSleeping","IncludeInCommandLine":false,"DefaultValue":"0","EnumValues":{"0":"Disallowed","1":"Allowed"}},
-  {"DisplayName":"Climate Distribution","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_WorldClimate","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.worldClimate","IncludeInCommandLine":false,"DefaultValue":"realistic","EnumValues":{"realistic":"Realistic","patchy":"Patchy"}},
-  {"DisplayName":"Landcover","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_Landcover","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.landcover","IncludeInCommandLine":false,"DefaultValue":"0.975","EnumValues":{"1":"100%","0.1":"10%","0.25":"25%","0.5":"50%","0.7":"70%","0.9":"90%","0.975":"97.5% (Standard)"}},
-  {"DisplayName":"Landcover Scale","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_OceanScale","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.oceanscale","IncludeInCommandLine":false,"DefaultValue":"5","EnumValues":{"1":"100%","2":"200%","5":"500% (Standard)","0.1":"10%","0.25":"25%","0.5":"50%"}},
-  {"DisplayName":"Upheaval Rate","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_UpheavelCommonness","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.upheavelCommonness","IncludeInCommandLine":false,"DefaultValue":"0.3","EnumValues":{"0":"0%","1":"100%","0.1":"10%","0.2":"20%","0.3":"30% (Standard)","0.4":"40%","0.5":"50%","0.6":"60%"}},
-  {"DisplayName":"Geologic Activity","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_GeologicActivity","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.geologicActivity","IncludeInCommandLine":false,"DefaultValue":"0.05","EnumValues":{"0":"None","0.025":"Very rare","0.05":"Rare (Standard)","0.1":"Uncommon","0.2":"Common","0.4":"Very common"}},
-  {"DisplayName":"Landform Scale","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_LandformScale","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.landformScale","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"100% (Standard)","2":"200%","3":"300%","0.2":"20%","0.5":"50%","1.5":"150%"}},
-  {"DisplayName":"World Width","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_WorldWidth","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.worldWidth","IncludeInCommandLine":false,"DefaultValue":"1024000","EnumValues":{"32768":"32k blocks","102400":"100k blocks","256000":"250k blocks","512000":"500k blocks","1024000":"1M blocks (Standard)","2048000":"2M blocks","4096000":"4M blocks","8192000":"8M blocks"}},
-  {"DisplayName":"World Length","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_WorldLength","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.worldLength","IncludeInCommandLine":false,"DefaultValue":"1024000","EnumValues":{"32768":"32k blocks","102400":"100k blocks","256000":"250k blocks","512000":"500k blocks","1024000":"1M blocks (Standard)","2048000":"2M blocks","4096000":"4M blocks","8192000":"8M blocks"}},
-  {"DisplayName":"World Edge","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_WorldEdge","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.worldEdge","IncludeInCommandLine":false,"DefaultValue":"traversable","EnumValues":{"traversable":"Traversable (can fall down)","blocked":"Blocked"}},
-  {"DisplayName":"Polar-Equator Distance","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_PolarEquatorDistance","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.polarEquatorDistance","IncludeInCommandLine":false,"DefaultValue":"100000","EnumValues":{"5000":"5k blocks","10000":"10k blocks","15000":"15k blocks","25000":"25k blocks","50000":"50k blocks","100000":"100k blocks (Standard)","200000":"200k blocks","400000":"400k blocks","800000":"800k blocks"}},
-  {"DisplayName":"Story Structure Distance","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_StoryStructuresDistScaling","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.storyStructuresDistScaling","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"100% (Standard)","2":"200%","3":"300%","0.15":"15%","0.25":"25%","0.5":"50%","0.75":"75%","1.5":"150%"}},
-  {"DisplayName":"Global Temperature","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_GlobalTemperature","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.globalTemperature","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"Normal","2":"Hot","3":"Very hot","5":"Extreme heat","0.1":"Very cold","0.5":"Cold","1.5":"Warm"}},
-  {"DisplayName":"Global Precipitation","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_GlobalPrecipitation","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.globalPrecipitation","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"Normal","2":"Very wet","3":"Extremely wet","5":"Maximum","0.1":"Very dry","0.5":"Dry","1.5":"Wet"}},
-  {"DisplayName":"Forestation & Shrubs","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_GlobalForestation","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.globalForestation","IncludeInCommandLine":false,"DefaultValue":"0","EnumValues":{"0":"Normal","1":"Full coverage","-1":"None","-0.5":"Sparse","0.5":"Dense"}},
-  {"DisplayName":"Global Deposit Spawn Rate","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_GlobalDepositSpawnRate","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.globalDepositSpawnRate","IncludeInCommandLine":false,"DefaultValue":"1","EnumValues":{"1":"100% (Standard)","2":"200%","3":"300%","0.2":"20%","0.5":"50%","0.75":"75%","1.5":"150%"}},
-  {"DisplayName":"Surface Copper Frequency","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_SurfaceCopperDeposits","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.surfaceCopperDeposits","IncludeInCommandLine":false,"DefaultValue":"0.12","EnumValues":{"0":"None","0.007":"Extremely rare","0.04":"Very rare","0.08":"Rare","0.12":"Standard","0.2":"Common","0.4":"Very common"}},
-  {"DisplayName":"Surface Tin Frequency","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_SurfaceTinDeposits","InputType":"enum","ParamFieldName":"$.WorldConfig.WorldConfiguration.surfaceTinDeposits","IncludeInCommandLine":false,"DefaultValue":"0.007","EnumValues":{"0":"None","0.003":"Extremely rare","0.007":"Standard","0.02":"Rare","0.05":"Uncommon","0.1":"Common"}},
-  {"DisplayName":"Snow and Ice","Category":"World:public","Subcategory":"World Generation:terrain:6","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_SnowAccum","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.snowAccum","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Land Claiming","Category":"World:public","Subcategory":"Multiplayer:groups:7","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_AllowLandClaiming","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.allowLandClaiming","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Class-exclusive Recipes","Category":"World:public","Subcategory":"Multiplayer:groups:7","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_ClassExclusiveRecipes","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.classExclusiveRecipes","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Auction House","Category":"World:public","Subcategory":"Multiplayer:groups:7","Description":"New-world setting. Uses Vintage Story's documented configuration value.","Keywords":"world,setup","FieldName":"VS_AuctionHouse","InputType":"checkbox","ParamFieldName":"$.WorldConfig.WorldConfiguration.auctionHouse","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Nimbus Server ID","Category":"Nimbus Backend:share","Subcategory":"Connection:dns:1","Description":"Unique ID that must exactly match this backend's key in the Proxy Backend Servers map.","Keywords":"nimbus,id","FieldName":"NimbusServerId","InputType":"text","ParamFieldName":"$.ServerId","IncludeInCommandLine":false,"Required":true,"DefaultValue":"","Placeholder":"hub","EnumValues":{}},
-  {"DisplayName":"Nimbus Display Name","Category":"Nimbus Backend:share","Subcategory":"Connection:dns:1","Description":"Friendly name for this backend.","Keywords":"nimbus,name","FieldName":"NimbusDisplayName","InputType":"text","ParamFieldName":"$.DisplayName","IncludeInCommandLine":false,"DefaultValue":"","Placeholder":"Hub","EnumValues":{}},
-  {"DisplayName":"Proxy Public Host","Category":"Nimbus Backend:share","Subcategory":"Connection:dns:1","Description":"Public hostname or IP players use for Nimbus Proxy, not this private backend.","Keywords":"proxy,host","FieldName":"NimbusPublicHost","InputType":"text","ParamFieldName":"$.PublicHost","IncludeInCommandLine":false,"Required":true,"DefaultValue":"","Placeholder":"play.example.com","EnumValues":{}},
-  {"DisplayName":"Proxy Public Port","Category":"Nimbus Backend:share","Subcategory":"Connection:dns:1","Description":"Public player port of Nimbus Proxy.","Keywords":"proxy,port","FieldName":"NimbusPublicPort","InputType":"number","ParamFieldName":"$.PublicPort","IncludeInCommandLine":false,"DefaultValue":"42420","MinValue":1,"MaxValue":65535,"EnumValues":{}},
-  {"DisplayName":"Nimbus Registry URL","Category":"Nimbus Backend:share","Subcategory":"Registry:hub:2","Description":"HTTP URL reachable from this backend for the Proxy's embedded Registry or the optional standalone Registry.","Keywords":"registry,url","FieldName":"NimbusRegistryUrl","InputType":"text","ParamFieldName":"$.RegistryUrl","IncludeInCommandLine":false,"Required":true,"DefaultValue":"","Placeholder":"http://proxy-host:8765","EnumValues":{}},
-  {"DisplayName":"Nimbus Shared Secret","Category":"Nimbus Backend:share","Subcategory":"Registry:hub:2","Description":"Copy the generated shared secret from the Proxy or standalone Registry. Backends never generate it.","Keywords":"registry,secret","FieldName":"NimbusSharedSecret","InputType":"password","ParamFieldName":"$.SharedSecret","IncludeInCommandLine":false,"Required":true,"DefaultValue":"","EnumValues":{}},
-  {"DisplayName":"Maintenance Mode","Category":"Nimbus Backend:share","Subcategory":"Routing:swap_horiz:3","Description":"Keep this backend online but remove it from normal routing.","Keywords":"maintenance,routing","FieldName":"NimbusMaintenance","InputType":"checkbox","ParamFieldName":"$.Maintenance","IncludeInCommandLine":false,"DefaultValue":"false","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Allow Player Server Command","Category":"Nimbus Backend:share","Subcategory":"Routing:swap_horiz:3","Description":"Allow players to use Nimbus server-switch commands.","Keywords":"server,command","FieldName":"NimbusAllowPlayerServerCommand","InputType":"checkbox","ParamFieldName":"$.AllowPlayerServerCommand","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Anonymous Stratum Statistics","Category":"Stratum:security","Subcategory":"Privacy:visibility:1","Description":"Send Stratum's anonymous version and player-count statistics.","Keywords":"stratum,statistics","FieldName":"StratumServerStats","InputType":"checkbox","ParamFieldName":"$.ServerStats.Enabled","IncludeInCommandLine":false,"DefaultValue":"true","EnumValues":{"True":"true","False":"false"}},
-  {"DisplayName":"Stratum Release Tag","Category":"Updates:update","Subcategory":"Version:verified_user:1","Description":"Optional exact Stratum release tag. Leave blank for the latest stable release; the release selects the compatible Vintage Story version.","Keywords":"stratum,version","FieldName":"StratumVersionTag","InputType":"text","ParamFieldName":"StratumVersionTag","IncludeInCommandLine":false,"DefaultValue":"","Placeholder":"v1.22.6-stratum.2","EnumValues":{}},
-  {"DisplayName":"Nimbus Release Tag","Category":"Updates:update","Subcategory":"Version:verified_user:1","Description":"Optional exact Nimbus release tag. Leave blank for the latest stable release.","Keywords":"nimbus,version","FieldName":"NimbusVersionTag","InputType":"text","ParamFieldName":"NimbusVersionTag","IncludeInCommandLine":false,"DefaultValue":"","Placeholder":"v0.5.0","EnumValues":{}}
+    {
+        "DisplayName":  "Server Port",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Network:dns:1",
+        "Description":  "Private game port used by Nimbus Proxy.",
+        "Keywords":  "port,backend",
+        "FieldName":  "$ServerPort",
+        "InputType":  "number",
+        "Hidden":  true,
+        "ParamFieldName":  "$.Port",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "42420",
+        "MinValue":  1,
+        "MaxValue":  65535,
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Player Limit",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Players:group:2",
+        "Description":  "Maximum simultaneous players on this backend.",
+        "Keywords":  "players,limit",
+        "FieldName":  "$MaxUsers",
+        "InputType":  "number",
+        "ParamFieldName":  "$.MaxClients",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "16",
+        "MinValue":  1,
+        "MaxValue":  1000,
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Server Name",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Identity:badge:1",
+        "Description":  "Name shown by the Vintage Story server.",
+        "Keywords":  "server,name",
+        "FieldName":  "VS_ServerName",
+        "InputType":  "text",
+        "ParamFieldName":  "$.ServerName",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "Vintage Story Server",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Server Description",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Identity:badge:1",
+        "Description":  "Short description shown to players.",
+        "Keywords":  "server,description",
+        "FieldName":  "VS_ServerDescription",
+        "InputType":  "text",
+        "ParamFieldName":  "$.ServerDescription",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Welcome Message",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Identity:badge:1",
+        "Description":  "Message shown after a player joins.",
+        "Keywords":  "welcome,message",
+        "FieldName":  "VS_WelcomeMessage",
+        "InputType":  "text",
+        "ParamFieldName":  "$.WelcomeMessage",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "Welcome, {0}, may you survive well and prosper",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Server Password",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Access:lock:3",
+        "Description":  "Optional password required to join. Leave blank for none.",
+        "Keywords":  "password,access",
+        "FieldName":  "VS_Password",
+        "InputType":  "password",
+        "ParamFieldName":  "$.Password",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Whitelist Mode",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Access:lock:3",
+        "Description":  "Default follows Vintage Story dedicated-server policy.",
+        "Keywords":  "whitelist,access",
+        "FieldName":  "VS_WhitelistMode",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.WhitelistMode",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "0",
+        "EnumValues":  {
+                           "0":  "Default (on for dedicated servers)",
+                           "1":  "Off",
+                           "2":  "On"
+                       }
+    },
+    {
+        "DisplayName":  "Allow PvP",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Rules:gavel:4",
+        "Description":  "Allow players to damage other players.",
+        "Keywords":  "pvp,rules",
+        "FieldName":  "VS_AllowPvP",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.AllowPvP",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Allow Fire Spread",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied at every server start. Allow fire to spread between flammable blocks.",
+        "Keywords":  "world,fire,spread",
+        "FieldName":  "VS_AllowFireSpread",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.Server.AllowFireSpread",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Pass Time When Empty",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Rules:gavel:4",
+        "Description":  "Advance world time while no players are online.",
+        "Keywords":  "time,empty",
+        "FieldName":  "VS_PassTimeWhenEmpty",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.PassTimeWhenEmpty",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "false",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Apply World Settings to Existing Save",
+        "Category":  "World:public",
+        "Subcategory":  "Identity and Preset:language:1",
+        "Description":  "Opt in to restart-based overrides for an existing save. Creation-only identity, seed, play style, height, dimensions, climate, and grace timer are never changed. World-generation changes affect only unexplored chunks and may create seams.",
+        "Keywords":  "world,existing,override,restart,enforce",
+        "FieldName":  "VS_ApplyWorldSettingsToExisting",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ApplyToExistingWorld",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "false",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "World Name",
+        "Category":  "World:public",
+        "Subcategory":  "Identity and Preset:language:1",
+        "Description":  "New worlds only. Name for a newly created world. Most settings here only apply before the first save is generated.",
+        "Keywords":  "world,name,setup",
+        "FieldName":  "VS_WorldName",
+        "InputType":  "text",
+        "ParamFieldName":  "$.Creation.WorldName",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "A new world",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "World Seed",
+        "Category":  "World:public",
+        "Subcategory":  "Identity and Preset:language:1",
+        "Description":  "New worlds only. Optional seed for a newly created world. Leave blank for random.",
+        "Keywords":  "world,seed,setup",
+        "FieldName":  "VS_WorldSeed",
+        "InputType":  "text",
+        "ParamFieldName":  "$.Creation.Seed",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Base Play Style",
+        "Category":  "World:public",
+        "Subcategory":  "Identity and Preset:language:1",
+        "Description":  "New worlds only. Base preset. Every other visible World Setup value is an explicit override.",
+        "Keywords":  "world,playstyle,setup",
+        "FieldName":  "VS_PlayStyle",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.Creation.PlayStyle",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "surviveandbuild",
+        "EnumValues":  {
+                           "surviveandbuild":  "Standard (Survive and Build)",
+                           "exploration":  "Exploration",
+                           "wildernesssurvival":  "Wilderness Survival",
+                           "creativebuilding":  "Creative Building"
+                       }
+    },
+    {
+        "DisplayName":  "World Height",
+        "Category":  "World:public",
+        "Subcategory":  "Identity and Preset:language:1",
+        "Description":  "New worlds only. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_WorldHeight",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.Creation.MapSizeY",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "256",
+        "EnumValues":  {
+                           "128":  "128 blocks",
+                           "192":  "192 blocks",
+                           "256":  "256 blocks (Standard)",
+                           "384":  "384 blocks",
+                           "448":  "448 blocks",
+                           "512":  "512 blocks"
+                       }
+    },
+    {
+        "DisplayName":  "Allow Falling Blocks",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied at every server start. Allow gravity-affected blocks to fall.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_AllowFallingBlocks",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.Server.AllowFallingBlocks",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Game Mode",
+        "Category":  "World:public",
+        "Subcategory":  "Player Spawn and Death:favorite:2",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_GameMode",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.gameMode",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "survival",
+        "EnumValues":  {
+                           "survival":  "Survival",
+                           "creative":  "Creative"
+                       }
+    },
+    {
+        "DisplayName":  "Player Lives",
+        "Category":  "World:public",
+        "Subcategory":  "Player Spawn and Death:favorite:2",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_PlayerLives",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.playerlives",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "-1",
+        "EnumValues":  {
+                           "1":  "1 life",
+                           "2":  "2 lives",
+                           "3":  "3 lives",
+                           "4":  "4 lives",
+                           "5":  "5 lives",
+                           "10":  "10 lives",
+                           "20":  "20 lives",
+                           "-1":  "Infinite"
+                       }
+    },
+    {
+        "DisplayName":  "Starting Climate",
+        "Category":  "World:public",
+        "Subcategory":  "Player Spawn and Death:favorite:2",
+        "Description":  "New worlds only. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_StartingClimate",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.CreationOnlyWorldConfiguration.startingClimate",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "temperate",
+        "EnumValues":  {
+                           "hot":  "Hot",
+                           "warm":  "Warm",
+                           "temperate":  "Temperate",
+                           "cool":  "Cool",
+                           "icy":  "Icy"
+                       }
+    },
+    {
+        "DisplayName":  "Random Respawn Radius",
+        "Category":  "World:public",
+        "Subcategory":  "Player Spawn and Death:favorite:2",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_SpawnRadius",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.spawnRadius",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "50",
+        "EnumValues":  {
+                           "0":  "0 blocks",
+                           "25":  "25 blocks",
+                           "50":  "50 blocks",
+                           "100":  "100 blocks",
+                           "250":  "250 blocks",
+                           "500":  "500 blocks",
+                           "1000":  "1,000 blocks",
+                           "2500":  "2,500 blocks",
+                           "5000":  "5,000 blocks",
+                           "10000":  "10,000 blocks"
+                       }
+    },
+    {
+        "DisplayName":  "Grace Timer",
+        "Category":  "World:public",
+        "Subcategory":  "Player Spawn and Death:favorite:2",
+        "Description":  "New worlds only. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_GraceTimer",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.CreationOnlyWorldConfiguration.graceTimer",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "0",
+        "EnumValues":  {
+                           "0":  "None",
+                           "1":  "1 day",
+                           "2":  "2 days",
+                           "3":  "3 days",
+                           "4":  "4 days",
+                           "5":  "5 days",
+                           "10":  "10 days"
+                       }
+    },
+    {
+        "DisplayName":  "Death Punishment",
+        "Category":  "World:public",
+        "Subcategory":  "Player Spawn and Death:favorite:2",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_DeathPunishment",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.deathPunishment",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "drop",
+        "EnumValues":  {
+                           "drop":  "Drop inventory contents",
+                           "keep":  "Keep inventory contents"
+                       }
+    },
+    {
+        "DisplayName":  "Dropped-on-Death Item Timer",
+        "Category":  "World:public",
+        "Subcategory":  "Player Spawn and Death:favorite:2",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_DroppedItemsTimer",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.droppedItemsTimer",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "600",
+        "EnumValues":  {
+                           "300":  "5 minutes",
+                           "600":  "10 minutes",
+                           "1200":  "20 minutes",
+                           "1800":  "30 minutes",
+                           "3600":  "60 minutes"
+                       }
+    },
+    {
+        "DisplayName":  "Seasons",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_Seasons",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.seasons",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "enabled",
+        "EnumValues":  {
+                           "enabled":  "Enabled",
+                           "spring":  "Always spring",
+                           "summer":  "Always summer",
+                           "fall":  "Always fall",
+                           "winter":  "Always winter"
+                       }
+    },
+    {
+        "DisplayName":  "Days per Month",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_DaysPerMonth",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.daysPerMonth",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "9",
+        "EnumValues":  {
+                           "3":  "3 days",
+                           "6":  "6 days",
+                           "9":  "9 days (Standard)",
+                           "12":  "12 days",
+                           "20":  "20 days",
+                           "30":  "30 days"
+                       }
+    },
+    {
+        "DisplayName":  "True Winters",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_HarshWinters",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.harshWinters",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Block Gravity",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_BlockGravity",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.blockGravity",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "sandgravel",
+        "EnumValues":  {
+                           "sandgravel":  "Sand and gravel",
+                           "sandgravelsoil":  "Sand, gravel, and soil"
+                       }
+    },
+    {
+        "DisplayName":  "Cave-ins",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_CaveIns",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.caveIns",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "off",
+        "EnumValues":  {
+                           "off":  "Disabled",
+                           "on":  "Enabled"
+                       }
+    },
+    {
+        "DisplayName":  "Fire from Lightning",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_LightningFires",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.lightningFires",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "false",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Allow Underground Farming",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_AllowUndergroundFarming",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.allowUndergroundFarming",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "false",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Prevent Liquid Source Transport",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_NoLiquidSourceTransport",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.noLiquidSourceTransport",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "false",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Player Health Points",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_PlayerHealthPoints",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.playerHealthPoints",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "15",
+        "EnumValues":  {
+                           "5":  "5 hp",
+                           "10":  "10 hp",
+                           "15":  "15 hp (Standard)",
+                           "20":  "20 hp",
+                           "25":  "25 hp",
+                           "30":  "30 hp"
+                       }
+    },
+    {
+        "DisplayName":  "Health Regeneration Rate",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_PlayerHealthRegenSpeed",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.playerHealthRegenSpeed",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "Normal (100%)",
+                           "2":  "200%",
+                           "3":  "300%",
+                           "0.25":  "25%",
+                           "0.5":  "50%",
+                           "0.75":  "75%",
+                           "1.5":  "150%"
+                       }
+    },
+    {
+        "DisplayName":  "Hunger Rate",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_PlayerHungerSpeed",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.playerHungerSpeed",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "Normal (100%)",
+                           "2":  "200%",
+                           "3":  "300%",
+                           "0.25":  "25%",
+                           "0.5":  "50%",
+                           "0.75":  "75%",
+                           "1.5":  "150%"
+                       }
+    },
+    {
+        "DisplayName":  "Lung Capacity",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_LungCapacity",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.lungCapacity",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "40000",
+        "EnumValues":  {
+                           "10000":  "10 seconds",
+                           "20000":  "20 seconds",
+                           "30000":  "30 seconds",
+                           "40000":  "40 seconds (Standard)",
+                           "60000":  "60 seconds",
+                           "120000":  "2 minutes",
+                           "3600000":  "1 hour"
+                       }
+    },
+    {
+        "DisplayName":  "Body Temperature Hardiness",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_BodyTemperatureResistance",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.bodyTemperatureResistance",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "0",
+        "EnumValues":  {
+                           "0":  "0 Â°C (Standard)",
+                           "10":  "10 Â°C",
+                           "20":  "20 Â°C",
+                           "-40":  "-40 Â°C",
+                           "-30":  "-30 Â°C",
+                           "-20":  "-20 Â°C",
+                           "-10":  "-10 Â°C"
+                       }
+    },
+    {
+        "DisplayName":  "Walk Speed",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_PlayerMoveSpeed",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.playerMoveSpeed",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1.5",
+        "EnumValues":  {
+                           "1":  "Reduced",
+                           "2":  "Fast",
+                           "3":  "Very fast",
+                           "0.5":  "Slow",
+                           "1.5":  "Normal"
+                       }
+    },
+    {
+        "DisplayName":  "Creature Hostility",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_CreatureHostility",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.creatureHostility",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "aggressive",
+        "EnumValues":  {
+                           "aggressive":  "Aggressive",
+                           "passive":  "Passive",
+                           "off":  "Off"
+                       }
+    },
+    {
+        "DisplayName":  "Creature Strength",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_CreatureStrength",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.creatureStrength",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "Normal (100%)",
+                           "2":  "200%",
+                           "3":  "300%",
+                           "0.25":  "25%",
+                           "0.5":  "50%",
+                           "0.75":  "75%",
+                           "1.5":  "150%"
+                       }
+    },
+    {
+        "DisplayName":  "Creature Swim Speed",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_CreatureSwimSpeed",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.creatureSwimSpeed",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "2",
+        "EnumValues":  {
+                           "1":  "100%",
+                           "2":  "200% (Standard)",
+                           "3":  "300%",
+                           "0.5":  "50%",
+                           "1.5":  "150%",
+                           "2.5":  "250%"
+                       }
+    },
+    {
+        "DisplayName":  "Food Spoilage Rate",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_FoodSpoilSpeed",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.foodSpoilSpeed",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "Normal (100%)",
+                           "2":  "200%",
+                           "3":  "300%",
+                           "0.25":  "25%",
+                           "0.5":  "50%",
+                           "0.75":  "75%",
+                           "1.5":  "150%"
+                       }
+    },
+    {
+        "DisplayName":  "Tree Sapling Growth Time",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_SaplingGrowthRate",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.saplingGrowthRate",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "Normal (100%)",
+                           "2":  "200%",
+                           "3":  "300%",
+                           "0.25":  "25%",
+                           "0.5":  "50%",
+                           "0.75":  "75%",
+                           "1.5":  "150%"
+                       }
+    },
+    {
+        "DisplayName":  "Tool Durability",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_ToolDurability",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.toolDurability",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "Normal (100%)",
+                           "2":  "200%",
+                           "3":  "300%",
+                           "0.25":  "25%",
+                           "0.5":  "50%",
+                           "0.75":  "75%",
+                           "1.5":  "150%"
+                       }
+    },
+    {
+        "DisplayName":  "Tool Mining Speed",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_ToolMiningSpeed",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.toolMiningSpeed",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "Normal (100%)",
+                           "2":  "200%",
+                           "3":  "300%",
+                           "0.25":  "25%",
+                           "0.5":  "50%",
+                           "0.75":  "75%",
+                           "1.5":  "150%"
+                       }
+    },
+    {
+        "DisplayName":  "Prospecting Pick Node Radius",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_PropickNodeSearchRadius",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.propickNodeSearchRadius",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "6",
+        "EnumValues":  {
+                           "0":  "Disabled",
+                           "2":  "2 blocks",
+                           "4":  "4 blocks",
+                           "6":  "6 blocks (Standard)",
+                           "8":  "8 blocks"
+                       }
+    },
+    {
+        "DisplayName":  "Microblock Chiseling",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_MicroblockChiseling",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.microblockChiseling",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "stonewood",
+        "EnumValues":  {
+                           "off":  "Off",
+                           "stonewood":  "Stone, wood, and bricks",
+                           "all":  "Most cubic blocks"
+                       }
+    },
+    {
+        "DisplayName":  "Coordinate Overlay",
+        "Category":  "World:public",
+        "Subcategory":  "Map and Navigation:map:4",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_AllowCoordinateHud",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.allowCoordinateHud",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "World Map",
+        "Category":  "World:public",
+        "Subcategory":  "Map and Navigation:map:4",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_AllowMap",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.allowMap",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Color-accurate World Map",
+        "Category":  "World:public",
+        "Subcategory":  "Map and Navigation:map:4",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_ColorAccurateWorldmap",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.colorAccurateWorldmap",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "false",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Lore Content",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_LoreContent",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.loreContent",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Clutter Obtainable",
+        "Category":  "World:public",
+        "Subcategory":  "Survival Challenges:local_fire_department:3",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_ClutterObtainable",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.clutterObtainable",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "ifrepaired",
+        "EnumValues":  {
+                           "ifrepaired":  "Only after repair with glue",
+                           "yes":  "Yes, without repair",
+                           "no":  "No"
+                       }
+    },
+    {
+        "DisplayName":  "Temporal Stability",
+        "Category":  "World:public",
+        "Subcategory":  "Temporal Stability:storm:5",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_TemporalStability",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.temporalStability",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Temporal Storms",
+        "Category":  "World:public",
+        "Subcategory":  "Temporal Stability:storm:5",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_TemporalStorms",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.temporalStorms",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "sometimes",
+        "EnumValues":  {
+                           "off":  "Off",
+                           "veryrare":  "Very rare",
+                           "rare":  "Rare",
+                           "sometimes":  "Sometimes (Standard)",
+                           "often":  "Often",
+                           "veryoften":  "Very often"
+                       }
+    },
+    {
+        "DisplayName":  "Temporal Storm Length",
+        "Category":  "World:public",
+        "Subcategory":  "Temporal Stability:storm:5",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_TempstormDurationMul",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.tempstormDurationMul",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "Normal (100%)",
+                           "2":  "200%",
+                           "3":  "300%",
+                           "0.25":  "25%",
+                           "0.5":  "50%",
+                           "0.75":  "75%",
+                           "1.5":  "150%"
+                       }
+    },
+    {
+        "DisplayName":  "Temporal Rifts",
+        "Category":  "World:public",
+        "Subcategory":  "Temporal Stability:storm:5",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_TemporalRifts",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.temporalRifts",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "visible",
+        "EnumValues":  {
+                           "off":  "Off",
+                           "invisible":  "Invisible",
+                           "visible":  "Visible"
+                       }
+    },
+    {
+        "DisplayName":  "Temporal Gear Respawn Uses",
+        "Category":  "World:public",
+        "Subcategory":  "Temporal Stability:storm:5",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_TemporalGearRespawnUses",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.temporalGearRespawnUses",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "20",
+        "EnumValues":  {
+                           "1":  "1 use",
+                           "5":  "5 uses",
+                           "10":  "10 uses",
+                           "20":  "20 uses (Standard)",
+                           "50":  "50 uses",
+                           "100":  "100 uses",
+                           "-1":  "Infinite"
+                       }
+    },
+    {
+        "DisplayName":  "Sleeping During Temporal Storms",
+        "Category":  "World:public",
+        "Subcategory":  "Temporal Stability:storm:5",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_TemporalStormSleeping",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorld.temporalStormSleeping",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "0",
+        "EnumValues":  {
+                           "0":  "Disallowed",
+                           "1":  "Allowed"
+                       }
+    },
+    {
+        "DisplayName":  "Climate Distribution",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_WorldClimate",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.worldClimate",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "realistic",
+        "EnumValues":  {
+                           "realistic":  "Realistic",
+                           "patchy":  "Patchy"
+                       }
+    },
+    {
+        "DisplayName":  "Landcover",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_Landcover",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.landcover",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "0.975",
+        "EnumValues":  {
+                           "1":  "100%",
+                           "0.1":  "10%",
+                           "0.25":  "25%",
+                           "0.5":  "50%",
+                           "0.7":  "70%",
+                           "0.9":  "90%",
+                           "0.975":  "97.5% (Standard)"
+                       }
+    },
+    {
+        "DisplayName":  "Landcover Scale",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_OceanScale",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.oceanscale",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "5",
+        "EnumValues":  {
+                           "1":  "100%",
+                           "2":  "200%",
+                           "5":  "500% (Standard)",
+                           "0.1":  "10%",
+                           "0.25":  "25%",
+                           "0.5":  "50%"
+                       }
+    },
+    {
+        "DisplayName":  "Upheaval Rate",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_UpheavelCommonness",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.upheavelCommonness",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "0.3",
+        "EnumValues":  {
+                           "0":  "0%",
+                           "1":  "100%",
+                           "0.1":  "10%",
+                           "0.2":  "20%",
+                           "0.3":  "30% (Standard)",
+                           "0.4":  "40%",
+                           "0.5":  "50%",
+                           "0.6":  "60%"
+                       }
+    },
+    {
+        "DisplayName":  "Geologic Activity",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_GeologicActivity",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.geologicActivity",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "0.05",
+        "EnumValues":  {
+                           "0":  "None",
+                           "0.025":  "Very rare",
+                           "0.05":  "Rare (Standard)",
+                           "0.1":  "Uncommon",
+                           "0.2":  "Common",
+                           "0.4":  "Very common"
+                       }
+    },
+    {
+        "DisplayName":  "Landform Scale",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_LandformScale",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.landformScale",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "100% (Standard)",
+                           "2":  "200%",
+                           "3":  "300%",
+                           "0.2":  "20%",
+                           "0.5":  "50%",
+                           "1.5":  "150%"
+                       }
+    },
+    {
+        "DisplayName":  "World Width",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "New worlds only. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_WorldWidth",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.CreationOnlyWorldConfiguration.worldWidth",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1024000",
+        "EnumValues":  {
+                           "32768":  "32k blocks",
+                           "102400":  "100k blocks",
+                           "256000":  "250k blocks",
+                           "512000":  "500k blocks",
+                           "1024000":  "1M blocks (Standard)",
+                           "2048000":  "2M blocks",
+                           "4096000":  "4M blocks",
+                           "8192000":  "8M blocks"
+                       }
+    },
+    {
+        "DisplayName":  "World Length",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "New worlds only. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_WorldLength",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.CreationOnlyWorldConfiguration.worldLength",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1024000",
+        "EnumValues":  {
+                           "32768":  "32k blocks",
+                           "102400":  "100k blocks",
+                           "256000":  "250k blocks",
+                           "512000":  "500k blocks",
+                           "1024000":  "1M blocks (Standard)",
+                           "2048000":  "2M blocks",
+                           "4096000":  "4M blocks",
+                           "8192000":  "8M blocks"
+                       }
+    },
+    {
+        "DisplayName":  "World Edge",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_WorldEdge",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.worldEdge",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "traversable",
+        "EnumValues":  {
+                           "traversable":  "Traversable (can fall down)",
+                           "blocked":  "Blocked"
+                       }
+    },
+    {
+        "DisplayName":  "Polar-Equator Distance",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_PolarEquatorDistance",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.polarEquatorDistance",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "100000",
+        "EnumValues":  {
+                           "5000":  "5k blocks",
+                           "10000":  "10k blocks",
+                           "15000":  "15k blocks",
+                           "25000":  "25k blocks",
+                           "50000":  "50k blocks",
+                           "100000":  "100k blocks (Standard)",
+                           "200000":  "200k blocks",
+                           "400000":  "400k blocks",
+                           "800000":  "800k blocks"
+                       }
+    },
+    {
+        "DisplayName":  "Story Structure Distance",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_StoryStructuresDistScaling",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.storyStructuresDistScaling",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "100% (Standard)",
+                           "2":  "200%",
+                           "3":  "300%",
+                           "0.15":  "15%",
+                           "0.25":  "25%",
+                           "0.5":  "50%",
+                           "0.75":  "75%",
+                           "1.5":  "150%"
+                       }
+    },
+    {
+        "DisplayName":  "Global Temperature",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_GlobalTemperature",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.globalTemperature",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "Normal",
+                           "2":  "Hot",
+                           "3":  "Very hot",
+                           "5":  "Extreme heat",
+                           "0.1":  "Very cold",
+                           "0.5":  "Cold",
+                           "1.5":  "Warm"
+                       }
+    },
+    {
+        "DisplayName":  "Global Precipitation",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_GlobalPrecipitation",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.globalPrecipitation",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "Normal",
+                           "2":  "Very wet",
+                           "3":  "Extremely wet",
+                           "5":  "Maximum",
+                           "0.1":  "Very dry",
+                           "0.5":  "Dry",
+                           "1.5":  "Wet"
+                       }
+    },
+    {
+        "DisplayName":  "Forestation \u0026 Shrubs",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_GlobalForestation",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.globalForestation",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "0",
+        "EnumValues":  {
+                           "0":  "Normal",
+                           "1":  "Full coverage",
+                           "-1":  "None",
+                           "-0.5":  "Sparse",
+                           "0.5":  "Dense"
+                       }
+    },
+    {
+        "DisplayName":  "Global Deposit Spawn Rate",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_GlobalDepositSpawnRate",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.globalDepositSpawnRate",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "1",
+        "EnumValues":  {
+                           "1":  "100% (Standard)",
+                           "2":  "200%",
+                           "3":  "300%",
+                           "0.2":  "20%",
+                           "0.5":  "50%",
+                           "0.75":  "75%",
+                           "1.5":  "150%"
+                       }
+    },
+    {
+        "DisplayName":  "Surface Copper Frequency",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_SurfaceCopperDeposits",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.surfaceCopperDeposits",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "0.12",
+        "EnumValues":  {
+                           "0":  "None",
+                           "0.007":  "Extremely rare",
+                           "0.04":  "Very rare",
+                           "0.08":  "Rare",
+                           "0.12":  "Standard",
+                           "0.2":  "Common",
+                           "0.4":  "Very common"
+                       }
+    },
+    {
+        "DisplayName":  "Surface Tin Frequency",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. With existing-world enforcement enabled, this affects unexplored chunks and can create terrain seams. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_SurfaceTinDeposits",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.ExistingWorldgen.surfaceTinDeposits",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "0.007",
+        "EnumValues":  {
+                           "0":  "None",
+                           "0.003":  "Extremely rare",
+                           "0.007":  "Standard",
+                           "0.02":  "Rare",
+                           "0.05":  "Uncommon",
+                           "0.1":  "Common"
+                       }
+    },
+    {
+        "DisplayName":  "Snow and Ice",
+        "Category":  "World:public",
+        "Subcategory":  "World Generation:terrain:6",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_SnowAccum",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.snowAccum",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Land Claiming",
+        "Category":  "World:public",
+        "Subcategory":  "Multiplayer:groups:7",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_AllowLandClaiming",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.allowLandClaiming",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Class-exclusive Recipes",
+        "Category":  "World:public",
+        "Subcategory":  "Multiplayer:groups:7",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_ClassExclusiveRecipes",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.classExclusiveRecipes",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Auction House",
+        "Category":  "World:public",
+        "Subcategory":  "Multiplayer:groups:7",
+        "Description":  "Applied to new worlds. Enable existing-world enforcement to apply it again at each restart. New-world setting. Uses Vintage Story\u0027s documented configuration value.",
+        "Keywords":  "world,setup",
+        "FieldName":  "VS_AuctionHouse",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ExistingWorld.auctionHouse",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Nimbus Server ID",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Connection:dns:1",
+        "Description":  "Unique ID that must exactly match this backend\u0027s key in the Proxy Backend Servers map.",
+        "Keywords":  "nimbus,id",
+        "FieldName":  "NimbusServerId",
+        "InputType":  "text",
+        "ParamFieldName":  "$.ServerId",
+        "IncludeInCommandLine":  false,
+        "Required":  true,
+        "DefaultValue":  "",
+        "Placeholder":  "hub",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Nimbus Display Name",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Connection:dns:1",
+        "Description":  "Friendly name for this backend.",
+        "Keywords":  "nimbus,name",
+        "FieldName":  "NimbusDisplayName",
+        "InputType":  "text",
+        "ParamFieldName":  "$.DisplayName",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "Placeholder":  "Hub",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Proxy Public Host",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Connection:dns:1",
+        "Description":  "Public hostname or IP players use for Nimbus Proxy, not this private backend.",
+        "Keywords":  "proxy,host",
+        "FieldName":  "NimbusPublicHost",
+        "InputType":  "text",
+        "ParamFieldName":  "$.PublicHost",
+        "IncludeInCommandLine":  false,
+        "Required":  true,
+        "DefaultValue":  "",
+        "Placeholder":  "play.example.com",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Proxy Public Port",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Connection:dns:1",
+        "Description":  "Public player port of Nimbus Proxy.",
+        "Keywords":  "proxy,port",
+        "FieldName":  "NimbusPublicPort",
+        "InputType":  "number",
+        "ParamFieldName":  "$.PublicPort",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "42420",
+        "MinValue":  1,
+        "MaxValue":  65535,
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Nimbus Registry URL",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Registry:hub:2",
+        "Description":  "HTTP URL reachable from this backend for the Proxy\u0027s embedded Registry or the optional standalone Registry.",
+        "Keywords":  "registry,url",
+        "FieldName":  "NimbusRegistryUrl",
+        "InputType":  "text",
+        "ParamFieldName":  "$.RegistryUrl",
+        "IncludeInCommandLine":  false,
+        "Required":  true,
+        "DefaultValue":  "",
+        "Placeholder":  "http://proxy-host:8765",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Nimbus Shared Secret",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Registry:hub:2",
+        "Description":  "Copy the generated shared secret from the Proxy or standalone Registry. Backends never generate it.",
+        "Keywords":  "registry,secret",
+        "FieldName":  "NimbusSharedSecret",
+        "InputType":  "password",
+        "ParamFieldName":  "$.SharedSecret",
+        "IncludeInCommandLine":  false,
+        "Required":  true,
+        "DefaultValue":  "",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Maintenance Mode",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Routing:swap_horiz:3",
+        "Description":  "Keep this backend online but remove it from normal routing.",
+        "Keywords":  "maintenance,routing",
+        "FieldName":  "NimbusMaintenance",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.Maintenance",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "false",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Allow Player Server Command",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Routing:swap_horiz:3",
+        "Description":  "Allow players to use Nimbus server-switch commands.",
+        "Keywords":  "server,command",
+        "FieldName":  "NimbusAllowPlayerServerCommand",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.AllowPlayerServerCommand",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Anonymous Stratum Statistics",
+        "Category":  "Stratum:security",
+        "Subcategory":  "Privacy:visibility:1",
+        "Description":  "Send Stratum\u0027s anonymous version and player-count statistics.",
+        "Keywords":  "stratum,statistics",
+        "FieldName":  "StratumServerStats",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ServerStats.Enabled",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Stratum Release Tag",
+        "Category":  "Updates:update",
+        "Subcategory":  "Version:verified_user:1",
+        "Description":  "Optional exact Stratum release tag. Leave blank for the latest stable release; the release selects the compatible Vintage Story version.",
+        "Keywords":  "stratum,version",
+        "FieldName":  "StratumVersionTag",
+        "InputType":  "text",
+        "ParamFieldName":  "StratumVersionTag",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "Placeholder":  "v1.22.6-stratum.2",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Nimbus Release Tag",
+        "Category":  "Updates:update",
+        "Subcategory":  "Version:verified_user:1",
+        "Description":  "Optional exact Nimbus release tag. Leave blank for the latest stable release.",
+        "Keywords":  "nimbus,version",
+        "FieldName":  "NimbusVersionTag",
+        "InputType":  "text",
+        "ParamFieldName":  "NimbusVersionTag",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "Placeholder":  "v0.5.0",
+        "EnumValues":  {
+
+                       }
+    }
 ]
