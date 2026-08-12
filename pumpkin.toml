@@ -1,18 +1,50 @@
+java_edition = true
+java_edition_address = "0.0.0.0:25565"
+bedrock_edition = true
+bedrock_edition_address = "0.0.0.0:19132"
+seed = ""
+max_players = 1000
+view_distance = 16
+simulation_distance = 10
+default_difficulty = "Normal"
+op_permission_level = 4
+allow_nether = true
+allow_end = true
+hardcore = false
+online_mode = true
+encryption = true
+motd = "A blazingly fast Pumpkin server!"
+tps = 20.0
+default_gamemode = "Survival"
+force_gamemode = false
+scrub_ips = true
+use_favicon = true
+favicon_path = "icon.png"
+default_level_name = "world"
+allow_chat_reports = false
+white_list = false
+enforce_whitelist = false
+
 [logging]
 enabled = true
 level = "Info"
 env = true
 threads = true
-color = true
+color = false
 timestamp = true
 file = "latest.log"
 
-[resource_pack]
+[resource_pack.java]
 enabled = false
 url = ""
 sha1 = ""
 prompt_message = ""
 force = false
+
+[resource_pack.bedrock]
+enabled = false
+force = false
+packs = []
 
 [world]
 lighting = "default"
@@ -57,7 +89,7 @@ address = "0.0.0.0:25565"
 enabled = false
 address = "0.0.0.0:25575"
 password = ""
-max_connections = 0
+max_connections = 10
 
 [networking.rcon.logging]
 logged_successfully = true
@@ -75,7 +107,12 @@ secret = ""
 [networking.proxy.bungeecord]
 enabled = false
 
-[networking.packet_compression]
+[networking.java_compression]
+enabled = true
+threshold = 256
+level = 4
+
+[networking.bedrock_compression]
 enabled = true
 threshold = 256
 level = 4

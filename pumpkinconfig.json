@@ -653,13 +653,13 @@
         "IncludeInCommandLine": false
     },
     {
-        "DisplayName": "Enable Packet Compression",
+        "DisplayName": "Java: Enable Packet Compression",
         "Category": "Minecraft:stadia_controller",
         "Subcategory": "Performance:speed:4",
         "Description": "Whether packet compression is enabled.",
         "Keywords": "compression,enable,packet_compression",
         "FieldName": "networking_packet_compression_enabled",
-        "ParamFieldName": "networking.packet_compression.enabled",
+        "ParamFieldName": "networking.java_compression.enabled",
         "InputType": "checkbox",
         "DefaultValue": "true",
         "EnumValues": {
@@ -669,13 +669,13 @@
         "IncludeInCommandLine": false
     },
     {
-        "DisplayName": "Compression Threshold",
+        "DisplayName": "Java: Compression Threshold",
         "Category": "Minecraft:stadia_controller",
         "Subcategory": "Performance:speed:4",
         "Description": "Sets the smallest size of raw network payload to compress.",
         "Keywords": "compression,threshold",
         "FieldName": "networking_packet_compression_threshold",
-        "ParamFieldName": "networking.packet_compression.threshold",
+        "ParamFieldName": "networking.java_compression.threshold",
         "InputType": "number",
         "DefaultValue": "256",
         "Placeholder": "256",
@@ -686,13 +686,70 @@
         "IncludeInCommandLine": false
     },
     {
-        "DisplayName": "Packet Compression Level",
+        "DisplayName": "Java: Packet Compression Level",
         "Category": "Minecraft:stadia_controller",
         "Subcategory": "Performance:speed:4",
         "Description": "Compression level (0 to disable).",
         "Keywords": "compression,level,packet_compression",
         "FieldName": "networking_packet_compression_level",
-        "ParamFieldName": "networking.packet_compression.level",
+        "ParamFieldName": "networking.java_compression.level",
+        "InputType": "enum",
+        "DefaultValue": "4",
+        "EnumValues": {
+            "0": "0",
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4 (default)",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9"
+        },
+        "IncludeInCommandLine": false
+    },
+    {
+        "DisplayName": "Bedrock: Enable Packet Compression",
+        "Category": "Minecraft:stadia_controller",
+        "Subcategory": "Performance:speed:4",
+        "Description": "Whether packet compression is enabled.",
+        "Keywords": "compression,enable,packet_compression",
+        "FieldName": "networking_bedrock_compression_enabled",
+        "ParamFieldName": "networking.bedrock_compression.enabled",
+        "InputType": "checkbox",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        },
+        "IncludeInCommandLine": false
+    },
+    {
+        "DisplayName": "Bedrock: Compression Threshold",
+        "Category": "Minecraft:stadia_controller",
+        "Subcategory": "Performance:speed:4",
+        "Description": "Sets the smallest size of raw network payload to compress.",
+        "Keywords": "compression,threshold",
+        "FieldName": "networking_bedrock_compression_threshold",
+        "ParamFieldName": "networking.bedrock_compression.threshold",
+        "InputType": "number",
+        "DefaultValue": "256",
+        "Placeholder": "256",
+        "EnumValues": {},
+        "Suffix": "bytes",
+        "MinValue": "0",
+        "MaxValue": "1024",
+        "IncludeInCommandLine": false
+    },
+    {
+        "DisplayName": "Bedrock: Packet Compression Level",
+        "Category": "Minecraft:stadia_controller",
+        "Subcategory": "Performance:speed:4",
+        "Description": "Compression level (0 to disable).",
+        "Keywords": "compression,level,packet_compression",
+        "FieldName": "networking_bedrock_compression_level",
+        "ParamFieldName": "networking.bedrock_compression.level",
         "InputType": "enum",
         "DefaultValue": "4",
         "EnumValues": {
@@ -1158,13 +1215,13 @@
         "IncludeInCommandLine": false
     },
     {
-        "DisplayName": "Require Texture Packs",
+        "DisplayName": "Java: Require Texture Packs",
         "Category": "Minecraft:stadia_controller",
         "Subcategory": "Resource Packs:texture:7",
         "Description": "If set, clients must use resource packs in the current world.",
         "Keywords": "resource,pack,enable,resource_pack",
         "FieldName": "resource_pack_enabled",
-        "ParamFieldName": "resource_pack.enabled",
+        "ParamFieldName": "resource_pack.java.enabled",
         "InputType": "checkbox",
         "DefaultValue": "false",
         "EnumValues": {
@@ -1174,13 +1231,13 @@
         "IncludeInCommandLine": false
     },
     {
-        "DisplayName": "Resource Pack URL",
+        "DisplayName": "Java: Resource Pack URL",
         "Category": "Minecraft:stadia_controller",
         "Subcategory": "Resource Packs:texture:7",
         "Description": "The direct download URL to the resource pack.",
         "Keywords": "resource,pack,url,resource_pack",
         "FieldName": "resource_pack_url",
-        "ParamFieldName": "resource_pack.url",
+        "ParamFieldName": "resource_pack.java.url",
         "InputType": "url",
         "DefaultValue": "",
         "Placeholder": "https://example.org/resourcepack.zip",
@@ -1188,45 +1245,90 @@
         "IncludeInCommandLine": false
     },
     {
-        "DisplayName": "Resource Pack SHA1",
+        "DisplayName": "Java: Resource Pack SHA1",
         "Category": "Minecraft:stadia_controller",
         "Subcategory": "Resource Packs:texture:7",
         "Description": "The SHA1 hash of the resource pack.",
         "Keywords": "resource,pack,sha1,resource_pack",
         "FieldName": "resource_pack_sha1",
-        "ParamFieldName": "resource_pack.sha1",
+        "ParamFieldName": "resource_pack.java.sha1",
         "InputType": "text",
         "DefaultValue": "",
         "EnumValues": {},
         "IncludeInCommandLine": false
     },
     {
-        "DisplayName": "Resource Pack Prompt",
+        "DisplayName": "Java: Resource Pack Prompt",
         "Category": "Minecraft:stadia_controller",
         "Subcategory": "Resource Packs:texture:7",
         "Description": "The message to show to the user when prompted.",
         "Keywords": "resource,pack,prompt,resource_pack,prompt_message",
         "FieldName": "resource_pack_prompt_message",
-        "ParamFieldName": "resource_pack.prompt_message",
+        "ParamFieldName": "resource_pack.java.prompt_message",
         "InputType": "text",
         "DefaultValue": "",
         "EnumValues": {},
         "IncludeInCommandLine": false
     },
     {
-        "DisplayName": "Force Resource Pack",
+        "DisplayName": "Java: Force Resource Pack",
         "Category": "Minecraft:stadia_controller",
         "Subcategory": "Resource Packs:texture:7",
         "Description": "Whether to force the client to download the resource pack.",
         "Keywords": "resource,pack,force,resource_pack",
         "FieldName": "resource_pack_force",
-        "ParamFieldName": "resource_pack.force",
+        "ParamFieldName": "resource_pack.java.force",
         "InputType": "checkbox",
         "DefaultValue": "false",
         "EnumValues": {
             "False": "false",
             "True": "true"
         },
+        "IncludeInCommandLine": false
+    },
+    {
+        "DisplayName": "Bedrock: Require Texture Packs",
+        "Category": "Minecraft:stadia_controller",
+        "Subcategory": "Resource Packs:texture:7",
+        "Description": "If set, clients must use resource packs in the current world.",
+        "Keywords": "resource,pack,enable,resource_pack",
+        "FieldName": "resource_pack_bedrock_enabled",
+        "ParamFieldName": "resource_pack.bedrock.enabled",
+        "InputType": "checkbox",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        },
+        "IncludeInCommandLine": false
+    },
+    {
+        "DisplayName": "Bedrock: Force Resource Pack",
+        "Category": "Minecraft:stadia_controller",
+        "Subcategory": "Resource Packs:texture:7",
+        "Description": "Whether to force the client to download the resource pack.",
+        "Keywords": "resource,pack,force,resource_pack",
+        "FieldName": "resource_pack_bedrock_force",
+        "ParamFieldName": "resource_pack.bedrock.force",
+        "InputType": "checkbox",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        },
+        "IncludeInCommandLine": false
+    },
+    {
+        "DisplayName": "Bedrock: Resource Packs",
+        "Category": "Minecraft:stadia_controller",
+        "Subcategory": "Resource Packs:texture:7",
+        "Description": "The Bedrock resource packs to include. Must follow the exact array format: ['pack1', 'pack2']",
+        "Keywords": "resource,packs,resource_pack",
+        "FieldName": "resource_pack_bedrock_packs",
+        "ParamFieldName": "resource_pack.bedrock.packs",
+        "InputType": "text",
+        "DefaultValue": "[]",
+        "EnumValues": {},
         "IncludeInCommandLine": false
     },
     {

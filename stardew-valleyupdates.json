@@ -1,0 +1,84 @@
+[
+    {
+        "UpdateStageName": "Game Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "413150",
+        "UpdateSourceArgs": "413150",
+        "UpdateSourceVersion": "{{GameBranch}}",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SMAPI Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'stardew-valley'; New-Item -ItemType Directory -Force -Path 'smapi' | Out-Null; $SMAPIVersion='{{SMAPIVersion}}'; if ([string]::IsNullOrWhiteSpace($SMAPIVersion)) { $SMAPIVersion = (Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/Pathoschild/SMAPI/releases/latest').tag_name }; if ($SMAPIVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid SMAPI version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://github.com/Pathoschild/SMAPI/releases/download/$SMAPIVersion/SMAPI-$SMAPIVersion-installer.zip -OutFile 'smapi\\installer.zip'; Expand-Archive -Path 'smapi\\installer.zip' -DestinationPath 'smapi' -Force; Remove-Item -Path 'smapi\\installer.zip' -Force; $smapiDir = Get-ChildItem -Path 'smapi' -Directory -Filter 'SMAPI*' | Select-Object -First 1; Rename-Item -Path (Join-Path $smapiDir.FullName 'internal\\windows\\install.dat') -NewName 'install.zip'; Expand-Archive -Path (Join-Path $smapiDir.FullName 'internal\\windows\\install.zip') -DestinationPath 'server' -Force; Copy-Item -Path 'server\\Stardew Valley.deps.json' -Destination 'server\\StardewModdingAPI.deps.json' -Force; Remove-Item -Path 'smapi' -Recurse -Force -ErrorAction SilentlyContinue\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SMAPI Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd stardew-valley && mkdir -p smapi && SMAPIVersion=\\\"{{SMAPIVersion}}\\\" && if [[ -z \\\"$SMAPIVersion\\\" ]]; then SMAPIVersion=$(wget -qO- https://api.github.com/repos/Pathoschild/SMAPI/releases/latest | jq -r .tag_name); fi && if [[ ! \\\"$SMAPIVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid SMAPI version format specified\\\" && exit 1; fi && wget -qO smapi/installer.zip https://github.com/Pathoschild/SMAPI/releases/download/$SMAPIVersion/SMAPI-$SMAPIVersion-installer.zip && unzip -o smapi/installer.zip -d smapi && rm -f smapi/installer.zip && cd smapi/SMAPI* && chmod +x internal/linux/SMAPI.Installer && internal/linux/SMAPI.Installer --install --game-path \\\"{{$FullBaseDir}}\\\" --no-prompt && cd ../.. && rm -rf smapi && rm -f server/StardewValley\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Dedicated Server Mod Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Remove-Item -Path '{{$FullBaseDir}}Mods\\DedicatedServer' -Recurse -Force -ErrorAction SilentlyContinue; $ModVersion='{{DedicatedServerModVersion}}'; if ([string]::IsNullOrWhiteSpace($ModVersion)) { $ModVersion = ((Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/Chris82111/SMAPIDedicatedServerMod/releases/latest').tag_name) -replace '^v','' }; if ($ModVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid Dedicated Server Mod version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://github.com/Chris82111/SMAPIDedicatedServerMod/releases/download/v$ModVersion/DedicatedServer.$ModVersion.zip -OutFile 'mod.zip'; Expand-Archive -Path 'mod.zip' -DestinationPath '{{$FullBaseDir}}Mods' -Force; Remove-Item -Path 'mod.zip' -Force; Invoke-WebRequest -UseBasicParsing -Uri https://github.com/Chris82111/SMAPIDedicatedServerMod/releases/download/v$ModVersion/config.json -OutFile '{{$FullBaseDir}}Mods\\DedicatedServer\\config.json'\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Dedicated Server Mod Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullBaseDir}}Mods/DedicatedServer\\\" && ModVersion=\\\"{{DedicatedServerModVersion}}\\\" && if [[ -z \\\"$ModVersion\\\" ]]; then ModVersion=$(wget -qO- https://api.github.com/repos/Chris82111/SMAPIDedicatedServerMod/releases/latest | jq -r .tag_name) && ModVersion=${ModVersion#v}; fi && if [[ ! \\\"$ModVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Dedicated Server Mod version format specified\\\" && exit 1; fi && wget -qO mod.zip https://github.com/Chris82111/SMAPIDedicatedServerMod/releases/download/v$ModVersion/DedicatedServer.$ModVersion.zip && unzip -oq mod.zip -d \\\"{{$FullBaseDir}}Mods\\\" && rm -f mod.zip && wget -qO \\\"{{$FullBaseDir}}Mods/DedicatedServer/config.json\\\" https://github.com/Chris82111/SMAPIDedicatedServerMod/releases/download/v$ModVersion/config.json\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'stardew-valley/7-Zip'; if (Test-Path '7z.exe') { exit 0 } else { Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/ip7z/7zip/releases/download/26.00/7z2600-x64.exe' -OutFile '7z-installer.exe' }; if ($?) { Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/ip7z/7zip/releases/download/26.00/7zr.exe' -OutFile '7zr.exe' }; if ($?) { & ./7zr.exe x -y -aoa 7z-installer.exe *> $null 2>&1; Remove-Item -Path '7z-installer.exe' -Force -ErrorAction SilentlyContinue | Out-Null }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Mesa Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'stardew-valley/server'; New-Item -ItemType Directory -Path 'mesa' -Force -ErrorAction SilentlyContinue | Out-Null; $MesaVersion = ((Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/pal1000/mesa-dist-win/releases/latest').tag_name); Invoke-WebRequest -UseBasicParsing -Uri https://github.com/pal1000/mesa-dist-win/releases/download/$MesaVersion/mesa3d-$MesaVersion-release-msvc.7z -OutFile 'mesa/mesa.7z'; if ($?) { & ../7-Zip/7z.exe x -y -aoa -omesa mesa/mesa.7z | Out-Null; Copy-Item mesa/x64/* . -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'mesa' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Saves Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$SavesDir = Join-Path $env:APPDATA 'StardewValley'; New-Item -Path $SavesDir -ItemType Directory -Force | Out-Null; if (-Not (Test-Path '{{$FullBaseDir}}StardewValley')) { New-Item -ItemType Junction -Path '{{$FullBaseDir}}StardewValley' -Target \\\"$SavesDir\\\" -Force | Out-Null }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Readme File",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}StardewValley/README.txt",
+        "UpdateSourceData": "WARNING: This directory will include the save data of multiple Stardew Valley servers\nrun on this system.\n\nTake care when managing files in this directory or its subdirectory!",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    }
+]

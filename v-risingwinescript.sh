@@ -25,7 +25,8 @@ WINE_VERSION=$(/usr/bin/wine --version | grep -oP '\d+' | head -1)
 case "$WINE_VERSION" in
   8) MONO_VERSION="8.1.0" ;;
   9) MONO_VERSION="9.4.0" ;;
-  10|11) MONO_VERSION="10.4.1" ;;
+  10) MONO_VERSION="10.4.1" ;;
+  11) MONO_VERSION="11.1.0" ;;
   *)
     echo "Unsupported Wine version: $WINE_VERSION"
     exec 6>&-
