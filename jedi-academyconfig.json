@@ -238,6 +238,24 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Player Count Mode",
+        "Category": "Jedi Knight Academy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets what is considered a player for the player count in AMP. Bots can be counted as players or not, and players with no GUID can be ignored or counted as players (can cause problems if player changes their name while connected to the server)",
+        "Keywords": "bot,count,players,noguid",
+        "FieldName": "UserIDRegex",
+        "InputType": "enum",
+        "ParamFieldName": "UserIDRegex",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "(BOT|(?<userid>(?!NOGUID).+?))",
+        "EnumValues": {
+            "(BOT|(?<userid>(?!NOGUID).+?))": "Count bots as players and ignore players with no GUID (default)",
+            "(?<userid>(?!BOT)(?!NOGUID).+?)": "Don't count bots as players and ignore players with no GUID",
+            "(NOGUID|BOT|(?<userid>.+?))": "Count bots as players and account for players with no GUID",
+            "(NOGUID|(?<userid>(?!BOT).+?))": "Don't count bots as players and account for players with no GUID"
+        }
+    },
+    {
         "DisplayName": "Private Client Number",
         "Category": "Jedi Knight Academy:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -402,6 +420,22 @@
         }
     },
     {
+        "DisplayName": "Enable Private Dueling",
+        "Category": "Jedi Knight Academy:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, private dueling between players will be allowed. Otherwise, private dueling will be disabled",
+        "Keywords": "private,duel,g_privateduel",
+        "FieldName": "g_privateDuel",
+        "InputType": "checkbox",
+        "ParamFieldName": "g_privateDuel",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
         "DisplayName": "Enable Friendly Fire",
         "Category": "Jedi Knight Academy:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -410,6 +444,22 @@
         "FieldName": "g_friendlyFire",
         "InputType": "checkbox",
         "ParamFieldName": "g_friendlyFire",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Enable Friendly Saber",
+        "Category": "Jedi Knight Academy:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, friendly sabering will be allowed, so players can damage their own teammates with lightsabers",
+        "Keywords": "friendly,saber,g_friendlysaber",
+        "FieldName": "g_friendlySaber",
+        "InputType": "checkbox",
+        "ParamFieldName": "g_friendlySaber",
         "IncludeInCommandLine": false,
         "DefaultValue": "0",
         "EnumValues": {
@@ -516,17 +566,17 @@
         "DisplayName": "Allow Voting",
         "Category": "Jedi Knight Academy:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, connected players can call for and vote on changes including: map, map restart, kick, and game type",
+        "Description": "10-bit bitflag controlling which votes players may call. 0 = voting disabled entirely, 1023 = all votes allowed. Bit 0 = Capture Limit, Bit 1 = Kick by Client Number, Bit 2 = Frag Limit, Bit 3 = Do Warmup, Bit 4 = Game Type, Bit 5 = Kick by Name, Bit 6 = Change Map, Bit 7 = Restart Map, Bit 8 = Play Next Map, Bit 9 = Time Limit",
         "Keywords": "vote,voting,g_allowvote",
         "FieldName": "g_allowVote",
-        "InputType": "checkbox",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "1023",
         "ParamFieldName": "g_allowVote",
         "IncludeInCommandLine": false,
         "DefaultValue": "0",
-        "EnumValues": {
-            "False": "0",
-            "True": "1"
-        }
+        "Placeholder": "0",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Weapon Respawn Time Period",
