@@ -1,0 +1,147 @@
+[
+    {
+        "UpdateStageName":  "Create server directory",
+        "UpdateSourcePlatform":  "All",
+        "UpdateSource":  "CreateDirectory",
+        "UpdateSourceArgs":  "{{$FullRootDir}}server",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Create data directory",
+        "UpdateSourcePlatform":  "All",
+        "UpdateSource":  "CreateDirectory",
+        "UpdateSourceArgs":  "{{$FullRootDir}}data",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Create tools directory",
+        "UpdateSourcePlatform":  "All",
+        "UpdateSource":  "CreateDirectory",
+        "UpdateSourceArgs":  "{{$FullRootDir}}tools",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Create Mods directory",
+        "UpdateSourcePlatform":  "All",
+        "UpdateSource":  "CreateDirectory",
+        "UpdateSourceArgs":  "{{$FullRootDir}}data/Mods",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Create ModConfig directory",
+        "UpdateSourcePlatform":  "All",
+        "UpdateSource":  "CreateDirectory",
+        "UpdateSourceArgs":  "{{$FullRootDir}}data/ModConfig",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Create dotnet directory",
+        "UpdateSourcePlatform":  "All",
+        "UpdateSource":  "CreateDirectory",
+        "UpdateSourceArgs":  "{{$FullRootDir}}dotnet",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Install local .NET 10 runtime",
+        "UpdateSourcePlatform":  "Linux",
+        "UpdateSourceArch":  "x86_64",
+        "UpdateSource":  "Executable",
+        "UpdateSourceData":  "/bin/bash",
+        "UpdateSourceArgs":  "-c \"set -euo pipefail; root=\u0027{{$FullRootDir}}\u0027; if [ -x \\\"$root/dotnet/dotnet\\\" ] \u0026\u0026 \\\"$root/dotnet/dotnet\\\" --list-runtimes | grep -q \u0027^Microsoft.NETCore.App 10\\.\u0027; then echo \u0027[AMP] .NET 10 runtime already installed\u0027; else tmp=\\\"$(mktemp)\\\"; curl -fsSL https://dot.net/v1/dotnet-install.sh -o \\\"$tmp\\\"; bash \\\"$tmp\\\" --channel 10.0 --runtime dotnet --install-dir \\\"$root/dotnet\\\" --no-path; rm -f \\\"$tmp\\\"; fi\"",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Install local .NET 10 runtime",
+        "UpdateSourcePlatform":  "Windows",
+        "UpdateSource":  "Executable",
+        "UpdateSourceData":  "powershell.exe",
+        "UpdateSourceArgs":  "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference=\u0027Stop\u0027; $root=\u0027{{$FullRootDir}}\u0027; $dotnet=Join-Path $root \u0027dotnet\\dotnet.exe\u0027; $ready=$false; if (Test-Path -LiteralPath $dotnet) { $ready=[bool]((\u0026 $dotnet --list-runtimes) -match \u0027^Microsoft.NETCore.App 10\\.\u0027) }; if ($ready) { Write-Output \u0027[AMP] .NET 10 runtime already installed\u0027 } else { $script=Join-Path $env:TEMP (\u0027dotnet-install-\u0027+[guid]::NewGuid().ToString(\u0027N\u0027)+\u0027.ps1\u0027); try { Invoke-WebRequest -UseBasicParsing -Uri https://dot.net/v1/dotnet-install.ps1 -OutFile $script; \u0026 $script -Channel 10.0 -Runtime dotnet -InstallDir (Join-Path $root \u0027dotnet\u0027) -NoPath } finally { Remove-Item -LiteralPath $script -Force -ErrorAction SilentlyContinue } }\"",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Install Stratum release",
+        "UpdateSourcePlatform":  "Linux",
+        "UpdateSourceArch":  "x86_64",
+        "UpdateSource":  "Executable",
+        "UpdateSourceData":  "/bin/bash",
+        "UpdateSourceArgs":  "-c \"set -euo pipefail; root=\u0027{{$FullRootDir}}\u0027; tag=\u0027{{StratumVersionTag}}\u0027; if [ -z \\\"$tag\\\" ]; then tag=\\\"$(curl -fsSL -H \u0027User-Agent: AMP-Clean-Template\u0027 https://api.github.com/repos/StratumServer/Stratum/releases/latest | jq -r .tag_name)\\\"; fi; case \\\"$tag\\\" in v*) ;; *) tag=\\\"v$tag\\\";; esac; version=\\\"${tag#v}\\\"; asset=\\\"stratum-${version}-linux-x64.zip\\\"; stage=\\\"$root/.amp-stratum-stage\\\"; archive=\\\"$root/.amp-stratum.zip\\\"; rm -rf \\\"$stage\\\"; mkdir -p \\\"$stage\\\"; curl -fL --retry 3 -o \\\"$archive\\\" \\\"https://github.com/StratumServer/Stratum/releases/download/$tag/$asset\\\"; unzip -q \\\"$archive\\\" -d \\\"$stage\\\"; rm -f \\\"$archive\\\"; test -x \\\"$stage/StratumServer\\\" || chmod +x \\\"$stage/StratumServer\\\"; test -x \\\"$stage/StratumServer\\\"; old=\\\"$root/.amp-stratum-old\\\"; rm -rf \\\"$old\\\"; if [ -d \\\"$root/server\\\" ]; then mv \\\"$root/server\\\" \\\"$old\\\"; fi; mv \\\"$stage\\\" \\\"$root/server\\\"; rm -rf \\\"$old\\\"; printf \u0027%s\u0027 \\\"$tag\\\" \u003e \\\"$root/server/.amp-stratum-release\\\"\"",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Install Stratum release",
+        "UpdateSourcePlatform":  "Windows",
+        "UpdateSource":  "Executable",
+        "UpdateSourceData":  "powershell.exe",
+        "UpdateSourceArgs":  "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference=\u0027Stop\u0027; $ProgressPreference=\u0027SilentlyContinue\u0027; $root=\u0027{{$FullRootDir}}\u0027; $tag=\u0027{{StratumVersionTag}}\u0027.Trim(); $headers=@{\u0027User-Agent\u0027=\u0027AMP-Clean-Template\u0027}; if (-not $tag) { $tag=(Invoke-RestMethod -Headers $headers -Uri https://api.github.com/repos/StratumServer/Stratum/releases/latest).tag_name }; if (-not $tag.StartsWith(\u0027v\u0027)) { $tag=\u0027v\u0027+$tag }; $version=$tag.TrimStart(\u0027v\u0027); $asset=\u0027stratum-\u0027+$version+\u0027-win-x64.zip\u0027; $stage=Join-Path $root \u0027.amp-stratum-stage\u0027; $archive=Join-Path $root \u0027.amp-stratum.zip\u0027; $server=Join-Path $root \u0027server\u0027; $old=Join-Path $root \u0027.amp-stratum-old\u0027; Remove-Item -LiteralPath $stage,$old,$archive -Recurse -Force -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Path $stage | Out-Null; Invoke-WebRequest -UseBasicParsing -Headers $headers -Uri (\u0027https://github.com/StratumServer/Stratum/releases/download/\u0027+$tag+\u0027/\u0027+$asset) -OutFile $archive; Expand-Archive -LiteralPath $archive -DestinationPath $stage -Force; Remove-Item -LiteralPath $archive -Force; if (-not (Test-Path -LiteralPath (Join-Path $stage \u0027StratumServer.exe\u0027))) { throw \u0027Stratum archive did not contain StratumServer.exe\u0027 }; if (Test-Path -LiteralPath $server) { Move-Item -LiteralPath $server -Destination $old }; try { Move-Item -LiteralPath $stage -Destination $server; Remove-Item -LiteralPath $old -Recurse -Force -ErrorAction SilentlyContinue } catch { if ((Test-Path -LiteralPath $old) -and -not (Test-Path -LiteralPath $server)) { Move-Item -LiteralPath $old -Destination $server }; throw }; [IO.File]::WriteAllText((Join-Path $server \u0027.amp-stratum-release\u0027),$tag,(New-Object Text.UTF8Encoding $false))\"",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Prepare compatible Vintage Story server assets",
+        "UpdateSourcePlatform":  "Linux",
+        "UpdateSourceArch":  "x86_64",
+        "UpdateSource":  "Executable",
+        "UpdateSourceData":  "/bin/bash",
+        "UpdateSourceArgs":  "-c \"set -euo pipefail; export DOTNET_ROOT=\u0027{{$FullRootDir}}dotnet\u0027; cd \u0027{{$FullRootDir}}server\u0027; ./StratumServer --stratum-prepare-only --stratum-no-banner --dataPath \u0027../data\u0027\"",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Prepare compatible Vintage Story server assets",
+        "UpdateSourcePlatform":  "Windows",
+        "UpdateSource":  "Executable",
+        "UpdateSourceData":  "powershell.exe",
+        "UpdateSourceArgs":  "-NoProfile -Command \"$env:DOTNET_ROOT=\u0027{{$FullRootDir}}dotnet\u0027; Set-Location \u0027{{$FullRootDir}}server\u0027; \u0026 \u0027.\\StratumServer.exe\u0027 --stratum-prepare-only --stratum-no-banner --dataPath \u0027../data\u0027; exit $LASTEXITCODE\"",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Generate official Vintage Story configuration when missing",
+        "UpdateSourcePlatform":  "Linux",
+        "UpdateSourceArch":  "x86_64",
+        "UpdateSource":  "Executable",
+        "UpdateSourceData":  "/bin/bash",
+        "UpdateSourceArgs":  "-c \"set -euo pipefail; if [ ! -f \u0027{{$FullRootDir}}data/serverconfig.json\u0027 ]; then export DOTNET_ROOT=\u0027{{$FullRootDir}}dotnet\u0027; cd \u0027{{$FullRootDir}}server\u0027; ./StratumServer --genconfig --dataPath \u0027../data\u0027; fi\"",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Generate official Vintage Story configuration when missing",
+        "UpdateSourcePlatform":  "Windows",
+        "UpdateSource":  "Executable",
+        "UpdateSourceData":  "powershell.exe",
+        "UpdateSourceArgs":  "-NoProfile -Command \"$cfg=\u0027{{$FullRootDir}}data\\serverconfig.json\u0027; if (-not (Test-Path -LiteralPath $cfg)) { $env:DOTNET_ROOT=\u0027{{$FullRootDir}}dotnet\u0027; Set-Location \u0027{{$FullRootDir}}server\u0027; \u0026 \u0027.\\StratumServer.exe\u0027 --genconfig --dataPath \u0027../data\u0027; exit $LASTEXITCODE }\"",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Seed Stratum configuration when missing",
+        "UpdateSourcePlatform":  "All",
+        "UpdateSource":  "CreateFile",
+        "UpdateSourceArgs":  "{{$FullRootDir}}data/stratum.json",
+        "UpdateSourceData":  "{\n  \"ServerStats\": {\n    \"Enabled\": true\n  }\n}\n",
+        "OverwriteExistingFiles":  false,
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Seed Nimbus backend configuration when missing",
+        "UpdateSourcePlatform":  "All",
+        "UpdateSource":  "CreateFile",
+        "UpdateSourceArgs":  "{{$FullRootDir}}data/ModConfig/nimbus-server.json",
+        "UpdateSourceData":  "{\n  \"Enabled\": true,\n  \"ServerId\": \"\",\n  \"DisplayName\": \"\",\n  \"PublicHost\": \"\",\n  \"PublicPort\": 42420,\n  \"RegistryUrl\": \"\",\n  \"SharedSecret\": \"\",\n  \"HeartbeatIntervalSeconds\": 5,\n  \"RegistryHttpTimeoutSeconds\": 5,\n  \"Maintenance\": false,\n  \"ReservationRequired\": true,\n  \"FailClosedWhenRegistryUnreachable\": false,\n  \"AllowPlayerServerCommand\": true,\n  \"TransferMode\": \"redirect\",\n  \"SeamlessPrepareAckTimeoutSeconds\": 8,\n  \"ShortcutCommands\": [],\n  \"Tags\": []\n}\n",
+        "OverwriteExistingFiles":  false,
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Install Nimbus ServerMod",
+        "UpdateSourcePlatform":  "Linux",
+        "UpdateSourceArch":  "x86_64",
+        "UpdateSource":  "Executable",
+        "UpdateSourceData":  "/bin/bash",
+        "UpdateSourceArgs":  "-c \"set -euo pipefail; root=\u0027{{$FullRootDir}}\u0027; tag=\u0027{{NimbusVersionTag}}\u0027; if [ -z \\\"$tag\\\" ]; then tag=\\\"$(curl -fsSL -H \u0027User-Agent: AMP-Clean-Template\u0027 https://api.github.com/repos/StratumServer/Nimbus/releases/latest | jq -r .tag_name)\\\"; fi; case \\\"$tag\\\" in v*) ;; *) tag=\\\"v$tag\\\";; esac; stage=\\\"$root/.amp-nimbus-mod-stage\\\"; archive=\\\"$root/.amp-nimbus-mod.zip\\\"; target=\\\"$root/data/Mods/Nimbus.ServerMod\\\"; rm -rf \\\"$stage\\\"; mkdir -p \\\"$stage\\\"; curl -fL --retry 3 -o \\\"$archive\\\" \\\"https://github.com/StratumServer/Nimbus/releases/download/$tag/Nimbus.ServerMod-$tag.zip\\\"; unzip -q \\\"$archive\\\" -d \\\"$stage\\\"; rm -f \\\"$archive\\\"; find \\\"$stage\\\" -type f | grep -q .; old=\\\"$root/.amp-nimbus-mod-old\\\"; rm -rf \\\"$old\\\"; if [ -d \\\"$target\\\" ]; then mv \\\"$target\\\" \\\"$old\\\"; fi; mv \\\"$stage\\\" \\\"$target\\\"; rm -rf \\\"$old\\\"; printf \u0027%s\u0027 \\\"$tag\\\" \u003e \\\"$target/.amp-nimbus-release\\\"\"",
+        "SkipOnFailure":  false
+    },
+    {
+        "UpdateStageName":  "Install Nimbus ServerMod",
+        "UpdateSourcePlatform":  "Windows",
+        "UpdateSource":  "Executable",
+        "UpdateSourceData":  "powershell.exe",
+        "UpdateSourceArgs":  "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference=\u0027Stop\u0027; $ProgressPreference=\u0027SilentlyContinue\u0027; $root=\u0027{{$FullRootDir}}\u0027; $tag=\u0027{{NimbusVersionTag}}\u0027.Trim(); $headers=@{\u0027User-Agent\u0027=\u0027AMP-Clean-Template\u0027}; if (-not $tag) { $tag=(Invoke-RestMethod -Headers $headers -Uri https://api.github.com/repos/StratumServer/Nimbus/releases/latest).tag_name }; if (-not $tag.StartsWith(\u0027v\u0027)) { $tag=\u0027v\u0027+$tag }; $stage=Join-Path $root \u0027.amp-nimbus-mod-stage\u0027; $archive=Join-Path $root \u0027.amp-nimbus-mod.zip\u0027; $target=Join-Path $root \u0027data\\Mods\\Nimbus.ServerMod\u0027; $old=Join-Path $root \u0027.amp-nimbus-mod-old\u0027; Remove-Item -LiteralPath $stage,$old,$archive -Recurse -Force -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Path $stage | Out-Null; Invoke-WebRequest -UseBasicParsing -Headers $headers -Uri (\u0027https://github.com/StratumServer/Nimbus/releases/download/\u0027+$tag+\u0027/Nimbus.ServerMod-\u0027+$tag+\u0027.zip\u0027) -OutFile $archive; Expand-Archive -LiteralPath $archive -DestinationPath $stage -Force; Remove-Item -LiteralPath $archive -Force; if (-not (Get-ChildItem -LiteralPath $stage -File -Recurse | Select-Object -First 1)) { throw \u0027Nimbus ServerMod archive was empty\u0027 }; if (Test-Path -LiteralPath $target) { Move-Item -LiteralPath $target -Destination $old }; try { Move-Item -LiteralPath $stage -Destination $target; Remove-Item -LiteralPath $old -Recurse -Force -ErrorAction SilentlyContinue } catch { if ((Test-Path -LiteralPath $old) -and -not (Test-Path -LiteralPath $target)) { Move-Item -LiteralPath $old -Destination $target }; throw }; [IO.File]::WriteAllText((Join-Path $target \u0027.amp-nimbus-release\u0027),$tag,(New-Object Text.UTF8Encoding $false))\"",
+        "SkipOnFailure":  false
+    }
+]
