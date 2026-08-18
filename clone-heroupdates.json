@@ -16,7 +16,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'clone-hero/server'; $Dir = Get-ChildItem -Directory './CloneHero-StandaloneServer' -ErrorAction Stop; Copy-Item \\\"$Dir/win-x64/Server.exe\\\" -Destination '.' -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path \\\"$Dir\\\" -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'clone-hero/server'; Copy-Item './build/win-x64/Server.exe' -Destination '.' -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path './build' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure": false
     },
     {
@@ -25,7 +25,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd clone-hero/server && \\cp -rf CloneHero-StandaloneServer/linux-x64/Server ./ >/dev/null 2>&1 && chmod +x Server; rm -rf CloneHero-StandaloneServer >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd clone-hero/server && \\cp -rf build/linux-x64/Server ./ >/dev/null 2>&1 && chmod +x Server; rm -rf build >/dev/null 2>&1\"",
         "SkipOnFailure": false
     },
     {
@@ -34,7 +34,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd clone-hero/server && \\cp -rf CloneHero-StandaloneServer/linux-arm64/Server ./ >/dev/null 2>&1 && chmod +x Server; rm -rf CloneHero-StandaloneServer >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd clone-hero/server && \\cp -rf build/linux-arm64/Server ./ >/dev/null 2>&1 && chmod +x Server; rm -rf build >/dev/null 2>&1\"",
         "SkipOnFailure": false
     },
     {

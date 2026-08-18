@@ -16,29 +16,10 @@
     {
         "Protocol": "UDP",
         "Port": 7777,
-        "Ref": "OvermapGamePort",
-        "Name": "UE5 Overmap game port",
-        "Description": "UDP port for the Overmap map's UE5 dedicated server."
-    },
-    {
-        "Protocol": "UDP",
-        "Port": 7778,
-        "Ref": "Survival1GamePort",
-        "Name": "UE5 Survival_1 game port",
-        "Description": "UDP port for the Survival_1 (Abbir) map's UE5 dedicated server."
-    },
-    {
-        "Protocol": "UDP",
-        "Port": 7888,
-        "Ref": "OvermapIgwPort",
-        "Name": "UE5 Overmap IGW port",
-        "Description": "Funcom Internet Gateway port for the Overmap instance."
-    },
-    {
-        "Protocol": "UDP",
-        "Port": 7889,
-        "Ref": "Survival1IgwPort",
-        "Name": "UE5 Survival_1 IGW port",
-        "Description": "Funcom Internet Gateway port for the Survival_1 instance."
+        "Range": 30,
+        "MinListening": 2,
+        "Ref": "GamePort",
+        "Name": "UE5 game port pool",
+        "Description": "UDP port range covering every UE5 dedicated server instance \u2014 both the always-warm hub maps (Survival_1, Overmap and any others the admin adds to AlwaysWarmMaps) and the on-demand spawns (dungeons, sietches, ecolabs, story missions). The pool's soft cap is set under 'Max concurrent instances' (default 8) and must not exceed Range (default 30; Range deliberately exceeds the cap so admins can raise the cap without re-editing the firewall). MinListening=2 means AMP considers the instance alive once the two default always-warm maps have bound their ports."
     }
 ]

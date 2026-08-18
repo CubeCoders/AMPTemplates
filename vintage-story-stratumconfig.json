@@ -1,0 +1,354 @@
+[
+    {
+        "DisplayName":  "Server Port",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Network:dns:1",
+        "Description":  "Private game port used by Nimbus Proxy.",
+        "Keywords":  "port,backend",
+        "FieldName":  "$ServerPort",
+        "InputType":  "number",
+        "Hidden":  true,
+        "ParamFieldName":  "$.Port",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "42420",
+        "MinValue":  1,
+        "MaxValue":  65535,
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Player Limit",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Players:group:2",
+        "Description":  "Maximum simultaneous players on this backend.",
+        "Keywords":  "players,limit",
+        "FieldName":  "$MaxUsers",
+        "InputType":  "number",
+        "ParamFieldName":  "$.MaxClients",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "16",
+        "MinValue":  1,
+        "MaxValue":  1000,
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Server Name",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Identity:badge:1",
+        "Description":  "Name shown by the Vintage Story server.",
+        "Keywords":  "server,name",
+        "FieldName":  "VS_ServerName",
+        "InputType":  "text",
+        "ParamFieldName":  "$.ServerName",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "Vintage Story Server",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Server Description",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Identity:badge:1",
+        "Description":  "Short description shown to players.",
+        "Keywords":  "server,description",
+        "FieldName":  "VS_ServerDescription",
+        "InputType":  "text",
+        "ParamFieldName":  "$.ServerDescription",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Welcome Message",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Identity:badge:1",
+        "Description":  "Message shown after a player joins.",
+        "Keywords":  "welcome,message",
+        "FieldName":  "VS_WelcomeMessage",
+        "InputType":  "text",
+        "ParamFieldName":  "$.WelcomeMessage",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "Welcome, {0}, may you survive well and prosper",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Server Password",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Access:lock:3",
+        "Description":  "Optional password required to join. Leave blank for none.",
+        "Keywords":  "password,access",
+        "FieldName":  "VS_Password",
+        "InputType":  "password",
+        "ParamFieldName":  "$.Password",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Whitelist Mode",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Access:lock:3",
+        "Description":  "Default follows Vintage Story dedicated-server policy.",
+        "Keywords":  "whitelist,access",
+        "FieldName":  "VS_WhitelistMode",
+        "InputType":  "enum",
+        "ParamFieldName":  "$.WhitelistMode",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "0",
+        "EnumValues":  {
+                           "0":  "Default (on for dedicated servers)",
+                           "1":  "Off",
+                           "2":  "On"
+                       }
+    },
+    {
+        "DisplayName":  "Allow PvP",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Rules:gavel:4",
+        "Description":  "Allow players to damage other players.",
+        "Keywords":  "pvp,rules",
+        "FieldName":  "VS_AllowPvP",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.AllowPvP",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Pass Time When Empty",
+        "Category":  "Vintage Story:stadia_controller",
+        "Subcategory":  "Rules:gavel:4",
+        "Description":  "Advance world time while no players are online.",
+        "Keywords":  "time,empty",
+        "FieldName":  "VS_PassTimeWhenEmpty",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.PassTimeWhenEmpty",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "false",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Enable Nimbus Backend",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Status:power_settings_new:0",
+        "Description":  "Enable Nimbus backend networking. Leave disabled to run Stratum without Nimbus. Network settings below are required only when enabled.",
+        "Keywords":  "nimbus,enable,disable,standalone",
+        "FieldName":  "NimbusEnabled",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.Enabled",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "false",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Nimbus Server ID",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Connection:dns:1",
+        "Description":  "Required only when Nimbus is enabled. Unique ID that must exactly match this backend\u0027s key in the Proxy Backend Servers map.",
+        "Keywords":  "nimbus,id",
+        "FieldName":  "NimbusServerId",
+        "InputType":  "text",
+        "ParamFieldName":  "$.ServerId",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "Placeholder":  "hub",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Nimbus Display Name",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Connection:dns:1",
+        "Description":  "Friendly name for this backend.",
+        "Keywords":  "nimbus,name",
+        "FieldName":  "NimbusDisplayName",
+        "InputType":  "text",
+        "ParamFieldName":  "$.DisplayName",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "Placeholder":  "Hub",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Backend Reachable Host",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Connection:dns:1",
+        "Description":  "Required only when Nimbus is enabled. Hostname or IP the Nimbus Proxy uses to reach this backend.",
+        "Keywords":  "nimbus,backend,host",
+        "FieldName":  "NimbusPublicHost",
+        "InputType":  "text",
+        "ParamFieldName":  "$.PublicHost",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "Placeholder":  "192.168.1.20",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Backend Reachable Port",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Connection:dns:1",
+        "Description":  "Port the Nimbus Proxy uses to reach this backend. Required only when Nimbus is enabled.",
+        "Keywords":  "nimbus,backend,port",
+        "FieldName":  "NimbusPublicPort",
+        "InputType":  "number",
+        "ParamFieldName":  "$.PublicPort",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "42420",
+        "MinValue":  1,
+        "MaxValue":  65535,
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Nimbus Registry URL",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Registry:hub:2",
+        "Description":  "Required only when Nimbus is enabled. HTTP URL reachable from this backend for the Proxy\u0027s embedded Registry or the optional standalone Registry.",
+        "Keywords":  "registry,url",
+        "FieldName":  "NimbusRegistryUrl",
+        "InputType":  "text",
+        "ParamFieldName":  "$.RegistryUrl",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "Placeholder":  "http://proxy-host:8765",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Nimbus Shared Secret",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Registry:hub:2",
+        "Description":  "Required only when Nimbus is enabled. Copy the generated shared secret from the Proxy or standalone Registry. Backends never generate it.",
+        "Keywords":  "registry,secret",
+        "FieldName":  "NimbusSharedSecret",
+        "InputType":  "password",
+        "ParamFieldName":  "$.SharedSecret",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Maintenance Mode",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Routing:swap_horiz:3",
+        "Description":  "Nimbus networks only. Keep this configured backend online and heartbeating but remove it from normal routing. This does not disable Nimbus.",
+        "Keywords":  "maintenance,routing",
+        "FieldName":  "NimbusMaintenance",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.Maintenance",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "false",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Allow Player Server Command",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Routing:swap_horiz:3",
+        "Description":  "Allow players to use Nimbus server-switch commands.",
+        "Keywords":  "server,command",
+        "FieldName":  "NimbusAllowPlayerServerCommand",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.AllowPlayerServerCommand",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Anonymous Stratum Statistics",
+        "Category":  "Stratum:security",
+        "Subcategory":  "Privacy:visibility:1",
+        "Description":  "Send Stratum\u0027s anonymous version and player-count statistics.",
+        "Keywords":  "stratum,statistics",
+        "FieldName":  "StratumServerStats",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.ServerStats.Enabled",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "true",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
+        "DisplayName":  "Stratum Release Tag",
+        "Category":  "Updates:update",
+        "Subcategory":  "Version:verified_user:1",
+        "Description":  "Optional exact Stratum release tag. Leave blank for the latest stable release; the release selects the compatible Vintage Story version.",
+        "Keywords":  "stratum,version",
+        "FieldName":  "StratumVersionTag",
+        "InputType":  "text",
+        "ParamFieldName":  "StratumVersionTag",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "Placeholder":  "v1.22.6-stratum.2",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "Nimbus Release Tag",
+        "Category":  "Updates:update",
+        "Subcategory":  "Version:verified_user:1",
+        "Description":  "Optional exact Nimbus release tag. Leave blank for the latest stable release.",
+        "Keywords":  "nimbus,version",
+        "FieldName":  "NimbusVersionTag",
+        "InputType":  "text",
+        "ParamFieldName":  "NimbusVersionTag",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "Placeholder":  "v0.5.0",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "RedirectFix Release Tag",
+        "Category":  "Updates:update",
+        "Subcategory":  "Version:verified_user:1",
+        "Description":  "Optional exact RedirectFix release tag. Leave blank to install and track the latest stable release.",
+        "Keywords":  "redirectfix,version,client,mod",
+        "FieldName":  "RedirectFixVersionTag",
+        "InputType":  "text",
+        "ParamFieldName":  "RedirectFixVersionTag",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "Placeholder":  "v1.0.1",
+        "EnumValues":  {
+
+                       }
+    }
+]
