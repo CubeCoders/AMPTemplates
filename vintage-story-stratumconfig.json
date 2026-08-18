@@ -144,16 +144,31 @@
                        }
     },
     {
+        "DisplayName":  "Enable Nimbus Backend",
+        "Category":  "Nimbus Backend:share",
+        "Subcategory":  "Status:power_settings_new:0",
+        "Description":  "Enable Nimbus backend networking. Leave disabled to run Stratum without Nimbus. Network settings below are required only when enabled.",
+        "Keywords":  "nimbus,enable,disable,standalone",
+        "FieldName":  "NimbusEnabled",
+        "InputType":  "checkbox",
+        "ParamFieldName":  "$.Enabled",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "false",
+        "EnumValues":  {
+                           "True":  "true",
+                           "False":  "false"
+                       }
+    },
+    {
         "DisplayName":  "Nimbus Server ID",
         "Category":  "Nimbus Backend:share",
         "Subcategory":  "Connection:dns:1",
-        "Description":  "Unique ID that must exactly match this backend\u0027s key in the Proxy Backend Servers map.",
+        "Description":  "Required only when Nimbus is enabled. Unique ID that must exactly match this backend\u0027s key in the Proxy Backend Servers map.",
         "Keywords":  "nimbus,id",
         "FieldName":  "NimbusServerId",
         "InputType":  "text",
         "ParamFieldName":  "$.ServerId",
         "IncludeInCommandLine":  false,
-        "Required":  true,
         "DefaultValue":  "",
         "Placeholder":  "hub",
         "EnumValues":  {
@@ -177,28 +192,27 @@
                        }
     },
     {
-        "DisplayName":  "Proxy Public Host",
+        "DisplayName":  "Backend Reachable Host",
         "Category":  "Nimbus Backend:share",
         "Subcategory":  "Connection:dns:1",
-        "Description":  "Public hostname or IP players use for Nimbus Proxy, not this private backend.",
-        "Keywords":  "proxy,host",
+        "Description":  "Required only when Nimbus is enabled. Hostname or IP the Nimbus Proxy uses to reach this backend.",
+        "Keywords":  "nimbus,backend,host",
         "FieldName":  "NimbusPublicHost",
         "InputType":  "text",
         "ParamFieldName":  "$.PublicHost",
         "IncludeInCommandLine":  false,
-        "Required":  true,
         "DefaultValue":  "",
-        "Placeholder":  "play.example.com",
+        "Placeholder":  "192.168.1.20",
         "EnumValues":  {
 
                        }
     },
     {
-        "DisplayName":  "Proxy Public Port",
+        "DisplayName":  "Backend Reachable Port",
         "Category":  "Nimbus Backend:share",
         "Subcategory":  "Connection:dns:1",
-        "Description":  "Public player port of Nimbus Proxy.",
-        "Keywords":  "proxy,port",
+        "Description":  "Port the Nimbus Proxy uses to reach this backend. Required only when Nimbus is enabled.",
+        "Keywords":  "nimbus,backend,port",
         "FieldName":  "NimbusPublicPort",
         "InputType":  "number",
         "ParamFieldName":  "$.PublicPort",
@@ -214,13 +228,12 @@
         "DisplayName":  "Nimbus Registry URL",
         "Category":  "Nimbus Backend:share",
         "Subcategory":  "Registry:hub:2",
-        "Description":  "HTTP URL reachable from this backend for the Proxy\u0027s embedded Registry or the optional standalone Registry.",
+        "Description":  "Required only when Nimbus is enabled. HTTP URL reachable from this backend for the Proxy\u0027s embedded Registry or the optional standalone Registry.",
         "Keywords":  "registry,url",
         "FieldName":  "NimbusRegistryUrl",
         "InputType":  "text",
         "ParamFieldName":  "$.RegistryUrl",
         "IncludeInCommandLine":  false,
-        "Required":  true,
         "DefaultValue":  "",
         "Placeholder":  "http://proxy-host:8765",
         "EnumValues":  {
@@ -231,13 +244,12 @@
         "DisplayName":  "Nimbus Shared Secret",
         "Category":  "Nimbus Backend:share",
         "Subcategory":  "Registry:hub:2",
-        "Description":  "Copy the generated shared secret from the Proxy or standalone Registry. Backends never generate it.",
+        "Description":  "Required only when Nimbus is enabled. Copy the generated shared secret from the Proxy or standalone Registry. Backends never generate it.",
         "Keywords":  "registry,secret",
         "FieldName":  "NimbusSharedSecret",
         "InputType":  "password",
         "ParamFieldName":  "$.SharedSecret",
         "IncludeInCommandLine":  false,
-        "Required":  true,
         "DefaultValue":  "",
         "EnumValues":  {
 
@@ -247,7 +259,7 @@
         "DisplayName":  "Maintenance Mode",
         "Category":  "Nimbus Backend:share",
         "Subcategory":  "Routing:swap_horiz:3",
-        "Description":  "Keep this backend online but remove it from normal routing.",
+        "Description":  "Nimbus networks only. Keep this configured backend online and heartbeating but remove it from normal routing. This does not disable Nimbus.",
         "Keywords":  "maintenance,routing",
         "FieldName":  "NimbusMaintenance",
         "InputType":  "checkbox",
@@ -319,6 +331,22 @@
         "IncludeInCommandLine":  false,
         "DefaultValue":  "",
         "Placeholder":  "v0.5.0",
+        "EnumValues":  {
+
+                       }
+    },
+    {
+        "DisplayName":  "RedirectFix Release Tag",
+        "Category":  "Updates:update",
+        "Subcategory":  "Version:verified_user:1",
+        "Description":  "Optional exact RedirectFix release tag. Leave blank to install and track the latest stable release.",
+        "Keywords":  "redirectfix,version,client,mod",
+        "FieldName":  "RedirectFixVersionTag",
+        "InputType":  "text",
+        "ParamFieldName":  "RedirectFixVersionTag",
+        "IncludeInCommandLine":  false,
+        "DefaultValue":  "",
+        "Placeholder":  "v1.0.1",
         "EnumValues":  {
 
                        }
