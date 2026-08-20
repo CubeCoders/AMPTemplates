@@ -488,8 +488,8 @@
         "DisplayName": "EAC Enabled",
         "Category": "7 Days to Die:skull",
         "Subcategory": "Server:dns",
-        "Description": "Enables/Disables EasyAntiCheat.",
-        "Keywords": "EAC,Enabled,EACEnabled",
+        "Description": "Enables/Disables EasyAntiCheat. Selecting an overhaul mod under \"Mod Mode\" in the Updates section disables EasyAntiCheat automatically and overrides this setting, because overhaul mods load their own code and players would otherwise be kicked when they connect. Note that disabling EasyAntiCheat also prevents console players from joining, so a server cannot run an overhaul mod and support crossplay at the same time.",
+        "Keywords": "EAC,Enabled,EACEnabled,anticheat,mod,overhaul,crossplay",
         "FieldName": "EACEnabled",
         "InputType": "checkbox",
         "IsFlagArgument": false,
@@ -1708,7 +1708,7 @@
         "EnumValues": {
             "": "Standard server (default)",
             "-EACEnabled=false -RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} ": "Undead Legacy Stable mod (Alpha 20.7 build)",
-            "-RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} -EACEnabled=false ": "Undead Legacy Experimental mod (Alpha 20.7 build)",
+            "-RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} -EACEnabled=false ": "Undead Legacy Experimental mod (Version 2.6 build)",
             "-EACEnabled=false ": "Darkness Falls mod (Alpha 20.7 build)",
             "-EACEnabled=false  ": "Darkness Falls V5 mod (Alpha 21.2 build)",
             "-EACEnabled=false   ": "Darkness Falls V6 mod (Version 1.4 build)"
@@ -1735,7 +1735,7 @@
         "DisplayName": "Please Read!",
         "Category": "7 Days to Die:skull",
         "Subcategory": "Undead Legacy:extension",
-        "Description": "If you would like to install Undead Legacy you need to select the relevant Stable or Experimental version under the \"Updates\" section, and also set the associated \"Release Stream\" accordingly. This will then install the appropriate server and Undead Legacy versions when you click update.",
+        "Description": "To install Undead Legacy, select the Stable or Experimental option under \"Mod Mode\" in the Updates section, set the \"Release Stream\" to the game version that build targets, then update the server. As of the mod author's current downloads, Stable (UL 2.6.17) targets game Alpha 20.7 b1, so set the Release Stream to \"alpha20.7\"; Experimental (UL 2.7.11) targets game v2.6 b14, so set the Release Stream to \"v2.6\". Selecting the wrong stream will stop the mod loading. Undead Legacy must also be installed by every player who connects, and the settings below only take effect when the mod is running.",
         "Keywords": "Read,Please,Info",
         "FieldName": "PleaseRead",
         "InputType": "hidden"
@@ -1788,10 +1788,11 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "16",
         "EnumValues": {},
-        "Suffix": "hours"
+        "Suffix": "hours",
+        "minValue": 1
     },
     {
-        "DisplayName": "Wandering Horde Range",
+        "DisplayName": "Wandering Horde Frequency Range",
         "Category": "7 Days to Die:skull",
         "Subcategory": "Undead Legacy:extension",
         "Description": "Additional random hours added to Wandering Horde Frequency to add randomness to hours between spawns. For example, Frequency: 5, Frequency RNG Range: 10, then wandering horde will spawn anywhere between 5 to 15 (5+10) in-game hours + additional hours if special conditions occur (No players alive, etc).",
@@ -1818,10 +1819,12 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "10",
         "EnumValues": {},
-        "Suffix": "zombies"
+        "Suffix": "zombies",
+        "minValue": 2,
+        "maxValue": 64
     },
     {
-        "DisplayName": "Wandering Horde Range",
+        "DisplayName": "Wandering Horde Count Range",
         "Category": "7 Days to Die:skull",
         "Subcategory": "Undead Legacy:extension",
         "Description": "This value determines up to how many additional zombies can spawn for Wandering Horde. For example, Zombies: 5, Zombies RNG Range: 10, then wandering horde will spawn anywhere between 5 to 15 5+10 zombies. Combined value must not exceed: 64",
@@ -1833,13 +1836,14 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "10",
         "EnumValues": {},
-        "Suffix": "zombies"
+        "Suffix": "zombies",
+        "maxValue": 64
     },
     {
-        "DisplayName": "Death Penalty",
+        "DisplayName": "Death Penalty (Undead Legacy)",
         "Category": "7 Days to Die:skull",
         "Subcategory": "Undead Legacy:extension",
-        "Description": "Penalty after dying. Nothing: No penalty (you will not get XP debt as well as no debuff, that lowers your attributes). Beginner: Near death trauma debuff (vanilla-like experience). Moderate: Same as Beginner, but also with loss of random action skills. Standard: Same as Moderate, but also you will respawn with partial health, food and water.",
+        "Description": "Penalty after dying, when running Undead Legacy. This overrides the \"Death Penalty\" setting under Gameplay, which has different meanings and applies to a standard server. Nothing: No penalty (you will not get XP debt as well as no debuff, that lowers your attributes). Beginner: Near death trauma debuff (vanilla-like experience). Moderate: Same as Beginner, but also with loss of random action skills. Standard: Same as Moderate, but also you will respawn with partial health, food and water.",
         "Keywords": "Death,Penalty,DeathPenalty",
         "FieldName": "UndeadLegacyDeathPenalty",
         "InputType": "enum",
@@ -1867,6 +1871,8 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "0",
         "EnumValues": {},
-        "Suffix": "%"
+        "Suffix": "%",
+        "minValue": 0,
+        "maxValue": 100
     }
 ]
