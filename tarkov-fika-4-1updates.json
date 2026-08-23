@@ -10,7 +10,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\"; cd \\\"{{$FullRootDir}}\\\" && if [[ -x dotnet/dotnet ]]; then InstalledVersion=$(dotnet/dotnet --list-runtimes | sed -n \\\"s/^Microsoft\\.AspNetCore\\.App \\([0-9.]*\\) .*/\\1/p\\\" | head -n1); else InstalledVersion=\\\"\\\"; fi; if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/9.0/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi; if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid ASP.NET Core Runtime version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$DotnetVersion\\\" ]]; then echo \\\"ASP.NET Core Runtime v$DotnetVersion already installed. Skipping\\\" && exit 0; else [[ -f dotnet.tar.gz ]] && rm -f dotnet.tar.gz >/dev/null 2>&1; wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-linux-x64.tar.gz || { echo \\\"Download failed from the Microsoft CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; rm -rf dotnet/* >/dev/null 2>&1 && tar -xzf dotnet.tar.gz -C dotnet >/dev/null 2>&1 && rm -f dotnet.tar.gz >/dev/null 2>&1 && echo \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\"; fi\"",
+        "UpdateSourceArgs": "-c \"DotnetVersion=\\\"{{DotnetVersion}}\\\"; cd \\\"{{$FullRootDir}}\\\" && if [[ -x dotnet/dotnet ]]; then InstalledVersion=$(dotnet/dotnet --list-runtimes | sed -n \\\"s/^Microsoft\\.AspNetCore\\.App \\([0-9.]*\\) .*/\\1/p\\\" | head -n1); else InstalledVersion=\\\"\\\"; fi; if [[ -z \\\"$DotnetVersion\\\" ]]; then DotnetVersion=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/10.0/releases.json | jq -r \\\".[\\\\\\\"latest-runtime\\\\\\\"]\\\"); fi; if [[ ! \\\"$DotnetVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid ASP.NET Core Runtime version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$DotnetVersion\\\" ]]; then echo \\\"ASP.NET Core Runtime v$DotnetVersion already installed. Skipping\\\" && exit 0; else [[ -f dotnet.tar.gz ]] && rm -f dotnet.tar.gz >/dev/null 2>&1; wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$DotnetVersion/aspnetcore-runtime-$DotnetVersion-linux-x64.tar.gz || { echo \\\"Download failed from the Microsoft CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; rm -rf dotnet/* >/dev/null 2>&1 && tar -xzf dotnet.tar.gz -C dotnet >/dev/null 2>&1 && rm -f dotnet.tar.gz >/dev/null 2>&1 && echo \\\"ASP.NET Core Runtime v$DotnetVersion downloaded\\\"; fi\"",
         "SkipOnFailure": false
     },
     {
@@ -49,7 +49,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'tarkov/server'; if (Test-Path 'SPT.bak') { Remove-Item 'SPT.bak' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'SPT') { Copy-Item -Path 'SPT' -Destination 'SPT.bak' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'tarkov/server'; if (Test-Path 'SPT_Runtime.bak') { Remove-Item 'SPT_Runtime.bak' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }; if (Test-Path 'SPT_Runtime') { Copy-Item -Path 'SPT_Runtime' -Destination 'SPT_Runtime.bak' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null }\"",
         "SkipOnFailure": false
     },
     {
@@ -57,7 +57,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd tarkov/server; [[ -d SPT.bak ]] && rm -rf SPT.bak >/dev/null 2>&1; [[ -d SPT ]] && \\cp -rf SPT SPT.bak >/dev/null 2>&1 || exit 0\"",
+        "UpdateSourceArgs": "-c \"cd tarkov/server; [[ -d SPT_Runtime.bak ]] && rm -rf SPT_Runtime.bak >/dev/null 2>&1; [[ -d SPT_Runtime ]] && \\cp -rf SPT_Runtime SPT_Runtime.bak >/dev/null 2>&1 || exit 0\"",
         "SkipOnFailure": false
     },
     {
@@ -65,7 +65,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'tarkov/server'; $DownloadURL = 'https://github.com/sp-tarkov/build/releases/download/4.0.13/SPT-4.0.13-40087-2891fd4.7z'; Invoke-WebRequest -UseBasicParsing -Uri \\\"$DownloadURL\\\" -OutFile 'SPT.7z'; & ../7-Zip/7z.exe x -y -aoa SPT.7z | Out-Null; Remove-Item -Path 'SPT.7z' -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'tarkov/server'; $DownloadURL = [regex]::Match((Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/sp-tushonka/build/releases/latest').body, 'https://mirror\\.sp-tushonka\\.com/releases/SPT[^\\s\\r\\n]+\\.7z').Value; Invoke-WebRequest -UseBasicParsing -Uri \\\"$DownloadURL\\\" -OutFile 'SPT.7z'; & ../7-Zip/7z.exe x -y -aoa SPT.7z | Out-Null; Remove-Item -Path 'SPT.7z' -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure": false
     },
     {
@@ -73,15 +73,14 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd tarkov/server && DownloadURL='https://github.com/sp-tarkov/build/releases/download/4.0.13/SPT-4.0.13-40087-2891fd4.7z' && wget -qO SPT.7z \\\"$DownloadURL\\\" && ../7-Zip/7zzs x -y -aoa SPT.7z >/dev/null 2>&1 && rm -f SPT.7z >/dev/null 2>&1 && chmod +x SPT/SPT.Server.Linux >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd tarkov/server && DownloadURL=$(wget -qO- https://api.github.com/repos/sp-tushonka/build/releases/latest | jq -r '.body' | grep -Eo 'https://mirror\\.sp-tushonka\\.com/releases/SPT-[^ ]+\\.7z' | head -n 1) && wget -qO SPT.7z \\\"$DownloadURL\\\" && ../7-Zip/7zzs x -y -aoa SPT.7z >/dev/null 2>&1 && rm -f SPT.7z >/dev/null 2>&1 && chmod +x SPT_Runtime/SPT.Server.Linux >/dev/null 2>&1\"",
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Fika Server Mod Download",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURLFromJQ",
-        "UpdateSourceData": "https://api.github.com/repos/project-fika/Fika-Server-CSharp/releases/tags/v2.3.5",
-        "UpdateSourceArgs": "$.assets[0].browser_download_url",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "project-fika/Fika-Server-CSharp",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
