@@ -320,7 +320,52 @@
         "FieldName": "reviveConfig_enabled",
         "InputType": "checkbox",
         "ParamFieldName": "$.client.reviveConfig.enabled",
-        "DefaultValue": "true",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Headshots Always Kill",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, headshots will always kill outright instead of downing the player",
+        "Keywords": "client,revive,headshot,headshotKills",
+        "FieldName": "reviveConfig_headshotKills",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.client.reviveConfig.headshotKills",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Grenades Always Kill",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, grenade kills will always kill outright instead of downing the player",
+        "Keywords": "client,revive,grenade,grenadesKills",
+        "FieldName": "reviveConfig_grenadesKills",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.client.reviveConfig.grenadesKills",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Allow Looting Downed Players",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, downed players can be looted before they bleed out",
+        "Keywords": "client,revive,loot,looting,allowLooting",
+        "FieldName": "reviveConfig_allowLooting",
+        "InputType": "checkbox",
+        "ParamFieldName": "$.client.reviveConfig.allowLooting",
+        "DefaultValue": "false",
         "EnumValues": {
             "False": "false",
             "True": "true"
@@ -330,10 +375,12 @@
         "DisplayName": "Max Revives",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets amount of maximum revives allowed. Set to 0 for infinite revives.",
-        "Keywords": "client,revive,enable,maxRevives",
+        "Description": "Sets the maximum number of revives allowed per player. Set to 0 for infinite revives",
+        "Keywords": "client,revive,max,maxRevives",
         "FieldName": "reviveConfig_maxRevives",
         "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "10",
         "ParamFieldName": "$.client.reviveConfig.maxRevives",
         "DefaultValue": "0",
         "Placeholder": "0",
@@ -343,13 +390,32 @@
         "DisplayName": "Revive Bleedout Time",
         "Category": "Tarkov:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the time in seconds for how long it takes the player to bleedout and become unrevivable.",
-        "Keywords": "client,revive,bleedout,enable,bleedoutTime",
+        "Description": "Sets how long a downed player has before they bleed out and become unrevivable",
+        "Keywords": "client,revive,bleedout,bleedoutTime",
         "FieldName": "reviveConfig_bleedoutTime",
         "InputType": "number",
+        "MinValue": "10",
+        "MaxValue": "600",
         "ParamFieldName": "$.client.reviveConfig.bleedoutTime",
         "DefaultValue": "60",
         "Placeholder": "60",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Revive Time",
+        "Category": "Tarkov:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets how long it takes to revive a downed player",
+        "Keywords": "client,revive,time,reviveTime",
+        "FieldName": "reviveConfig_reviveTime",
+        "InputType": "number",
+        "MinValue": "3",
+        "MaxValue": "30",
+        "ParamFieldName": "$.client.reviveConfig.reviveTime",
+        "DefaultValue": "5",
+        "Placeholder": "5",
+        "Suffix": "seconds",
         "EnumValues": {}
     },
     {
