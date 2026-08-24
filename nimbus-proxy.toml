@@ -1,0 +1,63 @@
+bind = "0.0.0.0:42420"
+try = ["default"]
+proxy_protocol_servers = []
+servers = { default = "127.0.0.1:42421" }
+[forced_hosts]
+[transfers]
+default_mode = "redirect"
+allow_seamless = false
+require_seamless_capability = true
+fallback_to_redirect_when_seamless_unavailable = true
+enable_unsafe_seamless_splice = false
+[admin]
+bind = "127.0.0.1:42499"
+secret = ""
+granted_permissions = ["*"]
+enabled = true
+[registry]
+mode = "embedded"
+proxy_id = "nimbus-proxy"
+reservation_ttl_seconds = 60
+fail_on_error = true
+transfer_intent_poll_ms = 1000
+url = ""
+shared_secret = ""
+http_timeout_seconds = 5
+embedded_bind = "http://127.0.0.1:8765"
+embedded_shared_secret = "change-me-and-keep-secret"
+backend_stale_seconds = 20
+backend_drop_seconds = 120
+nonce_window_seconds = 90
+max_reservation_ttl_seconds = 300
+advertise_on_master_server = false
+[whitelist]
+network = false
+servers = []
+fail_open_until_first_sync = false
+[logging]
+verbose = false
+sniff_frames = false
+log_traffic_bytes = false
+[metrics]
+enabled = true
+bind = "http://127.0.0.1:42500"
+path = "/metrics"
+[status]
+enabled = true
+name = "Nimbus"
+motd = "Vintage Story proxy"
+game_mode = "survival"
+password = false
+server_version = ""
+max_players = 100
+query_timeout_ms = 1500
+[plugins]
+enabled = true
+directory = "plugins"
+disabled = []
+[persistence]
+persist_drain_flags = true
+drain_flags_file = "nimbus.drain-state.json"
+[advanced]
+connect_timeout_ms = 5000
+buffer_size = 16384
