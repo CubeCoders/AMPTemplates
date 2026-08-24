@@ -23,7 +23,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd luanti && wget -qO luantiserver.tar.gz https://github.com/rollerozxa/luantiserver/releases/download/{{ServerVersion}}/luantiserver-{{ServerVersion}}.tar.gz && tar -xzf luantiserver.tar.gz -C server --strip-components=1 >/dev/null 2>&1 && rm -rf luantiserver.tar.gz >/dev/null 2>&1 && echo \\\"Luanti server v{{ServerVersion}} installed.\\\"\"",
+        "UpdateSourceArgs": "-c \"cd luanti && Arch=$(uname -m) && BaseURL=https://github.com/rollerozxa/luantiserver/releases/download/{{ServerVersion}}/luantiserver-{{ServerVersion}} && { wget -qO luantiserver.tar.gz $BaseURL-$Arch.tar.gz || wget -qO luantiserver.tar.gz $BaseURL.tar.gz; } && tar -xzf luantiserver.tar.gz -C server --strip-components=1 >/dev/null 2>&1 && rm -rf luantiserver.tar.gz >/dev/null 2>&1 && echo \\\"Luanti server v{{ServerVersion}} installed.\\\"\"",
         "SkipOnFailure": false
     },
     {
