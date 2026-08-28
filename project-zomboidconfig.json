@@ -1156,7 +1156,7 @@
         "DisplayName": "Nighttime Length",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets how long nighttime lasts depending on daytime: 0.5 means twice as long, 2 means half the normal time",
+        "Description": "Sets how long nighttime lasts depending on daytime: 0.5 means twice as long, 2 means half the normal time. Requires b41 - b42 use \"Nighttime Length (Sandbox)\" instead. Note that on b41 the sandbox \"Nighttime Length\" setting also applies",
         "Keywords": "nighttime,night,nightlengthmodifier",
         "FieldName": "nightlengthmodifier",
         "InputType": "number",
@@ -1166,6 +1166,26 @@
         "DefaultValue": "1.0",
         "Placeholder": "1.0",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Nighttime Length (Sandbox)",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the time from dusk to dawn. This is a sandbox setting and applies on both b41 and b42. On b42 it replaces the .ini-based \"Nighttime Length\" multiplier, which b42 no longer reads. The \"Always Day\" option requires b42",
+        "Keywords": "nighttime,night,length,NightLength",
+        "FieldName": "NightLength",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "NightLength",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "3",
+        "EnumValues": {
+            "1": "Always Night",
+            "2": "Long",
+            "3": "Normal (default)",
+            "4": "Short",
+            "5": "Always Day (b42 only)"
+        }
     },
     {
         "DisplayName": "Don't Allow Fire",
@@ -1343,11 +1363,28 @@
         "DisplayName": "Disable Safehouse When Player Connected",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, disables a safehouse when a member of the safehouse is connected, so that it acts like a normal house and is only secure when players are offline",
+        "Description": "If set, disables a safehouse when a member of the safehouse is connected, so that it acts like a normal house and is only secure when players are offline. Renamed in b42 - use \"Disable Safehouse When Owner Connected\" instead",
         "Keywords": "safehouse,disable,connected,DisableSafehouseWhenPlayerConnected",
         "FieldName": "DisableSafehouseWhenPlayerConnected",
         "InputType": "checkbox",
         "ParamFieldName": "DisableSafehouseWhenPlayerConnected",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Disable Safehouse When Owner Connected",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, a safehouse acts like a normal house while its owner is connected, so it is only secure when the owner is offline. Requires b42.18 or later, where it replaced DisableSafehouseWhenPlayerConnected",
+        "Keywords": "safehouse,disable,connected,owner,DisableSafehouseWhenOwnerConnected",
+        "FieldName": "DisableSafehouseWhenOwnerConnected",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "DisableSafehouseWhenOwnerConnected",
+        "IncludeInCommandLine": false,
         "DefaultValue": "false",
         "EnumValues": {
             "False": "false",
@@ -2224,12 +2261,26 @@
         "DisplayName": "Discord Channel",
         "Category": "Project Zomboid:stadia_controller",
         "Subcategory": "Discord and Slack:forum:4",
-        "Description": "Sets the name of the Discord channel to integrate with. Use \"Discord ID\" if this does not work",
+        "Description": "Sets the name of the Discord channel to integrate with. Use \"Discord Channel ID\" if this does not work. Requires b41 - on b42 use \"Discord Chat Channel\" instead",
         "Keywords": "discord,channel,DiscordChannel",
         "FieldName": "DiscordChannel",
         "InputType": "text",
         "IsFlagArgument": false,
         "ParamFieldName": "DiscordChannel",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Discord Chat Channel",
+        "Category": "Project Zomboid:stadia_controller",
+        "Subcategory": "Discord and Slack:forum:4",
+        "Description": "Sets the name of the Discord chat channel to integrate with. Requires b42, where it replaced DiscordChannel",
+        "Keywords": "discord,channel,chat,DiscordChatChannel",
+        "FieldName": "DiscordChatChannel",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "DiscordChatChannel",
         "IncludeInCommandLine": false,
         "DefaultValue": "",
         "EnumValues": {}
