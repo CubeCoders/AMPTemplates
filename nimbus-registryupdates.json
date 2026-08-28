@@ -1,5 +1,14 @@
 [
     {
+        "UpdateStageName": "Config Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/nimbus-registrytemplate.toml"
+        "UpdateSourceArgs": "AMP_nimbus.registry.toml",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
         "UpdateStageName": "Nimbus Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "GithubRelease",
@@ -8,15 +17,14 @@
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
-        "SkipOnFailure": false,
-        "UpdateSourceVersion": "v{{NimbusVersion}}"
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Nimbus Installation",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'nimbus-registry/server'; Copy-Item -Path 'release_full/Nimbus.Registry/*' -Destination './' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Remove-Item -Path 'release_full' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path '{{$FullBaseDir}}'; Copy-Item -Path 'release_full\\Nimbus.Registry\\*' -Destination './' -Recurse -Force -ErrorAction Stop; Remove-Item -Path 'release_full' -Recurse -Force -ErrorAction SilentlyContinue | Out-Null; Write-Output 'Nimbus Registry installed'\"",
         "SkipOnFailure": false
     },
     {
@@ -24,17 +32,8 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd nimbus-registry/server && \\\\cp -rf release_full/Nimbus.Registry/* ./ >/dev/null 2>&1; rm -rf release_full >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}\\\" && cp -rf release_full/Nimbus.Registry/. ./ && rm -rf release_full && echo \\\"Nimbus Registry installed\\\"\"",
         "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Config File Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/nimbus-registry.toml",
-        "UpdateSourceArgs": "nimbus.registry.toml",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": false
     },
     {
         "UpdateStageName": "Dotnet Directory Creation",

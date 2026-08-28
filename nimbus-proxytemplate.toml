@@ -1,0 +1,82 @@
+bind = "{{bind}}"
+try = [{{try}}]
+servers = { {{servers}} }
+forced_hosts = { {{forced_hosts}} }
+proxy_protocol_servers = [{{proxy_protocol_servers}}]
+{{Extra_root}}
+[transfers]
+default_mode = "{{transfers_default_mode}}"
+allow_seamless = {{transfers_allow_seamless}}
+require_seamless_capability = {{transfers_require_seamless_capability}}
+fallback_to_redirect_when_seamless_unavailable = {{transfers_fallback_to_redirect_when_seamless_unavailable}}
+redirect_address = "{{transfers_redirect_address}}"
+enable_unsafe_seamless_splice = {{transfers_enable_unsafe_seamless_splice}}
+{{Extra_transfers}}
+[admin]
+enabled = {{admin_enabled}}
+bind = "{{admin_bind}}"
+secret = "{{admin_secret}}"
+granted_permissions = [{{admin_granted_permissions}}]
+{{Extra_admin}}
+[registry]
+mode = "{{registry_mode}}"
+proxy_id = "{{registry_proxy_id}}"
+reservation_ttl_seconds = {{registry_reservation_ttl_seconds}}
+fail_on_error = {{registry_fail_on_error}}
+transfer_intent_poll_ms = {{registry_transfer_intent_poll_ms}}
+url = "{{registry_url}}"
+shared_secret = "{{registry_shared_secret}}"
+http_timeout_seconds = {{registry_http_timeout_seconds}}
+embedded_bind = "{{registry_embedded_bind}}"
+embedded_shared_secret = "{{registry_embedded_shared_secret}}"
+embedded_state_dir = "{{registry_embedded_state_dir}}"
+backend_stale_seconds = {{registry_backend_stale_seconds}}
+backend_drop_seconds = {{registry_backend_drop_seconds}}
+nonce_window_seconds = {{registry_nonce_window_seconds}}
+max_reservation_ttl_seconds = {{registry_max_reservation_ttl_seconds}}
+advertise_on_master_server = {{registry_advertise_on_master_server}}
+api_tokens_enabled = {{registry_api_tokens_enabled}}
+api_tokens_rate_limit_per_minute = {{registry_api_tokens_rate_limit_per_minute}}
+api_tokens_trust_forwarded_proto = {{registry_api_tokens_trust_forwarded_proto}}
+{{Extra_registry}}
+[whitelist]
+network = {{whitelist_network}}
+servers = [{{whitelist_servers}}]
+fail_open_until_first_sync = {{whitelist_fail_open_until_first_sync}}
+{{Extra_whitelist}}
+[logging]
+verbose = {{logging_verbose}}
+sniff_frames = {{logging_sniff_frames}}
+log_traffic_bytes = {{logging_log_traffic_bytes}}
+{{Extra_logging}}
+[metrics]
+enabled = {{metrics_enabled}}
+bind = "{{metrics_bind}}"
+path = "{{metrics_path}}"
+status_api = {{metrics_status_api}}
+status_api_token = "{{metrics_status_api_token}}"
+{{Extra_metrics}}
+[status]
+enabled = {{status_enabled}}
+name = "{{status_name}}"
+motd = "{{status_motd}}"
+game_mode = "{{status_game_mode}}"
+password = {{status_password}}
+server_version = "{{status_server_version}}"
+max_players = {{status_max_players}}
+query_timeout_ms = {{status_query_timeout_ms}}
+{{Extra_status}}
+[plugins]
+enabled = {{plugins_enabled}}
+directory = "{{plugins_directory}}"
+disabled = [{{plugins_disabled}}]
+{{Extra_plugins}}
+[persistence]
+persist_drain_flags = {{persistence_persist_drain_flags}}
+drain_flags_file = "{{persistence_drain_flags_file}}"
+{{Extra_persistence}}
+[advanced]
+connect_timeout_ms = {{advanced_connect_timeout_ms}}
+buffer_size = {{advanced_buffer_size}}
+{{Extra_advanced}}
+{{UserSettings}}
