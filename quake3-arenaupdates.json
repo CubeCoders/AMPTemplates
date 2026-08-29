@@ -7,7 +7,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
@@ -17,22 +18,23 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
-    },
-    {
-        "UpdateStageName": "Server Files Extract",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C cd quake3-arena\\server\\ && tar -xf release-mingw64-x86_64.zip > NUL 2>&1 && del /Q /S release-mingw64-x86_64.zip > NUL 2>&1",
+        "DeleteAfterExtract": true,
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Server Files Extract",
+        "UpdateStageName": "Move Server Files",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd quake3-arena\\server\\ && xcopy /E /Y /I ioquake3\\* .\\ > NUL 2>&1 && rmdir /Q /S ioquake3 > NUL 2>&1",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Move Server Files",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd ./quake3-arena/server/ && unzip -ao release-linux-x86_64.zip >/dev/null 2>&1 && rm -f release-linux-x86_64.zip >/dev/null 2>&1 && chmod +x ioq3ded.x86_64\"",
+        "UpdateSourceArgs": "-c \"cd ./quake3-arena/server && \\cp -rf ./ioquake3/* ./ >/dev/null 2>&1 && rm -rf ./ioquake3 >/dev/null 2>&1 && chmod +x ioq3ded.x86_64\"",
         "SkipOnFailure": false
     },
     {
@@ -43,7 +45,8 @@
         "UpdateSourceTarget": "{{$FullRootDir}}client",
         "ForceDownloadPlatform": "Windows",
         "UpdateSourceConditionSetting": "DisablePakDownload",
-        "UpdateSourceConditionValue": "false"
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Client File Copy",
@@ -73,7 +76,8 @@
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Patch Files Copy",
@@ -98,6 +102,7 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/quake3-arenaserver.cfg",
         "UpdateSourceArgs": "server.cfg",
         "UpdateSourceTarget": "{{$FullBaseDir}}baseq3",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     }
 ]

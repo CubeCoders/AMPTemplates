@@ -93,7 +93,7 @@
         "Description": "Sets the password to connect to the server. Default is no password",
         "Keywords": "server,password,ServerPassword",
         "FieldName": "ServerPassword",
-        "InputType": "password",
+        "InputType": "Password",
         "ParamFieldName": "ServerPassword",
         "DefaultValue": "",
         "EnumValues": {}
@@ -105,7 +105,7 @@
         "Description": "Sets the admin password. Default is a strong random password",
         "Keywords": "admin,password,AdminPassword",
         "FieldName": "AdminPassword",
-        "InputType": "password",
+        "InputType": "Password",
         "ParamFieldName": "AdminPassword",
         "DefaultValue": "{{newguid()}}",
         "EnumValues": {}
@@ -324,6 +324,35 @@
         "ParamFieldName": "DefaultInfectionValue",
         "DefaultValue": "0.1",
         "Placeholder": "0.1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Client Files Location Mode",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Sets whether the server uses the default location (the instance's base directory) to locate the Subnautica (Legacy) client files, or whether the location specified under Custom Client Files Location is used instead. Unless already installed via AMP before the Subnautica 'legacy' branch was removed from Steam, the client files will need to be supplied manually",
+        "Keywords": "client,files,location,mode",
+        "FieldName": "ClientFilesLocationMode",
+        "InputType": "enum",
+        "ParamFieldName": "ClientFilesLocationMode",
+        "DefaultValue": "",
+        "Required": true,
+        "EnumValues": {
+            "": "--Please select--",
+            "{{$FullBaseDir}}": "Default",
+            "{{CustomClientFilesLocation}}": "Custom"
+        }
+    },
+    {
+        "DisplayName": "Custom Client Files Location",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Specifies the full path on this system to the location of the Subnautica (Legacy) client files, if Client Files Location Mode is set to 'Custom'",
+        "Keywords": "custom,client,files,location",
+        "FieldName": "CustomClientFilesLocation",
+        "InputType": "text",
+        "ParamFieldName": "CustomClientFilesLocation",
+        "DefaultValue": "",
         "EnumValues": {}
     }
 ]

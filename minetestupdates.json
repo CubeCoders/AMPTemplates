@@ -3,7 +3,8 @@
         "UpdateStageName": "AppImage Directory Creation",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullRootDir}}.appimage"
+        "UpdateSourceArgs": "{{$FullRootDir}}.appimage",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Minetest Download",
@@ -13,7 +14,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Minetest Copy",
@@ -28,7 +30,8 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://github.com/An0n3m0us/Minetest-AppImages/releases/download/{{ServerVersion}}/Minetest-{{ServerVersion}}-x86_64.AppImage",
-        "UpdateSourceTarget": "{{$FullRootDir}}.appimage"
+        "UpdateSourceTarget": "{{$FullRootDir}}.appimage",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Minetest Extract",
@@ -50,7 +53,8 @@
         "UpdateStageName": "Mods Directory Creation",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}mods"
+        "UpdateSourceArgs": "{{$FullBaseDir}}mods",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Game Config File Copy",
@@ -67,6 +71,7 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/minetest/minetest/master/minetest.conf.example",
         "UpdateSourceArgs": "minetest.conf",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     }
 ]

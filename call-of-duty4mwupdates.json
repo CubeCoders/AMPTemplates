@@ -5,7 +5,8 @@
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "7940",
         "UpdateSourceArgs": "7940",
-        "ForceDownloadPlatform": "Windows"
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config File Download",
@@ -14,7 +15,8 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/call-of-duty4mwserver.cfg",
         "UpdateSourceArgs": "server.cfg",
         "UpdateSourceTarget": "{{$FullBaseDir}}main",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Create Custom Maps Directory",
@@ -28,7 +30,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win32 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win32 WINEDEBUG=-all /usr/bin/wineboot --init\"",
         "SkipOnFailure": false
     }
 ]

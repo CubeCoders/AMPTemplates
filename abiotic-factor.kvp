@@ -11,21 +11,22 @@ Meta.ConfigManifest=abiotic-factorconfig.json
 Meta.MetaConfigManifest=abiotic-factormetaconfig.json
 Meta.ConfigRoot=abiotic-factor.kvp
 Meta.MinAMPVersion=2.5.0.8
-Meta.SpecificDockerImage=cubecoders/ampbase:wine8
+Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
 Meta.DockerRequired=False
 Meta.DockerBaseReadOnly=False
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
-Meta.ContainerPolicyReason=The server requires Wine to run on Linux. Using a container avoids the need to install this dependency on the host.
+Meta.ContainerPolicyReason=The server requires Wine (ideally latest stable from winehq.org) to run on Linux. Using a container avoids the need for you to install this dependency on the host.
 Meta.ExtraSetupStepsURI=
 Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=1.5
+Meta.ConfigVersion=11
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
 Meta.AppConfigId=2cd58de5-88a4-49f8-a71a-b09d08d1fd5e
 Meta.ImportableExtensions=[]
+Meta.AppIsMultiIPAware=False
 App.DisplayName=Abiotic Factor
 App.RootDir=./abiotic-factor/
 App.BaseDirectory=./abiotic-factor/2857200/
@@ -35,10 +36,10 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=2857200
 App.LinuxCommandLineArgs="./AbioticFactor/Binaries/Win64/AbioticFactorServer-Win64-Shipping.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} AbioticFactor -stdout -FullStdOutLogOutput {{useperfthreads}}{{NoAsyncLoadingThread}}{{useallavailablecores}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -SteamServerName="{{ServerName}}" -SandboxIniPath=Config/WindowsServer/SandboxSettings.ini {{$FormattedArgs}} {{CustomArgs}}
+App.CommandLineArgs={{$PlatformArgs}} AbioticFactor -stdout -FullStdOutLogOutput {{useperfthreads}}{{NoAsyncLoadingThread}}{{useallavailablecores}}{{LANOnly}}{{UseLocalIPs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -SteamServerName="{{ServerName}}" -SandboxIniPath=Config/WindowsServer/SandboxSettings.ini {{$FormattedArgs}} {{CustomArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"SteamAppId":"427410","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all"}
+App.EnvironmentVariables={"SteamAppId":"427410","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"version.dll=n,b"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
@@ -87,7 +88,6 @@ App.MonitorDirectChildOnly=False
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RegexMatch
-App.TemplateMatchRegex={{(!?(?<Platform>Linux|Windows|All):)?(?<Value>\$?[\w]+)}}
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$

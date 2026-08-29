@@ -33,6 +33,7 @@ if (Test-Path $workshopDir) {
         # Final fallback: Try fetching name from Steam workshop webpage if no name found
         $modID = $_.Name
         $steamPage = "https://steamcommunity.com/workshop/filedetails/?id=$modID"
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         $modName = (Invoke-WebRequest -UseBasicParsing -Uri $steamPage).Content |
                    Select-String -Pattern '<div class="workshopItemTitle">([^<]*)</div>' |
                    ForEach-Object { $_.Matches.Groups[1].Value } |

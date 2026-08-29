@@ -1,0 +1,88 @@
+[
+    {
+        "UpdateStageName": "Prepare runtime (world identity, certs, DB init)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"DUNE_JWT='{{FlsServiceAuthToken}}' DUNE_WORLD_TITLE='{{WorldTitle}}' DUNE_REGION='{{Region}}' DUNE_WORLD_NAME_OVERRIDE='{{WorldNameOverride}}' DUNE_HOST_DC_ID='{{ProviderName}}' DUNE_BIND_IP='{{$ApplicationIPBinding}}' DUNE_EXTERNAL_IP='{{PublicIPMode}}' DUNE_MQ_GAME_PORT='{{$RmqGamePort}}' DUNE_MQ_GAME_MGMT_PORT='{{$RmqGameHttpPort}}' K8S_POOL_GAME_PORT_BASE='{{$GamePort}}' '{{$FullRootDir}}scripts/prestart.sh' '{{$FullRootDir}}'\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Start Postgres",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "{{$FullRootDir}}scripts/start-pg.sh {{$FullRootDir}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Run schema migrations",
+        "UpdateStageDescription": null,
+        "UpdateSourcePlatform": 2,
+        "UpdateSource": 8,
+        "UpdateSourceArch": 3,
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "{{$FullRootDir}}scripts/migrate-db.sh {{$FullRootDir}}",
+        "UpdateSourceVersion": null,
+        "UpdateSourceExtra": null,
+        "UpdateSourceTarget": null,
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "ForceDownloadPlatform": 0,
+        "UpdateSourceConditionSetting": null,
+        "UpdateSourceConditionValue": null,
+        "DeleteAfterExtract": false,
+        "RunInBackground": false,
+        "SkipOnFailure": false,
+        "ProcessToolOutput": false,
+        "OneShot": false
+    },
+    {
+        "UpdateStageName": "Start RabbitMQ Admin broker",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "{{$FullRootDir}}scripts/start-mq-admin.sh {{$FullRootDir}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Start RabbitMQ Game broker (TLS)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "{{$FullRootDir}}scripts/start-mq-game.sh {{$FullRootDir}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Start Text Router",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "{{$FullRootDir}}scripts/start-text-router.sh {{$FullRootDir}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Start Mock Kubernetes API",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "{{$FullRootDir}}scripts/start-mock-k8s.sh {{$FullRootDir}} \"{{$AMPToken}}\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Start Battlegroup Director",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "{{$FullRootDir}}scripts/start-director.sh {{$FullRootDir}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Start Gateway",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "{{$FullRootDir}}scripts/start-gateway.sh {{$FullRootDir}}",
+        "SkipOnFailure": false
+    }
+]

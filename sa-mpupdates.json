@@ -8,7 +8,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
@@ -19,7 +20,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Move Server Files",
@@ -33,7 +35,8 @@
         "UpdateStageName": "Create Plugins Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}plugins"
+        "UpdateSourceArgs": "{{$FullBaseDir}}plugins",
+        "SkipOnFailure": true
     },
     {
         "UpdateStageName": "Server.cfg Template File Download",
@@ -42,6 +45,7 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/sa-mpserver.cfg",
         "UpdateSourceArgs": "AMP_server.cfg",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     }
 ]

@@ -8,7 +8,8 @@
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Server Download",
@@ -19,19 +20,22 @@
         "UpdateSourceTarget": "{{$FullRootDir}}",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Set Executable Flag",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "{{$FullRootDir}}veloren-server-cli"
+        "UpdateSourceArgs": "{{$FullRootDir}}veloren-server-cli",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}userdata/server/server_config"
+        "UpdateSourceArgs": "{{$FullBaseDir}}userdata/server/server_config",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Settings Template Download",
@@ -40,21 +44,25 @@
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/velorensettings.ron",
         "UpdateSourceArgs": "AMP_settings.ron",
         "UpdateSourceTarget": "{{$FullBaseDir}}userdata/server/server_config/",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Start Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "StartApplication"
+        "UpdateSource": "StartApplication",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Wait For Server Start",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "WaitForStartupComplete"
+        "UpdateSource": "WaitForStartupComplete",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Stop Server",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "ShutdownApplication"
+        "UpdateSource": "ShutdownApplication",
+        "SkipOnFailure": false
     }
 ]

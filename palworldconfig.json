@@ -1,17 +1,5 @@
 [
     {
-        "DisplayName": "Public Port",
-        "Category": "Palworld:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "",
-        "Keywords": "",
-        "FieldName": "$GamePort",
-        "InputType": "number",
-        "Hidden": true,
-        "ParamFieldName": "PublicPort",
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "RCON Port",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -24,16 +12,41 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Enable RCON",
+        "DisplayName": "REST API Port",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
         "Description": "",
         "Keywords": "",
-        "FieldName": "RCONEnabled",
-        "InputType": "text",
+        "FieldName": "$RESTAPIPort",
+        "InputType": "number",
         "Hidden": true,
-        "ParamFieldName": "RCONEnabled",
-        "DefaultValue": "True",
+        "ParamFieldName": "RESTAPIPort",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable UE4SS Console",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "ConsoleEnabled",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "Debug.ConsoleEnabled",
+        "DefaultValue": "1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Disable UE4SS GUI Console",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "GuiConsoleEnabled",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "Debug.GuiConsoleEnabled",
+        "DefaultValue": "0",
         "EnumValues": {}
     },
     {
@@ -139,29 +152,43 @@
         }
     },
     {
-        "DisplayName": "Public IP Selection Mode",
-        "Category": "Palworld:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets whether AMP should automatically select the public IP advertised for the server, or whether it should use the IP set under Server Public IP",
-        "Keywords": "public,ip,publicip",
-        "FieldName": "PublicIP",
-        "InputType": "enum",
-        "ParamFieldName": "PublicIP",
-        "DefaultValue": "{{$ExternalIP}}",
-        "EnumValues": {
-            "{{$ExternalIP}}": "Automatic (default)",
-            "{{ManualPublicIP}}": "Manual"
-        }
-    },
-    {
         "DisplayName": "Server Public IP",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the public IP advertised for the server, if \"Manual\" is selected as the Public IP Selection Mode. Useful if the host network has multiple public IPs, or the server is behind a public proxy",
-        "Keywords": "manual,public,ip,publicip",
-        "FieldName": "ManualPublicIP",
+        "Description": "Sets the public IP advertised for the server. Useful if the host network has multiple public IPs, or the server is behind a public proxy",
+        "Keywords": "public,ip,publicip",
+        "FieldName": "PublicIP",
         "InputType": "text",
-        "ParamFieldName": "ManualPublicIP",
+        "ParamFieldName": "PublicIP",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Public Port Selection Mode",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets whether the public port advertised for the server should be the same as the Game Port, or whether it should be the custom port set under Server Public Port",
+        "Keywords": "public,port,publicport",
+        "FieldName": "PublicPort",
+        "InputType": "enum",
+        "ParamFieldName": "PublicPort",
+        "DefaultValue": "{{$GamePort}}",
+        "EnumValues": {
+            "{{$GamePort}}": "Use Game Port (default)",
+            "{{CustomPublicPort}}": "Use custom port"
+        }
+    },
+    {
+        "DisplayName": "Server Public Port",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the public port advertised for the server, if \"Use custom port\" is selected as the Public Port Selection Mode",
+        "Keywords": "custom,public,port,publicport",
+        "FieldName": "CustomPublicPort",
+        "InputType": "number",
+        "MinValue": "1024",
+        "MaxValue": "65535",
+        "ParamFieldName": "CustomPublicPort",
         "DefaultValue": "",
         "EnumValues": {}
     },
@@ -172,7 +199,7 @@
         "Description": "Sets the password required for players to join the server. Default is no password",
         "Keywords": "password,server,serverpassword",
         "FieldName": "ServerPassword",
-        "InputType": "password",
+        "InputType": "Password",
         "ParamFieldName": "ServerPassword",
         "DefaultValue": "",
         "EnumValues": {}
@@ -189,15 +216,59 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Enable RCON",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, RCON will be enabled.",
+        "Keywords": "rcon,enabled,RCONEnabled",
+        "FieldName": "RCONEnabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "RCONEnabled",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable REST API",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the REST API will be enabled. Requires a new AMP instance as of Palworld 1.0",
+        "Keywords": "rest,api,enabled,RESTAPIEnabled",
+        "FieldName": "RESTAPIEnabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "RESTAPIEnabled",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Game Data API",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the game data will be accessible through the REST API. Requires Enable REST API to be set",
+        "Keywords": "enable,gamedata,api,enable-gamedata-api",
+        "FieldName": "EnableGamedataApi",
+        "InputType": "checkbox",
+        "ParamFieldName": "EnableGamedataApi",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-enable-gamedata-api "
+        }
+    },
+    {
         "DisplayName": "Player Limit",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the maximum number of players allowed on the server at one time",
+        "Description": "Sets the maximum number of players allowed on the server at one time. 32 is the maximum officially supported",
         "Keywords": "max,players,slots,limit,ServerPlayerMaxNum",
         "FieldName": "$MaxUsers",
         "InputType": "number",
         "MinValue": "1",
-        "MaxValue": "64",
         "ParamFieldName": "ServerPlayerMaxNum",
         "DefaultValue": "32",
         "Placeholder": "32",
@@ -238,12 +309,12 @@
         "DisplayName": "Enable Multi-Threaded Performance Improvements",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If enabled, the server's performance will be enhanced in multi-threaded CPU environments",
+        "Description": "If enabled, the server's performance will be enhanced in multi-threaded CPU environments. In v1.0 and later, this may decrease performance. May cause the server to crash on Windows if enabled",
         "Keywords": "multi,thread,threaded,performance,improvements,useperfthreads,NoAsyncLoadingThread,UseMultithreadForDS",
         "FieldName": "MultiThread",
         "InputType": "checkbox",
         "ParamFieldName": "MultiThread",
-        "DefaultValue": "-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS ",
+        "DefaultValue": "",
         "EnumValues": {
             "False": "",
             "True": "-useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS "
@@ -287,9 +358,39 @@
         "FieldName": "BanListURL",
         "InputType": "url",
         "ParamFieldName": "BanListURL",
-        "DefaultValue": "https://api.palworldgame.com/api/banlist.txt",
-        "Placeholder": "https://api.palworldgame.com/api/banlist.txt",
+        "DefaultValue": "https://b.palworldgame.com/api/banlist.txt",
+        "Placeholder": "https://b.palworldgame.com/api/banlist.txt",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Allow Client Mods",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, allows players with mods enabled to join the server",
+        "Keywords": "allow,client,mod,bAllowClientMod",
+        "FieldName": "bAllowClientMod",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowClientMod",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Show Join/Leave Messages",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, shows in-game messages when players join and leave",
+        "Keywords": "show,join,left,leave,message,bIsShowJoinLeftMessage",
+        "FieldName": "bIsShowJoinLeftMessage",
+        "InputType": "checkbox",
+        "ParamFieldName": "bIsShowJoinLeftMessage",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
     },
     {
         "DisplayName": "Crossplay Platforms",
@@ -302,6 +403,33 @@
         "ParamFieldName": "CrossplayPlatforms",
         "DefaultValue": "Steam,Xbox,PS5,Mac",
         "Placeholder": "Steam,Xbox,PS5,Mac",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Steam Workshop Mods (Windows)",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the mods listed under Active Steam Workshop Mods List will be enabled on the server, if they are installed. Steam Workshop mods can be downloaded from the Steam Workshop under Updates>Steam Workshop, or installed manually in the 'Mods/Workshop' folder. Windows only",
+        "Keywords": "mods,workshop,items,bGlobalEnableMod",
+        "FieldName": "bGlobalEnableMod",
+        "InputType": "checkbox",
+        "ParamFieldName": "bGlobalEnableMod",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Active Steam Workshop Mods List (Windows)",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "List of Steam Workshop mods to enable on the server. Example: ActiveModList=PalSync. One mod per line. Use the PackageName of each mod from the mod's Info.json file. [More information](https://docs.palworldgame.com/settings-and-operation/mod#enabling-mods-via-palmodsettingsini). Requires the mods to be installed, and Enable Steam Workshop Mods to be set. Windows only",
+        "Keywords": "mods,workshop,items,ActiveModList",
+        "FieldName": "ActiveModList",
+        "InputType": "Textarea",
+        "ParamFieldName": "ActiveModList",
+        "DefaultValue": "",
         "EnumValues": {}
     },
     {
@@ -350,6 +478,21 @@
         }
     },
     {
+        "DisplayName": "Enable UE4SS UObject Listeners (Windows)",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, UObject listeners will be created in GUObjectArray to create a fast cache for use instead of iterating GUObjectArray. Recommended to keep disabled for UE4SS mods to avoid crashes. Windows only",
+        "Keywords": "ue4ss,uobject,listeners,bUseUObjectArrayCache",
+        "FieldName": "bUseUObjectArrayCache",
+        "InputType": "checkbox",
+        "ParamFieldName": "General.bUseUObjectArrayCache",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
         "DisplayName": "Custom Command Line Arguments",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -372,7 +515,7 @@
         "InputType": "text",
         "ParamFieldName": "UserSettings",
         "DefaultValue": "",
-        "Placeholder": "RESTAPIEnabled=True,RESTAPIPort=8212",
+        "Placeholder": "CustomSetting=True,CustomSetting2=1000",
         "EnumValues": {}
     },
     {
@@ -397,12 +540,12 @@
         "FieldName": "DeathPenalty",
         "InputType": "enum",
         "ParamFieldName": "DeathPenalty",
-        "DefaultValue": "All",
+        "DefaultValue": "Item",
         "EnumValues": {
             "None": "Lose nothing",
-            "Item": "Lose items (not equipment)",
+            "Item": "Lose items, not equipment (default)",
             "ItemAndEquipment": "Lose items and equipment",
-            "All": "Lose items, equipment and pals (default)"
+            "All": "Lose items, equipment, and pals"
         }
     },
     {
@@ -507,6 +650,20 @@
         "ParamFieldName": "DropItemMaxNum",
         "DefaultValue": "3000",
         "Placeholder": "3000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Physics Active Drop Item Max Number",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the maximum number of dropped items that can use physics behavior. Set to -1 for unlimited",
+        "Keywords": "maximum,number,physics,active,drop,item,PhysicsActiveDropItemMaxNum",
+        "FieldName": "PhysicsActiveDropItemMaxNum",
+        "InputType": "number",
+        "MinValue": "-1",
+        "ParamFieldName": "PhysicsActiveDropItemMaxNum",
+        "DefaultValue": "-1",
+        "Placeholder": "-1",
         "EnumValues": {}
     },
     {
@@ -628,6 +785,66 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Guild Rejoin Cooldown Period",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the cooldown period before a player can rejoin a guild",
+        "Keywords": "guild,rejoin,cooldown,minutes,GuildRejoinCooldownMinutes",
+        "FieldName": "GuildRejoinCooldownMinutes",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "GuildRejoinCooldownMinutes",
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "Suffix": "minutes",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Auto Transfer Master Check Interval",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the interval to check the auto transfer master",
+        "Keywords": "auto,transfer,master,check,interval,seconds,AutoTransferMasterCheckIntervalSeconds",
+        "FieldName": "AutoTransferMasterCheckIntervalSeconds",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "AutoTransferMasterCheckIntervalSeconds",
+        "DefaultValue": "3600.000000",
+        "Placeholder": "3600.000000",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Auto Transfer Master Threshold",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the max threshold for auto transfer master",
+        "Keywords": "auto,transfer,master,threshold,days,AutoTransferMasterThresholdDays",
+        "FieldName": "AutoTransferMasterThresholdDays",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "AutoTransferMasterThresholdDays",
+        "DefaultValue": "14",
+        "Placeholder": "14",
+        "Suffix": "days",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Max Guilds Per Frame",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the max guilds per frame",
+        "Keywords": "max,guilds,per,frame,MaxGuildsPerFrame",
+        "FieldName": "MaxGuildsPerFrame",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "MaxGuildsPerFrame",
+        "DefaultValue": "10",
+        "Placeholder": "10",
+        "Suffix": "guilds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Egg Hatching Time",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -637,8 +854,8 @@
         "InputType": "number",
         "MinValue": "0",
         "ParamFieldName": "PalEggDefaultHatchingTime",
-        "DefaultValue": "72.000000",
-        "Placeholder": "72.000000",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
         "Suffix": "hours",
         "EnumValues": {}
     },
@@ -661,7 +878,7 @@
         "DisplayName": "Enable PvP",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, enables Player vs Player (PvP) mode",
+        "Description": "If set, enables Player vs Player (PvP) mode. Enable Player To Player Damage and  Enable Defending Other Guild Players must also be set. [Recommended settings for PvP servers](https://docs.palworldgame.com/settings-and-operation/pvp#recommended-server-settings-when-enabling-pvp)",
         "Keywords": "pvp,enable,disable,bIsPvP",
         "FieldName": "bIsPvP",
         "InputType": "checkbox",
@@ -718,6 +935,36 @@
         }
     },
     {
+        "DisplayName": "Display PVP Items In Bases",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, shows the number of PvP-exclusive items in each base on the map",
+        "Keywords": "display,pvp,item,number,world,map,base,camp,bDisplayPvPItemNumOnWorldMap_BaseCamp",
+        "FieldName": "bDisplayPvPItemNumOnWorldMap_BaseCamp",
+        "InputType": "checkbox",
+        "ParamFieldName": "bDisplayPvPItemNumOnWorldMap_BaseCamp",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Display PVP Items On Players",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, shows player locations and the number of PvP-exclusive items on the map",
+        "Keywords": "display,pvp,item,number,world,map,player,bDisplayPvPItemNumOnWorldMap_Player",
+        "FieldName": "bDisplayPvPItemNumOnWorldMap_Player",
+        "InputType": "checkbox",
+        "ParamFieldName": "bDisplayPvPItemNumOnWorldMap_Player",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Enable Death Penalty Pickup",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -763,6 +1010,21 @@
         }
     },
     {
+        "DisplayName": "Enable Fast Travel Only Base Camps",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, restricts fast travel to between bases only",
+        "Keywords": "fast,travel,enable,only,base,camp,bEnableFastTravelOnlyBaseCamp",
+        "FieldName": "bEnableFastTravelOnlyBaseCamp",
+        "InputType": "checkbox",
+        "ParamFieldName": "bEnableFastTravelOnlyBaseCamp",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
         "DisplayName": "Enable Start Location Selection By Map",
         "Category": "Palworld:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -771,7 +1033,7 @@
         "FieldName": "bIsStartLocationSelectByMap",
         "InputType": "checkbox",
         "ParamFieldName": "bIsStartLocationSelectByMap",
-        "DefaultValue": "True",
+        "DefaultValue": "False",
         "EnumValues": {
             "False": "False",
             "True": "True"
@@ -862,8 +1124,8 @@
         "InputType": "number",
         "MinValue": "0",
         "ParamFieldName": "ChatPostLimitPerMinute",
-        "DefaultValue": "10",
-        "Placeholder": "10",
+        "DefaultValue": "30",
+        "Placeholder": "30",
         "EnumValues": {}
     },
     {
@@ -940,6 +1202,209 @@
             "False": "False",
             "True": "True"
         }
+    },
+    {
+        "DisplayName": "Allow Stat Allocation - Attack",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, allows allocating stat points to Attack",
+        "Keywords": "allow,enhanced,stat,attack,bAllowEnhanceStat_Attack",
+        "FieldName": "bAllowEnhanceStat_Attack",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowEnhanceStat_Attack",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Stat Allocation - Health",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, allows allocating stat points to Health",
+        "Keywords": "allow,enhanced,stat,health,bAllowEnhanceStat_Health",
+        "FieldName": "bAllowEnhanceStat_Health",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowEnhanceStat_Health",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Stat Allocation - Stamina",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, allows allocating stat points to Stamina",
+        "Keywords": "allow,enhanced,stat,stamina,bAllowEnhanceStat_Stamina",
+        "FieldName": "bAllowEnhanceStat_Stamina",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowEnhanceStat_Stamina",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Stat Allocation - Weight",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, allows allocating stat points to Weight",
+        "Keywords": "allow,enhanced,stat,weight,bAllowEnhanceStat_Weight",
+        "FieldName": "bAllowEnhanceStat_Weight",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowEnhanceStat_Weight",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Allow Stat Allocation - Work Speed",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, allows allocating stat points to Work Speed",
+        "Keywords": "allow,enhanced,stat,work,speed,bAllowEnhanceStat_WorkSpeed",
+        "FieldName": "bAllowEnhanceStat_WorkSpeed",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAllowEnhanceStat_WorkSpeed",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Building Player UI Display",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, creator’s player ID will display on structures.",
+        "Keywords": "enable,building,player,ui,display,bEnableBuildingPlayerUIdDisplay",
+        "FieldName": "bEnableBuildingPlayerUIdDisplay",
+        "InputType": "checkbox",
+        "ParamFieldName": "bEnableBuildingPlayerUIdDisplay",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Building Name Display Cache TTL",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "How long to cache the player name displayed on structures",
+        "Keywords": "building,name,display,cache,ttl,seconds,BuildingNameDisplayCacheTTLSeconds",
+        "FieldName": "BuildingNameDisplayCacheTTLSeconds",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "BuildingNameDisplayCacheTTLSeconds",
+        "DefaultValue": "60",
+        "Placeholder": "60",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Additional Drop Item In PVP",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, players will drop a special item when killed while PvP is enabled. Additional Drop Item In PVP Item ID and Additional Drop Item In PVP Amount must also be set",
+        "Keywords": "additional,drop,item,when,player,killing,pvp,mode,bAdditionalDropItemWhenPlayerKillingInPvPMode",
+        "FieldName": "bAdditionalDropItemWhenPlayerKillingInPvPMode",
+        "InputType": "checkbox",
+        "ParamFieldName": "bAdditionalDropItemWhenPlayerKillingInPvPMode",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Enable Voice Chat",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, enable in-game voice chat",
+        "Keywords": "enable,voice,chat,bEnableVoiceChat",
+        "FieldName": "bEnableVoiceChat",
+        "InputType": "checkbox",
+        "ParamFieldName": "bEnableVoiceChat",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Voice Chat Max Volume Distance",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "The distance between players where they can hear the in-game voice chat at max volume",
+        "Keywords": "voice,chat,max,volume,distance,VoiceChatMaxVolumeDistance",
+        "FieldName": "VoiceChatMaxVolumeDistance",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "VoiceChatMaxVolumeDistance",
+        "DefaultValue": "3000.000000",
+        "Placeholder": "3000.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Voice Chat Zero Volume Distance",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "The distance between players where they can no longer hear the in-game voice chat",
+        "Keywords": "voice,chat,zero,volume,distance,VoiceChatZeroVolumeDistance",
+        "FieldName": "VoiceChatZeroVolumeDistance",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "VoiceChatZeroVolumeDistance",
+        "DefaultValue": "15000.000000",
+        "Placeholder": "15000.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional Drop Item In PVP Item ID",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If Enable Additional Drop Item In PVP is set, sets the ID of the item to drop",
+        "Keywords": "additional,drop,item,number,player,killing,pvp,mode,AdditionalDropItemWhenPlayerKillingInPvPMode",
+        "FieldName": "AdditionalDropItemWhenPlayerKillingInPvPMode",
+        "InputType": "text",
+        "ParamFieldName": "AdditionalDropItemWhenPlayerKillingInPvPMode",
+        "DefaultValue": "PlayerDropItem",
+        "Placeholder": "PlayerDropItem",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional Drop Item In PVP Amount",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If Enable Additional Drop Item In PVP is set, sets the quantity of the item to drop",
+        "Keywords": "additional,drop,item,number,player,killing,pvp,mode,AdditionalDropItemNumWhenPlayerKillingInPvPMode",
+        "FieldName": "AdditionalDropItemNumWhenPlayerKillingInPvPMode",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "AdditionalDropItemNumWhenPlayerKillingInPvPMode",
+        "DefaultValue": "1",
+        "Placeholder": "1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Deny Technology List",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Disable specific technologies by specifying [Technology IDs](https://docs.palworldgame.com/settings-and-operation/technologyids). Must follow the exact format: \"ItemID1\", \"ItemID2\"",
+        "Keywords": "deny,technology,list,DenyTechnologyList",
+        "FieldName": "DenyTechnologyList",
+        "InputType": "text",
+        "ParamFieldName": "DenyTechnologyList",
+        "DefaultValue": "",
+        "Placeholder": "(\"PALBOX\", \"RepairBench\")",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Day Time Speed Rate",
@@ -1303,6 +1768,155 @@
         "ParamFieldName": "ItemWeightRate",
         "DefaultValue": "1.000000",
         "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Equipment Durability Damage Rate",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the equipment durability loss multiplier",
+        "Keywords": "equipment,durability,loss,multiplier,damage,rate,EquipmentDurabilityDamageRate",
+        "FieldName": "EquipmentDurabilityDamageRate",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "EquipmentDurabilityDamageRate",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Item Container Force Mark Dirty Interval",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the interval for force sync when open the container",
+        "Keywords": "interval,force,sync,open,container,mark,dirty,ItemContainerForceMarkDirtyInterval",
+        "FieldName": "ItemContainerForceMarkDirtyInterval",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "ItemContainerForceMarkDirtyInterval",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Data Pal Storage Update Check Tick Interval",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the interval for updating the pal storage",
+        "Keywords": "player,data,pal,storage,update,check,tick,interval,PlayerDataPalStorageUpdateCheckTickInterval",
+        "FieldName": "PlayerDataPalStorageUpdateCheckTickInterval",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "PlayerDataPalStorageUpdateCheckTickInterval",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Monster Farm Action Speed Rate",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the item production speed multiplier from grazing",
+        "Keywords": "monster,farm,action,speed,rate,MonsterFarmActionSpeedRate",
+        "FieldName": "MonsterFarmActionSpeedRate",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "MonsterFarmActionSpeedRate",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Item Decay Rate Multiplier",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the rate items decay or spoil",
+        "Keywords": "decay,spoil,rate,multiplier,item,corruption,ItemCorruptionMultiplier",
+        "FieldName": "ItemCorruptionMultiplier",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "ItemCorruptionMultiplier",
+        "DefaultValue": "1.000000",
+        "Placeholder": "1.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Block Respawn Time",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the cooldown period before a player can respawn after death",
+        "Keywords": "block,respawn,time,BlockRespawnTime",
+        "FieldName": "BlockRespawnTime",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "BlockRespawnTime",
+        "DefaultValue": "5.000000",
+        "Placeholder": "5.000000",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Respawn Penalty Time Scale",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the multiplier applied to the respawn cooldown period",
+        "Keywords": "respawn,penalty,time,scale,RespawnPenaltyTimeScale",
+        "FieldName": "RespawnPenaltyTimeScale",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "RespawnPenaltyTimeScale",
+        "DefaultValue": "2.000000",
+        "Placeholder": "2.000000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Respawn Penalty Duration Threshold",
+        "Category": "Palworld:stadia_controller",
+        "Subcategory": "Multipliers:tune:3",
+        "Description": "Sets the survival-time threshold for applying the respawn cooldown multiplier set by Respawn Penalty Time Scale on a subsequent death",
+        "Keywords": "respawn,penalty,duration,threshold,RespawnPenaltyDurationThreshold",
+        "FieldName": "RespawnPenaltyDurationThreshold",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "RespawnPenaltyDurationThreshold",
+        "DefaultValue": "0.000000",
+        "Placeholder": "0.000000",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Install UE Scripting System (Windows)",
+        "Category": "Updates",
+        "Subcategory": "Runtime Configuration:build:3",
+        "Description": "Sets the action to take when the server is updated. If an installation option is selected, the selected build of the Unreal Engine 4/5 Scripting System will be installed from either the [UE4SS-RE repo](https://github.com/UE4SS-RE/RE-UE4SS) or the [Okaetsu forked repo](https://github.com/Okaetsu/RE-UE4SS), allowing the server to be modded without using the Steam Workshop. Also set the Specific UE4SS-RE Experimental Build Version if relevant. Windows only",
+        "Keywords": "install,ue4ss,unreal,engine,scripting,system,ue4ss-re,okaetsu,modding,experimental",
+        "FieldName": "InstallUE4SS",
+        "InputType": "enum",
+        "ParamFieldName": "InstallUE4SS",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Do nothing (default)",
+            "false": "Remove UE4SS files",
+            "experimental-palworld": "Install latest Okaetsu experimental build (recommended build)",
+            "experimental-latest": "Install latest UE4SS-RE experimental build",
+            "experimental": "Install specific UE4SS-RE experimental build",
+            "true": "Install latest UE4SS-RE release build"
+        }
+    },
+    {
+        "DisplayName": "Specific UE4SS-RE Experimental Build Version",
+        "Category": "Updates",
+        "Subcategory": "Runtime Configuration:build:3",
+        "Description": "If \"Install specific UE4SS-RE experimental build\" is selected under Install UE Scripting System, sets the [relevant UE4SS-RE version](https://github.com/UE4SS-RE/RE-UE4SS/releases/tag/experimental) to install. Example: v3.0.1-137-g6867a08",
+        "Keywords": "ue4ss,unreal,engine,scripting,system,experimental",
+        "FieldName": "UE4SSExperimentalVersion",
+        "InputType": "text",
+        "ParamFieldName": "UE4SSExperimentalVersion",
+        "DefaultValue": "v3.0.1-137-g6867a08",
+        "Placeholder": "v3.0.1-137-g6867a08",
         "EnumValues": {}
     }
 ]

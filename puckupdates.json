@@ -1,19 +1,30 @@
 [
     {
         "UpdateStageName": "Server Download",
-        "UpdateSourcePlatform": "Linux",
+        "UpdateSourcePlatform": "All",
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "3481440",
         "UpdateSourceArgs": "2994020",
-        "UpdateSourceVersion": "{{ServerBranch}}"
+        "UpdateSourceVersion": "{{ServerBranch}}",
+        "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Server_configuration.json Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/puckserver_configuration.json",
+        "UpdateStageName": "SteamCMD Component Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1007",
+        "UpdateSourceArgs": "2994020",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "UpdateSourceArgs": "server_configuration.json",
-        "OverwriteExistingFiles": false
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server_config.json Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/puckserver_config.json",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "server_config.json",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     }
 ]

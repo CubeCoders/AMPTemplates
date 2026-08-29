@@ -5,23 +5,8 @@
         "UpdateSource": "SteamCMD",
         "UpdateSourceData": "896660",
         "UpdateSourceArgs": "892970",
-        "UpdateSourceVersion": "{{Stream}}"
-    },
-    {
-        "UpdateStageName": "Update Saves Directory",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C move \"{{$FullBaseDir}}Data\" \"{{$FullBaseDir}}Saves\" > NUL 2>&1",
-        "SkipOnFailure": true
-    },
-    {
-        "UpdateStageName": "Update Saves Directory",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"mv \\\"{{$FullBaseDir}}Data/\\\" \\\"{{$FullBaseDir}}Saves/\\\" >/dev/null 2>&1\"",
-        "SkipOnFailure": true
+        "UpdateSourceVersion": "{{Stream}}",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "ValheimPlus Download",
@@ -32,7 +17,8 @@
         "UpdateSourceConditionSetting": "valheim_plus_install",
         "UpdateSourceConditionValue": "true",
         "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "ValheimPlus Download",
@@ -43,7 +29,8 @@
         "UpdateSourceConditionSetting": "valheim_plus_install",
         "UpdateSourceConditionValue": "true",
         "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Settings File Download",
@@ -54,7 +41,8 @@
         "UpdateSourceTarget": "{{$FullBaseDir}}BepInEx/config",
         "OverwriteExistingFiles": false,
         "UpdateSourceConditionSetting": "valheim_plus_install",
-        "UpdateSourceConditionValue": "true"
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "BepInEx Download",
@@ -71,7 +59,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $BepInExVersion='{{bepinex_version}}'; if ([string]::IsNullOrWhiteSpace($BepInExVersion)) { $BepInExVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://thunderstore.io/api/v1/package-metrics/denikson/BepInExPack_Valheim).latest_version }; if ($BepInExVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid BepInEx version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://gcdn.thunderstore.io/live/repository/packages/denikson-BepInExPack_Valheim-$BepInExVersion.zip -OutFile 'BepInEx.zip'; if ($?) { Write-Output \\\"BepInEx v$BepInExVersion downloaded\\\" }\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $BepInExVersion='{{bepinex_version}}'; if ([string]::IsNullOrWhiteSpace($BepInExVersion)) { $BepInExVersion=(Invoke-RestMethod -UseBasicParsing -Uri https://thunderstore.io/api/v1/package-metrics/denikson/BepInExPack_Valheim).latest_version }; if ($BepInExVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output \\\"Invalid BepInEx version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://gcdn.thunderstore.io/live/repository/packages/denikson-BepInExPack_Valheim-$BepInExVersion.zip -OutFile 'BepInEx.zip'; if ($?) { Write-Output \\\"BepInEx v$BepInExVersion downloaded\\\" }\"",
         "UpdateSourceConditionSetting": "bepinex_install",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false

@@ -7,13 +7,15 @@
         "UpdateSourceTarget": "./",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Set Executable Flag",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "./Xonotic/xonotic-linux64-dedicated"
+        "UpdateSourceArgs": "./Xonotic/xonotic-linux64-dedicated",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config File Download",
@@ -21,13 +23,15 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://raw.githubusercontent.com/CubeCoders/AMPTemplates/main/xonoticserver.cfg",
         "UpdateSourceTarget": "../",
-        "OverwriteExistingFiles": true
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Data Directory Creation",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "./xonotic/Xonotic/ServerData/data"
+        "UpdateSourceArgs": "./xonotic/Xonotic/ServerData/data",
+        "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Config File Copy",
@@ -35,6 +39,7 @@
         "UpdateSource": "CopyFilePath",
         "UpdateSourceData": "./xonotic/Xonotic/ServerData/data/server.cfg",
         "UpdateSourceArgs": "./xonoticserver.cfg",
-        "OverwriteExistingFiles": false
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     }
 ]

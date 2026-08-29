@@ -172,7 +172,7 @@
         "Description": "Sets the password required to join the server. Default is no password",
         "Keywords": "server,password,connection.password",
         "FieldName": "connection_password",
-        "InputType": "password",
+        "InputType": "Password",
         "ParamFieldName": "connection.password",
         "DefaultValue": "",
         "EnumValues": {}
@@ -184,7 +184,7 @@
         "Description": "Sets the password required to join the server. Default is no password",
         "Keywords": "server,admin,password,admin_password,connection.admin_password",
         "FieldName": "connection_admin_password",
-        "InputType": "password",
+        "InputType": "Password",
         "ParamFieldName": "connection.admin_password",
         "DefaultValue": "",
         "EnumValues": {}
@@ -244,7 +244,7 @@
         "Description": "Sets the password required to connect to remote admin. Default is no password",
         "Keywords": "remote,admin,password,remote_admin.password",
         "FieldName": "remote_admin_password",
-        "InputType": "password",
+        "InputType": "Password",
         "ParamFieldName": "remote_admin.password",
         "DefaultValue": "",
         "EnumValues": {}
@@ -420,7 +420,7 @@
         "Description": "Sets the password required to connect to the Live Port. Default is no password",
         "Keywords": "live,timing,data,port,password,live.password",
         "FieldName": "live_password",
-        "InputType": "password",
+        "InputType": "Password",
         "ParamFieldName": "live.password",
         "DefaultValue": "",
         "EnumValues": {}
@@ -1176,6 +1176,40 @@
         "EnumValues": {
             "False": "0",
             "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Download Source",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Sets how to download the client and server files. Standalone = complete download from the mirror set under Standalone Download Mirror. Steam with patch = client files downloaded from Steam, along with server patch downloaded from MX-Bikes.com. NOTE: Update the server after changing this setting!",
+        "Keywords": "server,download,source,steam,path,standalone",
+        "FieldName": "DownloadSource",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "DownloadSource",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "standalone",
+        "EnumValues": {
+            "standalone": "Standalone (default)",
+            "steam": "Steam with patch"
+        }
+    },
+    {
+        "DisplayName": "Standalone Download Mirror",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Sets the mirror to download the client and server files from, if \"Standalone\" is selected under Download Source. NOTE: Update the server after changing this setting!",
+        "Keywords": "server,download,mirror,cdn",
+        "FieldName": "ServerDownloadMirror",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "ServerDownloadMirror",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "MXB-Mods.com",
+        "EnumValues": {
+            "MXB-Mods.com": "MXB-Mods.com (default)",
+            "MX-Bikes.com": "MX-Bikes.com"
         }
     }
 ]

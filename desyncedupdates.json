@@ -1,0 +1,19 @@
+[
+    {
+        "UpdateStageName": "Application Updating",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "2943070",
+        "UpdateSourceArgs": "1450900",
+        "UpdateSourceVersion": "{{ReleaseBranch}}",
+        "ForceDownloadPlatform": "Windows"
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
+    }
+]

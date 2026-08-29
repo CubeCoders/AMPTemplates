@@ -62,10 +62,23 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Server Tags",
+        "Category": "Enshrouded:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets optional filter tags for the server that assist searching in the server browser. Available tags are listed in enshrouded_server_readme.txt",
+        "Keywords": "server,filter,tags",
+        "FieldName": "tags",
+        "InputType": "list",
+        "ParamFieldName": "$.tags",
+        "DefaultValue": "[]",
+        "Special": "array:text",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Server Roles",
         "Category": "Enshrouded:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Permissions for groups of players, including passwords to join the server, can be defined via [server roles](https://enshrouded.zendesk.com/hc/en-us/articles/19191581489309-Server-Roles-Configuration) in enshrouded_server.json",
+        "Description": "Permissions for groups of players, including passwords to join the server, can be defined via [server roles](https://enshrouded.zendesk.com/hc/en-us/articles/19191581489309-Server-Roles-Configuration) in enshrouded_server.json. See enshrouded_server_readme.txt for further details",
         "Keywords": "server,roles,password,permissions",
         "FieldName": "ServerRoles",
         "InputType": "hidden",
@@ -86,6 +99,17 @@
         "DefaultValue": "16",
         "Placeholder": "16",
         "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Banned Players",
+        "Category": "Enshrouded:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Players can be permanently banned from the server by accessing the banlist in-game via the Social-tab and adding them there. The banlist can also be edited directly by configuring 'bannedAccounts' in enshrouded_server.json - see enshrouded_server_readme.txt for format details",
+        "Keywords": "banned,players,banlist,bannedAccounts",
+        "FieldName": "banlist",
+        "InputType": "hidden",
+        "ParamFieldName": "banlist",
         "EnumValues": {}
     },
     {
@@ -159,11 +183,12 @@
         "Keywords": "playerHealthFactor",
         "FieldName": "playerHealthFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.25",
         "MaxValue": "4",
         "ParamFieldName": "$.gameSettings.playerHealthFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -174,11 +199,12 @@
         "Keywords": "player,mana,factor,playerManaFactor",
         "FieldName": "playerManaFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.25",
         "MaxValue": "4",
         "ParamFieldName": "$.gameSettings.playerManaFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -189,11 +215,12 @@
         "Keywords": "player,stamina,factor,playerStaminaFactor",
         "FieldName": "playerStaminaFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.25",
         "MaxValue": "4",
         "ParamFieldName": "$.gameSettings.playerStaminaFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -205,13 +232,30 @@
         "FieldName": "playerBodyHeatFactor",
         "InputType": "enum",
         "ParamFieldName": "$.gameSettings.playerBodyHeatFactor",
-        "DefaultValue": "1",
+        "DefaultValue": "1.0",
+        "MultipleOf": "0.1",
         "EnumValues": {
             "0.5": "Low",
-            "1": "Default",
+            "1.0": "Default",
             "1.5": "High",
-            "2": "Maximum"
+            "2.0": "Maximum"
         }
+    },
+    {
+        "DisplayName": "Diving Time Factor",
+        "Category": "Enshrouded:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Modifies the initial amount of oxygen for players and therefore the time available underwater. Minimum = 0.25",
+        "Keywords": "diving,time,factor,playerDivingTimeFactor",
+        "FieldName": "playerDivingTimeFactor",
+        "InputType": "number",
+        "MinValue": "0.25",
+        "MaxValue": "2",
+        "ParamFieldName": "$.gameSettings.playerDivingTimeFactor",
+        "DefaultValue": "1",
+        "Placeholder": "1",
+        "MultipleOf": "0.000001",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Enable Weapon Durability",
@@ -251,11 +295,12 @@
         "Keywords": "food,buff,duration,factor,foodBuffDurationFactor",
         "FieldName": "foodBuffDurationFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.5",
         "MaxValue": "2",
         "ParamFieldName": "$.gameSettings.foodBuffDurationFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -277,11 +322,12 @@
         "Keywords": "shroud,time,factor,shroudTimeFactor",
         "FieldName": "shroudTimeFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.5",
         "MaxValue": "2",
         "ParamFieldName": "$.gameSettings.shroudTimeFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -333,6 +379,24 @@
         }
     },
     {
+        "DisplayName": "Fishing Difficulty",
+        "Category": "Enshrouded:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the strength of the fish during the fishing minigame. The stronger a fish is, the longer the minigame will proceed",
+        "Keywords": "fish,fishing,difficulty,fishingDifficulty",
+        "FieldName": "fishingDifficulty",
+        "InputType": "enum",
+        "ParamFieldName": "$.gameSettings.fishingDifficulty",
+        "DefaultValue": "Normal",
+        "EnumValues": {
+            "VeryEasy": "Very easy",
+            "Easy": "Easy",
+            "Normal": "Normal",
+            "Hard": "Hard",
+            "VeryHard": "Very hard"
+        }
+    },
+    {
         "DisplayName": "Mining Effectiveness",
         "Category": "Enshrouded:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
@@ -340,11 +404,12 @@
         "Keywords": "mining,damage,factor,yield,resources,terraforming,miningDamageFactor",
         "FieldName": "miningDamageFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.5",
         "MaxValue": "2",
         "ParamFieldName": "$.gameSettings.miningDamageFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -355,11 +420,12 @@
         "Keywords": "plant,growth,speed,factor,plantGrowthSpeedFactor",
         "FieldName": "plantGrowthSpeedFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.25",
         "MaxValue": "2",
         "ParamFieldName": "$.gameSettings.plantGrowthSpeedFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -370,11 +436,12 @@
         "Keywords": "resources,drop,stack,gain,modifier,factor,materials,loot,resourceDropStackAmountFactor",
         "FieldName": "resourceDropStackAmountFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.25",
         "MaxValue": "2",
         "ParamFieldName": "$.gameSettings.resourceDropStackAmountFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -385,11 +452,12 @@
         "Keywords": "factory,production,speed,factor,workshop,items,factoryProductionSpeedFactor",
         "FieldName": "factoryProductionSpeedFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.25",
         "MaxValue": "2",
         "ParamFieldName": "$.gameSettings.factoryProductionSpeedFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -405,6 +473,7 @@
         "ParamFieldName": "$.gameSettings.perkUpgradeRecyclingFactor",
         "DefaultValue": "0.500000",
         "Placeholder": "0.500000",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -415,11 +484,12 @@
         "Keywords": "runes,upgrade,weapons,perk,cost,factor,perkCostFactor",
         "FieldName": "perkCostFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.25",
         "MaxValue": "2",
         "ParamFieldName": "$.gameSettings.perkCostFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -430,11 +500,12 @@
         "Keywords": "experience,combat,factor,experienceCombatFactor",
         "FieldName": "experienceCombatFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.25",
         "MaxValue": "2",
         "ParamFieldName": "$.gameSettings.experienceCombatFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -445,11 +516,12 @@
         "Keywords": "experience,mining,resources,factor,experienceMiningFactor",
         "FieldName": "experienceMiningFactor",
         "InputType": "number",
-        "ParamFieldName": "$.gameSettings.experienceMiningFactor",
         "MinValue": "0",
         "MaxValue": "2",
+        "ParamFieldName": "$.gameSettings.experienceMiningFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -460,11 +532,12 @@
         "Keywords": "experience,exploration,quests,factor,experienceExplorationQuestsFactor",
         "FieldName": "experienceExplorationQuestsFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.25",
         "MaxValue": "2",
         "ParamFieldName": "$.gameSettings.experienceExplorationQuestsFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -509,11 +582,12 @@
         "Keywords": "enemy,damage,factor,enemyDamageFactor",
         "FieldName": "enemyDamageFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.25",
         "MaxValue": "5",
         "ParamFieldName": "$.gameSettings.enemyDamageFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -524,11 +598,12 @@
         "Keywords": "enemy,health,factor,enemyHealthFactor",
         "FieldName": "enemyHealthFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.25",
         "MaxValue": "4",
         "ParamFieldName": "$.gameSettings.enemyHealthFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -539,11 +614,12 @@
         "Keywords": "enemy,stun,factor,stamina,enemyStaminaFactor",
         "FieldName": "enemyStaminaFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.5",
         "MaxValue": "2",
         "ParamFieldName": "$.gameSettings.enemyStaminaFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -554,11 +630,12 @@
         "Keywords": "enemy,perception,factor,enemyPerceptionRangeFactor",
         "FieldName": "enemyPerceptionRangeFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.5",
         "MaxValue": "2",
         "ParamFieldName": "$.gameSettings.enemyPerceptionRangeFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -569,11 +646,12 @@
         "Keywords": "boss,attacks,damage,factor,bossDamageFactor",
         "FieldName": "bossDamageFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.2",
         "MaxValue": "5",
         "ParamFieldName": "$.gameSettings.bossDamageFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -584,11 +662,12 @@
         "Keywords": "boss,health,factor,bossHealthFactor",
         "FieldName": "bossHealthFactor",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.2",
         "MaxValue": "5",
         "ParamFieldName": "$.gameSettings.bossHealthFactor",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {
@@ -599,11 +678,12 @@
         "Keywords": "enemy,attacks,frequency,threat,bonus,threatBonus",
         "FieldName": "threatBonus",
         "InputType": "number",
-        "MinValue": "0",
+        "MinValue": "0.25",
         "MaxValue": "4",
         "ParamFieldName": "$.gameSettings.threatBonus",
         "DefaultValue": "1",
         "Placeholder": "1",
+        "MultipleOf": "0.000001",
         "EnumValues": {}
     },
     {

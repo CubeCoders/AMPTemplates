@@ -13,7 +13,7 @@ read -r DPY_NUM < display.log
 rm display.log
 
 [[ -f winetricks ]] && rm -f winetricks
-wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20250102/src/winetricks
+wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20260125/src/winetricks
 chmod +x winetricks
 
 export WINEPREFIX="$SCRIPTDIR/terratech-worlds/.wine"
@@ -21,6 +21,7 @@ export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 export WINEDEBUG=fixme-all
 export DISPLAY=:$DPY_NUM
+
 ./winetricks -q vcrun2022 >> winescript_log.txt 2>&1
 rm -rf ~/.cache/winetricks
 

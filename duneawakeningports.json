@@ -1,0 +1,25 @@
+[
+    {
+        "Protocol": "TCP",
+        "Port": 5673,
+        "Ref": "RmqGamePort",
+        "Name": "RabbitMQ Game (AMQPS)",
+        "Description": "TLS AMQP endpoint that game clients use for messaging. Advertised to clients via FLS as $ExternalIP:$RmqGamePort."
+    },
+    {
+        "Protocol": "TCP",
+        "Port": 15673,
+        "Ref": "RmqGameHttpPort",
+        "Name": "RabbitMQ Game (HTTP mgmt)",
+        "Description": "Management HTTP endpoint clients use for token auth. Advertised to clients via FLS."
+    },
+    {
+        "Protocol": "UDP",
+        "Port": 7777,
+        "Range": 30,
+        "MinListening": 2,
+        "Ref": "GamePort",
+        "Name": "UE5 game port pool",
+        "Description": "UDP port range covering every UE5 dedicated server instance \u2014 both the always-warm hub maps (Survival_1, Overmap and any others the admin adds to AlwaysWarmMaps) and the on-demand spawns (dungeons, sietches, ecolabs, story missions). The pool's soft cap is set under 'Max concurrent instances' (default 8) and must not exceed Range (default 30; Range deliberately exceeds the cap so admins can raise the cap without re-editing the firewall). MinListening=2 means AMP considers the instance alive once the two default always-warm maps have bound their ports."
+    }
+]

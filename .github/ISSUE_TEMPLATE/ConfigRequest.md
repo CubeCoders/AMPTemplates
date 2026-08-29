@@ -8,6 +8,8 @@ about: To request a new application configuration
 Note: Please try setting up a configuration yourself before raising an issue to request a configuration:  ~~https://config.getamp.sh/~~
 ***There is a newer beta version available at https://iceofwraith.github.io/GenericConfigGen/
 
+AI generated configurations will not be accepted in this repo.
+
 ## Game Information:
 
 Game Title:
