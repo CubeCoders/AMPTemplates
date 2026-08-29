@@ -866,8 +866,8 @@
         "DisplayName": "Death Penalty",
         "Category": "7 Days to Die:skull",
         "Subcategory": "Gameplay:joystick",
-        "Description": "Penalty after dying. Nothing: No penalty for dying. Default: Classic XP Penalty. Injured: You keep most of your debuffs. Food and Water is set to 50% on respawn. Permanent Death: Your character is completely reset. You will respawn with a fresh start within the saved game. Only applies to server version Alpha 21.2+.",
-        "Keywords": "Death,Penalty,DeathPenalty",
+        "Description": "Penalty after dying. This setting has different meeanings between the base game and Undead Legacy modded servers. Base game - Nothing: no penalty. Default: classic XP penalty. Injured: you keep most of your debuffs, food and water are set to 50% on respawn. Permanent Death: your character is completely reset and respawns fresh within the saved game. Undead Legacy - Nothing: no XP debt and no attribute-lowering debuff. Beginner: near death trauma debuff, closest to the base game experience. Moderate: as Beginner, plus loss of random action skills. Standard: as Moderate, plus you respawn with partial health, food and water.",
+        "Keywords": "Death,Penalty,DeathPenalty,UndeadLegacy,UL",
         "FieldName": "DeathPenalty",
         "InputType": "enum",
         "IsFlagArgument": false,
@@ -876,9 +876,9 @@
         "DefaultValue": "1",
         "EnumValues": {
             "0": "Nothing",
-            "1": "Default",
-            "2": "Injured",
-            "3": "Permanent Death"
+            "1": "Default: Classic XP Penalty / UL Beginner",
+            "2": "Injured / UL Moderate",
+            "3": "Permanent Death / UL Standard"
         }
     },
     {
@@ -1707,8 +1707,8 @@
         "DefaultValue": "",
         "EnumValues": {
             "": "Standard server (default)",
-            "-EACEnabled=false -RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} ": "Undead Legacy Stable mod (Alpha 20.7 build)",
-            "-RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{UndeadLegacyDeathPenalty}} -POITierLootScale={{POITierLootScale}} -EACEnabled=false ": "Undead Legacy Experimental mod (Version 2.6 build)",
+            "-EACEnabled=false -RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -DeathPenalty={{DeathPenalty}} -POITierLootScale={{POITierLootScale}} ": "Undead Legacy Stable mod (Alpha 20.7 build)",
+            "-RecipeFilter={{RecipeFilter}} -StarterQuestEnabled={{StarterQuestEnabled}} -WanderingHordeFrequency={{WanderingHordeFrequency}} -WanderingHordeRange={{WanderingHordeRange}} -WanderingHordeEnemyCount={{WanderingHordeEnemyCount}} -WanderingHordeEnemyRange={{WanderingHordeEnemyRange}} -POITierLootScale={{POITierLootScale}} -EACEnabled=false ": "Undead Legacy Experimental mod (Version 2.6 build)",
             "-EACEnabled=false ": "Darkness Falls mod (Alpha 20.7 build)",
             "-EACEnabled=false  ": "Darkness Falls V5 mod (Alpha 21.2 build)",
             "-EACEnabled=false   ": "Darkness Falls V6 mod (Version 1.4 build)"
@@ -1838,25 +1838,6 @@
         "EnumValues": {},
         "Suffix": "zombies",
         "maxValue": 64
-    },
-    {
-        "DisplayName": "Death Penalty (Undead Legacy)",
-        "Category": "7 Days to Die:skull",
-        "Subcategory": "Undead Legacy:extension",
-        "Description": "Penalty after dying, when running Undead Legacy. This overrides the \"Death Penalty\" setting under Gameplay, which has different meanings and applies to a standard server. Nothing: No penalty (you will not get XP debt as well as no debuff, that lowers your attributes). Beginner: Near death trauma debuff (vanilla-like experience). Moderate: Same as Beginner, but also with loss of random action skills. Standard: Same as Moderate, but also you will respawn with partial health, food and water.",
-        "Keywords": "Death,Penalty,DeathPenalty",
-        "FieldName": "UndeadLegacyDeathPenalty",
-        "InputType": "enum",
-        "IsFlagArgument": false,
-        "ParamFieldName": "UndeadLegacyDeathPenalty",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "3",
-        "EnumValues": {
-            "0": "Nothing",
-            "1": "Beginner",
-            "2": "Moderate",
-            "3": "Standard (default)"
-        }
     },
     {
         "DisplayName": "POI Tier Loot Scale",
