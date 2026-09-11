@@ -8,6 +8,85 @@
         "SkipOnFailure": false
     },
     {
+        "UpdateStageName": "Download Wurm Server Mod Launcher",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/ago1024/WurmServerModLauncher/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^server-modlauncher-.*\\.zip$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "ModLauncher",
+        "UpdateSourceConditionValue": "-patched",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Patch Server Launcher",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd /d wurm-unlimited\\402370 && (patcher.bat < NUL) & if not exist WurmServerLauncher-patched.exe exit /b 1",
+        "UpdateSourceConditionSetting": "ModLauncher",
+        "UpdateSourceConditionValue": "-patched",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Patch Server Launcher",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ./wurm-unlimited/402370 && chmod +x patcher.sh && ./patcher.sh; chmod +x WurmServerLauncher-patched 2>/dev/null; test -f WurmServerLauncher-patched\"",
+        "UpdateSourceConditionSetting": "ModLauncher",
+        "UpdateSourceConditionValue": "-patched",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Download Announcer Mod",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/ago1024/WurmServerModLauncher/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^announcer-.*\\.zip$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "UpdateSourceConditionSetting": "Announcer",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Announcer Config",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}mods/announcer.config",
+        "UpdateSourceData": "# Managed by AMP - edit these under the Announcer Mod settings.\nannouncePlayers=true\nannouncePlayerLogout=true\nannounceMaxPower=5\n",
+        "OverwriteExistingFiles": false,
+        "UpdateSourceConditionSetting": "Announcer",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Remove Announcer Mod",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C if exist wurm-unlimited\\402370\\mods\\announcer.properties del /Q wurm-unlimited\\402370\\mods\\announcer.properties",
+        "UpdateSourceConditionSetting": "Announcer",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Remove Announcer Mod",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -f ./wurm-unlimited/402370/mods/announcer.properties\"",
+        "UpdateSourceConditionSetting": "Announcer",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
+    },
+    {
         "UpdateStageName": "Start Server",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "StartApplication",
