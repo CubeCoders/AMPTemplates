@@ -65,7 +65,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'tarkov/server'; $SPTVersion='{{SPTVersion}}'; if ( [string]::IsNullOrWhiteSpace($SPTVersion) ) { $SPTVersion='4.1' }; $Releases = (Invoke-WebRequest -UseBasicParsing -Uri 'https://api.github.com/repos/sp-tushonka/build/releases').Content; $DownloadURL = [regex]::Match($Releases, \\\"https://mirror\\\\.sp-tushonka\\\\.com/[A-Za-z0-9._-]+/SPT-$SPTVersion[.-][A-Za-z0-9._-]+\\\\.7z\\\").Value; if ( [string]::IsNullOrWhiteSpace($DownloadURL) ) { Write-Output \\\"No download URL found for SPT $SPTVersion. The GitHub API may be rate limited, or that version does not exist. Aborting\\\"; exit 1 }; Write-Output \\\"Downloading $DownloadURL\\\"; Invoke-WebRequest -UseBasicParsing -Uri \\\"$DownloadURL\\\" -OutFile 'SPT.7z'; & ../7-Zip/7z.exe x -y -aoa SPT.7z | Out-Null; Remove-Item -Path 'SPT.7z' -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'tarkov/server'; $SPTVersion='{{SPTVersion}}'; if ( [string]::IsNullOrWhiteSpace($SPTVersion) ) { $SPTVersion='4.1' }; if ( $SPTVersion -notmatch '^\\d+(\\.\\d+){0,2}$' ) { Write-Output 'Invalid SPT version format specified'; exit 1 }; $SPTPattern = $SPTVersion -replace '\\.','[.]'; $Releases = (Invoke-WebRequest -UseBasicParsing -Uri 'https://api.github.com/repos/sp-tushonka/build/releases?per_page=100').Content; $DownloadURL = [regex]::Match($Releases, \\\"https://mirror\\.sp-tushonka\\.com/[A-Za-z0-9._-]+/SPT-${SPTPattern}[.-][A-Za-z0-9._-]+\\.7z\\\").Value; if ( [string]::IsNullOrWhiteSpace($DownloadURL) ) { Write-Output \\\"No download URL found for SPT $SPTVersion. The GitHub API may be rate limited, or that version does not exist. Aborting\\\"; exit 1 }; Write-Output \\\"Downloading $DownloadURL\\\"; Invoke-WebRequest -UseBasicParsing -Uri \\\"$DownloadURL\\\" -OutFile 'SPT.7z'; & ../7-Zip/7z.exe x -y -aoa SPT.7z | Out-Null; Remove-Item -Path 'SPT.7z' -Force -ErrorAction SilentlyContinue | Out-Null\"",
         "SkipOnFailure": false
     },
     {
@@ -73,19 +73,23 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd tarkov/server && SPTVersion=\\\"{{SPTVersion}}\\\"; [[ -z \\\"$SPTVersion\\\" ]] && SPTVersion=\\\"4.1\\\"; DownloadURL=$(wget -qO- https://api.github.com/repos/sp-tushonka/build/releases | grep -Eo \\\"https://mirror\\\\.sp-tushonka\\\\.com/[A-Za-z0-9._-]+/SPT-$SPTVersion[.-][A-Za-z0-9._-]+\\\\.7z\\\" | head -n 1); if [[ -z \\\"$DownloadURL\\\" ]]; then echo \\\"No download URL found for SPT $SPTVersion. The GitHub API may be rate limited, or that version does not exist. Aborting\\\"; exit 1; fi; echo \\\"Downloading $DownloadURL\\\" && wget -qO SPT.7z \\\"$DownloadURL\\\" && ../7-Zip/7zzs x -y -aoa SPT.7z >/dev/null 2>&1 && rm -f SPT.7z >/dev/null 2>&1 && chmod +x SPT_Runtime/SPT.Server.Linux >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd tarkov/server && SPTVersion='{{SPTVersion}}'; if [[ -z \\\"$SPTVersion\\\" ]]; then SPTVersion=\\\"4.1\\\"; fi; if [[ ! \\\"$SPTVersion\\\" =~ ^[0-9]+(\\.[0-9]+){0,2}$ ]]; then echo \\\"Invalid SPT version format specified\\\"; exit 1; fi; SPTPattern=${SPTVersion//./[.]}; DownloadURL=$(wget -qO- \\\"https://api.github.com/repos/sp-tushonka/build/releases?per_page=100\\\" | grep -Eo \\\"https://mirror\\.sp-tushonka\\.com/[A-Za-z0-9._-]+/SPT-${SPTPattern}[.-][A-Za-z0-9._-]+\\.7z\\\" | head -n 1); if [[ -z \\\"$DownloadURL\\\" ]]; then echo \\\"No download URL found for SPT $SPTVersion. The GitHub API may be rate limited, or that version does not exist. Aborting\\\"; exit 1; fi; echo \\\"Downloading $DownloadURL\\\" && wget -qO SPT.7z \\\"$DownloadURL\\\" && ../7-Zip/7zzs x -y -aoa SPT.7z >/dev/null 2>&1 && rm -f SPT.7z >/dev/null 2>&1 && chmod +x SPT_Runtime/SPT.Server.Linux >/dev/null 2>&1\"",
         "SkipOnFailure": false
     },
     {
         "UpdateStageName": "Fika Server Mod Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "FetchURLFromJQ",
-        "UpdateSourceData": "https://api.github.com/repos/project-fika/Fika-Server-CSharp/releases/{{FikaVersion}}",
-        "UpdateSourceArgs": "$.assets[0].browser_download_url",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'tarkov/server'; $FikaVersion='{{FikaVersion}}'; if ( (-not [string]::IsNullOrWhiteSpace($FikaVersion)) -and ($FikaVersion -notmatch '^\\d+\\.\\d+\\.\\d+$') ) { Write-Output 'Invalid Fika Server version format specified'; exit 1 }; if ( [string]::IsNullOrWhiteSpace($FikaVersion) ) { $ReleaseURL='https://api.github.com/repos/project-fika/Fika-Server-CSharp/releases/latest' } else { $ReleaseURL=\\\"https://api.github.com/repos/project-fika/Fika-Server-CSharp/releases/tags/v$FikaVersion\\\" }; try { $Release = Invoke-RestMethod -UseBasicParsing -Uri $ReleaseURL -ErrorAction Stop } catch { Write-Output \\\"No release found for Fika Server $FikaVersion. The GitHub API may be rate limited, or that version does not exist. Aborting\\\"; exit 1 }; $DownloadURL = ($Release.assets | Where-Object { $_.name -like '*.zip' } | Select-Object -First 1).browser_download_url; if ( [string]::IsNullOrWhiteSpace($DownloadURL) ) { Write-Output 'No download URL found for the Fika Server release. Aborting'; exit 1 }; Write-Output \\\"Downloading $DownloadURL\\\"; Invoke-WebRequest -UseBasicParsing -Uri \\\"$DownloadURL\\\" -OutFile 'Fika.zip'; & ../7-Zip/7z.exe x -y -aoa Fika.zip | Out-Null; Remove-Item -Path 'Fika.zip' -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Fika Server Mod Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd tarkov/server && FikaVersion='{{FikaVersion}}'; if [[ -n \\\"$FikaVersion\\\" && ! \\\"$FikaVersion\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Fika Server version format specified\\\"; exit 1; fi; if [[ -z \\\"$FikaVersion\\\" ]]; then ReleaseURL=\\\"https://api.github.com/repos/project-fika/Fika-Server-CSharp/releases/latest\\\"; else ReleaseURL=\\\"https://api.github.com/repos/project-fika/Fika-Server-CSharp/releases/tags/v$FikaVersion\\\"; fi; DownloadURL=$(wget -qO- \\\"$ReleaseURL\\\" | jq -r '[.assets[] | select(.name | endswith(\\\".zip\\\")) | .browser_download_url][0] // empty' 2>/dev/null); if [[ -z \\\"$DownloadURL\\\" ]]; then echo \\\"No download URL found for Fika Server ${FikaVersion:-latest}. The GitHub API may be rate limited, or that version does not exist. Aborting\\\"; exit 1; fi; echo \\\"Downloading $DownloadURL\\\" && wget -qO Fika.zip \\\"$DownloadURL\\\" && ../7-Zip/7zzs x -y -aoa Fika.zip >/dev/null 2>&1 && rm -f Fika.zip >/dev/null 2>&1\"",
         "SkipOnFailure": false
     },
     {
