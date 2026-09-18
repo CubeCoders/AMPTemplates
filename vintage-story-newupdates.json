@@ -77,7 +77,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"StratumVersion=\\\"{{StratumVersion}}\\\"; cd \\\"{{$FullBaseDir}}server\\\" && if [[ -z \\\"$StratumVersion\\\" ]]; then Release=$(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/latest); else Release=$(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/tags/v$StratumVersion); fi; Url=$(echo \\\"$Release\\\" | jq -r '.assets[]? | select(.name | endswith(\"-linux-x64.zip\")) | .browser_download_url' | head -n1); StratumVersion=$(echo \\\"$Release\\\" | jq -r '.tag_name // empty'); if [[ -z \\\"$Url\\\" ]]; then echo \\\"No Stratum linux-x64 build found for the version specified. Aborting\\\" && exit 1; fi; wget -qO stratum.zip \\\"$Url\\\" || { echo \\\"Download failed from GitHub. This is a fault with GitHub, not AMP. Aborting\\\"; exit 1; }; unzip -qo stratum.zip && rm -f stratum.zip && chmod +x StratumServer && echo \\\"Stratum $StratumVersion downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"cd {{$FullBaseDir}}server && StratumVersion={{StratumVersion}} && [[ -z \\\"$StratumVersion\\\" ]] && { wget -qO stratum.zip $(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/latest | grep browser_download_url | cut -d\\\\\\\" -f4 | grep -- -linux-x64.zip) && unzip -qo stratum.zip && rm -f stratum.zip && chmod +x StratumServer && echo \\\"Latest Stratum downloaded\\\"; } || { wget -qO stratum.zip $(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/tags/v$StratumVersion | grep browser_download_url | cut -d\\\\\\\" -f4 | grep -- -linux-x64.zip) && unzip -qo stratum.zip && rm -f stratum.zip && chmod +x StratumServer && echo \\\"Stratum v$StratumVersion downloaded\\\"; }\"",
         "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "ServerExecutable",
         "UpdateSourceConditionValue": "StratumServer"
@@ -88,7 +88,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"StratumVersion=\\\"{{StratumVersion}}\\\"; cd \\\"{{$FullBaseDir}}server\\\" && if [[ -z \\\"$StratumVersion\\\" ]]; then Release=$(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/latest); else Release=$(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/tags/v$StratumVersion); fi; Url=$(echo \\\"$Release\\\" | jq -r '.assets[]? | select(.name | endswith(\"-linux-arm64.zip\")) | .browser_download_url' | head -n1); StratumVersion=$(echo \\\"$Release\\\" | jq -r '.tag_name // empty'); if [[ -z \\\"$Url\\\" ]]; then echo \\\"No Stratum linux-arm64 build found for the version specified. Aborting\\\" && exit 1; fi; wget -qO stratum.zip \\\"$Url\\\" || { echo \\\"Download failed from GitHub. This is a fault with GitHub, not AMP. Aborting\\\"; exit 1; }; unzip -qo stratum.zip && rm -f stratum.zip && chmod +x StratumServer && echo \\\"Stratum $StratumVersion downloaded\\\"\"",
+        "UpdateSourceArgs": "-c \"cd {{$FullBaseDir}}server && StratumVersion={{StratumVersion}} && [[ -z \\\"$StratumVersion\\\" ]] && { wget -qO stratum.zip $(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/latest | grep browser_download_url | cut -d\\\\\\\" -f4 | grep -- -linux-arm64.zip) && unzip -qo stratum.zip && rm -f stratum.zip && chmod +x StratumServer && echo \\\"Latest Stratum downloaded\\\"; } || { wget -qO stratum.zip $(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/tags/v$StratumVersion | grep browser_download_url | cut -d\\\\\\\" -f4 | grep -- -linux-arm64.zip) && unzip -qo stratum.zip && rm -f stratum.zip && chmod +x StratumServer && echo \\\"Stratum v$StratumVersion downloaded\\\"; }\"",
         "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "ServerExecutable",
         "UpdateSourceConditionValue": "StratumServer"
@@ -98,7 +98,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; Set-Location -Path '{{$FullBaseDir}}server'; $StratumVersion='{{StratumVersion}}'; if ([string]::IsNullOrWhiteSpace($StratumVersion)) { $Release=Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/StratumServer/Stratum/releases/latest' } else { $Release=Invoke-RestMethod -UseBasicParsing -Uri ('https://api.github.com/repos/StratumServer/Stratum/releases/tags/v'+$StratumVersion) }; $Asset=$Release.assets | Where-Object { $_.name -like '*-win-x64.zip' } | Select-Object -First 1; if ($null -eq $Asset) { Write-Output 'No Stratum win-x64 build found for the version specified. Aborting'; exit 1 }; try { Invoke-WebRequest -UseBasicParsing -Uri $Asset.browser_download_url -OutFile stratum.zip -ErrorAction Stop } catch { Write-Output 'Download failed from GitHub. This is a fault with GitHub, not AMP. Aborting'; exit 1 }; Expand-Archive stratum.zip -DestinationPath . -Force; Remove-Item stratum.zip -Force; Write-Output \\\"Stratum $($Release.tag_name) downloaded\\\"\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path '{{$FullBaseDir}}server'; $ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $StratumVersion='{{StratumVersion}}'; if ([string]::IsNullOrWhiteSpace($StratumVersion)) { Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/StratumServer/Stratum/releases/latest').assets | Where-Object { $_.browser_download_url -like '*-win-x64.zip' }).browser_download_url -OutFile 'stratum.zip'; if ($?) { Expand-Archive stratum.zip -DestinationPath . -Force; Remove-Item stratum.zip -Force; Write-Output \\\"Latest Stratum downloaded\\\" } } else { Invoke-WebRequest -UseBasicParsing -Uri ((Invoke-RestMethod -UseBasicParsing -Uri \"https://api.github.com/repos/StratumServer/Stratum/releases/tags/v$StratumVersion\").assets | Where-Object { $_.browser_download_url -like '*-win-x64.zip' }).browser_download_url -OutFile 'stratum.zip'; if ($?) { Expand-Archive stratum.zip -DestinationPath . -Force; Remove-Item stratum.zip -Force; Write-Output \\\"Stratum v$StratumVersion downloaded\\\" } }\"",
         "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "ServerExecutable",
         "UpdateSourceConditionValue": "StratumServer"
@@ -122,6 +122,61 @@
         "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "ServerExecutable",
         "UpdateSourceConditionValue": "StratumServer"
+    },
+    {
+        "UpdateStageName": "Create Mods Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}data/Mods",
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "NimbusEnabled",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Create ModConfig Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}data/ModConfig",
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "NimbusEnabled",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Nimbus Backend Config Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}data/ModConfig/nimbus-server.json",
+        "UpdateSourceData": "{\n  \"Enabled\": false,\n  \"ServerId\": \"\",\n  \"DisplayName\": \"\",\n  \"PublicHost\": \"127.0.0.1\",\n  \"PublicPort\": 42420,\n  \"RegistryUrl\": \"http://127.0.0.1:8765\",\n  \"SharedSecret\": \"\",\n  \"HeartbeatIntervalSeconds\": 5,\n  \"RegistryHttpTimeoutSeconds\": 5,\n  \"Maintenance\": false,\n  \"ReservationRequired\": true,\n  \"FailClosedWhenRegistryUnreachable\": false,\n  \"AllowPlayerServerCommand\": true,\n  \"TransferMode\": \"redirect\",\n  \"SeamlessPrepareAckTimeoutSeconds\": 8,\n  \"ShortcutCommands\": [],\n  \"Tags\": []\n}\n",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "NimbusEnabled",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Nimbus ServerMod Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/StratumServer/Nimbus/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^Nimbus\\.ServerMod-.*\\.zip$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}data/Mods",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "NimbusEnabled",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Nimbus Redirect Fix Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/StratumServer/redirectfix/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^redirectfix-.*\\.zip$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}data/Mods",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "NimbusEnabled",
+        "UpdateSourceConditionValue": "true"
     },
     {
         "UpdateStageName": "Start Server",
