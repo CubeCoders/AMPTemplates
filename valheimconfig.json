@@ -614,6 +614,40 @@
         }
     },
     {
+        "DisplayName": "Disable Heavy Snow Damage",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "Removes the heavy snow damage to player built objects and disables the effects related to it.",
+        "Keywords": "Building,Heavy,Snow,Damage,Building.noHeavySnowDamage",
+        "FieldName": "Building.noHeavySnowDamage",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "Building.noHeavySnowDamage",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Disable Lava Damage",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "Removes the lava damage to player built objects and disables the effects related to it.",
+        "Keywords": "Building,Heavy,Snow,Damage,Building.noLavaDamage",
+        "FieldName": "Building.noLavaDamage",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "Building.noLavaDamage",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
         "DisplayName": "Maximum Placement Distance",
         "Category": "Valheim Plus:extension",
         "Subcategory": "Basic:settings:1",
@@ -4342,17 +4376,17 @@
         }
     },
     {
-        "DisplayName": "Unarmed Damage Bonus",
+        "DisplayName": "Unarmed Damage Scale",
         "Category": "Valheim Plus:extension",
         "Subcategory": "Players:joystick:2",
-        "Description": "The base unarmed damage multiplied by your skill level. 120 will result in a maximum of up to 12 damage when you have a skill level of 10. Default 70",
-        "Keywords": "Player,Unarmed,Damage,Player.baseUnarmedDamage",
-        "FieldName": "Player.baseUnarmedDamage",
+        "Description": "Percentage modifier for unarmed damage. For example, 50 gives 50% more unarmed damage while -50 gives half.",
+        "Keywords": "Player,Unarmed,Damage,Scale,Player.unarmedDamageScale",
+        "FieldName": "Player.unarmedDamageScale",
         "InputType": "number",
         "IsFlagArgument": false,
-        "ParamFieldName": "Player.baseUnarmedDamage",
+        "ParamFieldName": "Player.unarmedDamageScale",
         "IncludeInCommandLine": false,
-        "DefaultValue": "70",
+        "DefaultValue": "0",
         "Suffix": "damage",
         "EnumValues": {}
     },
@@ -5169,74 +5203,6 @@
         "InputType": "hidden"
     },
     {
-        "DisplayName": "Valheim Plus Enable",
-        "Category": "Valheim Plus:extension",
-        "Subcategory": "Server:dns:3",
-        "Description": "Enabling this section gives you access to the settings up to the next section. This does NOT install Valheim Plus. To install Valheim Plus, navigate to the Updates menu and enable Install Valheim Plus, then update the server.",
-        "Keywords": "ValheimPlus,Enable,ValheimPlus.enabled",
-        "FieldName": "ValheimPlus.enabled",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "ValheimPlus.enabled",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "false",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
-        "DisplayName": "Valheim Plus Logo",
-        "Category": "Valheim Plus:extension",
-        "Subcategory": "Server:dns:3",
-        "Description": "Display the Valheim Plus logo in the main menu",
-        "Keywords": "ValheimPlus,Logo,ValheimPlus.mainMenuLogo",
-        "FieldName": "ValheimPlus.mainMenuLogo",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "ValheimPlus.mainMenuLogo",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "true",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
-        "DisplayName": "Server Browser Advertisement",
-        "Category": "Valheim Plus:extension",
-        "Subcategory": "Server:dns:3",
-        "Description": "Display the advertisement of our server hosting partner on the server browser menu.",
-        "Keywords": "ValheimPlus,Server,Browser,Advertisement,ValheimPlus.serverBrowserAdvertisement",
-        "FieldName": "ValheimPlus.serverBrowserAdvertisement",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "ValheimPlus.serverBrowserAdvertisement",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "true",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
-        "DisplayName": "Disable Config Auto-Updates",
-        "Category": "Valheim Plus:extension",
-        "Subcategory": "Server:dns:3",
-        "Description": "Disables configuration file auto updates from GitHub, useful if GitHub is blocked on your network.",
-        "Keywords": "ValheimPlus,Disable,Config,Auto,Updates,ValheimPlus.disableConfigAutoUpdates",
-        "FieldName": "ValheimPlus.disableConfigAutoUpdates",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "ValheimPlus.disableConfigAutoUpdates",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "false",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
         "DisplayName": "Server Settings Enable",
         "Category": "Valheim Plus:extension",
         "Subcategory": "Server:dns:3",
@@ -5424,7 +5390,9 @@
         "IsFlagArgument": false,
         "ParamFieldName": "Game.difficultyScaleRange",
         "IncludeInCommandLine": false,
-        "DefaultValue": "200",
+        "MinValue": "1",
+        "MaxValue": "20000",
+        "DefaultValue": "100",
         "Suffix": "meters",
         "EnumValues": {}
     },
@@ -6397,23 +6365,6 @@
         }
     },
     {
-        "DisplayName": "Auto Share Map Pins",
-        "Category": "Valheim Plus:extension",
-        "Subcategory": "Server:dns:3",
-        "Description": "This option automatically shares created pins with everyone playing on the server.",
-        "Keywords": "Map,Share,Pins,Map.shareAllPins",
-        "FieldName": "Map.shareAllPins",
-        "InputType": "checkbox",
-        "IsFlagArgument": false,
-        "ParamFieldName": "Map.shareAllPins",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "false",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
         "DisplayName": "Show Carts and Boats on Map",
         "Category": "Valheim Plus:extension",
         "Subcategory": "Server:dns:3",
@@ -6598,6 +6549,23 @@
         "InputType": "checkbox",
         "IsFlagArgument": false,
         "ParamFieldName": "StructuralIntegrity.disableStructuralIntegrity",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Allow Dismantling of Boats and Carts",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Server:dns:3",
+        "Description": "Allow players to dismantle player-built boats and carts with a hammer instead of attacking and destroying them. Storage must be empty, and players cannot be interacting with the boat/cart before disassembly.",
+        "Keywords": "Structural,Integrity,Allow,Dismantling,Boat,Cart,StructuralIntegrity.allowDismantlingOfBoatsAndCarts",
+        "FieldName": "StructuralIntegrity.allowDismantlingOfBoatsAndCarts",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "StructuralIntegrity.allowDismantlingOfBoatsAndCarts",
         "IncludeInCommandLine": false,
         "DefaultValue": "false",
         "EnumValues": {
@@ -7274,6 +7242,21 @@
         }
     },
     {
+        "DisplayName": "Auto Stack Reply Timeout",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "Sets the amount of time in seconds the game will wait for a chest to respond to auto stack before skipping it.",
+        "Keywords": "Auto,Stack,Reply,Timeout,AutoStack.replyTimeout",
+        "FieldName": "AutoStack.replyTimeout",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "AutoStack.replyTimeout",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "1",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Demister Settings Enable",
         "Category": "Valheim Plus:extension",
         "Subcategory": "Basic:settings:1",
@@ -7636,6 +7619,249 @@
         "ParamFieldName": "Egg.sellPrice",
         "IncludeInCommandLine": false,
         "DefaultValue": "1500",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Frigid Kiln Settings Enable",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "Enabling this section gives you access to the settings up to the next section.",
+        "Keywords": "Frigid,Kiln,Enable,FrigidKiln.enabled",
+        "FieldName": "FrigidKiln.enabled",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrigidKiln.enabled",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Frigid Kiln Frozen Fuel Production Speed",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "This value determines the time in seconds to produce a single frozen fuel. Default: 30",
+        "Keywords": "Frigid,Kiln,FrigidKiln.productionSpeed,Frozen,Fuel,Production,Speed",
+        "FieldName": "FrigidKiln.productionSpeed",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrigidKiln.productionSpeed",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "30",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Frigid Kiln Maximum Ice",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "This sets the maximum amount of ice that the frigid kiln can hold at once. Default: 25",
+        "Keywords": "Frigid,Kiln,FrigidKiln.maximumIce,Maximum,Ice",
+        "FieldName": "FrigidKiln.maximumIce",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrigidKiln.maximumIce",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "25",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Frigid Kiln Ice Consumed Per Frozen Fuel",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "This sets the amount of ice consumed to produce a single frozen fuel. Default: 5",
+        "Keywords": "Frigid,Kiln,FrigidKiln.iceUsedPerProduct,Frozen,Fuel,Ice",
+        "FieldName": "FrigidKiln.iceUsedPerProduct",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrigidKiln.iceUsedPerProduct",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "25",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Frigid Kiln Auto Deposit",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "Instead of dropping the items, they will be placed inside the nearest nearby chests.",
+        "Keywords": "Frigid,Kiln,FrigidKiln.autoDeposit,Auto,Deposit",
+        "FieldName": "FrigidKiln.autoDeposit",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrigidKiln.autoDeposit",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Frigid Kiln Auto Fuel",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "When enabled, the frigid kiln will automatically pull ice from nearby chests.",
+        "Keywords": "Frigid,Kiln,FrigidKiln.autoFuel,Auto,Fuel",
+        "FieldName": "FrigidKiln.autoFuel",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrigidKiln.autoFuel",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Frigid Kiln Ignore Private Area Check",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "This option prevents the frigid kiln from pulling items from warded areas if it isn't placed inside of it. For convenience, we recommend this be enabled",
+        "Keywords": "Frigid,Kiln,Ignore,Private,Area,Check,FrigidKiln.ignorePrivateAreaCheck",
+        "FieldName": "FrigidKiln.ignorePrivateAreaCheck",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrigidKiln.ignorePrivateAreaCheck",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Frigid Kiln Auto Deposit/Fuel Range",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "The range of the chest detection for the auto deposit and auto fuel features. Maximum is 50",
+        "Keywords": "Frigid,Kiln,Auto,Deposit,Range,FrigidKiln.autoDepositRange",
+        "FieldName": "FrigidKiln.autoDepositRange",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "50",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrigidKiln.autoDepositRange",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "10",
+        "Suffix": "meters",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Frost Foundry Settings Enable",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "Enabling this section gives you access to the settings up to the next section.",
+        "Keywords": "Frost,Foundry,Enable,FrostFoundry.enabled",
+        "FieldName": "FrostFoundry.enabled",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrostFoundry.enabled",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Frost Foundry Frozen Fuel Production Speed",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "This value determines the time in seconds to produce a single item. Default: 50",
+        "Keywords": "Frost,Foundry,FrostFoundry.productionSpeed,Production,Speed",
+        "FieldName": "FrostFoundry.productionSpeed",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrostFoundry.productionSpeed",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "50",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Frost Foundry Maximum Frozen Fuel",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "This sets the maximum amount of frozen fuel that the Frost Foundry can hold at once. Default: 20",
+        "Keywords": "Frost,Foundry,FrostFoundry.maximumFrozenFuel,Maximum,Frozen,Fuel",
+        "FieldName": "FrostFoundry.maximumFrozenFuel",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrostFoundry.maximumFrozenFuel",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "20",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Frost Foundry Ice Consumed Per Frozen Fuel",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "This sets the amount of ice consumed to produce a single frozen fuel. Default: 5",
+        "Keywords": "Frost,Foundry,FrostFoundry.frozenFuelUsedPerProduct,Frozen,Fuel,Used,Per,Product",
+        "FieldName": "FrostFoundry.frozenFuelUsedPerProduct",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrostFoundry.frozenFuelUsedPerProduct",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "25",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Frost Foundry Auto Fuel",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "When enabled, the frost foundry will automatically pull frozen fuel from nearby chests.",
+        "Keywords": "Frost,Foundry,FrostFoundry.autoFuel,Auto,Fuel",
+        "FieldName": "FrostFoundry.autoFuel",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrostFoundry.autoFuel",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Frost Foundry Ignore Private Area Check",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "This option prevents the frost foundry from pulling items from warded areas if it isn't placed inside of it. For convenience, we recommend this be enabled",
+        "Keywords": "Frost,Foundry,Ignore,Private,Area,Check,FrostFoundry.ignorePrivateAreaCheck",
+        "FieldName": "FrostFoundry.ignorePrivateAreaCheck",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrostFoundry.ignorePrivateAreaCheck",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Frost Foundry Auto Deposit Range",
+        "Category": "Valheim Plus:extension",
+        "Subcategory": "Basic:settings:1",
+        "Description": "The range of the chest detection for the auto fuel feature. Maximum is 50",
+        "Keywords": "Frost,Foundry,Auto,Deposit,Range,FrostFoundry.autoDepositRange",
+        "FieldName": "FrostFoundry.autoRange",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "50",
+        "IsFlagArgument": false,
+        "ParamFieldName": "FrostFoundry.autoRange",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "10",
+        "Suffix": "meters",
         "EnumValues": {}
     }
 ]
