@@ -33,36 +33,29 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Settings File Download",
+        "UpdateStageName": "Settings Template File Download",
         "UpdateSourcePlatform": "All",
-        "UpdateSource": "GithubRelease",
-        "UpdateSourceArgs": "Grantapher/ValheimPlus",
-        "UpdateSourceData": "valheim_plus.cfg",
-        "UpdateSourceTarget": "{{$FullBaseDir}}BepInEx/config",
-        "OverwriteExistingFiles": false,
-        "UpdateSourceConditionSetting": "valheim_plus_install",
-        "UpdateSourceConditionValue": "true",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/valheimvalheim_plus.cfg",
+        "UpdateSourceArgs": "AMP_valheim_plus.cfg",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
         "SkipOnFailure": false
     },
-
     {
-        "UpdateStageName": "Rename Settings File",
+        "UpdateStageName": "Retire Legacy Settings File",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C ren Valheim\\896660\\BepInEx\\config\\valheim_plus.cfg Valheim\\896660\\BepInEx\\config\\org.bepinex.plugins.valheim_plus.cfg",
-        "UpdateSourceConditionSetting": "valheim_plus_install",
-        "UpdateSourceConditionValue": "true",
+        "UpdateSourceArgs": "/C if exist Valheim\\896660\\BepInEx\\config\\valheim_plus.cfg move /Y Valheim\\896660\\BepInEx\\config\\valheim_plus.cfg Valheim\\896660\\BepInEx\\config\\valheim_plus.cfg.migrated > NUL 2>&1",
         "SkipOnFailure": true
     },
     {
-        "UpdateStageName": "Rename Settings File",
+        "UpdateStageName": "Retire Legacy Settings File",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"mv -f ./Valheim/896660/BepInEx/config/valheim_plus.cfg ./Valheim/896660/BepInEx/config/org.bepinex.plugins.valheim_plus.cfg >/dev/null 2>&1\"",
-        "UpdateSourceConditionSetting": "valheim_plus_install",
-        "UpdateSourceConditionValue": "true",
+        "UpdateSourceArgs": "-c \"if [ -f ./Valheim/896660/BepInEx/config/valheim_plus.cfg ]; then mv -f ./Valheim/896660/BepInEx/config/valheim_plus.cfg ./Valheim/896660/BepInEx/config/valheim_plus.cfg.migrated; fi\"",
         "SkipOnFailure": true
     },
     {
