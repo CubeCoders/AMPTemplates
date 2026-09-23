@@ -1,0 +1,51 @@
+[
+    {
+        "UpdateStageName": "Download Gate Binary",
+        "UpdateStageDescription": "Fetching latest Gate release from GitHub",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceData": "gate_*_windows_amd64.zip",
+        "UpdateSourceArgs": "minekube/gate",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "Download Gate Binary",
+        "UpdateStageDescription": "Fetching latest Gate release from GitHub",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceData": "gate_*_linux_amd64.tar.gz",
+        "UpdateSourceArgs": "minekube/gate",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "Download Gate Binary",
+        "UpdateStageDescription": "Fetching latest Gate release from GitHub",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSourceData": "gate_*_linux_arm64.tar.gz",
+        "UpdateSourceArgs": "minekube/gate",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "Rename Gate Binary (Windows)",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CMD",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceArgs": "if exist gate_*_windows_amd64.exe move /y gate_*_windows_amd64.exe gate.exe"
+    },
+    {
+        "UpdateStageName": "Rename Gate Binary (Linux)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Bash",
+        "UpdateSourceArgs": "mv -f gate_*_linux_* gate 2>/dev/null || true chmod +x gate 2>/dev/null || true"
+    }
+]

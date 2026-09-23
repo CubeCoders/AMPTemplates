@@ -1,0 +1,124 @@
+[
+    {
+        "DisplayName": "Velocity Secret",
+        "Category": "Minekube Gate Proxy:stadia_controlle",
+        "Subcategory": "Server:dns:1",
+        "Description": "Secret key used to authenticate modern forwarding with backend Velocity-compatible servers.",
+        "Keywords": "velocity,secret",
+        "FieldName": "config.forwarding.velocitySecret",
+        "InputType": "Password",
+        "ParamFieldName": "config.yml:config.forwarding.velocitySecret",
+        "DefaultValue": "",
+        "Placeholder": "GenerateASecretKeyHere12345678"
+    },
+    {
+        "DisplayName": "Listen Address",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "IP and port Gate listens on for incoming player connections.",
+        "Keywords": "listen,address",
+        "FieldName": "config.bind",
+        "InputType": "text",
+        "Required": true,
+        "ParamFieldName": "config.yml:config.bind",
+        "DefaultValue": "0.0.0.0:25565",
+        "Placeholder": "0.0.0.0:25565"
+    },
+    {
+        "DisplayName": "Backend Servers",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Mapping of server identifiers to their internal IP and port targets.",
+        "Keywords": "backend,servers",
+        "FieldName": "config.servers",
+        "InputType": "text",
+        "Required": true,
+        "ParamFieldName": "config.yml:config.servers",
+        "Special": "dictionary:text",
+        "DefaultValue": "",
+        "Placeholder": "main=127.0.0.1:25567,survival=127.0.0.1:25566,plots=127.0.0.1:25568,minigame-hub=127.0.0.1:25569"
+    },
+    {
+        "DisplayName": "Server MOTD",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Message of the day displayed in the multiplayer server list.",
+        "Keywords": "server,motd",
+        "FieldName": "status.motd",
+        "InputType": "text",
+        "ParamFieldName": "config.yml:status.motd",
+        "DefaultValue": ""
+    },
+    {
+        "DisplayName": "Enable Minekube Connect",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Whether to register and connect the proxy to Minekube Connect cloud services.",
+        "Keywords": "enable,minekube,connect",
+        "FieldName": "connect.enabled",
+        "InputType": "checkbox",
+        "Required": true,
+        "ParamFieldName": "config.yml:connect.enabled",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Lite Mode",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Runs Gate in lightweight forwarding mode with minimal packet processing.",
+        "Keywords": "enable,lite,mode",
+        "FieldName": "config.lite.enabled",
+        "InputType": "checkbox",
+        "Required": true,
+        "ParamFieldName": "config.yml:config.lite.enabled",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Fallback Server Try Order",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Ordered list of backend servers Gate attempts to connect players to on login.",
+        "Keywords": "fallback,server,try,order",
+        "FieldName": "config.try",
+        "InputType": "text",
+        "Required": true,
+        "ParamFieldName": "config.yml:config.try",
+        "Special": "array:text",
+        "DefaultValue": ""
+    },
+    {
+        "DisplayName": "Proxy Ping Status",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "When enabled, Gate forwards server list ping requests to the backend server instead of answering them directly.",
+        "Keywords": "proxy,ping,status",
+        "FieldName": "status.proxy",
+        "InputType": "checkbox",
+        "Required": true,
+        "ParamFieldName": "config.yml:status.proxy",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Server Favicon",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Relative path to the 64x64 PNG server icon file shown in the multiplayer server list.",
+        "Keywords": "server,favicon",
+        "FieldName": "status.favicon",
+        "InputType": "text",
+        "ParamFieldName": "config.yml:status.favicon",
+        "DefaultValue": "server-icon.png"
+    }
+]
