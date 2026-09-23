@@ -7,7 +7,7 @@
         "Keywords": "velocity,secret",
         "FieldName": "config.forwarding.velocitySecret",
         "InputType": "Password",
-        "ParamFieldName": "config.yml:config.forwarding.velocitySecret",
+        "ParamFieldName": "$.config.forwarding.velocitySecret",
         "DefaultValue": "",
         "Placeholder": "GenerateASecretKeyHere12345678"
     },
@@ -20,23 +20,106 @@
         "FieldName": "config.bind",
         "InputType": "text",
         "Required": true,
-        "ParamFieldName": "config.yml:config.bind",
+        "ParamFieldName": "$.config.bind",
         "DefaultValue": "0.0.0.0:25565",
         "Placeholder": "0.0.0.0:25565"
     },
     {
-        "DisplayName": "Backend Servers",
+        "DisplayName": "Primary Server (main)",
         "Category": "Minekube Gate Proxy:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Mapping of server identifiers to their internal IP and port targets.",
-        "Keywords": "backend,servers",
-        "FieldName": "config.servers",
+        "Subcategory": "Backend Servers:dns:1",
+        "Description": "IP and port for the primary 'main' backend Minecraft server.",
+        "Keywords": "backend,server,main",
+        "FieldName": "config.servers.main",
         "InputType": "text",
         "Required": true,
-        "ParamFieldName": "config.yml:config.servers",
-        "Special": "dictionary:text",
-        "DefaultValue": "main=127.0.0.1:25567",
-        "Placeholder": "main=127.0.0.1:25567,survival=127.0.0.1:25566,plots=127.0.0.1:25568,minigame-hub=127.0.0.1:25569"
+        "ParamFieldName": "$.config.servers.main",
+        "DefaultValue": "127.0.0.1:25567",
+        "Placeholder": "127.0.0.1:25567"
+    },
+    {
+        "DisplayName": "Backend Server 2 (flat)",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Backend Servers:dns:1",
+        "Description": "IP and port for optional 'flat' backend server.",
+        "Keywords": "backend,server,flat",
+        "FieldName": "config.servers.flat",
+        "InputType": "text",
+        "ParamFieldName": "$.config.servers.flat",
+        "DefaultValue": "",
+        "Placeholder": "127.0.0.1:25568"
+    },
+    {
+        "DisplayName": "Backend Server 3 (survival)",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Backend Servers:dns:1",
+        "Description": "IP and port for optional 'survival' backend server.",
+        "Keywords": "backend,server,survival",
+        "FieldName": "config.servers.survival",
+        "InputType": "text",
+        "ParamFieldName": "$.config.servers.survival",
+        "DefaultValue": "",
+        "Placeholder": "127.0.0.1:25566"
+    },
+    {
+        "DisplayName": "Backend Server 4 (lobby)",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Backend Servers:dns:1",
+        "Description": "IP and port for optional 'lobby' backend server.",
+        "Keywords": "backend,server,lobby",
+        "FieldName": "config.servers.lobby",
+        "InputType": "text",
+        "ParamFieldName": "$.config.servers.lobby",
+        "DefaultValue": "",
+        "Placeholder": "127.0.0.1:25569"
+    },
+    {
+        "DisplayName": "Backend Server 5 (creative)",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Backend Servers:dns:1",
+        "Description": "IP and port for optional 'creative' backend server.",
+        "Keywords": "backend,server,creative",
+        "FieldName": "config.servers.creative",
+        "InputType": "text",
+        "ParamFieldName": "$.config.servers.creative",
+        "DefaultValue": "",
+        "Placeholder": "127.0.0.1:25570"
+    },
+    {
+        "DisplayName": "Backend Server 6 (minigames)",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Backend Servers:dns:1",
+        "Description": "IP and port for optional 'minigames' backend server.",
+        "Keywords": "backend,server,minigames",
+        "FieldName": "config.servers.minigames",
+        "InputType": "text",
+        "ParamFieldName": "$.config.servers.minigames",
+        "DefaultValue": "",
+        "Placeholder": "127.0.0.1:25571"
+    },
+    {
+        "DisplayName": "Backend Server 7 (hub)",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Backend Servers:dns:1",
+        "Description": "IP and port for optional 'hub' backend server.",
+        "Keywords": "backend,server,hub",
+        "FieldName": "config.servers.hub",
+        "InputType": "text",
+        "ParamFieldName": "$.config.servers.hub",
+        "DefaultValue": "",
+        "Placeholder": "127.0.0.1:25572"
+    },
+    {
+        "DisplayName": "Backend Server 8 (bedrock)",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Backend Servers:dns:1",
+        "Description": "IP and port for optional 'bedrock' backend server.",
+        "Keywords": "backend,server,bedrock",
+        "FieldName": "config.servers.bedrock",
+        "InputType": "text",
+        "ParamFieldName": "$.config.servers.bedrock",
+        "DefaultValue": "",
+        "Placeholder": "127.0.0.1:19132"
     },
     {
         "DisplayName": "Server MOTD",
@@ -46,7 +129,7 @@
         "Keywords": "server,motd",
         "FieldName": "config.status.motd",
         "InputType": "text",
-        "ParamFieldName": "config.yml:config.status.motd",
+        "ParamFieldName": "$.config.status.motd",
         "DefaultValue": "§6§lLook Beyond the Horizon!\n§c§oHosted by Not a Glitch Studios"
     },
     {
@@ -58,7 +141,7 @@
         "FieldName": "connect.enabled",
         "InputType": "checkbox",
         "Required": true,
-        "ParamFieldName": "config.yml:connect.enabled",
+        "ParamFieldName": "$.connect.enabled",
         "DefaultValue": "true",
         "EnumValues": {
             "False": "false",
@@ -73,7 +156,7 @@
         "Keywords": "enable,lite,mode",
         "FieldName": "config.lite.enabled",
         "InputType": "checkbox",
-        "ParamFieldName": "config.yml:config.lite.enabled",
+        "ParamFieldName": "$.config.lite.enabled",
         "DefaultValue": "false",
         "EnumValues": {
             "False": "false",
@@ -87,12 +170,13 @@
         "Description": "Ordered list of backend servers Gate attempts to connect players to on login.",
         "Keywords": "fallback,server,try,order",
         "FieldName": "config.try",
-        "InputType": "text",
+        "InputType": "list",
         "Required": true,
-        "ParamFieldName": "config.yml:config.try",
+        "ParamFieldName": "$.config.try",
         "Special": "array:text",
-        "DefaultValue": "main",
-        "Placeholder": "main"
+        "DefaultValue": "[\"main\"]",
+        "Placeholder": "[\"main\"]",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Proxy Ping Status",
@@ -103,7 +187,7 @@
         "FieldName": "config.status.proxy",
         "InputType": "checkbox",
         "Required": true,
-        "ParamFieldName": "config.yml:config.status.proxy",
+        "ParamFieldName": "$.config.status.proxy",
         "DefaultValue": "true",
         "EnumValues": {
             "False": "false",
@@ -118,8 +202,8 @@
         "Keywords": "server,favicon",
         "FieldName": "config.status.favicon",
         "InputType": "text",
-        "ParamFieldName": "config.yml:config.status.favicon",
-        "DefaultValue": "server-icon.png"
+        "ParamFieldName": "$.config.status.favicon",
+        "DefaultValue": ""
     },
     {
         "DisplayName": "Minekube Connect Name",
@@ -129,8 +213,8 @@
         "Keywords": "minekube,connect,name",
         "FieldName": "connect.name",
         "InputType": "text",
-        "ParamFieldName": "config.yml:connect.name",
-        "DefaultValue": "prim-anjela",
+        "ParamFieldName": "$.connect.name",
+        "DefaultValue": "put-name-here",
         "Placeholder": "random-generation"
     },
     {
@@ -141,7 +225,7 @@
         "Keywords": "minekube,connect,token",
         "FieldName": "connect.token",
         "InputType": "Password",
-        "ParamFieldName": "connect.json:token",
+        "ParamFieldName": "$.token",
         "DefaultValue": "",
         "Placeholder": "4ENgYRJobUUNYFWTqmHP3E"
     }
