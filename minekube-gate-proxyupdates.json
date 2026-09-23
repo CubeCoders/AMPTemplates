@@ -34,19 +34,19 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "CMD",
         "UpdateSourceArch": "x86_64",
-        "UpdateSourceArgs": "if exist gate_*_windows_amd64.exe move /y gate_*_windows_amd64.exe gate.exe"
+        "UpdateSourceArgs": "if exist gate_*_windows_amd64.exe move /y gate_*_windows_amd64.exe serverfiles\\gate.exe"
     },
     {
         "UpdateStageName": "Rename Gate Binary (Linux)",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Bash",
-        "UpdateSourceArgs": "mv -f gate_*_linux_* gate 2>/dev/null || true chmod +x gate 2>/dev/null || true"
+        "UpdateSourceArgs": "mv -f gate_*_linux_* serverfiles/gate 2>/dev/null || true"
     },
     {
         "UpdateStageName": "Make Gate Executable",
         "UpdateStageDescription": "Setting execute permission on the Gate binary",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "SetExecutableFlag",
-        "UpdateSourceArgs": "gate"
+        "UpdateSourceArgs": "serverfiles/gate"
     }
 ]
