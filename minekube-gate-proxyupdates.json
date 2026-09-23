@@ -3,37 +3,31 @@
         "UpdateStageName": "Download Gate Binary",
         "UpdateStageDescription": "Fetching latest Gate release from GitHub",
         "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "GithubRelease",
+        "UpdateSource": "FetchURLfromJQ",
         "UpdateSourceArch": "x86_64",
-        "UpdateSourceData": "gate_{{ReleaseTag}}_windows_amd64.zip",
-        "UpdateSourceArgs": "minekube/gate",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "UpdateSourceData": "https://api.github.com/repos/minekube/gate/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /windows_amd64\\.exe$/)].browser_download_url",
+        "OverwriteExistingFiles": true
     },
     {
         "UpdateStageName": "Download Gate Binary",
         "UpdateStageDescription": "Fetching latest Gate release from GitHub",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "GithubRelease",
+        "UpdateSource": "FetchURLfromJQ",
         "UpdateSourceArch": "x86_64",
-        "UpdateSourceData": "gate_{{ReleaseTag}}_linux_amd64.tar.gz",
-        "UpdateSourceArgs": "minekube/gate",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "UpdateSourceData": "https://api.github.com/repos/minekube/gate/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /linux_amd64$/)].browser_download_url",
+        "OverwriteExistingFiles": true
     },
     {
         "UpdateStageName": "Download Gate Binary",
         "UpdateStageDescription": "Fetching latest Gate release from GitHub",
         "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "GithubRelease",
+        "UpdateSource": "FetchURLfromJQ",
         "UpdateSourceArch": "aarch64",
-        "UpdateSourceData": "gate_{{ReleaseTag}}_linux_arm64.tar.gz",
-        "UpdateSourceArgs": "minekube/gate",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true
+        "UpdateSourceData": "https://api.github.com/repos/minekube/gate/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /linux_arm64$/)].browser_download_url",
+        "OverwriteExistingFiles": true
     },
     {
         "UpdateStageName": "Rename Gate Binary (Windows)",
@@ -47,5 +41,12 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Bash",
         "UpdateSourceArgs": "mv -f gate_*_linux_* gate 2>/dev/null || true chmod +x gate 2>/dev/null || true"
+    },
+    {
+        "UpdateStageName": "Make Gate Executable",
+        "UpdateStageDescription": "Setting execute permission on the Gate binary",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "serverfiles/gate"
     }
 ]
