@@ -1,322 +1,5 @@
 [
     {
-        "DisplayName": "Server Name",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "Server name as it appears in the server list",
-        "FieldName": "ServerName",
-        "InputType": "text",
-        "ParamFieldName": "name",
-        "IncludeInCommandLine": false,
-        "Required": true,
-        "DefaultValue": "My Valheim Server - Powered by AMP"
-    },
-    {
-        "DisplayName": "World Name",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "Name of the world .db file to load. Also used as the random seed used for terrain random generation",
-        "Keywords": "world,seed,db",
-        "FieldName": "WorldName",
-        "InputType": "text",
-        "ParamFieldName": "world",
-        "IncludeInCommandLine": false,
-        "Required": true,
-        "DefaultValue": "PoweredByAMP"
-    },
-    {
-        "DisplayName": "Server Password",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "Password that clients must supply in order to connect. NOTE: Unless a mod is used to remove the need for a password, the server requires a password that is at least 5 characters long and that is not included in the server name. Default: 12345.",
-        "FieldName": "ServerPassword",
-        "InputType": "Password",
-        "ParamFieldName": "password",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "12345",
-        "Placeholder": "12345"
-    },
-    {
-        "DisplayName": "Server is Public",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "Whether or not the server appears on the server list. Disable for a LAN-only server.",
-        "FieldName": "ServerPublic",
-        "InputType": "checkbox",
-        "ParamFieldName": "public",
-        "IncludeInCommandLine": true,
-        "DefaultValue": "1",
-        "EnumValues": {
-            "True": "1",
-            "False": "0"
-        }
-    },
-    {
-        "DisplayName": "Enable Crossplay",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "When enabled, the backend will be running Playfab instead of Steamworks. A \"Join code\" will appear when you join a Dedicated server supporting crossplay. Players can use this code to join the server. This Join code is regenerated whenever the server is restarted.",
-        "FieldName": "crossplay",
-        "InputType": "checkbox",
-        "ParamFieldName": "crossplay",
-        "IncludeInCommandLine": false,
-        "DefaultValue": "",
-        "EnumValues": {
-            "True": "-crossplay",
-            "False": ""
-        }
-    },
-    {
-        "DisplayName": "Admin Players",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "A list of Steam64 IDs for players that are in-game admins. [Find your Steam64 ID](https://steamid.io/)",
-        "FieldName": "AdminPlayers",
-        "InputType": "list",
-        "Special": "listfile:./Valheim/896660/Saves/adminlist.txt"
-    },
-    {
-        "DisplayName": "Permitted Players",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "A list of Steam64 IDs for players that are permitted in-game. [Find your Steam64 ID](https://steamid.io/)",
-        "FieldName": "PermittedPlayers",
-        "InputType": "list",
-        "Special": "listfile:./Valheim/896660/Saves/permittedlist.txt"
-    },
-    {
-        "DisplayName": "World Preset",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "Sets the world modifiers preset, which applies each modifier according to preconfigured levels. The preset can be overriden by custom modifier settings.",
-        "Keywords": "preset,modifier",
-        "FieldName": "preset",
-        "InputType": "enum",
-        "ParamFieldName": "preset",
-        "IncludeInCommandLine": true,
-        "DefaultValue": "normal",
-        "EnumValues": {
-            "normal": "Normal (default)",
-            "casual": "Casual",
-            "easy": "Easy",
-            "hard": "Hard",
-            "hardcore": "Hardcore",
-            "immersive": "Immersive",
-            "hammer": "Hammer"
-        }
-    },
-    {
-        "DisplayName": "Custom Combat Modifier",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "Governs how much damage you give and take. Also governs how likely you are to encounter higher leveled enemies, and how dangerous they are.",
-        "Keywords": "preset,combat,modifier",
-        "FieldName": "combatModifier",
-        "InputType": "enum",
-        "ParamFieldName": "modifier",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "",
-        "EnumValues": {
-            "": "No custom combat modifier (default)",
-            "combat veryeasy": "Very easy",
-            "combat easy": "Easy",
-            "combat hard": "Hard",
-            "combat veryhard": "Very hard"
-        }
-    },
-    {
-        "DisplayName": "Custom Death Penalty Modifier",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "Governs what happens when you die. From not dropping equipment and items, and heavily reduced skill loss, to permanent loss of equipment and skills.",
-        "Keywords": "preset,death,penalty,deathpenalty,modifier",
-        "FieldName": "deathpenaltyModifier",
-        "InputType": "enum",
-        "ParamFieldName": "modifier",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "",
-        "EnumValues": {
-            "": "No custom death penalty modifier (default)",
-            "deathpenalty casual": "Casual",
-            "deathpenalty veryeasy": "Very easy",
-            "deathpenalty easy": "Easy",
-            "deathpenalty hard": "Hard",
-            "deathpenalty hardcore": "Hardcore"
-        }
-    },
-    {
-        "DisplayName": "Custom Resources Modifier",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "Governs the amount of resources you gain from the world and from enemies.",
-        "Keywords": "preset,resources,modifier",
-        "FieldName": "resourcesModifier",
-        "InputType": "enum",
-        "ParamFieldName": "modifier",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "",
-        "EnumValues": {
-            "": "No custom resources modifier (default)",
-            "resources muchless": "Much less (x 0.5)",
-            "resources less": "Less (x 0.75)",
-            "resources more": "More (x 1.5)",
-            "resources muchmore": "Much more (x 2.0)",
-            "resources most": "Most (x 3.0)"
-        }
-    },
-    {
-        "DisplayName": "Custom Raids Modifier",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "Governs how often enemies may raid your base.",
-        "Keywords": "preset,raids,modifier",
-        "FieldName": "raidsModifier",
-        "InputType": "enum",
-        "ParamFieldName": "modifier",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "",
-        "EnumValues": {
-            "": "No custom raids modifier (default)",
-            "raids none": "Never",
-            "raids muchless": "Much less",
-            "raids less": "Less",
-            "raids more": "More",
-            "raids muchmore": "Much more"
-        }
-    },
-    {
-        "DisplayName": "Custom Portals Modifier",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "Changes how portals work in the game. From bringing all items through portal, to no portals at all.",
-        "Keywords": "preset,portals,modifier",
-        "FieldName": "portalsModifier",
-        "InputType": "enum",
-        "ParamFieldName": "modifier",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "",
-        "EnumValues": {
-            "": "No custom portals modifier (default)",
-            "portals casual": "Casual (portal items)",
-            "portals hard": "Hard (no boss portals)",
-            "portals veryhard": "Very hard (no portals)"
-        }
-    },
-    {
-        "DisplayName": "Custom Build Cost Modifier",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "If set, build pieces require no materials to build. You still need to discover recipes as per usual.",
-        "Keywords": "setkey,build,cost,nobuildcost",
-        "FieldName": "nobuildcost",
-        "InputType": "checkbox",
-        "ParamFieldName": "setkey",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "",
-        "EnumValues": {
-            "False": "",
-            "True": "nobuildcost"
-        }
-    },
-    {
-        "DisplayName": "Custom Passive Enemies Modifier",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "If enabled, enemies won't attack until you provoke them.",
-        "Keywords": "setkey,passive,enemies,passivemobs",
-        "FieldName": "passivemobs",
-        "InputType": "checkbox",
-        "ParamFieldName": "setkey",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "",
-        "EnumValues": {
-            "False": "",
-            "True": "passivemobs"
-        }
-    },
-    {
-        "DisplayName": "Custom Player Based Raids Modifier",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "If enabled, raids are based on the progress of each individual player, rather than on which bosses have been killed on the server. Recommended if you want the game to be slightly friendlier to players with different progress.",
-        "Keywords": "setkey,player,events,raids,playerevents",
-        "FieldName": "playerevents",
-        "InputType": "checkbox",
-        "ParamFieldName": "setkey",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "",
-        "EnumValues": {
-            "False": "",
-            "True": "playerevents"
-        }
-    },
-    {
-        "DisplayName": "Custom Map Modifier",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "If set, you will not have access to the map or the minimap. This makes the game harder than intended, by requiring navigation by the stars and world tree.",
-        "Keywords": "setkey,disable,map,minimap,nomap",
-        "FieldName": "nomap",
-        "InputType": "checkbox",
-        "ParamFieldName": "setkey",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "",
-        "EnumValues": {
-            "False": "",
-            "True": "nomap"
-        }
-    },
-    {
-        "DisplayName": "Custom Fire Hazards Modifier",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "If set, fire will spread realistically.",
-        "Keywords": "setkey,fire,hazards",
-        "FieldName": "fire",
-        "InputType": "checkbox",
-        "ParamFieldName": "setkey",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "",
-        "EnumValues": {
-            "False": "",
-            "True": "fire"
-        }
-    },
-    {
-        "DisplayName": "Banned Players",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "A list of Steam64 IDs for players that are banned [Find a Steam64 ID](https://steamid.io/)",
-        "FieldName": "BannedPlayers",
-        "InputType": "list",
-        "Special": "listfile:./Valheim/896660/Saves/bannedlist.txt"
-    },
-    {
-        "DisplayName": "World Save Interval",
-        "Category": "Valheim:stadia_controller",
-        "Subcategory": "General:dns:1",
-        "Description": "Changes how often the world is saved in seconds. Default is 1800 seconds (30 minutes).",
-        "Keywords": "save,autosave,interval,time,timer,frequency,saveinterval",
-        "FieldName": "saveinterval",
-        "InputType": "number",
-        "ParamFieldName": "saveinterval",
-        "IncludeInCommandLine": true,
-        "SkipIfEmpty": true,
-        "DefaultValue": "1800",
-        "Suffix": "seconds",
-        "EnumValues": {}
-    },
-    {
         "DisplayName": "Server Branch",
         "Category": "Updates",
         "Subcategory": "Steam Downloads:download",
@@ -337,6 +20,15 @@
             "default_prebw": "Last stable build before Bog Witch",
             "default_preal": "Last stable build before Ashlands"
         }
+    },
+    {
+        "DisplayName": " Please Note",
+        "Category": "Updates",
+        "Subcategory": "Steam Workshop:share",
+        "Description": "Valheim does not support Steam Workshop. Any items or collections entered here will not be loaded by the server. Valheim mods must be installed using BepInEx / Valheim Plus (configured under Runtime Configuration or manually via Thunderstore/Nexus/Hexium).",
+        "Keywords": "steam,workshop,mods,notice,warning,info",
+        "FieldName": "SteamWorkshopNotice",
+        "InputType": "hidden"
     },
     {
         "DisplayName": "Install BepInEx",
@@ -367,7 +59,7 @@
         "ParamFieldName": "bepinex_version",
         "IncludeInCommandLine": false,
         "DefaultValue": "",
-        "Placeholder": "5.4.2202",
+        "Placeholder": "5.4.2351",
         "EnumValues": {}
     },
     {
@@ -386,6 +78,631 @@
             "False": "false",
             "True": "true"
         }
+    },
+    {
+        "DisplayName": "Server Name",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Basic:dns:1",
+        "Description": "Server name as it appears in the server list",
+        "FieldName": "ServerName",
+        "InputType": "text",
+        "ParamFieldName": "name",
+        "IncludeInCommandLine": false,
+        "Required": true,
+        "DefaultValue": "My Valheim Server - Powered by AMP"
+    },
+    {
+        "DisplayName": "World Name",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Basic:dns:1",
+        "Description": "Name of the world .db file to load. Also used as the random seed used for terrain random generation",
+        "Keywords": "world,seed,db",
+        "FieldName": "WorldName",
+        "InputType": "text",
+        "ParamFieldName": "world",
+        "IncludeInCommandLine": false,
+        "Required": true,
+        "DefaultValue": "PoweredByAMP"
+    },
+    {
+        "DisplayName": "Server Password",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Basic:dns:1",
+        "Description": "Password that clients must supply in order to connect. NOTE: Unless a mod is used to remove the need for a password, the server requires a password that is at least 5 characters long and that is not included in the server name. Default: 12345.",
+        "FieldName": "ServerPassword",
+        "InputType": "Password",
+        "ParamFieldName": "password",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "12345",
+        "Placeholder": "12345"
+    },
+    {
+        "DisplayName": "Server is Public",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Basic:dns:1",
+        "Description": "Whether the server is listed in the public in-game community server browser (-public). If disabled, the server is unlisted/private, but players can still connect directly using the server IP:Port or Join Code.",
+        "FieldName": "ServerPublic",
+        "InputType": "checkbox",
+        "ParamFieldName": "public",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "True": "1",
+            "False": "0"
+        }
+    },
+    {
+        "DisplayName": "Enable Crossplay",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Basic:dns:1",
+        "Description": "When enabled, routes multiplayer traffic through Microsoft PlayFab instead of Steamworks (-crossplay), enabling cross-platform play between Steam, Xbox, and PC Game Pass players. A 6-digit Join Code is generated on startup. NOTE: If all players are on Steam/PC, leaving this disabled provides lower ping and direct IP connections without PlayFab relay overhead.",
+        "FieldName": "crossplay",
+        "InputType": "checkbox",
+        "ParamFieldName": "crossplay",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "True": "-crossplay",
+            "False": ""
+        }
+    },
+    {
+        "DisplayName": "World Preset",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Basic:dns:1",
+        "Description": "Sets the world modifiers preset, which applies each modifier according to preconfigured levels. The preset can be overriden by custom modifier settings.",
+        "Keywords": "preset,modifier",
+        "FieldName": "preset",
+        "InputType": "enum",
+        "ParamFieldName": "preset",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "normal",
+        "EnumValues": {
+            "normal": "Normal (default)",
+            "casual": "Casual",
+            "easy": "Easy",
+            "hard": "Hard",
+            "hardcore": "Hardcore",
+            "immersive": "Immersive",
+            "hammer": "Hammer"
+        }
+    },
+    {
+        "DisplayName": "Admin Players",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Basic:dns:1",
+        "Description": "A list of player IDs that have in-game admin rights. Accepts standard Steam64 IDs (for Steam players) or PlayFab IDs (formatted as PlayFab/<ID> for Xbox/Crossplay players, visible in server logs when they join). Saves directly to adminlist.txt.",
+        "FieldName": "AdminPlayers",
+        "InputType": "list",
+        "Special": "listfile:./Valheim/896660/Saves/adminlist.txt"
+    },
+    {
+        "DisplayName": "Permitted Players",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Basic:dns:1",
+        "Description": "A whitelist of player IDs permitted to join this server. If this list is not empty, only players listed here can connect. Accepts standard Steam64 IDs or PlayFab IDs (formatted as PlayFab/<ID> for Xbox/Crossplay players). Saves directly to permittedlist.txt.",
+        "FieldName": "PermittedPlayers",
+        "InputType": "list",
+        "Special": "listfile:./Valheim/896660/Saves/permittedlist.txt"
+    },
+    {
+        "DisplayName": "Banned Players",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Basic:dns:1",
+        "Description": "A list of player IDs that are banned from joining this server. Accepts standard Steam64 IDs or PlayFab IDs (formatted as PlayFab/<ID> for Xbox/Crossplay players). Saves directly to bannedlist.txt.",
+        "FieldName": "BannedPlayers",
+        "InputType": "list",
+        "Special": "listfile:./Valheim/896660/Saves/bannedlist.txt"
+    },
+    {
+        "DisplayName": "Combat Difficulty",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "Governs how much damage you give and take. Also governs how likely you are to encounter higher leveled enemies, and how dangerous they are.",
+        "Keywords": "preset,combat,modifier",
+        "FieldName": "combatModifier",
+        "InputType": "enum",
+        "ParamFieldName": "modifier",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "No custom combat modifier (default)",
+            "combat veryeasy": "Very easy",
+            "combat easy": "Easy",
+            "combat hard": "Hard",
+            "combat veryhard": "Very hard"
+        }
+    },
+    {
+        "DisplayName": "Death Penalty Severity",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "Governs what happens when you die. From not dropping equipment and items, and heavily reduced skill loss, to permanent loss of equipment and skills.",
+        "Keywords": "preset,death,penalty,deathpenalty,modifier",
+        "FieldName": "deathpenaltyModifier",
+        "InputType": "enum",
+        "ParamFieldName": "modifier",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "No custom death penalty modifier (default)",
+            "deathpenalty casual": "Casual",
+            "deathpenalty veryeasy": "Very easy",
+            "deathpenalty easy": "Easy",
+            "deathpenalty hard": "Hard",
+            "deathpenalty hardcore": "Hardcore"
+        }
+    },
+    {
+        "DisplayName": "Resource Drop Rate",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "Governs the amount of resources you gain from the world and from enemies.",
+        "Keywords": "preset,resources,modifier",
+        "FieldName": "resourcesModifier",
+        "InputType": "enum",
+        "ParamFieldName": "modifier",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "No custom resources modifier (default)",
+            "resources muchless": "Much less (x 0.5)",
+            "resources less": "Less (x 0.75)",
+            "resources more": "More (x 1.5)",
+            "resources muchmore": "Much more (x 2.0)",
+            "resources most": "Most (x 3.0)"
+        }
+    },
+    {
+        "DisplayName": "Raid Event Frequency",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "Governs how often enemies may raid your base.",
+        "Keywords": "preset,raids,modifier",
+        "FieldName": "raidsModifier",
+        "InputType": "enum",
+        "ParamFieldName": "modifier",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "No custom raids modifier (default)",
+            "raids none": "Never",
+            "raids muchless": "Much less",
+            "raids less": "Less",
+            "raids more": "More",
+            "raids muchmore": "Much more"
+        }
+    },
+    {
+        "DisplayName": "Portal Restriction Level",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "Changes how portals work in the game. From bringing all items through portal, to no portals at all.",
+        "Keywords": "preset,portals,modifier",
+        "FieldName": "portalsModifier",
+        "InputType": "enum",
+        "ParamFieldName": "modifier",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "No custom portals modifier (default)",
+            "portals casual": "Casual (portal items)",
+            "portals hard": "Hard (no boss portals)",
+            "portals veryhard": "Very hard (no portals)"
+        }
+    },
+    {
+        "DisplayName": "Free Building (No Material Cost)",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If set, build pieces require no materials to build. You still need to discover recipes as per usual.",
+        "Keywords": "setkey,build,cost,nobuildcost",
+        "FieldName": "nobuildcost",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "nobuildcost"
+        }
+    },
+    {
+        "DisplayName": "Passive Enemies (Attack Only When Provoked)",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If enabled, enemies won't attack until you provoke them.",
+        "Keywords": "setkey,passive,enemies,passivemobs",
+        "FieldName": "passivemobs",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "passivemobs"
+        }
+    },
+    {
+        "DisplayName": "Player-Based Raid Scaling (Per-Player Progress)",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If enabled, raids are based on the progress of each individual player, rather than on which bosses have been killed on the server. Recommended if you want the game to be slightly friendlier to players with different progress.",
+        "Keywords": "setkey,player,events,raids,playerevents",
+        "FieldName": "playerevents",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "playerevents"
+        }
+    },
+    {
+        "DisplayName": "Disable Map & Minimap (Hardcore Navigation)",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If set, you will not have access to the map or the minimap. This makes the game harder than intended, by requiring navigation by the stars and world tree.",
+        "Keywords": "setkey,disable,map,minimap,nomap",
+        "FieldName": "nomap",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "nomap"
+        }
+    },
+    {
+        "DisplayName": "Enable Realistic Fire Spread",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If set, fire will spread realistically.",
+        "Keywords": "setkey,fire,hazards",
+        "FieldName": "fire",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "fire"
+        }
+    },
+    {
+        "DisplayName": "Free Crafting & Repairs (No Material Cost)",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If set, crafting and repairing items requires no materials. (-setkey nocraftcost)",
+        "Keywords": "setkey,craft,cost,free,materials,nocraftcost",
+        "FieldName": "nocraftcost",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "nocraftcost"
+        }
+    },
+    {
+        "DisplayName": "Unlock All Building Pieces Immediately",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If set, all building pieces are unlocked immediately without needing to discover materials. (-setkey allpiecesunlocked)",
+        "Keywords": "setkey,build,pieces,unlock,allpiecesunlocked",
+        "FieldName": "allpiecesunlocked",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "allpiecesunlocked"
+        }
+    },
+    {
+        "DisplayName": "Craft & Build Anywhere (No Workbench Required)",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If set, all crafting and construction can be done without being near a workbench, forge, or crafting station. (-setkey noworkbench)",
+        "Keywords": "setkey,build,workbench,station,noworkbench",
+        "FieldName": "noworkbench",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "noworkbench"
+        }
+    },
+    {
+        "DisplayName": "Disable Structural Integrity (No Collapse)",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If set, buildings and structures will not collapse or take structural damage from lack of support. (-setkey nobuildingfall)",
+        "Keywords": "setkey,build,stability,collapse,physics,structural,nobuildingfall",
+        "FieldName": "nobuildingfall",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "nobuildingfall"
+        }
+    },
+    {
+        "DisplayName": "Enable Building in Dungeons & Caves",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If set, players can build and place structures inside dungeons, crypts, and caves. (-setkey dungeonbuild)",
+        "Keywords": "setkey,dungeon,crypt,cave,build,dungeonbuild",
+        "FieldName": "dungeonbuild",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "dungeonbuild"
+        }
+    },
+    {
+        "DisplayName": "Unrestricted Portals (Allow Metals & Eggs)",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If set, all items (including metal ores, ingots, and dragon eggs) can be transported through portals. (-setkey teleportall)",
+        "Keywords": "setkey,portal,teleport,ore,metal,items,teleportall",
+        "FieldName": "teleportall",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "teleportall"
+        }
+    },
+    {
+        "DisplayName": "Block Portals Near Boss Altars",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If set, portals cannot be placed or used near boss altars and summoning locations. (-setkey nobossportals)",
+        "Keywords": "setkey,portal,boss,altar,nobossportals",
+        "FieldName": "nobossportals",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "nobossportals"
+        }
+    },
+    {
+        "DisplayName": "Disable All Portals Globally",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Gameplay Tweaks:joystick:2",
+        "Description": "If set, portals are completely disabled in the world. (-setkey noportals)",
+        "Keywords": "setkey,portal,disable,noportals",
+        "FieldName": "noportals",
+        "InputType": "checkbox",
+        "ParamFieldName": "setkey",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "noportals"
+        }
+    },
+    {
+        "DisplayName": "World Save Interval",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Advanced Settings:tune:3",
+        "Description": "Sets the frequency of automatic world saves in seconds (-saveinterval). Default is 1800 seconds (30 minutes). Lower values (e.g. 900 / 15 mins) minimize lost progress in the event of an unexpected server crash or power loss, while higher values reduce world-save micro-stutters during gameplay.",
+        "Keywords": "save,autosave,interval,time,timer,frequency,saveinterval",
+        "FieldName": "saveinterval",
+        "InputType": "number",
+        "ParamFieldName": "saveinterval",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "1800",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "World Backup Retention Count",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Advanced Settings:tune:3",
+        "Description": "Sets the number of automatic rolling backups to retain on disk in the world saves directory (located at Saves/worlds_local/). Valheim names these files as <WorldName>_backup_auto-<timestamp> (-backups). Default is 4.",
+        "Keywords": "backup,save,retention,count,backups",
+        "FieldName": "backups",
+        "InputType": "number",
+        "ParamFieldName": "backups",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "4",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Short-Term Backup Interval",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Advanced Settings:tune:3",
+        "Description": "Interval in seconds between short-term automatic backup rotations in Saves/worlds_local/ (-backupshort). Default is 7200 seconds (2 hours). Valheim uses this threshold to decide when to update recent snapshots versus preserving older backups.",
+        "Keywords": "backup,save,interval,short,backupshort",
+        "FieldName": "backupshort",
+        "InputType": "number",
+        "ParamFieldName": "backupshort",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "7200",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Long-Term Backup Interval",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Advanced Settings:tune:3",
+        "Description": "Interval in seconds between long-term automatic backup rotations in Saves/worlds_local/ (-backuplong). Default is 43200 seconds (12 hours). When the backup count is reached, Valheim uses this threshold to preserve older restore points for disaster recovery.",
+        "Keywords": "backup,save,interval,long,backuplong",
+        "FieldName": "backuplong",
+        "InputType": "number",
+        "ParamFieldName": "backuplong",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "43200",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Instance ID",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Advanced Settings:tune:3",
+        "Description": "Specifies a unique instance identifier string for this server (-instanceid). When running multiple Valheim servers on the same physical host or IP with Crossplay enabled, PlayFab uses the host hardware ID to identify sessions. Setting a unique instance ID appends to this identifier and prevents servers from colliding or overwriting each other in the crossplay matchmaking lobby. Leave blank if only running a single server on this machine.",
+        "Keywords": "instance,id,cluster,server,instanceid,crossplay,playfab",
+        "FieldName": "instanceid",
+        "InputType": "text",
+        "ParamFieldName": "instanceid",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "valheim-01",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Reset World Modifiers on Startup",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Advanced Settings:tune:3",
+        "Description": "If enabled, resets all world modifiers and keys back to their default values on next server startup (-resetmodifiers). NOTE: Disable this option after the server boots to prevent resetting on subsequent restarts.",
+        "Keywords": "reset,modifiers,world,keys,resetmodifiers",
+        "FieldName": "resetmodifiers",
+        "InputType": "checkbox",
+        "ParamFieldName": "resetmodifiers",
+        "IncludeInCommandLine": true,
+        "IsFlagArgument": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Active Simulation Distance",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Advanced Settings:tune:3",
+        "Description": "Sets the active world simulation radius around players (-simulationdistance). Valid range is 0 to 6. Default is 2 (Classic, 4 zones total). Lower values (0-1) reduce CPU load on high-population servers; higher values (3-6) keep creature AI, physics, and world processing active across a wider area.",
+        "Keywords": "simulation,distance,radius,performance,cpu,zones,simulationdistance",
+        "FieldName": "simulationdistance",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "6",
+        "ParamFieldName": "simulationdistance",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "2",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Please Read!",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Launch & Environment:warning:4",
+        "Description": "WARNING: Do NOT touch or modify these settings unless you really know what you are doing! These settings configure custom command line launch parameters and low-level Mono Boehm GC runtime environment variables. Incorrect values can cause launch failures, severe lag spikes, or server crashes.\n\nNote: If GC tuning fields are left empty or unset, Mono's Boehm GC will log harmless startup notices in the console (e.g. 'GC Warning: GC_PAUSE_TIME_TARGET environment variable value too small or bad syntax: Ignoring' and 'GC Warning: Bad initial heap size  - ignoring it.'). These are normal and simply indicate the runtime is using its internal defaults.",
+        "Keywords": "Read,Please,Warning,Notice,Info,mono,gc,boehm,garbage,collector,environment,variables",
+        "FieldName": "PleaseReadEnvVars",
+        "InputType": "hidden"
+    },
+    {
+        "DisplayName": "Custom Command Line Options",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Launch & Environment:warning:4",
+        "Description": "WARNING: Advanced users only! Specifies additional raw command line parameters appended directly to the server launch command. All parameters MUST begin with a dash (e.g. -customflag). DO NOT duplicate arguments already managed by AMP (-name, -port, -world, -password, -savedir, -public, -preset, etc.), as conflicting arguments can cause launch failures or crash the server.",
+        "Keywords": "custom,server,arguments,parameters,options",
+        "FieldName": "CustomParameters",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "CustomParameters",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "-customflag",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "GC Pause Time Target (ms)",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Launch & Environment:warning:4",
+        "Description": "Sets the target pause time in milliseconds for Mono's Boehm GC incremental marking slices (GC_PAUSE_TIME_TARGET). Default is 3ms (Unity runtime default). Increasing this (e.g. 15-20ms) helps prevent the fatal 'Unexpected mark stack overflow' (SIGABRT / Exit code 134) crash when exploring large, heavily populated Valheim worlds.",
+        "Keywords": "gc,pause,time,target,boehm,memory,performance,crash,overflow,GC_PAUSE_TIME_TARGET",
+        "FieldName": "GCPauseTimeTarget",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "GCPauseTimeTarget",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "3",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "GC Initial Heap Size",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Launch & Environment:warning:4",
+        "Description": "Sets the initial heap memory pre-allocated by Boehm GC at startup (GC_INITIAL_HEAP_SIZE), e.g. 4G, 8G. Pre-allocating heap space reduces stop-the-world heap expansion pauses during world loading and heavy player activity. Setting this higher than available system RAM will cause the server to fail to start.",
+        "Keywords": "gc,heap,initial,size,boehm,memory,ram,performance,GC_INITIAL_HEAP_SIZE",
+        "FieldName": "GCInitialHeapSize",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "GCInitialHeapSize",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "4G",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "GC Maximum Heap Size",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Launch & Environment:warning:4",
+        "Description": "Sets the upper ceiling on total heap memory allocated by Boehm GC (GC_MAXIMUM_HEAP_SIZE), e.g. 16G, 32G. Note: If configured, this should be equal to or greater than the initial heap size.",
+        "Keywords": "gc,heap,maximum,max,limit,ram,memory,performance,GC_MAXIMUM_HEAP_SIZE",
+        "FieldName": "GCMaximumHeapSize",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "GCMaximumHeapSize",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "16G",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Log Garbage Collection Statistics - Instructions",
+        "Category": "Valheim :stadia_controller",
+        "Subcategory": "Launch & Environment:warning:4",
+        "Description": "Boehm GC statistics logging (GC_PRINT_STATS=1) prints internal collection timing and heap metrics to stdout, which consumes additional CPU cycles. Because of this, it is not recommended for normal gameplay. To enable logging temporarily for performance diagnostics: stop the server, open GenericModule.kvp in the instance root, and add \"GC_PRINT_STATS\":\"1\" into the raw App.EnvironmentVariables JSON object (e.g. App.EnvironmentVariables={\"GC_PRINT_STATS\":\"1\",...}). Remove the entry from GenericModule.kvp once diagnostics are complete.",
+        "Keywords": "gc,stats,statistics,log,logging,boehm,memory,diagnostic,instructions,GC_PRINT_STATS",
+        "FieldName": "GCPrintStatsNotice",
+        "InputType": "hidden"
     },
     {
         "DisplayName": "Please Read!",
