@@ -1,17 +1,27 @@
 [
     {
-        "Protocol": "UDP",
+        "Protocol": "Both",
         "Port": 19132,
         "Ref": "ServerPortv4",
         "Name": "Server IPv4 Port",
-        "Description": "Port for IPv4 game traffic"
+        "Description": "Port for game traffic. NetherNet uses it for the TCP signaling handshake, RakNet for UDP gameplay"
     },
     {
         "Protocol": "UDP",
         "Port": 19133,
         "Ref": "ServerPortv6",
         "Name": "Server IPv6 Port",
-        "Description": "Port for IPv6 game traffic"
+        "Description": "Port for IPv6 game traffic. RakNet only - NetherNet ignores it and opens a dual-stack socket on the IPv4 port instead"
+    },
+    {
+        "Protocol": "UDP",
+        "Port": 19134,
+        "Range": 20,
+        "MinListening": 1,
+        "IsDelayedOpen": true,
+        "Ref": "UDPTransportPort",
+        "Name": "NetherNet UDP Transport Ports",
+        "Description": "UDP port pool NetherNet allocates client connections from. Only bound while clients are connected, and ignored when Transport is RakNet"
     },
     {
         "Protocol": "UDP",

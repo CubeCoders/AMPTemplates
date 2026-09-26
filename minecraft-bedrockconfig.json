@@ -149,7 +149,7 @@
         "DisplayName": "Enable LAN Visibility",
         "Category": "Minecraft Bedrock:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "WARNING: READ THIS BEFORE ENABLING THIS SETTING! This setting enables LAN discoverability of the server. Only enable this setting if the Server Ports allocated in AMP to your server are 19132 and 19133. Otherwise, your server will either not start or will not be joinable",
+        "Description": "WARNING: READ THIS BEFORE ENABLING THIS SETTING! This setting enables LAN discoverability of the server. It only applies when Transport is RakNet, and then only if the Server Ports allocated in AMP to your server are 19132 and 19133. Otherwise, your server will either not start or will not be joinable",
         "Keywords": "lan,visible,visibility,discoverable,enable-lan-visibility",
         "FieldName": "enable-lan-visibility",
         "InputType": "checkbox",
@@ -344,7 +344,7 @@
     {
         "DisplayName": "Enable Content Errors Logging",
         "Category": "Minecraft Bedrock:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Logging:article:3",
         "Description": "If set, logging content errors to a file will be enabled",
         "Keywords": "content,log,logging,file,enabled,content-log-file-enabled",
         "FieldName": "content-log-file-enabled",
@@ -387,22 +387,6 @@
         }
     },
     {
-        "DisplayName": "Server Movement Authority",
-        "Category": "Minecraft Bedrock:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the server authority on movement",
-        "Keywords": "server,authoritative,authority,movement,server-authoritative-movement",
-        "FieldName": "server-authoritative-movement",
-        "InputType": "enum",
-        "ParamFieldName": "server-authoritative-movement",
-        "DefaultValue": "server-auth",
-        "EnumValues": {
-            "client-auth": "Server has no authority",
-            "server-auth": "Server simulates movement but accepts client version (default)",
-            "server-auth-with-rewind": "Server replays input and pushes to client"
-        }
-    },
-    {
         "DisplayName": "Player Position Tolerance Threshold",
         "Category": "Minecraft Bedrock:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -430,21 +414,6 @@
         "DefaultValue": "0.85",
         "Placeholder": "0.85",
         "EnumValues": {}
-    },
-    {
-        "DisplayName": "Enable Server Authority Block Breaking",
-        "Category": "Minecraft Bedrock:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "If set, the server will compute block mining operations in sync with the client",
-        "Keywords": "server,authoritative,block,breaking,compute,sync,server-authoritative-block-breaking",
-        "FieldName": "server-authoritative-block-breaking",
-        "InputType": "checkbox",
-        "ParamFieldName": "server-authoritative-block-breaking",
-        "DefaultValue": "false",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
     },
     {
         "DisplayName": "Server Authority Block Breaking Pick Range Scalar",
@@ -476,24 +445,9 @@
         }
     },
     {
-        "DisplayName": "Disable Client Caching",
-        "Category": "Minecraft Bedrock:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "If set, the server will inform clients to not cache game data",
-        "Keywords": "disable,client,caching,disable-client-caching",
-        "FieldName": "disable-client-caching",
-        "InputType": "checkbox",
-        "ParamFieldName": "disable-client-caching",
-        "DefaultValue": "false",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
-        }
-    },
-    {
         "DisplayName": "Allow Outbound Script Debugging",
         "Category": "Minecraft Bedrock:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Script Debugger:bug_report:4",
         "Description": "If set, allows use of the script debugger 'connect' command and 'Connect' for the Script Debugger Auto-Attach Mode",
         "Keywords": "allow,outbound,script,debugging,connect,allow-outbound-script-debugging",
         "FieldName": "allow-outbound-script-debugging",
@@ -508,7 +462,7 @@
     {
         "DisplayName": "Allow Inbound Script Debugging",
         "Category": "Minecraft Bedrock:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Script Debugger:bug_report:4",
         "Description": "If set, allows use of the script debugger 'listen' command and 'Listen' for the Script Debugger Auto-Attach Mode",
         "Keywords": "allow,inbound,script,debugging,listen,allow-inbound-script-debugging",
         "FieldName": "allow-inbound-script-debugging",
@@ -523,8 +477,8 @@
     {
         "DisplayName": "Script Debugger Auto-Attach Mode",
         "Category": "Minecraft Bedrock:stadia_controller",
-        "Subcategory": "Server:dns:1",
-        "Description": "Sets the behaviour of the script debugger auto-attach feature",
+        "Subcategory": "Script Debugger:bug_report:4",
+        "Description": "Sets the behavior of the script debugger auto-attach feature",
         "Keywords": "script,debugger,auto,attach,mode,inbound,outbound,connections",
         "FieldName": "script-debugger-auto-attach",
         "InputType": "enum",
@@ -539,7 +493,7 @@
     {
         "DisplayName": "Script Debugger Auto-Attach Connect Address",
         "Category": "Minecraft Bedrock:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Script Debugger:bug_report:4",
         "Description": "Sets the address to use when the Script Debugger Auto-Attach Mode is set to 'Connect'. Make sure to use the Debugger Port allocated to the instance",
         "Keywords": "script,debugger,auto,attach,connect,address,host,port,script-debugger-auto-attach-connect-address",
         "FieldName": "script-debugger-auto-attach-connect-address",
@@ -549,9 +503,446 @@
         "Placeholder": "localhost:19144"
     },
     {
-        "DisplayName": "Enable Server Telemetry",
+        "DisplayName": "Strict Player Movement Checks",
         "Category": "Minecraft Bedrock:stadia_controller",
         "Subcategory": "Server:dns:1",
+        "Description": "If set, the server is stricter about the client-reported player position and sends more corrections. Players near moving blocks on a high latency connection are affected most",
+        "Keywords": "server,authoritative,movement,strict,corrections,server-authoritative-movement-strict",
+        "FieldName": "server-authoritative-movement-strict",
+        "InputType": "checkbox",
+        "ParamFieldName": "server-authoritative-movement-strict",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Strict Dismount Checks",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server is stricter about the player dismount position and corrects clients on a high latency connection",
+        "Keywords": "server,authoritative,dismount,strict,server-authoritative-dismount-strict",
+        "FieldName": "server-authoritative-dismount-strict",
+        "InputType": "checkbox",
+        "ParamFieldName": "server-authoritative-dismount-strict",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Strict Entity Interaction Checks",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server is stricter about entity interactions. Players interacting with each other on a high latency connection are affected most",
+        "Keywords": "server,authoritative,entity,interactions,strict,server-authoritative-entity-interactions-strict",
+        "FieldName": "server-authoritative-entity-interactions-strict",
+        "InputType": "checkbox",
+        "ParamFieldName": "server-authoritative-entity-interactions-strict",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Disable Vibrant Visuals",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server tells clients to use the next best available graphics setting instead of Vibrant Visuals. Leave unset to use the server default",
+        "Keywords": "disable,client,vibrant,visuals,graphics,disable-client-vibrant-visuals",
+        "FieldName": "disable-client-vibrant-visuals",
+        "InputType": "checkbox",
+        "ParamFieldName": "disable-client-vibrant-visuals",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Transport",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Networking:lan:2",
+        "Description": "Sets the network transport the server uses. RakNet is the classic UDP transport and uses both the IPv4 and IPv6 Server Ports allocated in AMP. NetherNet is WebRTC based: it ignores the IPv6 Server Port and opens a dual-stack socket on the IPv4 Server Port instead, and carries client traffic on the UDP Transport Port allocated in AMP",
+        "Keywords": "transport,raknet,nethernet,webrtc,protocol",
+        "FieldName": "transport",
+        "InputType": "enum",
+        "ParamFieldName": "transport",
+        "DefaultValue": "nethernet",
+        "EnumValues": {
+            "nethernet": "NetherNet (default)",
+            "raknet": "RakNet (legacy - refused by current server builds)"
+        }
+    },
+    {
+        "DisplayName": "Allow Players To Join",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Networking:lan:2",
+        "Description": "If not set, players cannot join the server unless explicitly allowed by scripting (via AsyncPlayerJoinBeforeEvent)",
+        "Keywords": "allow,player,joining,join,scripting,allow-player-joining",
+        "FieldName": "allow-player-joining",
+        "InputType": "checkbox",
+        "ParamFieldName": "allow-player-joining",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Content Errors Console Output",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Logging:article:3",
+        "Description": "If set, content errors will also be written to the console",
+        "Keywords": "content,log,console,output,stdout,enabled,content-log-console-output-enabled",
+        "FieldName": "content-log-console-output-enabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "content-log-console-output-enabled",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Content Log Level",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Logging:article:3",
+        "Description": "Sets the minimum content log level that will be recorded, with Error being the highest level",
+        "Keywords": "content,log,level,error,warning,info,verbose,content-log-level",
+        "FieldName": "content-log-level",
+        "InputType": "enum",
+        "ParamFieldName": "content-log-level",
+        "DefaultValue": "info",
+        "EnumValues": {
+            "error": "Error",
+            "warning": "Warning",
+            "info": "Info (default)",
+            "verbose": "Verbose"
+        }
+    },
+    {
+        "DisplayName": "Script Debugger Listen Address",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Script Debugger:bug_report:4",
+        "Description": "Sets the address used for the inbound (listen) debugger mode. A non-loopback address requires a Script Debugger Passcode and exposes debugging access to the network",
+        "Keywords": "script,debugger,listen,address,inbound,loopback,script-debugger-listen-address",
+        "FieldName": "script-debugger-listen-address",
+        "InputType": "text",
+        "ParamFieldName": "script-debugger-listen-address",
+        "DefaultValue": "127.0.0.1",
+        "Placeholder": "127.0.0.1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Script Debugger Auto-Attach Timeout",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Script Debugger:bug_report:4",
+        "Description": "Sets how long the server waits at world load for a debugger to attach. Leave unset to use the server default",
+        "Keywords": "script,debugger,auto,attach,timeout,wait,script-debugger-auto-attach-timeout",
+        "FieldName": "script-debugger-auto-attach-timeout",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "script-debugger-auto-attach-timeout",
+        "Placeholder": "0",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Script Debugger Passcode",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Script Debugger:bug_report:4",
+        "Description": "Sets the passcode that VSCode will prompt the user for when connecting. Required when the Script Debugger Listen Address is not a loopback address",
+        "Keywords": "script,debugger,passcode,password,vscode,script-debugger-passcode",
+        "FieldName": "script-debugger-passcode",
+        "InputType": "text",
+        "ParamFieldName": "script-debugger-passcode",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Script Watchdog",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Script Watchdog:timer:5",
+        "Description": "If set, the script watchdog is enabled",
+        "Keywords": "script,watchdog,enable,script-watchdog-enable",
+        "FieldName": "script-watchdog-enable",
+        "InputType": "checkbox",
+        "ParamFieldName": "script-watchdog-enable",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Script Watchdog Exception Handling",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Script Watchdog:timer:5",
+        "Description": "If set, watchdog exceptions can be handled by scripts via the events.beforeWatchdogTerminate event",
+        "Keywords": "script,watchdog,exception,handling,beforeWatchdogTerminate,script-watchdog-enable-exception-handling",
+        "FieldName": "script-watchdog-enable-exception-handling",
+        "InputType": "checkbox",
+        "ParamFieldName": "script-watchdog-enable-exception-handling",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Script Watchdog Shutdown",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Script Watchdog:timer:5",
+        "Description": "If set, the server shuts down when a watchdog exception goes unhandled",
+        "Keywords": "script,watchdog,shutdown,unhandled,exception,script-watchdog-enable-shutdown",
+        "FieldName": "script-watchdog-enable-shutdown",
+        "InputType": "checkbox",
+        "ParamFieldName": "script-watchdog-enable-shutdown",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Throw Script Watchdog Hang Exception",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Script Watchdog:timer:5",
+        "Description": "If set, a critical exception is thrown when a hang occurs, interrupting script execution",
+        "Keywords": "script,watchdog,hang,exception,critical,script-watchdog-hang-exception",
+        "FieldName": "script-watchdog-hang-exception",
+        "InputType": "checkbox",
+        "ParamFieldName": "script-watchdog-hang-exception",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Script Watchdog Hang Threshold",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Script Watchdog:timer:5",
+        "Description": "Sets the watchdog threshold for a hang within a single tick",
+        "Keywords": "script,watchdog,hang,threshold,tick,script-watchdog-hang-threshold",
+        "FieldName": "script-watchdog-hang-threshold",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "script-watchdog-hang-threshold",
+        "DefaultValue": "10000",
+        "Placeholder": "10000",
+        "Suffix": "ms",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Script Watchdog Spike Threshold",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Script Watchdog:timer:5",
+        "Description": "Sets the watchdog threshold for a spike within a single tick. Leave unset to disable the warning, which is the server default",
+        "Keywords": "script,watchdog,spike,threshold,tick,script-watchdog-spike-threshold",
+        "FieldName": "script-watchdog-spike-threshold",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "script-watchdog-spike-threshold",
+        "Placeholder": "100",
+        "Suffix": "ms",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Script Watchdog Slow Threshold",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Script Watchdog:timer:5",
+        "Description": "Sets the watchdog threshold for slow scripts spanning multiple ticks. Leave unset to disable the warning, which is the server default",
+        "Keywords": "script,watchdog,slow,threshold,ticks,script-watchdog-slow-threshold",
+        "FieldName": "script-watchdog-slow-threshold",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "script-watchdog-slow-threshold",
+        "Placeholder": "10",
+        "Suffix": "ms",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Script Watchdog Memory Warning",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Script Watchdog:timer:5",
+        "Description": "Writes a content log warning when combined script memory usage exceeds this threshold. 0 = disabled",
+        "Keywords": "script,watchdog,memory,warning,threshold,script-watchdog-memory-warning",
+        "FieldName": "script-watchdog-memory-warning",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "2000",
+        "ParamFieldName": "script-watchdog-memory-warning",
+        "DefaultValue": "100",
+        "Placeholder": "100",
+        "Suffix": "MB",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Script Watchdog Memory Limit",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Script Watchdog:timer:5",
+        "Description": "Saves and shuts down the world when combined script memory usage exceeds this threshold. 0 = disabled",
+        "Keywords": "script,watchdog,memory,limit,shutdown,script-watchdog-memory-limit",
+        "FieldName": "script-watchdog-memory-limit",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "2000",
+        "ParamFieldName": "script-watchdog-memory-limit",
+        "DefaultValue": "250",
+        "Placeholder": "250",
+        "Suffix": "MB",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Auto-Start Diagnostics Capture",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Diagnostics:monitor_heart:6",
+        "Description": "If set, a diagnostics capture session is started at world load",
+        "Keywords": "diagnostics,capture,auto,start,session,diagnostics-capture-auto-start",
+        "FieldName": "diagnostics-capture-auto-start",
+        "InputType": "checkbox",
+        "ParamFieldName": "diagnostics-capture-auto-start",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Maximum Diagnostics Capture Files",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Diagnostics:monitor_heart:6",
+        "Description": "Sets the number of diagnostics capture files to keep before cycling",
+        "Keywords": "diagnostics,capture,max,files,cycle,diagnostics-capture-max-files",
+        "FieldName": "diagnostics-capture-max-files",
+        "InputType": "number",
+        "MinValue": "1",
+        "ParamFieldName": "diagnostics-capture-max-files",
+        "DefaultValue": "5",
+        "Placeholder": "5",
+        "Suffix": "files",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Diagnostics Capture File Size",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Diagnostics:monitor_heart:6",
+        "Description": "Sets the size the current diagnostics capture file may reach before the server cycles to a new file",
+        "Keywords": "diagnostics,capture,max,file,size,bytes,diagnostics-capture-max-file-size",
+        "FieldName": "diagnostics-capture-max-file-size",
+        "InputType": "number",
+        "MinValue": "1",
+        "ParamFieldName": "diagnostics-capture-max-file-size",
+        "DefaultValue": "2097152",
+        "Placeholder": "2097152",
+        "Suffix": "bytes",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Editor Network Metrics",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Diagnostics:monitor_heart:6",
+        "Description": "If set, network metrics are collected so live diagnostics can be shown in the debugger. Leave unset to use the server default",
+        "Keywords": "editor,network,metrics,diagnostics,debugger,enable-editor-network-metrics",
+        "FieldName": "enable-editor-network-metrics",
+        "InputType": "checkbox",
+        "ParamFieldName": "enable-editor-network-metrics",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Sentry Rate Limit Window",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Diagnostics:monitor_heart:6",
+        "Description": "Sets the window over which scripting errors reported to Sentry are rate limited. 0 = no limit",
+        "Keywords": "sentry,rate,limit,window,errors,sentry-rate-limit-window",
+        "FieldName": "sentry-rate-limit-window",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "sentry-rate-limit-window",
+        "DefaultValue": "60",
+        "Placeholder": "60",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Sentry Maximum Events Per Window",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Diagnostics:monitor_heart:6",
+        "Description": "Sets the maximum number of events allowed within the Sentry Rate Limit Window. 0 = do not send events to Sentry",
+        "Keywords": "sentry,max,events,window,errors,sentry-max-events-per-window",
+        "FieldName": "sentry-max-events-per-window",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "sentry-max-events-per-window",
+        "DefaultValue": "10",
+        "Placeholder": "10",
+        "Suffix": "events",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Persistent Ticking Areas",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum number of persistent ticking areas allowed when adding a new area across all dimensions. Allowed values = unlimited or any positive integer up to 2147483647. Existing saved areas are not removed when this is lowered. Leave blank to use the server default",
+        "Keywords": "persistent,ticking,area,max,count,persistent-ticking-area-max-count",
+        "FieldName": "persistent-ticking-area-max-count",
+        "InputType": "text",
+        "ParamFieldName": "persistent-ticking-area-max-count",
+        "Placeholder": "10",
+        "Suffix": "areas",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Persistent Ticking Area Chunks",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum number of chunks allowed when adding a new persistent ticking area. Allowed values = unlimited or any positive integer up to 2147483647. Existing saved areas are not removed when this is lowered. Leave blank to use the server default",
+        "Keywords": "persistent,ticking,area,max,chunks,persistent-ticking-area-max-chunks",
+        "FieldName": "persistent-ticking-area-max-chunks",
+        "InputType": "text",
+        "ParamFieldName": "persistent-ticking-area-max-chunks",
+        "Placeholder": "100",
+        "Suffix": "chunks",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Transient Ticking Area Chunks",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum aggregate number of unique chunks in transient ticking areas for each behavior pack. Allowed values = unlimited or any positive integer up to 2147483647. Higher values and unlimited significantly affect server performance and memory use. Leave blank to use the server default",
+        "Keywords": "transient,ticking,area,max,chunks,behavior,pack,transient-ticking-area-max-chunks",
+        "FieldName": "transient-ticking-area-max-chunks",
+        "InputType": "text",
+        "ParamFieldName": "transient-ticking-area-max-chunks",
+        "Placeholder": "300",
+        "Suffix": "chunks",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Server Authority Block Breaking",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will compute block mining operations in sync with the client, so it can verify that the client should be able to break the blocks it thinks it can",
+        "Keywords": "server,authoritative,block,breaking,compute,sync,server-authoritative-block-breaking",
+        "FieldName": "server-authoritative-block-breaking",
+        "InputType": "checkbox",
+        "ParamFieldName": "server-authoritative-block-breaking",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Server Telemetry",
+        "Category": "Minecraft Bedrock:stadia_controller",
+        "Subcategory": "Diagnostics:monitor_heart:6",
         "Description": "If set, server telemetry will be enabled, resulting in server data being sent to Microsoft",
         "Keywords": "server,telemetry,data,emit-server-telemetry",
         "FieldName": "emit-server-telemetry",
