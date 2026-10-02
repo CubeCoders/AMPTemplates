@@ -1,0 +1,44 @@
+[
+    {
+        "UpdateStageName": "Download Linux Server",
+        "UpdateStageDescription": "Download and extract the Luna Multiplayer Linux server",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceData": "LunaMultiplayer-Server-linux-x64-Release.zip",
+        "UpdateSourceArgs": "LunaMultiplayer/LunaMultiplayer",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "Install Linux Server",
+        "UpdateStageDescription": "Move Luna Multiplayer server files into the server root",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cp -a \\\"{{$FullBaseDir}}LMPServer-linux-x64/.\\\" \\\"{{$FullBaseDir}}.\\\" && rm -rf \\\"{{$FullBaseDir}}LMPServer-linux-x64\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Download Windows Server",
+        "UpdateStageDescription": "Download and extract the Luna Multiplayer Windows server",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceData": "LunaMultiplayer-Server-Release.zip",
+        "UpdateSourceArgs": "LunaMultiplayer/LunaMultiplayer",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true
+    },
+    {
+        "UpdateStageName": "Install Windows Server",
+        "UpdateStageDescription": "Move Luna Multiplayer server files into the server root",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C \"xcopy /E /I /Y \\\"{{$FullBaseDir}}LMPServer\\*\\\" \\\"{{$FullBaseDir}}\\\" && rmdir /S /Q \\\"{{$FullBaseDir}}LMPServer\\\"\"",
+        "SkipOnFailure": false
+    }
+]
