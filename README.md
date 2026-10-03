@@ -6,11 +6,9 @@ See the wiki article for the module: https://github.com/CubeCoders/AMP/wiki/Conf
 
 You can also use the online configurator at https://config.getamp.sh/ to help with building templates.
 
-*There is a much more robust version of the [online configuration tool](https://iceofwraith.github.io/GenericConfigGen/) that is still in beta. This should provide much better results than the above even so. If you have any feedback, please contact IceOfWraith in the CubeCoders Discord.
+**The online configurator can be used as a starting point for making templates. Templates produced using the generator must be fully tested prior to being submitted for review.**
 
-**The online configurator can be used as a starting point for making templates. However, it will not generally produce a fully functioning template. Templates produced using the generator can be deployed for personal use but will not be accepted into the CubeCoders repository.**
-
-**AI generated configurations will not be accepted in this repo.**
+**AI-assisted contributions are welcome**, as long as you've reviewed and tested the result yourself and it follows the repo's issue templates and submission guidelines. Submissions with clearly incorrect or made-up information may be closed by maintainers without notice, but you're welcome to resubmit once they're addressed.
 
 # Sharing Templates
 Right now the following restrictions apply to templates that may be publicly shared via this repository (some of these will be relaxed over time):
@@ -18,8 +16,7 @@ Right now the following restrictions apply to templates that may be publicly sha
  - The application must not require any login/authentication in order to download (except for SteamCMD logins).
  - If the application does not have a Linux version you should add a Proton download via SteamCMD to support it if possible.
  - Applications that have customizable settings must use a Settings Manifest.
- - Only applications that expose some kind of Console that AMP is able to pick up.
- - Do not invoke any shell scripts/batch files. You must only launch actual executables.
+ - Do not invoke any shell scripts/batch files. You must only launch actual executables. Scripts may be used for update and pre-start stages.
  
 # To share a template
 
@@ -27,29 +24,33 @@ Create a pull request containing the following files in the top-level directory 
 
     *APPLICATIONAME*.kvp
     *APPLICATIONAME*config.json
-    *APPLICATIONAME*metaconfig.json (Optional)
+    *APPLICATIONAME*metaconfig.json
+    *APPLICATIONAME*ports.json
+    *APPLICATIONAME*start.json (Optional)
+    *APPLICATIONAME*updates.json
 
 With the names fully lower-cased.
 
-For example, `valheim.kvp`, `valheimconfig.json`, `valheimmetaconfig.json`
+For example, `valheim.kvp`, `valheimconfig.json`, `valheimmetaconfig.json`, `valheimports.json`, `valheimstart.json`, `valheinupdates.json`
 
-Do not use any directories and include no-other files.
+Do not use any directories. The only other files included should be necessary config files when the server doesn't produce one automatically.
 
-**If you are only submitting a draft, make sure to append (draft) to the pull request title.**
+**If you are only submitting a draft, make sure to `Convert to draft` after opening.**
 
 # Editing templates
 
-If you believe that a template needs either updating or changes made, please submit a pull request for that template with a justification for why that change is needed. If possible try and contact the original author first.
+If you believe that a template needs updates or changes made, please submit a pull request for that template with a justification for why that change is needed.
 
 # After submitting a template
 
-Once you've submitted a pull request, your configuration will be tested in its as-is state by an automated tool. It will:
+Once you've submitted a pull request, your configuration will be tested in its as-is state. AMP must be able to:
 
 - Load the configuration
-- Attempt to perform an update
-- Attempt to start the application
-- Verify that the application reaches the 'Ready' state.
-- Attempt to stop the application
-- Verify that the application reaches the 'Stopped' state.
+- Perform an update
+- Start the application
+- Reaches the 'Ready' state.
+- Gracefully stop the application
+- Reach the 'Stopped' state.
+- Apply configuration changes.
 
-You should ensure that your configuration can do this on both Windows and Linux before submitting your configuration.
+You should ensure that your configuration can do this on both Windows and Linux before submitting.
