@@ -109,5 +109,21 @@
         "UpdateSourceConditionSetting": "bepinex_install",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Thunderstore Mods",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"if [ -s ./Valheim/thunderstore-mods.txt ] || [ -s ./Valheim/896660/BepInEx/plugins/.thunderstore-versions ]; then wget -qO managemods.sh https://cdn-repo.c7rs.com/AMPTemplates/valheimmanagemods.sh && bash ./managemods.sh \\\"{{bepinex_install}}\\\" \\\"{{valheim_plus_install}}\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Thunderstore Mods",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"if ((Test-Path 'Valheim\\thunderstore-mods.txt') -and (Get-Content 'Valheim\\thunderstore-mods.txt' | Where-Object { $_.Trim() })) { Write-Output 'Mods (Thunderstore / Hexium) is only supported on Linux, the list was not installed'; exit 1 }\"",
+        "SkipOnFailure": true
     }
 ]
