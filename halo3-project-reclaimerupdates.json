@@ -1,0 +1,79 @@
+[
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/ProjectReclaimer/project-reclaimer-releases/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^project-reclaimer-dedicated-v.*\\.exe$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$b='{{$FullBaseDir}}'; $f=Get-ChildItem -Path $b -Filter 'project-reclaimer-dedicated-v*.exe' | Sort-Object LastWriteTime -Descending | Select-Object -First 1; if(-not $f){ Write-Host 'No downloaded server executable found'; exit 1 }; Copy-Item -LiteralPath $f.FullName -Destination (Join-Path $b 'project-reclaimer-dedicated.exe') -Force; Get-ChildItem -Path $b -Filter 'project-reclaimer-dedicated-v*.exe' | Remove-Item -Force; Write-Host ('Installed ' + $f.Name)\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}\\\" || exit 1; f=$(ls -t project-reclaimer-dedicated-v*.exe 2>/dev/null | head -n 1); [ -n \\\"$f\\\" ] || { echo \\\"No downloaded server executable found\\\"; exit 1; }; cp -f \\\"$f\\\" project-reclaimer-dedicated.exe && rm -f project-reclaimer-dedicated-v*.exe && echo \\\"Installed $f\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Steam Login",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "228980",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "DownloadGameFiles",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Halo 3 Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference='Stop'; $root='{{$FullRootDir}}'; $base='{{$FullBaseDir}}'; $sc=Join-Path $root 'steamcmd.exe'; if(-not (Test-Path -LiteralPath $sc)){ Write-Host 'steamcmd.exe was not found'; exit 1 }; $cfg=Join-Path $root 'config\\config.vdf'; $txt=''; if(Test-Path -LiteralPath $cfg){ $txt=Get-Content -Raw -LiteralPath $cfg }; $names=@([regex]::Matches($txt,'\\\"([^\\\"]+)\\\"\\s*\\{\\s*\\\"SteamID\\\"') | ForEach-Object { $_.Groups[1].Value }); $nocache='No cached Steam login was found. Run the update again and enter the Steam Guard code from the Steam Mobile app in the login prompt, instead of approving the login on the phone'; if(($names.Count -eq 0) -or ($txt -notmatch '\\\"ConnectCache\\\"')){ Write-Host $nocache; exit 1 }; $empty=Join-Path $env:TEMP 'h3_empty_stdin.txt'; Set-Content -LiteralPath $empty -Value ''; $acct=''; if($names.Count -eq 1){ $acct=$names[0] } else { foreach($n in $names){;   $probe=Join-Path $env:TEMP 'h3_probe_out.txt';   $pp=Start-Process -FilePath $sc -ArgumentList @('+login',$n,'+quit') -NoNewWindow -PassThru -RedirectStandardInput $empty -RedirectStandardOutput $probe;   if(-not $pp.WaitForExit(180000)){ try{ $pp.Kill() }catch{} };   if((Test-Path -LiteralPath $probe) -and ((Get-Content -Raw -LiteralPath $probe) -match \\\"Logging in user '[^']*'[^\\r\\n]*\\.\\.\\.OK\\\")){ $acct=$n; break }; } }; if(-not $acct){ Write-Host $nocache; exit 1 }; $depots=@('976739'); if('{{IncludeCampaignFiles}}' -eq 'true'){ $depots+='976738' }; $sa=@('+@sSteamCmdForcePlatformType','windows','+login',$acct); foreach($d in $depots){ $sa+=@('+download_depot','976730',$d) }; $sa+='+quit'; $content=Join-Path $root 'steamapps\\content\\app_976730'; $expected=[double]9332886741; if($depots.Count -gt 1){ $expected+=9007725781 }; $p=Start-Process -FilePath $sc -ArgumentList $sa -NoNewWindow -PassThru -RedirectStandardInput $empty; $t0=Get-Date; while(-not $p.HasExited){;   if(((Get-Date)-$t0).TotalSeconds -gt 7200){ try{ $p.Kill() }catch{}; Write-Host 'The Halo 3 download took too long and was stopped'; exit 1 };   Start-Sleep -Seconds 10;   $sz=0;   if(Test-Path -LiteralPath $content){ $sz=[double](Get-ChildItem -LiteralPath $content -Recurse -File -ErrorAction SilentlyContinue | Measure-Object Length -Sum).Sum };   $pct=[Math]::Min(99,[int](100*$sz/$expected));   Write-Host ('Downloading Halo 3 files: '+$pct+'% ('+[Math]::Round($sz/1GB,1)+' GB of '+[Math]::Round($expected/1GB,1)+' GB)'); }; $dest=Join-Path $base 'game\\halo3'; $xd=@('fmod','waves','hopper_game_variants','hopper_map_variants'); function SizeOf($p){ $r=[double]0; if(Test-Path -LiteralPath $p){ $m=Get-ChildItem -LiteralPath $p -Recurse -File -Force -ErrorAction SilentlyContinue | Measure-Object Length -Sum; if($m.Sum){ $r=[double]$m.Sum } }; return $r }; $srcs=@(); foreach($d in $depots){;   $src=Join-Path $content ('depot_'+$d+'\\halo3');   if(-not (Test-Path -LiteralPath $src)){ Write-Host ('Depot '+$d+' did not download. Check that the Steam account owns Halo: The Master Chief Collection'); exit 1 };   $srcs+=$src; }; $total=[double]0; foreach($s in $srcs){ $total+=SizeOf $s; foreach($x in $xd){ $total-=SizeOf (Join-Path $s $x) } }; if($total -lt 1){ $total=[double]1 }; $base0=SizeOf $dest; foreach($s in $srcs){;   $j=Start-Job -ScriptBlock { param($a,$b,$x) robocopy $a $b /E /XD $x /NFL /NDL /NJH /NJS /NP | Out-Null; $LASTEXITCODE } -ArgumentList $s,$dest,$xd;   while($j.State -eq 'Running'){;     Start-Sleep -Seconds 10;     $cur=(SizeOf $dest)-$base0;     if($cur -lt 0){ $cur=0 };     $pct=[Math]::Min(99,[int](100*$cur/$total));     Write-Host ('Copying Halo 3 files: '+$pct+'% ('+[Math]::Round($cur/1GB,1)+' GB of '+[Math]::Round($total/1GB,1)+' GB)');   };   $code=@(Receive-Job $j)[-1];   Remove-Job $j -Force;   if(($null -eq $code) -or ($code -ge 8)){ Write-Host 'Copying the Halo 3 files failed'; exit 1 }; }; Remove-Item -Recurse -Force -LiteralPath $content -ErrorAction SilentlyContinue; Write-Host 'Halo 3 files installed'; exit 0\"",
+        "UpdateSourceConditionSetting": "DownloadGameFiles",
+        "UpdateSourceConditionValue": "true",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Steam Login",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "228980",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "DownloadGameFiles",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Halo 3 Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"root='{{$FullRootDir}}'; base='{{$FullBaseDir}}'; sc=\\\"${root}steamcmd.sh\\\"; if [ ! -f \\\"$sc\\\" ]; then echo 'steamcmd.sh was not found'; exit 1; fi; vh=\\\"$(cd \\\"${root}..\\\" 2>/dev/null && pwd)/.virtualhome\\\"; cfg=\\\"$vh/Steam/config/config.vdf\\\"; nocache='No cached Steam login was found. Run the update again and enter the Steam Guard code from the Steam Mobile app in the login prompt, instead of approving the login on the phone'; if [ ! -f \\\"$cfg\\\" ]; then echo \\\"$nocache\\\"; exit 1; fi; names=$(tr -d '\\r' < \\\"$cfg\\\" | awk '/\\\"Accounts\\\"/{f=1; next} f&&/^[ \\t]*\\\"[^\\\"]+\\\"[ \\t]*$/{t=$0; gsub(/[ \\t\\\"]/,\\\"\\\",t)} f&&/\\\"SteamID\\\"/&&t!=\\\"\\\"{print t; t=\\\"\\\"}'); if [ -z \\\"$names\\\" ] || ! grep -q '\\\"ConnectCache\\\"' \\\"$cfg\\\"; then echo \\\"$nocache\\\"; exit 1; fi; acct=''; if [ \\\"$(echo \\\"$names\\\" | wc -l)\\\" -eq 1 ]; then acct=\\\"$names\\\"; else for n in $names; do if HOME=\\\"$vh\\\" timeout 180 bash \\\"$sc\\\" +login \\\"$n\\\" +quit < /dev/null 2>&1 | grep -Eq \\\"Logging in user '[^']*'.*\\.\\.\\.OK\\\"; then acct=\\\"$n\\\"; break; fi; done; fi; if [ -z \\\"$acct\\\" ]; then echo \\\"$nocache\\\"; exit 1; fi; depots=\\\"976739\\\"; if [ '{{IncludeCampaignFiles}}' = 'true' ]; then depots=\\\"$depots 976738\\\"; fi; set -- +@sSteamCmdForcePlatformType linux +login \\\"$acct\\\"; for d in $depots; do set -- \\\"$@\\\" +download_depot 976730 \\\"$d\\\"; done; set -- \\\"$@\\\" +quit; c1=\\\"$vh/Steam/steamapps/content/app_976730\\\"; c2=\\\"${root}linux32/steamapps/content/app_976730\\\"; expected=9332886741; case \\\" $depots \\\" in *' 976738 '*) expected=$((expected+9007725781));; esac; HOME=\\\"$vh\\\" timeout 7200 bash \\\"$sc\\\" \\\"$@\\\" < /dev/null & spid=$!; while kill -0 \\\"$spid\\\" 2>/dev/null; do sleep 10; sz=$(du -sb \\\"$c1\\\" \\\"$c2\\\" 2>/dev/null | awk '{s+=$1} END{print s+0}'); sz=${sz:-0}; pct=$((100*sz/expected)); if [ \\\"$pct\\\" -gt 99 ]; then pct=99; fi; awk -v p=\\\"$pct\\\" -v s=\\\"$sz\\\" -v e=\\\"$expected\\\" 'BEGIN{printf \\\"Downloading Halo 3 files: %d%% (%.1f GB of %.1f GB)\\n\\\", p, s/1073741824, e/1073741824}'; done; wait \\\"$spid\\\"; dest=\\\"${base}game/halo3\\\"; mkdir -p \\\"$dest\\\"; srcs=\\\"\\\"; for d in $depots; do src=\\\"\\\"; for c in \\\"$c1\\\" \\\"$c2\\\"; do if [ -d \\\"$c/depot_$d/halo3\\\" ]; then src=\\\"$c/depot_$d/halo3\\\"; fi; done; if [ -z \\\"$src\\\" ]; then echo \\\"Depot $d did not download. Check that the Steam account owns Halo: The Master Chief Collection\\\"; exit 1; fi; srcs=\\\"$srcs $src\\\"; done; total=0; for s in $srcs; do t=$(du -sb \\\"$s\\\" | cut -f1); for x in fmod waves hopper_game_variants hopper_map_variants; do xs=$(du -sb \\\"$s/$x\\\" 2>/dev/null | cut -f1); t=$((t-${xs:-0})); done; total=$((total+t)); done; if [ \\\"$total\\\" -lt 1 ]; then total=1; fi; d0=$(du -sb \\\"$dest\\\" | cut -f1); copyall() { for s in $srcs; do (cd \\\"$s\\\" && tar -cf - --exclude=./fmod --exclude=./waves --exclude=./hopper_game_variants --exclude=./hopper_map_variants .) | tar -xf - -C \\\"$dest\\\" || return 1; done; }; copyall & cpid=$!; while kill -0 \\\"$cpid\\\" 2>/dev/null; do sleep 10; cur=$(du -sb \\\"$dest\\\" 2>/dev/null | cut -f1); cdone=$((${cur:-0}-d0)); if [ \\\"$cdone\\\" -lt 0 ]; then cdone=0; fi; pct=$((100*cdone/total)); if [ \\\"$pct\\\" -gt 99 ]; then pct=99; fi; awk -v p=\\\"$pct\\\" -v s=\\\"$cdone\\\" -v e=\\\"$total\\\" 'BEGIN{printf \\\"Copying Halo 3 files: %d%% (%.1f GB of %.1f GB)\\n\\\", p, s/1073741824, e/1073741824}'; done; wait \\\"$cpid\\\" || { echo 'Copying the Halo 3 files failed'; exit 1; }; rm -rf \\\"$c1\\\" \\\"$c2\\\"; echo 'Halo 3 files installed'; exit 0\"",
+        "UpdateSourceConditionSetting": "DownloadGameFiles",
+        "UpdateSourceConditionValue": "true",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\\\"mscoree,mshtml=\\\"; if [ ! -f \\\"$WINEPREFIX/system.reg\\\" ]; then /usr/bin/xvfb-run -a /usr/bin/wineboot --init && /usr/bin/wine reg add 'HKCU\\Software\\Wine\\Drivers' /v Audio /t REG_SZ /f >/dev/null && /usr/bin/wineserver --wait && echo 'Wine prefix created'; else echo \\\"Wine prefix already exists. Skipping\\\"; fi\"",
+        "SkipOnFailure": false
+    }
+]
