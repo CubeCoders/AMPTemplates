@@ -67,7 +67,7 @@
         "DisplayName": "Map",
         "Category": "Halo 3:stadia_controller",
         "Subcategory": "Game:sports_esports:2",
-        "Description": "The map every game is played on. The map's files must be in the game folder (see the setup guide). Ignored if a Playlist File is set",
+        "Description": "The map every game is played on. The map's files must be in the game folder (see the setup guide). Ignored if Use Custom Map or a Playlist File is set",
         "Keywords": "map,level,guardian,valhalla",
         "FieldName": "MapName",
         "InputType": "enum",
@@ -106,7 +106,7 @@
         "DisplayName": "Game Type",
         "Category": "Halo 3:stadia_controller",
         "Subcategory": "Game:sports_esports:2",
-        "Description": "The game type every game plays. Custom game variants can be used through a Playlist File. Ignored if a Playlist File is set",
+        "Description": "The game type for every game. Flood Infection and UNSC vs Covenant also need the campaign files. Ignored if a Custom Game Type or Playlist File is set",
         "Keywords": "game,type,mode,gametype,slayer,variant",
         "FieldName": "GameType",
         "InputType": "enum",
@@ -122,19 +122,63 @@
             "Juggernaut": "Juggernaut",
             "VIP": "VIP",
             "Escalation Slayer": "Escalation Slayer",
-            "Forge": "Forge"
+            "Forge": "Forge",
+            "Gun Game": "Gun Game",
+            "Growth": "Growth",
+            "One in the Chamber": "One in the Chamber",
+            "Zone Control": "Zone Control",
+            "Flood Infection": "Flood Infection",
+            "UNSC vs Covenant": "UNSC vs Covenant"
         }
+    },
+    {
+        "DisplayName": "Use Custom Map",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "If enabled, every game is played on the Custom Map Name below instead of the Map above. Ignored if a Playlist File is set, or if the Custom Map Name is empty",
+        "Keywords": "custom,map,workshop,mod,forge,use",
+        "FieldName": "UseCustomMap",
+        "InputType": "checkbox",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Custom Map Name",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "The map to play when Use Custom Map is on, by file name without .map, such as hugeass_remastered_mcc. It must be installed in content/Mods or content/Maps, for example from a Workshop item. Avoid quotes",
+        "Keywords": "custom,map,name,workshop,mod,forge,saved",
+        "FieldName": "CustomMapName",
+        "InputType": "text",
+        "DefaultValue": "",
+        "Placeholder": "hugeass_remastered_mcc",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Custom Game Type",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "Optional. A custom game type from the content/Game Modes folder, by name or file, such as Momentum or Game Modes/momentum.json. Replaces Game Type. Ignored if a Playlist File is set",
+        "Keywords": "custom,game,mode,type,variant,gametype,megalo,script",
+        "FieldName": "CustomGameType",
+        "InputType": "text",
+        "DefaultValue": "",
+        "Placeholder": "Game Modes/momentum.json",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Playlist File",
         "Category": "Halo 3:stadia_controller",
         "Subcategory": "Game:sports_esports:2",
-        "Description": "Optional playlist of three or more games that players vote on, such as playlists/slayer.playlist.json. Upload the file to the playlists folder. Leave blank to use the Map and Game Type above",
+        "Description": "Optional playlist of three or more games that players vote on. Enter its file name, such as playlist1 (the playlists folder and .playlist.json ending are added for you), after uploading it to the playlists folder. Overrides Map and Game Type",
         "Keywords": "playlist,rotation,vote,games",
         "FieldName": "PlaylistFile",
         "InputType": "text",
         "DefaultValue": "",
-        "Placeholder": "playlists/slayer.playlist.json",
+        "Placeholder": "playlist1",
         "EnumValues": {}
     },
     {
@@ -197,7 +241,7 @@
         "DisplayName": "Stats Reporting",
         "Category": "Halo 3:stadia_controller",
         "Subcategory": "Security:security:3",
-        "Description": "If enabled, the server reports finished games to the Project Reclaimer public stats service, which keeps players' ranks and service records. Disabled by default: the server reports nowhere",
+        "Description": "If enabled, finished games are reported to the Project Reclaimer public stats service, which keeps player ranks. Off by default",
         "Keywords": "stats,statistics,ranks,service,record,report,privacy",
         "FieldName": "StatsReporting",
         "InputType": "checkbox",
@@ -223,6 +267,20 @@
         }
     },
     {
+        "DisplayName": "RCON Address",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Security:security:3",
+        "Description": "Who can connect to the remote console (RCON). 127.0.0.1 is this machine only. 0.0.0.0 allows every network and is not encrypted, so only allow your own tools through the firewall",
+        "Keywords": "rcon,remote,console,address,bind,network,0.0.0.0,localhost",
+        "FieldName": "RconAddress",
+        "InputType": "enum",
+        "DefaultValue": "127.0.0.1",
+        "EnumValues": {
+            "127.0.0.1": "127.0.0.1 (this machine only, default)",
+            "0.0.0.0": "0.0.0.0 (every network, not encrypted)"
+        }
+    },
+    {
         "DisplayName": "Admin Player IDs",
         "Category": "Halo 3:stadia_controller",
         "Subcategory": "Security:security:3",
@@ -238,7 +296,7 @@
         "DisplayName": "Server Browser Listing",
         "Category": "Halo 3:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "If enabled, this machine runs the discovery master that the server browser queries to list the server. Only one master runs per machine. Disable to list the server on other masters only, or nowhere for direct connect only",
+        "Description": "If enabled, this machine runs the discovery master that the server browser uses to list your server. Only one runs per machine",
         "Keywords": "master,browser,discovery,list",
         "FieldName": "MasterEnabled",
         "InputType": "checkbox",
@@ -252,7 +310,7 @@
         "DisplayName": "Download Halo 3 Files",
         "Category": "Halo 3:stadia_controller",
         "Subcategory": "Updates:update:4",
-        "Description": "Experimental. If enabled, an update downloads the Halo 3 multiplayer files the server needs through SteamCMD (about 9 GB). The Steam account used at the login prompt must own Halo: The Master Chief Collection and must not use Steam Guard approval on a phone, because the saved login is reused. Disable to supply the files yourself",
+        "Description": "Experimental. Downloads the Halo 3 multiplayer files (about 9 GB), including every map and the game's own playlist game types, with SteamCMD on the next Update. Needs a Steam account that owns MCC, without phone-approval Steam Guard. Turn it off after the first download",
         "Keywords": "steam,download,game,files,mcc,halo,update,steamcmd",
         "FieldName": "DownloadGameFiles",
         "InputType": "checkbox",
@@ -275,5 +333,45 @@
             "False": "false",
             "True": "true"
         }
+    },
+    {
+        "DisplayName": "Re-download Halo 3 Files",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Updates:update:4",
+        "Description": "With Download Halo 3 Files on, downloads the files again even if they are already installed, for example after an MCC patch. Turn it off afterwards",
+        "Keywords": "redownload,download,again,force,update,steam,mcc,patch",
+        "FieldName": "RedownloadGameFiles",
+        "InputType": "checkbox",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Download Workshop Items",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Updates:update:4",
+        "Description": "Experimental. Downloads the Workshop items listed below with SteamCMD on the next Update. Needs a Steam account that owns MCC and the Halo 3 DLC, without phone-approval Steam Guard",
+        "Keywords": "workshop,steam,mods,maps,download,items,steamcmd",
+        "FieldName": "DownloadWorkshopItems",
+        "InputType": "checkbox",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Workshop Item IDs",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Updates:update:4",
+        "Description": "Workshop item IDs separated by commas (the number after id= in the item's address). The update log lists each map's name to use in Custom Map Name",
+        "Keywords": "workshop,item,ids,mods,maps,list",
+        "FieldName": "WorkshopItems",
+        "InputType": "text",
+        "DefaultValue": "",
+        "Placeholder": "2984061723, 2981234567",
+        "EnumValues": {}
     }
 ]
