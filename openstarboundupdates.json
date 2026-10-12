@@ -16,9 +16,9 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "GithubRelease",
         "UpdateSourceArgs": "OpenStarbound/OpenStarbound",
-        "UpdateSourceData": "OpenStarbound-Linux-Clang-Server.zip",
+        "UpdateSourceData": "OpenStarbound-Linux-Clang-Server.tar.lz",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
-        "UnzipUpdateSource": true,
+        "UnzipUpdateSource": false,
         "OverwriteExistingFiles": true,
         "DeleteAfterExtract": true,
         "SkipOnFailure": false
@@ -28,7 +28,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd openstarbound/server && tar -xf server.tar --strip-components=1 >/dev/null 2>&1 && rm -f server.tar >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"set -o pipefail; cd openstarbound/server && python3 -c 'import lzma,sys;d=sys.stdin.buffer.read();o=sys.stdout.buffer;g=lambda p:(x:=lzma.LZMADecompressor(lzma.FORMAT_RAW,filters=[dict(id=lzma.FILTER_LZMA1,dict_size=(1<<(d[p+5]&31))-(1<<(d[p+5]&31))//16*(d[p+5]>>5),lc=3,lp=0,pb=2)]),o.write(x.decompress(d[p+6:])),len(d)-len(x.unused_data)+20)[-1];f=lambda p:f(g(p)) if p<len(d) else 0;f(0)' < OpenStarbound-Linux-Clang-Server.tar.lz | tar -x --strip-components=1 && rm -f OpenStarbound-Linux-Clang-Server.tar.lz\"",
         "SkipOnFailure": false
     },
     {
