@@ -12,6 +12,18 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Welcome Message",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Optional chat message each player sees on joining. {name} is the player and {server} the server name. Avoid quotes",
+        "Keywords": "welcome,message,motd,greeting,rules,join",
+        "FieldName": "WelcomeMessage",
+        "InputType": "text",
+        "DefaultValue": "",
+        "Placeholder": "Welcome {name} to {server}!",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Player Limit",
         "Category": "Halo 3:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -149,7 +161,7 @@
         "DisplayName": "Custom Map Name",
         "Category": "Halo 3:stadia_controller",
         "Subcategory": "Game:sports_esports:2",
-        "Description": "The map to play when Use Custom Map is on, by file name without .map, such as hugeass_remastered_mcc. It must be installed in content/Mods or content/Maps, for example from a Workshop item. Avoid quotes",
+        "Description": "The map to play when Use Custom Map is on, by file name without .map, such as hugeass_remastered_mcc. It must be in content/Mods or content/Maps. Avoid quotes",
         "Keywords": "custom,map,name,workshop,mod,forge,saved",
         "FieldName": "CustomMapName",
         "InputType": "text",
@@ -173,7 +185,7 @@
         "DisplayName": "Playlist File",
         "Category": "Halo 3:stadia_controller",
         "Subcategory": "Game:sports_esports:2",
-        "Description": "Optional playlist of three or more games that players vote on. Enter its file name, such as playlist1 (the playlists folder and .playlist.json ending are added for you), after uploading it to the playlists folder. Overrides Map and Game Type",
+        "Description": "Optional playlist of three or more games that players vote on. Enter its file name, such as playlist1, after uploading it to the playlists folder. Overrides Map and Game Type",
         "Keywords": "playlist,rotation,vote,games",
         "FieldName": "PlaylistFile",
         "InputType": "text",
@@ -188,6 +200,48 @@
         "Description": "If enabled, players can use voice chat",
         "Keywords": "voice,chat,audio,mic",
         "FieldName": "VoiceChat",
+        "InputType": "checkbox",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Global Voice",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "If enabled, players can talk to everyone (V). Needs Voice Chat on and Project Reclaimer 0.9.15 or newer",
+        "Keywords": "voice,global,everyone,chat,audio",
+        "FieldName": "VoiceGlobal",
+        "InputType": "checkbox",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Team Voice",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "If enabled, players can talk to teammates (B). Needs Voice Chat on and Project Reclaimer 0.9.15 or newer",
+        "Keywords": "voice,team,teammates,chat,audio",
+        "FieldName": "VoiceTeam",
+        "InputType": "checkbox",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Proximity Voice",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "If enabled, players can talk to nearby players (N). Needs Voice Chat on and Project Reclaimer 0.9.15 or newer",
+        "Keywords": "voice,proximity,nearby,chat,audio",
+        "FieldName": "VoiceProximity",
         "InputType": "checkbox",
         "DefaultValue": "true",
         "EnumValues": {
@@ -221,6 +275,35 @@
         "EnumValues": {
             "False": "false",
             "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Friendly Fire",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "If disabled, players cannot hurt teammates or campaign co-op partners. Needs Project Reclaimer 0.9.14 or newer",
+        "Keywords": "friendly,fire,teamkill,team,damage,betrayal",
+        "FieldName": "FriendlyFire",
+        "InputType": "checkbox",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Team Changing",
+        "Category": "Halo 3:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "How players may change teams: Balanced (only to a smaller team), Game Type (follows the game type), or Off",
+        "Keywords": "team,teams,changing,switch,balance",
+        "FieldName": "TeamChanging",
+        "InputType": "enum",
+        "DefaultValue": "balanced",
+        "EnumValues": {
+            "balanced": "Balanced",
+            "game_type": "Game Type",
+            "off": "Off"
         }
     },
     {
@@ -310,7 +393,7 @@
         "DisplayName": "Download Halo 3 Files",
         "Category": "Halo 3:stadia_controller",
         "Subcategory": "Updates:update:4",
-        "Description": "Experimental. Downloads the Halo 3 multiplayer files (about 9 GB), including every map and the game's own playlist game types, with SteamCMD on the next Update. Needs a Steam account that owns MCC, without phone-approval Steam Guard. Turn it off after the first download",
+        "Description": "Experimental. On the next Update, downloads the Halo 3 multiplayer files (about 9 GB) with SteamCMD. Needs a Steam account that owns MCC, without phone-approval Steam Guard. Turn off afterwards",
         "Keywords": "steam,download,game,files,mcc,halo,update,steamcmd",
         "FieldName": "DownloadGameFiles",
         "InputType": "checkbox",
