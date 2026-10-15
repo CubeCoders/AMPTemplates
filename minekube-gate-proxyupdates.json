@@ -1,0 +1,68 @@
+[
+    {
+        "UpdateStageName": "Download Gate Binary",
+        "UpdateStageDescription": "Fetching latest Gate release from GitHub",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceData": "https://api.github.com/repos/minekube/gate/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /windows_amd64\\.exe$/)].browser_download_url",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Download Gate Binary",
+        "UpdateStageDescription": "Fetching latest Gate release from GitHub",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceData": "https://api.github.com/repos/minekube/gate/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /linux_amd64$/)].browser_download_url",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Download Gate Binary",
+        "UpdateStageDescription": "Fetching latest Gate release from GitHub",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSourceData": "https://api.github.com/repos/minekube/gate/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /linux_arm64$/)].browser_download_url",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Rename Gate Binary (Windows)",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CMD",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceArgs": "if exist gate_*_windows_amd64.exe move /y gate_*_windows_amd64.exe serverfiles\\gate.exe"
+    },
+    {
+        "UpdateStageName": "Rename Gate Binary (Linux)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Bash",
+        "UpdateSourceArgs": "mv -f gate_*_linux_* serverfiles/gate 2>/dev/null || true"
+    },
+    {
+        "UpdateStageName": "Make Gate Executable",
+        "UpdateStageDescription": "Setting execute permission on the Gate binary",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "serverfiles/gate"
+    },
+    {
+        "UpdateStageName": "Seed Initial Config",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "connect:\n  enabled: true\n  name: \"put-name-here\"\n\nconfig:\n  bind: 0.0.0.0:25565\n  lite:\n    enabled: false\n\n  forwarding:\n    mode: velocity\n    velocitySecret: \"GenerateASecretKeyHere12345678\"\n\n  servers:\n    main: 127.0.0.1:25567\n\n  try:\n    - main\n\n  status:\n    proxy: true\n    motd:    favicon: \"\"\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}config.yml",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Seed Connect JSON",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "{\n  \"token\": \"\"\n}\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}connect.json",
+        "OverwriteExistingFiles": false
+    }
+]
