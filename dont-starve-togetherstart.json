@@ -1,0 +1,11 @@
+[
+    {
+        "UpdateStageName": "Start Caves Shard",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}dstserver/dstserver_config/Cluster_1\\\" && mkdir -p Caves && printf '[NETWORK]\\nserver_port = {{$CavesServerPort}}\\n\\n[SHARD]\\nis_master = false\\nname = Caves\\nid = 2\\n\\n[STEAM]\\nmaster_server_port = {{$CavesQueryPort}}\\nauthentication_port = {{$CavesAuthPort}}\\n' > Caves/server.ini && { [ -f Caves/leveldataoverride.lua ] || [ -f Caves/worldgenoverride.lua ] || printf 'return {\\n\\toverride_enabled = true,\\n\\tpreset = \\\"DST_CAVE\\\",\\n}\\n' > Caves/worldgenoverride.lua; } && cd \\\"{{$FullBaseDir}}bin{{ServerExecutable}}\\\" && export server=\\\"$PWD/dontstarve_dedicated_server_nullrenderer\\\" && pkill -INT -f \\\"^$server .*-shard Caves\\\"; while pgrep -f \\\"^$server .*-shard Caves\\\" > /dev/null; do sleep 1; done; setsid -f bash -c '\\\"$server\\\" -persistent_storage_root ../dstserver -conf_dir dstserver_config -shard Caves -tickrate {{tickrate}} & caves=$!; for i in $(seq 60); do pgrep -f \\\"^$server .*-shard shard\\\" > /dev/null && break; sleep 1; done; while pgrep -f \\\"^$server .*-shard shard\\\" > /dev/null; do sleep 5; done; kill -INT $caves; wait $caves' < /dev/null > /dev/null 2>&1\"",
+        "UpdateSourceConditionSetting": "caves",
+        "UpdateSourceConditionValue": "true"
+    }
+]
