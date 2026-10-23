@@ -18,11 +18,11 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Link Linux Config To Windows Config",
+        "UpdateStageName": "Link Linux Saved Data To Windows",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"W=\\\"{{$FullBaseDir}}WindowsServer/BeastsOfBermuda/Saved/Config/WindowsServer\\\"; L=\\\"{{$FullBaseDir}}LinuxServer/BeastsOfBermuda/Saved/Config/LinuxServer\\\"; mkdir -p \\\"$W\\\" \\\"$(dirname \\\"$L\\\")\\\" || exit 1; if [ -d \\\"$L\\\" ] && [ ! -L \\\"$L\\\" ]; then cp -an \\\"$L\\\"/. \\\"$W\\\"/ && rm -rf \\\"$L\\\" || exit 1; fi; ln -sfn ../../../../WindowsServer/BeastsOfBermuda/Saved/Config/WindowsServer \\\"$L\\\" && echo \\\"Linked LinuxServer config to WindowsServer config\\\"\"",
+        "UpdateSourceArgs": "-c \"B=\\\"{{$FullBaseDir}}\\\"; link_saved() { mkdir -p \\\"$1\\\" \\\"$(dirname \\\"$2\\\")\\\" || exit 1; if [ -d \\\"$2\\\" ] && [ ! -L \\\"$2\\\" ]; then cp -an \\\"$2\\\"/. \\\"$1\\\"/ && rm -rf \\\"$2\\\" || exit 1; fi; ln -sfn \\\"$3\\\" \\\"$2\\\" || exit 1; }; link_saved \\\"${B}WindowsServer/BeastsOfBermuda/Saved/Config/WindowsServer\\\" \\\"${B}LinuxServer/BeastsOfBermuda/Saved/Config/LinuxServer\\\" \\\"../../../../WindowsServer/BeastsOfBermuda/Saved/Config/WindowsServer\\\"; link_saved \\\"${B}WindowsServer/BeastsOfBermuda/Saved/SaveGames\\\" \\\"${B}LinuxServer/BeastsOfBermuda/Saved/SaveGames\\\" \\\"../../../WindowsServer/BeastsOfBermuda/Saved/SaveGames\\\"; link_saved \\\"${B}WindowsServer/BeastsOfBermuda/Saved/User\\\" \\\"${B}LinuxServer/BeastsOfBermuda/Saved/User\\\" \\\"../../../WindowsServer/BeastsOfBermuda/Saved/User\\\"; echo \\\"Linked LinuxServer Config, SaveGames, and User to WindowsServer\\\"\"",
         "SkipOnFailure": false
     },
     {
