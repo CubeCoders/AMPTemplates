@@ -1,0 +1,10 @@
+[
+    {
+        "UpdateStageName": "Link Linux Config To Windows Config",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"W=\\\"{{$FullBaseDir}}WindowsServer/BeastsOfBermuda/Saved/Config/WindowsServer\\\"; L=\\\"{{$FullBaseDir}}LinuxServer/BeastsOfBermuda/Saved/Config/LinuxServer\\\"; mkdir -p \\\"$W\\\" \\\"$(dirname \\\"$L\\\")\\\" || exit 1; if [ -d \\\"$L\\\" ] && [ ! -L \\\"$L\\\" ]; then cp -an \\\"$L\\\"/. \\\"$W\\\"/ && rm -rf \\\"$L\\\" || exit 1; fi; ln -sfn ../../../../WindowsServer/BeastsOfBermuda/Saved/Config/WindowsServer \\\"$L\\\" && echo \\\"Linked LinuxServer config to WindowsServer config\\\"\"",
+        "SkipOnFailure": false
+    }
+]
