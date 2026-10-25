@@ -4,9 +4,11 @@ For the AMP community to share Generic Module templates.
 # Making generic module templates
 See the wiki article for the module: https://github.com/CubeCoders/AMP/wiki/Configuring-the-'Generic'-AMP-module
 
-You can also use the online configurator at https://config.getamp.sh/ to help with building templates.
+You can also use the online configurator at ~~https://config.getamp.sh/~~* to help with building templates.
 
-**The online configurator can be used as a starting point for making templates. Templates produced using the generator must be fully tested prior to being submitted for review.**
+*There is a much more robust version of the [online configuration tool](https://iceofwraith.github.io/GenericConfigGen/) that is still in beta. This should provide much better results than the above even so. If you have any feedback, please contact IceOfWraith in the CubeCoders Discord.
+
+**The online configurator can be used as a starting point for making templates. However, it will not generally produce a fully functioning template. Templates produced using the generator can be deployed for personal use but will not be accepted into the CubeCoders repository.**
 
 **AI-assisted contributions are welcome**, as long as you've reviewed and tested the result yourself and it follows the repo's issue templates and submission guidelines. Submissions with clearly incorrect or made-up information may be closed by maintainers without notice, but you're welcome to resubmit once they're addressed.
 
