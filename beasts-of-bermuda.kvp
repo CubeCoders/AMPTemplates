@@ -24,7 +24,7 @@ Meta.NoCommercialUsage=False
 Meta.AppConfigId=e79b39ca-9383-4713-9333-7f78960c4a19
 Meta.ConfigVersion=7
 Meta.ReleaseNotes=Linux hosts now run the native Linux dedicated server from depot 882430 instead of Wine. Config, SaveGames, and User under Saved are linked to the WindowsServer folders so saves stay shared. Windows hosts are unchanged.
-Meta.BreakingReleaseNotes=Existing Linux Wine instances now launch LinuxServer instead of the Windows binary under Wine. Config, SaveGames, and User are linked to the WindowsServer copies, so Wine-era saves are kept automatically. Logs and Crashes stay per-platform.
+Meta.BreakingReleaseNotes=Existing Linux Wine instances now launch LinuxServer instead of the Windows binary under Wine. Config, SaveGames, and User are linked to the WindowsServer copies, so Wine-era saves are kept automatically. Any existing LinuxServer copy of those folders is merged in (Windows files win) and then moved to a .linux-backup-<timestamp> folder beside it, never deleted. Logs and Crashes stay per-platform.
 Meta.AppIsMultiIPAware=False
 App.DisplayName=Beasts of Bermuda
 App.RootDir=./beasts-of-bermuda/
@@ -34,7 +34,7 @@ App.ExecutableWin=882430\WindowsServer\BeastsOfBermuda\Binaries\Win64\BeastsOfBe
 App.ExecutableLinux=882430/LinuxServer/BeastsOfBermuda/Binaries/Linux/BeastsOfBermudaServer
 App.WorkingDir=882430
 App.LinuxCommandLineArgs=
-App.WindowsCommandLineArgs=
+App.WindowsCommandLineArgs=-stdout
 App.CommandLineArgs={{$PlatformArgs}} BeastsOfBermuda -Port={{$GamePort}} -QueryPort={{$SteamQueryPort}} -MultiHome={{$ApplicationIPBinding}} {{$FormattedArgs}} -FullStdOutLogOutput
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
