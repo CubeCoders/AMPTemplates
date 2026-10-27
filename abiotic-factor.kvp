@@ -21,7 +21,7 @@ Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=11
+Meta.ConfigVersion=12
 Meta.ReleaseNotes=
 Meta.BreakingReleaseNotes=
 Meta.AppConfigId=2cd58de5-88a4-49f8-a71a-b09d08d1fd5e
@@ -36,7 +36,7 @@ App.ExecutableLinux=/usr/bin/wine
 App.WorkingDir=2857200
 App.LinuxCommandLineArgs="./AbioticFactor/Binaries/Win64/AbioticFactorServer-Win64-Shipping.exe"
 App.WindowsCommandLineArgs=
-App.CommandLineArgs={{$PlatformArgs}} AbioticFactor -stdout -FullStdOutLogOutput {{useperfthreads}}{{NoAsyncLoadingThread}}{{useallavailablecores}}{{LANOnly}}{{UseLocalIPs}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -SteamServerName="{{ServerName}}" -SandboxIniPath=Config/WindowsServer/SandboxSettings.ini {{$FormattedArgs}} {{CustomArgs}}
+App.CommandLineArgs={{$PlatformArgs}} AbioticFactor -stdout -FullStdOutLogOutput {{useperfthreads}}{{NoAsyncLoadingThread}}{{useallavailablecores}}{{LANOnly}}{{UseLocalIPs}}{{OverrideModWarnings}}{{SideloadMods}} -Port={{$GamePort}} -QueryPort={{$QueryPort}} -SteamServerName="{{ServerName}}" -SandboxIniPath=Config/WindowsServer/SandboxSettings.ini {{$FormattedArgs}} {{CustomArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={"SteamAppId":"427410","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"version.dll=n,b"}
@@ -88,8 +88,8 @@ App.MonitorDirectChildOnly=False
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
 App.ApplicationReadyMode=RegexMatch
-Console.FilterMatchRegex=
-Console.FilterMatchReplacement=
+Console.FilterMatchRegex=-ModioToken=\S+
+Console.FilterMatchReplacement=-ModioToken=********
 Console.ThrowawayMessageRegex=^(WARNING|ERROR): Shader.+$
 Console.AppReadyRegex=^\[[\d.]+-[\d.:]+\]\[[\d ]+\]LogOnlineSession: Display: OSS: Session creation completed\. Automatic start is turned on, starting session now\.$
 Console.UserJoinRegex=^\[[\d\.]+-[\d\.]+:\d+\]\[[\d ]+\]LogAbiotic: Display: CHAT LOG: (?<username>.*?) has entered the facility\.$
