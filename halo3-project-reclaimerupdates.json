@@ -1,0 +1,112 @@
+[
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/ProjectReclaimer/project-reclaimer-releases/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^project-reclaimer-dedicated-v.*\\.exe$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$b='{{$FullBaseDir}}'; $f=Get-ChildItem -Path $b -Filter 'project-reclaimer-dedicated-v*.exe' | Sort-Object LastWriteTime -Descending | Select-Object -First 1; if(-not $f){ Write-Host 'No downloaded server executable found'; exit 1 }; Copy-Item -LiteralPath $f.FullName -Destination (Join-Path $b 'project-reclaimer-dedicated.exe') -Force; Get-ChildItem -Path $b -Filter 'project-reclaimer-dedicated-v*.exe' | Remove-Item -Force; Write-Host ('Installed ' + $f.Name)\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}\\\" || exit 1; f=$(ls -t project-reclaimer-dedicated-v*.exe 2>/dev/null | head -n 1); [ -n \\\"$f\\\" ] || { echo \\\"No downloaded server executable found\\\"; exit 1; }; cp -f \\\"$f\\\" project-reclaimer-dedicated.exe && rm -f project-reclaimer-dedicated-v*.exe && echo \\\"Installed $f\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Halo 3 Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "976730",
+        "UpdateSourceArgs": "976730",
+        "UpdateSourceTarget": "{{$FullBaseDir}}game",
+        "UpdateSourceItems": "{{IncludeCampaignFiles}}",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "DownloadGameFiles",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Halo 3 Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$b='{{$FullBaseDir}}'; $g=Join-Path $b 'game\\halo3'; foreach($p in @(@('hopper_map_variants','content\\Maps'),@('hopper_game_variants','content\\Game Modes'))){ $s=Join-Path $g $p[0]; if(Test-Path -LiteralPath $s){ $d=Join-Path $b $p[1]; New-Item -ItemType Directory -Force -Path $d | Out-Null; Copy-Item -Path (Join-Path $s '*') -Destination $d -Force } }; foreach($x in 'fmod','waves','hopper_game_variants','hopper_map_variants'){ Remove-Item -Recurse -Force -LiteralPath (Join-Path $g $x) -ErrorAction SilentlyContinue }; Write-Host 'Halo 3 files installed'\"",
+        "UpdateSourceConditionSetting": "DownloadGameFiles",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Halo 3 Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"b='{{$FullBaseDir}}'; g=\\\"${b}game/halo3\\\"; for p in 'hopper_map_variants:content/Maps' 'hopper_game_variants:content/Game Modes'; do s=\\\"$g/${p%%:*}\\\"; d=\\\"$b${p#*:}\\\"; if [ -d \\\"$s\\\" ]; then mkdir -p \\\"$d\\\" && cp -f \\\"$s\\\"/* \\\"$d/\\\"; fi; done; rm -rf \\\"$g/fmod\\\" \\\"$g/waves\\\" \\\"$g/hopper_game_variants\\\" \\\"$g/hopper_map_variants\\\"; echo 'Halo 3 files installed'\"",
+        "UpdateSourceConditionSetting": "DownloadGameFiles",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Workshop Login",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "228980",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "DownloadWorkshopItems",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Workshop Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference='Stop'; $root='{{$FullRootDir}}'; $base='{{$FullBaseDir}}'; $ids=@('{{WorkshopItems}}'.Split(',') | ForEach-Object { $_.Trim() } | Where-Object { $_ -match '^[0-9]{5,12}$' } | Select-Object -Unique); if($ids.Count -eq 0){ Write-Host 'No valid Workshop item IDs were entered. Enter the numbers after id= in each item address, separated by commas'; exit 0 }; if($ids.Count -gt 64){ Write-Host 'At most 64 Workshop items can be installed'; exit 1 }; $mods=Join-Path $base 'content\\Mods'; New-Item -ItemType Directory -Force -Path $mods | Out-Null; $todo=@($ids | Where-Object { -not (Test-Path -LiteralPath (Join-Path $mods ($_+'\\ModInfo.json'))) }); if($todo.Count -eq 0){ Write-Host 'All Workshop items are already installed. Delete an item folder from content/Mods to download it again'; exit 0 }; $sc=Join-Path $root 'steamcmd.exe'; if(-not (Test-Path -LiteralPath $sc)){ Write-Host 'steamcmd.exe was not found'; exit 1 }; $cfg=Join-Path $root 'config\\config.vdf'; $txt=''; if(Test-Path -LiteralPath $cfg){ $txt=Get-Content -Raw -LiteralPath $cfg }; $names=@([regex]::Matches($txt,'\\\"([^\\\"]+)\\\"\\s*\\{\\s*\\\"SteamID\\\"') | ForEach-Object { $_.Groups[1].Value }); $nocache='No cached Steam login was found. Run the update again and enter the Steam Guard code from the Steam Mobile app in the login prompt, instead of approving the login on the phone'; if(($names.Count -eq 0) -or ($txt -notmatch '\\\"ConnectCache\\\"')){ Write-Host $nocache; exit 1 }; $empty=Join-Path $env:TEMP 'h3_empty_stdin.txt'; Set-Content -LiteralPath $empty -Value ''; $acct=''; if($names.Count -eq 1){ $acct=$names[0] } else { foreach($n in $names){;   $probe=Join-Path $env:TEMP 'h3_probe_out.txt';   $pp=Start-Process -FilePath $sc -ArgumentList @('+login',$n,'+quit') -NoNewWindow -PassThru -RedirectStandardInput $empty -RedirectStandardOutput $probe;   if(-not $pp.WaitForExit(180000)){ try{ $pp.Kill() }catch{} };   if((Test-Path -LiteralPath $probe) -and ((Get-Content -Raw -LiteralPath $probe) -match \\\"Logging in user '[^']*'[^\\r\\n]*\\.\\.\\.OK\\\")){ $acct=$n; break }; } }; if(-not $acct){ Write-Host $nocache; exit 1 }; $tmp=Join-Path $base 'data\\workshop-tmp'; if(Test-Path -LiteralPath $tmp){ Remove-Item -Recurse -Force -LiteralPath $tmp }; $sa=@('+@sSteamCmdForcePlatformType','windows','+force_install_dir',$tmp,'+login',$acct); foreach($i in $todo){ $sa+=@('+workshop_download_item','976730',$i) }; $sa+='+quit'; $p=Start-Process -FilePath $sc -ArgumentList $sa -NoNewWindow -PassThru -RedirectStandardInput $empty; $t0=Get-Date; while(-not $p.HasExited){;   if(((Get-Date)-$t0).TotalSeconds -gt 7200){ try{ $p.Kill() }catch{}; Write-Host 'The Workshop download took too long and was stopped'; exit 1 };   Start-Sleep -Seconds 10;   $sz=0;   if(Test-Path -LiteralPath $tmp){ $sz=[double](Get-ChildItem -LiteralPath $tmp -Recurse -File -ErrorAction SilentlyContinue | Measure-Object Length -Sum).Sum };   Write-Host ('Downloading Workshop items: '+[Math]::Round($sz/1MB)+' MB'); }; $failed=0; foreach($i in $todo){;   $src=Join-Path $tmp ('steamapps\\workshop\\content\\976730\\'+$i);   if(-not (Test-Path -LiteralPath (Join-Path $src 'ModInfo.json'))){ Write-Host ('Workshop item '+$i+' did not download. Check that the Steam account owns Halo: The Master Chief Collection and the Halo 3 DLC'); $failed++; continue };   robocopy $src (Join-Path $mods $i) /E /MOVE /NFL /NDL /NJH /NJS /NP | Out-Null;   if($LASTEXITCODE -ge 8){ Write-Host ('Copying Workshop item '+$i+' failed'); $failed++; continue };   $maps=@(Get-ChildItem -LiteralPath (Join-Path $mods ($i+'\\maps')) -Filter *.map -ErrorAction SilentlyContinue | ForEach-Object { $_.BaseName });   Write-Host ('Workshop item '+$i+' installed. Maps: '+($maps -join ', ')); }; if(Test-Path -LiteralPath $tmp){ Remove-Item -Recurse -Force -LiteralPath $tmp -ErrorAction SilentlyContinue }; if($failed -gt 0){ exit 1 }; Write-Host 'Workshop items installed'; exit 0\"",
+        "UpdateSourceConditionSetting": "DownloadWorkshopItems",
+        "UpdateSourceConditionValue": "true",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Workshop Login",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "228980",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "DownloadWorkshopItems",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Workshop Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"root='{{$FullRootDir}}'; base='{{$FullBaseDir}}'; ids=$(printf '%s' '{{WorkshopItems}}' | tr ',' '\\n' | sed -e 's/^ *//' -e 's/ *$//' | grep -E '^[0-9]{5,12}$' | sort -u); if [ -z \\\"$ids\\\" ]; then echo 'No valid Workshop item IDs were entered. Enter the numbers after id= in each item address, separated by commas'; exit 0; fi; if [ \\\"$(echo \\\"$ids\\\" | wc -l)\\\" -gt 64 ]; then echo 'At most 64 Workshop items can be installed'; exit 1; fi; mods=\\\"${base}content/Mods\\\"; mkdir -p \\\"$mods\\\"; todo=''; for i in $ids; do if [ ! -f \\\"$mods/$i/ModInfo.json\\\" ]; then todo=\\\"$todo $i\\\"; fi; done; if [ -z \\\"$todo\\\" ]; then echo 'All Workshop items are already installed. Delete an item folder from content/Mods to download it again'; exit 0; fi; sc=\\\"${root}steamcmd.sh\\\"; if [ ! -f \\\"$sc\\\" ]; then echo 'steamcmd.sh was not found'; exit 1; fi; vh=\\\"$(cd \\\"${root}..\\\" 2>/dev/null && pwd)/.virtualhome\\\"; cfg=\\\"$vh/Steam/config/config.vdf\\\"; nocache='No cached Steam login was found. Run the update again and enter the Steam Guard code from the Steam Mobile app in the login prompt, instead of approving the login on the phone'; if [ ! -f \\\"$cfg\\\" ]; then echo \\\"$nocache\\\"; exit 1; fi; names=$(tr -d '\\r' < \\\"$cfg\\\" | awk '/\\\"Accounts\\\"/{f=1; next} f&&/^[ \\t]*\\\"[^\\\"]+\\\"[ \\t]*$/{t=$0; gsub(/[ \\t\\\"]/,\\\"\\\",t)} f&&/\\\"SteamID\\\"/&&t!=\\\"\\\"{print t; t=\\\"\\\"}'); if [ -z \\\"$names\\\" ] || ! grep -q '\\\"ConnectCache\\\"' \\\"$cfg\\\"; then echo \\\"$nocache\\\"; exit 1; fi; acct=''; if [ \\\"$(echo \\\"$names\\\" | wc -l)\\\" -eq 1 ]; then acct=\\\"$names\\\"; else for n in $names; do if HOME=\\\"$vh\\\" timeout 180 bash \\\"$sc\\\" +login \\\"$n\\\" +quit < /dev/null 2>&1 | grep -Eq \\\"Logging in user '[^']*'.*\\.\\.\\.OK\\\"; then acct=\\\"$n\\\"; break; fi; done; fi; if [ -z \\\"$acct\\\" ]; then echo \\\"$nocache\\\"; exit 1; fi; tmp=\\\"${base}data/workshop-tmp\\\"; rm -rf \\\"$tmp\\\"; mkdir -p \\\"$tmp\\\"; w2=\\\"$vh/Steam/steamapps/workshop\\\"; set -- +@sSteamCmdForcePlatformType linux +force_install_dir \\\"$tmp\\\" +login \\\"$acct\\\"; for i in $todo; do set -- \\\"$@\\\" +workshop_download_item 976730 \\\"$i\\\"; done; set -- \\\"$@\\\" +quit; HOME=\\\"$vh\\\" timeout 7200 bash \\\"$sc\\\" \\\"$@\\\" < /dev/null & spid=$!; while kill -0 \\\"$spid\\\" 2>/dev/null; do sleep 10; sz=$(du -sm \\\"$tmp\\\" \\\"$w2\\\" 2>/dev/null | awk '{s+=$1} END{print s+0}'); echo \\\"Downloading Workshop items: $sz MB\\\"; done; wait \\\"$spid\\\"; failed=0; for i in $todo; do src=\\\"$tmp/steamapps/workshop/content/976730/$i\\\"; if [ ! -f \\\"$src/ModInfo.json\\\" ]; then src=\\\"$w2/content/976730/$i\\\"; fi; if [ ! -f \\\"$src/ModInfo.json\\\" ]; then echo \\\"Workshop item $i did not download. Check that the Steam account owns Halo: The Master Chief Collection and the Halo 3 DLC\\\"; failed=$((failed+1)); continue; fi; rm -rf \\\"${mods:?}/$i\\\"; if ! mv \\\"$src\\\" \\\"$mods/$i\\\"; then echo \\\"Copying Workshop item $i failed\\\"; failed=$((failed+1)); continue; fi; maps=$(ls \\\"$mods/$i/maps\\\" 2>/dev/null | grep -E '[.]map$' | sed 's/[.]map$//' | paste -sd, -); echo \\\"Workshop item $i installed. Maps: $maps\\\"; done; rm -rf \\\"$tmp\\\"; rm -f \\\"${w2:?}/appworkshop_976730.acf\\\"; rm -rf \\\"${w2:?}/content/976730\\\" \\\"${w2:?}/downloads\\\" \\\"${w2:?}/temp\\\"; if [ \\\"$failed\\\" -gt 0 ]; then exit 1; fi; echo 'Workshop items installed'; exit 0\"",
+        "UpdateSourceConditionSetting": "DownloadWorkshopItems",
+        "UpdateSourceConditionValue": "true",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\\\"mscoree,mshtml=\\\"; if [ ! -f \\\"$WINEPREFIX/system.reg\\\" ]; then /usr/bin/xvfb-run -a /bin/bash -c 'K=$(printf \\\"HKCU\\134Software\\134Wine\\134Drivers\\\"); /usr/bin/wineboot --init && /usr/bin/wine reg add \\\"$K\\\" /v Audio /t REG_SZ /f >/dev/null && /usr/bin/wineserver --wait' && echo 'Wine prefix created'; else echo \\\"Wine prefix already exists. Skipping\\\"; fi\"",
+        "SkipOnFailure": false
+    }
+]
