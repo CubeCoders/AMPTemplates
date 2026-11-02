@@ -50,11 +50,40 @@
         "UpdateSourceArgs": "serverfiles/gate"
     },
     {
-        "UpdateStageName": "Seed Initial Config",
+        "UpdateStageName": "Gate Config Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/minekube-gate-proxyconfig.yml",
+        "UpdateSourceArgs": "AMP_config.yml",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Gate Config Defaults",
+        "UpdateStageDescription": "Empty anchors so config.user.yml only needs the blocks it uses",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateFile",
-        "UpdateSourceData": "connect:\n  enabled: true\n  name: \"put-name-here\"\n\nconfig:\n  bind: 0.0.0.0:25565\n  lite:\n    enabled: false\n\n  forwarding:\n    mode: velocity\n    velocitySecret: \"GenerateASecretKeyHere12345678\"\n\n  servers:\n    main: 127.0.0.1:25567\n\n  try:\n    - main\n\n  status:\n    proxy: true\n    motd:    favicon: \"\"\n",
-        "UpdateSourceArgs": "{{$FullBaseDir}}config.yml",
+        "UpdateSourceData": "# AMP managed - regenerated on every update. Do not edit.\nx-amp-root: &root {}\nx-amp-config: &config {}\nx-amp-status: &status {}\nx-amp-forwarding: &forwarding {}\nx-amp-lite: &lite {}\nx-amp-connect: &connect {}\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}amp-defaults.yml",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Gate User Config Seed",
+        "UpdateStageDescription": "Creates config.user.yml once; never overwritten",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/minekube-gate-proxyuser.yml",
+        "UpdateSourceArgs": "config.user.yml",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Default Server Icon Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://gate.minekube.com/minekube-logo.png",
+        "UpdateSourceArgs": "server-icon.png",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
         "OverwriteExistingFiles": false
     },
     {
