@@ -25,10 +25,10 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Create World Directory",
+        "UpdateStageName": "Create Data Directory",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "{{$FullBaseDir}}save-data/Worlds/{{WorldName}}",
+        "UpdateSourceArgs": "{{$FullBaseDir}}save-data",
         "SkipOnFailure": false
     },
     {
@@ -39,30 +39,5 @@
         "UpdateSourceData": "{\n  \"NetworkConfig\": {\n    \"Name\": \"{{ServerName}}\",\n    \"ipAddress\": \"{{$ApplicationIPBinding}}\",\n    \"Port\": {{$GamePort}},\n    \"QueryPort\": {{$QueryPort}},\n    \"Location\": \"{{Location}}\"\n  },\n  \"RespawnScalingConfig\": {\n    \"Enabled\": {{RespawnScalingEnabled}},\n    \"RadiusMeters\": {{RespawnRadiusMeters}},\n    \"PerPlayerSpeedup\": {{RespawnPerPlayerSpeedup}},\n    \"MinMultiplier\": {{RespawnMinMultiplier}}\n  }\n}\n",
         "OverwriteExistingFiles": false,
         "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Initialize World Settings",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "CreateFile",
-        "UpdateSourceArgs": "{{$FullBaseDir}}save-data/Worlds/{{WorldName}}/worldsettings.json",
-        "UpdateSourceData": "{\n  \"DisplayName\": \"{{DisplayName}}\",\n  \"Description\": \"{{Description}}\",\n  \"MaxPlayers\": {{$MaxUsers}},\n  \"PvPEnabled\": {{PvPEnabled}},\n  \"XpRate\": {{XpRate}},\n  \"GatherRate\": {{GatherRate}},\n  \"LootRate\": {{LootRate}},\n  \"DeathPenalty\": \"{{DeathPenalty}}\",\n  \"Difficulty\": \"{{Difficulty}}\",\n  \"AcceptsTransfers\": {{AcceptsTransfers}},\n  \"MaxCharactersPerUser\": {{MaxCharactersPerUser}},\n  \"MaxImportLevel\": {{MaxImportLevel}},\n  \"StripGearOnImport\": {{StripGearOnImport}},\n  \"ImportAllowlist\": \"{{ImportAllowlist}}\",\n  \"Admins\": \"{{Admins}}\",\n  \"OriginServerId\": \"\",\n  \"ServerPassword\": \"{{ServerPassword}}\",\n  \"CreatedDate\": \"\",\n  \"LastPlayedDate\": \"\"\n}\n",
-        "OverwriteExistingFiles": false,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Populate World Metadata",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"f=\\\"{{$FullBaseDir}}save-data/Worlds/{{WorldName}}/worldsettings.json\\\"; if grep -qE 'OriginServerId[^0-9a-f]+,' \\\"$f\\\" 2>/dev/null; then uid=$(tr -d '-' < /proc/sys/kernel/random/uuid); ts=$(date -u +'%Y-%m-%d %H:%M:%S'); sed -i -E -e \\\"s/\\x22OriginServerId\\x22: \\x22\\x22/\\x22OriginServerId\\x22: \\x22$uid\\x22/\\\" -e \\\"s/\\x22CreatedDate\\x22: \\x22\\x22/\\x22CreatedDate\\x22: \\x22$ts\\x22/\\\" -e \\\"s/\\x22LastPlayedDate\\x22: \\x22\\x22/\\x22LastPlayedDate\\x22: \\x22$ts\\x22/\\\" -e 's/(\\x22(XpRate|GatherRate|LootRate)\\x22: [0-9]+),/\\1.0,/' \\\"$f\\\"; fi\"",
-        "SkipOnFailure": true
-    },
-    {
-        "UpdateStageName": "Populate World Metadata",
-        "UpdateSourcePlatform": "Windows",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$f = '{{$FullBaseDir}}save-data/Worlds/{{WorldName}}/worldsettings.json'; if (Test-Path -LiteralPath $f) { $c = Get-Content -LiteralPath $f -Raw; if ($c -match '\\x22OriginServerId\\x22:\\s*\\x22\\x22') { $q = [char]34; $u = [guid]::NewGuid().ToString('N'); $t = (Get-Date).ToUniversalTime().ToString('yyyy-MM-dd HH:mm:ss'); $c = $c -replace '\\x22OriginServerId\\x22:\\s*\\x22\\x22', ($q + 'OriginServerId' + $q + ': ' + $q + $u + $q) -replace '\\x22CreatedDate\\x22:\\s*\\x22\\x22', ($q + 'CreatedDate' + $q + ': ' + $q + $t + $q) -replace '\\x22LastPlayedDate\\x22:\\s*\\x22\\x22', ($q + 'LastPlayedDate' + $q + ': ' + $q + $t + $q) -replace '(\\x22XpRate\\x22:\\s*\\d+),', '$1.0,' -replace '(\\x22GatherRate\\x22:\\s*\\d+),', '$1.0,' -replace '(\\x22LootRate\\x22:\\s*\\d+),', '$1.0,'; [System.IO.File]::WriteAllText($f, $c) } }\"",
-        "SkipOnFailure": true
     }
 ]
