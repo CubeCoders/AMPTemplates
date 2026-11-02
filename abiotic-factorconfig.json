@@ -928,6 +928,155 @@
         }
     },
     {
+        "DisplayName": "Apocalyptic Abilities",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, all enemies can use their apocalyptic abilities even if Apocalyptic difficulty is not enabled",
+        "Keywords": "apocalyptic,abilities,enemies,difficulty,ApocalypticAbilities",
+        "FieldName": "ApocalypticAbilities",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.ApocalypticAbilities",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Maximize Enemy Spawns",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Sandbox:joystick:2",
+        "Description": "If set, all enemy spawn points will be enabled, regardless of the difficulty setting or how many players are in the world",
+        "Keywords": "maximize,maximise,enemy,spawns,spawn,points,MaximizeEnemySpawns",
+        "FieldName": "MaximizeEnemySpawns",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.MaximizeEnemySpawns",
+        "DefaultValue": "False",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Mod List",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Mods:extension:3",
+        "Description": "Sets the list of mods the server will run with, separated by semicolons (e.g. 6472275;6472552;6456360). Mod IDs can be found at [mod.io](https://mod.io/g/abiotic-factor). Unlisted dependencies of a mod are downloaded automatically only if a Modio Token is set. Otherwise, it is up to you to make sure your list of mods will work correctly",
+        "Keywords": "mods,modio,mod.io,ids,list,Mods",
+        "FieldName": "Mods",
+        "InputType": "text",
+        "ParamFieldName": "Mods",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "6472275;6472552;6456360",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Modio Token",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Mods:extension:3",
+        "Description": "Sets the mod.io personal access token, created from your account [here](https://mod.io/me/access#tokens). Without a token, the server will re-download the mods every time it starts. WARNING: Do not share your mod.io token with anyone",
+        "Keywords": "modio,mod.io,token,access,personal,ModioToken",
+        "FieldName": "ModioToken",
+        "InputType": "Password",
+        "ParamFieldName": "ModioToken",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Mod Install Timeout",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Mods:extension:3",
+        "Description": "Sets how long to wait for mod downloads to finish before failing. Default is 900 seconds",
+        "Keywords": "mod,install,download,timeout,wait,ModInstallTimeout",
+        "FieldName": "ModInstallTimeout",
+        "InputType": "number",
+        "MinValue": "1",
+        "ParamFieldName": "ModInstallTimeout",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "900",
+        "Placeholder": "900",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Override Mod Warnings",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Mods:extension:3",
+        "Description": "If set, the server will bypass any modding warnings in the server log that would otherwise stop it from starting up and running. WARNING: Only use this if you know what you are doing",
+        "Keywords": "override,mod,warnings,errors,start,OverrideModWarnings",
+        "FieldName": "OverrideModWarnings",
+        "InputType": "checkbox",
+        "ParamFieldName": "OverrideModWarnings",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-OverrideModWarnings "
+        }
+    },
+    {
+        "DisplayName": "Allow Local Only Mods",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Mods:extension:3",
+        "Description": "If set, players can join with their own local-only cosmetic mods enabled",
+        "Keywords": "local,only,cosmetic,client,mods,AllowLocalOnlyMods",
+        "FieldName": "AllowLocalOnlyMods",
+        "InputType": "checkbox",
+        "ParamFieldName": "SandboxSettings.AllowLocalOnlyMods",
+        "DefaultValue": "True",
+        "EnumValues": {
+            "False": "False",
+            "True": "True"
+        }
+    },
+    {
+        "DisplayName": "Mods Directory Override",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Advanced:tune:4",
+        "Description": "Sets a specific folder for the mod download location. Requires a Modio Token to work. Default is AbioticFactor\\Saved\\mod.io",
+        "Keywords": "mods,directory,folder,path,download,ModsDir",
+        "FieldName": "ModsDir",
+        "InputType": "text",
+        "ParamFieldName": "ModsDir",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Sideload Mods",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Advanced:tune:4",
+        "Description": "For advanced users only. If set, the server will skip downloading mods through mod.io and mount pre-downloaded mods from disk instead. Mod List is still required, but only to specify which mods there will be. NOTE: This feature was added for game server providers, so troubleshooting support for it will be limited",
+        "Keywords": "sideload,mods,offline,manual,SideloadMods",
+        "FieldName": "SideloadMods",
+        "InputType": "checkbox",
+        "ParamFieldName": "SideloadMods",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-SideloadMods "
+        }
+    },
+    {
+        "DisplayName": "Sideload Mods Path",
+        "Category": "Abiotic Factor:stadia_controller",
+        "Subcategory": "Advanced:tune:4",
+        "Description": "For advanced users only. Sets the mods folder used by Sideload Mods. Default is AbioticFactor\\Mods. NOTE: This feature was added for game server providers, so troubleshooting support for it will be limited",
+        "Keywords": "sideload,mods,path,folder,directory,SideloadModsPath",
+        "FieldName": "SideloadModsPath",
+        "InputType": "text",
+        "ParamFieldName": "SideloadModsPath",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
         "DisplayName": "Install UE Scripting System",
         "Category": "Updates",
         "Subcategory": "Runtime Configuration:build:3",
