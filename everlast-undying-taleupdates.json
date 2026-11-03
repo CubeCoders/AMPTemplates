@@ -1,0 +1,43 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "4268160",
+        "UpdateSourceArgs": "3818450",
+        "UpdateSourceVersion": "{{ServerBranch}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Steam SDK64 Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}.steam/sdk64",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Copy SteamClient Library",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}.steam/sdk64/steamclient.so",
+        "UpdateSourceArgs": "{{$FullBaseDir}}linux64/steamclient.so",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Data Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}save-data",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialize Server Settings",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}save-data/appsettings.json",
+        "UpdateSourceData": "{\n  \"NetworkConfig\": {\n    \"Name\": \"{{ServerName}}\",\n    \"ipAddress\": \"{{$ApplicationIPBinding}}\",\n    \"Port\": {{$GamePort}},\n    \"QueryPort\": {{$QueryPort}},\n    \"Location\": \"{{Location}}\"\n  },\n  \"RespawnScalingConfig\": {\n    \"Enabled\": {{RespawnScalingEnabled}},\n    \"RadiusMeters\": {{RespawnRadiusMeters}},\n    \"PerPlayerSpeedup\": {{RespawnPerPlayerSpeedup}},\n    \"MinMultiplier\": {{RespawnMinMultiplier}}\n  }\n}\n",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]

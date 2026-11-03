@@ -1,0 +1,43 @@
+[
+    {
+        "UpdateStageName": "Create World Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}save-data/Worlds/{{WorldName}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialize Server Settings",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}save-data/appsettings.json",
+        "UpdateSourceData": "{\n  \"NetworkConfig\": {\n    \"Name\": \"{{ServerName}}\",\n    \"ipAddress\": \"{{$ApplicationIPBinding}}\",\n    \"Port\": {{$GamePort}},\n    \"QueryPort\": {{$QueryPort}},\n    \"Location\": \"{{Location}}\"\n  },\n  \"RespawnScalingConfig\": {\n    \"Enabled\": {{RespawnScalingEnabled}},\n    \"RadiusMeters\": {{RespawnRadiusMeters}},\n    \"PerPlayerSpeedup\": {{RespawnPerPlayerSpeedup}},\n    \"MinMultiplier\": {{RespawnMinMultiplier}}\n  }\n}\n",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialize World Settings",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}save-data/Worlds/{{WorldName}}/worldsettings.json",
+        "UpdateSourceData": "{\n  \"DisplayName\": \"{{DisplayName}}\",\n  \"Description\": \"{{Description}}\",\n  \"MaxPlayers\": {{$MaxUsers}},\n  \"PvPEnabled\": {{PvPEnabled}},\n  \"XpRate\": {{XpRate}},\n  \"GatherRate\": {{GatherRate}},\n  \"LootRate\": {{LootRate}},\n  \"DeathPenalty\": \"{{DeathPenalty}}\",\n  \"Difficulty\": \"{{Difficulty}}\",\n  \"AcceptsTransfers\": {{AcceptsTransfers}},\n  \"MaxCharactersPerUser\": {{MaxCharactersPerUser}},\n  \"MaxImportLevel\": {{MaxImportLevel}},\n  \"StripGearOnImport\": {{StripGearOnImport}},\n  \"ImportAllowlist\": \"{{ImportAllowlist}}\",\n  \"Admins\": \"{{Admins}}\",\n  \"ServerPassword\": \"{{ServerPassword}}\"\n}\n",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Set World Created Date",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"f=\\\"{{$FullBaseDir}}save-data/Worlds/{{WorldName}}/worldsettings.json\\\"; if [ -f \\\"$f\\\" ] && ! grep -q CreatedDate \\\"$f\\\"; then d=$(date -u '+%Y-%m-%d %H:%M:%S'); sed -i '$ s/^}$/,\\x22CreatedDate\\x22: \\x22'\\\"$d\\\"'\\x22, \\x22LastPlayedDate\\x22: \\x22'\\\"$d\\\"'\\x22}/' \\\"$f\\\"; fi\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Set World Created Date",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$f = '{{$FullBaseDir}}save-data/Worlds/{{WorldName}}/worldsettings.json'; if ((Test-Path -LiteralPath $f) -and -not (Select-String -LiteralPath $f -Pattern CreatedDate -Quiet)) { $d = [DateTime]::UtcNow.ToString('yyyy-MM-dd HH:mm:ss'); $q = [char]34; $c = [IO.File]::ReadAllText($f); $c = $c.Substring(0, $c.LastIndexOf('}')) + ',' + $q + 'CreatedDate' + $q + ': ' + $q + $d + $q + ', ' + $q + 'LastPlayedDate' + $q + ': ' + $q + $d + $q + '}' + [Environment]::NewLine; [IO.File]::WriteAllText($f, $c) }\"",
+        "SkipOnFailure": true
+    }
+]
