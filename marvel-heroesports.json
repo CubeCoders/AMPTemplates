@@ -10,7 +10,21 @@
         "Protocol": "TCP",
         "Port": 8180,
         "Name": "Web Frontend Port",
-        "Description": "Plain HTTP port for login, account creation and the dashboard. Clients reach it through your HTTPS reverse proxy (port 443), not directly",
+        "Description": "Plain HTTP port for login, account creation and the dashboard. Clients reach it through the HTTPS port, not directly",
         "Ref": "WebPort"
+    },
+    {
+        "Protocol": "TCP",
+        "Port": 8081,
+        "Name": "SiteConfig Port",
+        "Description": "HTTP port of the built-in web server serving SiteConfig.xml. The game client only connects to port 80, so forward public port 80 to this port",
+        "Ref": "HttpPort"
+    },
+    {
+        "Protocol": "TCP",
+        "Port": 8443,
+        "Name": "Login Port",
+        "Description": "HTTPS port of the built-in web server, proxied to the Web Frontend Port. The game client only connects to port 443, so forward public port 443 to this port",
+        "Ref": "HttpsPort"
     }
 ]

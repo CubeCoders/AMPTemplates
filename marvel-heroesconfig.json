@@ -3,7 +3,7 @@
         "DisplayName": "Public Address",
         "Category": "Marvel Heroes:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Address clients use to reach the game port: your public IP or a domain (e.g. mh.example.com). Clients also need a web server that serves SiteConfig.xml over HTTP on port 80 and proxies /AuthServer to the Web Frontend Port over HTTPS on port 443 (the client will not log in over plain HTTP); see Extra Setup Steps. Windows installs ship a ready Apache24 folder next to MHServerEmu. A new account database includes test accounts test1@test.com to test5@test.com with password 123: ban them (!account ban test1@test.com) or enable the whitelist before opening the server to the public",
+        "Description": "Address players use to reach this server: your public IP or a domain (e.g. mh.example.com). Players launch the client with -robocopy -nosteam -siteconfigurl=ADDRESS/SiteConfig.xml (ADDRESS = this setting). A new account database includes test accounts test1@test.com to test5@test.com with password 123: ban them (!account ban test1@test.com) or enable the whitelist before opening the server to the public",
         "Keywords": "public,address,ip,domain",
         "FieldName": "Frontend.PublicAddress",
         "InputType": "text",
@@ -12,6 +12,22 @@
         "DefaultValue": "127.0.0.1",
         "Placeholder": "127.0.0.1",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Built-in Web Server",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Runs a bundled Caddy web server that serves SiteConfig.xml on the SiteConfig Port and proxies logins over HTTPS on the Login Port with a self-signed certificate, which the client accepts. The game client only connects to ports 80 and 443 and AMP cannot assign ports below 1024, so forward public port 80 to the SiteConfig Port and 443 to the Login Port (router port forwarding, or on the host: netsh interface portproxy on Windows, an iptables REDIRECT rule on Linux). Disable this to use your own reverse proxy instead; see Extra Setup Steps",
+        "Keywords": "web,server,caddy,siteconfig,proxy,https,port,forward",
+        "FieldName": "WebServer",
+        "InputType": "checkbox",
+        "ParamFieldName": "WebServer",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
     },
     {
         "DisplayName": "Web Frontend Address",

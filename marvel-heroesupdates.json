@@ -101,6 +101,58 @@
         "SkipOnFailure": false
     },
     {
+        "UpdateStageName": "Create Caddy Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}caddy",
+        "UpdateSourceConditionSetting": "WebServer",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Caddy Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://caddyserver.com/api/download?os=windows&arch=amd64",
+        "UpdateSourceArgs": "caddy.exe",
+        "UpdateSourceTarget": "{{$FullRootDir}}caddy",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "WebServer",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Caddy Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://caddyserver.com/api/download?os=linux&arch=amd64",
+        "UpdateSourceArgs": "caddy",
+        "UpdateSourceTarget": "{{$FullRootDir}}caddy",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "WebServer",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Make Caddy Executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullRootDir}}caddy/caddy",
+        "UpdateSourceConditionSetting": "WebServer",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "SiteConfig Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/Crypto137/MHServerEmu/master/assets/SiteConfig.xml",
+        "UpdateSourceArgs": "SiteConfig.template.xml",
+        "UpdateSourceTarget": "{{$FullRootDir}}caddy",
+        "OverwriteExistingFiles": false,
+        "UpdateSourceConditionSetting": "WebServer",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
         "UpdateStageName": "Sip Files Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
