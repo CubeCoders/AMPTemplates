@@ -1,0 +1,167 @@
+[
+    {
+        "DisplayName": "Listen Address",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "IP and port Gate listens on for incoming player connections. Follows the AMP-assigned port.",
+        "Keywords": "listen,address,bind",
+        "FieldName": "config.bind",
+        "InputType": "text",
+        "ParamFieldName": "config.bind",
+        "DefaultValue": "{{$ApplicationIPBinding}}:{{$MainGamePort}}",
+        "EnumValues": {},
+        "Hidden": true,
+        "ExcludeFromSeed": true
+    },
+    {
+        "DisplayName": "Backend Servers",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Backend Servers:dns:1",
+        "Description": "Backend servers as a JSON object of name to address, e.g. {\"main\": \"127.0.0.1:25567\", \"lobby\": \"127.0.0.1:25568\"}. Names are referenced by the Fallback Server Try Order.",
+        "Keywords": "backend,server,servers",
+        "FieldName": "config.servers",
+        "InputType": "text",
+        "Required": true,
+        "ParamFieldName": "config.servers",
+        "DefaultValue": "{\"main\": \"127.0.0.1:25567\"}",
+        "Placeholder": "{\"main\": \"127.0.0.1:25567\"}",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Fallback Server Try Order",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Backend Servers:dns:1",
+        "Description": "Ordered list of backend server names Gate attempts to connect players to on login, or when kicked from a server.",
+        "Keywords": "fallback,server,try,order",
+        "FieldName": "config.try",
+        "InputType": "list",
+        "Required": true,
+        "ParamFieldName": "config.try",
+        "Special": "array:text",
+        "DefaultValue": "[\"main\"]",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Forwarding Mode",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "How player IPs and UUIDs are forwarded to backend servers. Must match the backend server's proxy settings.",
+        "Keywords": "forwarding,mode,velocity,bungeeguard,legacy",
+        "FieldName": "config.forwarding.mode",
+        "InputType": "enum",
+        "ParamFieldName": "config.forwarding.mode",
+        "DefaultValue": "velocity",
+        "EnumValues": {
+            "velocity": "Velocity (modern)",
+            "legacy": "Legacy (BungeeCord)",
+            "bungeeguard": "BungeeGuard",
+            "none": "None"
+        }
+    },
+    {
+        "DisplayName": "Velocity Secret",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Secret key used to authenticate modern forwarding with backend Velocity-compatible servers.",
+        "Keywords": "velocity,secret",
+        "FieldName": "config.forwarding.velocitySecret",
+        "InputType": "Password",
+        "ParamFieldName": "config.forwarding.velocitySecret",
+        "DefaultValue": "{{newguid()}}",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server MOTD",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Message of the day displayed in the multiplayer server list. Use \\n for a second line. Do not use double quotes.",
+        "Keywords": "server,motd",
+        "FieldName": "config.status.motd",
+        "InputType": "text",
+        "ParamFieldName": "config.status.motd",
+        "DefaultValue": "§bA Gate Proxy\\n§fHosted with AMP",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Favicon",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Server list icon: a PNG file path relative to the server folder, or a base64 data:image URI. Must not be empty and the file must exist, or Gate will not start. Larger images are scaled down to 64x64.",
+        "Keywords": "server,favicon,icon",
+        "FieldName": "config.status.favicon",
+        "InputType": "text",
+        "Required": true,
+        "ParamFieldName": "config.status.favicon",
+        "DefaultValue": "server-icon.png",
+        "Placeholder": "server-icon.png",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Lite Mode",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Runs Gate as a lightweight reverse proxy that routes players by the hostname they connect with, using Lite Routes. Lite mode ignores Backend Servers, Fallback Server Try Order and player info forwarding, so backends must not require proxy forwarding.",
+        "Keywords": "enable,lite,mode",
+        "FieldName": "config.lite.enabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "config.lite.enabled",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Lite Routes",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Lite mode routes as a JSON array, matched in order, e.g. [{\"host\": \"play.example.com\", \"backend\": \"127.0.0.1:25567\"}, {\"host\": \"*\", \"backend\": \"127.0.0.1:25568\"}]. host and backend can also be arrays; optional keys include strategy, proxyProtocol, modifyVirtualHost and cachePingTTL. Must contain at least one route when Lite mode is enabled. See https://gate.minekube.com/guide/lite",
+        "Keywords": "lite,routes,host,backend",
+        "FieldName": "config.lite.routes",
+        "InputType": "text",
+        "Required": true,
+        "ParamFieldName": "config.lite.routes",
+        "DefaultValue": "[{\"host\": \"*\", \"backend\": \"127.0.0.1:25567\"}]",
+        "Placeholder": "[{\"host\": \"*\", \"backend\": \"127.0.0.1:25567\"}]",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Minekube Connect",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Minekube Connect:cloud:2",
+        "Description": "Registers the proxy with the Minekube Connect network so players can join without port forwarding.",
+        "Keywords": "enable,minekube,connect",
+        "FieldName": "connect.enabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "connect.enabled",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Minekube Connect Name",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Minekube Connect:cloud:2",
+        "Description": "Globally unique endpoint name on Minekube Connect. Leave empty for a random name on every start (testing only).",
+        "Keywords": "minekube,connect,name",
+        "FieldName": "connect.name",
+        "InputType": "text",
+        "ParamFieldName": "connect.name",
+        "DefaultValue": "",
+        "Placeholder": "my-server-name",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Minekube Connect Token",
+        "Category": "Minekube Gate Proxy:stadia_controller",
+        "Subcategory": "Minekube Connect:cloud:2",
+        "Description": "Authentication token that owns the endpoint name. Gate generates one on first start; only set this to reuse an existing token.",
+        "Keywords": "minekube,connect,token",
+        "FieldName": "connect.token",
+        "InputType": "Password",
+        "ParamFieldName": "$.token",
+        "EnumValues": {}
+    }
+]
