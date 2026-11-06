@@ -1,0 +1,34 @@
+[
+	{
+        "Protocol": "UDP",
+        "Port": 27015,
+        "Ref": "GamePort",
+        "Name": "Game Port",
+        "Description": "Port for main game traffic",
+        "ChildPorts": [
+            {
+                "Protocol": "UDP",
+                "Port": 27016,
+                "Offset": 1,
+                "Ref": "QueryPort",
+                "Name": "Query Port",
+                "Description": "Port for query traffic"
+            },
+            {
+                "Protocol": "TCP",
+                "Port": 27017,
+                "Offset": 2,
+                "Ref": "ModServerPort",
+                "Name": "Mod Server Port",
+                "Description": "Port for mod backup file server traffic"
+            }
+        ]
+    },
+	{
+        "Protocol": "TCP",
+        "Port": 9090,
+        "Ref": "WebPort",
+        "Name": "Web Port",
+        "Description": "Port for web admin traffic"
+    }
+]
