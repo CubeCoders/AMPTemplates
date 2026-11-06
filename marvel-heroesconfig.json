@@ -17,7 +17,7 @@
         "DisplayName": "Built-in Web Server",
         "Category": "Marvel Heroes:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Runs a bundled Caddy web server that serves SiteConfig.xml on the SiteConfig Port and proxies logins over HTTPS on the Login Port with a self-signed certificate, which the client accepts. The game client only connects to ports 80 and 443 and AMP cannot assign ports below 1024, so forward public port 80 to the SiteConfig Port and 443 to the Login Port (router port forwarding, or on the host: netsh interface portproxy on Windows, an iptables REDIRECT rule on Linux). Disable this to use your own reverse proxy instead; see Extra Setup Steps",
+        "Description": "Runs a bundled Caddy web server that serves SiteConfig.xml on the SiteConfig Port and proxies logins over HTTPS on the Login Port with a self-signed certificate, which the client accepts. Port-patched clients (MarvelHeroesOmega port patch) connect straight to these ports: launch with -siteconfigport=SITECONFIG_PORT added. Stock clients only use ports 80 and 443, and AMP cannot assign ports below 1024, so for them forward public port 80 to the SiteConfig Port and 443 to the Login Port (router port forwarding, or on the host: netsh interface portproxy on Windows, an iptables REDIRECT rule on Linux). Disable this to use your own reverse proxy instead; see Extra Setup Steps",
         "Keywords": "web,server,caddy,siteconfig,proxy,https,port,forward",
         "FieldName": "WebServer",
         "InputType": "checkbox",

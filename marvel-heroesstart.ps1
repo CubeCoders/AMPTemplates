@@ -8,6 +8,8 @@ if ($WebServer -eq 'true') {
     New-Item -ItemType Directory -Force -Path $www | Out-Null
     $site = [IO.File]::ReadAllText((Join-Path $dir 'SiteConfig.template.xml'))
     $site = $site -replace 'name="AuthServerAddress" value="[^"]*"', "name=`"AuthServerAddress`" value=`"$PublicAddress`""
+    # Port-patched clients use this; stock clients always use 443.
+    $site = $site -replace 'name="AuthServerPort" value="[^"]*"', "name=`"AuthServerPort`" value=`"$HttpsPort`""
     [IO.File]::WriteAllText((Join-Path $www 'SiteConfig.xml'), $site)
     $d = $dir -replace '\\', '/'
     @"

@@ -7,7 +7,8 @@ ROOT=$(cd "$(dirname "$0")" && pwd)
 if [ "$WEB" = true ]; then
     D="$ROOT/caddy"
     mkdir -p "$D/www"
-    sed "s|name=\"AuthServerAddress\" value=\"[^\"]*\"|name=\"AuthServerAddress\" value=\"$PUB\"|" "$D/SiteConfig.template.xml" > "$D/www/SiteConfig.xml"
+    # Port-patched clients use AuthServerPort; stock clients always use 443.
+    sed -e "s|name=\"AuthServerAddress\" value=\"[^\"]*\"|name=\"AuthServerAddress\" value=\"$PUB\"|"         -e "s|name=\"AuthServerPort\" value=\"[^\"]*\"|name=\"AuthServerPort\" value=\"$HTTPS\"|" "$D/SiteConfig.template.xml" > "$D/www/SiteConfig.xml"
     cat > "$D/Caddyfile" <<EOF
 {
 	admin off
