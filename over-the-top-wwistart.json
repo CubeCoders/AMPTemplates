@@ -1,0 +1,18 @@
+[
+    {
+        "UpdateStageName": "Archive Previous Log (Windows)",
+        "UpdateStageDescription": "Moving the previous server log aside so old joins and chat are not replayed",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CMD",
+        "UpdateSourceArgs": "(if not exist 3052620\\Logs\\archive mkdir 3052620\\Logs\\archive) & (for %f in (3052620\\Logs\\2*.txt) do @(type %f >> 3052620\\Logs\\archive\\%~nxf & del /q %f)) & exit /b 0",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Archive Previous Log (Linux)",
+        "UpdateStageDescription": "Moving the previous server log aside so old joins and chat are not replayed",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Bash",
+        "UpdateSourceArgs": "mkdir -p 3052620/Logs/archive && for f in 3052620/Logs/2*.txt; do if [ -f $f ]; then cat $f >> 3052620/Logs/archive/${f##*/} && rm -f $f; fi; done",
+        "SkipOnFailure": true
+    }
+]
