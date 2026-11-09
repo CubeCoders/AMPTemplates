@@ -1,0 +1,39 @@
+# Your own Gate settings. AMP never overwrites this file; changes apply on the next start.
+# All options: https://gate.minekube.com/guide/config/
+#
+# AMP builds config.yml from three parts: its defaults, this file, then the settings from
+# AMP's Configuration tab. Settings AMP manages always win over values set here.
+#
+# Each block below is a YAML anchor. Uncomment the ones you need and put your settings under
+# the anchor for the block they belong to - a setting under the wrong anchor is ignored.
+# Indent with spaces, never tabs. Invalid YAML here stops Gate from starting.
+#
+# Ports: any port you set here (e.g. the API or Bedrock) must also be added to this instance's
+# ports in ADS (the instance's "Network and Ports" page), or AMP won't open it in the firewall
+# or publish it for containers.
+
+# Top-level blocks, e.g. the HTTP API or Bedrock cross-play.
+# x-root: &root
+#   api:
+#     enabled: true
+#     bind: localhost:26080  # pick a free port, then add it in ADS (see Ports above)
+
+# Inside "config:", e.g. online mode, forced hosts, timeouts.
+# x-config: &config
+#   onlineMode: true
+#   connectionTimeout: 5s
+#   forcedHosts:
+#     "lobby.example.com": ["main"]
+
+# Inside "config: status:", the server list ping response.
+# x-status: &status
+#   showMaxPlayers: 100
+#   logPingRequests: false
+
+# Inside "config: forwarding:".
+# x-forwarding: &forwarding
+#   bungeeGuardSecret: change-me
+
+# Inside "connect:".
+# x-connect: &connect
+#   allowOfflineModePlayers: false
