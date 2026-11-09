@@ -1,0 +1,18 @@
+[
+    {
+        "UpdateStageName": "Archive Previous Log (Windows)",
+        "UpdateStageDescription": "Moving previous server logs aside so old joins are not replayed",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CMD",
+        "UpdateSourceArgs": "(if not exist server\\Logs\\archive mkdir server\\Logs\\archive) & (for %f in (server\\Logs\\server_log_*.txt) do @(type \"%f\" >> \"server\\Logs\\archive\\%~nxf\" & del /q \"%f\")) & exit /b 0",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Archive Previous Log (Linux)",
+        "UpdateStageDescription": "Moving previous server logs aside so old joins are not replayed",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Bash",
+        "UpdateSourceArgs": "mkdir -p server/Logs/archive && for f in server/Logs/server_log_*.txt; do if [ -f \"$f\" ]; then cat \"$f\" >> \"server/Logs/archive/${f##*/}\" && rm -f \"$f\"; fi; done",
+        "SkipOnFailure": true
+    }
+]
