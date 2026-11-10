@@ -1,0 +1,20 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "568880",
+        "UpdateSourceArgs": "312660",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Map Rotation File Creation",
+        "UpdateStageDescription": "Creates the map rotation file once; it is never overwritten",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "// Map rotation for this server. Edit this file to change maps and modes; AMP never overwrites it.\n// AMP writes the other settings to amp_server.cfg, which runs this file last before hosting,\n// so any setting placed here overrides the AMP value.\n//\n// Format: MapRotation.AddMap <MAP> <MODE> [tl=<minutes>] [sl=<score>]\n// Maps: RIVIERA, COMPOUND, RAILYARD, VILLAGE, DOCKYARD, URBAN, BUNKER, FORTRESS, \"NIGHT WOODS\", MARINA\n// Modes: DM, TDM, DK (Distance King), TDK (Team Distance King), NC (No Cross), CL (Control),\n//        LMS (Last Man Standing), CTF (Capture the Flag). NC is not available on DOCKYARD, URBAN, BUNKER or MARINA.\n// With Map Vote enabled, only the first map is used; players vote on the rest.\n// Rule presets and map lists: exec Docs/ExampleConfigs/Preset_Hardcore.cfg (see Docs/Command Reference.pdf).\n\nMapRotation.AddMap DOCKYARD TDM\nMapRotation.AddMap COMPOUND TDM\nMapRotation.AddMap MARINA TDM\nMapRotation.AddMap RIVIERA TDM\nMapRotation.AddMap RAILYARD TDM\nMapRotation.AddMap VILLAGE TDM\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}amp_maprotation.cfg",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
