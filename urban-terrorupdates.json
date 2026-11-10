@@ -1,0 +1,31 @@
+[
+    {
+        "UpdateStageName": "Licence Acceptance",
+        "UpdateStageDescription": "Records licence acceptance so the official updater can run unattended",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "ASKBEFOREUPDATING=0\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}updater-cfg",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Updater Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/FrozenSand/UrTUpdater/releases/download/v4.0.3-RC1/UrTUpdater-v4.0.3-Ded.sh",
+        "UpdateSourceArgs": "UrTUpdater-Ded.sh",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Update",
+        "UpdateStageDescription": "Running the official Urban Terror updater (about 1.5 GB on first install)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd '{{$FullBaseDir}}' && echo 'Checking for Urban Terror updates...' &&bash UrTUpdater-Ded.sh -q && chmod +x Quake3-UrT-Ded.x86_64 && if [ ! -f q3ut4/server.cfg ]; then sed '/^map /d' q3ut4/server_example.cfg > q3ut4/server.cfg && echo 'set bot_enable 1' >> q3ut4/server.cfg && echo 'set bot_minplayers 0' >> q3ut4/server.cfg; fi && if [ ! -f q3ut4/mapcycle.txt ]; then cp q3ut4/mapcycle_example.txt q3ut4/mapcycle.txt; fi && echo 'Urban Terror is up to date'\"",
+        "SkipOnFailure": false
+    }
+]
