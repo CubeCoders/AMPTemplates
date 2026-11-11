@@ -1,0 +1,63 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1331550",
+        "UpdateSourceArgs": "1331550",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Proton GE Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\"; mkdir -p \\\"{{$FullRootDir}}.proton/compatdata\\\" \\\"{{$FullBaseDir}}.steam/steam\\\" \\\"{{$FullBaseDir}}.steam/sdk32\\\" \\\"{{$FullBaseDir}}.steam/sdk64\\\" \\\"{{$FullBaseDir}}.config/protonfixes\\\" && \\cp -f \\\"{{$FullRootDir}}linux32/steamclient.so\\\" \\\"{{$FullBaseDir}}.steam/sdk32/\\\" && \\cp -f \\\"{{$FullRootDir}}linux64/steamclient.so\\\" \\\"{{$FullBaseDir}}.steam/sdk64/\\\"; ProtonVersion=\\\"{{SpecificReleaseVersion}}\\\" && if [[ -x \\\"{{$FullRootDir}}.proton/proton\\\" && -f \\\"{{$FullRootDir}}.proton/version\\\" ]]; then read _ InstalledVersion < \\\"{{$FullRootDir}}.proton/version\\\"; else InstalledVersion=\\\"\\\"; fi; if [[ -z \\\"$ProtonVersion\\\" ]]; then ProtonVersion=$(wget -qO- https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest | jq -r .tag_name); fi; if [[ ! \\\"$ProtonVersion\\\" =~ ^GE-Proton[0-9]+-[0-9]+$ ]]; then echo \\\"Invalid Proton GE release version format specified\\\" && exit 1; elif [[ \\\"$InstalledVersion\\\" == \\\"$ProtonVersion\\\"* ]]; then echo \\\"Proton GE version $ProtonVersion already installed. Skipping\\\" && exit 0; else [[ -f GE-Proton.tar.gz ]] && rm -f GE-Proton.tar.gz >/dev/null 2>&1; suffix=\\\"\\\"; ver=\\\"${ProtonVersion#GE-Proton}\\\"; major=\\\"${ver%%-*}\\\"; minor=\\\"${ver#*-}\\\"; if (( major > 11 || (major == 11 && minor >= 4) )); then suffix=\\\"-x86_64\\\"; fi; wget -qO GE-Proton.tar.gz https://github.com/GloriousEggroll/proton-ge-custom/releases/download/$ProtonVersion/${ProtonVersion}${suffix}.tar.gz || { echo \\\"Proton GE download failed from GitHub. Aborting\\\"; exit 1; }; rm -rf \\\"{{$FullRootDir}}.proton/compatdata/\\\"* >/dev/null 2>&1; tar -xzf GE-Proton.tar.gz -C \\\"{{$FullRootDir}}.proton\\\" --strip-components=1 && rm -f GE-Proton.tar.gz >/dev/null 2>&1 && echo \\\"Proton GE version $ProtonVersion downloaded\\\" && { STEAM_COMPAT_DATA_PATH=\\\"{{$FullRootDir}}.proton/compatdata\\\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\\\"{{$FullBaseDir}}.steam/steam\\\" \\\"{{$FullRootDir}}.proton/proton\\\" PROTON_LOG=1 >/dev/null 2>&1; exit 0; }; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Default server settings",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"f=\\\"{{$FullBaseDir}}bamp-server.json\\\"; [ -f \\\"$f\\\" ] || printf '%s\\n' '{\\\"ServerLanguage\\\": \\\"en\\\", \\\"Headless\\\": true, \\\"DedicatedHost\\\": true, \\\"DedicatedSession\\\": \\\"\\\", \\\"DedicatedNewGame\\\": \\\"\\\", \\\"DedicatedLoadSave\\\": \\\"\\\", \\\"PlayerId\\\": \\\"Server\\\", \\\"HostPort\\\": 7777, \\\"DedicatedIdleGraceSeconds\\\": 0, \\\"DedicatedAfkMinutes\\\": 5, \\\"DedicatedPauseInMenu\\\": true, \\\"DedicatedRequireKey\\\": true, \\\"DedicatedAutoAccept\\\": true, \\\"AutosaveMinutes\\\": 5, \\\"AutosaveSlots\\\": \\\"3\\\", \\\"MaxPlayers\\\": \\\"8\\\", \\\"PlayerWebUrl\\\": \\\"\\\", \\\"HeadlessFps\\\": 30, \\\"HeadlessIdleFps\\\": 5, \\\"TelemetryKey\\\": \\\"\\\"}' > \\\"$f\\\"; mkdir -p \\\"{{$FullRootDir}}headless\\\" \\\"{{$FullRootDir}}bamp-mod\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Going Public Server download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceData": "GoingPublicServer-Server.zip",
+        "UpdateSourceArgs": "amaus1209/BigAmbitionsGoingPublicServer",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Settings for AMP",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/usr/bin/python3",
+        "UpdateSourceArgs": "\"{{$FullRootDir}}bamp-tools/seed-settings.py\" \"{{$FullBaseDir}}bamp-server.json\" \"{{$FullRootDir}}bamp-tools/bigambitionsconfig.json\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Settings in the server language",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/usr/bin/python3",
+        "UpdateSourceArgs": "\"{{$FullRootDir}}bamp-tools/localize-template.py\" \"{{ServerLanguage}}\" --manifest \"{{$FullRootDir}}../configmanifest.json\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Install Going Public Server into the Proton prefix",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"m=\\\"{{$FullRootDir}}bamp-mod/GoingPublicServer\\\"; d=\\\"{{$FullRootDir}}.proton/compatdata/pfx/drive_c/users/steamuser/AppData/LocalLow/Hovgaard Games/Big Ambitions/ModsLocal\\\"; if [ -f \\\"$m/BigAmbitionsMP.dll\\\" ]; then mkdir -p \\\"$d\\\" && rm -rf \\\"$d/BigAmbitionsMP\\\" \\\"$d/GoingPublicServer\\\" && cp -r \\\"$m\\\" \\\"$d/\\\" && echo \\\"Going Public Server installed into the prefix\\\"; else echo \\\"No mod in bamp-mod/GoingPublicServer yet - upload the built mod folder there and update again\\\"; fi\"",
+        "SkipOnFailure": true
+    }
+]
