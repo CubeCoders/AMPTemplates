@@ -21,8 +21,8 @@ Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=3
-Meta.ReleaseNotes=
+Meta.ConfigVersion=4
+Meta.ReleaseNotes=Linux: use the Steamworks SDK steamclient so the server registers with Steam before the game's 15 second timeout, and line-buffer console output so AMP sees the server become ready.
 Meta.BreakingReleaseNotes=
 Meta.AppConfigId=27e85739-18a4-4613-ab70-5a185d32eb4a
 App.DisplayName=Astro Colony
@@ -30,14 +30,14 @@ App.RootDir=./astro-colony/
 App.BaseDirectory=./astro-colony/2662210/
 App.SteamWorkshopDownloadLocation=
 App.ExecutableWin=2662210\AstroColony\Binaries\Win64\AstroColonyServer.exe
-App.ExecutableLinux=2662210/AstroColony/Binaries/Linux/AstroColonyServer
+App.ExecutableLinux=/usr/bin/stdbuf
 App.WorkingDir=2662210
-App.LinuxCommandLineArgs=
-App.WindowsCommandLineArgs=-stdout -FullStdOutLogOutput
-App.CommandLineArgs=AstroColony -QueryPort={{$SteamQueryPort}} {{$FormattedArgs}} {{$PlatformArgs}}
+App.LinuxCommandLineArgs=-oL ./AstroColony/Binaries/Linux/AstroColonyServer AstroColony
+App.WindowsCommandLineArgs=AstroColony -stdout -FullStdOutLogOutput
+App.CommandLineArgs={{$PlatformArgs}} -QueryPort={{$SteamQueryPort}} {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1614550"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1614550"}
 App.CommandLineParameterFormat=-{0}="{1}"
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
