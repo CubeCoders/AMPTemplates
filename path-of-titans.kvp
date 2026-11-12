@@ -22,7 +22,7 @@ Meta.ExtraContainerPackages=["apt-utils","icu-devtools","dos2unix","gnupg","gcc"
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
 Meta.ConfigVersion=9
-Meta.ReleaseNotes=Synced with the current hosting docs: new whitelist, critter, nesting, quest, subspecies and logout settings; updated day/night and logout defaults; Source Query enabled and bound to the instance IP; fixed container policy key
+Meta.ReleaseNotes=Synced with the current hosting docs: new whitelist, critter, nesting, quest, subspecies and logout settings; updated day/night and logout defaults; Source Query enabled and bound to the instance IP; Linux now starts via PathOfTitansServer.sh, which picks the Zen 4 (AVX-512) build when supported; fixed container policy key
 Meta.BreakingReleaseNotes=
 Meta.AppConfigId=b7a9a499-80a5-4f04-b781-92c11f72ed9a
 Meta.ImportableExtensions=[]
@@ -32,11 +32,11 @@ App.RootDir=./path-of-titans/
 App.BaseDirectory=./path-of-titans/
 App.SteamWorkshopDownloadLocation=
 App.ExecutableWin=PathOfTitans\Binaries\Win64\PathOfTitansServer-Win64-Shipping.exe
-App.ExecutableLinux=PathOfTitans/Binaries/Linux/PathOfTitansServer-Linux-Shipping
+App.ExecutableLinux=PathOfTitansServer.sh
 App.WorkingDir=
 App.LinuxCommandLineArgs=-nullRHI
 App.WindowsCommandLineArgs=
-App.CommandLineArgs=PathOfTitans {{ServerMap}}?listen?MaxPlayers={{$MaxUsers}} {{$PlatformArgs}} -log -Port={{$GamePort}} -QueryPort={{$QueryPort}} -RconPort={{$RCONPort}} -RconPassword="{{$RemoteAdminPassword}}" -MultiHome={{$ApplicationIPBinding}} -ServerName={{ServerName}} {{$FormattedArgs}}
+App.CommandLineArgs={{ServerMap}}?listen?MaxPlayers={{$MaxUsers}} {{$PlatformArgs}} -log -Port={{$GamePort}} -QueryPort={{$QueryPort}} -RconPort={{$RCONPort}} -RconPassword="{{$RemoteAdminPassword}}" -MultiHome={{$ApplicationIPBinding}} -ServerName={{ServerName}} {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
 App.EnvironmentVariables={}
