@@ -1,0 +1,41 @@
+[
+    {
+        "UpdateStageName": "Natural Selection 2 Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "4940",
+        "UpdateSourceArgs": "4920",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Workshop Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Natural Selection 2/workshop",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Logs Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Natural Selection 2/logs",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Config Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "{\n  \"settings\": {\n    \"rookie_only\": false,\n    \"end_round_on_team_unbalance\": 0.4,\n    \"auto_team_balance\": {\n      \"enabled_after_seconds\": 10,\n      \"enabled_on_unbalance_amount\": 2\n    }\n  },\n  \"tags\": []\n}\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Natural Selection 2/ServerConfig.json",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Steam Runtime Setup",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"natural-selection-2/4940/steam-runtime/setup.sh --host=amd64 --target=amd64 --release --auto-update\"",
+        "SkipOnFailure": false
+    }
+]

@@ -1,0 +1,16 @@
+[
+    {
+        "UpdateStageName": "Build Gate Config",
+        "UpdateStageDescription": "Joins AMP defaults, config.user.yml and AMP-managed settings into config.yml",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Bash",
+        "UpdateSourceArgs": "touch serverfiles/config.user.yml && cat serverfiles/amp-defaults.yml serverfiles/config.user.yml serverfiles/amp-managed.yml > serverfiles/config.yml"
+    },
+    {
+        "UpdateStageName": "Build Gate Config",
+        "UpdateStageDescription": "Joins AMP defaults, config.user.yml and AMP-managed settings into config.yml",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CMD",
+        "UpdateSourceArgs": "(if not exist serverfiles\\config.user.yml type nul > serverfiles\\config.user.yml) & copy /y /b serverfiles\\amp-defaults.yml + serverfiles\\config.user.yml + serverfiles\\amp-managed.yml serverfiles\\config.yml > nul"
+    }
+]

@@ -1,0 +1,58 @@
+[
+    {
+        "UpdateStageName": "7-Zip Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'ring-racers/7-Zip'; if (Test-Path '7z.exe') { exit 0 } else { Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/ip7z/7zip/releases/download/26.00/7z2600-x64.exe' -OutFile '7z-installer.exe' }; if ($?) { Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/ip7z/7zip/releases/download/26.00/7zr.exe' -OutFile '7zr.exe' }; if ($?) { & ./7zr.exe x -y -aoa 7z-installer.exe *> $null 2>&1; Remove-Item -Path '7z-installer.exe' -Force -ErrorAction SilentlyContinue | Out-Null }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ring-racers/7-Zip && [[ -x 7zzs ]] && exit 0 || { wget -qO 7z.tar.xz https://github.com/ip7z/7zip/releases/download/26.00/7z2600-linux-x64.tar.xz && tar -xf 7z.tar.xz >/dev/null 2>&1 && rm -f 7z.tar.xz >/dev/null 2>&1; }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'ring-racers/server'; $ServerVersion='{{ServerVersion}}'; if ([string]::IsNullOrWhiteSpace($ServerVersion)) { $ServerVersion = (Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/KartKrewDev/RingRacers/releases/latest').tag_name }; if ($ServerVersion -notmatch '^v\\d+\\.\\d+(-rc\\d+)?$') { Write-Output \\\"Invalid server version format specified\\\"; exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri https://github.com/KartKrewDev/RingRacers/releases/download/$ServerVersion/Dr.Robotnik.s-Ring-Racers-$ServerVersion-Installer.exe -OutFile 'rrinstaller.exe'; & ../7-Zip/7z.exe x -y -aoa rrinstaller.exe | Out-Null; Remove-Item -Path 'rrinstaller.exe' -Force -ErrorAction SilentlyContinue | Out-Null\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ring-racers/server && ServerVersion=\\\"{{ServerVersion}}\\\" && if [[ -z \\\"$ServerVersion\\\" ]]; then ServerVersion=$(wget -qO- https://api.github.com/repos/KartKrewDev/RingRacers/releases/latest | jq -r .tag_name); fi && if [[ ! \\\"$ServerVersion\\\" =~ ^v[0-9]+\\.[0-9]+(-rc[0-9]+)?$ ]]; then echo \\\"Invalid server version format specified\\\" && exit 1; fi && wget -qO rrinstaller.exe https://github.com/KartKrewDev/RingRacers/releases/download/$ServerVersion/Dr.Robotnik.s-Ring-Racers-$ServerVersion-Installer.exe && ../7-Zip/7zzs x -y -aoa rrinstaller.exe >/dev/null 2>&1 && rm -f rrinstaller.exe >/dev/null 2>&1\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Config File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/dr-robotniks-ring-racersringserv.cfg",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "ringserv.cfg",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win32 WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
+    }
+]

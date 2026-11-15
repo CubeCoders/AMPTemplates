@@ -1,0 +1,69 @@
+[
+    {
+        "UpdateStageName": "Server Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}"
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateStageDescription": "Downloading the server build from the fork's manifest and checking its hash",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"set -e; case $(uname -m) in aarch64|arm64) rid=linux-arm64;; *) rid=linux-x64;; esac; wget -qO manifest.json '{{ManifestURL}}'; ver='{{SpecificBuildVersion}}'; if [ x$ver = x ]; then ver=$(jq -r '.builds | to_entries | sort_by(.value.time) | last | .key' manifest.json); fi; url=$(jq -r --arg v $ver --arg r $rid '.builds[$v].server[$r].url // empty' manifest.json); sha=$(jq -r --arg v $ver --arg r $rid '.builds[$v].server[$r].sha256 // empty' manifest.json); rm -f manifest.json; if [ x$url = x ]; then echo Build $ver has no $rid server in the manifest; exit 1; fi; wget -qO SS14.Server.zip $url; if [ $(sha256sum SS14.Server.zip | cut -d' ' -f1) != $(echo $sha | tr A-F a-f) ]; then echo Checksum mismatch for build $ver; rm -f SS14.Server.zip; exit 1; fi; rm -rf '{{$FullBaseDir}}Resources'; echo Space Station 14 build $ver downloaded\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateStageDescription": "Downloading the server build from the fork's manifest and checking its hash",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol='Tls12'; $rid = if ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64') { 'win-arm64' } else { 'win-x64' }; $m = Invoke-RestMethod -UseBasicParsing -Uri '{{ManifestURL}}'; $ver = '{{SpecificBuildVersion}}'; if (-not $ver) { $ver = ($m.builds.PSObject.Properties | Sort-Object { [datetime]$_.Value.time } | Select-Object -Last 1).Name }; $b = $m.builds.$ver.server.$rid; if (-not $b.url) { throw ('Build ' + $ver + ' has no ' + $rid + ' server in the manifest') }; Invoke-WebRequest -UseBasicParsing -Uri $b.url -OutFile SS14.Server.zip; if ((Get-FileHash SS14.Server.zip -Algorithm SHA256).Hash -ne $b.sha256) { Remove-Item SS14.Server.zip; throw ('Checksum mismatch for build ' + $ver) }; if (Test-Path '{{$FullBaseDir}}Resources') { Remove-Item '{{$FullBaseDir}}Resources' -Recurse -Force }; 'Space Station 14 build ' + $ver + ' downloaded'\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Extract",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ExtractArchive",
+        "UpdateSourceData": "SS14.Server.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Make Server Executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Robust.Server"
+    },
+    {
+        "UpdateStageName": ".NET Runtime Install",
+        "UpdateStageDescription": "Installing the .NET runtime version the server build targets",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"set -e; cd '{{$FullBaseDir}}'; case $(uname -m) in aarch64|arm64) arch=arm64;; *) arch=x64;; esac; ver='{{DotnetVersion}}'; if [ x$ver = x ]; then rel=$(jq -r .runtimeOptions.framework.version Robust.Server.runtimeconfig.json | cut -d. -f1,2); ver=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/$rel/releases.json | jq -r --arg k latest-runtime '.[$k]'); fi; if [[ ! $ver =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo Invalid .NET runtime version: $ver; exit 1; fi; if [ -d Dotnet/shared/Microsoft.NETCore.App/$ver ]; then echo .NET runtime $ver already installed; exit 0; fi; wget -qO dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$ver/dotnet-runtime-$ver-linux-$arch.tar.gz; rm -rf Dotnet; mkdir Dotnet; tar -xzf dotnet.tar.gz -C Dotnet; rm -f dotnet.tar.gz; echo .NET runtime $ver installed\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": ".NET Runtime Install",
+        "UpdateStageDescription": "Installing the .NET runtime version the server build targets",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol='Tls12'; Set-Location '{{$FullBaseDir}}'; $arch = if ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64') { 'arm64' } else { 'x64' }; $ver = '{{DotnetVersion}}'; if (-not $ver) { $rel = ((Get-Content -Raw Robust.Server.runtimeconfig.json | ConvertFrom-Json).runtimeOptions.framework.version -split '\\.')[0..1] -join '.'; $ver = (Invoke-RestMethod -UseBasicParsing -Uri ('https://builds.dotnet.microsoft.com/dotnet/release-metadata/' + $rel + '/releases.json')).'latest-runtime' }; if ($ver -notmatch '^\\d+\\.\\d+\\.\\d+$') { throw ('Invalid .NET runtime version: ' + $ver) }; if (Test-Path ('Dotnet\\shared\\Microsoft.NETCore.App\\' + $ver)) { '.NET runtime ' + $ver + ' already installed'; exit 0 }; Invoke-WebRequest -UseBasicParsing -Uri ('https://builds.dotnet.microsoft.com/dotnet/Runtime/' + $ver + '/dotnet-runtime-' + $ver + '-win-' + $arch + '.zip') -OutFile dotnet.zip; if (Test-Path Dotnet) { Remove-Item Dotnet -Recurse -Force }; Expand-Archive dotnet.zip Dotnet; Remove-Item dotnet.zip; '.NET runtime ' + $ver + ' installed'\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Config Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "# Settings shown in AMP are written here. Other keys from the server's own server_config.toml can be added by hand.\n# Full list: https://docs.spacestation14.com/en/general-development/tips/config-file-reference.html\n\n[log]\npath = \"Logs\"\nformat = \"log_%(date)s-%(time)s.txt\"\nlevel = 2\nenabled = true\n\n[net]\ntickrate = 30\nport = 1212\nbindto = \"0.0.0.0,::\"\nmax_connections = 256\nupnp = false\n\n[status]\nenabled = true\nconnectaddress = \"\"\n\n[game]\nhostname = \"AMP Powered Space Station 14 Server\"\ndesc = \"My SS14 server!\"\nsoft_max_players = 30\nlobbyenabled = true\nlobbyduration = 150\ndisallowlatejoins = false\nrole_timers = true\nauto_pause_empty = true\n\n[whitelist]\nenabled = false\n\n[chat]\nmotd = \"Welcome to my SS14 server!\"\n\n[console]\nloginlocal = true\nlogin_host_user = \"\"\n\n[hub]\nadvertise = false\ntags = \"\"\nserver_url = \"\"\nhub_urls = \"https://hub.spacestation14.com/\"\n\n[auth]\nmode = 0\nallowlocal = true\n\n[metrics]\nenabled = false\nhost = \"localhost\"\nport = 44880\n\n[database]\nengine = \"sqlite\"\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}AMP_server_config.toml",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]

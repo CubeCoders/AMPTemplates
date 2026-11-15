@@ -1,0 +1,18 @@
+[
+    {
+        "UpdateStageName": "Set SuperUser Password",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$Password = '{{SuperUserPassword}}'; if ($Password) { Start-Process -FilePath '{{$FullBaseDir}}mumble-server.exe' -ArgumentList '-ini','\\\"{{$FullBaseDir}}mumble-server.ini\\\"','-supw',('\\\"' + $Password + '\\\"') -WorkingDirectory '{{$FullBaseDir}}' -Wait }\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Set SuperUser Password",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"p='{{SuperUserPassword}}'; [ -z \\\"$p\\\" ] || '{{LinuxExecutable}}' -ini '{{$FullBaseDir}}mumble-server.ini' -supw \\\"$p\\\" >/dev/null 2>&1\"",
+        "SkipOnFailure": true
+    }
+]

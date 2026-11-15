@@ -1,0 +1,97 @@
+[
+    {
+        "UpdateStageName": "Download Gate Binary",
+        "UpdateStageDescription": "Fetching latest Gate release from GitHub",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceData": "https://api.github.com/repos/minekube/gate/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /windows_amd64\\.exe$/)].browser_download_url",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Download Gate Binary",
+        "UpdateStageDescription": "Fetching latest Gate release from GitHub",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceData": "https://api.github.com/repos/minekube/gate/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /linux_amd64$/)].browser_download_url",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Download Gate Binary",
+        "UpdateStageDescription": "Fetching latest Gate release from GitHub",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSourceData": "https://api.github.com/repos/minekube/gate/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /linux_arm64$/)].browser_download_url",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Rename Gate Binary (Windows)",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CMD",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceArgs": "if exist gate_*_windows_amd64.exe move /y gate_*_windows_amd64.exe serverfiles\\gate.exe"
+    },
+    {
+        "UpdateStageName": "Rename Gate Binary (Linux)",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Bash",
+        "UpdateSourceArgs": "mv -f gate_*_linux_* serverfiles/gate 2>/dev/null || true"
+    },
+    {
+        "UpdateStageName": "Make Gate Executable",
+        "UpdateStageDescription": "Setting execute permission on the Gate binary",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "serverfiles/gate"
+    },
+    {
+        "UpdateStageName": "Gate Config Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/minekube-gate-proxyconfig.yml",
+        "UpdateSourceArgs": "AMP_config.yml",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Gate Config Defaults",
+        "UpdateStageDescription": "Empty anchors so config.user.yml only needs the blocks it uses",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "# AMP managed - regenerated on every update. Do not edit.\nx-amp-root: &root {}\nx-amp-config: &config {}\nx-amp-status: &status {}\nx-amp-forwarding: &forwarding {}\nx-amp-lite: &lite {}\nx-amp-connect: &connect {}\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}amp-defaults.yml",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Gate User Config Seed",
+        "UpdateStageDescription": "Creates config.user.yml once; never overwritten",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/minekube-gate-proxyuser.yml",
+        "UpdateSourceArgs": "config.user.yml",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Default Server Icon Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://gate.minekube.com/minekube-logo.png",
+        "UpdateSourceArgs": "server-icon.png",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Seed Connect JSON",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "{\n  \"token\": \"\"\n}\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}connect.json",
+        "OverwriteExistingFiles": false
+    }
+]

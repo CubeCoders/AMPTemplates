@@ -1,0 +1,60 @@
+[
+    {
+        "UpdateStageName": "Draconia Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1956500",
+        "UpdateSourceArgs": "1295900",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Steamworks SDK Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1007",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Draconia/Binaries/Win64",
+        "UpdateSourceArgs": "1295900",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Steamworks SDK Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1007",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Draconia/Binaries/Linux",
+        "UpdateSourceArgs": "1295900",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Settings Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Draconia/Saved/Config/WindowsServer",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Settings Directory Creation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Draconia/Saved/Config/LinuxServer",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Settings Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "[/Script/Draconia.DServerSettings]\nServerPassword=\nServerAnnouncement=Welcome to an AMP powered Draconia server!\nTOD_OneDayInSec=3600.000000\nTOD_StartingTime=1200.000000\nDefaultDecayEnergy=1.000000\nDefaultDecayRate=30240.000000\nDefaultDecayDamage=2.500000\n\n; Admins: add one line per player, using their 17-digit SteamID\n; Flags: EAdminFlag_Super / EAdminFlag_Admin / EAdminFlag_Mod / EAdminFlag_None\n; DefaultPlayerFlags=(SteamID=\"76561190000000000\",AdminFlag=EAdminFlag_Super)\n!DefaultPlayerFlags=ClearArray\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Draconia/Saved/Config/WindowsServer/ServerSettings_Dedicated_1.ini",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Settings Creation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "[/Script/Draconia.DServerSettings]\nServerPassword=\nServerAnnouncement=Welcome to an AMP powered Draconia server!\nTOD_OneDayInSec=3600.000000\nTOD_StartingTime=1200.000000\nDefaultDecayEnergy=1.000000\nDefaultDecayRate=30240.000000\nDefaultDecayDamage=2.500000\n\n; Admins: add one line per player, using their 17-digit SteamID\n; Flags: EAdminFlag_Super / EAdminFlag_Admin / EAdminFlag_Mod / EAdminFlag_None\n; DefaultPlayerFlags=(SteamID=\"76561190000000000\",AdminFlag=EAdminFlag_Super)\n!DefaultPlayerFlags=ClearArray\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Draconia/Saved/Config/LinuxServer/ServerSettings_Dedicated_1.ini",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]

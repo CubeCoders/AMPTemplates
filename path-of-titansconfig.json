@@ -256,6 +256,51 @@
         }
     },
     {
+        "DisplayName": "Enforce Whitelist",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, only players listed in PathOfTitans/Saved/whitelist.txt (one Alderon Games ID per line) can join. The whitelist has no effect while the file is missing or empty. Players with a role in Commands.ini bypass it. Refer to these [instructions](https://hosting.pathoftitans.wiki/guide/whitelist)",
+        "Keywords": "whitelist,allowlist,benforcewhitelist",
+        "FieldName": "bEnforceWhitelist",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bEnforceWhitelist",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Show Name Tags",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, displays name tags above players",
+        "Keywords": "name,tags,nametags,bservernametags",
+        "FieldName": "bServerNameTags",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerNameTags",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Allow Replay Recording",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, allows players to record replays on the server",
+        "Keywords": "replay,recording,bserverallowreplayrecording",
+        "FieldName": "bServerAllowReplayRecording",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerAllowReplayRecording",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
         "DisplayName": "Idle Player Kick Time",
         "Category": "Path of Titans:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -310,10 +355,27 @@
         "InputType": "number",
         "MinValue": "0",
         "ParamFieldName": "/Script/PathOfTitans.IGameSession.ServerLogoutTime",
-        "DefaultValue": "120",
-        "Placeholder": "120",
+        "DefaultValue": "60",
+        "Placeholder": "60",
         "Suffix": "seconds",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Logout Pose",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the pose a player's dinosaur is put into while waiting to safe log",
+        "Keywords": "logout,pose,action,sit,sleep,serverlogoutaction",
+        "FieldName": "ServerLogoutAction",
+        "InputType": "enum",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.ServerLogoutAction",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "0": "No change (default)",
+            "1": "Standing",
+            "2": "Sitting",
+            "3": "Sleeping"
+        }
     },
     {
         "DisplayName": "Allow Chat",
@@ -349,7 +411,7 @@
         "DisplayName": "Database Location",
         "Category": "Path of Titans:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets whether to use a local or remote database. Local is recommended unless connecting shared character data between servers is required",
+        "Description": "Sets whether to use a local or remote database. Remote is recommended by the developers and lets multiple servers share character data. Switching between Local and Remote does not transfer character data",
         "Keywords": "database",
         "FieldName": "Database",
         "InputType": "enum",
@@ -375,6 +437,21 @@
         "EnumValues": {
             "production": "Production",
             "demo-public-test": "Public Test"
+        }
+    },
+    {
+        "DisplayName": "Linux Server Build",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Linux only. Sets which server executable to run. Standard needs a CPU with AVX2, FMA3 and BMI2 (Intel Haswell or AMD Zen 1 and newer). Zen 4 is optimized for AMD Zen 4/5 and needs AVX-512 F/DQ/CD/BW/VL on every core (e.g. Ryzen 7000+, EPYC Genoa+, Xeon Scalable); on other CPUs it exits at startup with code 78 and names the missing feature in the console",
+        "Keywords": "linux,server,build,executable,zen4,avx512,cpu",
+        "FieldName": "LinuxServerBuild",
+        "InputType": "enum",
+        "ParamFieldName": "LinuxServerBuild",
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Standard (default)",
+            "Zen4": "Zen 4 (AVX-512)"
         }
     },
     {
@@ -509,8 +586,8 @@
         "FieldName": "ServerDayLength",
         "InputType": "number",
         "ParamFieldName": "/Script/PathOfTitans.IGameMode.ServerDayLength",
-        "DefaultValue": "240",
-        "Placeholder": "240",
+        "DefaultValue": "60",
+        "Placeholder": "60",
         "Suffix": "minutes",
         "EnumValues": {}
     },
@@ -523,8 +600,8 @@
         "FieldName": "ServerNightLength",
         "InputType": "number",
         "ParamFieldName": "/Script/PathOfTitans.IGameMode.ServerNightLength",
-        "DefaultValue": "240",
-        "Placeholder": "240",
+        "DefaultValue": "30",
+        "Placeholder": "30",
         "Suffix": "minutes",
         "EnumValues": {}
     },
@@ -722,10 +799,25 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "Enable Quests Required For Completion Override",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, Quests Required For Completion is used instead of the game's default",
+        "Keywords": "quests,complete,location,poi,override,boverridemaxcompletequestsinlocation",
+        "FieldName": "bOverrideMaxCompleteQuestsInLocation",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bOverrideMaxCompleteQuestsInLocation",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
         "DisplayName": "Quests Required For Completion",
         "Category": "Path of Titans:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets how many quests must be completed within a POI before it is \"completed\"",
+        "Description": "Sets how many quests must be completed within a POI before it is \"completed\". Requires Enable Quests Required For Completion Override to be set",
         "Keywords": "quests,complete,location,poi,maxcompletequestsinlocation",
         "FieldName": "MaxCompleteQuestsInLocation",
         "InputType": "number",
@@ -753,7 +845,7 @@
         "DisplayName": "Dead Body Period",
         "Category": "Path of Titans:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets how long a dead body will persist in the server. 0 = persists forever",
+        "Description": "Sets how long an uneaten body persists before it is removed. Does not affect decay. 0 = persists until fully decayed",
         "Keywords": "dead,body,persist,period,serverdeadbodytime",
         "FieldName": "ServerDeadBodyTime",
         "InputType": "number",
@@ -828,11 +920,132 @@
         "DisplayName": "Allow Hatchling Caves Tutorial",
         "Category": "Path of Titans:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, enables the tutorial Hatchling Caves. Players will spawn in a tutorial area at 0 growth, and completing quests will bring them to 0.3 growth by the time they exit. If disabled, players will spawn in the world at 0.3 growth and completely skip the tutorial",
+        "Description": "If set, enables the tutorial Hatchling Caves. Players will spawn in a tutorial area at 0 growth, and completing quests will bring them to the Hatchling Cave Exit Growth by the time they exit. If disabled, players will spawn in the world at that growth and completely skip the tutorial",
         "Keywords": "hatchling,caves,tutorial,bserverhatchlingcaves",
         "FieldName": "bServerHatchlingCaves",
         "InputType": "checkbox",
         "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerHatchlingCaves",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Hatchling Cave Exit Growth",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the growth players have when leaving the Hatchling Caves, or when spawning in the world if the Hatchling Caves are disabled. Full growth = 1",
+        "Keywords": "hatchling,caves,exit,growth,hatchlingcaveexitgrowth",
+        "FieldName": "HatchlingCaveExitGrowth",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "1",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.HatchlingCaveExitGrowth",
+        "DefaultValue": "0.25",
+        "Placeholder": "0.25",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Allow Ability Editing While Sleeping",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, players can edit their abilities while sleeping",
+        "Keywords": "ability,abilities,edit,sleeping,bservereditabilitieswhilesleeping",
+        "FieldName": "bServerEditAbilitiesWhileSleeping",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerEditAbilitiesWhileSleeping",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Allow Subspecies Changes",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, players can change their dinosaur's subspecies",
+        "Keywords": "subspecies,change,bserverallowchangesubspecies",
+        "FieldName": "bServerAllowChangeSubspecies",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerAllowChangeSubspecies",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Growth Loss On Subspecies Change",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the percentage of growth a player loses when changing subspecies",
+        "Keywords": "subspecies,change,growth,penalty,percent,changesubspeciesgrowthpenaltypercent",
+        "FieldName": "ChangeSubspeciesGrowthPenaltyPercent",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "100",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.ChangeSubspeciesGrowthPenaltyPercent",
+        "DefaultValue": "25",
+        "Placeholder": "25",
+        "Suffix": "%",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Footprint Lifetime",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets how long footprints remain visible. 0 = footprints disabled",
+        "Keywords": "footprint,footprints,tracks,lifetime,serverfootprintlifetime",
+        "FieldName": "ServerFootprintLifetime",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.ServerFootprintLifetime",
+        "DefaultValue": "60",
+        "Placeholder": "60",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Allow 3D Map Markers",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, map markers are shown in the 3D world",
+        "Keywords": "map,markers,3d,bserverallow3dmapmarkers",
+        "FieldName": "bServerAllow3DMapMarkers",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerAllow3DMapMarkers",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Waystones",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, enables Waystones",
+        "Keywords": "waystone,waystones,bserverwaystones",
+        "FieldName": "bServerWaystones",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerWaystones",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Home Cave Camping Debuff",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, players who linger near another player's home cave receive a debuff",
+        "Keywords": "home,cave,camping,debuff,bserverhomecavecampingdebuff",
+        "FieldName": "bServerHomecaveCampingDebuff",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerHomecaveCampingDebuff",
         "DefaultValue": "true",
         "EnumValues": {
             "False": "false",
@@ -946,7 +1159,7 @@
         "DisplayName": "Enable POI Completion Reward Timer Override",
         "Category": "Path of Titans:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "If set, allows the time it takes for the POI completion reward to reset after reaching 100% to be overriden",
+        "Description": "If set, allows the time it takes for the POI completion reward to reset after reaching 100% to be overridden",
         "Keywords": "poi,completion,reward,timer,reset,override,boverridelocationquestcooldown",
         "FieldName": "bOverrideLocationQuestCooldown",
         "InputType": "checkbox",
@@ -1000,6 +1213,66 @@
         "DefaultValue": "",
         "Placeholder": "",
         "Suffix": "rewards",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable POI Discovery Rewards",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, players are rewarded for discovering POIs",
+        "Keywords": "poi,discovery,rewards,bpoidiscoveryrewards",
+        "FieldName": "bPOIDiscoveryRewards",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bPOIDiscoveryRewards",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Exploration Quests",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, enables exploration quests",
+        "Keywords": "explore,exploration,quests,benableexplorequests",
+        "FieldName": "bEnableExploreQuests",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bEnableExploreQuests",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Trophy Quests",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, enables trophy quests",
+        "Keywords": "trophy,quests,btrophyquests",
+        "FieldName": "bTrophyQuests",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bTrophyQuests",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Maximum Group Quests",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the maximum number of quests a group can have active at once",
+        "Keywords": "group,quests,maximum,maxgroupquests",
+        "FieldName": "MaxGroupQuests",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.MaxGroupQuests",
+        "DefaultValue": "2",
+        "Placeholder": "2",
+        "Suffix": "quests",
         "EnumValues": {}
     },
     {
@@ -1170,7 +1443,7 @@
         "ParamFieldName": "/Script/PathOfTitans.IGameSession.RevengeKillDistance",
         "DefaultValue": "100000",
         "Placeholder": "100000",
-        "Suffix": "centimetres",
+        "Suffix": "centimeters",
         "EnumValues": {}
     },
     {
@@ -1194,7 +1467,7 @@
         "DisplayName": "Speed Hack Detection Threshold",
         "Category": "Path of Titans:stadia_controller",
         "Subcategory": "Gameplay:joystick:2",
-        "Description": "Sets the amount of speedhack detections that will be allowed per minute before the Speed Hack Detection Action is taken. Helps to minimise false positives due to packet loss or lag. 0 = disabled",
+        "Description": "Sets the amount of speedhack detections that will be allowed per minute before the Speed Hack Detection Action is taken. Helps to minimize false positives due to packet loss or lag. 0 = disabled",
         "Keywords": "speed,hack,detection,threshold,speedhackthreshold",
         "FieldName": "SpeedhackThreshold",
         "InputType": "number",
@@ -1246,7 +1519,7 @@
         "ParamFieldName": "/Script/PathOfTitans.IGameMode.MaxGroupLeaderCommunicationDistance",
         "DefaultValue": "50000",
         "Placeholder": "50000",
-        "Suffix": "metres",
+        "Suffix": "meters",
         "EnumValues": {}
     },
     {
@@ -1273,6 +1546,110 @@
         "FieldName": "bDeathInfo",
         "InputType": "checkbox",
         "ParamFieldName": "/Script/PathOfTitans.IGameSession.bDeathInfo",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Disable Grouping",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, players cannot form groups",
+        "Keywords": "group,grouping,disable,bdisablegrouping",
+        "FieldName": "bDisableGrouping",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bDisableGrouping",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Critters",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, enables critter spawning. Individual critters can be allowed or disallowed with AllowedCritters=/DisallowedCritters= lines in Additional IGameSession Settings as per [these instructions](https://hosting.pathoftitans.wiki/guide/critters)",
+        "Keywords": "critters,critter,spawning,bservercritters",
+        "FieldName": "bServerCritters",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerCritters",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Critter Burrows",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, enables critter burrows",
+        "Keywords": "critters,critter,burrows,bcritterburrows",
+        "FieldName": "bCritterBurrows",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bCritterBurrows",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Maximum Critters",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the maximum number of critters that can exist at once",
+        "Keywords": "critters,critter,maximum,servermaxcritters",
+        "FieldName": "ServerMaxCritters",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.ServerMaxCritters",
+        "DefaultValue": "200",
+        "Placeholder": "200",
+        "Suffix": "critters",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Critter Density Multiplier",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the critter spawn density",
+        "Keywords": "critters,critter,density,multiplier,servercritterdensitymultiplier",
+        "FieldName": "ServerCritterDensityMultiplier",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.ServerCritterDensityMultiplier",
+        "DefaultValue": "0.75",
+        "Placeholder": "0.75",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Nesting",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, enables nesting. Further nesting settings can be added in Additional IGameSession Settings as per [these instructions](https://hosting.pathoftitans.wiki/guide/nesting)",
+        "Keywords": "nest,nesting,bservernesting",
+        "FieldName": "bServerNesting",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bServerNesting",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Invulnerable Nests",
+        "Category": "Path of Titans:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If set, nests cannot be destroyed by other players",
+        "Keywords": "nest,nests,invulnerable,bnestsinvulnerable",
+        "FieldName": "bNestsInvulnerable",
+        "InputType": "checkbox",
+        "ParamFieldName": "/Script/PathOfTitans.IGameSession.bNestsInvulnerable",
         "DefaultValue": "false",
         "EnumValues": {
             "False": "false",

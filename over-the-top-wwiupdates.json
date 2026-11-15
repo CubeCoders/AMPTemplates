@@ -1,0 +1,60 @@
+[
+    {
+        "UpdateStageName": "Back Up Server Files (Windows)",
+        "UpdateStageDescription": "Saving config, rotation, whitelist and ban files, since the server update replaces them",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CMD",
+        "UpdateSourceArgs": "(if not exist config-backup mkdir config-backup) & (for %f in (ServerInfo.ini ServerConfiguration.ini MapRotation.txt MpCampaign.txt Whitelist.txt Banlist.txt TempBanlist.txt) do @if exist 3052620\\%f copy /y 3052620\\%f config-backup\\%f >nul) & exit /b 0",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Back Up Server Files (Linux)",
+        "UpdateStageDescription": "Saving config, rotation, whitelist and ban files, since the server update replaces them",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Bash",
+        "UpdateSourceArgs": "mkdir -p config-backup && for f in ServerInfo.ini ServerConfiguration.ini MapRotation.txt MpCampaign.txt Whitelist.txt Banlist.txt TempBanlist.txt; do if [ -f 3052620/$f ]; then cp -f 3052620/$f config-backup/$f; fi; done",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "3052620",
+        "UpdateSourceArgs": "2778610",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SteamCMD Component Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1007",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Restore Server Files (Windows)",
+        "UpdateStageDescription": "Putting back the saved config, rotation, whitelist and ban files",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CMD",
+        "UpdateSourceArgs": "(for %f in (ServerInfo.ini ServerConfiguration.ini MapRotation.txt MpCampaign.txt Whitelist.txt Banlist.txt TempBanlist.txt) do @if exist config-backup\\%f copy /y config-backup\\%f 3052620\\%f >nul) & exit /b 0",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Restore Server Files (Linux)",
+        "UpdateStageDescription": "Putting back the saved config, rotation, whitelist and ban files",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Bash",
+        "UpdateSourceArgs": "for f in ServerInfo.ini ServerConfiguration.ini MapRotation.txt MpCampaign.txt Whitelist.txt Banlist.txt TempBanlist.txt; do if [ -f config-backup/$f ]; then cp -f config-backup/$f 3052620/$f; fi; done",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
+    }
+]
