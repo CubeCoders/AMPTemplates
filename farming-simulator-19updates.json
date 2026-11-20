@@ -11,7 +11,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"if [[ -x /usr/bin/wine ]]; then WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update || exit 1; for f in \\\"{{$FullRootDir}}.proton\\\"/*; do [[ \\\"$f\\\" == */compatdata ]] || rm -rf \\\"$f\\\"; done; else echo \\\"ERROR: Wine was not found at /usr/bin/wine. This template now runs the server under Wine instead of Proton GE. For a container instance, change its container image to cubecoders/ampbase:wine-stable. Without a container, install Wine (latest stable from winehq.org) on the host.\\\"; exit 1; fi\"",
+        "UpdateSourceArgs": "-c \"if [[ -x /usr/bin/wine ]]; then WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update || exit 1; for f in \\\"{{$FullRootDir}}.proton\\\"/*; do [[ \\\"$f\\\" == */compatdata ]] || rm -rf \\\"$f\\\"; done; elif [[ -x \\\"{{$FullRootDir}}.proton/proton\\\" ]]; then echo \\\"WARNING: Wine was not found at /usr/bin/wine, so this instance keeps running on its current Proton GE version, which is no longer updated. To switch to Wine, change a container instance's image to cubecoders/ampbase:wine-stable, or install Wine (latest stable from winehq.org) on a host without containers.\\\"; else echo \\\"ERROR: Wine was not found at /usr/bin/wine. To switch to Wine, change a container instance's image to cubecoders/ampbase:wine-stable, or install Wine (latest stable from winehq.org) on a host without containers.\\\"; exit 1; fi\"",
         "SkipOnFailure": false
     },
     {
