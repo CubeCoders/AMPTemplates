@@ -41,7 +41,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd pocketmine-mp && PMMPVersion=\\\"{{PMMPVersion}}\\\" && if [[ -z \\\"$PMMPVersion\\\" ]]; then wget -q -O - https://get.pmmp.io | bash -s - ; elif [[ ! \\\"$PMMPVersion\\\" =~ ^([0-9]+(?:\\.[0-9]+)?(?:-(alpha|beta))?|alpha|beta|stable)$ ]]; then echo \\\"Invalid PocketMine-MP version format specified\\\" && exit 1; else wget -q -O - https://get.pmmp.io | bash -s - -v $PMMPVersion; fi\"",
+        "UpdateSourceArgs": "-c \"cd pocketmine-mp && V=\\\"{{PMMPVersion}}\\\" && if [[ -z \\\"$V\\\" ]]; then B=latest/download; elif [[ \\\"$V\\\" =~ ^[0-9]+[.][0-9]+[.][0-9]+$ ]]; then B=download/$V; else echo \\\"Invalid PocketMine-MP version format specified\\\" && exit 1; fi && B=https://github.com/pmmp/PocketMine-MP/releases/$B && wget -qO build_info.json $B/build_info.json && PHP=$(jq -r .php_version build_info.json) && PM=$(jq -r .base_version build_info.json) && wget -qO PocketMine-MP.phar $B/PocketMine-MP.phar && rm -rf bin && wget -qO- https://github.com/pmmp/PHP-Binaries/releases/download/pm${PM%%.*}-php-$PHP-latest/PHP-$PHP-Linux-x86_64-PM${PM%%.*}.tar.gz | tar -zx && E=$(find $PWD/bin -name '*debug-zts*') && sed -i \\\"1i extension_dir=$E\\\" bin/php7/bin/php.ini && echo \\\"PocketMine-MP $PM installed with PHP $PHP\\\"\"",
         "SkipOnFailure": false
     }
 ]

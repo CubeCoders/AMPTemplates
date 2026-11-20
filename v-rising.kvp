@@ -11,14 +11,15 @@ Meta.ConfigManifest=v-risingconfig.json
 Meta.MetaConfigManifest=v-risingmetaconfig.json
 Meta.ConfigRoot=v-rising.kvp
 Meta.MinAMPVersion=2.8.0.4
-Meta.SpecificDockerImage=cubecoders/ampbase:debian
+Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
 Meta.DockerRequired=False
 Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
-Meta.ContainerPolicyReason=The server requires Xvfb to install and run on Linux. Using a container avoids the need for you to install this dependency on the host.
+Meta.ContainerPolicyReason=The server requires Wine (ideally latest stable from winehq.org) and Xvfb to run on Linux. Using a container avoids the need for you to install these dependencies on the host.
 Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
-Meta.ConfigVersion=10
+Meta.ConfigVersion=11
+Meta.BreakingReleaseNotes=Linux now uses Wine instead of Proton GE. Existing container instances: change the image to cubecoders/ampbase:wine-stable. Native hosts: install Wine. Until then the old Proton GE install keeps working but is no longer updated. Proton saves are copied into the Wine prefix; .proton/compatdata is kept.
 Meta.AppConfigId=0ff28908-3b0b-4cd4-b9bd-0d468d676032
 App.DisplayName=V Rising
 App.RootDir=./v-rising/
@@ -26,12 +27,12 @@ App.BaseDirectory=./v-rising/1829350/
 App.ExecutableWin=1829350\VRisingServer.exe
 App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=1829350
-App.LinuxCommandLineArgs=-a "{{$FullRootDir}}.proton/proton" runinprefix "./VRisingServer.exe"
+App.LinuxCommandLineArgs=-a /bin/bash -c "if [[ -x /usr/bin/wine ]]; then exec /usr/bin/wine \"./VRisingServer.exe\" \"$@\"; elif [[ -x \"{{$FullRootDir}}.proton/proton\" ]]; then unset WINEPREFIX WINEARCH WINEDEBUG; export STEAM_COMPAT_DATA_PATH=\"{{$FullRootDir}}.proton/compatdata\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\"{{$FullBaseDir}}.steam/steam\" HOME=\"{{$FullBaseDir}}\"; exec \"{{$FullRootDir}}.proton/proton\" runinprefix \"./VRisingServer.exe\" \"$@\"; else echo \"ERROR: Wine was not found at /usr/bin/wine, and this instance has no Proton GE runtime to fall back to.\"; exit 1; fi" amp-launch
 App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} -persistentDataPath "{{$FullBaseDir}}save-data" -lanMode {{lanMode}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1604030","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullBaseDir}}.steam/steam","HOME":"{{$FullBaseDir}}","WINEDLLOVERRIDES":"winhttp=n,b","BOX64_DYNAREC_STRONGMEM":"1","BOX64_DYNAREC_BIGBLOCK":"0","BOX64_DYNAREC_FASTNAN":"1","BOX64_DYNAREC_FASTROUND":"1","BOX64_LOG":"0"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullBaseDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1604030","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"winhttp=n,b","BOX64_DYNAREC_STRONGMEM":"1","BOX64_DYNAREC_BIGBLOCK":"0","BOX64_DYNAREC_FASTNAN":"1","BOX64_DYNAREC_FASTROUND":"1","BOX64_LOG":"0"}
 App.CommandLineParameterFormat=-{0} "{1}"
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE

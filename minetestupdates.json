@@ -57,6 +57,22 @@
         "SkipOnFailure": false
     },
     {
+        "UpdateStageName": "Minetest Game Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ./minetest/server && [ -d games/minetest_game ] || (mkdir -p games && wget -qO mtg.zip https://github.com/luanti-org/minetest_game/archive/refs/tags/5.8.0.zip && unzip -qo mtg.zip -d games && mv games/minetest_game-5.8.0 games/minetest_game && rm -f mtg.zip)\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Minetest Game Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd minetest\\server && if not exist games\\minetest_game (mkdir games 2>nul & curl -sLo mtg.zip https://github.com/luanti-org/minetest_game/archive/refs/tags/5.8.0.zip && tar -xf mtg.zip -C games && move games\\minetest_game-5.8.0 games\\minetest_game && del mtg.zip)",
+        "SkipOnFailure": false
+    },
+    {
         "UpdateStageName": "Game Config File Copy",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "CopyFilePath",
