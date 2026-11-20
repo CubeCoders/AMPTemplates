@@ -1,0 +1,56 @@
+[
+    {
+        "UpdateStageName": "The Riftbreaker Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "4114030",
+        "UpdateSourceArgs": "780310",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Steam Client Library Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}bin/steamclient64.dll",
+        "UpdateSourceArgs": "{{$FullBaseDir}}steamclient64.dll",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Steam Tier0 Library Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}bin/tier0_s64.dll",
+        "UpdateSourceArgs": "{{$FullBaseDir}}tier0_s64.dll",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Steam Vstdlib Library Copy",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}bin/vstdlib_s64.dll",
+        "UpdateSourceArgs": "{{$FullBaseDir}}vstdlib_s64.dll",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Config.cfg File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/the-riftbreakerconfig.cfg",
+        "UpdateSourceArgs": "config.cfg",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
+    }
+]

@@ -1,0 +1,44 @@
+[
+    {
+        "UpdateStageName": "Create Latest Save Script",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "# AMP: points mission_save at the newest save made in the configured campaign mode, or clears it so a new map starts.\nparam([string]$Config, [string]$Saves)\n$text = [IO.File]::ReadAllText($Config)\nif ($text -notmatch '(?m)^set campaign \"(.*)\"') { exit 0 }\n$mode = 'campaigns/' + $Matches[1] + '.campaign'\n$inf = Get-ChildItem -Path $Saves -Filter *.inf -Recurse -ErrorAction SilentlyContinue | Where-Object { [IO.File]::ReadAllText($_.FullName).Contains($mode) } | Sort-Object LastWriteTime | Select-Object -Last 1\n$name = ''\nif ($inf) { $name = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($inf.BaseName.Replace('-', '+').Replace('_', '/'))) }\n[IO.File]::WriteAllText($Config, ($text -replace '(?m)^set mission_save \".*\"', ('set mission_save \"' + $name.Replace('$', '$$') + '\"')))\nif ($name) { Write-Output \"[AMP] Loading latest save: $name\" } else { Write-Output '[AMP] No saves for this campaign mode, starting a new map' }\n",
+        "UpdateSourceArgs": "{{$FullRootDir}}amp-latest-save.ps1",
+        "UpdateSourceConditionSetting": "AutoLoadLatestSave",
+        "UpdateSourceConditionValue": "True",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Create Latest Save Script",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "#!/bin/bash\n# AMP: points mission_save at the newest save made in the configured campaign mode, or clears it so a new map starts.\nmode=$(sed -n 's/^set campaign \"\\(.*\\)\".*/\\1/p' \"$1\")\n[ -n \"$mode\" ] || exit 0\ninf=$(grep -laF \"campaigns/$mode.campaign\" \"$2\"/*.campaign/*.inf 2>/dev/null | xargs -r -d '\\n' ls -t | head -n 1)\nname=''\n[ -n \"$inf\" ] && name=$(basename \"$inf\" .inf | tr -- '-_' '+/' | base64 -d)\nesc=$(echo \"$name\" | sed 's/[\\/&]/\\\\&/g')\nsed -i \"s/^set mission_save \\\".*\\\"/set mission_save \\\"$esc\\\"/\" \"$1\"\nif [ -n \"$name\" ]; then echo \"[AMP] Loading latest save: $name\"; else echo '[AMP] No saves for this campaign mode, starting a new map'; fi\n",
+        "UpdateSourceArgs": "{{$FullRootDir}}amp-latest-save.sh",
+        "UpdateSourceConditionSetting": "AutoLoadLatestSave",
+        "UpdateSourceConditionValue": "True",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Select Latest Save",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -File \"{{$FullRootDir}}amp-latest-save.ps1\" -Config \"{{$FullBaseDir}}config.cfg\" -Saves \"{{$FullRootDir}}saves\\campaignV2\"",
+        "UpdateSourceConditionSetting": "AutoLoadLatestSave",
+        "UpdateSourceConditionValue": "True",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Select Latest Save",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "\"{{$FullRootDir}}amp-latest-save.sh\" \"{{$FullBaseDir}}config.cfg\" \"{{$FullRootDir}}saves/campaignV2\"",
+        "UpdateSourceConditionSetting": "AutoLoadLatestSave",
+        "UpdateSourceConditionValue": "True",
+        "SkipOnFailure": true
+    }
+]
