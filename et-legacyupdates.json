@@ -26,7 +26,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (Invoke-WebRequest -Uri \\\"https://www.etlegacy.com/download\\\" -UseBasicParsing).Content -match 'data-href=\\\"([^\\\"]+)\\\"[^>]*>Win64 archive' | Out-Null; $DOWNLOAD_URL = $matches[1]; Invoke-WebRequest -UseBasicParsing -Uri $DOWNLOAD_URL -OutFile 'et-legacy.zip'\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (Invoke-WebRequest -Uri \\\"https://www.etlegacy.com/download\\\" -UseBasicParsing).Content -match 'data-href=\\\"([^\\\"]+)\\\"[^>]*title=\\\"etlegacy-v[\\d.]+-x64\\.zip\\\"' | Out-Null; $DOWNLOAD_URL = $matches[1]; Invoke-WebRequest -UseBasicParsing -Uri $DOWNLOAD_URL -OutFile 'et-legacy.zip'\"",
         "UpdateSourceConditionSetting": "ServerVersion",
         "UpdateSourceConditionValue": "x86_64",
         "SkipOnFailure": false
@@ -36,7 +36,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "powershell.exe",
-        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (Invoke-WebRequest -Uri \\\"https://www.etlegacy.com/download\\\" -UseBasicParsing).Content -match 'data-href=\\\"([^\\\"]+)\\\"[^>]*>Win32 archive' | Out-Null; $DOWNLOAD_URL = $matches[1]; Invoke-WebRequest -UseBasicParsing -Uri $DOWNLOAD_URL -OutFile 'et-legacy.zip'\"",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (Invoke-WebRequest -Uri \\\"https://www.etlegacy.com/download\\\" -UseBasicParsing).Content -match 'data-href=\\\"([^\\\"]+)\\\"[^>]*title=\\\"etlegacy-v[\\d.]+-x86\\.zip\\\"' | Out-Null; $DOWNLOAD_URL = $matches[1]; Invoke-WebRequest -UseBasicParsing -Uri $DOWNLOAD_URL -OutFile 'et-legacy.zip'\"",
         "UpdateSourceConditionSetting": "ServerVersion",
         "UpdateSourceConditionValue": "i386",
         "SkipOnFailure": false
@@ -64,7 +64,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd et-legacy && DOWNLOAD_URL=$(wget -qO- \\\"https://www.etlegacy.com/download\\\" | sed -n \\\"s/.*data-href=\\\\\\\"\\([^\\\\\\\"]*\\)\\\\\\\"[^>]*>x86_64 archive.*/\\1/p\\\"); wget -qO et-legacy.tar.gz $DOWNLOAD_URL && tar -xzf et-legacy.tar.gz >/dev/null 2>&1 && mv etlegacy-* etl && for file in etl_server.cfg legacy.cfg; do [ -e \\\"server/etmain/$file\\\" ] && rm -f \\\"etl/etmain/$file\\\" >/dev/null 2>&1; done; \\cp -rf etl/* server/ >/dev/null 2>&1 && rm -rf etl >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd et-legacy && DOWNLOAD_URL=$(wget -qO- https://www.etlegacy.com/download | tr -d '\\n' | grep -o 'data-href=.https://www.etlegacy.com/download/file/[0-9]*.[^>]*title=.etlegacy-v[0-9.]*-x86_64[.]tar[.]gz' | head -1 | grep -o 'https://[a-z./]*file/[0-9]*'); wget -qO et-legacy.tar.gz $DOWNLOAD_URL && tar -xzf et-legacy.tar.gz >/dev/null 2>&1 && mv etlegacy-* etl && for file in etl_server.cfg legacy.cfg; do [ -e \\\"server/etmain/$file\\\" ] && rm -f \\\"etl/etmain/$file\\\" >/dev/null 2>&1; done; \\cp -rf etl/* server/ >/dev/null 2>&1 && rm -rf etl >/dev/null 2>&1\"",
         "UpdateSourceConditionSetting": "ServerVersion",
         "UpdateSourceConditionValue": "x86_64",
         "SkipOnFailure": false
@@ -74,7 +74,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd et-legacy && DOWNLOAD_URL=$(wget -qO- \\\"https://www.etlegacy.com/download\\\" | sed -n \\\"s/.*data-href=\\\\\\\"\\([^\\\\\\\"]*\\)\\\\\\\"[^>]*>i386 archive.*/\\1/p\\\"); wget -qO et-legacy.tar.gz $DOWNLOAD_URL && tar -xzf et-legacy.tar.gz >/dev/null 2>&1 && mv etlegacy-* etl && for file in etl_server.cfg legacy.cfg; do [ -e \\\"server/etmain/$file\\\" ] && rm -f \\\"etl/etmain/$file\\\" >/dev/null 2>&1; done; \\cp -rf etl/* server/ >/dev/null 2>&1 && rm -rf etl >/dev/null 2>&1\"",
+        "UpdateSourceArgs": "-c \"cd et-legacy && DOWNLOAD_URL=$(wget -qO- https://www.etlegacy.com/download | tr -d '\\n' | grep -o 'data-href=.https://www.etlegacy.com/download/file/[0-9]*.[^>]*title=.etlegacy-v[0-9.]*-i386[.]tar[.]gz' | head -1 | grep -o 'https://[a-z./]*file/[0-9]*'); wget -qO et-legacy.tar.gz $DOWNLOAD_URL && tar -xzf et-legacy.tar.gz >/dev/null 2>&1 && mv etlegacy-* etl && for file in etl_server.cfg legacy.cfg; do [ -e \\\"server/etmain/$file\\\" ] && rm -f \\\"etl/etmain/$file\\\" >/dev/null 2>&1; done; \\cp -rf etl/* server/ >/dev/null 2>&1 && rm -rf etl >/dev/null 2>&1\"",
         "UpdateSourceConditionSetting": "ServerVersion",
         "UpdateSourceConditionValue": "i386",
         "SkipOnFailure": false
