@@ -1,0 +1,46 @@
+[
+    {
+        "UpdateStageName": "Server Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}user"
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateStageDescription": "Downloading the latest DDNet release from ddnet.org",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"set -e; f=$(wget -qO- https://ddnet.org/downloads/ | grep -oE 'DDNet-[0-9][0-9.]*-linux_x86_64\\.tar\\.xz' | head -n1); if [ x$f = x ]; then echo Could not find the latest DDNet release; exit 1; fi; wget -qO ddnet.tar.xz https://ddnet.org/downloads/$f; tar -xJf ddnet.tar.xz -C '{{$FullBaseDir}}' --strip-components=1 --exclude='*/DDNet' --exclude='*/storage.cfg'; rm -f ddnet.tar.xz; echo $f installed\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateStageDescription": "Downloading the latest DDNet release from ddnet.org",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol='Tls12'; $m = [regex]::Match((Invoke-WebRequest -UseBasicParsing -Uri 'https://ddnet.org/downloads/').Content, 'DDNet-[0-9][0-9.]*-win64\\.zip'); if (-not $m.Success) { throw 'Could not find the latest DDNet release' }; Invoke-WebRequest -UseBasicParsing -Uri ('https://ddnet.org/downloads/' + $m.Value) -OutFile ddnet.zip; tar.exe -xf ddnet.zip -C '{{$FullBaseDir}}' --strip-components=1 --exclude 'DDNet.exe' --exclude 'storage.cfg'; if ($LASTEXITCODE) { throw 'Extracting the DDNet release failed' }; Remove-Item ddnet.zip; $m.Value + ' installed'\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Storage Config Creation",
+        "UpdateStageDescription": "Keeps maps, ranks and logs inside the instance",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "add_path user\nadd_path $DATADIR\nadd_path $CURRENTDIR\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}storage.cfg",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Config Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/ddnetautoexec_server.cfg",
+        "UpdateSourceArgs": "autoexec_server.cfg",
+        "UpdateSourceTarget": "{{$FullBaseDir}}user",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
