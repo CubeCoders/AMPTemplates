@@ -1,0 +1,154 @@
+[
+    {
+        "DisplayName": "Server Name",
+        "Category": "Nazi Zombies: Portable:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Name of the server shown in the server browser",
+        "Keywords": "server,name,hostname",
+        "FieldName": "hostname",
+        "InputType": "text",
+        "ParamFieldName": "hostname",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "AMP Powered NZ:P Server",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Client Type",
+        "Category": "Nazi Zombies: Portable:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Which NZ:P clients can join. Native (PC) clients connect over UDP; browser clients connect over WebSocket (TCP) with 'connect ws://ip:port' from an HTTP (not HTTPS) page of the web client",
+        "Keywords": "protocol,com_protocolname,web,browser,native",
+        "FieldName": "com_protocolname",
+        "InputType": "enum",
+        "ParamFieldName": "com_protocolname",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "NZP-REBOOT",
+        "EnumValues": {
+            "NZP-REBOOT": "Native (PC)",
+            "NZP-REBOOT-WEB": "Web (Browser)"
+        }
+    },
+    {
+        "DisplayName": "Server Visibility",
+        "Category": "Nazi Zombies: Portable:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "How the server is listed on the frag-net master server. 'Public (IP)' needs the port forwarded; 'Public (Room Code)' uses peer-to-peer and lists the server by room code without port forwarding, but can be less reliable",
+        "Keywords": "public,sv_public,master,frag-net,room code",
+        "FieldName": "sv_public",
+        "InputType": "enum",
+        "ParamFieldName": "sv_public",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "1",
+        "EnumValues": {
+            "0": "Private",
+            "1": "Public (IP)",
+            "2": "Public (Room Code)"
+        }
+    },
+    {
+        "DisplayName": "Server Password",
+        "Category": "Nazi Zombies: Portable:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Password players need to join. Leave empty for no password",
+        "Keywords": "password,join",
+        "FieldName": "password",
+        "InputType": "password",
+        "ParamFieldName": "password",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Limit",
+        "Category": "Nazi Zombies: Portable:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Maximum number of players. NZ:P co-op is designed for up to 4 players",
+        "Keywords": "players,max,maxclients",
+        "FieldName": "$MaxUsers",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "8",
+        "ParamFieldName": "maxclients",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "4",
+        "Placeholder": "4",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Starting Map",
+        "Category": "Nazi Zombies: Portable:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "Map loaded when the server starts (the .bsp name without extension). Included maps: ndu (Nacht der Untoten), nzp_warehouse, nzp_warehouse2, christmas_special, nzp_xmas2, lexi_house, lexi_overlook, lexi_temple, hangar, wahnsinn, fegefeuer, 4all, b1oodv3, b1oodv4, boxxer, bunker-defense, dung3on, loop",
+        "Keywords": "map,level,ndu",
+        "FieldName": "map",
+        "InputType": "text",
+        "ParamFieldName": "map",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "ndu",
+        "Placeholder": "ndu",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Map Rotation",
+        "Category": "Nazi Zombies: Portable:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "What happens when a game ends. 'Fixed' reads map names, one per line, from nzp/map_rotation.txt (falls back to random if the file is missing)",
+        "Keywords": "map,rotation,sv_maprotationmode",
+        "FieldName": "sv_maprotationmode",
+        "InputType": "enum",
+        "ParamFieldName": "sv_maprotationmode",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "0": "Restart Current Map",
+            "1": "Fixed",
+            "2": "Random"
+        }
+    },
+    {
+        "DisplayName": "Map Voting",
+        "Category": "Nazi Zombies: Portable:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "Lets players vote for the next map with the 'mapvote <mapname>' chat command",
+        "Keywords": "map,vote,mapvote,sv_enablechatplugins",
+        "FieldName": "sv_enablechatplugins",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_enablechatplugins",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Tick Rate",
+        "Category": "Nazi Zombies: Portable:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "Seconds between physics frames (0.045 is about 22 per second). Lower values can fix zombies getting stuck on terrain but use much more bandwidth, especially in higher rounds",
+        "Keywords": "tick,tickrate,sv_mintic,physics",
+        "FieldName": "sv_mintic",
+        "InputType": "text",
+        "ParamFieldName": "sv_mintic",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "0.045",
+        "Placeholder": "0.045",
+        "Suffix": "s",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional Arguments",
+        "Category": "Nazi Zombies: Portable:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "Extra command-line arguments, e.g. '+set net_mtu 1200'",
+        "Keywords": "arguments,args,command,cvar",
+        "FieldName": "extra_args",
+        "InputType": "text",
+        "ParamFieldName": "extra_args",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    }
+]
