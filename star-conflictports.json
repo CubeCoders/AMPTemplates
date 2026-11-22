@@ -1,0 +1,54 @@
+[
+    {
+        "Protocol": "TCP",
+        "Port": 3801,
+        "Ref": "LoadBalancerPort",
+        "Name": "Load Balancer Port",
+        "Description": "Port players enter in the client's server login. Forward it."
+    },
+    {
+        "Protocol": "TCP",
+        "Port": 3802,
+        "Ref": "ShardPort",
+        "Name": "Shard Port",
+        "Description": "Hangar and account service; the load balancer sends clients here. Forward it."
+    },
+    {
+        "Protocol": "TCP",
+        "Port": 3815,
+        "Ref": "ChatPort",
+        "Name": "Chat Port",
+        "Description": "Chat server. Forward it."
+    },
+    {
+        "Protocol": "Both",
+        "Port": 35000,
+        "Range": 50,
+        "MinListening": 1,
+        "IsDelayedOpen": true,
+        "Ref": "BattlePort",
+        "Name": "Battle Server Ports",
+        "Description": "Ports for the battle and open-space servers, one per running match. They only open while a match runs. Forward the whole range."
+    },
+    {
+        "Protocol": "TCP",
+        "Port": 3850,
+        "Ref": "HubPort",
+        "Name": "Hub Port",
+        "Description": "Internal: the server services connect to Hub on this port. Do not forward it."
+    },
+    {
+        "Protocol": "TCP",
+        "Port": 9001,
+        "Ref": "HubStatusPort",
+        "Name": "Hub Status Port",
+        "Description": "Internal: Hub's status listener. Do not forward it."
+    },
+    {
+        "Protocol": "TCP",
+        "Port": 27017,
+        "Ref": "MongoPort",
+        "Name": "MongoDB Port",
+        "Description": "Internal: the bundled MongoDB, bound to 127.0.0.1. Do not forward it."
+    }
+]
