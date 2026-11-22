@@ -1,0 +1,123 @@
+[
+    {
+        "DisplayName": "Allow Anonymous Clients",
+        "Category": "Mosquitto:hub",
+        "Subcategory": "Broker:settings:1",
+        "Description": "Allows clients to connect without a username and password. When off, clients must log in with an account from the password file",
+        "Keywords": "anonymous,allow_anonymous,authentication,login",
+        "FieldName": "AllowAnonymous",
+        "InputType": "checkbox",
+        "ParamFieldName": "AllowAnonymous",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Username",
+        "Category": "Mosquitto:hub",
+        "Subcategory": "Broker:settings:1",
+        "Description": "Adds this user to the password file (passwords.txt) each time the broker starts, or updates its password. Leave empty to manage the password file yourself with mosquitto_passwd. Must not contain spaces, colons or quotes",
+        "Keywords": "user,username,account,password_file,mosquitto_passwd",
+        "FieldName": "MqttUsername",
+        "InputType": "text",
+        "ParamFieldName": "MqttUsername",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Password",
+        "Category": "Mosquitto:hub",
+        "Subcategory": "Broker:settings:1",
+        "Description": "Password for the user above. Must not contain quotes",
+        "Keywords": "password,account,password_file",
+        "FieldName": "MqttPassword",
+        "InputType": "password",
+        "ParamFieldName": "MqttPassword",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable WebSockets",
+        "Category": "Mosquitto:hub",
+        "Subcategory": "Broker:settings:1",
+        "Description": "Opens a second listener for MQTT over WebSockets on the instance's WebSocket port",
+        "Keywords": "websockets,websocket,ws,listener",
+        "FieldName": "WebSocketsListener",
+        "InputType": "checkbox",
+        "ParamFieldName": "WebSocketsListener",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "#",
+            "True": ""
+        }
+    },
+    {
+        "DisplayName": "Persistence",
+        "Category": "Mosquitto:hub",
+        "Subcategory": "Broker:settings:1",
+        "Description": "Saves retained messages, subscriptions and queued messages to the data folder so they survive a restart. Uses the SQLite persistence plugin on Windows and the built-in database on Linux",
+        "Keywords": "persistence,retained,database",
+        "FieldName": "SaveBrokerState",
+        "InputType": "checkbox",
+        "ParamFieldName": "SaveBrokerState",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "#",
+            "True": ""
+        }
+    },
+    {
+        "DisplayName": "Log Connections",
+        "Category": "Mosquitto:hub",
+        "Subcategory": "Broker:settings:1",
+        "Description": "Logs clients connecting and disconnecting. Needed for AMP to show connected clients",
+        "Keywords": "connection_messages,log,connections,clients",
+        "FieldName": "ConnectionMessages",
+        "InputType": "checkbox",
+        "ParamFieldName": "ConnectionMessages",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Verbose Logging",
+        "Category": "Mosquitto:hub",
+        "Subcategory": "Broker:settings:1",
+        "Description": "Logs all message types, including subscriptions and debug output. Can be very noisy on a busy broker",
+        "Keywords": "verbose,debug,log_type,logging",
+        "FieldName": "VerboseLogging",
+        "InputType": "checkbox",
+        "ParamFieldName": "VerboseLogging",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "#",
+        "EnumValues": {
+            "False": "#",
+            "True": ""
+        }
+    },
+    {
+        "DisplayName": "Linux Executable",
+        "Category": "Mosquitto:hub",
+        "Subcategory": "Broker:settings:1",
+        "Description": "Path to the Mosquitto broker on Linux. Without a container you must install the mosquitto package yourself. Only change this if your distro installs it elsewhere",
+        "Keywords": "linux,executable,binary,LinuxExecutable",
+        "FieldName": "LinuxExecutable",
+        "InputType": "text",
+        "ParamFieldName": "LinuxExecutable",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "/usr/sbin/mosquitto",
+        "Placeholder": "/usr/sbin/mosquitto",
+        "Required": true,
+        "EnumValues": {}
+    }
+]

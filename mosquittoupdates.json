@@ -1,0 +1,72 @@
+[
+    {
+        "UpdateStageName": "Visual C++ Runtime Check",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C if exist %SystemRoot%\\System32\\vcruntime140_1.dll (exit 0) else (echo The Microsoft Visual C++ 2015-2022 Redistributable x64 is required. Install it from https://aka.ms/vs/17/release/vc_redist.x64.exe & exit 1)",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'mosquitto/7-Zip'; if (Test-Path '7z.exe') { exit 0 } else { Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/ip7z/7zip/releases/download/26.00/7z2600-x64.exe' -OutFile '7z-installer.exe' }; if ($?) { Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/ip7z/7zip/releases/download/26.00/7zr.exe' -OutFile '7zr.exe' }; if ($?) { & ./7zr.exe x -y -aoa 7z-installer.exe *> $null 2>&1; Remove-Item -Path '7z-installer.exe' -Force -ErrorAction SilentlyContinue | Out-Null }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Mosquitto Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'mosquitto'; $Index = (Invoke-WebRequest -UseBasicParsing -Uri 'https://mosquitto.org/files/binary/win64/').Content; $Latest = [regex]::Matches($Index, 'mosquitto-(\\d+\\.\\d+\\.\\d+)-install-windows-x64\\.exe') | ForEach-Object { [version]$_.Groups[1].Value } | Sort-Object -Unique | Select-Object -Last 1; if (-not $Latest) { Write-Output 'No Windows build found on mosquitto.org'; exit 1 }; if ((Test-Path 'mosquitto.exe') -and (Test-Path 'version.txt') -and ((Get-Content -Path 'version.txt' -Raw).Trim() -eq [string]$Latest)) { Write-Output ('Mosquitto ' + $Latest + ' already installed. Skipping'); exit 0 }; Invoke-WebRequest -UseBasicParsing -Uri ('https://mosquitto.org/files/binary/win64/mosquitto-' + $Latest + '-install-windows-x64.exe') -OutFile 'mosquitto-installer.exe'; & ./7-Zip/7z.exe x -y -aoa 'mosquitto-installer.exe' '-x!$PLUGINSDIR' '-x!devel' '-x!vc_redist.x64.exe' '-x!mosquitto.conf' | Out-Null; $Code = $LASTEXITCODE; Remove-Item -Path 'mosquitto-installer.exe' -Force -ErrorAction SilentlyContinue; if ($Code -ne 0 -or -not (Test-Path 'mosquitto.exe')) { Write-Output 'Could not extract Mosquitto from the installer'; exit 1 }; Set-Content -Path 'version.txt' -Value ([string]$Latest); Write-Output ('Installed Mosquitto ' + $Latest)\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Mosquitto Package Check",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"if [ -x '{{LinuxExecutable}}' ]; then '{{LinuxExecutable}}' -h | head -n 1; else echo 'Mosquitto was not found at {{LinuxExecutable}}. Use a container, or install the mosquitto package on the host'; exit 1; fi\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Data Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}data"
+    },
+    {
+        "UpdateStageName": "Custom Config Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}conf.d"
+    },
+    {
+        "UpdateStageName": "Custom Config File Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "# Extra Mosquitto settings. AMP regenerates mosquitto.conf on every start, but never touches this file.\n# Any .conf file in this folder is loaded before the listeners AMP defines.\n# To add your own listener (for example TLS on 8883), start a block with a 'listener' line, and open the port in AMP.\n# See https://mosquitto.org/man/mosquitto-conf-5.html\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}conf.d/custom.conf",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Password File Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "",
+        "UpdateSourceArgs": "{{$FullBaseDir}}passwords.txt",
+        "OverwriteExistingFiles": false
+    }
+]
