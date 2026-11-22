@@ -196,13 +196,90 @@ prepare() {
     log 'Pre-start preparation complete; AMP will launch the engine directly'
 }
 
+# Preserve every original console line. The additional AMP-Coop lines translate
+# full @DS@ rosters into the individual events GenericModule understands.
+track_players() {
+    jq --unbuffered -Rnr '
+      def clean_field: gsub("[\u0000-\u001f\u007f]"; " ");
+      def valid_roster:
+        try (type == "object" and .ev == "players" and (.list | type == "array") and
+          all(.list[]; type == "object" and (.id | type == "number") and
+            .id >= 0 and .id <= 2147483647 and .id == (.id | floor) and (.name | type == "string") and
+            ((.addr // "") | type == "string")) and
+          ([.list[].id] | unique | length) == (.list | length)) catch false;
+      def changed($a; $b): $a == null or $b == null or $a.name != $b.name or $a.addr != $b.addr;
+      def apply_roster($next):
+        .players as $old |
+        .out += [ $old | to_entries[] | select(changed(.value; $next[.key])) |
+          "[AMP-Coop] leave\tpeer-" + .key ] |
+        .out += [ $next | to_entries[] | select(changed($old[.key]; .value)) |
+          "[AMP-Coop] join\tpeer-" + .key + "\t" + .value.name + "\t" + .value.addr ] |
+        .players = $next;
+      def snapshot($event):
+        .players as $old |
+        ($event.list | map(.id | tostring)) as $present |
+        (reduce $event.list[] as $p ({};
+          ($p.id | tostring) as $id |
+          ($p.name | clean_field) as $raw |
+          (if $raw != "" and $raw != "(joining)" then $raw
+           else $old[$id].rawName // null end) as $name |
+          if $name == null then . else
+            (if $old[$id].rawName == $name then $old[$id].name else $name end) as $preferred |
+            ([.[] | .name] + [$old | to_entries[] |
+              select(.key != $id and (.key as $k | $present | index($k)) != null) | .value.name]) as $used |
+            (if ($used | index($preferred)) == null then $preferred else
+              ($name + " [peer " + $id + "]") |
+              until(. as $candidate | ($used | index($candidate)) == null; . + "#") end) as $display |
+            .[$id] = {rawName:$name, name:$display, addr:(($p.addr // "") | clean_field)}
+          end)) as $next |
+        apply_roster($next);
+      foreach (inputs, null) as $line (
+        {players:{}, buffer:null, out:[]};
+        .out = (if $line == null then [] else [$line] end) |
+        if $line == null then apply_roster({}) else
+          ($line | gsub("\u001b\\[[0-?]*[ -/]*[@-~]"; "") | sub("\r+$"; "")) as $clean |
+          ((try ($clean | capture("^\\[DedicatedServer\\] player disconnected: peer (?<id>[0-9]+)(?:\\s|\\(|$)")) catch null) // null) as $disconnect |
+          if $disconnect != null then
+            .buffer = null | apply_roster(.players | del(.[$disconnect.id]))
+          else
+            if ($clean | test("^\\s*@DS@")) then
+              .buffer = ($clean | sub("^\\s*@DS@"; ""))
+            elif .buffer != null then .buffer += $clean
+            else . end |
+            if .buffer != null then
+              if (.buffer | length) > 1048576 then .buffer = null else
+                (try {value:(.buffer | fromjson)} catch null) as $parsed |
+                if $parsed != null then
+                  .buffer = null |
+                  if ($parsed.value | valid_roster) then snapshot($parsed.value) else . end
+                else . end
+              end
+            else . end
+          end
+        end;
+        .out[])
+    '
+}
+
+start() {
+    local module=$1
+    [[ "$module" =~ ^[A-Za-z0-9_.-]+$ ]] || die 'Invalid Coop module Id'
+    cd -- "$ROOT/server/engine/bin/Win64_Shipping_Server"
+    env "BANNERLORD_USER_DIR=Z:$ROOT/data" "COOP_DATA_DIR=Z:$ROOT/data" \
+      "DOTNET_ROOT=Z:$ROOT/server/engine/dotnet" \
+      xvfb-run -a socat STDIO \
+      "EXEC:wine ../../dotnet/dotnet.exe TaleWorlds.Starter.DotNetCore.dll _MODULES_*Native*SandBoxCore*Sandbox*$module*DedicatedServer.Windows*_MODULES_,pty,setsid,ctty,echo=0,inlcr" \
+      | track_players
+}
+
 main() {
     command -v jq >/dev/null || die 'jq is required; refresh the AMP container packages'
     case "${1:-}" in
         update) update ;;
         init) settings ;;
         prepare) [[ $# == 3 ]] || die 'Usage: mount-and-blade2-coop.sh prepare GAME_PORT MODULE_ID'; prepare "$2" "$3" ;;
-        *) die 'Usage: mount-and-blade2-coop.sh init|update|prepare GAME_PORT MODULE_ID' ;;
+        start) [[ $# == 2 ]] || die 'Usage: mount-and-blade2-coop.sh start MODULE_ID'; start "$2" ;;
+        *) die 'Usage: mount-and-blade2-coop.sh init|update|prepare GAME_PORT MODULE_ID|start MODULE_ID' ;;
     esac
 }
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then main "$@"; fi

@@ -1,6 +1,6 @@
 Meta.DisplayName=Mount & Blade II: Bannerlord Co-op
 Meta.Description=Co-op campaign dedicated server for Linux Docker using Wine. Experimental template.
-Meta.ReleaseNotes=Initial Linux template for the Bannerlord Co-op campaign dedicated server, with Steam Workshop installation, Wine startup and persistent campaign settings.
+Meta.ReleaseNotes=Initial Linux template for the Bannerlord Co-op campaign dedicated server, with Steam Workshop installation, persistent campaign settings and AMP player tracking.
 Meta.OS=Linux
 Meta.Arch=x86_64
 Meta.Author=ZifeRRoT
@@ -21,9 +21,9 @@ Meta.AppConfigId=7b025c72-f27d-4fcf-bced-9b4ad2964dac
 App.DisplayName=Mount & Blade II: Bannerlord Co-op
 App.RootDir=./bannerlord-coop/
 App.BaseDirectory=./bannerlord-coop/
-App.ExecutableLinux=/usr/bin/env
+App.ExecutableLinux=/bin/bash
 App.WorkingDir=server/engine/bin/Win64_Shipping_Server
-App.LinuxCommandLineArgs="BANNERLORD_USER_DIR=Z:{{$FullRootDir}}data" "COOP_DATA_DIR=Z:{{$FullRootDir}}data" "DOTNET_ROOT=Z:{{$FullRootDir}}server/engine/dotnet" /usr/bin/xvfb-run -a /usr/bin/socat STDIO "EXEC:/usr/bin/wine ../../dotnet/dotnet.exe TaleWorlds.Starter.DotNetCore.dll _MODULES_*Native*SandBoxCore*Sandbox*{{CoopModuleId}}*DedicatedServer.Windows*_MODULES_,pty,setsid,ctty,echo=0,inlcr"
+App.LinuxCommandLineArgs="{{$FullRootDir}}mount-and-blade2-coop.sh" start {{CoopModuleId}}
 App.CommandLineArgs={{$PlatformArgs}}
 App.UseLinuxIOREDIR=False
 App.EnvironmentVariables={"WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"mscoree,mshtml=","DOTNET_MULTILEVEL_LOOKUP":"0","DS_ACCEPT_EULA":"{{AcceptEULA}}"}
@@ -47,6 +47,9 @@ App.SteamForceLoginPrompt=True
 App.SupportsUniversalSleep=False
 App.ApplicationReadyMode=RegexMatch
 Console.AppReadyRegex=^.*coop server up, waiting for clients.*$
+Console.UserJoinRegex=^\[AMP-Coop\] join\t(?<sessionid>peer-\d+)\t(?<username>[^\t\r\n]+)\t(?<endpoint>[^\t\r\n]*)\r*$
+Console.UserLeaveRegex=^\[AMP-Coop\] leave\t(?<sessionid>peer-\d+)\r*$
+Console.MetricsRegex=^.*\[DedicatedServer\] pulse: .*\bplayers=(?<Connected_Peers>\d+)\b.*$
 Console.FilterMatchRegex=
 Console.FilterMatchReplacement=
 Console.SuppressLogAtStart=False
