@@ -1,0 +1,161 @@
+[
+    {
+        "DisplayName": "Server Name",
+        "Category": "rAthena:public",
+        "Subcategory": "Server:dns:1",
+        "Description": "Name of the server shown in the client's server list. Maximum 20 characters",
+        "Keywords": "server,name,title",
+        "FieldName": "ServerName",
+        "InputType": "text",
+        "ParamFieldName": "server_name",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "rAthena",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Public IP Address",
+        "Category": "rAthena:public",
+        "Subcategory": "Server:dns:1",
+        "Description": "IP address that clients use to reach the char and map servers after logging in. Defaults to the external IP AMP detects. Use the LAN IP for local-only play; a wrong or empty value leaves clients stuck after character select",
+        "Keywords": "public,ip,address,char_ip,map_ip,wan",
+        "FieldName": "PublicIP",
+        "InputType": "text",
+        "ParamFieldName": "PublicIP",
+        "IncludeInCommandLine": false,
+        "SkipIfEmpty": true,
+        "DefaultValue": "{{$ExternalIP}}",
+        "Placeholder": "203.0.113.10",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Allow _M/_F Registration",
+        "Category": "rAthena:public",
+        "Subcategory": "Server:dns:1",
+        "Description": "Allows players to create an account at the login screen by adding _M or _F to a new username (for example 'name_M')",
+        "Keywords": "new,account,registration,register,_M,_F",
+        "FieldName": "NewAccount",
+        "InputType": "checkbox",
+        "ParamFieldName": "new_account",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "no",
+        "EnumValues": {
+            "False": "no",
+            "True": "yes"
+        }
+    },
+    {
+        "DisplayName": "Start Web Server",
+        "Category": "rAthena:public",
+        "Subcategory": "Server:dns:1",
+        "Description": "Starts rAthena's web server alongside the other servers. Newer clients use it for guild emblems and user settings",
+        "Keywords": "web,server,emblem",
+        "FieldName": "EnableWebServer",
+        "InputType": "checkbox",
+        "ParamFieldName": "EnableWebServer",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Inter-Server Username",
+        "Category": "rAthena:public",
+        "Subcategory": "Server:dns:1",
+        "Description": "Username the char and map servers use to log in to the login server. 4 to 23 characters. AMP applies it to the server account on every start",
+        "Keywords": "inter,server,userid,s1",
+        "FieldName": "InterServerUser",
+        "InputType": "text",
+        "ParamFieldName": "userid",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "s1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Inter-Server Password",
+        "Category": "rAthena:public",
+        "Subcategory": "Server:dns:1",
+        "Description": "Password the char and map servers use to log in to the login server. Maximum 23 characters. AMP applies it to the server account on every start",
+        "Keywords": "inter,server,passwd,password,p1",
+        "FieldName": "InterServerPassword",
+        "InputType": "password",
+        "ParamFieldName": "passwd",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "{{randomdigits(16)}}",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Database Password",
+        "Category": "rAthena:public",
+        "Subcategory": "Server:dns:1",
+        "Description": "Password for the 'ragnarok' user of the bundled MariaDB database (database 'ragnarok', listening on 127.0.0.1 inside the instance). AMP applies it on every start",
+        "Keywords": "database,mysql,mariadb,password,sql",
+        "FieldName": "DatabasePassword",
+        "InputType": "password",
+        "ParamFieldName": "DatabasePassword",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "{{randomdigits(20)}}",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "rAthena Version",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Branch, tag or commit of [rAthena](https://github.com/rathena/rathena) to build. Run Update after changing it. Database changes between versions are in sql-files/upgrades and must be applied by hand",
+        "Keywords": "rathena,version,branch,commit",
+        "FieldName": "RathenaVersion",
+        "InputType": "text",
+        "ParamFieldName": "RathenaVersion",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "master",
+        "Placeholder": "master",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Mode",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Builds rAthena for Renewal or Pre-Renewal game mechanics. Run Update after changing it to rebuild",
+        "Keywords": "renewal,pre-renewal,prere,mode",
+        "FieldName": "ServerMode",
+        "InputType": "enum",
+        "ParamFieldName": "ServerMode",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "renewal",
+        "EnumValues": {
+            "renewal": "Renewal",
+            "prerenewal": "Pre-Renewal"
+        }
+    },
+    {
+        "DisplayName": "Packet Version",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Client date (packet version) to build for, matching your game client. Empty = rAthena's default. Run Update after changing it to rebuild",
+        "Keywords": "packet,version,packetver,client,date",
+        "FieldName": "PacketVersion",
+        "InputType": "text",
+        "ParamFieldName": "PacketVersion",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "20211103",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable VIP System",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Builds rAthena with the VIP system enabled. Run Update after changing it to rebuild",
+        "Keywords": "vip",
+        "FieldName": "EnableVIP",
+        "InputType": "checkbox",
+        "ParamFieldName": "EnableVIP",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    }
+]
