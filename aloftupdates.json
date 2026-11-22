@@ -1,0 +1,45 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1660080",
+        "UpdateSourceArgs": "1660080",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\\\"mscoree,mshtml=\\\" /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Winescript Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/aloftwinescript.sh",
+        "UpdateSourceArgs": "winescript.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install Windows Components",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "./winescript.sh",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Saves Directory Creation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullRootDir}}.wine/drive_c/users/$(id -un)/AppData/LocalLow/Astrolabe Interactive/Aloft\\\" && cd aloft/1660080 && ln -sfn \\\"../.wine/drive_c/users/$(id -un)/AppData/LocalLow/Astrolabe Interactive/Aloft\\\" ./Aloft\"",
+        "SkipOnFailure": false
+    }
+]
