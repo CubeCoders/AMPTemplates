@@ -1,0 +1,89 @@
+[
+    {
+        "UpdateStageName": "Download Folder Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}ac-download",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Tools Folder Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}ac-tools",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "AssaultCube Download",
+        "UpdateStageDescription": "Downloads the latest AssaultCube release from GitHub",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/assaultcube/AC/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^AssaultCube_v.*\\.exe$/)].browser_download_url",
+        "UpdateSourceTarget": "ac-download",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "AssaultCube Download",
+        "UpdateStageDescription": "Downloads the latest AssaultCube release from GitHub",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/assaultcube/AC/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^AssaultCube_v.*\\.tar\\.bz2$/)].browser_download_url",
+        "UpdateSourceTarget": "ac-download",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Download",
+        "UpdateStageDescription": "Downloads the official 7-Zip tools used to unpack the AssaultCube installer",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/ip7z/7zip/releases/download/26.06/7zr.exe",
+        "UpdateSourceArgs": "7zr.exe",
+        "UpdateSourceTarget": "ac-tools",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Download",
+        "UpdateStageDescription": "Downloads the official 7-Zip tools used to unpack the AssaultCube installer",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/ip7z/7zip/releases/download/26.06/7z2606-x64.exe",
+        "UpdateSourceArgs": "7z-x64.exe",
+        "UpdateSourceTarget": "ac-tools",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "AssaultCube Installation",
+        "UpdateStageDescription": "Unpacks the installer into a temporary folder, then copies it into the server folder without replacing existing config files",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C cd /D \"{{$FullRootDir}}.\" & (if not exist ac-tools\\7z.exe ac-tools\\7zr.exe x -y -oac-tools ac-tools\\7z-x64.exe 7z.exe 7z.dll > NUL) & rd /S /Q ac-install > NUL 2>&1 & for %f in (ac-download\\AssaultCube_v*.exe) do (ac-tools\\7z.exe x -y -oac-install -x!$PLUGINSDIR -x!$TEMP \"%f\" > NUL) & if not exist ac-install\\bin_win32\\ac_server.exe (echo AssaultCube installer could not be unpacked & exit /b 1) else (robocopy ac-install\\config \"{{$FullBaseDir}}config\" /E /XC /XN /XO /NFL /NDL /NJH /NJS /NP > NUL & robocopy ac-install \"{{$FullBaseDir}}.\" /E /XD config /XF Uninstall.exe /NFL /NDL /NJH /NJS /NP > NUL & rd /S /Q ac-install ac-download > NUL 2>&1 & cd /D \"{{$FullBaseDir}}.\" & copy /Y bin_win32\\ac_server.exe ac_server.exe > NUL & copy /Y bin_win32\\SDL2.dll SDL2.dll > NUL & copy /Y bin_win32\\zlib1.dll zlib1.dll > NUL & if not exist ac_server.exe (exit /b 1) else (echo AssaultCube installed/updated & exit /b 0))",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "AssaultCube Installation",
+        "UpdateStageDescription": "Extracts the release into a temporary folder, then copies it into the server folder without replacing existing config files",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && rm -rf ac-install && mkdir -p ac-install \\\"{{$FullBaseDir}}config\\\" && tar -xjf ac-download/AssaultCube_v*.tar.bz2 -C ac-install && cp -rn ac-install/config/. \\\"{{$FullBaseDir}}config/\\\" && rm -rf ac-install/config && cp -rf ac-install/. \\\"{{$FullBaseDir}}\\\" && chmod +x \\\"{{$FullBaseDir}}bin_unix/linux_64_server\\\" && rm -rf ac-install ac-download && echo 'AssaultCube installed/updated'\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Logs Folder Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}logs",
+        "SkipOnFailure": false
+    }
+]
