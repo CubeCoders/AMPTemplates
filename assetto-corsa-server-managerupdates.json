@@ -1,0 +1,71 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "302550",
+        "UpdateSourceArgs": "244210",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Download Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}sm-download",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Manager Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/JustaPenguin/assetto-server-manager/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^server-manager_v.*\\.zip$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullRootDir}}sm-download",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Manager Install",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CMD",
+        "UpdateSourceArgs": "move /Y sm-download\\windows\\server-manager.exe server-manager\\server-manager.exe && rmdir /S /Q sm-download",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Manager Install",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Bash",
+        "UpdateSourceArgs": "mv -f sm-download/linux/server-manager server-manager/server-manager && chmod +x server-manager/server-manager && rm -rf sm-download",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Manager Config Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/assetto-corsa-server-managerconfig.yml",
+        "UpdateSourceArgs": "AMP_config.yml",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Data Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}data",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Options Seed",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/assetto-corsa-server-managerserveroptions.json",
+        "UpdateSourceArgs": "server_options.json",
+        "UpdateSourceTarget": "{{$FullBaseDir}}data",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
