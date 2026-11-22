@@ -1,0 +1,67 @@
+[
+    {
+        "UpdateStageName": "KissMP Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/TheHellBox/KISS-multiplayer/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^KissMP_.*\\.zip$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Copy Server Binary",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}kissmp-server",
+        "UpdateSourceArgs": "{{$FullBaseDir}}linux/kissmp-server",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Copy Server Binary",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}kissmp-server",
+        "UpdateSourceArgs": "{{$FullBaseDir}}linux-arm/kissmp-server",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Set Executable Flag",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}kissmp-server",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Config File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/kissmpserverconfig.json",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "config.json",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Identifier Generation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$f='{{$FullBaseDir}}config.json'; $c=[IO.File]::ReadAllText($f); $e='\\\"server_identifier\\\": \\\"\\\"'; if($c.Contains($e)){ [IO.File]::WriteAllText($f, $c.Replace($e, '\\\"server_identifier\\\": \\\"' + [guid]::NewGuid().ToString('N') + '\\\"')); 'Generated a server identifier' }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Identifier Generation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"f=\\\"{{$FullBaseDir}}config.json\\\"; if grep -q '\\\"server_identifier\\\": \\\"\\\"' \\\"$f\\\"; then id=$(tr -d - < /proc/sys/kernel/random/uuid); sed -i \\\"s/\\\\\\\"server_identifier\\\\\\\": \\\\\\\"\\\\\\\"/\\\\\\\"server_identifier\\\\\\\": \\\\\\\"$id\\\\\\\"/\\\" \\\"$f\\\" && echo 'Generated a server identifier'; fi\"",
+        "SkipOnFailure": false
+    }
+]
