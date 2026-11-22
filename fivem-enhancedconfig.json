@@ -1,0 +1,247 @@
+[
+    {
+        "DisplayName": "Server Port",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "",
+        "Keywords": "",
+        "FieldName": "$ServerPort",
+        "InputType": "number",
+        "Hidden": true,
+        "ParamFieldName": "ServerPort",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Cfx.re Server Registration Key",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the [Cfx.re server registration key](https://portal.cfx.re/servers/registration-keys) required to run the server",
+        "Keywords": "licence,license,registration,key,keymaster,sv_licenseKey",
+        "FieldName": "sv_licenseKey",
+        "InputType": "Password",
+        "ParamFieldName": "sv_licenseKey",
+        "DefaultValue": "",
+        "Required": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Steam Web API Key",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the [Steam Web API key](https://steamcommunity.com/login/home/?goto=%2Fdev%2Fapikey) required to allow for Steam identifiers to be returned by the server",
+        "Keywords": "steam,web,api,key,steam_webApiKey",
+        "FieldName": "steam_webApiKey",
+        "InputType": "Password",
+        "ParamFieldName": "steam_webApiKey",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Mark Server Private",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, the server will be set as \"private\", making it not possible to join by using the server browser UI (the server connect button will be disabled). The server will not be de-listed from the master list",
+        "Keywords": "private,server,list,sv_master1",
+        "FieldName": "sv_master1",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_master1",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "sv_master1 \"\" "
+        }
+    },
+    {
+        "DisplayName": "Starting Resources",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the resources to load on server start. One entry per line in the format: ensure <resourcename>",
+        "Keywords": "ensure,resources",
+        "FieldName": "ensure",
+        "InputType": "Textarea",
+        "ParamFieldName": "ensure",
+        "DefaultValue": "ensure mapmanager\nensure chat\nensure spawnmanager\nensure sessionmanager\nensure basic-gamemode\nensure hardcap\nensure rconlog",
+        "Placeholder": "ensure mapmanager\nensure chat\nensure spawnmanager\nensure sessionmanager\nensure basic-gamemode\nensure hardcap\nensure rconlog",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Load Base Game Only",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, clients load the base game without any DLCs. Otherwise the latest supported game build is used. This can only be set at startup",
+        "Keywords": "enforce,game,build,base,dlc,sv_enforceGameBuild",
+        "FieldName": "sv_enforceGameBuild",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_enforceGameBuild",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "sv_enforceGameBuild 1"
+        }
+    },
+    {
+        "DisplayName": "Player Limit",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum number of players that may connect to the server at one time",
+        "Keywords": "maximum,players,clients,limit,maxClients",
+        "FieldName": "$MaxUsers",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "2048",
+        "ParamFieldName": "sv_maxClients",
+        "DefaultValue": "32",
+        "Placeholder": "32",
+        "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Sync Tick Rate",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the tick rate of the sync thread. Higher values reduce latency but use more CPU",
+        "Keywords": "sync,tick,rate,latency,sv_syncTickRate",
+        "FieldName": "sv_syncTickRate",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "120",
+        "ParamFieldName": "sv_syncTickRate",
+        "DefaultValue": "60",
+        "Placeholder": "60",
+        "Suffix": "Hz",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable OneSync Population",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, NPCs and vehicles will be spawned on the server",
+        "Keywords": "onesync,population,npcs,vehicles,onesync_population",
+        "FieldName": "onesync_population",
+        "InputType": "checkbox",
+        "ParamFieldName": "onesync_population",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable OneSync Vehicle Distance Culling",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, player-occupied vehicles will be subject to distance culling",
+        "Keywords": "onesync,vehicles,distance,cull,culling,onesync_distanceCullVehicles",
+        "FieldName": "onesync_distanceCullVehicles",
+        "InputType": "checkbox",
+        "ParamFieldName": "onesync_distanceCullVehicles",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable OneSync Forced Migration",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, any entity that has not received any clone sync updates for over a certain period will be migrated to any other nearby player",
+        "Keywords": "onesync,force,migration,onesync_forceMigration",
+        "FieldName": "onesync_forceMigration",
+        "InputType": "checkbox",
+        "ParamFieldName": "onesync_forceMigration",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Access Control Commands",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies [access control commands](https://docs.fivem.net/docs/server-manual/server-commands/#access-control-commands) to include in \"server.cfg\". This can be used to add system admins",
+        "Keywords": "admin,access,control",
+        "FieldName": "AccessControlCommands",
+        "InputType": "Textarea",
+        "ParamFieldName": "AccessControlCommands",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server/RCON IP Binding",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If required, you can change the binding of the server and RCON by changing the 'Server IP Address' setting under Security and Privacy. NOTE: The IP must be reachable by AMP, otherwise AMP's console won't work",
+        "Keywords": "ip,binding,endpoint,endpoint_add_udp,endpoint_add_tcp",
+        "FieldName": "$ApplicationIPBinding",
+        "InputType": "hidden",
+        "ParamFieldName": "ApplicationIPBinding",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional Command Line Parameters",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies additional command line parameters that are not otherwise set by AMP. ONE LINE ONLY! Use with care. Alternatively, specify the equivalent under \"Additional Server Settings\"",
+        "Keywords": "custom,server,arguments,variables,parameters",
+        "FieldName": "CustomArgs",
+        "InputType": "Textarea",
+        "ParamFieldName": "CustomArgs",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional Server Settings",
+        "Category": "FiveM Enhanced:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies additional settings to include in \"server.cfg\" that are not otherwise set by AMP. One setting per line",
+        "Keywords": "additional,settings,custom",
+        "FieldName": "UserSettings",
+        "InputType": "Textarea",
+        "ParamFieldName": "UserSettings",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Specific Build Download URL",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Leave empty to install the build currently offered on the [Cfx.re server download page](https://docs.fivem.net/docs/server-download/?platform=enhanced). To pin a build, set its full download URL (cfx-server_win_x64.zip on Windows, cfx-server_linux_x64.tar.xz on Linux). Update the server after changing this setting",
+        "Keywords": "server,build,artifact,specific,version,url",
+        "FieldName": "SpecificBuildVersionURL",
+        "InputType": "url",
+        "ParamFieldName": "SpecificBuildVersionURL",
+        "DefaultValue": "",
+        "Placeholder": "https://cfx-downloads.akamaized.net/prod/.../cfx-server_linux_x64.tar.xz",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Resource GitHub Repo",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Sets the GitHub repo from which to clone resources. If \"Custom repo\" is selected, the relevant repo URL must be set under Custom Repo URL. Delete the server-data directory and update the server after changing this setting",
+        "Keywords": "resource,repo,repository,github",
+        "FieldName": "ResourceRepo",
+        "InputType": "enum",
+        "ParamFieldName": "ResourceRepo",
+        "DefaultValue": "https://github.com/citizenfx/cfx-server-data.git",
+        "EnumValues": {
+            "https://github.com/citizenfx/cfx-server-data.git": "Cfx.re standard repo (default)",
+            "{{CustomRepo}}": "Custom repo"
+        }
+    },
+    {
+        "DisplayName": "Custom Repo URL",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Sets the URL for a custom repo from which to clone resources, if \"Custom repo\" is selected under Resource GitHub Repo. The URL must end in .git. The repo must be public and on the main/master branch",
+        "Keywords": "resource,custom,repo,repository,github,url",
+        "FieldName": "CustomRepo",
+        "InputType": "url",
+        "ParamFieldName": "CustomRepo",
+        "DefaultValue": "",
+        "Placeholder": "https://github.com/username/reponame.git",
+        "EnumValues": {}
+    }
+]
