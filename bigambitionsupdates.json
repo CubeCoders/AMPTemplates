@@ -18,10 +18,10 @@
     },
     {
         "UpdateStageName": "Default server settings",
-        "UpdateSourcePlatform": "All",
+        "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"f=\\\"{{$FullBaseDir}}bamp-server.json\\\"; [ -f \\\"$f\\\" ] || printf '%s\\n' '{\\\"ServerLanguage\\\": \\\"en\\\", \\\"Headless\\\": true, \\\"DedicatedHost\\\": true, \\\"DedicatedSession\\\": \\\"\\\", \\\"DedicatedNewGame\\\": \\\"\\\", \\\"DedicatedLoadSave\\\": \\\"\\\", \\\"PlayerId\\\": \\\"Server\\\", \\\"HostPort\\\": 7777, \\\"DedicatedIdleGraceSeconds\\\": 0, \\\"DedicatedAfkMinutes\\\": 5, \\\"DedicatedPauseInMenu\\\": true, \\\"DedicatedRequireKey\\\": true, \\\"DedicatedAutoAccept\\\": true, \\\"AutosaveMinutes\\\": 5, \\\"AutosaveSlots\\\": \\\"3\\\", \\\"MaxPlayers\\\": \\\"8\\\", \\\"PlayerWebUrl\\\": \\\"\\\", \\\"HeadlessFps\\\": 30, \\\"HeadlessIdleFps\\\": 5, \\\"TelemetryKey\\\": \\\"\\\"}' > \\\"$f\\\"; mkdir -p \\\"{{$FullRootDir}}headless\\\" \\\"{{$FullRootDir}}bamp-mod\\\"\"",
+        "UpdateSourceArgs": "-c \"f=\\\"{{$FullBaseDir}}bamp-server.json\\\"; [ -f \\\"$f\\\" ] || printf '%s\\n' '{\\\"ServerLanguage\\\": \\\"en\\\", \\\"Headless\\\": true, \\\"DedicatedHost\\\": true, \\\"DedicatedSession\\\": \\\"\\\", \\\"DedicatedNewGame\\\": \\\"\\\", \\\"DedicatedLoadSave\\\": \\\"\\\", \\\"PlayerId\\\": \\\"Server\\\", \\\"HostPort\\\": 7777, \\\"DedicatedIdleGraceSeconds\\\": 0, \\\"DedicatedAfkMinutes\\\": 5, \\\"DedicatedPauseInMenu\\\": true, \\\"DedicatedRequireKey\\\": true, \\\"DedicatedAutoAccept\\\": true, \\\"AutosaveMinutes\\\": 5, \\\"AutosaveSlots\\\": \\\"3\\\", \\\"MaxPlayers\\\": \\\"8\\\", \\\"PlayerWebUrl\\\": \\\"\\\", \\\"HeadlessFps\\\": 200, \\\"HeadlessIdleFps\\\": 5, \\\"TelemetryKey\\\": \\\"\\\"}' > \\\"$f\\\"; mkdir -p \\\"{{$FullRootDir}}headless\\\" \\\"{{$FullRootDir}}bamp-mod\\\"\"",
         "SkipOnFailure": false
     },
     {
@@ -42,14 +42,6 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/usr/bin/python3",
         "UpdateSourceArgs": "\"{{$FullRootDir}}bamp-tools/seed-settings.py\" \"{{$FullBaseDir}}bamp-server.json\" \"{{$FullRootDir}}bamp-tools/bigambitionsconfig.json\"",
-        "SkipOnFailure": true
-    },
-    {
-        "UpdateStageName": "Settings in the server language",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/usr/bin/python3",
-        "UpdateSourceArgs": "\"{{$FullRootDir}}bamp-tools/localize-template.py\" \"{{ServerLanguage}}\" --manifest \"{{$FullRootDir}}../configmanifest.json\"",
         "SkipOnFailure": true
     },
     {

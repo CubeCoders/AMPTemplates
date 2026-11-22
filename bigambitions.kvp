@@ -1,12 +1,12 @@
 Meta.DisplayName=Big Ambitions (Going Public server)
-Meta.Description=Always-on Big Ambitions multiplayer host: the Going Public mod in headless server mode under Proton
+Meta.Description=Always-on Big Ambitions multiplayer host: the Going Public mod in headless server mode under Proton. The server files add Unity Doorstop and a small preloader so the game's mod loader starts without a Steam client - see the setup steps.
 Meta.OS=Linux
 Meta.AarchSupport=Unknown
 Meta.Arch=x86_64
 Meta.Author=amaus1209
 Meta.URL=https://github.com/amaus1209/BigAmbitionsGoingPublicServer
 Meta.DisplayImageSource=url:https://raw.githubusercontent.com/amaus1209/BigAmbitionsGoingPublicServer/main/logo.jpg
-Meta.EndpointURIFormat=https://{ip}/monitor/{GenericModule.App.Ports.$GamePort}/index.html
+Meta.EndpointURIFormat=
 Meta.ConfigManifest=bigambitionsconfig.json
 Meta.MetaConfigManifest=bigambitionsmetaconfig.json
 Meta.ConfigRoot=bigambitions.kvp
@@ -33,7 +33,6 @@ App.BaseDirectory=./bigambitions/1331550/
 App.SteamWorkshopDownloadLocation=
 App.StoresSupported=SteamWorkshop
 App.StoreDownloadLocations={"SteamWorkshop":"{{$FullRootDir}}bamp-mods-extra"}
-App.ExecutableWin=1331550\Big Ambitions.exe
 App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=1331550
 App.LinuxCommandLineArgs=-a "{{$FullRootDir}}.proton/proton" runinprefix "{{$FullBaseDir}}Big Ambitions.exe" -batchmode -nographics -bamp-config "Z:{{$FullBaseDir}}bamp-server.json" -bamp-headless-dir "Z:{{$FullRootDir}}headless"
@@ -96,7 +95,7 @@ Console.UserLeaveRegex=^.*\[BAMP-HEADLESS\] LEAVE (?<username>.+)$
 Console.UserChatRegex=^.*\[BAMP-HEADLESS\] CHAT (?<username>[^:]+): (?<message>.+)$
 Console.UpdateAvailableRegex=^$
 Console.MetricsRegex=^$
-Console.ServerInfoRegex=^.*\[Server\] Info: (?:Port=(?<Spiel_Port>\S+) \| )?Schluessel=(?<Server_Password>\S+) \| Version=(?<Server_Version>\S+)(?: \| Admin=(?<Admin_Seite>\S+))?$
+Console.ServerInfoRegex=^.*\[Server\] Info: (?:Port=(?<Game_Port>\S+) \| )?(?:Key|Schluessel)=(?<Server_Key>\S+) \| Version=(?<Server_Version>\S+)(?: \| Admin=(?<Admin_Page>\S+))?$
 Console.SuppressLogAtStart=False
 Console.ActivateLogRegex=
 Console.UserActions={"Kick":"kick ${Name}","Ban":"ban ${Name}"}
