@@ -1,0 +1,20 @@
+[
+    {
+        "UpdateStageName": "TS3MusicBot Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ts3musicbot && if [[ -f TS3MusicBot/system/TS3MusicBotLauncher2.jar ]]; then echo \\\"TS3MusicBot already installed. The launcher keeps the bot updated. Skipping\\\"; else wget -qO ts3musicbot.tar https://download2.ts3musicbot.net/TS3MusicBot_v4.6.tar || { echo \\\"Download failed from the TS3MusicBot server. Aborting\\\"; exit 1; }; tar -xf ts3musicbot.tar && rm -f ts3musicbot.tar && find TS3MusicBot -name \\\"._*\\\" -delete && chmod +x TS3MusicBot/TS3MusicBot_runscript.sh && echo \\\"TS3MusicBot installed\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd ts3musicbot && if [[ -x java/bin/java ]]; then InstalledVersion=$(java/bin/java --version | grep \\\"Temurin-\\\" | head -n1 | sed -n \\\"s/.*Temurin-\\\\([^[:space:]]\\\\+\\\\).*/\\\\1/p\\\"); else InstalledVersion=\\\"\\\"; fi; LatestVersionBuild=$(wget -qO- \\\"https://api.adoptium.net/v3/assets/latest/{{InstanceJavaVersion}}/hotspot?architecture=x64&image_type=jdk&os=linux&vendor=eclipse\\\" | jq -r \\\".[0].version.openjdk_version\\\" | sed \\\"s/-LTS$//\\\"); if [[ -n \\\"$InstalledVersion\\\" && \\\"$InstalledVersion\\\" == \\\"$LatestVersionBuild\\\" ]]; then echo \\\"Eclipse Temurin Java $LatestVersionBuild already installed. Skipping\\\" && exit 0; else rm -f java.tar.gz >/dev/null 2>&1; wget -qO java.tar.gz https://api.adoptium.net/v3/binary/latest/{{InstanceJavaVersion}}/ga/linux/x64/jdk/hotspot/normal/eclipse || { echo \\\"Download failed from the Eclipse Temurin CDN. Aborting\\\"; exit 1; }; mkdir -p java && rm -rf java/* >/dev/null 2>&1 && tar -xzf java.tar.gz -C java --strip-components=1 >/dev/null 2>&1 && rm -f java.tar.gz >/dev/null 2>&1 && chmod +x java/bin/java && echo \\\"Eclipse Temurin Java $LatestVersionBuild downloaded\\\"; fi\"",
+        "UpdateSourceConditionSetting": "JavaVersion",
+        "UpdateSourceConditionValue": "java/bin/java",
+        "SkipOnFailure": false
+    }
+]
