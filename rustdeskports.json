@@ -1,0 +1,44 @@
+[
+    {
+        "Protocol": "Both",
+        "Port": 21116,
+        "Ref": "IdPort",
+        "Name": "ID Server Port",
+        "Description": "Port for ID registration and hole punching (hbbs, TCP and UDP). Clients connect to this port",
+        "ChildPorts": [
+            {
+                "Protocol": "TCP",
+                "Port": 21115,
+                "Offset": -1,
+                "Ref": "NatTestPort",
+                "Name": "NAT Test Port",
+                "Description": "Port for the NAT type test (hbbs)"
+            },
+            {
+                "Protocol": "TCP",
+                "Port": 21118,
+                "Offset": 2,
+                "Ref": "IdWebSocketPort",
+                "Name": "ID Server WebSocket Port",
+                "Description": "Port for web client connections to the ID server (hbbs)"
+            }
+        ]
+    },
+    {
+        "Protocol": "TCP",
+        "Port": 21117,
+        "Ref": "RelayPort",
+        "Name": "Relay Port",
+        "Description": "Port for relayed connections (hbbr)",
+        "ChildPorts": [
+            {
+                "Protocol": "TCP",
+                "Port": 21119,
+                "Offset": 2,
+                "Ref": "RelayWebSocketPort",
+                "Name": "Relay WebSocket Port",
+                "Description": "Port for web client connections to the relay (hbbr)"
+            }
+        ]
+    }
+]

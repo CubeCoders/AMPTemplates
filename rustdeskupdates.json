@@ -1,0 +1,34 @@
+[
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceData": "rustdesk-server-linux-amd64.zip",
+        "UpdateSourceArgs": "rustdesk/rustdesk-server",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Set Executable Permissions",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"chmod +x \\\"{{$FullBaseDir}}amd64/hbbs\\\" \\\"{{$FullBaseDir}}amd64/hbbr\\\" \\\"{{$FullBaseDir}}amd64/rustdesk-utils\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceData": "rustdesk-server-windows-x86_64-unsigned.zip",
+        "UpdateSourceArgs": "rustdesk/rustdesk-server",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    }
+]
