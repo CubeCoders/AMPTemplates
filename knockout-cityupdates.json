@@ -1,0 +1,44 @@
+[
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "2915930",
+        "UpdateSourceArgs": "2915930",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Data Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C mkdir \"%UserProfile%\\AppData\\Local\\KnockoutCityServer\" > NUL 2>&1 & rd /S /Q \"{{$FullBaseDir}}KnockoutCityServerData\" > NUL 2>&1 & mklink /J \"{{$FullBaseDir}}KnockoutCityServerData\" \"%UserProfile%\\AppData\\Local\\KnockoutCityServer\" > NUL 2>&1",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Data Directory Creation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullRootDir}}.wine/drive_c/users/amp/AppData/Local/KnockoutCityServer\\\" >/dev/null 2>&1; cd knockout-city/2915930 && rm -f KnockoutCityServerData >/dev/null 2>&1 && ln -sf \\\"../.wine/drive_c/users/amp/AppData/Local/KnockoutCityServer\\\" ./KnockoutCityServerData >/dev/null 2>&1\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Readme File",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}KnockoutCityServerData/README.txt",
+        "UpdateSourceData": "WARNING: This directory will include the save data of multiple Knockout City servers\nrun on this system.\n\nTake care when managing files in this directory or its subdirectories!",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    }
+]
