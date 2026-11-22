@@ -1,0 +1,54 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "2738040",
+        "UpdateSourceArgs": "1494420",
+        "UpdateSourceVersion": "{{ServerBranch}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Steam SDK64 Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Documents/.steam/sdk64",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Copy SteamClient Library",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}Documents/.steam/sdk64/steamclient.so",
+        "UpdateSourceArgs": "{{$FullBaseDir}}linux64/steamclient.so",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Settings Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Documents/Silica",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "ServerSettings.xml Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/silicaserversettings.xml",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Documents/Silica",
+        "UpdateSourceArgs": "ServerSettings.xml",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "GameSettings.xml Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/silicagamesettings.xml",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Documents/Silica",
+        "UpdateSourceArgs": "GameSettings.xml",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
