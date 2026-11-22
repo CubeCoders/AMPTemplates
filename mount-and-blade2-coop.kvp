@@ -23,11 +23,11 @@ App.RootDir=./bannerlord-coop/
 App.BaseDirectory=./bannerlord-coop/
 App.ExecutableLinux=/usr/bin/env
 App.WorkingDir=server/engine/bin/Win64_Shipping_Server
-App.LinuxCommandLineArgs="BANNERLORD_USER_DIR=Z:{{$FullRootDir}}data" "COOP_DATA_DIR=Z:{{$FullRootDir}}data" "DOTNET_ROOT=Z:{{$FullRootDir}}server/engine/dotnet" /usr/bin/xvfb-run -a /usr/bin/socat STDIO "EXEC:/usr/bin/wine ../../dotnet/dotnet.exe TaleWorlds.Starter.DotNetCore.dll _MODULES_*Native*SandBoxCore*Sandbox*{{CoopModuleId}}*DedicatedServer.Windows*_MODULES_ /dedicatedcustomserver {{CoopEnginePort}} EU 0,pty,setsid,ctty,echo=0,inlcr"
+App.LinuxCommandLineArgs="BANNERLORD_USER_DIR=Z:{{$FullRootDir}}data" "COOP_DATA_DIR=Z:{{$FullRootDir}}data" "DOTNET_ROOT=Z:{{$FullRootDir}}server/engine/dotnet" /usr/bin/xvfb-run -a /usr/bin/socat STDIO "EXEC:/usr/bin/wine ../../dotnet/dotnet.exe TaleWorlds.Starter.DotNetCore.dll _MODULES_*Native*SandBoxCore*Sandbox*{{CoopModuleId}}*DedicatedServer.Windows*_MODULES_,pty,setsid,ctty,echo=0,inlcr"
 App.CommandLineArgs={{$PlatformArgs}}
 App.UseLinuxIOREDIR=False
 App.EnvironmentVariables={"WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"mscoree,mshtml=","DOTNET_MULTILEVEL_LOOKUP":"0","DS_ACCEPT_EULA":"{{AcceptEULA}}"}
-App.AppSettings={"CoopModuleId":"Coop","CoopEnginePort":"7210"}
+App.AppSettings={"CoopModuleId":"Coop"}
 App.ExitMethod=String
 App.ExitString=stop
 App.ExitTimeout=180
@@ -41,7 +41,7 @@ App.AdminPortRef=0
 App.UpdateSources=@IncludeJson[mount-and-blade2-coopupdates.json]
 App.PreStartStages=@IncludeJson[mount-and-blade2-coopstart.json]
 App.MonitorDirectChildOnly=False
-App.MonitorChildProcessName=^(?:"?[A-Za-z]:[\\/].*?dotnet\.exe"?|(?:\.\./)+dotnet/dotnet\.exe|dotnet\.exe)\s+.*TaleWorlds\.Starter\.DotNetCore\.dll.* /dedicatedcustomserver {{CoopEnginePort}} EU 0\s*$
+App.MonitorChildProcessName=^(?:"?[A-Za-z]:[\\/].*?dotnet\.exe"?|(?:\.\./)+dotnet/dotnet\.exe|dotnet\.exe)\s+.*TaleWorlds\.Starter\.DotNetCore\.dll"?\s+"?_MODULES_\*Native\*SandBoxCore\*Sandbox\*{{CoopModuleId}}\*DedicatedServer\.Windows\*_MODULES_"?\s*$
 App.SteamUpdateAnonymousLogin=False
 App.SteamForceLoginPrompt=True
 App.SupportsUniversalSleep=False

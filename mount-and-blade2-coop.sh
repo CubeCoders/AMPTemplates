@@ -147,7 +147,7 @@ stage_server() {
 
 prepare_config() {
     local port=$1 data="$ROOT/data" temporary old
-    check_port "$port" 65534
+    check_port "$port"
     settings
     mkdir -p -- "$data"
     old="$data/server-config.json"
@@ -167,9 +167,8 @@ prepare_config() {
 }
 
 prepare() {
-    local port=$1 engine=$2 expected=$3 game="$ROOT/server" data name mid binary
-    check_port "$port" 65534; check_port "$engine"
-    (( engine != port && engine != port+1 )) || die 'Engine port overlaps Co-op ports'
+    local port=$1 expected=$2 game="$ROOT/server" data name mid binary
+    check_port "$port"
     for binary in wine wineboot wineserver xvfb-run socat timeout; do
         command -v "$binary" >/dev/null || die "Missing container dependency: $binary"
     done
@@ -202,8 +201,8 @@ main() {
     case "${1:-}" in
         update) update ;;
         init) settings ;;
-        prepare) [[ $# == 4 ]] || die 'Usage: mount-and-blade2-coop.sh prepare GAME_PORT ENGINE_PORT MODULE_ID'; prepare "$2" "$3" "$4" ;;
-        *) die 'Usage: mount-and-blade2-coop.sh init|update|prepare GAME_PORT ENGINE_PORT MODULE_ID' ;;
+        prepare) [[ $# == 3 ]] || die 'Usage: mount-and-blade2-coop.sh prepare GAME_PORT MODULE_ID'; prepare "$2" "$3" ;;
+        *) die 'Usage: mount-and-blade2-coop.sh init|update|prepare GAME_PORT MODULE_ID' ;;
     esac
 }
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then main "$@"; fi
