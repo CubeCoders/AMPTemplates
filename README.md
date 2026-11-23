@@ -14,7 +14,7 @@ You can also use the online configurator at https://config.getamp.sh/ to help wi
 Right now the following restrictions apply to templates that may be publicly shared via this repository (some of these will be relaxed over time):
 
  - The application must not require any login/authentication in order to download (except for SteamCMD logins).
- - If the application does not have a Linux version you should add a Proton download via SteamCMD to support it if possible.
+ - If the application does not have a Linux version you should add Wine support if possible. Proton GE should be used as a secondary option if Wine fails to work.
  - Applications that have customizable settings must use a Settings Manifest.
  - Do not invoke any shell scripts/batch files. You must only launch actual executables. Scripts may be used for update and pre-start stages.
  
