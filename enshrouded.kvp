@@ -11,19 +11,19 @@ Meta.ConfigManifest=enshroudedconfig.json
 Meta.MetaConfigManifest=enshroudedmetaconfig.json
 Meta.ConfigRoot=enshrouded.kvp
 Meta.MinAMPVersion=2.6.2.8
-Meta.SpecificDockerImage=cubecoders/ampbase:debian
+Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
 Meta.DockerRequired=False
 Meta.DockerBaseReadOnly=False
-Meta.ContainerPolicy=Supported
-Meta.ContainerPolicyReason=
+Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
+Meta.ContainerPolicyReason=The server requires Wine (ideally latest stable from winehq.org) to run on Linux. Using a container avoids the need for you to install this dependency on the host.
 Meta.ExtraSetupStepsURI=
 Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=12
+Meta.ConfigVersion=13
 Meta.ReleaseNotes=Enshrouded 1.0: adds the Automatic option to Enemy Amount and the Flame Altar Shroud Level setting. Limits now match the game: Diving Time Factor minimum 0.75, Enemy Damage Factor maximum 2.5, Boss Health Modifier maximum 4.
-Meta.BreakingReleaseNotes=
+Meta.BreakingReleaseNotes=Linux now uses Wine instead of Proton GE. Existing container instances: change the image to cubecoders/ampbase:wine-stable. Native hosts: install Wine. Until then the old Proton GE install keeps working but is no longer updated. Proton saves are copied into the Wine prefix; .proton/compatdata is kept.
 Meta.ImportableExtensions=[]
 Meta.AppConfigId=473ef3af-bc0b-4555-a42b-9f6393ffd29f
 Meta.AppIsMultiIPAware=False
@@ -32,14 +32,14 @@ App.RootDir=./enshrouded/
 App.BaseDirectory=./enshrouded/2278520/
 App.SteamWorkshopDownloadLocation=
 App.ExecutableWin=2278520\enshrouded_server.exe
-App.ExecutableLinux=.proton/proton
+App.ExecutableLinux=/bin/bash
 App.WorkingDir=2278520
-App.LinuxCommandLineArgs=runinprefix "{{$FullBaseDir}}enshrouded_server.exe"
+App.LinuxCommandLineArgs=-c "if [[ -x /usr/bin/wine ]]; then exec /usr/bin/wine \"{{$FullBaseDir}}enshrouded_server.exe\" \"$@\"; elif [[ -x \"{{$FullRootDir}}.proton/proton\" ]]; then unset WINEPREFIX WINEARCH WINEDEBUG; export STEAM_COMPAT_DATA_PATH=\"{{$FullRootDir}}.proton/compatdata\" STEAM_COMPAT_CLIENT_INSTALL_PATH=\"{{$FullBaseDir}}.steam/steam\" HOME=\"{{$FullBaseDir}}\"; exec \"{{$FullRootDir}}.proton/proton\" runinprefix \"{{$FullBaseDir}}enshrouded_server.exe\" \"$@\"; else echo \"ERROR: Wine was not found at /usr/bin/wine, and this instance has no Proton GE runtime to fall back to.\"; exit 1; fi" amp-launch
 App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1203620","STEAM_COMPAT_DATA_PATH":"{{$FullRootDir}}.proton/compatdata","STEAM_COMPAT_CLIENT_INSTALL_PATH":"{{$FullBaseDir}}.steam/steam","HOME":"{{$FullBaseDir}}","WINEDLLOVERRIDES":"dbghelp=n,b"}
+App.EnvironmentVariables={"LD_LIBRARY_PATH":"{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%","SteamAppId":"1203620","WINEPREFIX":"{{$FullRootDir}}.wine","WINEARCH":"win64","WINEDEBUG":"-all","WINEDLLOVERRIDES":"dbghelp=n,b"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter= 
 App.ExitMethod=OS_CLOSE
