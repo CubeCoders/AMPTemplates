@@ -1,6 +1,6 @@
 Meta.DisplayName=Knockout City: Private Server Edition
 Meta.Description=Knockout City Private Server Edition Dedicated Server
-Meta.OS=Windows
+Meta.OS=Windows, Linux
 Meta.AarchSupport=Unknown
 Meta.Arch=x86_64
 Meta.Author=Greelan
@@ -12,13 +12,13 @@ Meta.MetaConfigManifest=knockout-citymetaconfig.json
 Meta.ConfigRoot=knockout-city.kvp
 Meta.MinAMPVersion=2.6.4.0
 Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
-Meta.DockerRequired=False
+Meta.DockerRequired=True
 Meta.DockerBaseReadOnly=False
-Meta.ContainerPolicy=SupportedOnWindows, RecommendedOnLinux
-Meta.ContainerPolicyReason=The server requires Wine to run on Linux. Using a container avoids the need for you to install this dependency on the host.
+Meta.ContainerPolicy=Required
+Meta.ContainerPolicyReason=The server always keeps its database in the user profile and starts its own PostgreSQL and Redis on fixed ports, so instances outside a container would share data and clash. In a container it runs under Wine with its data kept inside the instance.
 Meta.ExtraSetupStepsURI=
 Meta.Prerequisites=[]
-Meta.ExtraContainerPackages=[]
+Meta.ExtraContainerPackages=["postgresql","redis-server"]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
 Meta.ConfigVersion=1
@@ -32,8 +32,8 @@ App.BaseDirectory=./knockout-city/2915930/
 App.SteamWorkshopDownloadLocation=
 App.ExecutableWin=2915930\KnockoutCityServer\KnockoutCityServer.exe
 App.ExecutableLinux=/usr/bin/wine
-App.WorkingDir=2915930/KnockoutCityServer
-App.LinuxCommandLineArgs=KnockoutCityServer.exe
+App.WorkingDir=/tmp/knockout-city-server
+App.LinuxCommandLineArgs=KnockoutCityServer.exe -backend_db=postgresql://viper:viper@localhost:5434/viper -backend_redis_db_host=127.0.0.1 -backend_redis_db_port=6380
 App.WindowsCommandLineArgs=
 App.CommandLineArgs={{$PlatformArgs}} -backend_port={{$ServerPort1}} -server_min_port={{$ServerPort1}} -server_max_port={{$ServerPort3}} {{$FormattedArgs}}
 App.UseLinuxIOREDIR=False
@@ -74,7 +74,7 @@ App.RCONSelectIPMethod=Default
 App.TelnetLoginFormat= 
 App.TelnetNewLineType=Default
 App.UpdateSources=@IncludeJson[knockout-cityupdates.json]
-App.PreStartStages=[]
+App.PreStartStages=@IncludeJson[knockout-citystart.json]
 App.UserActions=[]
 App.ForceUpdate=False
 App.ForceUpdateReason=
@@ -85,7 +85,7 @@ App.RapidStartup=False
 App.SmartExcludeExemptions=["*.cfg","*.conf","*.config","*.ini","*.json","*.xml","*.properties","*.kvp","*.yml","*.yaml","*.toml","*.lua"]
 App.SmartExcludeSupported=False
 App.DumpFullChildProcessTree=False
-App.MonitorChildProcessName=^{{$WineBaseDir}}KnockoutCityServer\\KnockoutCityServer\.exe.*-backend_port={{$ServerPort1}}.*$
+App.MonitorChildProcessName=^Z:\\tmp\\knockout-city-server\\KnockoutCityServer\.exe.*-backend_port={{$ServerPort1}}.*$
 App.MonitorDirectChildOnly=False
 App.SupportsUniversalSleep=False
 App.WakeupMode=Any
