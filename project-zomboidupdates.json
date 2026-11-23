@@ -70,5 +70,23 @@
         "UpdateSourceArgs": "{{$FullBaseDir}}Zomboid/Server/{{servername}}_SandboxVars.lua",
         "OverwriteExistingFiles": false,
         "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Spawn Regions File Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "function SpawnRegions()\n\treturn {\n\t\t{ name = \"Muldraugh, KY\", file = \"media/maps/Muldraugh, KY/spawnpoints.lua\" },\n\t\t{ name = \"West Point, KY\", file = \"media/maps/West Point, KY/spawnpoints.lua\" },\n\t\t{ name = \"Rosewood, KY\", file = \"media/maps/Rosewood, KY/spawnpoints.lua\" },\n\t\t{ name = \"Riverside, KY\", file = \"media/maps/Riverside, KY/spawnpoints.lua\" },\n\t\t-- Uncomment the line below to add a custom spawnpoint for this server.\n--\t\t{ name = \"Twiggy's Bar\", serverfile = \"{{servername}}_spawnpoints.lua\" },\n\t}\nend\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Zomboid/Server/{{servername}}_spawnregions.lua",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Spawn Points File Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "function SpawnPoints()\n\treturn {\n\t\tunemployed = {\n\t\t\t{ worldX = 40, worldY = 22, posX = 67, posY = 201 }\n\t\t}\n\t}\nend\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Zomboid/Server/{{servername}}_spawnpoints.lua",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     }
 ]
