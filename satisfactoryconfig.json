@@ -34,7 +34,7 @@
     {
         "DisplayName": "MultiHome IP Binding",
         "Category": "Satisfactory:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Network:lan:2",
         "Description": "If required, you can change the binding of the server by changing the Application IP Binding for this instance. Binding to :: will make the server accessible on all IPv4 and IPv6 interfaces",
         "Keywords": "ip,binding,address,multihome",
         "FieldName": "MultiHome",
@@ -45,7 +45,7 @@
     {
         "DisplayName": "Initial Connection Timeout",
         "Category": "Satisfactory:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Network:lan:2",
         "Description": "Sets the amount of time to wait for a new network connection to be established before destroying the connection. May assist with connection issues for client systems with older hardware or slower networks",
         "Keywords": "initial,connect,connection,timeout,initialconnecttimeout",
         "FieldName": "InitialConnectTimeout",
@@ -62,7 +62,7 @@
     {
         "DisplayName": "Established Connection Timeout",
         "Category": "Satisfactory:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Network:lan:2",
         "Description": "Sets the amount of time to wait before considering an established connection timed out. Typically shorter than the Initial Connection Timeout. May assist with connection issues for client systems with older hardware or slower networks",
         "Keywords": "established,connection,timeout,connectiontimeout",
         "FieldName": "ConnectionTimeout",
@@ -79,7 +79,7 @@
     {
         "DisplayName": "Maximum Tick Rate",
         "Category": "Satisfactory:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Network:lan:2",
         "Description": "Sets the maximum tick rate for the server",
         "Keywords": "maximum,tick,rate,netmaxtickrate,lanmaxtickrate",
         "FieldName": "MaxTickRate",
@@ -96,7 +96,7 @@
     {
         "DisplayName": "Maximum Tick Rate",
         "Category": "Satisfactory:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Network:lan:2",
         "Description": "",
         "Keywords": "",
         "FieldName": "MaxTickRate",
@@ -109,7 +109,7 @@
     {
         "DisplayName": "Maximum Tick Rate",
         "Category": "Satisfactory:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Network:lan:2",
         "Description": "",
         "Keywords": "",
         "FieldName": "MaxTickRate",
@@ -122,7 +122,7 @@
     {
         "DisplayName": "Maximum Tick Rate",
         "Category": "Satisfactory:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Network:lan:2",
         "Description": "",
         "Keywords": "",
         "FieldName": "MaxTickRate",
@@ -135,7 +135,7 @@
     {
         "DisplayName": "Maximum Tick Rate",
         "Category": "Satisfactory:stadia_controller",
-        "Subcategory": "Server:dns:1",
+        "Subcategory": "Network:lan:2",
         "Description": "",
         "Keywords": "",
         "FieldName": "MaxTickRate",
@@ -144,6 +144,26 @@
         "ParamFieldName": "ini:Engine:[/Script/Engine.Engine]:NetClientTicksPerSecond",
         "IncludeInCommandLine": true,
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Network Quality",
+        "Category": "Satisfactory:stadia_controller",
+        "Subcategory": "Network:lan:2",
+        "Description": "Sets the server's network bandwidth limits using the game's Low, Medium, High or Ultra presets. When set, this overrides the Network Quality chosen in the in-game Server Manager on every start. Unrestricted raises the limits to 100 MB/s per client and can use much more bandwidth",
+        "Keywords": "network,quality,bandwidth,speed,rate,networkquality,maxclientrate,totalnetbandwidth",
+        "FieldName": "NetworkQuality",
+        "InputType": "enum",
+        "ParamFieldName": "NetworkQuality",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "Use in-game Server Manager setting (default)",
+            " -ini:Scalability:[NetworkQuality@0]:ConfiguredInternetSpeed=60000 -ini:Scalability:[NetworkQuality@0]:ConfiguredLanSpeed=70000 -ini:Scalability:[NetworkQuality@0]:MaxClientRate=60000 -ini:Scalability:[NetworkQuality@0]:MaxInternetClientRate=60000 -ini:Scalability:[NetworkQuality@0]:TotalNetBandwidth=240000 -ini:Scalability:[NetworkQuality@0]:MaxDynamicBandwidth=60000 -ini:Scalability:[NetworkQuality@0]:MinDynamicBandwidth=50000 -ini:Scalability:[NetworkQuality@1]:ConfiguredInternetSpeed=60000 -ini:Scalability:[NetworkQuality@1]:ConfiguredLanSpeed=70000 -ini:Scalability:[NetworkQuality@1]:MaxClientRate=60000 -ini:Scalability:[NetworkQuality@1]:MaxInternetClientRate=60000 -ini:Scalability:[NetworkQuality@1]:TotalNetBandwidth=240000 -ini:Scalability:[NetworkQuality@1]:MaxDynamicBandwidth=60000 -ini:Scalability:[NetworkQuality@1]:MinDynamicBandwidth=50000 -ini:Scalability:[NetworkQuality@2]:ConfiguredInternetSpeed=60000 -ini:Scalability:[NetworkQuality@2]:ConfiguredLanSpeed=70000 -ini:Scalability:[NetworkQuality@2]:MaxClientRate=60000 -ini:Scalability:[NetworkQuality@2]:MaxInternetClientRate=60000 -ini:Scalability:[NetworkQuality@2]:TotalNetBandwidth=240000 -ini:Scalability:[NetworkQuality@2]:MaxDynamicBandwidth=60000 -ini:Scalability:[NetworkQuality@2]:MinDynamicBandwidth=50000 -ini:Scalability:[NetworkQuality@3]:ConfiguredInternetSpeed=60000 -ini:Scalability:[NetworkQuality@3]:ConfiguredLanSpeed=70000 -ini:Scalability:[NetworkQuality@3]:MaxClientRate=60000 -ini:Scalability:[NetworkQuality@3]:MaxInternetClientRate=60000 -ini:Scalability:[NetworkQuality@3]:TotalNetBandwidth=240000 -ini:Scalability:[NetworkQuality@3]:MaxDynamicBandwidth=60000 -ini:Scalability:[NetworkQuality@3]:MinDynamicBandwidth=50000": "Low",
+            " -ini:Scalability:[NetworkQuality@0]:ConfiguredInternetSpeed=120000 -ini:Scalability:[NetworkQuality@0]:ConfiguredLanSpeed=130000 -ini:Scalability:[NetworkQuality@0]:MaxClientRate=120000 -ini:Scalability:[NetworkQuality@0]:MaxInternetClientRate=120000 -ini:Scalability:[NetworkQuality@0]:TotalNetBandwidth=500000 -ini:Scalability:[NetworkQuality@0]:MaxDynamicBandwidth=120000 -ini:Scalability:[NetworkQuality@0]:MinDynamicBandwidth=100000 -ini:Scalability:[NetworkQuality@1]:ConfiguredInternetSpeed=120000 -ini:Scalability:[NetworkQuality@1]:ConfiguredLanSpeed=130000 -ini:Scalability:[NetworkQuality@1]:MaxClientRate=120000 -ini:Scalability:[NetworkQuality@1]:MaxInternetClientRate=120000 -ini:Scalability:[NetworkQuality@1]:TotalNetBandwidth=500000 -ini:Scalability:[NetworkQuality@1]:MaxDynamicBandwidth=120000 -ini:Scalability:[NetworkQuality@1]:MinDynamicBandwidth=100000 -ini:Scalability:[NetworkQuality@2]:ConfiguredInternetSpeed=120000 -ini:Scalability:[NetworkQuality@2]:ConfiguredLanSpeed=130000 -ini:Scalability:[NetworkQuality@2]:MaxClientRate=120000 -ini:Scalability:[NetworkQuality@2]:MaxInternetClientRate=120000 -ini:Scalability:[NetworkQuality@2]:TotalNetBandwidth=500000 -ini:Scalability:[NetworkQuality@2]:MaxDynamicBandwidth=120000 -ini:Scalability:[NetworkQuality@2]:MinDynamicBandwidth=100000 -ini:Scalability:[NetworkQuality@3]:ConfiguredInternetSpeed=120000 -ini:Scalability:[NetworkQuality@3]:ConfiguredLanSpeed=130000 -ini:Scalability:[NetworkQuality@3]:MaxClientRate=120000 -ini:Scalability:[NetworkQuality@3]:MaxInternetClientRate=120000 -ini:Scalability:[NetworkQuality@3]:TotalNetBandwidth=500000 -ini:Scalability:[NetworkQuality@3]:MaxDynamicBandwidth=120000 -ini:Scalability:[NetworkQuality@3]:MinDynamicBandwidth=100000": "Medium",
+            " -ini:Scalability:[NetworkQuality@0]:ConfiguredInternetSpeed=200000 -ini:Scalability:[NetworkQuality@0]:ConfiguredLanSpeed=220000 -ini:Scalability:[NetworkQuality@0]:MaxClientRate=200000 -ini:Scalability:[NetworkQuality@0]:MaxInternetClientRate=200000 -ini:Scalability:[NetworkQuality@0]:TotalNetBandwidth=800000 -ini:Scalability:[NetworkQuality@0]:MaxDynamicBandwidth=220000 -ini:Scalability:[NetworkQuality@0]:MinDynamicBandwidth=200000 -ini:Scalability:[NetworkQuality@1]:ConfiguredInternetSpeed=200000 -ini:Scalability:[NetworkQuality@1]:ConfiguredLanSpeed=220000 -ini:Scalability:[NetworkQuality@1]:MaxClientRate=200000 -ini:Scalability:[NetworkQuality@1]:MaxInternetClientRate=200000 -ini:Scalability:[NetworkQuality@1]:TotalNetBandwidth=800000 -ini:Scalability:[NetworkQuality@1]:MaxDynamicBandwidth=220000 -ini:Scalability:[NetworkQuality@1]:MinDynamicBandwidth=200000 -ini:Scalability:[NetworkQuality@2]:ConfiguredInternetSpeed=200000 -ini:Scalability:[NetworkQuality@2]:ConfiguredLanSpeed=220000 -ini:Scalability:[NetworkQuality@2]:MaxClientRate=200000 -ini:Scalability:[NetworkQuality@2]:MaxInternetClientRate=200000 -ini:Scalability:[NetworkQuality@2]:TotalNetBandwidth=800000 -ini:Scalability:[NetworkQuality@2]:MaxDynamicBandwidth=220000 -ini:Scalability:[NetworkQuality@2]:MinDynamicBandwidth=200000 -ini:Scalability:[NetworkQuality@3]:ConfiguredInternetSpeed=200000 -ini:Scalability:[NetworkQuality@3]:ConfiguredLanSpeed=220000 -ini:Scalability:[NetworkQuality@3]:MaxClientRate=200000 -ini:Scalability:[NetworkQuality@3]:MaxInternetClientRate=200000 -ini:Scalability:[NetworkQuality@3]:TotalNetBandwidth=800000 -ini:Scalability:[NetworkQuality@3]:MaxDynamicBandwidth=220000 -ini:Scalability:[NetworkQuality@3]:MinDynamicBandwidth=200000": "High",
+            " -ini:Scalability:[NetworkQuality@0]:ConfiguredInternetSpeed=300000 -ini:Scalability:[NetworkQuality@0]:ConfiguredLanSpeed=340000 -ini:Scalability:[NetworkQuality@0]:MaxClientRate=300000 -ini:Scalability:[NetworkQuality@0]:MaxInternetClientRate=300000 -ini:Scalability:[NetworkQuality@0]:TotalNetBandwidth=1200000 -ini:Scalability:[NetworkQuality@0]:MaxDynamicBandwidth=320000 -ini:Scalability:[NetworkQuality@0]:MinDynamicBandwidth=300000 -ini:Scalability:[NetworkQuality@1]:ConfiguredInternetSpeed=300000 -ini:Scalability:[NetworkQuality@1]:ConfiguredLanSpeed=340000 -ini:Scalability:[NetworkQuality@1]:MaxClientRate=300000 -ini:Scalability:[NetworkQuality@1]:MaxInternetClientRate=300000 -ini:Scalability:[NetworkQuality@1]:TotalNetBandwidth=1200000 -ini:Scalability:[NetworkQuality@1]:MaxDynamicBandwidth=320000 -ini:Scalability:[NetworkQuality@1]:MinDynamicBandwidth=300000 -ini:Scalability:[NetworkQuality@2]:ConfiguredInternetSpeed=300000 -ini:Scalability:[NetworkQuality@2]:ConfiguredLanSpeed=340000 -ini:Scalability:[NetworkQuality@2]:MaxClientRate=300000 -ini:Scalability:[NetworkQuality@2]:MaxInternetClientRate=300000 -ini:Scalability:[NetworkQuality@2]:TotalNetBandwidth=1200000 -ini:Scalability:[NetworkQuality@2]:MaxDynamicBandwidth=320000 -ini:Scalability:[NetworkQuality@2]:MinDynamicBandwidth=300000 -ini:Scalability:[NetworkQuality@3]:ConfiguredInternetSpeed=300000 -ini:Scalability:[NetworkQuality@3]:ConfiguredLanSpeed=340000 -ini:Scalability:[NetworkQuality@3]:MaxClientRate=300000 -ini:Scalability:[NetworkQuality@3]:MaxInternetClientRate=300000 -ini:Scalability:[NetworkQuality@3]:TotalNetBandwidth=1200000 -ini:Scalability:[NetworkQuality@3]:MaxDynamicBandwidth=320000 -ini:Scalability:[NetworkQuality@3]:MinDynamicBandwidth=300000": "Ultra",
+            " -ini:Scalability:[NetworkQuality@0]:ConfiguredInternetSpeed=104857600 -ini:Scalability:[NetworkQuality@0]:ConfiguredLanSpeed=104857600 -ini:Scalability:[NetworkQuality@0]:MaxClientRate=104857600 -ini:Scalability:[NetworkQuality@0]:MaxInternetClientRate=104857600 -ini:Scalability:[NetworkQuality@0]:TotalNetBandwidth=104857600 -ini:Scalability:[NetworkQuality@0]:MaxDynamicBandwidth=104857600 -ini:Scalability:[NetworkQuality@0]:MinDynamicBandwidth=10485760 -ini:Scalability:[NetworkQuality@1]:ConfiguredInternetSpeed=104857600 -ini:Scalability:[NetworkQuality@1]:ConfiguredLanSpeed=104857600 -ini:Scalability:[NetworkQuality@1]:MaxClientRate=104857600 -ini:Scalability:[NetworkQuality@1]:MaxInternetClientRate=104857600 -ini:Scalability:[NetworkQuality@1]:TotalNetBandwidth=104857600 -ini:Scalability:[NetworkQuality@1]:MaxDynamicBandwidth=104857600 -ini:Scalability:[NetworkQuality@1]:MinDynamicBandwidth=10485760 -ini:Scalability:[NetworkQuality@2]:ConfiguredInternetSpeed=104857600 -ini:Scalability:[NetworkQuality@2]:ConfiguredLanSpeed=104857600 -ini:Scalability:[NetworkQuality@2]:MaxClientRate=104857600 -ini:Scalability:[NetworkQuality@2]:MaxInternetClientRate=104857600 -ini:Scalability:[NetworkQuality@2]:TotalNetBandwidth=104857600 -ini:Scalability:[NetworkQuality@2]:MaxDynamicBandwidth=104857600 -ini:Scalability:[NetworkQuality@2]:MinDynamicBandwidth=10485760 -ini:Scalability:[NetworkQuality@3]:ConfiguredInternetSpeed=104857600 -ini:Scalability:[NetworkQuality@3]:ConfiguredLanSpeed=104857600 -ini:Scalability:[NetworkQuality@3]:MaxClientRate=104857600 -ini:Scalability:[NetworkQuality@3]:MaxInternetClientRate=104857600 -ini:Scalability:[NetworkQuality@3]:TotalNetBandwidth=104857600 -ini:Scalability:[NetworkQuality@3]:MaxDynamicBandwidth=104857600 -ini:Scalability:[NetworkQuality@3]:MinDynamicBandwidth=10485760": "Unrestricted (100 MB/s per client)"
+        }
     },
     {
         "DisplayName": "Maximum Autosaves",
