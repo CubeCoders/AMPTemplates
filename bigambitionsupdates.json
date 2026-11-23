@@ -26,7 +26,7 @@
     },
     {
         "UpdateStageName": "Going Public Server download",
-        "UpdateSourcePlatform": "Linux",
+        "UpdateSourcePlatform": "All",
         "UpdateSource": "GithubRelease",
         "UpdateSourceData": "GoingPublicServer-Server.zip",
         "UpdateSourceArgs": "amaus1209/BigAmbitionsGoingPublicServer",
@@ -50,6 +50,22 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"m=\\\"{{$FullRootDir}}bamp-mod/GoingPublicServer\\\"; d=\\\"{{$FullRootDir}}.proton/compatdata/pfx/drive_c/users/steamuser/AppData/LocalLow/Hovgaard Games/Big Ambitions/ModsLocal\\\"; if [ -f \\\"$m/BigAmbitionsMP.dll\\\" ]; then mkdir -p \\\"$d\\\" && rm -rf \\\"$d/BigAmbitionsMP\\\" \\\"$d/GoingPublicServer\\\" && cp -r \\\"$m\\\" \\\"$d/\\\" && echo \\\"Going Public Server installed into the prefix\\\"; else echo \\\"No mod in bamp-mod/GoingPublicServer yet - upload the built mod folder there and update again\\\"; fi\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Default server settings and settings for AMP",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"{{$FullRootDir}}bamp-tools\\bamp-prestart.ps1\" settings \"{{$FullRootDir}}.\" \"{{$FullBaseDir}}bamp-server.json\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Going Public Server into the server's mods folder",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"{{$FullRootDir}}bamp-tools\\bamp-prestart.ps1\" mods \"{{$FullRootDir}}.\" \"{{$FullBaseDir}}bamp-server.json\"",
         "SkipOnFailure": true
     }
 ]

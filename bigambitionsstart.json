@@ -54,5 +54,37 @@
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "\"{{$FullRootDir}}bamp-tools/bamp-prestart.sh\" translate \"{{$FullRootDir}}\" \"{{$FullBaseDir}}bamp-server.json\"",
         "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "End a game left over from the last run",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"{{$FullRootDir}}bamp-tools\\bamp-prestart.ps1\" leftovers \"{{$FullRootDir}}.\" \"{{$FullBaseDir}}bamp-server.json\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Settings for AMP",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"{{$FullRootDir}}bamp-tools\\bamp-prestart.ps1\" settings \"{{$FullRootDir}}.\" \"{{$FullBaseDir}}bamp-server.json\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Server key",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"{{$FullRootDir}}bamp-tools\\bamp-prestart.ps1\" key \"{{$FullRootDir}}.\" \"{{$FullBaseDir}}bamp-server.json\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Going Public Server and server mods, their list for players",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"{{$FullRootDir}}bamp-tools\\bamp-prestart.ps1\" mods \"{{$FullRootDir}}.\" \"{{$FullBaseDir}}bamp-server.json\"",
+        "SkipOnFailure": true
     }
 ]
