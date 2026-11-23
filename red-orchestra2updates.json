@@ -1,0 +1,37 @@
+[
+    {
+        "UpdateStageName": "Server SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "212542",
+        "UpdateSourceArgs": "35450",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Start Server To Generate Config Files",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "StartApplication",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Wait For Server Start",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "WaitForStartupComplete",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Stop Server",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "ShutdownApplication",
+        "SkipOnFailure": false
+    }
+]
