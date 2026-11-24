@@ -58,7 +58,7 @@
         "DisplayName": "World",
         "Category": "Big Ambitions:storefront",
         "Subcategory": "Server:dns:1",
-        "Description": "The world the server runs: the worlds on this server, or \"(world played last)\". The server fills the list itself; AMP shows new worlds after the next restart of the instance. A new world comes from \"New world: name\" (tab New world); on a server without any world, \"New world: difficulty\" creates one called \"Server\".",
+        "Description": "The world the server runs: the worlds on this server, or \"(world played last)\". The server fills the list itself; AMP reads it only when the instance starts, so new worlds show after the next restart of the instance (restarting just the server is not enough). A new world comes from \"New world: name\" (tab New world); on a server without any world, \"New world: difficulty\" creates one called \"Server\".",
         "Keywords": "",
         "FieldName": "DedicatedSession",
         "InputType": "enum",
@@ -74,7 +74,7 @@
         "DisplayName": "Load a save once",
         "Category": "Big Ambitions:storefront",
         "Subcategory": "Server:dns:1",
-        "Description": "Load this save at the next start instead of the newest, once - later restarts load the newest again. The list shows the saves on this server, newest first, with game day and time; the server fills it itself, AMP shows new saves after the next restart of the instance. \"(newest save)\" = always the newest.",
+        "Description": "Load this save at the next start instead of the newest, once - later restarts load the newest again. \"(2nd newest save)\" to \"(5th newest save)\" count back from the newest save of the world the server runs and are always there. The saves by name, newest first with game day and time, are filled in by the server; AMP reads them only when the instance starts, so new saves show after the next restart of the instance (restarting just the server is not enough). In the console, saves lists them, and load #N or load with a save's name loads one at once (the server saves first and restarts) - also to load the same entry again. \"(newest save)\" = always the newest.",
         "Keywords": "",
         "FieldName": "DedicatedLoadSave",
         "InputType": "enum",
@@ -83,7 +83,11 @@
         "IncludeInCommandLine": false,
         "DefaultValue": "-",
         "EnumValues": {
-            "-": "(newest save)"
+            "-": "(newest save)",
+            "#2": "(2nd newest save)",
+            "#3": "(3rd newest save)",
+            "#4": "(4th newest save)",
+            "#5": "(5th newest save)"
         }
     },
     {
