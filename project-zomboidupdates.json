@@ -44,5 +44,49 @@
         "UpdateSourceArgs": "{{$FullBaseDir}}Zomboid/mods",
         "OverwriteExistingFiles": false,
         "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Config Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Zomboid/Server",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Config File Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "PVP=\nPVPLogToolChat=\nPVPLogToolFile=\nPauseEmpty=\nGlobalChat=\nChatStreams=\nOpen=\nServerWelcomeMessage=\nDisplayUserName=\nShowFirstAndLastName=\nUsernameDisguises=\nHideDisguisedUserName=\nSwitchZombiesOwnershipEachUpdate=\nSpawnPoint=\nSafetySystem=\nShowSafety=\nSafetyToggleTimer=\nSafetyCooldownTimer=\nSafetyDisconnectDelay=\nSpawnItems=\nDefaultPort=\nUDPPort=\nMods=\nMap=\nDoLuaChecksum=\nDenyLoginOnOverloadedServer=\nPublic=\nPublicName=\nPublicDescription=\nMaxPlayers=\nPingLimit=\nSafehousePreventsLootRespawn=\nDropOffWhiteListAfterDeath=\nNoFire=\nAnnounceDeath=\nSaveWorldEveryMinutes=\nPlayerSafehouse=\nAdminSafehouse=\nSafehouseAllowTrepass=\nSafehouseAllowFire=\nSafehouseAllowLoot=\nSafehouseAllowRespawn=\nSafehouseDaySurvivedToClaim=\nSafeHouseRemovalTime=\nSafehouseAllowNonResidential=\nSafehouseDisableDisguises=\nMaxSafezoneSize=\nAllowDestructionBySledgehammer=\nSledgehammerOnlyInSafehouse=\nWarStartDelay=\nWarDuration=\nWarSafehouseHitPoints=\nRCONPort=\nRCONPassword=\nDiscordEnable=\nDiscordToken=\nDiscordChatChannel=\nWebhookAddress=\nPassword=\nMaxAccountsPerUser=\nAllowCoop=\nSleepAllowed=\nSleepNeeded=\nKnockedDownAllowed=\nSneakModeHideFromOtherPlayers=\nUltraSpeedDoesnotAffectToAnimals=\nWorkshopItems=\nSteamScoreboard=\nSteamVAC=\nUPnP=\nVoiceEnable=\nVoiceMinDistance=\nVoiceMaxDistance=\nVoice3D=\nSpeedLimit=\nLoginQueueEnabled=\nLoginQueueConnectTimeout=\nserver_browser_announced_ip=\nPlayerRespawnWithSelf=\nPlayerRespawnWithOther=\nFastForwardMultiplier=\nDisableSafehouseWhenOwnerConnected=\nFaction=\nFactionDaySurvivedToCreate=\nFactionPlayersRequiredForTag=\nDisableRadioStaff=\nDisableRadioAdmin=\nDisableRadioGM=\nDisableRadioOverseer=\nDisableRadioModerator=\nDisableRadioInvisible=\nClientCommandFilter=\nClientActionLogs=\nPerkLogs=\nItemNumbersLimitPerContainer=\nBloodSplatLifespanDays=\nAllowNonAsciiUsername=\nBanKickGlobalSound=\nRemovePlayerCorpsesOnCorpseRemoval=\nTrashDeleteAll=\nPVPMeleeWhileHitReaction=\nMouseOverToSeeDisplayName=\nHidePlayersBehindYou=\nPVPMeleeDamageModifier=\nPVPFirearmDamageModifier=\nCarEngineAttractionModifier=\nPlayerBumpPlayer=\nMapRemotePlayerVisibility=\nBackupsCount=\nBackupsOnStart=\nBackupsOnVersionChange=\nBackupsPeriod=\nDisableVehicleTowing=\nDisableTrailerTowing=\nDisableBurntTowing=\nBadWordListFile=\nGoodWordListFile=\nBadWordPolicy=\nBadWordReplacement=\nMultiplayerStatisticsPeriod=\nDisableScoreboard=\nHideAdminsInPlayerList=\nUsePhysicsHitReaction=\nChatMessageCharacterLimit=\nChatMessageSlowModeTime=\nAutoCreateUserInWhiteList=\nWorldGenSeed=\nnightlengthmodifier=\nDisableSafehouseWhenPlayerConnected=\nSafehouseAllowTrespass=\nKickFastPlayers=\nDiscordChannel=\nDiscordChannelID=\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Zomboid/Server/{{servername}}.ini",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Sandbox Config File Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "SandboxVars = {\n    NightLength = 3,\n    MinutesPerPage = 1.00,\n    HoursForLootRespawn = 0,\n    MaxItemsForLootRespawn = 4,\n    ConstructionPreventsLootRespawn = true,\n}\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Zomboid/Server/{{servername}}_SandboxVars.lua",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Spawn Regions File Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "function SpawnRegions()\n\treturn {\n\t\t{ name = \"Muldraugh, KY\", file = \"media/maps/Muldraugh, KY/spawnpoints.lua\" },\n\t\t{ name = \"West Point, KY\", file = \"media/maps/West Point, KY/spawnpoints.lua\" },\n\t\t{ name = \"Rosewood, KY\", file = \"media/maps/Rosewood, KY/spawnpoints.lua\" },\n\t\t{ name = \"Riverside, KY\", file = \"media/maps/Riverside, KY/spawnpoints.lua\" },\n\t\t-- Uncomment the line below to add a custom spawnpoint for this server.\n--\t\t{ name = \"Twiggy's Bar\", serverfile = \"{{servername}}_spawnpoints.lua\" },\n\t}\nend\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Zomboid/Server/{{servername}}_spawnregions.lua",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Spawn Points File Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "function SpawnPoints()\n\treturn {\n\t\tunemployed = {\n\t\t\t{ worldX = 40, worldY = 22, posX = 67, posY = 201 }\n\t\t}\n\t}\nend\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Zomboid/Server/{{servername}}_spawnpoints.lua",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
     }
 ]
