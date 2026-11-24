@@ -1,5 +1,5 @@
 Meta.DisplayName=Big Ambitions (Going Public server)
-Meta.Description=Always-on Big Ambitions multiplayer host: the Going Public mod in headless server mode under Proton. The server files add Unity Doorstop and a small preloader so the game's mod loader starts without a Steam client - see the setup steps.
+Meta.Description=Always-on Big Ambitions multiplayer host: the Going Public mod in headless server mode, natively on Windows and under Wine on Linux. The server files add Unity Doorstop and a small preloader so the game's mod loader starts without a Steam client. Launch options: -bamp-nosteam (the preloader skips the game's own Steam initialisation and starts the mod loader itself, as there is no Steam client), -bamp-mods-dir (the game loads its mods from the instance's mods folder), -bamp-data-dir (saves and server data stay in the instance's gamedata folder) and -disable-force-steam (the game's own switch that stops it from relaunching through Steam). See the setup steps.
 Meta.OS=Windows, Linux
 Meta.AarchSupport=Unknown
 Meta.Arch=x86_64
@@ -11,18 +11,18 @@ Meta.ConfigManifest=bigambitionsconfig.json
 Meta.MetaConfigManifest=bigambitionsmetaconfig.json
 Meta.ConfigRoot=bigambitions.kvp
 Meta.MinAMPVersion=2.6.2.8
-Meta.SpecificDockerImage=cubecoders/ampbase:debian
+Meta.SpecificDockerImage=cubecoders/ampbase:wine-stable
 Meta.DockerRequired=False
 Meta.DockerBaseReadOnly=False
-Meta.ContainerPolicy=SupportedOnLinux
-Meta.ContainerPolicyReason=On Windows the server runs natively and each instance keeps its saves in its own folder. Containers are offered on Linux only: in a Windows-hosted container the game exits right after Proton starts.
+Meta.ContainerPolicy=RecommendedOnLinux
+Meta.ContainerPolicyReason=The server requires Wine (ideally latest stable from winehq.org), Xvfb and Python 3 to run on Linux. Using a container avoids the need for you to install these dependencies on the host. On Windows the server runs natively and each instance keeps its saves in its own folder.
 Meta.ExtraSetupStepsURI=https://github.com/amaus1209/BigAmbitionsGoingPublicServer#server-owners-amp
 Meta.Prerequisites=[]
 Meta.ExtraContainerPackages=["python3","xvfb","xauth"]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
-Meta.ConfigVersion=2
-Meta.ReleaseNotes=Windows support: runs natively, each instance keeps its saves in its own folder.
+Meta.ConfigVersion=3
+Meta.ReleaseNotes=Linux runs under Wine instead of Proton, with the same mods and data folders as Windows. On Windows the game's temp files stay in the instance. Existing Linux worlds stay in the old Proton prefix (.proton/compatdata/pfx/drive_c/users/steamuser/AppData/LocalLow/Hovgaard Games/Big Ambitions/SaveGames); copy them to gamedata/SaveGames to keep them.
 Meta.BreakingReleaseNotes=
 Meta.ImportableExtensions=[]
 Meta.AppConfigId=6b0c6a3e-9d1f-4a5e-8c2b-2f6d1e7a4b90
@@ -36,12 +36,12 @@ App.StoreDownloadLocations={"SteamWorkshop":"{{$FullRootDir}}bamp-mods-extra"}
 App.ExecutableWin=1331550\Big Ambitions.exe
 App.ExecutableLinux=/usr/bin/xvfb-run
 App.WorkingDir=1331550
-App.LinuxCommandLineArgs=-a "{{$FullRootDir}}.proton/proton" runinprefix "{{$FullBaseDir}}Big Ambitions.exe" -batchmode -nographics -bamp-config "Z:{{$FullBaseDir}}bamp-server.json" -bamp-headless-dir "Z:{{$FullRootDir}}headless"
+App.LinuxCommandLineArgs=-a wine "{{$FullBaseDir}}Big Ambitions.exe" -batchmode -nographics -disable-force-steam -bamp-nosteam -bamp-mods-dir "Z:{{$FullRootDir}}mods" -bamp-config "Z:{{$FullBaseDir}}bamp-server.json" -bamp-headless-dir "Z:{{$FullRootDir}}headless" -bamp-data-dir "Z:{{$FullRootDir}}gamedata" -logFile -
 App.WindowsCommandLineArgs=-batchmode -nographics -disable-force-steam -bamp-nosteam -bamp-mods-dir "{{$FullRootDir}}mods" -bamp-config "{{$FullBaseDir}}bamp-server.json" -bamp-headless-dir "{{$FullRootDir}}headless" -bamp-data-dir "{{$FullRootDir}}gamedata" -logFile -
 App.CommandLineArgs={{$PlatformArgs}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
-App.EnvironmentVariables={"SteamAppId": "1331550", "SteamGameId": "1331550", "STEAM_COMPAT_DATA_PATH": "{{$FullRootDir}}.proton/compatdata", "STEAM_COMPAT_CLIENT_INSTALL_PATH": "{{$FullBaseDir}}.steam/steam", "HOME": "{{$FullBaseDir}}", "LD_LIBRARY_PATH": "{{$FullRootDir}}linux64:%LD_LIBRARY_PATH%", "WINEDLLOVERRIDES": "winhttp=n,b"}
+App.EnvironmentVariables={"SteamAppId": "1331550", "SteamGameId": "1331550", "HOME": "{{$FullBaseDir}}", "TEMP": "{{$FullRootDir}}tmp", "TMP": "{{$FullRootDir}}tmp", "WINEPREFIX": "{{$FullRootDir}}.wine", "WINEARCH": "win64", "WINEDEBUG": "-all", "WINEDLLOVERRIDES": "winhttp=n,b"}
 App.CommandLineParameterFormat=-{0}={1}
 App.CommandLineParameterDelimiter=
 App.ExitMethod=String
@@ -89,7 +89,7 @@ App.WakeupMode=Any
 App.ApplicationReadyMode=RegexMatch
 Console.FilterMatchRegex=(\e\[(\d+;)*(\d+)?[ABCDHJKfmsu]|\e\[?[?\>\=\da-z]+)
 Console.FilterMatchReplacement=
-Console.ThrowawayMessageRegex=^(?!.*\[BAMP-HEADLESS\]).*(Shader|wine: |fixme:|AsyncGPUReadback|does not support asynchronous readback|Compressed to C:|Game C:/users/steamuser/AppData/Local/Temp).*$
+Console.ThrowawayMessageRegex=^(?!.*\[BAMP-HEADLESS\]).*(Shader|fixme:|AsyncGPUReadback|does not support asynchronous readback|Compressed to C:|Game C:/users/steamuser/AppData/Local/Temp).*$
 Console.AppReadyRegex=^.*\[BAMP-HEADLESS\] READY .*$
 Console.UserJoinRegex=^.*\[BAMP-HEADLESS\] JOIN (?<username>.+)$
 Console.UserLeaveRegex=^.*\[BAMP-HEADLESS\] LEAVE (?<username>.+)$
