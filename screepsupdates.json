@@ -1,0 +1,53 @@
+[
+  {
+    "UpdateStageName": "Node.js Download",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSourceArch": "x86_64",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"cd screeps && NodeVersion=\\\"v$(wget -qO- https://endoflife.date/api/v1/products/nodejs/releases/24 | jq -r \\\".result.latest.name\\\")\\\"; if [[ ! \\\"$NodeVersion\\\" =~ ^v24\\.[0-9]+\\.[0-9]+$ ]]; then if [[ -x node/bin/node ]]; then echo \\\"Could not check for a newer Node.js 24 release. Keeping $(node/bin/node --version)\\\" && exit 0; fi; echo \\\"Could not get the latest Node.js 24 version. Aborting\\\" && exit 1; fi; if [[ -x node/bin/node && \\\"$(node/bin/node --version)\\\" == \\\"$NodeVersion\\\" ]]; then echo \\\"Node.js $NodeVersion already installed. Skipping\\\"; else rm -f node.tar.gz; wget -qO node.tar.gz https://nodejs.org/download/release/$NodeVersion/node-$NodeVersion-linux-x64.tar.gz || { echo \\\"Download failed from the Node.js CDN. Aborting\\\"; exit 1; }; rm -rf node && mkdir -p node && tar -xzf node.tar.gz -C node --strip-components=1 && rm -f node.tar.gz && echo \\\"Node.js $NodeVersion installed\\\"; fi\"",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Node.js Download",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSourceArch": "aarch64",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"cd screeps && NodeVersion=\\\"v$(wget -qO- https://endoflife.date/api/v1/products/nodejs/releases/24 | jq -r \\\".result.latest.name\\\")\\\"; if [[ ! \\\"$NodeVersion\\\" =~ ^v24\\.[0-9]+\\.[0-9]+$ ]]; then if [[ -x node/bin/node ]]; then echo \\\"Could not check for a newer Node.js 24 release. Keeping $(node/bin/node --version)\\\" && exit 0; fi; echo \\\"Could not get the latest Node.js 24 version. Aborting\\\" && exit 1; fi; if [[ -x node/bin/node && \\\"$(node/bin/node --version)\\\" == \\\"$NodeVersion\\\" ]]; then echo \\\"Node.js $NodeVersion already installed. Skipping\\\"; else rm -f node.tar.gz; wget -qO node.tar.gz https://nodejs.org/download/release/$NodeVersion/node-$NodeVersion-linux-arm64.tar.gz || { echo \\\"Download failed from the Node.js CDN. Aborting\\\"; exit 1; }; rm -rf node && mkdir -p node && tar -xzf node.tar.gz -C node --strip-components=1 && rm -f node.tar.gz && echo \\\"Node.js $NodeVersion installed\\\"; fi\"",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Screeps Server Install",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"cd screeps/server && export PATH=\\\"$(cd ../node/bin && pwd):$PATH\\\" && { [ -f package.json ] || echo '{\\\"name\\\":\\\"screeps-server\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"private\\\":true}' > package.json; } && npm install --no-fund --no-audit screeps@latest {{Mods}}\"",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Mod Helper Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/screepsmods.js",
+    "UpdateSourceTarget": "{{$FullBaseDir}}",
+    "OverwriteExistingFiles": true,
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "World Data Creation",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"cd screeps && if [ ! -f world/.screepsrc ]; then mkdir -p world && cp -r server/node_modules/@screeps/launcher/init_dist/. world/ && sed -i \\\"s/^steam_api_key = .*/steam_api_key =/\\\" world/.screepsrc && echo \\\"World data created\\\"; else echo \\\"Existing world data found. Skipping\\\"; fi\"",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Mods Configuration",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"cd screeps/world && ../node/bin/node ../server/screepsmods.js ../server \\\"{{Mods}}\\\"\"",
+    "SkipOnFailure": false
+  }
+]

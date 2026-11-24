@@ -27,6 +27,7 @@
         "UpdateStageName": "Factorio Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "FetchURL",
+        "UpdateSourceArch": "x86_64",
         "UpdateSourceData": "https://factorio.com/get-download/stable/headless/linux64",
         "UpdateSourceArgs": "factorio.tar.xz",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
@@ -39,7 +40,34 @@
         "UpdateStageName": "Factorio Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "FetchURL",
+        "UpdateSourceArch": "x86_64",
         "UpdateSourceData": "https://www.factorio.com/get-download/{{BetaBranch}}/headless/linux64",
+        "UpdateSourceArgs": "factorio.tar.xz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "InstallBeta",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Factorio Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSourceData": "https://factorio.com/get-download/stable/headless/linux-arm64",
+        "UpdateSourceArgs": "factorio.tar.xz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "InstallBeta",
+        "UpdateSourceConditionValue": "false",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Factorio Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSourceData": "https://www.factorio.com/get-download/{{BetaBranch}}/headless/linux-arm64",
         "UpdateSourceArgs": "factorio.tar.xz",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "OverwriteExistingFiles": true,
@@ -53,6 +81,15 @@
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"cd factorio/server && tar -xJf factorio.tar.xz --strip-components=1 >/dev/null 2>&1 && rm -f factorio.tar.xz\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Link ARM64 Binary Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd factorio/server/bin && if [ -d x64 ] && [ ! -L x64 ]; then rm -rf x64; fi && ln -sfn arm64 x64\"",
         "SkipOnFailure": false
     },
     {
