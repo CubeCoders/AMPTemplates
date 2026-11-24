@@ -1,0 +1,105 @@
+[
+    {
+        "UpdateStageName": "SE2 Online Server Install",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'; Set-Location -LiteralPath '{{$FullRootDir}}'; New-Item -ItemType Directory -Force -Path 'server','upload' | Out-Null; $z = Get-ChildItem -Path 'upload' -Filter '*.zip' -File | Sort-Object LastWriteTime -Descending | Select-Object -First 1; if ($z) { Write-Output ('Extracting ' + $z.Name + ' into the server folder'); tar.exe -xf $z.FullName -C server; if ($LASTEXITCODE -ne 0) { Write-Output ('Could not extract ' + $z.Name + '. Upload it again and click Update'); exit 1 }; if (-not (Test-Path -LiteralPath 'server/Y51_SE2Online.DedicatedServer.exe')) { Write-Output ($z.Name + ' is not the SE2 Online dedicated server zip (no Y51_SE2Online.DedicatedServer.exe inside)'); exit 1 }; Remove-Item -LiteralPath $z.FullName -Force; Write-Output 'SE2 Online server installed. The uploaded zip was removed' } elseif (Test-Path -LiteralPath 'server/Y51_SE2Online.DedicatedServer.exe') { Write-Output 'No new server zip in the upload folder. Keeping the installed SE2 Online server' } else { Write-Output 'SE2 Online server files not found. Download the dedicated server zip from https://se2-online.yellow51.dev/ (sign in with Steam), upload it to the upload folder with the File Manager, then click Update again'; exit 1 }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SE2 Online Server Install",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && mkdir -p server upload; z=$(ls -t upload/*.zip 2>/dev/null | head -n1); if [[ -n \\\"$z\\\" ]]; then echo \\\"Extracting $(basename \\\"$z\\\") into the server folder\\\"; if ! unzip -oq \\\"$z\\\" -d server; then echo \\\"Could not extract $(basename \\\"$z\\\"). Upload it again and click Update\\\"; exit 1; fi; if [[ ! -f server/Y51_SE2Online.DedicatedServer.exe ]]; then echo \\\"$(basename \\\"$z\\\") is not the SE2 Online dedicated server zip (no Y51_SE2Online.DedicatedServer.exe inside)\\\"; exit 1; fi; rm -f \\\"$z\\\"; echo \\\"SE2 Online server installed. The uploaded zip was removed\\\"; elif [[ -f server/Y51_SE2Online.DedicatedServer.exe ]]; then echo \\\"No new server zip in the upload folder. Keeping the installed SE2 Online server\\\"; else echo \\\"SE2 Online server files not found. Download the dedicated server zip from https://se2-online.yellow51.dev/ (sign in with Steam), upload it to the upload folder with the File Manager, then click Update again\\\"; exit 1; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1133870",
+        "UpdateSourceTarget": "1133870",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Steamworks Redistributable Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1007",
+        "UpdateSourceTarget": "server",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Steamworks Library Copy 1",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}1133870/Game2/steamclient64.dll",
+        "UpdateSourceArgs": "{{$FullBaseDir}}server/steamclient64.dll",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Steamworks Library Copy 2",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}1133870/Game2/tier0_s64.dll",
+        "UpdateSourceArgs": "{{$FullBaseDir}}server/tier0_s64.dll",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Steamworks Library Copy 3",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}1133870/Game2/vstdlib_s64.dll",
+        "UpdateSourceArgs": "{{$FullBaseDir}}server/vstdlib_s64.dll",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": ".NET Desktop Runtime Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -LiteralPath '{{$FullBaseDir}}server'; try { $v = (Invoke-RestMethod -UseBasicParsing -Uri 'https://builds.dotnet.microsoft.com/dotnet/release-metadata/9.0/releases.json').'latest-runtime' } catch { Write-Output 'Could not reach the Microsoft .NET release feed'; exit 1 }; if (Test-Path -LiteralPath ('dotnet/shared/Microsoft.WindowsDesktop.App/' + $v)) { Write-Output ('.NET Desktop Runtime ' + $v + ' already installed. Skipping'); exit 0 }; Remove-Item -LiteralPath 'dotnet' -Recurse -Force -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force -Path 'dotnet' | Out-Null; try { Invoke-WebRequest -UseBasicParsing -Uri ('https://builds.dotnet.microsoft.com/dotnet/Runtime/' + $v + '/dotnet-runtime-' + $v + '-win-x64.zip') -OutFile 'dotnet-runtime.zip' -ErrorAction Stop; Invoke-WebRequest -UseBasicParsing -Uri ('https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/' + $v + '/windowsdesktop-runtime-' + $v + '-win-x64.zip') -OutFile 'dotnet-desktop.zip' -ErrorAction Stop } catch { Write-Output 'Download failed from the Microsoft CDN. Aborting'; exit 1 }; tar.exe -xf dotnet-runtime.zip -C dotnet; tar.exe -xf dotnet-desktop.zip -C dotnet; Remove-Item -LiteralPath 'dotnet-runtime.zip','dotnet-desktop.zip' -Force; Write-Output ('.NET Desktop Runtime ' + $v + ' installed')\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": ".NET Desktop Runtime Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}server\\\" || exit 1; v=$(wget -qO- https://builds.dotnet.microsoft.com/dotnet/release-metadata/9.0/releases.json | grep -o '\\\"latest-runtime\\\": *\\\"[0-9.]*\\\"' | head -n1 | grep -o '[0-9][0-9.]*'); if [[ -z \\\"$v\\\" ]]; then echo \\\"Could not reach the Microsoft .NET release feed\\\"; exit 1; fi; if [[ -d \\\"dotnet/shared/Microsoft.WindowsDesktop.App/$v\\\" ]]; then echo \\\".NET Desktop Runtime $v already installed. Skipping\\\"; exit 0; fi; rm -rf dotnet && mkdir -p dotnet; wget -qO dotnet-runtime.zip https://builds.dotnet.microsoft.com/dotnet/Runtime/$v/dotnet-runtime-$v-win-x64.zip && wget -qO dotnet-desktop.zip https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/$v/windowsdesktop-runtime-$v-win-x64.zip || { echo \\\"Download failed from the Microsoft CDN. Aborting\\\"; exit 1; }; unzip -oq dotnet-runtime.zip -d dotnet && unzip -oq dotnet-desktop.zip -d dotnet; rm -f dotnet-runtime.zip dotnet-desktop.zip; echo \\\".NET Desktop Runtime $v installed\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\\\"mscoree,mshtml=\\\" /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Runner Config Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "{\n  \"GameDirectory\": \"../1133870/Game2\",\n  \"Configuration\": \"server.json\",\n  \"Profile\": \"profile\",\n  \"Plugin\": \"Y51_SE2Online.dll\",\n  \"ShowWindow\": false,\n  \"Headless\": true\n}",
+        "UpdateSourceArgs": "{{$FullBaseDir}}server/runner.json",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Config Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}server/server.json",
+        "UpdateSourceArgs": "{{$FullBaseDir}}server/server.example.json",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
