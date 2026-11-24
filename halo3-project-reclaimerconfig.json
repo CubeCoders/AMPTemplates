@@ -27,7 +27,7 @@
         "DisplayName": "Player Limit",
         "Category": "Project Reclaimer:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the maximum number of players allowed on the server at one time. Servers older than Project Reclaimer 0.9.6 support at most 63",
+        "Description": "Sets the maximum number of players allowed on the server at one time, up to 127 (split-screen players and Bots count). A campaign or Halo 3: ODST server takes at most 16",
         "Keywords": "max,players,slots,limit,max_players",
         "FieldName": "$MaxUsers",
         "InputType": "number",
@@ -239,7 +239,7 @@
         "DisplayName": "Global Voice",
         "Category": "Project Reclaimer:stadia_controller",
         "Subcategory": "Game:sports_esports:2",
-        "Description": "If enabled, players can talk to everyone (V). Needs Voice Chat on and Project Reclaimer 0.9.15 or newer",
+        "Description": "If enabled, players can talk to everyone (V). Needs Voice Chat on",
         "Keywords": "voice,global,everyone,chat,audio",
         "FieldName": "VoiceGlobal",
         "InputType": "checkbox",
@@ -253,7 +253,7 @@
         "DisplayName": "Team Voice",
         "Category": "Project Reclaimer:stadia_controller",
         "Subcategory": "Game:sports_esports:2",
-        "Description": "If enabled, players can talk to teammates (B). Needs Voice Chat on and Project Reclaimer 0.9.15 or newer",
+        "Description": "If enabled, players can talk to teammates (B). Needs Voice Chat on",
         "Keywords": "voice,team,teammates,chat,audio",
         "FieldName": "VoiceTeam",
         "InputType": "checkbox",
@@ -267,7 +267,7 @@
         "DisplayName": "Proximity Voice",
         "Category": "Project Reclaimer:stadia_controller",
         "Subcategory": "Game:sports_esports:2",
-        "Description": "If enabled, players can talk to nearby players (N). Needs Voice Chat on and Project Reclaimer 0.9.15 or newer",
+        "Description": "If enabled, players can talk to nearby players (N). Needs Voice Chat on",
         "Keywords": "voice,proximity,nearby,chat,audio",
         "FieldName": "VoiceProximity",
         "InputType": "checkbox",
@@ -309,7 +309,7 @@
         "DisplayName": "Friendly Fire",
         "Category": "Project Reclaimer:stadia_controller",
         "Subcategory": "Game:sports_esports:2",
-        "Description": "If disabled, players cannot hurt teammates or campaign co-op partners. Needs Project Reclaimer 0.9.14 or newer",
+        "Description": "If disabled, players cannot hurt teammates or campaign co-op partners",
         "Keywords": "friendly,fire,teamkill,team,damage,betrayal",
         "FieldName": "FriendlyFire",
         "InputType": "checkbox",
@@ -347,20 +347,6 @@
             "first_person": "First Person",
             "player_choice": "Player's Choice",
             "third_person": "Third Person"
-        }
-    },
-    {
-        "DisplayName": "Allow Bots",
-        "Category": "Project Reclaimer:stadia_controller",
-        "Subcategory": "Game:sports_esports:2",
-        "Description": "Lets bots join the server",
-        "Keywords": "bots,bot,ai,allow_bots",
-        "FieldName": "AllowBots",
-        "InputType": "checkbox",
-        "DefaultValue": "false",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
         }
     },
     {
@@ -405,6 +391,50 @@
         "Placeholder": "15",
         "Suffix": "seconds",
         "EnumValues": {}
+    },
+    {
+        "DisplayName": "Bots",
+        "Category": "Project Reclaimer:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "AI players the server keeps in its multiplayer games, so games run even with nobody connected. They take player places: keep it below the Player Limit, which must leave room for at least one person. 0 turns them off. Not for campaign, ODST or Reach co-op games",
+        "Keywords": "bots,ai,combat,fill,combat_bots",
+        "FieldName": "CombatBots",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "126",
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "Suffix": "bots",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Bot Pilots",
+        "Category": "Project Reclaimer:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "How many of the Bots drive or fly the map's vehicles, up to the number of Bots. On maps without vehicles they fight on foot",
+        "Keywords": "bots,pilots,vehicles,drive,fly,bot_pilots",
+        "FieldName": "BotPilots",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "126",
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "Suffix": "bots",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Allow Bots",
+        "Category": "Project Reclaimer:stadia_controller",
+        "Subcategory": "Game:sports_esports:2",
+        "Description": "Lets bot programs such as reclaimer-bot (for example a music bot) join the server, 8 at most; they do not take a player place. For AI players that fight in games, use Bots",
+        "Keywords": "bots,bot,reclaimer-bot,music,allow_bots",
+        "FieldName": "AllowBots",
+        "InputType": "checkbox",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
     },
     {
         "DisplayName": "Block VPNs",
@@ -465,20 +495,6 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "RCON Address",
-        "Category": "Project Reclaimer:stadia_controller",
-        "Subcategory": "Security:security:3",
-        "Description": "Who can connect to the remote console (RCON). 127.0.0.1 is this machine only. 0.0.0.0 allows every network and is not encrypted, so only allow your own tools through the firewall",
-        "Keywords": "rcon,remote,console,address,bind,network,0.0.0.0,localhost",
-        "FieldName": "RconAddress",
-        "InputType": "enum",
-        "DefaultValue": "127.0.0.1",
-        "EnumValues": {
-            "127.0.0.1": "127.0.0.1 (this machine only, default)",
-            "0.0.0.0": "0.0.0.0 (every network, not encrypted)"
-        }
-    },
-    {
         "DisplayName": "Admin Player IDs",
         "Category": "Project Reclaimer:stadia_controller",
         "Subcategory": "Security:security:3",
@@ -503,6 +519,20 @@
         "EnumValues": {}
     },
     {
+        "DisplayName": "RCON Address",
+        "Category": "Project Reclaimer:stadia_controller",
+        "Subcategory": "Security:security:3",
+        "Description": "Who can connect to the remote console (RCON). 127.0.0.1 is this machine only. 0.0.0.0 allows every network and is not encrypted, so only allow your own tools through the firewall",
+        "Keywords": "rcon,remote,console,address,bind,network,0.0.0.0,localhost",
+        "FieldName": "RconAddress",
+        "InputType": "enum",
+        "DefaultValue": "127.0.0.1",
+        "EnumValues": {
+            "127.0.0.1": "127.0.0.1 (this machine only, default)",
+            "0.0.0.0": "0.0.0.0 (every network, not encrypted)"
+        }
+    },
+    {
         "DisplayName": "Server Browser Listing",
         "Category": "Project Reclaimer:stadia_controller",
         "Subcategory": "Server:dns:1",
@@ -520,7 +550,7 @@
         "DisplayName": "Download Halo 3 Files",
         "Category": "Project Reclaimer:stadia_controller",
         "Subcategory": "Updates:update:4",
-        "Description": "On the next Update, downloads the Halo 3 multiplayer files (about 9 GB) with SteamCMD, and keeps them up to date on later Updates. Needs a Steam account that owns MCC and Halo 3",
+        "Description": "On the next Update, downloads the Halo 3 multiplayer files (about 9 GB) with SteamCMD, and keeps them up to date on later Updates. Needs a Steam account that owns MCC and Halo 3. Turn this on before the first Update (or copy the files yourself): without the Halo 3 files the server cannot start",
         "Keywords": "steam,download,game,files,mcc,halo,update,steamcmd",
         "FieldName": "DownloadGameFiles",
         "InputType": "checkbox",
@@ -531,31 +561,17 @@
         }
     },
     {
-        "DisplayName": "Include Campaign Files",
+        "DisplayName": "Halo 3 Files",
         "Category": "Project Reclaimer:stadia_controller",
         "Subcategory": "Updates:update:4",
-        "Description": "Choose whether the update also downloads the Halo 3 campaign files (a download of about 7 GB, about 4 GB more on disk). They are needed for saved Forge maps that place campaign vehicles and AI, and for the Flood Infection and UNSC vs Covenant game types. Only used when Download Halo 3 Files is on",
+        "Description": "Which Halo 3 files to download: multiplayer, or multiplayer and campaign (the campaign adds a download of about 7 GB, about 4 GB more on disk). They are needed for saved Forge maps that place campaign vehicles and AI, and for the Flood Infection and UNSC vs Covenant game types. Only used when Download Halo 3 Files is on",
         "Keywords": "campaign,forge,vehicles,ai,download,steam",
         "FieldName": "IncludeCampaignFiles",
         "InputType": "enum",
         "DefaultValue": "976739",
         "EnumValues": {
-            "976739": "No, multiplayer files only (default)",
-            "976739,976738": "Yes, multiplayer and campaign files"
-        }
-    },
-    {
-        "DisplayName": "Download Halo: Reach Files",
-        "Category": "Project Reclaimer:stadia_controller",
-        "Subcategory": "Updates:update:4",
-        "Description": "On the next Update, downloads the Halo: Reach files with SteamCMD (about 12.3 GB download, about 14 GB on disk) so the server can play Reach's multiplayer maps, and keeps them up to date on later Updates. It downloads Reach's campaign files too: the server needs them to use Reach at all. Support for this game is new in Project Reclaimer 0.10 and still early. Needs a Steam account that owns MCC and Halo: Reach. Needs Download Halo 3 Files on too: this game uses Halo 3's files",
-        "Keywords": "steam,download,game,files,mcc,update,steamcmd,reach,haloreach,campaign,forge",
-        "FieldName": "DownloadReachFiles",
-        "InputType": "checkbox",
-        "DefaultValue": "false",
-        "EnumValues": {
-            "False": "false",
-            "True": "true"
+            "976739": "Multiplayer only (default)",
+            "976739,976738": "Multiplayer and campaign"
         }
     },
     {
@@ -612,6 +628,20 @@
         "EnumValues": {
             "976736": "Multiplayer only (default)",
             "976736,976735": "Multiplayer and campaign"
+        }
+    },
+    {
+        "DisplayName": "Download Halo: Reach Files",
+        "Category": "Project Reclaimer:stadia_controller",
+        "Subcategory": "Updates:update:4",
+        "Description": "On the next Update, downloads the Halo: Reach files with SteamCMD (about 12.3 GB download, about 14 GB on disk, as the two depots share files) so the server can play Reach's multiplayer maps, and keeps them up to date on later Updates. It downloads Reach's campaign files too: the server needs them to use Reach at all. Support for this game is new in Project Reclaimer 0.10 and still early. Needs a Steam account that owns MCC and Halo: Reach. Needs Download Halo 3 Files on too: this game uses Halo 3's files",
+        "Keywords": "steam,download,game,files,mcc,update,steamcmd,reach,haloreach,campaign,forge",
+        "FieldName": "DownloadReachFiles",
+        "InputType": "checkbox",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
         }
     },
     {
