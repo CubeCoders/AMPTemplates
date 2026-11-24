@@ -217,17 +217,30 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "Public Port",
+        "DisplayName": "Public Port Selection Mode",
         "Category": "Arma Reforger:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Sets the public port for the server. Useful when using proxy/tunnels. Leave blank to use game port",
-        "Keywords": "public,port",
+        "Description": "Sets whether the server advertises the game port automatically, or the port set under Server Public Port. Use Manual when using a proxy/tunnel",
+        "Keywords": "public,port,publicPort,tunnel",
         "FieldName": "publicPort",
-        "InputType": "number",
-        "IsFlagArgument": false,
-        "Hidden": false,
+        "InputType": "enum",
         "ParamFieldName": "publicPort",
-        "IncludeInCommandLine": false,
+        "DefaultValue": "{{$GamePort}}",
+        "EnumValues": {
+            "{{$GamePort}}": "Automatic - use game port (default)",
+            "{{ManualPublicPort}}": "Manual"
+        }
+    },
+    {
+        "DisplayName": "Server Public Port",
+        "Category": "Arma Reforger:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the public port advertised for the server, if \"Manual\" is selected as the Public Port Selection Mode. Useful when using a tunnel",
+        "Keywords": "manual,public,port,publicPort,tunnel",
+        "FieldName": "ManualPublicPort",
+        "InputType": "number",
+        "ParamFieldName": "ManualPublicPort",
+        "DefaultValue": "",
         "EnumValues": {}
     },
     {
