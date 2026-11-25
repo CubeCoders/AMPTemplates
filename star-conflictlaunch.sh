@@ -69,7 +69,9 @@ if [ -n "$ADVERTISED" ]; then
     LB_LINES+=("set net_overrideShardAddr \"$ADVERTISED\"" "set net_overrideChatServerAddr \"$ADVERTISED\"")
     SHARD_LINES+=("set net_overrideDedicatedServerAddr \"$ADVERTISED\"")
 fi
-write_cfg common_local.cfg "set db_mongoHosts \"127.0.0.1:$MONGO_PORT\""
+# Fixed database names, the same on both OSes, so moving an instance keeps its data.
+write_cfg common_local.cfg "set db_mongoHosts \"127.0.0.1:$MONGO_PORT\"" \
+    'set db_name "cosmosim_amp"' 'set db_stats_name "stats_cosmosim_amp"' 'set db_dedicatedDbCollectionSuffix "_amp"'
 write_cfg hub_local.cfg "set hub_listenTo \"$HUB_PORT\"" "set jsonp_listenPort $HUB_STATUS_PORT"
 write_cfg loadbalancer_local.cfg "${LB_LINES[@]}"
 write_cfg shard_local.cfg "${SHARD_LINES[@]}"

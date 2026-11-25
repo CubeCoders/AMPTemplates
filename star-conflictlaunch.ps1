@@ -65,7 +65,9 @@ else { Say "WARNING: No Public Address is set and the external IP is unknown; on
 
 $override = @()
 if ($advertised) { $override = @("set net_overrideShardAddr `"$advertised`"", "set net_overrideChatServerAddr `"$advertised`"") }
-Write-Cfg 'common_local.cfg' @("set db_mongoHosts `"127.0.0.1:$MongoPort`"")
+# Fixed database names: by default the game adds the user and machine name to
+# them, so a moved instance or a different service account would get empty ones.
+Write-Cfg 'common_local.cfg' @("set db_mongoHosts `"127.0.0.1:$MongoPort`"", 'set db_name "cosmosim_amp"', 'set db_stats_name "stats_cosmosim_amp"', 'set db_dedicatedDbCollectionSuffix "_amp"')
 Write-Cfg 'hub_local.cfg' @("set hub_listenTo `"$HubPort`"", "set jsonp_listenPort $HubStatusPort")
 Write-Cfg 'loadbalancer_local.cfg' (@("set lb_listenTo `"$LoadBalancerPort`"") + $override)
 $dsOverride = @(); if ($advertised) { $dsOverride = @("set net_overrideDedicatedServerAddr `"$advertised`"") }
