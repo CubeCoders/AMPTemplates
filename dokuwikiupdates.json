@@ -1,0 +1,47 @@
+[
+    {
+        "UpdateStageName": "Visual C++ Runtime Check",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C if exist %SystemRoot%\\System32\\vcruntime140_1.dll (exit 0) else (echo The Microsoft Visual C++ 2015-2022 Redistributable x64 is required. Install it from https://aka.ms/vs/17/release/vc_redist.x64.exe & exit 1)",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "PHP Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $ErrorActionPreference='Stop'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'dokuwiki'; $Branch='{{PHPBranch}}'; $Rel=(Invoke-RestMethod -UseBasicParsing -Uri 'https://windows.php.net/downloads/releases/releases.json').$Branch; $Zip=$Rel.PSObject.Properties | Where-Object { $_.Name -match '^nts-vs\\d+-x64$' } | ForEach-Object { $_.Value.zip.path } | Select-Object -First 1; if (-not $Zip) { Write-Output ('No Windows x64 build found for PHP ' + $Branch); exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri ('https://windows.php.net/downloads/releases/' + $Zip) -OutFile 'php.zip'; if (Test-Path 'php') { Remove-Item -Path 'php' -Recurse -Force }; New-Item -ItemType Directory -Path 'php' | Out-Null; & (Join-Path $env:SystemRoot 'System32\\tar.exe') -xf php.zip -C php; if ($LASTEXITCODE -ne 0) { Write-Output 'Could not extract the PHP archive'; exit 1 }; Remove-Item -Path 'php.zip' -Force; Set-Content -Path 'php/php.ini' -Value @(('extension_dir = ' + [char]34 + (Resolve-Path -Path 'php/ext').Path + [char]34), 'extension=mbstring', 'extension=openssl', 'extension=gd', 'extension=intl'); Write-Output ('Installed PHP ' + $Rel.version)\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "DokuWiki Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $ErrorActionPreference='Stop'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'dokuwiki'; Invoke-WebRequest -UseBasicParsing -Uri 'https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz' -OutFile 'dokuwiki.tgz'; New-Item -ItemType Directory -Path 'wiki' -Force | Out-Null; & (Join-Path $env:SystemRoot 'System32\\tar.exe') -xzf dokuwiki.tgz --strip-components=1 -C wiki; if ($LASTEXITCODE -ne 0) { Write-Output 'Could not extract the DokuWiki archive'; exit 1 }; Remove-Item -Path 'dokuwiki.tgz' -Force; Write-Output ('Installed DokuWiki ' + (Get-Content -Path 'wiki/VERSION' -Raw).Trim())\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "DokuWiki Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"set -o pipefail && cd dokuwiki && mkdir -p wiki && wget -qO- https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz | tar -xz --strip-components=1 -C wiki && echo Installed DokuWiki $(cat wiki/VERSION)\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Router Script Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/dokuwikirouter.php",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    }
+]
