@@ -1,0 +1,30 @@
+[
+    {
+        "UpdateStageName": "rAthena Scripts Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/rathenaupdate.sh",
+        "UpdateSourceArgs": "rathenaupdate.sh",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "rAthena Scripts Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/rathenarun.sh",
+        "UpdateSourceArgs": "rathenarun.sh",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "rAthena Download and Build",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}\\\" && sed -i 's/\\r$//' rathenaupdate.sh rathenarun.sh && chmod +x rathenaupdate.sh rathenarun.sh && ./rathenaupdate.sh \\\"{{RathenaVersion}}\\\" \\\"{{ServerMode}}\\\" \\\"{{PacketVersion}}\\\" \\\"{{EnableVIP}}\\\"\"",
+        "SkipOnFailure": false
+    }
+]
