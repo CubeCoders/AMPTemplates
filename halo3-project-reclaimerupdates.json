@@ -1,10 +1,21 @@
 [
     {
         "UpdateStageName": "Server Download",
-        "UpdateSourcePlatform": "All",
+        "UpdateSourcePlatform": "Windows",
         "UpdateSource": "FetchURLFromJQ",
         "UpdateSourceData": "https://api.github.com/repos/ProjectReclaimer/project-reclaimer-releases/releases/latest",
         "UpdateSourceArgs": "$.assets[?(@.name =~ /^project-reclaimer-dedicated-v.*\\.exe$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/ProjectReclaimer/project-reclaimer-releases/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^project-reclaimer-dedicated-v.*-linux-x86_64\\.tar\\.gz$/)].browser_download_url",
         "UpdateSourceTarget": "{{$FullBaseDir}}",
         "UnzipUpdateSource": false,
         "OverwriteExistingFiles": true,
@@ -23,7 +34,7 @@
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}\\\" || exit 1; f=$(ls -t project-reclaimer-dedicated-v*.exe 2>/dev/null | head -n 1); [ -n \\\"$f\\\" ] || { echo \\\"No downloaded server executable found\\\"; exit 1; }; cp -f \\\"$f\\\" project-reclaimer-dedicated.exe && rm -f project-reclaimer-dedicated-v*.exe && echo \\\"Installed $f\\\"\"",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}\\\" || exit 1; f=$(ls -t project-reclaimer-dedicated-v*-linux-x86_64.tar.gz 2>/dev/null | head -n 1); [ -n \\\"$f\\\" ] || { echo \\\"No downloaded server package found\\\"; exit 1; }; tar -xzf \\\"$f\\\" --strip-components=1 --wildcards '*/project-reclaimer' || exit 1; rm -f project-reclaimer-dedicated-v*-linux-x86_64.tar.gz project-reclaimer-dedicated.exe; rm -rf .wine; echo \\\"Installed $f\\\"\"",
         "SkipOnFailure": false
     },
     {
@@ -36,6 +47,19 @@
         "UpdateSourceItems": "{{IncludeCampaignFiles}}",
         "ForceDownloadPlatform": "Windows",
         "UpdateSourceConditionSetting": "DownloadGameFiles",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Halo 3: ODST Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "976730",
+        "UpdateSourceArgs": "976730",
+        "UpdateSourceTarget": "{{$FullBaseDir}}game",
+        "UpdateSourceItems": "1064222,976738",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "DownloadOdstFiles",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
     },
@@ -56,6 +80,45 @@
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "-c \"b='{{$FullBaseDir}}'; g=\\\"${b}game/halo3\\\"; for p in 'hopper_map_variants:content/Maps' 'hopper_game_variants:content/Game Modes'; do s=\\\"$g/${p%%:*}\\\"; d=\\\"$b${p#*:}\\\"; if [ -d \\\"$s\\\" ]; then mkdir -p \\\"$d\\\" && cp -f \\\"$s\\\"/* \\\"$d/\\\"; fi; done; rm -rf \\\"$g/fmod\\\" \\\"$g/waves\\\" \\\"$g/hopper_game_variants\\\" \\\"$g/hopper_map_variants\\\"; echo 'Halo 3 files installed'\"",
         "UpdateSourceConditionSetting": "DownloadGameFiles",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Halo: Reach Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "976730",
+        "UpdateSourceArgs": "976730",
+        "UpdateSourceTarget": "{{$FullBaseDir}}game",
+        "UpdateSourceItems": "1064226,1064225",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "DownloadReachFiles",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Halo: CE Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "976730",
+        "UpdateSourceArgs": "976730",
+        "UpdateSourceTarget": "{{$FullBaseDir}}game",
+        "UpdateSourceItems": "{{Halo1Files}}",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "DownloadHalo1Files",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Halo 2 Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "976730",
+        "UpdateSourceArgs": "976730",
+        "UpdateSourceTarget": "{{$FullBaseDir}}game",
+        "UpdateSourceItems": "{{Halo2Files}}",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "DownloadHalo2Files",
         "UpdateSourceConditionValue": "true",
         "SkipOnFailure": false
     },
@@ -99,14 +162,6 @@
         "UpdateSourceConditionSetting": "DownloadWorkshopItems",
         "UpdateSourceConditionValue": "true",
         "ProcessToolOutput": true,
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Initialise Wine",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\\\"mscoree,mshtml=\\\"; if [ ! -f \\\"$WINEPREFIX/system.reg\\\" ]; then /usr/bin/xvfb-run -a /bin/bash -c 'K=$(printf \\\"HKCU\\134Software\\134Wine\\134Drivers\\\"); /usr/bin/wineboot --init && /usr/bin/wine reg add \\\"$K\\\" /v Audio /t REG_SZ /f >/dev/null && /usr/bin/wineserver --wait' && echo 'Wine prefix created'; else echo \\\"Wine prefix already exists. Skipping\\\"; fi\"",
         "SkipOnFailure": false
     }
 ]
