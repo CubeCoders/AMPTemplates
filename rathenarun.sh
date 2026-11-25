@@ -2,7 +2,7 @@
 # Runs the bundled MariaDB server and the rAthena login, char, map (and optionally web) servers as one process for AMP.
 # Settings arrive as environment variables set by the AMP template.
 
-BASEDIR=$(dirname "$(readlink -f "$0")")
+BASEDIR="$PWD"
 SERVERDIR="$BASEDIR/server"
 DATADIR="$BASEDIR/mysql"
 RUNDIR="$BASEDIR/run"

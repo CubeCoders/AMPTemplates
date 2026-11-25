@@ -11,7 +11,7 @@ if [[ -n "$3" ]]; then
 fi
 [[ "${4,,}" == "true" ]] && FLAGS="$FLAGS --enable-vip=yes"
 FLAGS="${FLAGS# }"
-BASEDIR=$(dirname "$(readlink -f "$0")")
+BASEDIR="$PWD"
 SERVERDIR="$BASEDIR/server"
 SOURCE_STAMP="$SERVERDIR/.amp-source"
 BUILD_STAMP="$SERVERDIR/.amp-build"
