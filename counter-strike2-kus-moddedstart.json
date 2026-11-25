@@ -1,0 +1,18 @@
+[
+    {
+        "UpdateStageName": "Apply Custom Files",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$U='{{$FullBaseDir}}custom_files'; $C='{{$FullBaseDir}}game\\csgo'; New-Item -ItemType Directory -Force $U | Out-Null; if(-not(Test-Path -LiteralPath $C)){exit 0}; Copy-Item \\\"$U\\*\\\" $C -Recurse -Force; Write-Host 'Custom files applied'\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Apply Custom Files",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"U=\\\"{{$FullBaseDir}}custom_files\\\"; C=\\\"{{$FullBaseDir}}game/csgo\\\"; mkdir -p \\\"$U\\\"; [ -d \\\"$C\\\" ] || exit 0; cp -a \\\"$U/.\\\" \\\"$C/\\\" && echo \\\"Custom files applied\\\"\"",
+        "SkipOnFailure": false
+    }
+]
