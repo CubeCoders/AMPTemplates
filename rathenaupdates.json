@@ -5,7 +5,7 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/rathenaupdate.sh",
         "UpdateSourceArgs": "rathenaupdate.sh",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
         "OverwriteExistingFiles": true,
         "SkipOnFailure": false
     },
@@ -15,7 +15,7 @@
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/rathenarun.sh",
         "UpdateSourceArgs": "rathenarun.sh",
-        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
         "OverwriteExistingFiles": true,
         "SkipOnFailure": false
     },
@@ -24,7 +24,7 @@
         "UpdateSourcePlatform": "All",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}\\\" && sed -i 's/\\r$//' rathenaupdate.sh rathenarun.sh && chmod +x rathenaupdate.sh rathenarun.sh && ./rathenaupdate.sh \\\"{{RathenaVersion}}\\\" \\\"{{ServerMode}}\\\" \\\"{{PacketVersion}}\\\" \\\"{{EnableVIP}}\\\"\"",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullInstanceDir}}\\\" && sed -i 's/\\r$//' rathenaupdate.sh rathenarun.sh && chmod +x rathenaupdate.sh rathenarun.sh && cd \\\"{{$FullBaseDir}}\\\" && rm -f rathenaupdate.sh rathenarun.sh && \\\"{{$FullInstanceDir}}rathenaupdate.sh\\\" \\\"{{RathenaVersion}}\\\" \\\"{{ServerMode}}\\\" \\\"{{PacketVersion}}\\\" \\\"{{EnableVIP}}\\\"\"",
         "SkipOnFailure": false
     }
 ]
