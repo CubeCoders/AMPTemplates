@@ -1,0 +1,92 @@
+[
+    {
+        "UpdateStageName": "Arma 2 Game Data Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "33900",
+        "UpdateSourceArgs": "33900",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceVersion": "{{GameBranch}}",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "33905",
+        "UpdateSourceArgs": "33900",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "BattlEye Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C if not exist \"{{$FullBaseDir}}BattlEye\" mkdir \"{{$FullBaseDir}}BattlEye\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "BattlEye Directory Creation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullBaseDir}}BattlEye\\\"\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "BattlEye Server Library Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.battleye.com/downloads/arma2/BEServer.dll",
+        "UpdateSourceArgs": "BEServer.dll",
+        "UpdateSourceTarget": "{{$FullBaseDir}}BattlEye",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Server Config Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/arma2server.cfg",
+        "UpdateSourceArgs": "AMP_server.cfg",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Basic Config File Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/arma2basic.cfg",
+        "UpdateSourceArgs": "basic.cfg",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Server Parameters File",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}parameters.txt",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init --update\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Disable Prefix Sound",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd arma2 && [[ -f winetricks ]] && rm -f winetricks; wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20260125/src/winetricks && chmod +x winetricks; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\"; export WINEARCH=win64; ./winetricks sound=disabled > winescript_log.txt 2>&1\"",
+        "SkipOnFailure": true
+    }
+]
