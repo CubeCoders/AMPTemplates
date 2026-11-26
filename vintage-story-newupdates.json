@@ -77,7 +77,7 @@
         "UpdateSourceArch": "x86_64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd {{$FullBaseDir}}server && StratumVersion={{StratumVersion}} && [[ -z \\\"$StratumVersion\\\" ]] && { wget -qO stratum.zip $(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/latest | grep browser_download_url | cut -d\\\\\\\" -f4 | grep -- -linux-x64.zip) && unzip -qo stratum.zip && rm -f stratum.zip && chmod +x StratumServer && echo \\\"Latest Stratum downloaded\\\"; } || { wget -qO stratum.zip $(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/tags/v$StratumVersion | grep browser_download_url | cut -d\\\\\\\" -f4 | grep -- -linux-x64.zip) && unzip -qo stratum.zip && rm -f stratum.zip && chmod +x StratumServer && echo \\\"Stratum v$StratumVersion downloaded\\\"; }\"",
+        "UpdateSourceArgs": "-c \"cd {{$FullBaseDir}}server || exit 1; StratumVersion={{StratumVersion}}; if [[ -z \\\"$StratumVersion\\\" ]]; then Release=latest; Label=latest; else Release=tags/v$StratumVersion; Label=v$StratumVersion; fi; Url=$(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/$Release | grep browser_download_url | cut -d\\\\\\\" -f4 | grep -- -linux-x64.zip); if [[ -z \\\"$Url\\\" ]]; then echo \\\"No Stratum $Label linux-x64 release asset found\\\"; exit 1; fi; wget -qO stratum.zip \\\"$Url\\\" && unzip -qo stratum.zip && rm -f stratum.zip && chmod +x StratumServer && echo \\\"Stratum $Label downloaded\\\"\"",
         "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "ServerExecutable",
         "UpdateSourceConditionValue": "StratumServer"
@@ -88,7 +88,7 @@
         "UpdateSourceArch": "aarch64",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"cd {{$FullBaseDir}}server && StratumVersion={{StratumVersion}} && [[ -z \\\"$StratumVersion\\\" ]] && { wget -qO stratum.zip $(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/latest | grep browser_download_url | cut -d\\\\\\\" -f4 | grep -- -linux-arm64.zip) && unzip -qo stratum.zip && rm -f stratum.zip && chmod +x StratumServer && echo \\\"Latest Stratum downloaded\\\"; } || { wget -qO stratum.zip $(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/tags/v$StratumVersion | grep browser_download_url | cut -d\\\\\\\" -f4 | grep -- -linux-arm64.zip) && unzip -qo stratum.zip && rm -f stratum.zip && chmod +x StratumServer && echo \\\"Stratum v$StratumVersion downloaded\\\"; }\"",
+        "UpdateSourceArgs": "-c \"cd {{$FullBaseDir}}server || exit 1; StratumVersion={{StratumVersion}}; if [[ -z \\\"$StratumVersion\\\" ]]; then Release=latest; Label=latest; else Release=tags/v$StratumVersion; Label=v$StratumVersion; fi; Url=$(wget -qO- https://api.github.com/repos/StratumServer/Stratum/releases/$Release | grep browser_download_url | cut -d\\\\\\\" -f4 | grep -- -linux-arm64.zip); if [[ -z \\\"$Url\\\" ]]; then echo \\\"No Stratum $Label linux-arm64 release asset found\\\"; exit 1; fi; wget -qO stratum.zip \\\"$Url\\\" && unzip -qo stratum.zip && rm -f stratum.zip && chmod +x StratumServer && echo \\\"Stratum $Label downloaded\\\"\"",
         "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "ServerExecutable",
         "UpdateSourceConditionValue": "StratumServer"
@@ -148,6 +148,26 @@
         "UpdateSourceArgs": "{{$FullBaseDir}}data/ModConfig/nimbus-server.json",
         "UpdateSourceData": "{\n  \"Enabled\": false,\n  \"ServerId\": \"\",\n  \"DisplayName\": \"\",\n  \"PublicHost\": \"127.0.0.1\",\n  \"PublicPort\": 42420,\n  \"RegistryUrl\": \"http://127.0.0.1:8765\",\n  \"SharedSecret\": \"\",\n  \"HeartbeatIntervalSeconds\": 5,\n  \"RegistryHttpTimeoutSeconds\": 5,\n  \"Maintenance\": false,\n  \"ReservationRequired\": true,\n  \"FailClosedWhenRegistryUnreachable\": false,\n  \"AllowPlayerServerCommand\": true,\n  \"TransferMode\": \"redirect\",\n  \"SeamlessPrepareAckTimeoutSeconds\": 8,\n  \"ShortcutCommands\": [],\n  \"Tags\": []\n}\n",
         "OverwriteExistingFiles": false,
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "NimbusEnabled",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Old Nimbus Mods Removal",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -f \\\"{{$FullBaseDir}}data/Mods/\\\"Nimbus.ServerMod-*.zip \\\"{{$FullBaseDir}}data/Mods/\\\"redirectfix-*.zip\"",
+        "SkipOnFailure": false,
+        "UpdateSourceConditionSetting": "NimbusEnabled",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Old Nimbus Mods Removal",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Remove-Item -Path '{{$FullBaseDir}}data\\Mods\\*' -Include 'Nimbus.ServerMod-*.zip','redirectfix-*.zip' -Force -ErrorAction SilentlyContinue; exit 0\"",
         "SkipOnFailure": false,
         "UpdateSourceConditionSetting": "NimbusEnabled",
         "UpdateSourceConditionValue": "true"
