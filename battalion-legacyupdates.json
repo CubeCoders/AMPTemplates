@@ -8,6 +8,30 @@
     "SkipOnFailure": false
   },
   {
+    "UpdateStageName": "Disable Sentry Crash Handler",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"f=\\\"{{$FullBaseDir}}Battalion/Plugins/Sentry/Binaries/Linux/crashpad_handler\\\"; if [[ -f \\\"$f\\\" ]]; then mv -f \\\"$f\\\" \\\"$f.disabled\\\"; fi; exit 0\"",
+    "SkipOnFailure": true
+  },
+  {
+    "UpdateStageName": "Create Steam SDK64 Directory",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "CreateDirectory",
+    "UpdateSourceArgs": "{{$FullBaseDir}}.steam/sdk64",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Copy SteamClient Library",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "CopyFilePath",
+    "UpdateSourceData": "{{$FullBaseDir}}.steam/sdk64/steamclient.so",
+    "UpdateSourceArgs": "{{$FullBaseDir}}linux64/steamclient.so",
+    "OverwriteExistingFiles": true,
+    "SkipOnFailure": false
+  },
+  {
     "UpdateStageName": "Copy steamclient64.dll",
     "UpdateSourcePlatform": "Windows",
     "UpdateSource": "CopyFilePath",
