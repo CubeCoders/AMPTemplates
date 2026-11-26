@@ -1,0 +1,409 @@
+[
+    {
+        "DisplayName": "Server Name",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the name of the server that appears in the server list",
+        "Keywords": "server,name,hostname",
+        "FieldName": "hostname",
+        "InputType": "text",
+        "ParamFieldName": "hostname",
+        "DefaultValue": "AMP Powered Dino D-Day Server",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Tags",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Comma-separated list of server tags shown in the server browser",
+        "Keywords": "tags,sv_tags",
+        "FieldName": "sv_tags",
+        "InputType": "text",
+        "ParamFieldName": "sv_tags",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "LAN Server",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, the server will operate as a LAN server: no heartbeat, no authentication, and no non-class C addresses",
+        "Keywords": "lan,local,sv_lan",
+        "FieldName": "sv_lan",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_lan",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Server Password",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the password required to connect to the server. Leave empty for no password",
+        "Keywords": "server,password,sv_password",
+        "FieldName": "sv_password",
+        "InputType": "Password",
+        "ParamFieldName": "sv_password",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "RCON Password",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the RCON password. Managed by AMP",
+        "Keywords": "rcon,password",
+        "FieldName": "$RemoteAdminPassword",
+        "InputType": "hidden",
+        "ParamFieldName": "rcon_password",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Initial Map",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the map to start the server with. If \"Custom\" is selected, Custom Initial Map must also be specified",
+        "Keywords": "map",
+        "FieldName": "map",
+        "InputType": "enum",
+        "ParamFieldName": "map",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "ddd_hilltop",
+        "EnumValues": {
+            "ddd_airstrip": "ddd_airstrip",
+            "ddd_canyon": "ddd_canyon",
+            "ddd_depot": "ddd_depot",
+            "ddd_fortress": "ddd_fortress",
+            "ddd_gela": "ddd_gela",
+            "ddd_hilltop": "ddd_hilltop (default)",
+            "ddd_market": "ddd_market",
+            "ddd_opera": "ddd_opera",
+            "ddd_pacentro": "ddd_pacentro",
+            "ddd_resistance": "ddd_resistance",
+            "ddd_snowypark": "ddd_snowypark",
+            "ddd_subbase": "ddd_subbase",
+            "ddd_troina": "ddd_troina",
+            "ddd_ziegenfarm": "ddd_ziegenfarm",
+            "{{CustomMap}}": "--Custom--"
+        }
+    },
+    {
+        "DisplayName": "Custom Initial Map",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets a custom map to use for the Initial Map, if \"Custom\" is selected",
+        "Keywords": "custom,map",
+        "FieldName": "CustomMap",
+        "InputType": "text",
+        "ParamFieldName": "CustomMap",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Initial Game Mode",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the game mode for the initial map. Not every map supports every mode: Objective is available on ddd_canyon, ddd_depot and ddd_fortress, and ddd_opera is Survival only. Later maps and modes follow \"dinodday/mapcycle.txt\"",
+        "Keywords": "game,mode,gamemode,type",
+        "FieldName": "GameMode",
+        "InputType": "enum",
+        "ParamFieldName": "GameMode",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "dm",
+        "EnumValues": {
+            "dm": "Deathmatch (default)",
+            "koth": "King of the Hill",
+            "cp": "Capture Point",
+            "obj": "Objective",
+            "sur": "Survival"
+        }
+    },
+    {
+        "DisplayName": "Player Limit",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum number of players allowed on the server at one time",
+        "Keywords": "max,players,limit,maxplayers",
+        "FieldName": "$MaxUsers",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "32",
+        "ParamFieldName": "maxplayers",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "16",
+        "Placeholder": "16",
+        "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Region",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the server region shown in the server list",
+        "Keywords": "server,region,sv_region",
+        "FieldName": "sv_region",
+        "InputType": "enum",
+        "ParamFieldName": "sv_region",
+        "DefaultValue": "-1",
+        "EnumValues": {
+            "-1": "No region",
+            "0": "East Coast US",
+            "1": "West Coast US",
+            "2": "South America",
+            "3": "Europe",
+            "4": "Asia",
+            "5": "Australia",
+            "6": "Middle East",
+            "7": "Africa",
+            "255": "World"
+        }
+    },
+    {
+        "DisplayName": "Pure Server Mode",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets whether clients are only allowed to use certain files",
+        "Keywords": "pure,server,cheat,integrity,sv_pure",
+        "FieldName": "sv_pure",
+        "InputType": "enum",
+        "ParamFieldName": "sv_pure",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "1",
+        "EnumValues": {
+            "0": "Clients may use any files",
+            "1": "Client files must match server files, except as whitelisted in 'pure_server_whitelist.txt'",
+            "2": "All client files must match server files"
+        }
+    },
+    {
+        "DisplayName": "Disable Valve Anti-Cheat",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If set, Valve Anti-Cheat (VAC) will be disabled",
+        "Keywords": "valve,anti,cheat,vac,insecure",
+        "FieldName": "insecure",
+        "InputType": "checkbox",
+        "ParamFieldName": "insecure",
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-insecure "
+        }
+    },
+    {
+        "DisplayName": "Allow Cheats",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, cheat commands can be used on the server",
+        "Keywords": "cheats,sv_cheats",
+        "FieldName": "sv_cheats",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_cheats",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Allow Downloads",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, clients can download missing files (such as custom maps) from the server",
+        "Keywords": "download,sv_allowdownload",
+        "FieldName": "sv_allowdownload",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_allowdownload",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Fast Download URL",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets an HTTP URL that clients download missing files from instead of the server",
+        "Keywords": "download,url,fastdl,sv_downloadurl",
+        "FieldName": "sv_downloadurl",
+        "InputType": "url",
+        "ParamFieldName": "sv_downloadurl",
+        "DefaultValue": "",
+        "Placeholder": "https://example.com/dinodday/",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Allow Uploads",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, clients can upload custom files (such as sprays) to the server",
+        "Keywords": "upload,spray,sv_allowupload",
+        "FieldName": "sv_allowupload",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_allowupload",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Server/RCON IPv4 IP Binding",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "If required, you can change the IPv4 IP binding of the server and RCON by changing the Application IP Binding for this instance",
+        "Keywords": "ip,binding",
+        "FieldName": "ip",
+        "InputType": "hidden",
+        "ParamFieldName": "ip",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional Command Line Parameters",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies additional command line parameters (anything that begins with a -) that are not otherwise set by AMP. Use with care",
+        "Keywords": "custom,server,arguments,parameters",
+        "FieldName": "CustomParameters",
+        "InputType": "text",
+        "ParamFieldName": "CustomParameters",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional Console Variables",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies additional console variables (anything that begins with a +) that are not otherwise set by AMP. Use with care. Preferably, specify the equivalent under \"Additional Server Settings\"",
+        "Keywords": "custom,server,variables,cvars,convars",
+        "FieldName": "CustomConVars",
+        "InputType": "text",
+        "ParamFieldName": "CustomConVars",
+        "DefaultValue": "",
+        "Placeholder": "+sv_gravity \"500\"",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional Server Settings",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Specifies additional settings to include in \"server.cfg\" that are not otherwise set by AMP. One setting per line",
+        "Keywords": "additional,settings,custom",
+        "FieldName": "UserSettings",
+        "InputType": "Textarea",
+        "IsFlagArgument": false,
+        "ParamFieldName": "UserSettings",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Map Time Limit",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "Sets the game time per map. 0 = disabled",
+        "Keywords": "time,limit,rotation,mp_timelimit",
+        "FieldName": "mp_timelimit",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "mp_timelimit",
+        "DefaultValue": "30",
+        "Placeholder": "30",
+        "Suffix": "minutes",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Friendly Fire",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, players can damage their own team",
+        "Keywords": "friendly,fire,mp_friendlyfire",
+        "FieldName": "mp_friendlyfire",
+        "InputType": "checkbox",
+        "ParamFieldName": "mp_friendlyfire",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "All Talk",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, players can hear voice chat from both teams",
+        "Keywords": "voice,talk,sv_alltalk",
+        "FieldName": "sv_alltalk",
+        "InputType": "checkbox",
+        "ParamFieldName": "sv_alltalk",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Allow Spectators",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "Gameplay:joystick:2",
+        "Description": "If enabled, players can join as spectators",
+        "Keywords": "spectators,mp_allowspectators",
+        "FieldName": "mp_allowspectators",
+        "InputType": "checkbox",
+        "ParamFieldName": "mp_allowspectators",
+        "DefaultValue": "1",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    },
+    {
+        "DisplayName": "Disable SourceTV",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "SourceTV:tv:3",
+        "Description": "If set, SourceTV will be disabled on the server",
+        "Keywords": "sourcetv,source,nohltv",
+        "FieldName": "nohltv",
+        "InputType": "checkbox",
+        "ParamFieldName": "nohltv",
+        "DefaultValue": "-nohltv ",
+        "EnumValues": {
+            "False": "",
+            "True": "-nohltv "
+        }
+    },
+    {
+        "DisplayName": "SourceTV Maximum Clients",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "SourceTV:tv:3",
+        "Description": "Sets the maximum number of SourceTV spectators",
+        "Keywords": "sourcetv,clients,tv_maxclients",
+        "FieldName": "tv_maxclients",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "tv_maxclients",
+        "DefaultValue": "8",
+        "Placeholder": "8",
+        "Suffix": "clients",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "SourceTV Auto Record",
+        "Category": "Dino D-Day:stadia_controller",
+        "Subcategory": "SourceTV:tv:3",
+        "Description": "If enabled, SourceTV automatically records all games as demos",
+        "Keywords": "sourcetv,record,demo,tv_autorecord",
+        "FieldName": "tv_autorecord",
+        "InputType": "checkbox",
+        "ParamFieldName": "tv_autorecord",
+        "DefaultValue": "0",
+        "EnumValues": {
+            "False": "0",
+            "True": "1"
+        }
+    }
+]
