@@ -24,15 +24,30 @@
         "EnumValues": {}
     },
     {
-        "DisplayName": "External URL",
+        "DisplayName": "External URL Mode",
         "Category": "Refresh:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "Required. The public URL players and the website use to reach this server. Use this instance's public IP or domain and its Server Port (shown in the instance's network settings), e.g. http://203.0.113.10:10061, or a reverse proxy URL such as https://lbp.example.com",
-        "Keywords": "external,url,address,ExternalUrl",
+        "Description": "Sets the public URL players and the website use to reach this server. Automatic uses AMP's detected public IP and this instance's Server Port. Manual uses the URL entered under Manual External URL, e.g. a domain or reverse proxy URL",
+        "Keywords": "external,url,address,mode,ExternalUrl",
         "FieldName": "ExternalUrl",
-        "InputType": "text",
+        "InputType": "enum",
         "ParamFieldName": "$.ExternalUrl",
-        "Required": true,
+        "DefaultValue": "http://{{$ExternalIP}}:{{$ServerPort}}",
+        "EnumValues": {
+            "http://{{$ExternalIP}}:{{$ServerPort}}": "Automatic (default)",
+            "{{ManualExternalUrl}}": "Manual"
+        }
+    },
+    {
+        "DisplayName": "Manual External URL",
+        "Category": "Refresh:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "The public URL players and the website use to reach this server, if \"Manual\" is selected as the External URL Mode. Use a public IP or domain with this instance's Server Port, e.g. http://203.0.113.10:10061, or a reverse proxy URL such as https://lbp.example.com",
+        "Keywords": "manual,external,url,address,ManualExternalUrl",
+        "FieldName": "ManualExternalUrl",
+        "InputType": "text",
+        "ParamFieldName": "ManualExternalUrl",
+        "IncludeInCommandLine": false,
         "DefaultValue": "",
         "Placeholder": "http://203.0.113.10:10061",
         "EnumValues": {}
