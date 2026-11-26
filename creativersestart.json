@@ -1,0 +1,18 @@
+[
+    {
+        "UpdateStageName": "Set World Owner SteamID",
+        "UpdateStageDescription": "Writes the World Owner SteamID into config_world.json as a number",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Bash",
+        "UpdateSourceArgs": "id='{{WorldOwnerSteamId}}'; case $id in ''|*[!0-9]*) echo 'World Owner SteamID must be a Steam64 ID (digits only)'; exit 1;; esac; sed -i -E 's/(.WorldOwnerSteamId.[[:space:]]*:[[:space:]]*)[^,}[:space:]]*/\\1'$id'/' '{{$FullBaseDir}}PlayfulCorp/CreativerseServer/worlddata/worlds/{{worldId}}/config_world.json'",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Set World Owner SteamID",
+        "UpdateStageDescription": "Writes the World Owner SteamID into config_world.json as a number",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "PowerShell",
+        "UpdateSourceArgs": "$ErrorActionPreference='Stop'; $f='{{$FullBaseDir}}PlayfulCorp/CreativerseServer/worlddata/worlds/{{worldId}}/config_world.json'; $id='{{WorldOwnerSteamId}}'; if ($id -notmatch '^[0-9]+$') { Write-Output 'World Owner SteamID must be a Steam64 ID (digits only)'; exit 1 }; $t=[IO.File]::ReadAllText($f); $t=$t -replace '(.WorldOwnerSteamId.[ \\t\\r\\n]*:[ \\t\\r\\n]*)[^,} \\t\\r\\n]*', ('${1}'+$id); [IO.File]::WriteAllText($f,$t)",
+        "SkipOnFailure": false
+    }
+]
