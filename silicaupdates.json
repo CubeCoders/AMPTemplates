@@ -9,12 +9,45 @@
         "SkipOnFailure": false
     },
     {
+        "UpdateStageName": "Create Steam SDK64 Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Documents/.steam/sdk64",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Copy SteamClient Library",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}Documents/.steam/sdk64/steamclient.so",
+        "UpdateSourceArgs": "{{$FullBaseDir}}linux64/steamclient.so",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
         "UpdateStageName": "Server Settings Template Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "FetchURL",
         "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/silicaserversettings.xml",
         "UpdateSourceTarget": "{{$FullBaseDir}}Silica_Data",
         "UpdateSourceArgs": "ServerSettings.xml",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Settings Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Documents/Silica",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Game Settings Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/silicagamesettings.xml",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Documents/Silica",
+        "UpdateSourceArgs": "GameSettings.xml",
         "OverwriteExistingFiles": false,
         "SkipOnFailure": false
     }
