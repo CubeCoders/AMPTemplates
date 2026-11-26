@@ -1,0 +1,115 @@
+[
+    {
+        "UpdateStageName": "Allowlist.json Backup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}allowlist.json.bak",
+        "UpdateSourceArgs": "{{$FullBaseDir}}allowlist.json",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Permissions.json Backup",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}permissions.json.bak",
+        "UpdateSourceArgs": "{{$FullBaseDir}}permissions.json",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Create lip Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}lip",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Server Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "lip Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/LiteLDev/lip/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^lip-.*-win-x64\\.zip$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullRootDir}}lip",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "lip Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/LiteLDev/lip/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^lip-.*-linux-x64\\.tar\\.xz$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullRootDir}}lip",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "lip Extraction",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}lip\\\" && for f in lip-*-linux-x64.tar.xz; do tar -xJf \\\"$f\\\" && rm -f \\\"$f\\\" || exit 1; done && chmod +x lip && ./lip --version\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "LeviLamina and Server Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"Set-Location -LiteralPath '{{$FullBaseDir}}'; $v = '{{LeviLaminaVersion}}'.Trim(); $p = 'github.com/LiteLDev/LeviLamina'; if ($v) { $p += '@' + $v }; & '{{$FullRootDir}}lip\\lip.exe' install --accept-eula $p; exit $LASTEXITCODE\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "LeviLamina and Server Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"export XDG_DATA_HOME=\\\"{{$FullRootDir}}.lip/data\\\" XDG_CACHE_HOME=\\\"{{$FullRootDir}}.lip/cache\\\" XDG_CONFIG_HOME=\\\"{{$FullRootDir}}.lip/config\\\" XDG_STATE_HOME=\\\"{{$FullRootDir}}.lip/state\\\" XDG_RUNTIME_DIR=; cd \\\"{{$FullBaseDir}}\\\" && V=\\\"{{LeviLaminaVersion}}\\\"; P=github.com/LiteLDev/LeviLamina; [ -n \\\"$V\\\" ] && P=\\\"$P@$V\\\"; \\\"{{$FullRootDir}}lip/lip\\\" install --accept-eula \\\"$P\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Stop lip Daemon",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "{{$FullRootDir}}lip\\lip.exe",
+        "UpdateSourceArgs": "daemon stop",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Stop lip Daemon",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"export XDG_DATA_HOME=\\\"{{$FullRootDir}}.lip/data\\\" XDG_CACHE_HOME=\\\"{{$FullRootDir}}.lip/cache\\\" XDG_CONFIG_HOME=\\\"{{$FullRootDir}}.lip/config\\\" XDG_STATE_HOME=\\\"{{$FullRootDir}}.lip/state\\\" XDG_RUNTIME_DIR=; \\\"{{$FullRootDir}}lip/lip\\\" daemon stop\"",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Allowlist.json Restore",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}allowlist.json",
+        "UpdateSourceArgs": "{{$FullBaseDir}}allowlist.json.bak",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Permissions.json Restore",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}permissions.json",
+        "UpdateSourceArgs": "{{$FullBaseDir}}permissions.json.bak",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    }
+]
