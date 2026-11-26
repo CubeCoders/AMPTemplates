@@ -32,7 +32,7 @@ check_port() {
 
 game_dir() {
     local base suffix="steamapps/workshop/content/$APP/$ITEM/DedicatedServer"
-    for base in "$ROOT/workshop" "$ROOT/../.virtualhome/Steam" "$ROOT/steam/Steam" "$ROOT/steam" "$ROOT"; do
+    for base in "${WORKSHOP_DIR:-$ROOT/workshop}" "$ROOT/workshop" "$ROOT/../.virtualhome/Steam" "$ROOT/steam/Steam" "$ROOT/steam" "$ROOT"; do
         if [[ -f "$base/$suffix/engine/dotnet/dotnet.exe" ]]; then
             (cd -- "$base/$suffix" && pwd -P)
             return
@@ -110,10 +110,18 @@ steam_account() {
 update() {
     local account output
     account=$(steam_account)
+    # On Windows hosts the instance folder is a Docker Desktop 9p share, where
+    # SteamCMD can't preallocate Workshop files before its timeout. Download into
+    # container storage there; stage_server copies the files into server/ anyway.
+    WORKSHOP_DIR="$ROOT/workshop"
+    if [[ "$(stat -f -c %T "$ROOT" 2>/dev/null)" == v9fs ]]; then
+        WORKSHOP_DIR=/tmp/amp-coop-workshop
+        mkdir -p -- "$WORKSHOP_DIR"
+    fi
     output=$(mktemp "$ROOT/.workshop-update.XXXXXX")
     if ! HOME="$ROOT/../.virtualhome" timeout 7200 /bin/bash "$ROOT/steamcmd.sh" \
         +@NoPromptForPassword 1 +@sSteamCmdForcePlatformType windows \
-        +force_install_dir "$ROOT/workshop" +login "$account" \
+        +force_install_dir "$WORKSHOP_DIR" +login "$account" \
         +workshop_download_item "$APP" "$ITEM" validate +quit </dev/null 2>&1 | tee "$output"; then
         rm -f -- "$output"
         die 'Workshop update failed; retry AMP Update login if the cached session expired'
@@ -124,6 +132,7 @@ update() {
     fi
     rm -f -- "$output"
     stage_server
+    if [[ "$WORKSHOP_DIR" == /tmp/amp-coop-workshop ]]; then rm -rf -- "$WORKSHOP_DIR"; fi
     log 'Workshop update finished'
 }
 
@@ -182,7 +191,7 @@ prepare() {
     fi
     export WINEPREFIX="$ROOT/.wine" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES='mscoree,mshtml='
     if [[ ! -f "$WINEPREFIX/system.reg" ]]; then
-        if ! timeout 180 xvfb-run -a wineboot -i; then
+        if ! timeout 900 xvfb-run -a wineboot -i; then
             wineserver -k || true
             die 'Wine prefix initialization failed'
         fi
