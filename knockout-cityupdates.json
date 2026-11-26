@@ -1,0 +1,36 @@
+[
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "2915930",
+        "UpdateSourceArgs": "2915930",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Data Directory Creation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullRootDir}}.wine/drive_c/users/amp/AppData/Local/KnockoutCityServer\\\" >/dev/null 2>&1; cd knockout-city/2915930 && rm -f KnockoutCityServerData >/dev/null 2>&1 && ln -sf \\\"../.wine/drive_c/users/amp/AppData/Local/KnockoutCityServer\\\" ./KnockoutCityServerData >/dev/null 2>&1\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Start Script",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullRootDir}}prepare-start.sh",
+        "UpdateSourceData": "#!/bin/bash\n# Prepares a Knockout City server start inside the container.\n# $1 = folder for the PostgreSQL and Redis data, $2 = server install folder.\nD=\"$1\"\nS=\"$2\"\nM=/tmp/knockout-city-server\n# Wine can't map the server exe from some bind mounts (e.g. Docker on Windows), so it runs from a\n# container-local copy; the other server files are linked from the instance.\nmkdir -p \"$M\" || exit 1\nfor f in \"$S\"/*; do\n  n=$(basename \"$f\")\n  [ \"$n\" = \"KnockoutCityServer.exe\" ] && continue\n  ln -sfn \"$f\" \"$M/$n\"\ndone\ncp -u -p \"$S/KnockoutCityServer.exe\" \"$M/KnockoutCityServer.exe\" || { echo \"Could not copy KnockoutCityServer.exe\"; exit 1; }\nPG=$(ls -d /usr/lib/postgresql/*/bin 2>/dev/null | sort -V | tail -n 1)\n[ -n \"$PG\" ] || { echo \"PostgreSQL is not installed in the container\"; exit 1; }\nmkdir -p \"$D/redis\"\nif [ ! -s \"$D/postgres/PG_VERSION\" ]; then\n  rm -rf \"$D/postgres\"\n  \"$PG/initdb\" -D \"$D/postgres\" -U viper -A trust -E UTF8 >\"$D/initdb.log\" 2>&1 || { echo \"initdb failed, see $D/initdb.log\"; exit 1; }\nfi\nif ! \"$PG/pg_ctl\" -D \"$D/postgres\" status >/dev/null 2>&1; then\n  rm -f \"$D/postgres/postmaster.pid\"\n  \"$PG/pg_ctl\" -D \"$D/postgres\" -l \"$D/postgres.log\" -o \"-p 5434 -k /tmp -c listen_addresses=127.0.0.1\" -w start >/dev/null 2>&1 || { echo \"PostgreSQL failed to start, see $D/postgres.log\"; exit 1; }\nfi\n\"$PG/psql\" -h 127.0.0.1 -p 5434 -U viper -d postgres -tAc \"SELECT 1 FROM pg_database WHERE datname='viper'\" 2>/dev/null | grep -q 1 || \"$PG/createdb\" -h 127.0.0.1 -p 5434 -U viper viper || exit 1\nredis-cli -p 6380 ping >/dev/null 2>&1 || redis-server --port 6380 --bind 127.0.0.1 --dir \"$D/redis\" --pidfile \"$D/redis/redis.pid\" --daemonize yes --logfile \"$D/redis.log\" >/dev/null 2>&1 || { echo \"Redis failed to start\"; exit 1; }\nexit 0",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    }
+]
