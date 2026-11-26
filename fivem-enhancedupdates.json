@@ -1,0 +1,51 @@
+[
+    {
+        "UpdateStageName": "Create Server Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}server",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Data Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}server-data",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path '{{$FullBaseDir}}server'; $Url='{{SpecificBuildVersionURL}}'; if ([string]::IsNullOrWhiteSpace($Url)) { $Page = (Invoke-WebRequest -UseBasicParsing -Uri 'https://docs.fivem.net/docs/server-download/?platform=enhanced&os=windows').Content; $Url = [regex]::Match($Page, 'https://cfx-downloads.akamaized.net/prod/[A-Za-z0-9-]+/cfx-server_win_x64.zip').Value }; if ([string]::IsNullOrWhiteSpace($Url)) { Write-Output 'Could not find the server download URL'; exit 1 }; Write-Output \\\"Downloading $Url\\\"; Invoke-WebRequest -UseBasicParsing -Uri $Url -OutFile 'cfx-server.zip'; if (-not $?) { exit 1 }; Expand-Archive -Path 'cfx-server.zip' -DestinationPath '.' -Force; if (-not $?) { exit 1 }; Remove-Item -Force 'cfx-server.zip'\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}server\\\" || exit 1; Url=\\\"{{SpecificBuildVersionURL}}\\\"; if [[ -z \\\"$Url\\\" ]]; then Url=$(wget -qO- 'https://docs.fivem.net/docs/server-download/?platform=enhanced&os=linux' | grep -oE 'https://cfx-downloads.akamaized.net/prod/[A-Za-z0-9-]+/cfx-server_linux_x64.tar.xz' | head -n1); fi; if [[ -z \\\"$Url\\\" ]]; then echo 'Could not find the server download URL'; exit 1; fi; echo \\\"Downloading $Url\\\"; wget -qO cfx-server.tar.xz \\\"$Url\\\" || exit 1; rm -rf alpine; tar -xf cfx-server.tar.xz || exit 1; rm -f cfx-server.tar.xz\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Clone Resources Repo",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "GitRepo",
+        "UpdateSourceData": "{{ResourceRepo}}",
+        "UpdateSourceTarget": "{{$FullBaseDir}}server-data"
+    },
+    {
+        "UpdateStageName": "Server.cfg Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/fivem-enhancedserver.cfg",
+        "UpdateSourceArgs": "AMP_server.cfg",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    }
+]
