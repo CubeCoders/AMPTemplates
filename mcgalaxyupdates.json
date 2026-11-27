@@ -1,0 +1,48 @@
+[
+    {
+        "UpdateStageName": "MCGalaxy Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn.classicube.net/client/mcg/release/MCGalaxy.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "MCGalaxy Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn.classicube.net/client/mcg/release/nix64/MCGalaxy.tar.gz",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Set Executable Flag",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}MCGalaxy",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Properties Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}properties",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Properties Seed",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/mcgalaxyserver.properties",
+        "UpdateSourceArgs": "server.properties",
+        "UpdateSourceTarget": "{{$FullBaseDir}}properties",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
