@@ -1,0 +1,27 @@
+[
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"set -e; cd '{{$FullBaseDir}}'; V=$(curl -fsSL https://lacrimesonline.com/builds/ | grep -oE 'LAC_Linux_v[0-9.]*[0-9][.]zip' | sed -E 's/^LAC_Linux_v//; s/[.]zip$//' | sort -uV | tail -n 1); if [ -z \\\"$V\\\" ]; then echo 'Could not find a Linux server build on lacrimesonline.com/builds'; exit 1; fi; if [ -f LACServer.x86_64 ] && [ \\\"$(cat version.txt 2>/dev/null)\\\" = \\\"$V\\\" ]; then echo \\\"Server v$V is already installed\\\"; exit 0; fi; echo \\\"Downloading server v$V\\\"; rm -rf lac_update; mkdir lac_update; curl -fsSL -o lac_update/server.zip \\\"https://lacrimesonline.com/builds/LAC_Linux_v$V.zip\\\"; unzip -q -o lac_update/server.zip -d lac_update/files; rm -f lac_update/server.zip; rm -rf LACServer_Data; mv \\\"lac_update/files/LAC_Linux_v${V}_Data\\\" LACServer_Data; mv \\\"lac_update/files/LAC_Linux_v${V}.x86_64\\\" LACServer.x86_64; cp -rf lac_update/files/. .; rm -rf lac_update; chmod +x LACServer.x86_64; echo \\\"$V\\\" > version.txt; echo \\\"Installed server v$V\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Config Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}unity3d/MA/LAC/editor",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Config File Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/los-angeles-crimesServerConfig.txt",
+        "UpdateSourceTarget": "{{$FullBaseDir}}unity3d/MA/LAC",
+        "UpdateSourceArgs": "ServerConfig.txt",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
