@@ -1,0 +1,177 @@
+[
+    {
+        "DisplayName": "Garage Version",
+        "Category": "Garage:storage",
+        "Subcategory": "Server:dns:1",
+        "Description": "Garage release to install, for example v2.6.0. Leave empty to install the latest stable release on each update. Read the Garage upgrade notes before moving to a new major version",
+        "Keywords": "version,release,upgrade,pin",
+        "FieldName": "GarageVersion",
+        "InputType": "text",
+        "ParamFieldName": "GarageVersion",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "Latest",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Metadata Engine",
+        "Category": "Garage:storage",
+        "Subcategory": "Server:dns:1",
+        "Description": "Database used for metadata. LMDB is the fastest; SQLite is more resilient to crashes. Changing this on an existing server needs a manual conversion with the garage convert-db command first",
+        "Keywords": "db_engine,database,lmdb,sqlite,metadata",
+        "FieldName": "DbEngine",
+        "InputType": "enum",
+        "ParamFieldName": "DbEngine",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "lmdb",
+        "EnumValues": {
+            "lmdb": "LMDB",
+            "sqlite": "SQLite"
+        }
+    },
+    {
+        "DisplayName": "Metadata Snapshot Interval",
+        "Category": "Garage:storage",
+        "Subcategory": "Server:dns:1",
+        "Description": "How often Garage saves a snapshot of its metadata database into the meta folder, so it can be restored after corruption",
+        "Keywords": "metadata_auto_snapshot_interval,snapshot,backup",
+        "FieldName": "SnapshotInterval",
+        "InputType": "enum",
+        "ParamFieldName": "SnapshotInterval",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "6h",
+        "EnumValues": {
+            "1h": "Every hour",
+            "6h": "Every 6 hours",
+            "12h": "Every 12 hours",
+            "24h": "Every 24 hours"
+        }
+    },
+    {
+        "DisplayName": "Compression Level",
+        "Category": "Garage:storage",
+        "Subcategory": "Server:dns:1",
+        "Description": "Zstd compression level for stored data. Higher levels save disk space but use more CPU",
+        "Keywords": "compression_level,zstd,compression",
+        "FieldName": "CompressionLevel",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "19",
+        "ParamFieldName": "CompressionLevel",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "S3 Region",
+        "Category": "Garage:storage",
+        "Subcategory": "S3 API:cloud:2",
+        "Description": "Region name that S3 clients must use when signing requests",
+        "Keywords": "s3_region,region",
+        "FieldName": "S3Region",
+        "InputType": "text",
+        "ParamFieldName": "S3Region",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "garage",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "S3 Root Domain",
+        "Category": "Garage:storage",
+        "Subcategory": "S3 API:cloud:2",
+        "Description": "Domain suffix for virtual-hosted-style bucket URLs (bucket.s3.example.com). Path-style URLs always work",
+        "Keywords": "root_domain,vhost,domain,virtual host",
+        "FieldName": "S3RootDomain",
+        "InputType": "text",
+        "ParamFieldName": "S3RootDomain",
+        "IncludeInCommandLine": false,
+        "DefaultValue": ".s3.garage.localhost",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Web Root Domain",
+        "Category": "Garage:storage",
+        "Subcategory": "S3 API:cloud:2",
+        "Description": "Domain suffix for buckets served as websites on the web port (bucket.web.example.com)",
+        "Keywords": "root_domain,website,web,static",
+        "FieldName": "WebRootDomain",
+        "InputType": "text",
+        "ParamFieldName": "WebRootDomain",
+        "IncludeInCommandLine": false,
+        "DefaultValue": ".web.garage.localhost",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Create Default Bucket",
+        "Category": "Garage:storage",
+        "Subcategory": "Default Access:key:3",
+        "Description": "Creates the default bucket below on start and gives the default access key read and write access to it. When off, only the access key is created",
+        "Keywords": "bucket,default bucket,default-bucket",
+        "FieldName": "CreateDefaultBucket",
+        "InputType": "checkbox",
+        "ParamFieldName": "CreateDefaultBucket",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "--default-bucket",
+        "EnumValues": {
+            "False": "--default-access-key",
+            "True": "--default-bucket"
+        }
+    },
+    {
+        "DisplayName": "Default Bucket Name",
+        "Category": "Garage:storage",
+        "Subcategory": "Default Access:key:3",
+        "Description": "Name of the bucket created when Create Default Bucket is on",
+        "Keywords": "bucket,bucket name",
+        "FieldName": "DefaultBucket",
+        "InputType": "text",
+        "ParamFieldName": "DefaultBucket",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "default-bucket",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Default Access Key ID",
+        "Category": "Garage:storage",
+        "Subcategory": "Default Access:key:3",
+        "Description": "Access key ID created on start: GK followed by 24 hex characters. Leave empty to use the one generated in secrets/default_access_key (it is also shown in the console on start). Set this and the secret key together",
+        "Keywords": "access key,key id,credentials,GARAGE_DEFAULT_ACCESS_KEY",
+        "FieldName": "DefaultAccessKey",
+        "InputType": "text",
+        "ParamFieldName": "DefaultAccessKey",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "Generated",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Default Secret Key",
+        "Category": "Garage:storage",
+        "Subcategory": "Default Access:key:3",
+        "Description": "Secret key for the access key above: 64 hex characters. Leave empty to use the one generated in secrets/default_secret_key",
+        "Keywords": "secret key,credentials,GARAGE_DEFAULT_SECRET_KEY",
+        "FieldName": "DefaultSecretKey",
+        "InputType": "password",
+        "ParamFieldName": "DefaultSecretKey",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "Generated",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Require Token for Metrics",
+        "Category": "Garage:storage",
+        "Subcategory": "Admin API:admin_panel_settings:4",
+        "Description": "Requires the token in secrets/metrics_token to read Prometheus metrics from the admin port. The admin API itself always uses the token in secrets/admin_token",
+        "Keywords": "metrics,prometheus,metrics_token,token",
+        "FieldName": "MetricsTokenLine",
+        "InputType": "checkbox",
+        "ParamFieldName": "MetricsTokenLine",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "#",
+            "True": ""
+        }
+    }
+]
