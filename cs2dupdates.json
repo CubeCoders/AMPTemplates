@@ -1,0 +1,48 @@
+[
+    {
+        "UpdateStageName": "CS2D Game Files Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; Set-Location -LiteralPath '{{$FullBaseDir}}'; try { $Page=(Invoke-WebRequest -UseBasicParsing -Uri 'https://www.cs2d.com/download.php').Content } catch { Write-Output 'Could not reach cs2d.com to look up the latest CS2D version'; exit 1 }; if ($Page -notmatch 'cs2d_(\\d+)_win\\.zip') { Write-Output 'Could not find the latest CS2D version on cs2d.com'; exit 1 }; $Version=$Matches[1]; $File='cs2d_'+$Version+'_win.zip'; if ((Test-Path 'CS2D.exe') -and (Test-Path '.cs2dversion') -and ((Get-Content '.cs2dversion' -Raw).Trim() -eq $Version)) { Write-Output ('CS2D '+$Version+' game files already installed'); exit 0 }; $Get=(Invoke-WebRequest -UseBasicParsing -Uri ('https://www.unrealsoftware.de/get.php?get='+$File)).Content; if ($Get -notmatch 'cid=(\\d+)') { Write-Output 'Could not get the CS2D download link from unrealsoftware.de'; exit 1 }; Write-Output ('Downloading CS2D '+$Version+' game files'); try { Invoke-WebRequest -UseBasicParsing -Uri ('https://www.unrealsoftware.de/get.php?get='+$File+'&p=1&cid='+$Matches[1]) -OutFile 'cs2d_client.zip' -ErrorAction Stop } catch { Write-Output 'CS2D game files download failed'; exit 1 }; Remove-Item -LiteralPath '_cs2dtmp' -Recurse -Force -ErrorAction SilentlyContinue; Expand-Archive -LiteralPath 'cs2d_client.zip' -DestinationPath '_cs2dtmp' -Force; $Tmp=(Resolve-Path -LiteralPath '_cs2dtmp').Path; Get-ChildItem -LiteralPath $Tmp -Recurse -File | ForEach-Object { $Rel=$_.FullName.Substring($Tmp.Length+1); if (($Rel -match '^sys\\\\[^\\\\]+\\.(cfg|lst)$' -or $Rel -eq 'sys\\serverinfo.txt') -and (Test-Path -LiteralPath $Rel)) { return }; $Dir=Split-Path -Parent $Rel; if ($Dir) { New-Item -ItemType Directory -Force -Path $Dir | Out-Null }; Copy-Item -LiteralPath $_.FullName -Destination $Rel -Force }; Remove-Item -LiteralPath '_cs2dtmp','cs2d_client.zip' -Recurse -Force -ErrorAction SilentlyContinue; Set-Content -Path '.cs2dversion' -Value $Version; Write-Output ('CS2D '+$Version+' game files installed')\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "CS2D Game Files Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}\\\" || exit 1; Version=$(wget -qO- https://www.cs2d.com/download.php | grep -oE 'cs2d_[0-9]+_linux\\.zip' | head -n1 | cut -d_ -f2); if [ -z \\\"$Version\\\" ]; then echo 'Could not find the latest CS2D version on cs2d.com'; exit 1; fi; File=cs2d_$Version'_linux.zip'; if [ -f CS2D ] && [ \\\"$(cat .cs2dversion 2>/dev/null)\\\" = \\\"$Version\\\" ]; then echo \\\"CS2D $Version game files already installed\\\"; exit 0; fi; Cid=$(wget -qO- \\\"https://www.unrealsoftware.de/get.php?get=$File\\\" | grep -oE 'cid=[0-9]+' | head -n1 | cut -d= -f2); if [ -z \\\"$Cid\\\" ]; then echo \\\"Could not get the CS2D download link for $File from unrealsoftware.de\\\"; exit 1; fi; echo \\\"Downloading CS2D $Version game files\\\"; wget -qO cs2d_client.zip \\\"https://www.unrealsoftware.de/get.php?get=$File&p=1&cid=$Cid\\\" || { echo 'CS2D game files download failed'; rm -f cs2d_client.zip; exit 1; }; rm -rf _cs2dtmp; unzip -qo cs2d_client.zip -d _cs2dtmp || { echo 'Could not extract the CS2D game files'; rm -rf _cs2dtmp cs2d_client.zip; exit 1; }; for f in _cs2dtmp/sys/*.cfg _cs2dtmp/sys/*.lst _cs2dtmp/sys/serverinfo.txt; do [ -f \\\"sys/$(basename \\\"$f\\\")\\\" ] && rm -f \\\"$f\\\"; done; cp -rf _cs2dtmp/. ./; rm -rf _cs2dtmp cs2d_client.zip; echo \\\"$Version\\\" > .cs2dversion; echo \\\"CS2D $Version game files installed\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "CS2D Dedicated Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.unrealsoftware.de/files_pub/cs2d_dedicated_win.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "CS2D Dedicated Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://www.unrealsoftware.de/files_pub/cs2d_dedicated_linux.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Set Executable Permissions",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"chmod +x ./cs2d/cs2d_dedicated\"",
+        "SkipOnFailure": false
+    }
+]
