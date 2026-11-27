@@ -1,0 +1,36 @@
+[
+  {
+    "UpdateStageName": "Download Linux preparation helper",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/mount-and-blade2-coop.sh",
+    "UpdateSourceTarget": "{{$FullRootDir}}",
+    "UpdateSourceArgs": "mount-and-blade2-coop.sh",
+    "OverwriteExistingFiles": true,
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Create server config for AMP AutoMap",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "\"{{$FullRootDir}}mount-and-blade2-coop.sh\" init",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Steam login through AMP",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "SteamCMD",
+    "UpdateSourceData": "228980",
+    "ForceDownloadPlatform": "Windows",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Update and stage Linux server files",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "\"{{$FullRootDir}}mount-and-blade2-coop.sh\" update",
+    "SkipOnFailure": false
+  }
+]

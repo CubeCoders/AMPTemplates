@@ -1,0 +1,348 @@
+#!/bin/bash
+# AMP Co-op runtime. Credentials belong to AMP's native SteamCMD dialog.
+set +x
+set -euo pipefail
+umask 077
+ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
+APP=261550
+ITEM=3770450698
+
+die() { printf '[coop] ERROR: %s\n' "$*" >&2; exit 1; }
+log() { printf '[coop] %s\n' "$*"; }
+
+settings() {
+    mkdir -p -- "$ROOT/data"
+    if [[ ! -f "$ROOT/data/server-config.json" ]]; then
+        printf '%s\n' '{"port":4200,"saveName":"saveauto1","autosaveMinutes":5,"password":"","logFile":true,"steam":false}' > "$ROOT/data/server-config.json"
+    fi
+    chmod 600 "$ROOT/data/server-config.json"
+    jq -e 'type == "object" and
+      ((.saveName // "saveauto1") | type == "string" and test("^[A-Za-z0-9_-]{1,80}$")) and
+      ((.autosaveMinutes // 5) | type == "number" and floor == . and . >= 1 and . <= 1440) and
+      ((has("steam") | not) or (.steam | type == "boolean")) and
+      ((has("password") | not) or (.password | type == "string"))' \
+      "$ROOT/data/server-config.json" >/dev/null || die 'Invalid data/server-config.json; check save name, autosave, Steam flag and password type'
+}
+
+on_9p_share() {
+    [[ "$(stat -f -c %T "$ROOT" 2>/dev/null)" == v9fs ]]
+}
+
+# On Windows hosts the instance folder is a Docker Desktop 9p share, which is
+# too slow for building and running a Wine prefix. Keep the prefix in container
+# storage there; it is rebuilt automatically when the container is recreated.
+wine_prefix() {
+    if on_9p_share; then echo /tmp/amp-coop-wine; else printf '%s\n' "$ROOT/.wine"; fi
+}
+
+# A fresh SteamCMD updates itself on its first run. On a 9p share its relaunch
+# after that update ends the run before AMP's login step, so AMP's first Update
+# never logs in. Install and self-update SteamCMD here first, so AMP's Steam
+# stage starts with a current SteamCMD and goes straight to the login.
+bootstrap_steamcmd() {
+    on_9p_share || return 0
+    [[ ! -f "$ROOT/steamcmd.sh" ]] || return 0
+    local archive
+    command -v curl >/dev/null || { log 'curl missing; skipping SteamCMD bootstrap'; return 0; }
+    log 'Installing SteamCMD before the Steam login'
+    archive=$(mktemp /tmp/amp-coop-steamcmd.XXXXXX)
+    if ! curl -fsSL --retry 3 -o "$archive" https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz ||
+        ! tar -xzf "$archive" -C "$ROOT"; then
+        rm -f -- "$archive"
+        log 'SteamCMD bootstrap failed; AMP will install SteamCMD itself'
+        return 0
+    fi
+    rm -f -- "$archive"
+    HOME="$ROOT/../.virtualhome" timeout 600 /bin/bash "$ROOT/steamcmd.sh" +quit </dev/null || true
+    log 'SteamCMD is ready'
+}
+
+check_port() {
+    if [[ ! "$1" =~ ^[1-9][0-9]{0,4}$ ]] || (( 10#$1 > ${2:-65535} )); then
+        die 'Invalid allocated port'
+    fi
+}
+
+game_dir() {
+    local base suffix="steamapps/workshop/content/$APP/$ITEM/DedicatedServer"
+    for base in "${WORKSHOP_DIR:-$ROOT/workshop}" "$ROOT/workshop" "$ROOT/../.virtualhome/Steam" "$ROOT/steam/Steam" "$ROOT/steam" "$ROOT"; do
+        if [[ -f "$base/$suffix/engine/dotnet/dotnet.exe" ]]; then
+            (cd -- "$base/$suffix" && pwd -P)
+            return
+        fi
+    done
+    die 'Workshop DedicatedServer missing; run AMP Update'
+}
+
+cached_accounts() {
+    # Tokenize quoted KeyValues, tracking the Accounts object instead of grepping
+    # nearby lines. Only account names leave awk; cache/token values never do.
+    awk '
+    function token(kind, val, lower) {
+      if (kind == "}") {
+        if (key != "" || depth < 1) { bad=1; return }
+        if (depth == accountdepth) accountdepth=0
+        depth--; return
+      }
+      if (kind == "{") {
+        if (key == "") { bad=1; return }
+        path[++depth]=key
+        if (tolower(key)=="accounts") accountdepth=depth
+        if (tolower(key)=="connectcache") hascache=1
+        key=""; return
+      }
+      if (key == "") { key=val; return }
+      lower=tolower(key)
+      if (lower=="connectcache" && val!="") hascache=1
+      if (accountdepth && depth==accountdepth+1 && lower=="steamid" && val!="") {
+        if (path[depth] ~ /^[A-Za-z0-9_]+$/) names[tolower(path[depth])]=1
+      }
+      key=""
+    }
+    {
+      line=$0; sub(/\r$/, "", line)
+      while (length(line)) {
+        if (match(line,/^[ \t]+/)) { line=substr(line,RLENGTH+1); continue }
+        if (line ~ /^\/\//) break
+        if (match(line,/^"([^"\\]|\\.)*"/)) {
+          value=substr(line,2,RLENGTH-2); line=substr(line,RLENGTH+1)
+          token("text",value); continue
+        }
+        if (line ~ /^[{}]/) { token(substr(line,1,1),""); line=substr(line,2); continue }
+        bad=1; break
+      }
+    }
+    END {
+      if (bad || depth || key!="" || !hascache) exit 1
+      for (name in names) print name
+    }' "$1"
+}
+
+steam_account() {
+    local cache="$ROOT/../.virtualhome/Steam/config/config.vdf" names account probe
+    [[ -f "$ROOT/steamcmd.sh" && -f "$cache" ]] || die 'Steam login missing; complete AMP Update login dialog'
+    names=$(cached_accounts "$cache") || die 'No readable reusable Steam cache; retry AMP Update with Steam Guard code'
+    [[ -n "$names" ]] || die 'No account in AMP Steam cache; retry AMP Update login'
+    if [[ "$names" != *$'\n'* ]]; then printf '%s\n' "$names"; return; fi
+    # Several old accounts can remain in Steam cache. Probe tokens without stdin,
+    # passwords or a new UI field; use the first account whose cached login works.
+    probe=$(mktemp "$ROOT/.steam-probe.XXXXXX")
+    while IFS= read -r account; do
+        if HOME="$ROOT/../.virtualhome" timeout 180 /bin/bash "$ROOT/steamcmd.sh" \
+            +@NoPromptForPassword 1 +login "$account" +quit </dev/null >"$probe" 2>&1 &&
+            grep -Eq 'Logging in.*[.][.][.].*OK' "$probe"; then
+            rm -f -- "$probe"
+            printf '%s\n' "$account"
+            return
+        fi
+    done <<< "$names"
+    rm -f -- "$probe"
+    die 'No cached account could log in; complete AMP Update login again'
+}
+
+update() {
+    local account output
+    account=$(steam_account)
+    # On Windows hosts the instance folder is a Docker Desktop 9p share, where
+    # SteamCMD can't preallocate Workshop files before its timeout. Download into
+    # container storage there; stage_server copies the files into server/ anyway.
+    WORKSHOP_DIR="$ROOT/workshop"
+    if on_9p_share; then
+        WORKSHOP_DIR=/tmp/amp-coop-workshop
+        mkdir -p -- "$WORKSHOP_DIR"
+    fi
+    output=$(mktemp "$ROOT/.workshop-update.XXXXXX")
+    # SteamCMD gives up on a Workshop item after a fixed time. Partial downloads
+    # are kept, so retrying a timed-out download resumes it.
+    local attempt
+    for attempt in 1 2 3; do
+        if HOME="$ROOT/../.virtualhome" timeout 7200 /bin/bash "$ROOT/steamcmd.sh" \
+            +@NoPromptForPassword 1 +@sSteamCmdForcePlatformType windows \
+            +force_install_dir "$WORKSHOP_DIR" +login "$account" \
+            +workshop_download_item "$APP" "$ITEM" validate +quit </dev/null 2>&1 | tee "$output"; then
+            break
+        fi
+        if (( attempt < 3 )) && grep -q "Timeout downloading item $ITEM" "$output"; then
+            log "Workshop download timed out; resuming (attempt $((attempt + 1)) of 3)"
+            continue
+        fi
+        rm -f -- "$output"
+        die 'Workshop update failed; retry AMP Update login if the cached session expired'
+    done
+    if ! grep -Eq "Success[.] Downloaded item $ITEM([[:space:]]|$)" "$output"; then
+        rm -f -- "$output"
+        die 'SteamCMD did not confirm the Workshop download; existing files were left in place'
+    fi
+    rm -f -- "$output"
+    stage_server
+    if [[ "$WORKSHOP_DIR" == /tmp/amp-coop-workshop ]]; then rm -rf -- "$WORKSHOP_DIR"; fi
+    log 'Workshop update finished'
+}
+
+stage_server() {
+    local game target="$ROOT/server"
+    game=$(game_dir)
+    # This is a disposable copy of application files, never the persistent data
+    # directory. Refuse symlinks/unmanaged destinations before deleting anything.
+    [[ ! -L "$target" ]] || die 'Refusing a symlink as staged server directory'
+    if [[ -e "$target" && ! -f "$target/.amp-coop-managed" ]]; then
+        die 'server/ is not managed by this template; move it aside before Update'
+    fi
+    mkdir -p -- "$target"
+    touch "$target/.amp-coop-managed"
+    rm -f -- "$target/.amp-coop-ready"
+    find "$target" -mindepth 1 -maxdepth 1 ! -name .amp-coop-managed -exec rm -rf -- {} +
+    cp -a -- "$game/." "$target/"
+    [[ -f "$target/engine/dotnet/dotnet.exe" ]] || die 'Staged .NET engine is missing'
+    touch "$target/.amp-coop-ready"
+}
+
+prepare_config() {
+    local port=$1 data="$ROOT/data" temporary old
+    check_port "$port"
+    settings
+    mkdir -p -- "$data"
+    old="$data/server-config.json"
+    # AMP maps settings directly into this file. Only normalize engine defaults
+    # and the allocated port; never replace UI settings from a second file.
+    temporary=$(mktemp "$data/.server-config.XXXXXX")
+    if ! jq --argjson port "$port" '
+      . + {port:$port, saveName:(.saveName // "saveauto1"),
+        autosaveMinutes:(.autosaveMinutes // 5), logFile:true, steam:(.steam // false),
+        password:(.password // "")}
+      ' "$old" > "$temporary"; then
+        rm -f -- "$temporary"
+        die 'Invalid JSON configuration; existing server-config.json was preserved'
+    fi
+    chmod 600 "$temporary"
+    mv -f -- "$temporary" "$old"
+}
+
+prepare() {
+    local port=$1 expected=$2 game="$ROOT/server" data name mid binary
+    check_port "$port"
+    for binary in wine wineboot wineserver xvfb-run socat timeout; do
+        command -v "$binary" >/dev/null || die "Missing container dependency: $binary"
+    done
+    [[ -f "$game/.amp-coop-managed" && -f "$game/.amp-coop-ready" && -f "$game/engine/dotnet/dotnet.exe" ]] || die 'Complete Update to stage the server before Start'
+    prepare_config "$port"
+    data="$ROOT/data"
+    name=$(jq -r '.saveName // "saveauto1"' "$data/server-config.json")
+    mkdir -p -- "$data/Game Saves"
+    if [[ ! -f "$data/Game Saves/$name.sav" ]]; then
+        cp -- "$game/server-data/Game Saves/default_new_game.sav" "$data/Game Saves/$name.sav"
+    fi
+    WINEPREFIX=$(wine_prefix)
+    export WINEPREFIX WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES='mscoree,mshtml='
+    # The marker is written only after a complete initialization, so a prefix
+    # left behind by an interrupted wineboot is rebuilt instead of reused.
+    if [[ ! -f "$WINEPREFIX/.amp-coop-prefix-ok" || ! -f "$WINEPREFIX/system.reg" ]]; then
+        [[ ! -L "$WINEPREFIX" ]] || die 'Refusing a symlink as Wine prefix'
+        rm -rf -- "$WINEPREFIX"
+        # Wine won't create a prefix inside a folder it doesn't own, such as /tmp.
+        mkdir -p -m 700 -- "$WINEPREFIX"
+        if ! timeout 900 xvfb-run -a wineboot -i; then
+            wineserver -k || true
+            rm -rf -- "$WINEPREFIX"
+            die 'Wine prefix initialization failed'
+        fi
+        timeout 15 wineserver -k || true
+        timeout 15 wineserver -w || true
+        [[ -f "$WINEPREFIX/system.reg" ]] || die 'Wine registry missing after initialization'
+        touch "$WINEPREFIX/.amp-coop-prefix-ok"
+    fi
+    mid=$(sed -n 's/.*<Id[[:space:]]*value="\([A-Za-z0-9_.-]*\)".*/\1/p' "$game/engine/Modules/Coop/SubModule.xml" | head -n 1)
+    [[ "$mid" =~ ^[A-Za-z0-9_.-]+$ ]] || die 'Cannot read Coop module Id'
+    [[ "$expected" =~ ^[A-Za-z0-9_.-]+$ && "$mid" == "$expected" ]] || die "Installed module is $mid; template CoopModuleId must match it before Start"
+    log 'Pre-start preparation complete; AMP will launch the engine directly'
+}
+
+# Preserve every original console line. The additional AMP-Coop lines translate
+# full @DS@ rosters into the individual events GenericModule understands.
+track_players() {
+    jq --unbuffered -Rnr '
+      def clean_field: gsub("[\u0000-\u001f\u007f]"; " ");
+      def valid_roster:
+        try (type == "object" and .ev == "players" and (.list | type == "array") and
+          all(.list[]; type == "object" and (.id | type == "number") and
+            .id >= 0 and .id <= 2147483647 and .id == (.id | floor) and (.name | type == "string") and
+            ((.addr // "") | type == "string")) and
+          ([.list[].id] | unique | length) == (.list | length)) catch false;
+      def changed($a; $b): $a == null or $b == null or $a.name != $b.name or $a.addr != $b.addr;
+      def apply_roster($next):
+        .players as $old |
+        .out += [ $old | to_entries[] | select(changed(.value; $next[.key])) |
+          "[AMP-Coop] leave\tpeer-" + .key ] |
+        .out += [ $next | to_entries[] | select(changed($old[.key]; .value)) |
+          "[AMP-Coop] join\tpeer-" + .key + "\t" + .value.name + "\t" + .value.addr ] |
+        .players = $next;
+      def snapshot($event):
+        .players as $old |
+        ($event.list | map(.id | tostring)) as $present |
+        (reduce $event.list[] as $p ({};
+          ($p.id | tostring) as $id |
+          ($p.name | clean_field) as $raw |
+          (if $raw != "" and $raw != "(joining)" then $raw
+           else $old[$id].rawName // null end) as $name |
+          if $name == null then . else
+            (if $old[$id].rawName == $name then $old[$id].name else $name end) as $preferred |
+            ([.[] | .name] + [$old | to_entries[] |
+              select(.key != $id and (.key as $k | $present | index($k)) != null) | .value.name]) as $used |
+            (if ($used | index($preferred)) == null then $preferred else
+              ($name + " [peer " + $id + "]") |
+              until(. as $candidate | ($used | index($candidate)) == null; . + "#") end) as $display |
+            .[$id] = {rawName:$name, name:$display, addr:(($p.addr // "") | clean_field)}
+          end)) as $next |
+        apply_roster($next);
+      foreach (inputs, null) as $line (
+        {players:{}, buffer:null, out:[]};
+        .out = (if $line == null then [] else [$line] end) |
+        if $line == null then apply_roster({}) else
+          ($line | gsub("\u001b\\[[0-?]*[ -/]*[@-~]"; "") | sub("\r+$"; "")) as $clean |
+          ((try ($clean | capture("^\\[DedicatedServer\\] player disconnected: peer (?<id>[0-9]+)(?:\\s|\\(|$)")) catch null) // null) as $disconnect |
+          if $disconnect != null then
+            .buffer = null | apply_roster(.players | del(.[$disconnect.id]))
+          else
+            if ($clean | test("^\\s*@DS@")) then
+              .buffer = ($clean | sub("^\\s*@DS@"; ""))
+            elif .buffer != null then .buffer += $clean
+            else . end |
+            if .buffer != null then
+              if (.buffer | length) > 1048576 then .buffer = null else
+                (try {value:(.buffer | fromjson)} catch null) as $parsed |
+                if $parsed != null then
+                  .buffer = null |
+                  if ($parsed.value | valid_roster) then snapshot($parsed.value) else . end
+                else . end
+              end
+            else . end
+          end
+        end;
+        .out[])
+    '
+}
+
+start() {
+    local module=$1
+    [[ "$module" =~ ^[A-Za-z0-9_.-]+$ ]] || die 'Invalid Coop module Id'
+    cd -- "$ROOT/server/engine/bin/Win64_Shipping_Server"
+    WINEPREFIX=$(wine_prefix)
+    [[ -f "$WINEPREFIX/.amp-coop-prefix-ok" ]] || die 'Wine prefix missing; Start again to rebuild it'
+    env "WINEPREFIX=$WINEPREFIX" "BANNERLORD_USER_DIR=Z:$ROOT/data" "COOP_DATA_DIR=Z:$ROOT/data" \
+      "DOTNET_ROOT=Z:$ROOT/server/engine/dotnet" \
+      xvfb-run -a socat STDIO \
+      "EXEC:wine ../../dotnet/dotnet.exe TaleWorlds.Starter.DotNetCore.dll _MODULES_*Native*SandBoxCore*Sandbox*$module*DedicatedServer.Windows*_MODULES_,pty,setsid,ctty,echo=0,inlcr" \
+      | track_players
+}
+
+main() {
+    command -v jq >/dev/null || die 'jq is required; refresh the AMP container packages'
+    case "${1:-}" in
+        update) update ;;
+        init) settings; bootstrap_steamcmd ;;
+        prepare) [[ $# == 3 ]] || die 'Usage: mount-and-blade2-coop.sh prepare GAME_PORT MODULE_ID'; prepare "$2" "$3" ;;
+        start) [[ $# == 2 ]] || die 'Usage: mount-and-blade2-coop.sh start MODULE_ID'; start "$2" ;;
+        *) die 'Usage: mount-and-blade2-coop.sh init|update|prepare GAME_PORT MODULE_ID|start MODULE_ID' ;;
+    esac
+}
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then main "$@"; fi
