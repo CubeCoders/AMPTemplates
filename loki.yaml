@@ -1,0 +1,54 @@
+# Grafana Loki configuration (single binary, local filesystem storage).
+# Reference: https://grafana.com/docs/loki/latest/configure/
+# This file is only created on first install and is never overwritten by updates.
+# The HTTP and gRPC listen addresses and ports are set by AMP on the command line.
+# Relative paths are inside the instance's loki folder.
+
+auth_enabled: false
+
+server:
+  log_level: info
+  grpc_server_max_concurrent_streams: 1000
+
+common:
+  instance_addr: 127.0.0.1
+  path_prefix: data
+  storage:
+    filesystem:
+      chunks_directory: data/chunks
+      rules_directory: data/rules
+  replication_factor: 1
+  ring:
+    kvstore:
+      store: inmemory
+
+query_range:
+  results_cache:
+    cache:
+      embedded_cache:
+        enabled: true
+        max_size_mb: 100
+
+limits_config:
+  metric_aggregation_enabled: true
+
+schema_config:
+  configs:
+    - from: 2020-10-24
+      store: tsdb
+      object_store: filesystem
+      schema: v13
+      index:
+        prefix: index_
+        period: 24h
+
+pattern_ingester:
+  enabled: true
+  metric_aggregation:
+    loki_address: localhost:${LOKI_HTTP_PORT:-3100}
+
+ruler:
+  alertmanager_url: http://localhost:9093
+
+frontend:
+  encoding: protobuf

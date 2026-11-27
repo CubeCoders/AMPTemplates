@@ -1,0 +1,38 @@
+[
+    {
+        "UpdateStageName": "Loki Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location 'loki'; New-Item -ItemType Directory -Force -Path 'server','data' | Out-Null; $v = '{{ServerVersion}}'; if (-not $v) { $v = (Invoke-RestMethod -UseBasicParsing 'https://api.github.com/repos/grafana/loki/releases/latest').tag_name }; if ($v -notmatch '^v\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.]+)?$') { Write-Output ('Invalid Loki version format specified: ' + $v); exit 1 }; $n = $v.Substring(1); if ((Test-Path 'server/loki.exe') -and (Test-Path 'server/.installed-version') -and ((Get-Content 'server/.installed-version' -Raw).Trim() -eq $n)) { Write-Output ('Loki ' + $v + ' already installed. Skipping'); exit 0 }; try { Invoke-WebRequest -UseBasicParsing -OutFile 'loki.zip' ('https://github.com/grafana/loki/releases/download/' + $v + '/loki-windows-amd64.exe.zip') } catch { Remove-Item 'loki.zip' -Force -ErrorAction SilentlyContinue; Write-Output 'Download failed from GitHub. Aborting'; exit 1 }; if (Test-Path 'extract') { Remove-Item 'extract' -Recurse -Force }; Expand-Archive -Path 'loki.zip' -DestinationPath 'extract' -Force; Move-Item -Path 'extract/loki-windows-amd64.exe' -Destination 'server/loki.exe' -Force; Remove-Item 'extract','loki.zip' -Recurse -Force; Set-Content -Path 'server/.installed-version' -Value $n; Write-Output ('Loki ' + $v + ' installed')\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Loki Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"ServerVersion=\\\"{{ServerVersion}}\\\"; Arch=\\\"amd64\\\"; cd loki || exit 1; mkdir -p server data; if [[ -z \\\"$ServerVersion\\\" ]]; then ServerVersion=$(wget -qO- https://api.github.com/repos/grafana/loki/releases/latest | jq -r .tag_name); fi; if [[ ! \\\"$ServerVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.]+)?$ ]]; then echo \\\"Invalid Loki version format specified: $ServerVersion\\\"; exit 1; fi; Version=\\\"${ServerVersion#v}\\\"; if [[ -x server/loki && \\\"$(cat server/.installed-version 2>/dev/null)\\\" == \\\"$Version\\\" ]]; then echo \\\"Loki $ServerVersion already installed. Skipping\\\"; exit 0; fi; rm -f loki.zip; wget -qO loki.zip \\\"https://github.com/grafana/loki/releases/download/$ServerVersion/loki-linux-$Arch.zip\\\" || { rm -f loki.zip; echo \\\"Download failed from GitHub. Aborting\\\"; exit 1; }; unzip -o -q loki.zip -d server && mv -f \\\"server/loki-linux-$Arch\\\" server/loki && rm -f loki.zip && chmod +x server/loki && echo \\\"$Version\\\" > server/.installed-version && echo \\\"Loki $ServerVersion installed\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Loki Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"ServerVersion=\\\"{{ServerVersion}}\\\"; Arch=\\\"arm64\\\"; cd loki || exit 1; mkdir -p server data; if [[ -z \\\"$ServerVersion\\\" ]]; then ServerVersion=$(wget -qO- https://api.github.com/repos/grafana/loki/releases/latest | jq -r .tag_name); fi; if [[ ! \\\"$ServerVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.]+)?$ ]]; then echo \\\"Invalid Loki version format specified: $ServerVersion\\\"; exit 1; fi; Version=\\\"${ServerVersion#v}\\\"; if [[ -x server/loki && \\\"$(cat server/.installed-version 2>/dev/null)\\\" == \\\"$Version\\\" ]]; then echo \\\"Loki $ServerVersion already installed. Skipping\\\"; exit 0; fi; rm -f loki.zip; wget -qO loki.zip \\\"https://github.com/grafana/loki/releases/download/$ServerVersion/loki-linux-$Arch.zip\\\" || { rm -f loki.zip; echo \\\"Download failed from GitHub. Aborting\\\"; exit 1; }; unzip -o -q loki.zip -d server && mv -f \\\"server/loki-linux-$Arch\\\" server/loki && rm -f loki.zip && chmod +x server/loki && echo \\\"$Version\\\" > server/.installed-version && echo \\\"Loki $ServerVersion installed\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Default Config Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/loki.yaml",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "loki.yaml",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
