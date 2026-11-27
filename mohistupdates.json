@@ -1,0 +1,44 @@
+[
+    {
+        "UpdateStageName": "MohistMC Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://api.mohistmc.com/project/mohist/{{MohistVersion}}/builds/latest/download",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "mohist.jar",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd mohist && V='{{SpecificInstanceJavaVersion}}'; if [[ $V == auto ]]; then case '{{MohistVersion}}' in 1.7.10|1.12.2|1.16.5) V=8;; *) V=17;; esac; fi; Latest=$(wget -qO- 'https://api.adoptium.net/v3/assets/latest/'$V'/hotspot?architecture=x64&image_type=jdk&os=linux&vendor=eclipse' | jq -r '.[0].version.openjdk_version'); if [[ -z $Latest || $Latest == null ]]; then echo 'Could not look up Eclipse Temurin Java '$V'. Aborting'; exit 1; fi; if [[ -x java/bin/java && $(cat java/.temurin-version 2>/dev/null) == $Latest ]]; then echo 'Eclipse Temurin Java '$Latest' already installed. Skipping'; exit 0; fi; rm -f java.tar.gz; wget -qO java.tar.gz 'https://api.adoptium.net/v3/binary/latest/'$V'/ga/linux/x64/jdk/hotspot/normal/eclipse' || { rm -f java.tar.gz; echo 'Download failed from the Eclipse Temurin CDN. Aborting'; exit 1; }; rm -rf java && mkdir -p java && tar -xzf java.tar.gz -C java --strip-components=1 && rm -f java.tar.gz && chmod +x java/bin/java && echo $Latest > java/.temurin-version && echo 'Eclipse Temurin Java '$Latest' downloaded'\"",
+        "UpdateSourceConditionSetting": "JavaVersion",
+        "UpdateSourceConditionValue": "{{Windows:java\\bin\\java.exe}}{{Linux:java/bin/java}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd mohist && V='{{SpecificInstanceJavaVersion}}'; if [[ $V == auto ]]; then case '{{MohistVersion}}' in 1.7.10|1.12.2|1.16.5) V=8;; *) V=17;; esac; fi; Latest=$(wget -qO- 'https://api.adoptium.net/v3/assets/latest/'$V'/hotspot?architecture=aarch64&image_type=jdk&os=linux&vendor=eclipse' | jq -r '.[0].version.openjdk_version'); if [[ -z $Latest || $Latest == null ]]; then echo 'Could not look up Eclipse Temurin Java '$V'. Aborting'; exit 1; fi; if [[ -x java/bin/java && $(cat java/.temurin-version 2>/dev/null) == $Latest ]]; then echo 'Eclipse Temurin Java '$Latest' already installed. Skipping'; exit 0; fi; rm -f java.tar.gz; wget -qO java.tar.gz 'https://api.adoptium.net/v3/binary/latest/'$V'/ga/linux/aarch64/jdk/hotspot/normal/eclipse' || { rm -f java.tar.gz; echo 'Download failed from the Eclipse Temurin CDN. Aborting'; exit 1; }; rm -rf java && mkdir -p java && tar -xzf java.tar.gz -C java --strip-components=1 && rm -f java.tar.gz && chmod +x java/bin/java && echo $Latest > java/.temurin-version && echo 'Eclipse Temurin Java '$Latest' downloaded'\"",
+        "UpdateSourceConditionSetting": "JavaVersion",
+        "UpdateSourceConditionValue": "{{Windows:java\\bin\\java.exe}}{{Linux:java/bin/java}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; $V='{{SpecificInstanceJavaVersion}}'; if ($V -eq 'auto') { if (@('1.7.10','1.12.2','1.16.5') -contains '{{MohistVersion}}') { $V='8' } else { $V='17' } }; Set-Location -Path 'mohist'; try { $Latest=(Invoke-RestMethod -UseBasicParsing -Uri ('https://api.adoptium.net/v3/assets/latest/'+$V+'/hotspot?architecture=x64&image_type=jdk&os=windows&vendor=eclipse'))[0].version.openjdk_version } catch { $Latest=$null }; if (-not $Latest) { Write-Output ('Could not look up Eclipse Temurin Java '+$V+'. Aborting'); exit 1 }; if ((Test-Path 'java\\bin\\java.exe') -and (Test-Path 'java\\.temurin-version') -and ((Get-Content 'java\\.temurin-version' -Raw).Trim() -eq $Latest)) { Write-Output ('Eclipse Temurin Java '+$Latest+' already installed. Skipping'); exit 0 }; if (Test-Path 'java.zip') { Remove-Item 'java.zip' -Force }; try { Invoke-WebRequest -UseBasicParsing -Uri ('https://api.adoptium.net/v3/binary/latest/'+$V+'/ga/windows/x64/jdk/hotspot/normal/eclipse') -OutFile 'java.zip' -ErrorAction Stop } catch { Write-Output 'Download failed from the Eclipse Temurin CDN. Aborting'; exit 1 }; if (Test-Path 'java-extract') { Remove-Item 'java-extract' -Recurse -Force }; Expand-Archive -Path 'java.zip' -DestinationPath 'java-extract' -Force; Remove-Item 'java.zip' -Force; $Dir=Get-ChildItem -Path 'java-extract' -Directory | Select-Object -First 1; if (-not $Dir) { Write-Output 'The Java archive was empty. Aborting'; exit 1 }; if (Test-Path 'java') { Remove-Item 'java' -Recurse -Force }; Move-Item -Path $Dir.FullName -Destination 'java'; Remove-Item 'java-extract' -Recurse -Force; Set-Content -Path 'java\\.temurin-version' -Value $Latest; Write-Output ('Eclipse Temurin Java '+$Latest+' downloaded')\"",
+        "UpdateSourceConditionSetting": "JavaVersion",
+        "UpdateSourceConditionValue": "{{Windows:java\\bin\\java.exe}}{{Linux:java/bin/java}}",
+        "SkipOnFailure": false
+    }
+]
