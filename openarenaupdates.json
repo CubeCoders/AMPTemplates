@@ -1,0 +1,32 @@
+[
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateStageDescription": "Downloading OpenArena 0.8.8 (about 400 MB)",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://download.tuxfamily.org/openarena/rel/088/openarena-0.8.8.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Set Executable Permission",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"chmod +x '{{$FullBaseDir}}oa_ded.x86_64'\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server.cfg Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/openarenaserver.cfg",
+        "UpdateSourceArgs": "server.cfg",
+        "UpdateSourceTarget": "{{$FullBaseDir}}baseoa",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
