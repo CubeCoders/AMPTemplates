@@ -1,0 +1,78 @@
+[
+    {
+        "UpdateStageName": "Prepare Download Folder",
+        "UpdateStageDescription": "Creates an empty download folder, removing any leftover from an earlier update",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullBaseDir}}forgejo-download\\\" && mkdir -p \\\"{{$FullBaseDir}}forgejo-download\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Forgejo Download",
+        "UpdateStageDescription": "Downloads the latest Forgejo release (amd64) from Codeberg",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceData": "https://codeberg.org/api/v1/repos/forgejo/forgejo/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^forgejo-[\\d.]+-linux-amd64$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}forgejo-download",
+        "UpdateSourceArch": "x86_64",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "ServerStream",
+        "UpdateSourceConditionValue": "latest",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Forgejo Download",
+        "UpdateStageDescription": "Downloads the latest Forgejo release (arm64) from Codeberg",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceData": "https://codeberg.org/api/v1/repos/forgejo/forgejo/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^forgejo-[\\d.]+-linux-arm64$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}forgejo-download",
+        "UpdateSourceArch": "aarch64",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "ServerStream",
+        "UpdateSourceConditionValue": "latest",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Forgejo Download",
+        "UpdateStageDescription": "Downloads the selected Forgejo version (amd64) from Codeberg",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://codeberg.org/forgejo/forgejo/releases/download/v{{SpecificServerVersion}}/forgejo-{{SpecificServerVersion}}-linux-amd64",
+        "UpdateSourceTarget": "{{$FullBaseDir}}forgejo-download",
+        "UpdateSourceArch": "x86_64",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "ServerStream",
+        "UpdateSourceConditionValue": "specificversion",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Forgejo Download",
+        "UpdateStageDescription": "Downloads the selected Forgejo version (arm64) from Codeberg",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://codeberg.org/forgejo/forgejo/releases/download/v{{SpecificServerVersion}}/forgejo-{{SpecificServerVersion}}-linux-arm64",
+        "UpdateSourceTarget": "{{$FullBaseDir}}forgejo-download",
+        "UpdateSourceArch": "aarch64",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "UpdateSourceConditionSetting": "ServerStream",
+        "UpdateSourceConditionValue": "specificversion",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Forgejo Installation",
+        "UpdateStageDescription": "Installs the downloaded binary, creates the data folders and writes a starting app.ini if there is none",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}\\\" && mkdir -p custom/conf data log && f=$(ls -1 forgejo-download/forgejo-* | head -n 1) && [ -n \\\"$f\\\" ] && mv -f \\\"$f\\\" forgejo && chmod +x forgejo && rm -rf forgejo-download && if [ ! -f custom/conf/app.ini ]; then printf '%s\\n' 'APP_NAME = Forgejo' '' '[server]' 'HTTP_ADDR = 0.0.0.0' 'HTTP_PORT = 3000' 'DOMAIN = localhost' 'ROOT_URL = http://localhost:3000/' 'START_SSH_SERVER = true' 'SSH_PORT = 2222' 'SSH_LISTEN_PORT = 2222' > custom/conf/app.ini; fi && ./forgejo --version\"",
+        "SkipOnFailure": false
+    }
+]
