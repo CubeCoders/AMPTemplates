@@ -1,0 +1,26 @@
+[
+    {
+        "UpdateStageName": "SteamCMD Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1549820",
+        "UpdateSourceArgs": "1281150",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Steam SDK64 Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}.steam/sdk64",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Copy SteamClient Library",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CopyFilePath",
+        "UpdateSourceData": "{{$FullBaseDir}}.steam/sdk64/steamclient.so",
+        "UpdateSourceArgs": "{{$FullBaseDir}}linux64/steamclient.so",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    }
+]
