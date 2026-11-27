@@ -1,0 +1,94 @@
+[
+    {
+        "DisplayName": "Elasticsearch Version",
+        "Category": "Elasticsearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Version to install, such as 9.5.7. Leave empty for the latest release. Run Update after changing this. Elasticsearch can't be downgraded once it has written its data",
+        "Keywords": "version,release,update,pin",
+        "FieldName": "ServerVersion",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "Latest",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Cluster Name",
+        "Category": "Elasticsearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Name of the cluster this node belongs to",
+        "Keywords": "cluster,name,cluster.name",
+        "FieldName": "ClusterName",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "amp-cluster",
+        "Placeholder": "amp-cluster",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Node Name",
+        "Category": "Elasticsearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Name of this node, shown in logs and the API",
+        "Keywords": "node,name,node.name",
+        "FieldName": "NodeName",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "amp-node",
+        "Placeholder": "amp-node",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Heap Size",
+        "Category": "Elasticsearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Java heap size for Elasticsearch. Elastic recommends no more than half of the memory available to the instance",
+        "Keywords": "heap,memory,ram,xmx,xms,java",
+        "FieldName": "HeapSize",
+        "InputType": "number",
+        "MinValue": "256",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "1024",
+        "Suffix": "MB",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Disable Security",
+        "Category": "Elasticsearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "If enabled, the REST API runs over plain HTTP with no login. If disabled, Elasticsearch sets up HTTPS with a self-signed certificate on the first start and requires a login: set Elastic Password. Choose before the first start, as switching later needs manual security setup",
+        "Keywords": "security,xpack,tls,ssl,https,password,auth",
+        "FieldName": "DisableSecurity",
+        "InputType": "checkbox",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-Expack.security.enabled=false "
+        }
+    },
+    {
+        "DisplayName": "Elastic Password",
+        "Category": "Elasticsearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Password for the elastic superuser, at least 6 characters, without quotes. Stored in the Elasticsearch keystore at each start and used until the password is changed through the API. Leave empty to set it yourself with elasticsearch-reset-password",
+        "Keywords": "password,elastic,superuser,security,login,bootstrap",
+        "FieldName": "ElasticPassword",
+        "InputType": "password",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Custom Settings",
+        "Category": "Elasticsearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Extra settings passed on the command line, such as -Eindices.query.bool.max_clause_count=4096",
+        "Keywords": "custom,arguments,args,settings,parameters",
+        "FieldName": "CustomArgs",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    }
+]
