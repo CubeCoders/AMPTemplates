@@ -1,0 +1,18 @@
+[
+    {
+        "UpdateStageName": "Wine and Saves Setup",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "./winescript.sh",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create World",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd aloft/1660080 || exit 1; [ -f Aloft.exe ] || { echo 'Aloft.exe not found. The server runs from the Aloft game files, so the Steam login must own Aloft.'; exit 1; }; [ -e \\\"Aloft/Data06/Saves/w_{{MapName}}\\\" ] || WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/xvfb-run -a wine Aloft.exe -batchmode -nographics -server create#{{MapName}}# islandcount#{{islandcount}}# corruptioncount#{{corruptioncount}}# creative#{{CreativeMode}}# log#{{log}}#\"",
+        "SkipOnFailure": false
+    }
+]
