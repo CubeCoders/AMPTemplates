@@ -1,0 +1,69 @@
+[
+    {
+        "UpdateStageName": "Tools Folder Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}tools",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Download",
+        "UpdateStageDescription": "Downloads the official 7-Zip tools used to unpack the Wesnoth installer",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/ip7z/7zip/releases/download/26.06/7zr.exe",
+        "UpdateSourceArgs": "7zr.exe",
+        "UpdateSourceTarget": "{{$FullBaseDir}}tools",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Download",
+        "UpdateStageDescription": "Downloads the official 7-Zip tools used to unpack the Wesnoth installer",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://github.com/ip7z/7zip/releases/download/26.06/7z2606-x64.exe",
+        "UpdateSourceArgs": "7z-x64.exe",
+        "UpdateSourceTarget": "{{$FullBaseDir}}tools",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Wesnoth Server Installation",
+        "UpdateStageDescription": "Downloads the latest Windows release of the selected series from SourceForge and unpacks only the server (wesnothd) from it",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol='Tls12'; Set-Location -LiteralPath '{{$FullBaseDir}}'; $rss=(Invoke-WebRequest -UseBasicParsing -TimeoutSec 60 -Uri 'https://sourceforge.net/projects/wesnoth/rss?path=/{{ReleaseSeries}}').Content; $m=[regex]::Match($rss, '/{{ReleaseSeries}}/wesnoth-1\\.[0-9]+\\.[0-9]+/wesnoth-(1\\.[0-9]+\\.[0-9]+)-win64\\.exe'); if (-not $m.Success) { throw 'Could not find the latest Wesnoth release on SourceForge' }; $v=$m.Groups[1].Value; if ((Test-Path wesnothd.exe) -and (Test-Path wesnoth-version.txt) -and ((Get-Content wesnoth-version.txt -Raw).Trim() -eq $v)) { 'Wesnoth ' + $v + ' is already installed'; exit 0 }; if (-not (Test-Path tools\\7z.exe)) { & tools\\7zr.exe x -y -otools tools\\7z-x64.exe 7z.exe 7z.dll | Out-Null; if ($LASTEXITCODE) { throw 'Unpacking 7-Zip failed' } }; 'Downloading Wesnoth ' + $v; Invoke-WebRequest -UseBasicParsing -UserAgent 'Wget' -Uri ('https://downloads.sourceforge.net/project/wesnoth' + $m.Value) -OutFile wesnoth-installer.exe; & tools\\7z.exe x -y -aoa -r- wesnoth-installer.exe wesnothd.exe *.dll COPYING.txt | Out-Null; if ($LASTEXITCODE) { throw 'Unpacking the Wesnoth installer failed' }; Remove-Item wesnoth-installer.exe; Set-Content -Path wesnoth-version.txt -Value $v; 'Wesnoth ' + $v + ' installed'\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Wesnoth Server Installation",
+        "UpdateStageDescription": "Downloads the latest Windows release of the selected series from SourceForge and unpacks only the server (wesnothd) from it, to run under Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"set -e; cd '{{$FullBaseDir}}'; if [ ! -x tools/7zz ]; then wget -qO tools/7z.tar.xz https://github.com/ip7z/7zip/releases/download/26.06/7z2606-linux-x64.tar.xz; tar -xJf tools/7z.tar.xz -C tools; rm -f tools/7z.tar.xz; fi; p=$(wget -q --timeout=60 --tries=3 -O- 'https://sourceforge.net/projects/wesnoth/rss?path=/{{ReleaseSeries}}' | grep -oE '/{{ReleaseSeries}}/wesnoth-1\\.[0-9]+\\.[0-9]+/wesnoth-1\\.[0-9]+\\.[0-9]+-win64\\.exe' | head -n1); if [ -z $p ]; then echo Could not find the latest Wesnoth release on SourceForge; exit 1; fi; v=$(echo $p | sed -E 's|.*/wesnoth-(1\\.[0-9]+\\.[0-9]+)-win64\\.exe|\\1|'); if [ -f wesnothd.exe ] && [ x$(cat wesnoth-version.txt 2>/dev/null) = x$v ]; then echo Wesnoth $v is already installed; exit 0; fi; echo Downloading Wesnoth $v; wget -q --timeout=60 --tries=5 -O wesnoth-installer.exe https://downloads.sourceforge.net/project/wesnoth$p; tools/7zz x -y -aoa -r- wesnoth-installer.exe wesnothd.exe '*.dll' COPYING.txt > /dev/null; rm -f wesnoth-installer.exe; echo $v > wesnoth-version.txt; echo Wesnoth $v installed\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Replays Folder Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}replays",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Config Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/wesnothserver.cfg",
+        "UpdateSourceArgs": "server.cfg",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
