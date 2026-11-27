@@ -1,0 +1,359 @@
+[
+    {
+        "DisplayName": "Server Name",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the server name shown in the VU server browser",
+        "Keywords": "server,name,servername",
+        "FieldName": "vars.serverName",
+        "InputType": "text",
+        "ParamFieldName": "vars.serverName",
+        "DefaultValue": "Venice Unleashed Server - Powered by AMP",
+        "Placeholder": "Venice Unleashed Server - Powered by AMP",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Description",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the server description shown in the VU server browser",
+        "Keywords": "server,description",
+        "FieldName": "vars.serverDescription",
+        "InputType": "text",
+        "ParamFieldName": "vars.serverDescription",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Password",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the password required to join the server. Leave empty for no password",
+        "Keywords": "server,password,gamepassword",
+        "FieldName": "vars.gamePassword",
+        "InputType": "password",
+        "ParamFieldName": "vars.gamePassword",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "RCON Password",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the password for remote administration (RCON) tools such as Procon. Leave empty to disable RCON logins",
+        "Keywords": "rcon,admin,password",
+        "FieldName": "admin.password",
+        "InputType": "password",
+        "ParamFieldName": "admin.password",
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Max Players",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum number of players. Players plus spectators can't exceed the Player Slot Cap",
+        "Keywords": "max,players,maxplayers",
+        "FieldName": "$MaxUsers",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "128",
+        "ParamFieldName": "vars.maxPlayers",
+        "DefaultValue": "64",
+        "Placeholder": "64",
+        "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Max Spectators",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the maximum number of spectators",
+        "Keywords": "max,spectators,maxspectators",
+        "FieldName": "vars.maxSpectators",
+        "InputType": "number",
+        "MinValue": "0",
+        "MaxValue": "128",
+        "ParamFieldName": "vars.maxSpectators",
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "Suffix": "spectators",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Player Slot Cap",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the total number of slots (players plus spectators) the server allows (-maxPlayers)",
+        "Keywords": "slot,cap,maxplayers",
+        "FieldName": "SlotCap",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "128",
+        "ParamFieldName": "SlotCap",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "64",
+        "Placeholder": "64",
+        "Suffix": "slots",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Unlisted",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Hides the server from the VU server browser. Players can still join with the server's join link",
+        "Keywords": "unlisted,hidden,browser",
+        "FieldName": "Unlisted",
+        "InputType": "checkbox",
+        "ParamFieldName": "Unlisted",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-unlisted"
+        }
+    },
+    {
+        "DisplayName": "Join Address",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the IPv4 address clients should connect to. Leave empty to let VU detect it",
+        "Keywords": "join,address,joinaddr,ip",
+        "FieldName": "joinaddr",
+        "InputType": "text",
+        "ParamFieldName": "joinaddr",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "192.168.1.10",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Join Hostname",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets a hostname clients should connect to. When set, Join Address is ignored",
+        "Keywords": "join,hostname,joinhost",
+        "FieldName": "joinhost",
+        "InputType": "text",
+        "ParamFieldName": "joinhost",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "vu.example.com",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Frequency",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:2",
+        "Description": "Sets the server tick rate. Higher rates need more CPU",
+        "Keywords": "frequency,tick,tickrate,high60,high120",
+        "FieldName": "FrequencyMode",
+        "InputType": "enum",
+        "ParamFieldName": "FrequencyMode",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "": "30 Hz",
+            "-high60": "60 Hz",
+            "-high120": "120 Hz"
+        }
+    },
+    {
+        "DisplayName": "Friendly Fire",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:2",
+        "Description": "Allows players to damage teammates",
+        "Keywords": "friendly,fire,friendlyfire",
+        "FieldName": "vars.friendlyFire",
+        "InputType": "checkbox",
+        "ParamFieldName": "vars.friendlyFire",
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Auto Balance",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:2",
+        "Description": "Automatically balances the teams",
+        "Keywords": "auto,balance,autobalance",
+        "FieldName": "vars.autoBalance",
+        "InputType": "checkbox",
+        "ParamFieldName": "vars.autoBalance",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Health Regeneration",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:2",
+        "Description": "Lets player health regenerate over time",
+        "Keywords": "regenerate,health,regen",
+        "FieldName": "vars.regenerateHealth",
+        "InputType": "checkbox",
+        "ParamFieldName": "vars.regenerateHealth",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Kill Cam",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:2",
+        "Description": "Shows the kill cam after a player dies",
+        "Keywords": "kill,cam,killcam",
+        "FieldName": "vars.killCam",
+        "InputType": "checkbox",
+        "ParamFieldName": "vars.killCam",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "3D Spotting",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:2",
+        "Description": "Lets players spot enemies in the 3D world",
+        "Keywords": "3d,spotting",
+        "FieldName": "vars.3dSpotting",
+        "InputType": "checkbox",
+        "ParamFieldName": "vars.3dSpotting",
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Idle Timeout",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:2",
+        "Description": "Kicks idle players after this many seconds. 0 disables it",
+        "Keywords": "idle,timeout,kick",
+        "FieldName": "vars.idleTimeout",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "vars.idleTimeout",
+        "DefaultValue": "300",
+        "Placeholder": "300",
+        "Suffix": "seconds",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Battlefield 3 Source",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Game Files:folder:3",
+        "Description": "Where the Battlefield 3 game files come from. Steam downloads them on update (the Steam login used by AMP must own Battlefield 3). Manual: upload a full, up-to-date Battlefield 3 installation (EA app or Steam copy) into the bf3 folder of the instance",
+        "Keywords": "battlefield,bf3,steam,source,game,files",
+        "FieldName": "BF3Source",
+        "InputType": "enum",
+        "ParamFieldName": "BF3Source",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "Manual",
+        "EnumValues": {
+            "Manual": "Manual upload",
+            "Steam": "Steam download"
+        }
+    },
+    {
+        "DisplayName": "Activate Battlefield 3 On Update",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Game Files:folder:3",
+        "Description": "Runs the VU game activation with the EA token below on the next update. VU needs this once per machine, and again after hardware or major OS changes. Get the token by running the \"Activate BF3\" shortcut (vu.exe -activate -lsx) on a PC with the EA app logged in to an account that owns Battlefield 3, then copy the text between the quotes. Tokens expire, so update soon after copying it, then turn this off",
+        "Keywords": "activate,activation,ea,token",
+        "FieldName": "ActivateGame",
+        "InputType": "checkbox",
+        "ParamFieldName": "ActivateGame",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "EA Activation Token",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Game Files:folder:3",
+        "Description": "The EA auth token used by the activation step above",
+        "Keywords": "ea,token,activation",
+        "FieldName": "EAToken",
+        "InputType": "password",
+        "ParamFieldName": "EAToken",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Disable VU Auto-Update",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Advanced:settings:4",
+        "Description": "Stops VU from updating itself when the server starts. Updates still come from the AMP update",
+        "Keywords": "update,noupdate",
+        "FieldName": "NoUpdate",
+        "InputType": "checkbox",
+        "ParamFieldName": "NoUpdate",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-noUpdate"
+        }
+    },
+    {
+        "DisplayName": "Skip Level Checksum",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Advanced:settings:4",
+        "Description": "Disables level checksum validation when clients connect",
+        "Keywords": "checksum,skipchecksum",
+        "FieldName": "SkipChecksum",
+        "InputType": "checkbox",
+        "ParamFieldName": "SkipChecksum",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-skipChecksum"
+        }
+    },
+    {
+        "DisplayName": "High Resolution Terrain",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Advanced:settings:4",
+        "Description": "Enables high resolution terrain, for mods that extend maps beyond their original play area",
+        "Keywords": "terrain,highresterrain",
+        "FieldName": "HighResTerrain",
+        "InputType": "checkbox",
+        "ParamFieldName": "HighResTerrain",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "-highResTerrain"
+        }
+    },
+    {
+        "DisplayName": "Custom Launch Arguments",
+        "Category": "Venice Unleashed:stadia_controller",
+        "Subcategory": "Advanced:settings:4",
+        "Description": "Extra launch arguments passed to the server",
+        "Keywords": "custom,arguments,args",
+        "FieldName": "CustomArgs",
+        "InputType": "text",
+        "ParamFieldName": "CustomArgs",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    }
+]
