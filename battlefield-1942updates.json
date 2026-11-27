@@ -1,0 +1,57 @@
+[
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://community.pcgamingwiki.com/files/file/1002-battlefield-1942-linux-standalone-server-1619/?do=download&r=3710&confirm=1&t=1",
+        "UpdateSourceArgs": "bf1942_lnxded.tar",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Extraction",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && tar -xf bf1942_lnxded.tar && keep='' && { [ -f mods/bf1942/settings/maplist.con ] && keep='--exclude=mods/bf1942/settings/maplist.con' || true; } && tail -n +341 bf1942_lnxded-1.6-rc2.run | tar -xz --no-same-owner --exclude='pb' --exclude='pb/*' $keep && rm -f bf1942_lnxded.tar bf1942_lnxded-1.6-rc2.run\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "1.61b Patch Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://community.pcgamingwiki.com/files/file/1003-battlefield-1942-linux-server-incremental-patch-1619-to-161b/?do=download&r=3711&confirm=1&t=1",
+        "UpdateSourceArgs": "bf1942-update-1.61.tar.gz",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "1.61b Patch Extraction",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && tar -xzf bf1942-update-1.61.tar.gz --no-same-owner --strip-components=1 && rm -f bf1942-update-1.61.tar.gz && ln -sf bf1942_lnxded.static bf1942_lnxded\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Set Executable Flag",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}bf1942_lnxded.static",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Settings Template Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/battlefield-1942serversettings.con",
+        "UpdateSourceArgs": "AMP_serversettings.con",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    }
+]
