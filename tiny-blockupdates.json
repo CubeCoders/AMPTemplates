@@ -1,0 +1,31 @@
+[
+    {
+        "UpdateStageName": "Tiny Block Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "hardtab/tinyblock-server",
+        "UpdateSourceData": "tinyblock-server-linux-x86_64.tar.gz",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Console Output Override",
+        "UpdateStageDescription": "Makes the server flush each console line so AMP can see it",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "[application]\n\nrun/flush_stdout_on_print=true\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}override.cfg",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Set Executable Flag",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}tinyblock-server.x86_64",
+        "SkipOnFailure": false
+    }
+]
