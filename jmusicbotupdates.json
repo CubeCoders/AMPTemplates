@@ -1,0 +1,66 @@
+[
+    {
+        "UpdateStageName": "JMusicBot Download",
+        "UpdateStageDescription": "Downloads the latest JMusicBot release from GitHub",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/jagrosh/MusicBot/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^JMusicBot-.*\\.jar$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "JMusicBot Rename",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd jmusicbot && f=$(ls -t JMusicBot-*.jar 2>/dev/null | head -n1); if [[ -z \\\"$f\\\" ]]; then echo \\\"No JMusicBot jar found. Aborting\\\"; exit 1; fi; mv -f \\\"$f\\\" JMusicBot.jar && rm -f JMusicBot-*.jar && echo \\\"Installed $f as JMusicBot.jar\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "JMusicBot Rename",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'jmusicbot'; $f = Get-ChildItem -File -Filter 'JMusicBot-*.jar' | Sort-Object LastWriteTime -Descending | Select-Object -First 1; if (-not $f) { Write-Output 'No JMusicBot jar found. Aborting'; exit 1 }; Move-Item -Force -LiteralPath $f.FullName -Destination 'JMusicBot.jar'; Get-ChildItem -File -Filter 'JMusicBot-*.jar' | Remove-Item -Force; Write-Output \\\"Installed $($f.Name) as JMusicBot.jar\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Config Template Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/jmusicbot-config.txt",
+        "UpdateSourceArgs": "AMP_config.txt",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd jmusicbot && if [[ -x java/bin/java ]]; then InstalledVersion=$(java/bin/java --version | grep \\\"Temurin-\\\" | head -n1 | sed -n \\\"s/.*Temurin-\\\\([^[:space:]]\\\\+\\\\).*/\\\\1/p\\\"); else InstalledVersion=\\\"\\\"; fi; LatestVersionBuild=$(wget -qO- \\\"https://api.adoptium.net/v3/assets/latest/{{JavaVersion}}/hotspot?architecture=x64&image_type=jdk&os=linux&vendor=eclipse\\\" | jq -r \\\".[0].version.openjdk_version\\\" | sed \\\"s/-LTS$//\\\"); if [[ \\\"$InstalledVersion\\\" == \\\"$LatestVersionBuild\\\" ]]; then echo \\\"Eclipse Temurin Java $LatestVersionBuild already installed. Skipping\\\" && exit 0; else [[ -f java.tar.gz ]] && rm -f java.tar.gz >/dev/null 2>&1; wget -qO java.tar.gz https://api.adoptium.net/v3/binary/latest/{{JavaVersion}}/ga/linux/x64/jdk/hotspot/normal/eclipse || { echo \\\"Download failed from the Eclipse Temurin CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; mkdir -p java && rm -rf java/* >/dev/null 2>&1 && tar -xzf java.tar.gz -C java --strip-components=1 >/dev/null 2>&1 && rm -f java.tar.gz >/dev/null 2>&1 && chmod +x java/bin/java && echo \\\"Eclipse Temurin Java $LatestVersionBuild downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd jmusicbot && if [[ -x java/bin/java ]]; then InstalledVersion=$(java/bin/java --version | grep \\\"Temurin-\\\" | head -n1 | sed -n \\\"s/.*Temurin-\\\\([^[:space:]]\\\\+\\\\).*/\\\\1/p\\\"); else InstalledVersion=\\\"\\\"; fi; LatestVersionBuild=$(wget -qO- \\\"https://api.adoptium.net/v3/assets/latest/{{JavaVersion}}/hotspot?architecture=aarch64&image_type=jdk&os=linux&vendor=eclipse\\\" | jq -r \\\".[0].version.openjdk_version\\\" | sed \\\"s/-LTS$//\\\"); if [[ \\\"$InstalledVersion\\\" == \\\"$LatestVersionBuild\\\" ]]; then echo \\\"Eclipse Temurin Java $LatestVersionBuild already installed. Skipping\\\" && exit 0; else [[ -f java.tar.gz ]] && rm -f java.tar.gz >/dev/null 2>&1; wget -qO java.tar.gz https://api.adoptium.net/v3/binary/latest/{{JavaVersion}}/ga/linux/aarch64/jdk/hotspot/normal/eclipse || { echo \\\"Download failed from the Eclipse Temurin CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; mkdir -p java && rm -rf java/* >/dev/null 2>&1 && tar -xzf java.tar.gz -C java --strip-components=1 >/dev/null 2>&1 && rm -f java.tar.gz >/dev/null 2>&1 && chmod +x java/bin/java && echo \\\"Eclipse Temurin Java $LatestVersionBuild downloaded\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Java Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'jmusicbot'; if (Test-Path 'java/bin/java.exe') { $InstalledVersion = (& java/bin/java.exe --version | Select-String -Pattern 'Temurin-(\\d+(?:\\.\\d+\\.\\d+(?:\\.\\d+)?)?\\+\\d+)' | Select-Object -First 1 | ForEach-Object { $_.Matches[0].Groups[1].Value }) } else { $InstalledVersion = '' }; $LatestVersionBuild = (Invoke-RestMethod -UseBasicParsing -Uri \\\"https://api.adoptium.net/v3/assets/latest/{{JavaVersion}}/hotspot?architecture=x64&image_type=jdk&os=windows&vendor=eclipse\\\")[0].version.openjdk_version -replace '-LTS$', ''; if ( $InstalledVersion -eq $LatestVersionBuild ) { Write-Output \\\"Eclipse Temurin Java $LatestVersionBuild already installed. Skipping\\\"; exit 0 } else { if ( Test-Path java.zip ) { Remove-Item java.zip -Force -ErrorAction SilentlyContinue *> $null }; try { Invoke-WebRequest -UseBasicParsing -Uri https://api.adoptium.net/v3/binary/latest/{{JavaVersion}}/ga/windows/x64/jdk/hotspot/normal/eclipse -OutFile java.zip -ErrorAction Stop } catch { Write-Output \\\"Download failed from the Eclipse Temurin CDN. This is a fault with the CDN, not AMP. Aborting\\\"; exit 1; }; Expand-Archive -Path \\\"java.zip\\\" -DestinationPath \\\".\\\" -Force *> $null; if ( Test-Path java.zip ) { Remove-Item java.zip -Force -ErrorAction SilentlyContinue *> $null }; if (Test-Path \\\"jdk-*\\\") { Remove-Item -Recurse -Force java -ErrorAction SilentlyContinue *> $null; Start-Sleep -Seconds 2; Get-ChildItem -Directory | Where-Object { $_.Name -like \\\"jdk-*\\\" } | Rename-Item -NewName \\\"java\\\" *> $null; Write-Output \\\"Eclipse Temurin Java $LatestVersionBuild downloaded\\\" } }\"",
+        "SkipOnFailure": false
+    }
+]
