@@ -1,0 +1,118 @@
+[
+    {
+        "DisplayName": "Prometheus Version",
+        "Category": "Prometheus:monitoring",
+        "Subcategory": "Server:dns:1",
+        "Description": "Prometheus release tag to install, such as v3.16.0. Leave empty to install the latest release. Run Update after changing this",
+        "Keywords": "version,release,tag,update",
+        "FieldName": "ServerVersion",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "Latest",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Data Retention Time",
+        "Category": "Prometheus:monitoring",
+        "Subcategory": "Storage:storage:2",
+        "Description": "How long to keep samples in storage, such as 15d, 12h or 1y. Leave empty to use the Prometheus default (15d, or no time limit if a size limit is set)",
+        "Keywords": "retention,time,storage,tsdb,days",
+        "FieldName": "RetentionTime",
+        "InputType": "text",
+        "ParamFieldName": "storage.tsdb.retention.time",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "15d",
+        "Placeholder": "15d",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Data Retention Size",
+        "Category": "Prometheus:monitoring",
+        "Subcategory": "Storage:storage:2",
+        "Description": "Maximum disk space for stored blocks, such as 10GB or 512MB. The oldest data is removed first. Leave empty for no size limit",
+        "Keywords": "retention,size,storage,tsdb,disk",
+        "FieldName": "RetentionSize",
+        "InputType": "text",
+        "ParamFieldName": "storage.tsdb.retention.size",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "10GB",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "External URL",
+        "Category": "Prometheus:monitoring",
+        "Subcategory": "Web:language:3",
+        "Description": "The URL users reach Prometheus at, for example when it sits behind a reverse proxy under a sub-path. Used for generated links and as the default route prefix. Leave empty to use the listen address",
+        "Keywords": "url,external,proxy,reverse proxy,prefix",
+        "FieldName": "ExternalUrl",
+        "InputType": "text",
+        "ParamFieldName": "web.external-url",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "https://example.com/prometheus/",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Web Config File",
+        "Category": "Prometheus:monitoring",
+        "Subcategory": "Web:language:3",
+        "Description": "Path, relative to the prometheus folder, of a [web configuration file](https://prometheus.io/docs/prometheus/latest/configuration/https/) that enables TLS and/or basic authentication. The web UI and API have no authentication unless this is set",
+        "Keywords": "tls,https,auth,authentication,basic auth,password,web config",
+        "FieldName": "TlsAuthConfig",
+        "InputType": "text",
+        "ParamFieldName": "web.config.file",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "web.yml",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Lifecycle API",
+        "Category": "Prometheus:monitoring",
+        "Subcategory": "Web:language:3",
+        "Description": "Allows reloading the configuration and shutting down Prometheus over HTTP (/-/reload and /-/quit)",
+        "Keywords": "lifecycle,reload,quit,api",
+        "FieldName": "EnableLifecycle",
+        "InputType": "checkbox",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--web.enable-lifecycle "
+        }
+    },
+    {
+        "DisplayName": "Enable Admin API",
+        "Category": "Prometheus:monitoring",
+        "Subcategory": "Web:language:3",
+        "Description": "Enables the admin HTTP API endpoints, such as snapshots and series deletion. Only enable this if the web port is protected",
+        "Keywords": "admin,api,snapshot,delete",
+        "FieldName": "EnableAdminAPI",
+        "InputType": "checkbox",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--web.enable-admin-api "
+        }
+    },
+    {
+        "DisplayName": "Custom Arguments",
+        "Category": "Prometheus:monitoring",
+        "Subcategory": "Server:dns:1",
+        "Description": "Additional [command-line flags](https://prometheus.io/docs/prometheus/latest/command-line/prometheus/) to pass to Prometheus, such as --enable-feature=remote-write-receiver",
+        "Keywords": "custom,arguments,args,flags,command line",
+        "FieldName": "CustomArgs",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "--enable-feature=...",
+        "EnumValues": {}
+    }
+]

@@ -1,0 +1,38 @@
+[
+    {
+        "UpdateStageName": "Prometheus Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location 'prometheus'; New-Item -ItemType Directory -Force -Path 'data' | Out-Null; $v = '{{ServerVersion}}'; if (-not $v) { $v = (Invoke-RestMethod -UseBasicParsing 'https://api.github.com/repos/prometheus/prometheus/releases/latest').tag_name }; if ($v -notmatch '^v\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.]+)?$') { Write-Output ('Invalid Prometheus version format specified: ' + $v); exit 1 }; $n = $v.Substring(1); if ((Test-Path 'server/prometheus.exe') -and (Test-Path 'server/.installed-version') -and ((Get-Content 'server/.installed-version' -Raw).Trim() -eq $n)) { Write-Output ('Prometheus ' + $v + ' already installed. Skipping'); exit 0 }; try { Invoke-WebRequest -UseBasicParsing -OutFile 'prometheus.zip' ('https://github.com/prometheus/prometheus/releases/download/' + $v + '/prometheus-' + $n + '.windows-amd64.zip') } catch { Remove-Item 'prometheus.zip' -Force -ErrorAction SilentlyContinue; Write-Output 'Download failed from GitHub. Aborting'; exit 1 }; if (Test-Path 'extract') { Remove-Item 'extract' -Recurse -Force }; Expand-Archive -Path 'prometheus.zip' -DestinationPath 'extract' -Force; if (Test-Path 'server') { Remove-Item 'server' -Recurse -Force }; Move-Item -Path (Get-ChildItem 'extract' -Directory | Select-Object -First 1).FullName -Destination 'server'; Remove-Item 'extract','prometheus.zip' -Recurse -Force; Set-Content -Path 'server/.installed-version' -Value $n; Write-Output ('Prometheus ' + $v + ' installed')\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Prometheus Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"ServerVersion=\\\"{{ServerVersion}}\\\"; Arch=\\\"amd64\\\"; cd prometheus || exit 1; mkdir -p server data; if [[ -z \\\"$ServerVersion\\\" ]]; then ServerVersion=$(wget -qO- https://api.github.com/repos/prometheus/prometheus/releases/latest | jq -r .tag_name); fi; if [[ ! \\\"$ServerVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.]+)?$ ]]; then echo \\\"Invalid Prometheus version format specified: $ServerVersion\\\"; exit 1; fi; Version=\\\"${ServerVersion#v}\\\"; if [[ -x server/prometheus && \\\"$(cat server/.installed-version 2>/dev/null)\\\" == \\\"$Version\\\" ]]; then echo \\\"Prometheus $ServerVersion already installed. Skipping\\\"; exit 0; fi; rm -f prometheus.tar.gz; wget -qO prometheus.tar.gz \\\"https://github.com/prometheus/prometheus/releases/download/$ServerVersion/prometheus-$Version.linux-$Arch.tar.gz\\\" || { rm -f prometheus.tar.gz; echo \\\"Download failed from GitHub. Aborting\\\"; exit 1; }; rm -rf server && mkdir -p server && tar -xzf prometheus.tar.gz -C server --strip-components=1 && rm -f prometheus.tar.gz && chmod +x server/prometheus server/promtool && echo \\\"$Version\\\" > server/.installed-version && echo \\\"Prometheus $ServerVersion installed\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Prometheus Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"ServerVersion=\\\"{{ServerVersion}}\\\"; Arch=\\\"arm64\\\"; cd prometheus || exit 1; mkdir -p server data; if [[ -z \\\"$ServerVersion\\\" ]]; then ServerVersion=$(wget -qO- https://api.github.com/repos/prometheus/prometheus/releases/latest | jq -r .tag_name); fi; if [[ ! \\\"$ServerVersion\\\" =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.]+)?$ ]]; then echo \\\"Invalid Prometheus version format specified: $ServerVersion\\\"; exit 1; fi; Version=\\\"${ServerVersion#v}\\\"; if [[ -x server/prometheus && \\\"$(cat server/.installed-version 2>/dev/null)\\\" == \\\"$Version\\\" ]]; then echo \\\"Prometheus $ServerVersion already installed. Skipping\\\"; exit 0; fi; rm -f prometheus.tar.gz; wget -qO prometheus.tar.gz \\\"https://github.com/prometheus/prometheus/releases/download/$ServerVersion/prometheus-$Version.linux-$Arch.tar.gz\\\" || { rm -f prometheus.tar.gz; echo \\\"Download failed from GitHub. Aborting\\\"; exit 1; }; rm -rf server && mkdir -p server && tar -xzf prometheus.tar.gz -C server --strip-components=1 && rm -f prometheus.tar.gz && chmod +x server/prometheus server/promtool && echo \\\"$Version\\\" > server/.installed-version && echo \\\"Prometheus $ServerVersion installed\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Default Config Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/prometheus.yml",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "prometheus.yml",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
