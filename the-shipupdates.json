@@ -1,0 +1,29 @@
+[
+  {
+    "UpdateStageName": "SteamCMD Server Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "SteamCMD",
+    "UpdateSourceData": "2403",
+    "UpdateSourceArgs": "2400",
+    "ForceDownloadPlatform": "Windows",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Server.cfg Template File Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/the-shipserver.cfg",
+    "UpdateSourceArgs": "AMP_server.cfg",
+    "UpdateSourceTarget": "{{$FullRootDir}}",
+    "OverwriteExistingFiles": true,
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Initialise Wine",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win32 WINEDEBUG=-all /usr/bin/wineboot --init\"",
+    "SkipOnFailure": false
+  }
+]
