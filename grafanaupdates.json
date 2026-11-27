@@ -1,0 +1,38 @@
+[
+    {
+        "UpdateStageName": "Grafana Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location 'grafana'; New-Item -ItemType Directory -Force -Path 'data','provisioning' | Out-Null; $v = '{{GrafanaVersion}}'; if (-not $v) { $v = (Invoke-RestMethod -UseBasicParsing 'https://api.github.com/repos/grafana/grafana/releases/latest').tag_name }; $v = $v -replace '^v',''; if ($v -notmatch '^\\d+\\.\\d+\\.\\d+(\\+security-\\d+)?$') { Write-Output ('Invalid Grafana version format specified: ' + $v); exit 1 }; if ((Test-Path 'server/bin/grafana.exe') -and (Test-Path 'server/.installed-version') -and ((Get-Content 'server/.installed-version' -Raw).Trim() -eq $v)) { Write-Output ('Grafana ' + $v + ' already installed. Skipping'); exit 0 }; $u = ((Invoke-RestMethod -UseBasicParsing ('https://grafana.com/api/downloads/grafana/versions/' + $v.Replace('+','%2B'))).packages | Where-Object { $_.os -eq 'win' -and $_.arch -eq 'amd64' -and $_.url -match '\\.(tar\\.gz|zip)$' } | Select-Object -First 1).url; if (-not $u) { Write-Output ('No Windows build found for Grafana ' + $v + '. Aborting'); exit 1 }; $f = 'grafana-download' + [IO.Path]::GetExtension($u); try { Invoke-WebRequest -UseBasicParsing -OutFile $f $u } catch { Remove-Item $f -Force -ErrorAction SilentlyContinue; Write-Output 'Download failed from dl.grafana.com. Aborting'; exit 1 }; if (Test-Path 'server') { Remove-Item 'server' -Recurse -Force }; New-Item -ItemType Directory -Path 'server' | Out-Null; & tar.exe -xf $f -C server --strip-components=1; if ($LASTEXITCODE -ne 0) { Write-Output 'Extraction failed. Aborting'; exit 1 }; Remove-Item $f -Force; Set-Content -Path 'server/.installed-version' -Value $v; Get-ChildItem 'server/conf/provisioning' -Directory | ForEach-Object { if (-not (Test-Path ('provisioning/' + $_.Name))) { Copy-Item $_.FullName ('provisioning/' + $_.Name) -Recurse } }; Write-Output ('Grafana ' + $v + ' installed')\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Grafana Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"V=\\\"{{GrafanaVersion}}\\\"; A=\\\"amd64\\\"; cd grafana || exit 1; mkdir -p data provisioning; if [[ -z \\\"$V\\\" ]]; then V=$(wget -qO- https://api.github.com/repos/grafana/grafana/releases/latest | jq -r .tag_name); fi; V=\\\"${V#v}\\\"; if [[ ! \\\"$V\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+(\\+security-[0-9]+)?$ ]]; then echo \\\"Invalid Grafana version format specified: $V\\\"; exit 1; fi; if [[ -x server/bin/grafana && \\\"$(cat server/.installed-version 2>/dev/null)\\\" == \\\"$V\\\" ]]; then echo \\\"Grafana $V already installed. Skipping\\\"; exit 0; fi; U=$(wget -qO- \\\"https://grafana.com/api/downloads/grafana/versions/${V/+/%2B}\\\" | jq -r --arg a \\\"$A\\\" '[.packages[] | select(.os == \\\"linux\\\" and .arch == $a and (.url | endswith(\\\".tar.gz\\\"))) | .url][0] // empty'); if [[ -z \\\"$U\\\" ]]; then echo \\\"No Linux $A build found for Grafana $V. Aborting\\\"; exit 1; fi; rm -f grafana.tar.gz; wget -qO grafana.tar.gz \\\"$U\\\" || { rm -f grafana.tar.gz; echo \\\"Download failed from dl.grafana.com. Aborting\\\"; exit 1; }; rm -rf server && mkdir -p server && tar -xzf grafana.tar.gz -C server --strip-components=1 && rm -f grafana.tar.gz && chmod +x server/bin/* && echo \\\"$V\\\" > server/.installed-version || { echo \\\"Extraction failed. Aborting\\\"; exit 1; }; for d in server/conf/provisioning/*/; do n=$(basename \\\"$d\\\"); [[ -d \\\"provisioning/$n\\\" ]] || cp -r \\\"$d\\\" \\\"provisioning/$n\\\"; done; echo \\\"Grafana $V installed\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Grafana Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"V=\\\"{{GrafanaVersion}}\\\"; A=\\\"arm64\\\"; cd grafana || exit 1; mkdir -p data provisioning; if [[ -z \\\"$V\\\" ]]; then V=$(wget -qO- https://api.github.com/repos/grafana/grafana/releases/latest | jq -r .tag_name); fi; V=\\\"${V#v}\\\"; if [[ ! \\\"$V\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+(\\+security-[0-9]+)?$ ]]; then echo \\\"Invalid Grafana version format specified: $V\\\"; exit 1; fi; if [[ -x server/bin/grafana && \\\"$(cat server/.installed-version 2>/dev/null)\\\" == \\\"$V\\\" ]]; then echo \\\"Grafana $V already installed. Skipping\\\"; exit 0; fi; U=$(wget -qO- \\\"https://grafana.com/api/downloads/grafana/versions/${V/+/%2B}\\\" | jq -r --arg a \\\"$A\\\" '[.packages[] | select(.os == \\\"linux\\\" and .arch == $a and (.url | endswith(\\\".tar.gz\\\"))) | .url][0] // empty'); if [[ -z \\\"$U\\\" ]]; then echo \\\"No Linux $A build found for Grafana $V. Aborting\\\"; exit 1; fi; rm -f grafana.tar.gz; wget -qO grafana.tar.gz \\\"$U\\\" || { rm -f grafana.tar.gz; echo \\\"Download failed from dl.grafana.com. Aborting\\\"; exit 1; }; rm -rf server && mkdir -p server && tar -xzf grafana.tar.gz -C server --strip-components=1 && rm -f grafana.tar.gz && chmod +x server/bin/* && echo \\\"$V\\\" > server/.installed-version || { echo \\\"Extraction failed. Aborting\\\"; exit 1; }; for d in server/conf/provisioning/*/; do n=$(basename \\\"$d\\\"); [[ -d \\\"provisioning/$n\\\" ]] || cp -r \\\"$d\\\" \\\"provisioning/$n\\\"; done; echo \\\"Grafana $V installed\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Default Config Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/grafana.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UpdateSourceArgs": "grafana.ini",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
