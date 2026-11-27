@@ -1,0 +1,106 @@
+[
+    {
+        "UpdateStageName": "Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C (if not exist \"{{$FullBaseDir}}client\" mkdir \"{{$FullBaseDir}}client\") & (if not exist \"{{$FullBaseDir}}bf3\" mkdir \"{{$FullBaseDir}}bf3\") & (if not exist \"{{$FullBaseDir}}instance\\Admin\\Mods\" mkdir \"{{$FullBaseDir}}instance\\Admin\\Mods\")",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Directory Creation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullBaseDir}}client\\\" \\\"{{$FullBaseDir}}bf3\\\" \\\"{{$FullBaseDir}}instance/Admin/Mods\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Venice Unleashed Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://veniceunleashed.net/files/vu.zip",
+        "UpdateSourceArgs": "vu.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}client",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Battlefield 3 Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1238820",
+        "UpdateSourceArgs": "1238820",
+        "UpdateSourceTarget": "{{$FullBaseDir}}bf3",
+        "ForceDownloadPlatform": "Windows",
+        "UpdateSourceConditionSetting": "BF3Source",
+        "UpdateSourceConditionValue": "Steam",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Startup Config Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/venice-unleashedstartup.txt",
+        "UpdateSourceArgs": "Startup.txt",
+        "UpdateSourceTarget": "{{$FullBaseDir}}instance/Admin",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Map List Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/venice-unleashedmaplist.txt",
+        "UpdateSourceArgs": "MapList.txt",
+        "UpdateSourceTarget": "{{$FullBaseDir}}instance/Admin",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Mod List Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}instance/Admin/ModList.txt",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win32 WINEDEBUG=-all; grep -qs '#arch=win32' \\\"$WINEPREFIX/system.reg\\\" && exit 0; rm -rf \\\"$WINEPREFIX\\\"; /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Install Visual C++ 2008 Runtime",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" && rm -f winetricks; wget -q https://raw.githubusercontent.com/Winetricks/winetricks/refs/tags/20260125/src/winetricks && chmod +x winetricks; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win32 WINEDEBUG=-all; xvfb-run -a ./winetricks -q sound=disabled vcrun2008 > winescript_log.txt 2>&1\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Battlefield 3 Activation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "{{$FullBaseDir}}client\\vu.com",
+        "UpdateSourceArgs": "-gamepath \"{{$FullBaseDir}}bf3\" -activate -ea_token {{EAToken}}",
+        "UpdateSourceConditionSetting": "ActivateGame",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Battlefield 3 Activation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}\\\" && export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win32 WINEDEBUG=-all; xvfb-run -a wine client/vu.com -gamepath \\\"Z:{{$FullBaseDir}}bf3\\\" -activate -ea_token '{{EAToken}}'\"",
+        "UpdateSourceConditionSetting": "ActivateGame",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": true
+    }
+]
