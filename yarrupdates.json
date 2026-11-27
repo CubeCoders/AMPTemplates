@@ -1,0 +1,73 @@
+[
+    {
+        "UpdateStageName": "yarr Download",
+        "UpdateStageDescription": "Downloads the latest yarr release from GitHub",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/nkanaev/yarr/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^yarr_windows_amd64\\.zip$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "yarr Download",
+        "UpdateStageDescription": "Downloads the latest yarr release from GitHub",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/nkanaev/yarr/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^yarr_windows_arm64\\.zip$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "yarr Download",
+        "UpdateStageDescription": "Downloads the latest yarr release from GitHub",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/nkanaev/yarr/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^yarr_linux_amd64\\.zip$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "yarr Download",
+        "UpdateStageDescription": "Downloads the latest yarr release from GitHub",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "FetchURLFromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/nkanaev/yarr/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^yarr_linux_arm64\\.zip$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "yarr Executable Rename",
+        "UpdateStageDescription": "The Windows release archive ships the binary without an .exe extension",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CMD",
+        "UpdateSourceArgs": "if exist \"{{$FullBaseDir}}yarr\" move /y \"{{$FullBaseDir}}yarr\" \"{{$FullBaseDir}}yarr.exe\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "yarr Executable Permission",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}yarr",
+        "SkipOnFailure": false
+    }
+]
