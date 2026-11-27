@@ -1,0 +1,133 @@
+[
+    {
+        "DisplayName": "Grafana Version",
+        "Category": "Grafana:monitoring",
+        "Subcategory": "Server:dns:1",
+        "Description": "Grafana OSS version to install, such as 13.3.2. Leave empty to install the latest release. Run Update after changing this",
+        "Keywords": "version,release,update",
+        "FieldName": "GrafanaVersion",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "Latest",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Initial Admin Username",
+        "Category": "Grafana:monitoring",
+        "Subcategory": "Server:dns:1",
+        "Description": "Username of the admin account created on first start. Only applies when the Grafana database is first created; change it in Grafana afterwards",
+        "Keywords": "admin,user,username,login",
+        "FieldName": "AdminUser",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "admin",
+        "Placeholder": "admin",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Initial Admin Password",
+        "Category": "Grafana:monitoring",
+        "Subcategory": "Server:dns:1",
+        "Description": "Password of the admin account created on first start. Leave empty to use admin, which Grafana asks you to change at first login. Only applies when the Grafana database is first created",
+        "Keywords": "admin,password,login",
+        "FieldName": "AdminPassword",
+        "InputType": "password",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "admin",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Root URL",
+        "Category": "Grafana:monitoring",
+        "Subcategory": "Web:language:2",
+        "Description": "The full public URL users reach Grafana at, used for redirects, emails and OAuth callbacks, for example behind a reverse proxy. Leave empty to use the default",
+        "Keywords": "url,root,proxy,reverse proxy,domain",
+        "FieldName": "RootUrl",
+        "InputType": "text",
+        "ParamFieldName": "server.root_url",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "https://example.com/grafana/",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Serve From Sub Path",
+        "Category": "Grafana:monitoring",
+        "Subcategory": "Web:language:2",
+        "Description": "Serves Grafana from the sub path given in the Root URL, for reverse proxies that don't strip the path",
+        "Keywords": "sub path,subpath,proxy,reverse proxy",
+        "FieldName": "ServeFromSubPath",
+        "InputType": "checkbox",
+        "ParamFieldName": "server.serve_from_sub_path",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Allow Sign Up",
+        "Category": "Grafana:monitoring",
+        "Subcategory": "Access:lock:3",
+        "Description": "Lets visitors create their own accounts from the login page",
+        "Keywords": "sign up,signup,register,users",
+        "FieldName": "AllowSignUp",
+        "InputType": "checkbox",
+        "ParamFieldName": "users.allow_sign_up",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Anonymous Access",
+        "Category": "Grafana:monitoring",
+        "Subcategory": "Access:lock:3",
+        "Description": "Lets visitors view dashboards without logging in, with the Viewer role in the main organisation",
+        "Keywords": "anonymous,public,guest,viewer",
+        "FieldName": "AnonymousEnabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "auth.anonymous.enabled",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Usage Reporting",
+        "Category": "Grafana:monitoring",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sends anonymous usage statistics to Grafana Labs",
+        "Keywords": "analytics,reporting,telemetry,stats",
+        "FieldName": "ReportingEnabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "analytics.reporting_enabled",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Custom Arguments",
+        "Category": "Grafana:monitoring",
+        "Subcategory": "Server:dns:1",
+        "Description": "Additional command-line arguments. Any setting from the [configuration docs](https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/) can be set as cfg:section.key=value, such as cfg:log.level=debug. Other settings can also go in grafana.ini in the grafana folder",
+        "Keywords": "custom,arguments,args,flags,command line,config",
+        "FieldName": "CustomArgs",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "cfg:log.level=debug",
+        "EnumValues": {}
+    }
+]
