@@ -1,0 +1,66 @@
+[
+    {
+        "UpdateStageName": "Setup Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}setup",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://gtaconnected.com/downloads/server/GTAC-Server-Win64-{{ServerVersion}}.zip",
+        "UpdateSourceArgs": "gtac.zip",
+        "UpdateSourceTarget": "{{$FullRootDir}}setup",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location -Path 'gtac'; if (Test-Path 'server.xml') { Remove-Item -Path 'setup/server.xml' -Force -ErrorAction SilentlyContinue }; if (Test-Path 'resources') { Remove-Item -Path 'setup/resources' -Recurse -Force -ErrorAction SilentlyContinue }; Copy-Item -Path 'setup/*' -Destination '.' -Recurse -Force; Remove-Item -Path 'setup' -Recurse -Force -ErrorAction SilentlyContinue\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Setup Directory Creation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}setup",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSourceData": "https://gtaconnected.com/downloads/server/GTAC-Server-Linux-{{ServerVersion}}.tar.gz",
+        "UpdateSourceArgs": "gtac.tar.gz",
+        "UpdateSourceTarget": "{{$FullRootDir}}setup",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSourceData": "https://gtaconnected.com/downloads/server/GTAC-Server-Linux-ARM64-{{ServerVersion}}.tar.gz",
+        "UpdateSourceArgs": "gtac.tar.gz",
+        "UpdateSourceTarget": "{{$FullRootDir}}setup",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd gtac/setup && tar -xzf gtac.tar.gz && rm -f gtac.tar.gz && if [ -f ../server.xml ]; then rm -f server.xml; fi && if [ -d ../resources ]; then rm -rf resources; fi && cp -rf . .. && cd .. && rm -rf setup && chmod +x Server\"",
+        "SkipOnFailure": false
+    }
+]
