@@ -1,0 +1,26 @@
+[
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"unset DISPLAY WAYLAND_DISPLAY; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\\\"mscoree,mshtml,winemenubuilder.exe=\\\"; if [[ -f \\\"$WINEPREFIX/system.reg\\\" ]]; then echo \\\"Wine prefix already initialised\\\"; exit 0; fi; /usr/bin/wineboot --init && /usr/bin/wineboot --shutdown; echo \\\"Wine prefix initialised\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "R5Reloaded Server Install",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'; Set-Location -LiteralPath '{{$FullBaseDir}}'; New-Item -ItemType Directory -Force -Path 'server','upload' | Out-Null; $z = Get-ChildItem -Path 'upload' -Filter '*.zip' -File | Sort-Object LastWriteTime -Descending | Select-Object -First 1; if ($z) { Write-Output ('Extracting ' + $z.Name + ' into the server folder'); tar.exe -xf $z.FullName -C server; if ($LASTEXITCODE -ne 0) { Write-Output ('Could not extract ' + $z.Name + '. Upload it again and click Update'); exit 1 }; if (-not (Test-Path -LiteralPath 'server/r5apex_ds.exe')) { $e = Get-ChildItem -Path 'server' -Filter 'r5apex_ds.exe' -File -Recurse -Depth 2 | Select-Object -First 1; if ($e) { $d = $e.DirectoryName; Get-ChildItem -LiteralPath $d -Force | Move-Item -Destination 'server' -Force; Remove-Item -LiteralPath $d -Force -ErrorAction SilentlyContinue } }; if (-not (Test-Path -LiteralPath 'server/r5apex_ds.exe')) { Write-Output ($z.Name + ' does not contain r5apex_ds.exe. Upload the R5Reloaded server folder as a zip'); exit 1 }; Remove-Item -LiteralPath $z.FullName -Force; Write-Output 'R5Reloaded server files installed. The uploaded zip was removed' } elseif (Test-Path -LiteralPath 'server/r5apex_ds.exe') { Write-Output 'No new zip in the upload folder. Keeping the installed R5Reloaded server files' } else { Write-Output 'R5Reloaded server files not found. Zip your R5Reloaded server folder (the one containing r5apex_ds.exe), upload the zip to the upload folder with the File Manager (or upload the files straight into the server folder), then click Update again'; exit 1 }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "R5Reloaded Server Install",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd \\\"{{$FullBaseDir}}\\\" || exit 1; mkdir -p server upload; z=$(ls -t upload/*.zip 2>/dev/null | head -n1); if [[ -n \\\"$z\\\" ]]; then echo \\\"Extracting $(basename \\\"$z\\\") into the server folder\\\"; if ! unzip -oq \\\"$z\\\" -d server; then echo \\\"Could not extract $(basename \\\"$z\\\"). Upload it again and click Update\\\"; exit 1; fi; if [[ ! -f server/r5apex_ds.exe ]]; then e=$(find server -mindepth 2 -maxdepth 3 -type f -name r5apex_ds.exe | head -n1); if [[ -n \\\"$e\\\" ]]; then d=$(dirname \\\"$e\\\"); shopt -s dotglob; mv -f \\\"$d\\\"/* server/ && rmdir \\\"$d\\\" 2>/dev/null; fi; fi; if [[ ! -f server/r5apex_ds.exe ]]; then echo \\\"$(basename \\\"$z\\\") does not contain r5apex_ds.exe. Upload the R5Reloaded server folder as a zip\\\"; exit 1; fi; rm -f \\\"$z\\\"; echo \\\"R5Reloaded server files installed. The uploaded zip was removed\\\"; elif [[ -f server/r5apex_ds.exe ]]; then echo \\\"No new zip in the upload folder. Keeping the installed R5Reloaded server files\\\"; else echo \\\"R5Reloaded server files not found. Zip your R5Reloaded server folder (the one containing r5apex_ds.exe), upload the zip to the upload folder with the File Manager (or upload the files straight into the server folder), then click Update again\\\"; exit 1; fi\"",
+        "SkipOnFailure": false
+    }
+]
