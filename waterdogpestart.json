@@ -1,0 +1,20 @@
+[
+    {
+        "UpdateStageName": "Apply AMP Network Settings",
+        "UpdateStageDescription": "Writes the bind address, ports and max players into config.yml",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd waterdogpe && if [[ -f config.yml ]]; then sed -i -E -e 's/^(  host: ).*/\\1{{$ApplicationIPBinding}}:{{$ServerPort}}/' -e 's/^(  max_players: ).*/\\1{{$MaxUsers}}/' -e 's/^(  webrtc_port: ).*/\\1{{$WebRTCPort}}/' config.yml; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Apply AMP Network Settings",
+        "UpdateStageDescription": "Writes the bind address, ports and max players into config.yml",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$f = 'waterdogpe/config.yml'; if (Test-Path $f) { $f = (Resolve-Path $f).Path; $c = [IO.File]::ReadAllText($f); $c = $c -replace '(?m)^(  host: )[^\\r\\n]*', '${1}{{$ApplicationIPBinding}}:{{$ServerPort}}' -replace '(?m)^(  max_players: )[^\\r\\n]*', '${1}{{$MaxUsers}}' -replace '(?m)^(  webrtc_port: )[^\\r\\n]*', '${1}{{$WebRTCPort}}'; [IO.File]::WriteAllText($f, $c) }\"",
+        "SkipOnFailure": false
+    }
+]
