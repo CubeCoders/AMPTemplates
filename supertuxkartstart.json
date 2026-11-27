@@ -1,0 +1,22 @@
+[
+    {
+        "UpdateStageName": "SuperTuxKart Account Login",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'supertuxkart/server'; $Here = (Get-Location).Path; $env:SUPERTUXKART_DATADIR = $Here; $env:SUPERTUXKART_ASSETS_DIR = (Join-Path $Here 'data') + '/'; $env:SUPERTUXKART_SAVEDIR = (Join-Path $Here '../userdata/config'); & ./bin/supertuxkart.exe --no-graphics --init-user '--login={{StkUsername}}' '--password={{StkPassword}}' *> '../userdata/login.log'; if (Select-String -Path '../userdata/login.log' -Pattern 'Logged in from command-line' -Quiet) { Write-Output 'Logged in to the SuperTuxKart account' } else { Get-Content -Path '../userdata/login.log' -Tail 5; Write-Output 'SuperTuxKart account login failed. Check the account username and password'; exit 1 }\"",
+        "UpdateSourceConditionSetting": "ServerType",
+        "UpdateSourceConditionValue": "wan",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SuperTuxKart Account Login",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd supertuxkart/server && SUPERTUXKART_DATADIR=$PWD SUPERTUXKART_ASSETS_DIR=$PWD/data/ SUPERTUXKART_SAVEDIR=$PWD/../userdata/config XDG_DATA_HOME=$PWD/../userdata/share XDG_CACHE_HOME=$PWD/../userdata/cache LD_LIBRARY_PATH=$PWD/lib ./bin/supertuxkart --no-graphics --init-user \\\"--login={{StkUsername}}\\\" \\\"--password={{StkPassword}}\\\" > ../userdata/login.log 2>&1; if grep -q 'Logged in from command-line' ../userdata/login.log; then echo 'Logged in to the SuperTuxKart account'; else tail -n 5 ../userdata/login.log; echo 'SuperTuxKart account login failed. Check the account username and password'; exit 1; fi\"",
+        "UpdateSourceConditionSetting": "ServerType",
+        "UpdateSourceConditionValue": "wan",
+        "SkipOnFailure": false
+    }
+]

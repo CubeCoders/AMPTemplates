@@ -1,0 +1,39 @@
+[
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; $ErrorActionPreference='Stop'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'supertuxkart'; $Release = Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/supertuxkart/stk-code/releases/latest'; $Asset = $Release.assets | Where-Object { $_.name -match '^SuperTuxKart-.*-win[.]zip$' } | Select-Object -First 1; if (-not $Asset) { Write-Output 'No Windows build found in the latest SuperTuxKart release. Aborting'; exit 1 }; $Tag = $Release.tag_name; if ((Test-Path 'server/bin/supertuxkart.exe') -and (Test-Path 'server/stk_version.txt') -and ((Get-Content 'server/stk_version.txt' -Raw).Trim() -eq $Tag)) { Write-Output ('SuperTuxKart ' + $Tag + ' already installed. Skipping'); exit 0 }; Remove-Item -Path 'stk.zip', 'stk-extract' -Recurse -Force -ErrorAction SilentlyContinue; Write-Output ('Downloading SuperTuxKart ' + $Tag); Invoke-WebRequest -UseBasicParsing -Uri $Asset.browser_download_url -OutFile 'stk.zip'; Add-Type -AssemblyName System.IO.Compression.FileSystem; [IO.Compression.ZipFile]::ExtractToDirectory((Join-Path (Get-Location).Path 'stk.zip'), (Join-Path (Get-Location).Path 'stk-extract')); $Src = (Get-ChildItem -Path 'stk-extract' -Directory | Select-Object -First 1).FullName; Remove-Item -Path 'server/bin', 'server/data' -Recurse -Force -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force -Path 'server' | Out-Null; Move-Item -Path (Join-Path $Src 'stk-code/data') -Destination 'server/data'; Move-Item -Path (Join-Path $Src 'stk-code/build-x86_64/bin') -Destination 'server/bin'; Remove-Item -Path 'stk.zip', 'stk-extract' -Recurse -Force -ErrorAction SilentlyContinue; Set-Content -Path 'server/stk_version.txt' -Value $Tag; Write-Output ('SuperTuxKart ' + $Tag + ' installed')\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd supertuxkart && Url=$(wget -qO- https://api.github.com/repos/supertuxkart/stk-code/releases/latest | grep -oE 'https://github[.]com/supertuxkart/stk-code/releases/download/[[:alnum:]._-]+/SuperTuxKart-[[:alnum:]._-]+-linux-x86_64[.]tar[.](gz|xz)' | head -n1); [[ -z $Url ]] && { echo 'No Linux x86_64 build found in the latest SuperTuxKart release. Aborting'; exit 1; }; Tag=$(echo $Url | cut -d/ -f8); if [[ -x server/bin/supertuxkart && -f server/stk_version.txt && $(cat server/stk_version.txt) == $Tag ]]; then echo SuperTuxKart $Tag already installed. Skipping; exit 0; fi; rm -f stk.tar >/dev/null 2>&1; echo Downloading SuperTuxKart $Tag; wget -qO stk.tar $Url || { echo 'Download failed. Aborting'; exit 1; }; rm -rf server/bin server/lib server/data >/dev/null 2>&1; mkdir -p server && tar -xf stk.tar -C server --strip-components=1 && rm -f stk.tar && echo $Tag > server/stk_version.txt && echo SuperTuxKart $Tag installed\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Config Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}userdata/config",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Data Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}userdata/share",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Cache Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}userdata/cache",
+        "SkipOnFailure": false
+    }
+]

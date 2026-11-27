@@ -1,0 +1,183 @@
+[
+    {
+        "DisplayName": "Server Name",
+        "Category": "SuperTuxKart:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Name of the server as shown in the server list",
+        "Keywords": "server,name,servername",
+        "FieldName": "ServerName",
+        "InputType": "text",
+        "ParamFieldName": "ServerName",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "AMP SuperTuxKart Server",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Type",
+        "Category": "SuperTuxKart:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "LAN servers show in the LAN list and accept direct connections by IP address. Public (WAN) servers are listed in the online server list and need the SuperTuxKart account below. If the account login fails, the server does not start",
+        "Keywords": "server,type,lan,wan,public,online",
+        "FieldName": "ServerType",
+        "InputType": "enum",
+        "ParamFieldName": "ServerType",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "lan",
+        "EnumValues": {
+            "lan": "LAN / direct IP (no account needed)",
+            "wan": "Public (WAN, needs a SuperTuxKart account)"
+        }
+    },
+    {
+        "DisplayName": "SuperTuxKart Account Username",
+        "Category": "SuperTuxKart:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Username of a SuperTuxKart (online.supertuxkart.net) account. Used only for Public (WAN) servers: the server logs in and saves the session before each start",
+        "Keywords": "account,username,login,wan,online",
+        "FieldName": "StkUsername",
+        "InputType": "text",
+        "ParamFieldName": "StkUsername",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "SuperTuxKart Account Password",
+        "Category": "SuperTuxKart:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Password of the SuperTuxKart account above. Used only for Public (WAN) servers. Avoid quote characters in the password",
+        "Keywords": "account,password,login,wan,online",
+        "FieldName": "StkPassword",
+        "InputType": "password",
+        "ParamFieldName": "StkPassword",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Password",
+        "Category": "SuperTuxKart:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Password players need to join. Leave empty for a public server",
+        "Keywords": "server,password,private",
+        "FieldName": "ServerPassword",
+        "InputType": "password",
+        "ParamFieldName": "ServerPassword",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Message of the Day",
+        "Category": "SuperTuxKart:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Message shown in the lobby to all players. Can also be the name of a .txt file in the server config folder",
+        "Keywords": "motd,message,lobby",
+        "FieldName": "Motd",
+        "InputType": "text",
+        "ParamFieldName": "Motd",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Players",
+        "Category": "SuperTuxKart:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Maximum number of players on the server. Values above 8 can degrade performance",
+        "Keywords": "max,players,maxplayers,slots",
+        "FieldName": "$MaxUsers",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "64",
+        "ParamFieldName": "max-players",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "8",
+        "Placeholder": "8",
+        "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Game Mode",
+        "Category": "SuperTuxKart:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:2",
+        "Description": "Game mode played on the server",
+        "Keywords": "game,mode,race,soccer,battle,ctf",
+        "FieldName": "GameMode",
+        "InputType": "enum",
+        "ParamFieldName": "GameMode",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "0": "Normal Race",
+            "1": "Time Trial",
+            "2": "Battle (Free-for-All)",
+            "3": "Soccer",
+            "5": "Capture the Flag"
+        }
+    },
+    {
+        "DisplayName": "Difficulty",
+        "Category": "SuperTuxKart:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:2",
+        "Description": "Race difficulty",
+        "Keywords": "difficulty",
+        "FieldName": "Difficulty",
+        "InputType": "enum",
+        "ParamFieldName": "Difficulty",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "0",
+        "EnumValues": {
+            "0": "Novice",
+            "1": "Intermediate",
+            "2": "Expert",
+            "3": "SuperTux"
+        }
+    },
+    {
+        "DisplayName": "Owner-less Server",
+        "Category": "SuperTuxKart:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:2",
+        "Description": "If enabled, there is no server owner: games start automatically once enough players have joined, and no player can kick others. If disabled, the first player to join becomes the owner and starts each game",
+        "Keywords": "owner,ownerless,autostart",
+        "FieldName": "OwnerLess",
+        "InputType": "checkbox",
+        "ParamFieldName": "OwnerLess",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "--owner-less",
+        "EnumValues": {
+            "False": "--no-owner-less",
+            "True": "--owner-less"
+        }
+    },
+    {
+        "DisplayName": "Minimum Players to Start",
+        "Category": "SuperTuxKart:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:2",
+        "Description": "For owner-less servers, the number of connected players needed before a game starts automatically",
+        "Keywords": "min,players,start,autostart",
+        "FieldName": "MinPlayers",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "64",
+        "ParamFieldName": "MinPlayers",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2",
+        "Placeholder": "2",
+        "Suffix": "players",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Custom Command Line Arguments",
+        "Category": "SuperTuxKart:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Extra command line arguments passed to the server, e.g. --auto-end. Other options are in server_config.xml in the instance's supertuxkart folder; settings above override the matching entries there",
+        "Keywords": "custom,arguments,args,command,line",
+        "FieldName": "CustomArgs",
+        "InputType": "text",
+        "ParamFieldName": "CustomArgs",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    }
+]
