@@ -1,0 +1,443 @@
+[
+    {
+        "DisplayName": "Java Version",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Java:local_cafe:2",
+        "Description": "Sets the Eclipse Temurin Java version installed in the instance to run ViaProxy. ViaProxy needs Java 17 or newer; ViaVersion recommends 21 or newer. Update the server after changing this setting",
+        "Keywords": "java,version,JavaVersion",
+        "FieldName": "JavaVersion",
+        "InputType": "enum",
+        "ParamFieldName": "JavaVersion",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "25",
+        "EnumValues": {
+            "25": "25 - LTS (default)",
+            "21": "21 - LTS",
+            "17": "17 - LTS"
+        }
+    },
+    {
+        "DisplayName": "Minimum Memory",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Java:local_cafe:2",
+        "Description": "Sets Java's minimum heap size",
+        "Keywords": "minimum,memory,heap,MinMemory",
+        "FieldName": "MinMemory",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "MinMemory",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "128",
+        "Suffix": "MB",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Memory",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Java:local_cafe:2",
+        "Description": "Sets Java's maximum heap size",
+        "Keywords": "maximum,memory,heap,MaxMemory",
+        "FieldName": "MaxMemory",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "MaxMemory",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "1024",
+        "Suffix": "MB",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional Java Arguments",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Java:local_cafe:2",
+        "Description": "Specifies any additional command line arguments to run Java with (NOT options passed to ViaProxy)",
+        "Keywords": "command,line,arguments,args,java,CustomJavaArgs",
+        "FieldName": "CustomJavaArgs",
+        "InputType": "text",
+        "ParamFieldName": "CustomJavaArgs",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "-XX:+UseG1GC",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Target Address",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Proxy:settings:1",
+        "Description": "The address and port of the Minecraft server ViaProxy forwards players to",
+        "Keywords": "target,address,server,backend",
+        "FieldName": "TargetAddress",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "target-address",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "127.0.0.1:25565",
+        "Placeholder": "mc.example.com:25565",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Target Version",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Proxy:settings:1",
+        "Description": "The version of the target server, written exactly as ViaProxy lists it (for example \"1.8.x\", \"1.21.4\", \"b1.7-b1.7.3\" or \"Bedrock 1.26.51\"). Run the jar with \"cli --list-versions\" for the full list",
+        "Keywords": "target,version,protocol",
+        "FieldName": "TargetVersion",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "target-version",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "Auto Detect (1.7+ servers)",
+        "Placeholder": "1.8.x",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Proxy Online Mode",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Proxy:settings:1",
+        "Description": "Requires players to have a valid Minecraft account. Lets players see skins on online mode servers and use signed chat",
+        "Keywords": "online,mode,auth",
+        "FieldName": "ProxyOnlineMode",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "proxy-online-mode",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Authentication Method",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Proxy:settings:1",
+        "Description": "How ViaProxy logs in to the target server. \"Account\" uses a Minecraft account added with the \"account\" console command",
+        "Keywords": "auth,method,account,login",
+        "FieldName": "AuthMethod",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "auth-method",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "NONE",
+        "EnumValues": {
+            "NONE": "None (offline mode)",
+            "ACCOUNT": "Account"
+        }
+    },
+    {
+        "DisplayName": "Minecraft Account Index",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Proxy:settings:1",
+        "Description": "Which saved account (0 indexed) to use when Authentication Method is \"Account\"",
+        "Keywords": "account,index",
+        "FieldName": "MinecraftAccountIndex",
+        "InputType": "number",
+        "MinValue": "0",
+        "IsFlagArgument": false,
+        "ParamFieldName": "minecraft-account-index",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "0",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "BetaCraft Authentication",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Proxy:settings:1",
+        "Description": "Uses BetaCraft authentication to join classic servers with online mode enabled",
+        "Keywords": "betacraft,classic,auth",
+        "FieldName": "BetacraftAuth",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "betacraft-auth",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Custom MOTD",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Proxy:settings:1",
+        "Description": "MOTD shown when clients ping the proxy. Leave empty to use the target server's MOTD",
+        "Keywords": "motd,message",
+        "FieldName": "CustomMotd",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "custom-motd",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Wildcard Domain Handling",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Proxy:settings:1",
+        "Description": "Lets clients choose the target server and version through wildcard domains",
+        "Keywords": "wildcard,domain",
+        "FieldName": "WildcardDomainHandling",
+        "InputType": "enum",
+        "IsFlagArgument": false,
+        "ParamFieldName": "wildcard-domain-handling",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "NONE",
+        "EnumValues": {
+            "NONE": "None",
+            "PUBLIC": "Public",
+            "INTERNAL": "Internal"
+        }
+    },
+    {
+        "DisplayName": "Chat Signing",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Proxy:settings:1",
+        "Description": "Enables sending signed chat messages on 1.19+ servers",
+        "Keywords": "chat,signing",
+        "FieldName": "ChatSigning",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "chat-signing",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Connect Timeout",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Timeout for connecting to the target server",
+        "Keywords": "connect,timeout",
+        "FieldName": "ConnectTimeout",
+        "InputType": "number",
+        "MinValue": "0",
+        "IsFlagArgument": false,
+        "ParamFieldName": "connect-timeout",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "8000",
+        "Suffix": "ms",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Compression Threshold",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Packets larger than this are compressed. -1 disables compression",
+        "Keywords": "compression,threshold",
+        "FieldName": "CompressionThreshold",
+        "InputType": "number",
+        "MinValue": "-1",
+        "IsFlagArgument": false,
+        "ParamFieldName": "compression-threshold",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "256",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Backend Proxy URL",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "SOCKS4/5 or HTTP(S) proxy used for connections to the target server, as type://address:port or type://user:pass@address:port. Leave empty to connect directly",
+        "Keywords": "backend,proxy,socks",
+        "FieldName": "BackendProxyUrl",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "backend-proxy-url",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "socks5://127.0.0.1:1080",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Backend HAProxy",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Sends HAProxy protocol messages to the target server",
+        "Keywords": "haproxy,backend",
+        "FieldName": "BackendHaproxy",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "backend-haproxy",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Frontend HAProxy",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Reads HAProxy protocol messages from client connections",
+        "Keywords": "haproxy,frontend",
+        "FieldName": "FrontendHaproxy",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "frontend-haproxy",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "BungeeCord Player Info Passthrough",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Passes player IP and UUID to the target server. Needs support on the target server",
+        "Keywords": "bungeecord,passthrough,ip,uuid",
+        "FieldName": "BungeecordPlayerInfoPassthrough",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "bungeecord-player-info-passthrough",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Allow Legacy Client Passthrough",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Lets 1.6.4 and older clients connect to the target server without translation",
+        "Keywords": "legacy,client,passthrough",
+        "FieldName": "AllowLegacyClientPassthrough",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "allow-legacy-client-passthrough",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Allow Beta Pinging",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Allows pinging b1.7.3 and older servers. May cause issues with servers that block frequent connections",
+        "Keywords": "beta,ping",
+        "FieldName": "AllowBetaPinging",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "allow-beta-pinging",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Rewrite Handshake Packet",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Rewrites the handshake address to what a client connecting directly would send. Disable only if the target server needs the original address",
+        "Keywords": "handshake,rewrite",
+        "FieldName": "RewriteHandshakePacket",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "rewrite-handshake-packet",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Rewrite Transfer Packets",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Rewrites transfer packets to point back to ViaProxy so it keeps translating after a transfer",
+        "Keywords": "transfer,rewrite",
+        "FieldName": "RewriteTransferPackets",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "rewrite-transfer-packets",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Simple Voice Chat Support",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Handles and rewrites Simple Voice Chat mod packets",
+        "Keywords": "voice,chat,simple",
+        "FieldName": "SimpleVoiceChatSupport",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "simple-voice-chat-support",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Fake Accept Resource Packs",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Accepts server resource packs without prompting the client. Needed for servers that require a pack the client cannot load",
+        "Keywords": "resource,pack,accept",
+        "FieldName": "FakeAcceptResourcePacks",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "fake-accept-resource-packs",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Ignore Protocol Translation Errors",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Logs packet translation errors instead of disconnecting the player",
+        "Keywords": "protocol,translation,errors",
+        "FieldName": "IgnoreProtocolTranslationErrors",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "ignore-protocol-translation-errors",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Log IP Addresses",
+        "Category": "ViaProxy:swap_horiz",
+        "Subcategory": "Advanced:tune:3",
+        "Description": "Shows player IP addresses in the console and log files",
+        "Keywords": "log,ip",
+        "FieldName": "LogIps",
+        "InputType": "checkbox",
+        "IsFlagArgument": false,
+        "ParamFieldName": "log-ips",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    }
+]
