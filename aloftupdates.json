@@ -9,14 +9,6 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Initialise Wine",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\\\"mscoree,mshtml=\\\" /usr/bin/wineboot --init --update\"",
-        "SkipOnFailure": false
-    },
-    {
         "UpdateStageName": "Winescript Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "FetchURL",
@@ -27,19 +19,11 @@
         "SkipOnFailure": false
     },
     {
-        "UpdateStageName": "Install Windows Components",
+        "UpdateStageName": "Wine and Saves Setup",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
         "UpdateSourceArgs": "./winescript.sh",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Saves Directory Creation",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullRootDir}}.wine/drive_c/users/$(id -un)/AppData/LocalLow/Astrolabe Interactive/Aloft\\\" && cd aloft/1660080 && ln -sfn \\\"../.wine/drive_c/users/$(id -un)/AppData/LocalLow/Astrolabe Interactive/Aloft\\\" ./Aloft\"",
         "SkipOnFailure": false
     }
 ]
