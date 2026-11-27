@@ -24,6 +24,39 @@ settings() {
       "$ROOT/data/server-config.json" >/dev/null || die 'Invalid data/server-config.json; check save name, autosave, Steam flag and password type'
 }
 
+on_9p_share() {
+    [[ "$(stat -f -c %T "$ROOT" 2>/dev/null)" == v9fs ]]
+}
+
+# On Windows hosts the instance folder is a Docker Desktop 9p share, which is
+# too slow for building and running a Wine prefix. Keep the prefix in container
+# storage there; it is rebuilt automatically when the container is recreated.
+wine_prefix() {
+    if on_9p_share; then echo /tmp/amp-coop-wine; else printf '%s\n' "$ROOT/.wine"; fi
+}
+
+# A fresh SteamCMD updates itself on its first run. On a 9p share its relaunch
+# after that update ends the run before AMP's login step, so AMP's first Update
+# never logs in. Install and self-update SteamCMD here first, so AMP's Steam
+# stage starts with a current SteamCMD and goes straight to the login.
+bootstrap_steamcmd() {
+    on_9p_share || return 0
+    [[ ! -f "$ROOT/steamcmd.sh" ]] || return 0
+    local archive
+    command -v curl >/dev/null || { log 'curl missing; skipping SteamCMD bootstrap'; return 0; }
+    log 'Installing SteamCMD before the Steam login'
+    archive=$(mktemp /tmp/amp-coop-steamcmd.XXXXXX)
+    if ! curl -fsSL --retry 3 -o "$archive" https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz ||
+        ! tar -xzf "$archive" -C "$ROOT"; then
+        rm -f -- "$archive"
+        log 'SteamCMD bootstrap failed; AMP will install SteamCMD itself'
+        return 0
+    fi
+    rm -f -- "$archive"
+    HOME="$ROOT/../.virtualhome" timeout 600 /bin/bash "$ROOT/steamcmd.sh" +quit </dev/null || true
+    log 'SteamCMD is ready'
+}
+
 check_port() {
     if [[ ! "$1" =~ ^[1-9][0-9]{0,4}$ ]] || (( 10#$1 > ${2:-65535} )); then
         die 'Invalid allocated port'
@@ -114,18 +147,28 @@ update() {
     # SteamCMD can't preallocate Workshop files before its timeout. Download into
     # container storage there; stage_server copies the files into server/ anyway.
     WORKSHOP_DIR="$ROOT/workshop"
-    if [[ "$(stat -f -c %T "$ROOT" 2>/dev/null)" == v9fs ]]; then
+    if on_9p_share; then
         WORKSHOP_DIR=/tmp/amp-coop-workshop
         mkdir -p -- "$WORKSHOP_DIR"
     fi
     output=$(mktemp "$ROOT/.workshop-update.XXXXXX")
-    if ! HOME="$ROOT/../.virtualhome" timeout 7200 /bin/bash "$ROOT/steamcmd.sh" \
-        +@NoPromptForPassword 1 +@sSteamCmdForcePlatformType windows \
-        +force_install_dir "$WORKSHOP_DIR" +login "$account" \
-        +workshop_download_item "$APP" "$ITEM" validate +quit </dev/null 2>&1 | tee "$output"; then
+    # SteamCMD gives up on a Workshop item after a fixed time. Partial downloads
+    # are kept, so retrying a timed-out download resumes it.
+    local attempt
+    for attempt in 1 2 3; do
+        if HOME="$ROOT/../.virtualhome" timeout 7200 /bin/bash "$ROOT/steamcmd.sh" \
+            +@NoPromptForPassword 1 +@sSteamCmdForcePlatformType windows \
+            +force_install_dir "$WORKSHOP_DIR" +login "$account" \
+            +workshop_download_item "$APP" "$ITEM" validate +quit </dev/null 2>&1 | tee "$output"; then
+            break
+        fi
+        if (( attempt < 3 )) && grep -q "Timeout downloading item $ITEM" "$output"; then
+            log "Workshop download timed out; resuming (attempt $((attempt + 1)) of 3)"
+            continue
+        fi
         rm -f -- "$output"
         die 'Workshop update failed; retry AMP Update login if the cached session expired'
-    fi
+    done
     if ! grep -Eq "Success[.] Downloaded item $ITEM([[:space:]]|$)" "$output"; then
         rm -f -- "$output"
         die 'SteamCMD did not confirm the Workshop download; existing files were left in place'
@@ -189,15 +232,24 @@ prepare() {
     if [[ ! -f "$data/Game Saves/$name.sav" ]]; then
         cp -- "$game/server-data/Game Saves/default_new_game.sav" "$data/Game Saves/$name.sav"
     fi
-    export WINEPREFIX="$ROOT/.wine" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES='mscoree,mshtml='
-    if [[ ! -f "$WINEPREFIX/system.reg" ]]; then
+    WINEPREFIX=$(wine_prefix)
+    export WINEPREFIX WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES='mscoree,mshtml='
+    # The marker is written only after a complete initialization, so a prefix
+    # left behind by an interrupted wineboot is rebuilt instead of reused.
+    if [[ ! -f "$WINEPREFIX/.amp-coop-prefix-ok" || ! -f "$WINEPREFIX/system.reg" ]]; then
+        [[ ! -L "$WINEPREFIX" ]] || die 'Refusing a symlink as Wine prefix'
+        rm -rf -- "$WINEPREFIX"
+        # Wine won't create a prefix inside a folder it doesn't own, such as /tmp.
+        mkdir -p -m 700 -- "$WINEPREFIX"
         if ! timeout 900 xvfb-run -a wineboot -i; then
             wineserver -k || true
+            rm -rf -- "$WINEPREFIX"
             die 'Wine prefix initialization failed'
         fi
-        timeout 15 wineserver -k
-        timeout 15 wineserver -w
+        timeout 15 wineserver -k || true
+        timeout 15 wineserver -w || true
         [[ -f "$WINEPREFIX/system.reg" ]] || die 'Wine registry missing after initialization'
+        touch "$WINEPREFIX/.amp-coop-prefix-ok"
     fi
     mid=$(sed -n 's/.*<Id[[:space:]]*value="\([A-Za-z0-9_.-]*\)".*/\1/p' "$game/engine/Modules/Coop/SubModule.xml" | head -n 1)
     [[ "$mid" =~ ^[A-Za-z0-9_.-]+$ ]] || die 'Cannot read Coop module Id'
@@ -274,7 +326,9 @@ start() {
     local module=$1
     [[ "$module" =~ ^[A-Za-z0-9_.-]+$ ]] || die 'Invalid Coop module Id'
     cd -- "$ROOT/server/engine/bin/Win64_Shipping_Server"
-    env "BANNERLORD_USER_DIR=Z:$ROOT/data" "COOP_DATA_DIR=Z:$ROOT/data" \
+    WINEPREFIX=$(wine_prefix)
+    [[ -f "$WINEPREFIX/.amp-coop-prefix-ok" ]] || die 'Wine prefix missing; Start again to rebuild it'
+    env "WINEPREFIX=$WINEPREFIX" "BANNERLORD_USER_DIR=Z:$ROOT/data" "COOP_DATA_DIR=Z:$ROOT/data" \
       "DOTNET_ROOT=Z:$ROOT/server/engine/dotnet" \
       xvfb-run -a socat STDIO \
       "EXEC:wine ../../dotnet/dotnet.exe TaleWorlds.Starter.DotNetCore.dll _MODULES_*Native*SandBoxCore*Sandbox*$module*DedicatedServer.Windows*_MODULES_,pty,setsid,ctty,echo=0,inlcr" \
@@ -285,7 +339,7 @@ main() {
     command -v jq >/dev/null || die 'jq is required; refresh the AMP container packages'
     case "${1:-}" in
         update) update ;;
-        init) settings ;;
+        init) settings; bootstrap_steamcmd ;;
         prepare) [[ $# == 3 ]] || die 'Usage: mount-and-blade2-coop.sh prepare GAME_PORT MODULE_ID'; prepare "$2" "$3" ;;
         start) [[ $# == 2 ]] || die 'Usage: mount-and-blade2-coop.sh start MODULE_ID'; start "$2" ;;
         *) die 'Usage: mount-and-blade2-coop.sh init|update|prepare GAME_PORT MODULE_ID|start MODULE_ID' ;;
