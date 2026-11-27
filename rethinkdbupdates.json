@@ -1,0 +1,21 @@
+[
+    {
+        "UpdateStageName": "RethinkDB Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -LiteralPath '{{$FullBaseDir}}'; try { $V = (Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/rethinkdb/rethinkdb/releases/latest').tag_name -replace '^v','' } catch { $V = '' }; if ($V -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output 'Could not get the latest RethinkDB version from GitHub'; exit 1 }; if ((Test-Path 'rethinkdb.exe') -and (Test-Path 'version.txt') -and ((Get-Content -Path 'version.txt' -Raw).Trim() -eq $V)) { Write-Output ('RethinkDB ' + $V + ' already installed. Skipping'); exit 0 }; Remove-Item -Path 'rethinkdb-download' -Recurse -Force -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Path 'rethinkdb-download' | Out-Null; try { Invoke-WebRequest -UseBasicParsing -Uri ('https://download.rethinkdb.com/repository/raw/windows/rethinkdb-' + $V + '.zip') -OutFile 'rethinkdb-download/rethinkdb.zip' -ErrorAction Stop } catch { Write-Output ('No Windows build of RethinkDB ' + $V + ' was found on download.rethinkdb.com'); Remove-Item -Path 'rethinkdb-download' -Recurse -Force -ErrorAction SilentlyContinue; exit 1 }; Expand-Archive -Path 'rethinkdb-download/rethinkdb.zip' -DestinationPath 'rethinkdb-download' -Force; $Exe = Get-ChildItem -Path 'rethinkdb-download' -Recurse -Filter 'rethinkdb.exe' | Select-Object -First 1; if (-not $Exe) { Write-Output 'rethinkdb.exe was not found in the download'; Remove-Item -Path 'rethinkdb-download' -Recurse -Force -ErrorAction SilentlyContinue; exit 1 }; Copy-Item -Path $Exe.FullName -Destination 'rethinkdb.exe' -Force; Set-Content -Path 'version.txt' -Value $V; Remove-Item -Path 'rethinkdb-download' -Recurse -Force -ErrorAction SilentlyContinue; Write-Output ('Installed RethinkDB ' + $V)\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "RethinkDB Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd '{{$FullBaseDir}}' || exit 1; V=$(wget -qO- https://api.github.com/repos/rethinkdb/rethinkdb/releases/latest | jq -r .tag_name | sed 's/^v//'); if [[ ! $V =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo 'Could not get the latest RethinkDB version from GitHub'; exit 1; fi; if [[ -x rethinkdb && $(cat version.txt 2>/dev/null) == $V ]]; then echo \\\"RethinkDB $V already installed. Skipping\\\"; exit 0; fi; rm -rf rethinkdb-download && mkdir rethinkdb-download || exit 1; wget -qO rethinkdb-download/rethinkdb.deb \\\"https://download.rethinkdb.com/repository/ubuntu-noble/pool/r/rethinkdb/rethinkdb_${V}~0noble_amd64.deb\\\" || { echo \\\"No Ubuntu 24.04 build of RethinkDB $V was found on download.rethinkdb.com\\\"; rm -rf rethinkdb-download; exit 1; }; dpkg-deb -x rethinkdb-download/rethinkdb.deb rethinkdb-download/pkg && cp -f rethinkdb-download/pkg/usr/bin/rethinkdb rethinkdb && chmod +x rethinkdb || { echo 'Could not extract rethinkdb from the package'; rm -rf rethinkdb-download; exit 1; }; echo $V > version.txt; rm -rf rethinkdb-download; echo \\\"Installed RethinkDB $V\\\"\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    }
+]
