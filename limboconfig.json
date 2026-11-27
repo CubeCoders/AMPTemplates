@@ -1,0 +1,422 @@
+[
+    {
+        "DisplayName": "Java Version",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Java:local_cafe:3",
+        "Description": "Sets the Eclipse Temurin Java version installed in the instance to run Limbo. Limbo needs Java 21 or newer. Update the server after changing this setting",
+        "Keywords": "java,version,JavaVersion",
+        "FieldName": "JavaVersion",
+        "InputType": "enum",
+        "ParamFieldName": "JavaVersion",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "25",
+        "EnumValues": {
+            "25": "25 - LTS (default)",
+            "21": "21 - LTS"
+        }
+    },
+    {
+        "DisplayName": "Minimum Memory",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Java:local_cafe:3",
+        "Description": "Sets Java's minimum heap size",
+        "Keywords": "minimum,memory,heap,MinMemory",
+        "FieldName": "MinMemory",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "MinMemory",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "128",
+        "Suffix": "MB",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Memory",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Java:local_cafe:3",
+        "Description": "Sets Java's maximum heap size",
+        "Keywords": "maximum,memory,heap,MaxMemory",
+        "FieldName": "MaxMemory",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "MaxMemory",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "512",
+        "Suffix": "MB",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional Java Arguments",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Java:local_cafe:3",
+        "Description": "Specifies any additional command line arguments to run Java with",
+        "Keywords": "command,line,arguments,args,java,CustomJavaArgs",
+        "FieldName": "CustomJavaArgs",
+        "InputType": "text",
+        "ParamFieldName": "CustomJavaArgs",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "-XX:+UseG1GC",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "MOTD",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the server list message, as a JSON text component",
+        "Keywords": "motd,message,server,list",
+        "FieldName": "motd",
+        "InputType": "text",
+        "ParamFieldName": "motd",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "{\"text\":\"\",\"extra\":[{\"text\":\"Limbo Server!\",\"color\":\"yellow\"}]}",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server List Version",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the version text shown in the server list",
+        "Keywords": "version,server,list",
+        "FieldName": "version",
+        "InputType": "text",
+        "ParamFieldName": "version",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "Limbo!",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Tab-List Header",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the tab-list header, as a JSON text component. Leave empty for none",
+        "Keywords": "tab,header,tablist",
+        "FieldName": "tab-header",
+        "InputType": "text",
+        "ParamFieldName": "tab-header",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "{\"text\":\"Welcome\"}",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Tab-List Footer",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the tab-list footer, as a JSON text component. Leave empty for none",
+        "Keywords": "tab,footer,tablist",
+        "FieldName": "tab-footer",
+        "InputType": "text",
+        "ParamFieldName": "tab-footer",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Allow Chat",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Server:dns:1",
+        "Description": "Allows chat messages. Turning this off saves some performance and makes the limboserver.chat permission powerless",
+        "Keywords": "chat,allow",
+        "FieldName": "allow-chat",
+        "InputType": "checkbox",
+        "ParamFieldName": "allow-chat",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enforce Whitelist",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Server:dns:1",
+        "Description": "Only lets players listed in whitelist.json join (same format as a vanilla Minecraft server)",
+        "Keywords": "whitelist,enforce",
+        "FieldName": "enforce-whitelist",
+        "InputType": "checkbox",
+        "ParamFieldName": "enforce-whitelist",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Log Player IP Addresses",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Server:dns:1",
+        "Description": "Logs player IP addresses. When off, they are replaced by <ip address withheld> in the logs",
+        "Keywords": "log,ip,address,privacy",
+        "FieldName": "log-player-ip-addresses",
+        "InputType": "checkbox",
+        "ParamFieldName": "log-player-ip-addresses",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Verbose Handshakes",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Server:dns:1",
+        "Description": "Prints a console message whenever a client handshakes or pings the server",
+        "Keywords": "handshake,verbose,ping,log",
+        "FieldName": "handshake-verbose",
+        "InputType": "checkbox",
+        "ParamFieldName": "handshake-verbose",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Ticks Per Second",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets how many ticks per second the server runs",
+        "Keywords": "tps,ticks,per,second",
+        "FieldName": "ticks-per-second",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "20",
+        "ParamFieldName": "ticks-per-second",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "5",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "View Distance",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sets the view distance in chunks",
+        "Keywords": "view,distance,chunks",
+        "FieldName": "view-distance",
+        "InputType": "number",
+        "MinValue": "2",
+        "MaxValue": "32",
+        "ParamFieldName": "view-distance",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "6",
+        "Suffix": "chunks",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "World",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "World:public:2",
+        "Description": "Sets the world name and the schematic file (in the server folder) to load it from, separated by a semicolon. A missing file is replaced by the default spawn schematic",
+        "Keywords": "level,name,world,schematic,schem",
+        "FieldName": "level-name",
+        "InputType": "text",
+        "ParamFieldName": "level-name",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "world;spawn.schem",
+        "Placeholder": "world;spawn.schem",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Dimension",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "World:public:2",
+        "Description": "Sets the dimension the world is shown as",
+        "Keywords": "dimension,level",
+        "FieldName": "level-dimension",
+        "InputType": "enum",
+        "ParamFieldName": "level-dimension",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "minecraft:overworld",
+        "EnumValues": {
+            "minecraft:overworld": "Overworld",
+            "minecraft:the_nether": "The Nether",
+            "minecraft:the_end": "The End"
+        }
+    },
+    {
+        "DisplayName": "Spawn Location",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "World:public:2",
+        "Description": "Sets the spawn point as world;x;y;z;yaw;pitch",
+        "Keywords": "spawn,location,world-spawn",
+        "FieldName": "world-spawn",
+        "InputType": "text",
+        "ParamFieldName": "world-spawn",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "world;20.5;17;22.5;-90;0",
+        "Placeholder": "world;20.5;17;22.5;-90;0",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Default Game Mode",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "World:public:2",
+        "Description": "Sets the game mode players join with",
+        "Keywords": "gamemode,game,mode",
+        "FieldName": "default-gamemode",
+        "InputType": "enum",
+        "ParamFieldName": "default-gamemode",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "creative",
+        "EnumValues": {
+            "survival": "Survival",
+            "creative": "Creative",
+            "adventure": "Adventure",
+            "spectator": "Spectator"
+        }
+    },
+    {
+        "DisplayName": "Allow Flight",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "World:public:2",
+        "Description": "Allows players to fly",
+        "Keywords": "flight,fly,allow",
+        "FieldName": "allow-flight",
+        "InputType": "checkbox",
+        "ParamFieldName": "allow-flight",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Reduced Debug Info",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "World:public:2",
+        "Description": "Hides coordinates and other details from the F3 debug screen",
+        "Keywords": "debug,f3,reduced",
+        "FieldName": "reduced-debug-info",
+        "InputType": "checkbox",
+        "ParamFieldName": "reduced-debug-info",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "BungeeCord Forwarding",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Proxy:swap_horiz:4",
+        "Description": "Accepts BungeeCord IP forwarding. Use only one forwarding mode",
+        "Keywords": "bungeecord,bungee,proxy,forwarding",
+        "FieldName": "bungeecord",
+        "InputType": "checkbox",
+        "ParamFieldName": "bungeecord",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Velocity Modern Forwarding",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Proxy:swap_horiz:4",
+        "Description": "Accepts Velocity modern player forwarding. Use only one forwarding mode, and set the forwarding secret",
+        "Keywords": "velocity,modern,proxy,forwarding",
+        "FieldName": "velocity-modern",
+        "InputType": "checkbox",
+        "ParamFieldName": "velocity-modern",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "BungeeGuard",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Proxy:swap_horiz:4",
+        "Description": "Accepts BungeeGuard forwarding (Velocity can also use this for clients older than 1.13). Use only one forwarding mode, and set the forwarding secret",
+        "Keywords": "bungeeguard,bungee,guard,proxy,forwarding",
+        "FieldName": "bungee-guard",
+        "InputType": "checkbox",
+        "ParamFieldName": "bungee-guard",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Forwarding Secrets",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Proxy:swap_horiz:4",
+        "Description": "Valid secrets for Velocity modern forwarding or BungeeGuard, separated by semicolons",
+        "Keywords": "forwarding,secret,velocity,bungeeguard",
+        "FieldName": "forwarding-secrets",
+        "InputType": "password",
+        "ParamFieldName": "forwarding-secrets",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Resource Pack URL",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Resource Pack:inventory_2:5",
+        "Description": "Sets the URL of the server resource pack. Leave empty for none",
+        "Keywords": "resource,pack,url",
+        "FieldName": "resource-pack",
+        "InputType": "text",
+        "ParamFieldName": "resource-pack",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "https://example.com/pack.zip",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Resource Pack SHA-1",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Resource Pack:inventory_2:5",
+        "Description": "Sets the SHA-1 hash of the resource pack. Required when a resource pack is set",
+        "Keywords": "resource,pack,sha1,hash",
+        "FieldName": "resource-pack-sha1",
+        "InputType": "text",
+        "ParamFieldName": "resource-pack-sha1",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Require Resource Pack",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Resource Pack:inventory_2:5",
+        "Description": "Kicks players who don't accept the server resource pack",
+        "Keywords": "resource,pack,required",
+        "FieldName": "required-resource-pack",
+        "InputType": "checkbox",
+        "ParamFieldName": "required-resource-pack",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Resource Pack Prompt",
+        "Category": "Limbo:hourglass_empty",
+        "Subcategory": "Resource Pack:inventory_2:5",
+        "Description": "Sets the message shown when prompting players to install the resource pack, as a JSON text component",
+        "Keywords": "resource,pack,prompt",
+        "FieldName": "resource-pack-prompt",
+        "InputType": "text",
+        "ParamFieldName": "resource-pack-prompt",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "{\"text\":\"\",\"extra\":[{\"text\":\"Install server resource pack!\",\"color\":\"yellow\"}]}",
+        "EnumValues": {}
+    }
+]
