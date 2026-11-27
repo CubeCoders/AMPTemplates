@@ -1,0 +1,35 @@
+[
+    {
+        "UpdateStageName": "Server Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "3017590",
+        "UpdateSourceArgs": "2199420",
+        "UpdateSourceVersion": "{{ServerBranch}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Data Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Data"
+    },
+    {
+        "UpdateStageName": "GameUserSettings.ini Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/brickadiagameusersettings.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Data/Saved/Config/WindowsServer",
+        "UpdateSourceArgs": "GameUserSettings.ini",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "GameUserSettings.ini Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/brickadiagameusersettings.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}Data/Saved/Config/LinuxServer",
+        "UpdateSourceArgs": "GameUserSettings.ini",
+        "OverwriteExistingFiles": false
+    }
+]
