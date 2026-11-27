@@ -1,0 +1,117 @@
+[
+    {
+        "DisplayName": "RustFS Version",
+        "Category": "RustFS:storage",
+        "Subcategory": "Server:dns:1",
+        "Description": "RustFS release tag to install, such as 1.0.7. Leave empty to install the latest release. Run Update after changing this",
+        "Keywords": "version,release,tag,update",
+        "FieldName": "ServerVersion",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "Latest",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Access Key",
+        "Category": "RustFS:storage",
+        "Subcategory": "Credentials:key:2",
+        "Description": "Access key (user name) of the root account, used for the web console and the S3 API. Change it, and the secret key, before exposing the server",
+        "Keywords": "access key,user,username,root,admin,credentials,login",
+        "FieldName": "AccessKey",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "rustfsadmin",
+        "Required": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Secret Key",
+        "Category": "RustFS:storage",
+        "Subcategory": "Credentials:key:2",
+        "Description": "Secret key (password) of the root account. At least 8 characters",
+        "Keywords": "secret key,password,root,admin,credentials,login",
+        "FieldName": "SecretKey",
+        "InputType": "password",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "rustfsadmin",
+        "Required": true,
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Web Console",
+        "Category": "RustFS:storage",
+        "Subcategory": "Server:dns:1",
+        "Description": "Serves the web console on the console port",
+        "Keywords": "console,web,ui,admin,dashboard",
+        "FieldName": "ConsoleEnable",
+        "InputType": "checkbox",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Region",
+        "Category": "RustFS:storage",
+        "Subcategory": "Server:dns:1",
+        "Description": "S3 region name reported to clients. Leave empty for the default",
+        "Keywords": "region,s3,location",
+        "FieldName": "Region",
+        "InputType": "text",
+        "ParamFieldName": "region",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "us-east-1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Domains",
+        "Category": "RustFS:storage",
+        "Subcategory": "Server:dns:1",
+        "Description": "Comma-separated domain names for virtual-hosted-style requests (bucket.s3.example.com). Leave empty to allow path-style requests only",
+        "Keywords": "domain,virtual host,hostname,s3,path style",
+        "FieldName": "ServerDomains",
+        "InputType": "text",
+        "ParamFieldName": "server-domains",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "s3.example.com",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Log Level",
+        "Category": "RustFS:storage",
+        "Subcategory": "Server:dns:1",
+        "Description": "Minimum level of messages shown in the console and written to the logs folder",
+        "Keywords": "log,level,logging,debug,verbose",
+        "FieldName": "LogLevel",
+        "InputType": "enum",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "info",
+        "EnumValues": {
+            "error": "Error",
+            "warn": "Warning",
+            "info": "Info",
+            "debug": "Debug",
+            "trace": "Trace"
+        }
+    },
+    {
+        "DisplayName": "Custom Arguments",
+        "Category": "RustFS:storage",
+        "Subcategory": "Server:dns:1",
+        "Description": "Additional `rustfs server` options, such as --tls-path or --kms-enable",
+        "Keywords": "custom,arguments,args,flags,command line,tls,kms",
+        "FieldName": "CustomArgs",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "--tls-path certs",
+        "EnumValues": {}
+    }
+]
