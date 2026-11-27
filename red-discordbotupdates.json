@@ -1,0 +1,26 @@
+[
+  {
+    "UpdateStageName": "Create Virtual Environment",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"cd '{{$FullBaseDir}}' && mkdir -p home config data && pick='{{PythonVersion}}'; if [ \\\"$pick\\\" = auto ]; then for v in 3.11 3.10 3.9; do if command -v python$v >/dev/null 2>&1; then pick=$v; break; fi; done; fi; if ! command -v python$pick >/dev/null 2>&1; then echo 'Error: no supported Python found. Red needs Python 3.9, 3.10 or 3.11 with the venv module.'; exit 1; fi; want=$(python$pick -V 2>&1); have=$(venv/bin/python -V 2>&1); if [ \\\"$want\\\" = \\\"$have\\\" ]; then echo \\\"Using existing virtual environment ($have)\\\"; else echo \\\"Creating virtual environment with $want\\\"; python$pick -m venv --clear venv || exit 1; fi\"",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Install Red-DiscordBot",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"export HOME='{{$FullBaseDir}}home' XDG_CONFIG_HOME='{{$FullBaseDir}}config' XDG_DATA_HOME='{{$FullBaseDir}}home/.local/share' XDG_CACHE_HOME='{{$FullBaseDir}}home/.cache' XDG_DATA_DIRS='{{$FullBaseDir}}config' PYTHONHOME= ; cd '{{$FullBaseDir}}' && venv/bin/python -m pip install --disable-pip-version-check -U pip setuptools wheel && spec=Red-DiscordBot && if [ -n '{{RedVersion}}' ]; then spec='Red-DiscordBot=={{RedVersion}}'; fi && venv/bin/python -m pip install --disable-pip-version-check -U \\\"$spec\\\" && venv/bin/redbot --version\"",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Configure Red Instance",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"export HOME='{{$FullBaseDir}}home' XDG_CONFIG_HOME='{{$FullBaseDir}}config' XDG_DATA_HOME='{{$FullBaseDir}}home/.local/share' XDG_CACHE_HOME='{{$FullBaseDir}}home/.cache' XDG_DATA_DIRS='{{$FullBaseDir}}config' PYTHONHOME= ; cd '{{$FullBaseDir}}' && if grep -q '\\\"amp\\\"' config/Red-DiscordBot/config.json 2>/dev/null; then echo 'Red instance already configured'; else venv/bin/redbot-setup --no-prompt --instance-name amp --data-path '{{$FullBaseDir}}data' --backend json; fi\"",
+    "SkipOnFailure": false
+  }
+]
