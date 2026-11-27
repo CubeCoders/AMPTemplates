@@ -1,0 +1,53 @@
+[
+    {
+        "UpdateStageName": "Clusterio Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd clusterio && A=$(uname -m); case $A in x86_64) A=x64;; aarch64) A=arm64;; *) echo \\\"Unsupported architecture $A\\\"; exit 1;; esac; V=$(wget -qO- https://nodejs.org/dist/latest-v{{NodeRelease}}.x/SHASUMS256.txt | grep -o \\\"node-v[0-9.]*-linux-$A.tar.gz\\\" | head -n 1 | sed -e \\\"s/^node-//\\\" -e \\\"s/-linux-.*$//\\\"); [ -n \\\"$V\\\" ] || { echo \\\"Could not look up the latest Node.js {{NodeRelease}} release from nodejs.org\\\"; exit 1; }; if [ -x node/bin/node ] && [ \\\"$(node/bin/node --version)\\\" = \\\"$V\\\" ]; then echo \\\"Node.js $V already installed\\\"; else wget -qO node.tar.gz \\\"https://nodejs.org/dist/$V/node-$V-linux-$A.tar.gz\\\" && rm -rf node && mkdir node && tar -xzf node.tar.gz -C node --strip-components=1 && rm -f node.tar.gz && echo \\\"Node.js $V installed\\\"; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Node.js Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location clusterio; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; try { $S = (Invoke-WebRequest -UseBasicParsing -Uri 'https://nodejs.org/dist/latest-v{{NodeRelease}}.x/SHASUMS256.txt').Content } catch { Write-Output 'Could not look up the latest Node.js {{NodeRelease}} release from nodejs.org'; exit 1 }; if ($S -is [byte[]]) { $S = [Text.Encoding]::UTF8.GetString($S) }; $M = [regex]::Match($S, 'node-(v[0-9.]+)-win-x64\\.zip'); if (-not $M.Success) { Write-Output 'Could not look up the latest Node.js {{NodeRelease}} release from nodejs.org'; exit 1 }; $V = $M.Groups[1].Value; $I = ''; if (Test-Path node/node.exe) { $I = & node/node.exe --version }; if ($I -eq $V) { Write-Output ('Node.js ' + $V + ' already installed') } else { try { Invoke-WebRequest -UseBasicParsing -Uri ('https://nodejs.org/dist/' + $V + '/node-' + $V + '-win-x64.zip') -OutFile node.zip -ErrorAction Stop } catch { Write-Output 'Node.js download failed'; exit 1 }; $X = 'node-' + $V + '-win-x64'; Remove-Item $X -Recurse -Force -ErrorAction SilentlyContinue; try { Add-Type -AssemblyName System.IO.Compression.FileSystem; [IO.Compression.ZipFile]::ExtractToDirectory((Join-Path (Get-Location).Path 'node.zip'), (Get-Location).Path) } catch { Write-Output ('Node.js extraction failed: ' + $_); exit 1 }; Remove-Item node -Recurse -Force -ErrorAction SilentlyContinue; Rename-Item $X node -ErrorAction Stop; Remove-Item node.zip -Force; Write-Output ('Node.js ' + $V + ' installed') }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Clusterio Install",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd clusterio && export PATH=\\\"{{$FullRootDir}}node/bin:$PATH\\\" && J=node_modules/@clusterio/host/dist/node/host.js && { [ -f package.json ] || echo {} > package.json; } && npm install --no-fund --no-audit --no-update-notifier --cache \\\"{{$FullRootDir}}.npm\\\" \\\"@clusterio/host@{{ClusterioVersion}}\\\" {{Plugins}} && { [ -f config-host.json ] || node $J config create; } && mkdir -p factorio && echo \\\"Clusterio host installed\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Clusterio Install",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location clusterio; $env:PATH = '{{$FullRootDir}}node;' + $env:PATH; $J = 'node_modules/@clusterio/host/dist/node/host.js'; if (!(Test-Path package.json)) { Set-Content -Path package.json -Value '{}' }; $P = @('{{Plugins}}'.Split(' ', [StringSplitOptions]::RemoveEmptyEntries)); & npm.cmd install --no-fund --no-audit --no-update-notifier --cache '{{$FullRootDir}}.npm' '@clusterio/host@{{ClusterioVersion}}' @P; if ($LASTEXITCODE -ne 0) { exit 1 }; if (!(Test-Path config-host.json)) { & node.exe $J config create; if ($LASTEXITCODE -ne 0) { exit 1 } }; New-Item -ItemType Directory -Force -Path factorio | Out-Null; Write-Output 'Clusterio host installed'\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Factorio Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "427520",
+        "UpdateSourceArgs": "427520",
+        "UpdateSourceTarget": "{{$FullBaseDir}}factorio/steam",
+        "UpdateSourceVersion": "public",
+        "UpdateSourceConditionSetting": "SteamFactorio",
+        "UpdateSourceConditionValue": "true",
+        "SkipOnFailure": false
+    }
+]

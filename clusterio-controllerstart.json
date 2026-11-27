@@ -1,0 +1,18 @@
+[
+    {
+        "UpdateStageName": "Apply Settings",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd clusterio && J=\\\"node/bin/node node_modules/@clusterio/controller/dist/node/controller.js --log-level=warn\\\" && $J config set controller.http_port {{$HttpPort}} && $J config set controller.bind_address \\\"{{$ApplicationIPBinding}}\\\" && $J config set controller.name \\\"{{ClusterName}}\\\" && $J config set controller.public_url \\\"{{PublicURL}}\\\" && for f in allow_remote_updates allow_plugin_updates allow_plugin_install; do $J config set controller.$f {{AllowRemoteUpdates}} || exit 1; done\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Apply Settings",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location clusterio; $J = 'node_modules/@clusterio/controller/dist/node/controller.js'; function S($k, $v) { & node\\node.exe $J --log-level=warn config set $k $v; if ($LASTEXITCODE -ne 0) { exit 1 } }; S 'controller.http_port' '{{$HttpPort}}'; S 'controller.bind_address' '{{$ApplicationIPBinding}}'; S 'controller.name' '{{ClusterName}}'; S 'controller.public_url' '{{PublicURL}}'; foreach ($f in 'allow_remote_updates','allow_plugin_updates','allow_plugin_install') { S ('controller.' + $f) '{{AllowRemoteUpdates}}' }\"",
+        "SkipOnFailure": false
+    }
+]

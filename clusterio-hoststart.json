@@ -1,0 +1,18 @@
+[
+    {
+        "UpdateStageName": "Apply Settings",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd clusterio && J=\\\"node/bin/node node_modules/@clusterio/host/dist/node/host.js --log-level=warn\\\" && U=\\\"{{ControllerURL}}\\\" && { [ -n \\\"$U\\\" ] || { echo \\\"Set Controller URL in the Clusterio Host settings before starting\\\"; exit 1; }; } && { [[ \\\"$U\\\" == */ ]] || U=\\\"$U/\\\"; } && PA=\\\"{{PublicAddress}}\\\" && { [ -n \\\"$PA\\\" ] || PA=\\\"{{$ExternalIP}}\\\"; } && $J config set host.name \\\"{{HostName}}\\\" && $J config set host.controller_url \\\"$U\\\" && $J config set host.public_address \\\"$PA\\\" && $J config set host.factorio_port_range \\\"{{$FactorioPortFirst}}-{{$FactorioPortLast}}\\\" && for f in allow_remote_updates allow_plugin_updates allow_plugin_install; do $J config set host.$f {{AllowRemoteUpdates}} || exit 1; done\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Apply Settings",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; Set-Location clusterio; $J = 'node_modules/@clusterio/host/dist/node/host.js'; function S($k, $v) { & node\\node.exe $J --log-level=warn config set $k $v; if ($LASTEXITCODE -ne 0) { exit 1 } }; $U = '{{ControllerURL}}'; if ([string]::IsNullOrWhiteSpace($U)) { Write-Output 'Set Controller URL in the Clusterio Host settings before starting'; exit 1 }; if (-not $U.EndsWith('/')) { $U = $U + '/' }; $PA = '{{PublicAddress}}'; if ([string]::IsNullOrWhiteSpace($PA)) { $PA = '{{$ExternalIP}}' }; S 'host.name' '{{HostName}}'; S 'host.controller_url' $U; S 'host.public_address' $PA; S 'host.factorio_port_range' '{{$FactorioPortFirst}}-{{$FactorioPortLast}}'; foreach ($f in 'allow_remote_updates','allow_plugin_updates','allow_plugin_install') { S ('host.' + $f) '{{AllowRemoteUpdates}}' }\"",
+        "SkipOnFailure": false
+    }
+]
