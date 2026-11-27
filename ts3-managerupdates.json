@@ -1,0 +1,50 @@
+[
+    {
+        "UpdateStageName": "TS3 Manager Download",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/joni1802/ts3-manager/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^ts3-manager-win-x64-v[\\d.]+\\.exe$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "TS3 Manager Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/joni1802/ts3-manager/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^ts3-manager-linux-x64-v[\\d.]+$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "TS3 Manager Rename",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "CMD",
+        "UpdateSourceArgs": "for %f in (ts3-manager-win-x64-v*.exe) do move /y %f ts3-manager.exe",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "TS3 Manager Rename",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Bash",
+        "UpdateSourceArgs": "for f in ts3-manager-linux-x64-v*; do mv -f $f ts3-manager; done",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Set Executable Flag",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}ts3-manager",
+        "SkipOnFailure": false
+    }
+]
