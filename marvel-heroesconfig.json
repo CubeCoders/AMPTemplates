@@ -1,0 +1,373 @@
+[
+    {
+        "DisplayName": "Public Address",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Address players use to reach this server: your public IP or a domain (e.g. mh.example.com). Players launch the client with -robocopy -nosteam -siteconfigurl=ADDRESS/SiteConfig.xml (ADDRESS = this setting). A new account database includes test accounts test1@test.com to test5@test.com with password 123: ban them (!account ban test1@test.com) or enable the whitelist before opening the server to the public",
+        "Keywords": "public,address,ip,domain",
+        "FieldName": "Frontend.PublicAddress",
+        "InputType": "text",
+        "ParamFieldName": "Frontend.PublicAddress",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "127.0.0.1",
+        "Placeholder": "127.0.0.1",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Built-in Web Server",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Runs a bundled Caddy web server that serves SiteConfig.xml on the SiteConfig Port and proxies logins over HTTPS on the Login Port with a self-signed certificate, which the client accepts. Port-patched clients (MarvelHeroesOmega port patch) connect straight to these ports: launch with -siteconfigport=SITECONFIG_PORT added. Stock clients only use ports 80 and 443, and AMP cannot assign ports below 1024, so for them forward public port 80 to the SiteConfig Port and 443 to the Login Port (router port forwarding, or on the host: netsh interface portproxy on Windows, an iptables REDIRECT rule on Linux). Disable this to use your own reverse proxy instead; see Extra Setup Steps",
+        "Keywords": "web,server,caddy,siteconfig,proxy,https,port,forward",
+        "FieldName": "WebServer",
+        "InputType": "checkbox",
+        "ParamFieldName": "WebServer",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Web Frontend Address",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Host name the web frontend (login and dashboard) listens on. Keep localhost when your reverse proxy runs on this machine. On Windows any other value needs a URL ACL (netsh http add urlacl) for the account AMP runs the server as",
+        "Keywords": "web,frontend,auth,address",
+        "FieldName": "WebFrontend.Address",
+        "InputType": "text",
+        "ParamFieldName": "WebFrontend.Address",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "localhost",
+        "Placeholder": "localhost",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Enable Dashboard",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Serves the account creation dashboard at /Dashboard/ on the Web Frontend Port",
+        "Keywords": "dashboard,web,account",
+        "FieldName": "WebFrontend.EnableDashboard",
+        "InputType": "checkbox",
+        "ParamFieldName": "WebFrontend.EnableDashboard",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "true",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Login Rate Limit",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Rate limits login attempts to slow down password guessing",
+        "Keywords": "login,rate,limit,security",
+        "FieldName": "WebFrontend.EnableLoginRateLimit",
+        "InputType": "checkbox",
+        "ParamFieldName": "WebFrontend.EnableLoginRateLimit",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Server Name",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Server name shown to players",
+        "Keywords": "server,name",
+        "FieldName": "GroupingManager.ServerName",
+        "InputType": "text",
+        "ParamFieldName": "GroupingManager.ServerName",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "MHServerEmu",
+        "Placeholder": "MHServerEmu",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Message of the Day",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Chat message every player receives when they log in",
+        "Keywords": "motd,message,welcome",
+        "FieldName": "GroupingManager.MotdText",
+        "InputType": "text",
+        "ParamFieldName": "GroupingManager.MotdText",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "Welcome to Marvel Heroes! Type !commands for a list of available server commands.",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Server Capacity",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Players allowed online before new logins are queued. 0 = unlimited",
+        "Keywords": "capacity,players,queue,max",
+        "FieldName": "PlayerManager.ServerCapacity",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "PlayerManager.ServerCapacity",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "0",
+        "Placeholder": "0",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Show News on Login",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "Opens the news panel when players log in",
+        "Keywords": "news,login",
+        "FieldName": "PlayerManager.ShowNewsOnLogin",
+        "InputType": "checkbox",
+        "ParamFieldName": "PlayerManager.ShowNewsOnLogin",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "News Page URL",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Server:dns:1",
+        "Description": "URL of the in-game news page",
+        "Keywords": "news,url",
+        "FieldName": "PlayerManager.NewsUrl",
+        "InputType": "text",
+        "ParamFieldName": "PlayerManager.NewsUrl",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "http://localhost/news/index.html",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Use Whitelist",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Accounts:manage_accounts:2",
+        "Description": "Only whitelisted accounts can log in. Manage with !account whitelist and toggle at runtime with !server whitelist",
+        "Keywords": "whitelist,accounts,access",
+        "FieldName": "PlayerManager.UseWhitelist",
+        "InputType": "checkbox",
+        "ParamFieldName": "PlayerManager.UseWhitelist",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Use JSON Save File",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Accounts:manage_accounts:2",
+        "Description": "Saves player data to a JSON file instead of the SQLite account database. Supports one account only",
+        "Keywords": "json,database,save",
+        "FieldName": "PlayerManager.UseJsonDBManager",
+        "InputType": "checkbox",
+        "ParamFieldName": "PlayerManager.UseJsonDBManager",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Allow Client Version Mismatch",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Accounts:manage_accounts:2",
+        "Description": "Lets clients that don't match the server's game version (1.52.0.1700) connect",
+        "Keywords": "client,version,mismatch",
+        "FieldName": "PlayerManager.AllowClientVersionMismatch",
+        "InputType": "checkbox",
+        "ParamFieldName": "PlayerManager.AllowClientVersionMismatch",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Starting Gazillionite",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Accounts:manage_accounts:2",
+        "Description": "Gazillionite balance given to new accounts",
+        "Keywords": "gazillionite,currency,store,mtx",
+        "FieldName": "MTXStore.GazillioniteBalanceForNewAccounts",
+        "InputType": "number",
+        "MinValue": "0",
+        "ParamFieldName": "MTXStore.GazillioniteBalanceForNewAccounts",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "10000",
+        "Placeholder": "10000",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Autosave Interval",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:3",
+        "Description": "Minutes between player data autosaves",
+        "Keywords": "autosave,save,interval",
+        "FieldName": "CustomGameOptions.AutosaveIntervalMinutes",
+        "InputType": "number",
+        "MinValue": "1",
+        "ParamFieldName": "CustomGameOptions.AutosaveIntervalMinutes",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "15",
+        "Placeholder": "15",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Unlock All Heroes",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:3",
+        "Description": "Every account has all heroes unlocked",
+        "Keywords": "unlock,heroes,avatars",
+        "FieldName": "CustomGameOptions.AutoUnlockAvatars",
+        "InputType": "checkbox",
+        "ParamFieldName": "CustomGameOptions.AutoUnlockAvatars",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Unlock All Team-Ups",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:3",
+        "Description": "Every account has all team-ups unlocked",
+        "Keywords": "unlock,teamups",
+        "FieldName": "CustomGameOptions.AutoUnlockTeamUps",
+        "InputType": "checkbox",
+        "ParamFieldName": "CustomGameOptions.AutoUnlockTeamUps",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Free Movement Powers",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:3",
+        "Description": "Movement powers don't use charges",
+        "Keywords": "movement,powers,charges",
+        "FieldName": "CustomGameOptions.DisableMovementPowerChargeCost",
+        "InputType": "checkbox",
+        "ParamFieldName": "CustomGameOptions.DisableMovementPowerChargeCost",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Enable Ultimate Prestige",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Gameplay:sports_esports:3",
+        "Description": "Lets players reset prestige after reaching the prestige cap",
+        "Keywords": "prestige,ultimate",
+        "FieldName": "CustomGameOptions.EnableUltimatePrestige",
+        "InputType": "checkbox",
+        "ParamFieldName": "CustomGameOptions.EnableUltimatePrestige",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Console Log Level",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Logging:description:4",
+        "Description": "Lowest severity shown in the AMP console. Trace and Debug are very verbose",
+        "Keywords": "log,level,console,debug,trace",
+        "FieldName": "Logging.ConsoleMinLevel",
+        "InputType": "enum",
+        "ParamFieldName": "Logging.ConsoleMinLevel",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "2",
+        "EnumValues": {
+            "0": "Trace",
+            "1": "Debug",
+            "2": "Info",
+            "3": "Warn",
+            "4": "Error",
+            "5": "Fatal"
+        }
+    },
+    {
+        "DisplayName": "Write Log Files",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Logging:description:4",
+        "Description": "Also writes logs to the Logs folder",
+        "Keywords": "log,file",
+        "FieldName": "Logging.EnableFile",
+        "InputType": "checkbox",
+        "ParamFieldName": "Logging.EnableFile",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Hide Sensitive Information",
+        "Category": "Marvel Heroes:stadia_controller",
+        "Subcategory": "Logging:description:4",
+        "Description": "Hides emails and IP addresses in logs",
+        "Keywords": "log,privacy,email,ip",
+        "FieldName": "Logging.HideSensitiveInformation",
+        "InputType": "checkbox",
+        "ParamFieldName": "Logging.HideSensitiveInformation",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Build Stream (Windows)",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "Server build to install on Windows. Linux always installs the latest nightly (self-contained) build. Update the server after changing this",
+        "Keywords": "build,stream,nightly,stable",
+        "FieldName": "BuildStream",
+        "InputType": "enum",
+        "ParamFieldName": "BuildStream",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "stable",
+        "EnumValues": {
+            "stable": "Stable release",
+            "nightly": "Nightly"
+        }
+    },
+    {
+        "DisplayName": ".NET Runtime Version (Windows)",
+        "Category": "Updates",
+        "Subcategory": "Server Updates:build:-1",
+        "Description": "[.NET 8 runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) version installed into the instance on Windows. Empty = latest 8.0. Update the server after changing this",
+        "Keywords": "dotnet,runtime,version",
+        "FieldName": "DotnetVersion",
+        "InputType": "text",
+        "ParamFieldName": "DotnetVersion",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "8.0.22",
+        "EnumValues": {}
+    }
+]
