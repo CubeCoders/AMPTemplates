@@ -1,0 +1,24 @@
+# Prometheus configuration. Edit this file to add your scrape targets, then restart the instance.
+# Reference: https://prometheus.io/docs/prometheus/latest/configuration/configuration/
+# This file is only created on first install and is never overwritten by updates.
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Rule files, loaded once and re-evaluated every 'evaluation_interval'
+rule_files:
+  # - "rules/*.yml"
+
+scrape_configs:
+  # Prometheus scraping its own metrics. Change the port if you change the instance's Web Port.
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
