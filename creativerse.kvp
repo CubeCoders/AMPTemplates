@@ -20,7 +20,7 @@ Meta.ExtraContainerPackages=[]
 Meta.ConfigReleaseState=NotSpecified
 Meta.NoCommercialUsage=False
 Meta.ConfigVersion=7
-Meta.ReleaseNotes=Players joining and leaving now show in AMP. The query port now opens TCP as well as UDP, and the web admin port is now TCP. The World Owner SteamID is now written by a pre-start step, so starts no longer fail once the server has saved it.
+Meta.ReleaseNotes=Players joining and leaving now show in AMP. The query port now opens TCP as well as UDP, and the web admin port is now TCP. The World Owner SteamID is now written by a pre-start step, so starts no longer fail once the server has saved it. On Windows, world data and backups are now kept inside the instance instead of a folder shared by all instances; existing worlds are copied in on the next update.
 Meta.AppConfigId=34fc091c-f0bf-4a36-a792-1e05928ce816
 Meta.AppIsMultiIPAware=True
 App.DisplayName=Creativerse
@@ -30,7 +30,7 @@ App.ExecutableWin=1098260\CreativerseServer.exe
 App.ExecutableLinux=1098260/CreativerseServer
 App.WorkingDir=1098260
 App.LinuxCommandLineArgs=
-App.WindowsCommandLineArgs=
+App.WindowsCommandLineArgs=-worldRoot="{{$FullBaseDir}}PlayfulCorp\CreativerseServer\worlddata\worlds" -worldBackup="{{$FullBaseDir}}PlayfulCorp\CreativerseServer\worlddata\backups"
 App.CommandLineArgs={{$PlatformArgs}} {{$FormattedArgs}} -forceIp={{$ApplicationIPBinding}}
 App.UseLinuxIOREDIR=False
 App.AppSettings={}
