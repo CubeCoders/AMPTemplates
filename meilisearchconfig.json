@@ -1,0 +1,182 @@
+[
+    {
+        "DisplayName": "Release Channel",
+        "Category": "Meilisearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Install the latest Meilisearch release, or the version set in Meilisearch Version. Run Update after changing this",
+        "Keywords": "version,release,channel,update,pin",
+        "FieldName": "ReleaseChannel",
+        "InputType": "enum",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "latest",
+        "EnumValues": {
+            "latest": "Latest Release",
+            "pinned": "Specific Version"
+        }
+    },
+    {
+        "DisplayName": "Meilisearch Version",
+        "Category": "Meilisearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Release tag to install when Release Channel is Specific Version, such as v1.58.0. Run Update after changing this",
+        "Keywords": "version,release,tag,update,pin",
+        "FieldName": "ServerVersion",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "v1.58.0",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Environment",
+        "Category": "Meilisearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Production requires a master key of at least 16 bytes and disables the built-in search preview. Development allows running without a master key",
+        "Keywords": "environment,env,production,development",
+        "FieldName": "Environment",
+        "InputType": "enum",
+        "ParamFieldName": "env",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "development",
+        "EnumValues": {
+            "development": "Development",
+            "production": "Production"
+        }
+    },
+    {
+        "DisplayName": "Master Key",
+        "Category": "Meilisearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Protects all API routes except GET /health. Required in production (at least 16 bytes). Leave empty to accept unauthenticated requests in development",
+        "Keywords": "master key,key,password,api key,security,auth",
+        "FieldName": "MasterKey",
+        "InputType": "password",
+        "ParamFieldName": "master-key",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Upgrade Database On Start",
+        "Category": "Meilisearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Upgrades a database created by an older Meilisearch version in place, without a dump. Without this, Meilisearch refuses to start after an update to a newer version until the database is migrated by hand. Back up the data.ms folder before updating",
+        "Keywords": "upgrade,database,migrate,update,dump",
+        "FieldName": "UpgradeDb",
+        "InputType": "checkbox",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "--upgrade-db ",
+        "EnumValues": {
+            "False": "",
+            "True": "--upgrade-db "
+        }
+    },
+    {
+        "DisplayName": "Anonymous Telemetry",
+        "Category": "Meilisearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sends anonymous usage data to Meilisearch. When enabled, Meilisearch also stores a telemetry ID in the user profile of the account running AMP",
+        "Keywords": "telemetry,analytics,privacy,tracking",
+        "FieldName": "NoAnalytics",
+        "InputType": "checkbox",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "--no-analytics ",
+        "EnumValues": {
+            "False": "--no-analytics ",
+            "True": ""
+        }
+    },
+    {
+        "DisplayName": "Max Indexing Memory",
+        "Category": "Meilisearch:search",
+        "Subcategory": "Performance:speed:2",
+        "Description": "Maximum RAM Meilisearch may use while indexing, such as 2Gb or 512Mb. Leave empty to use up to two thirds of the available memory",
+        "Keywords": "memory,ram,indexing,limit",
+        "FieldName": "MaxIndexingMemory",
+        "InputType": "text",
+        "ParamFieldName": "max-indexing-memory",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "2Gb",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Max Indexing Threads",
+        "Category": "Meilisearch:search",
+        "Subcategory": "Performance:speed:2",
+        "Description": "Maximum number of threads used for indexing. Leave empty to use at most half of the available processor threads",
+        "Keywords": "threads,cpu,cores,indexing,limit",
+        "FieldName": "MaxIndexingThreads",
+        "InputType": "number",
+        "MinValue": "1",
+        "MaxValue": "256",
+        "ParamFieldName": "max-indexing-threads",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "4",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Payload Size Limit",
+        "Category": "Meilisearch:search",
+        "Subcategory": "Performance:speed:2",
+        "Description": "Maximum size of a request body, such as 100Mb or 1Gb. Raise this to add large document batches in a single request",
+        "Keywords": "payload,size,limit,upload,documents",
+        "FieldName": "PayloadSizeLimit",
+        "InputType": "text",
+        "ParamFieldName": "http-payload-size-limit",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "100Mb",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Log Level",
+        "Category": "Meilisearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "How much detail Meilisearch writes to the console. Ready detection needs INFO or more detail",
+        "Keywords": "log,logging,level,debug,verbose",
+        "FieldName": "LogLevel",
+        "InputType": "enum",
+        "ParamFieldName": "log-level",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "INFO",
+        "EnumValues": {
+            "INFO": "Info",
+            "DEBUG": "Debug",
+            "TRACE": "Trace"
+        }
+    },
+    {
+        "DisplayName": "Enable Metrics",
+        "Category": "Meilisearch:search",
+        "Subcategory": "Performance:speed:2",
+        "Description": "Exposes Prometheus metrics on GET /metrics (experimental)",
+        "Keywords": "metrics,prometheus,monitoring",
+        "FieldName": "EnableMetrics",
+        "InputType": "checkbox",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "EnumValues": {
+            "False": "",
+            "True": "--experimental-enable-metrics "
+        }
+    },
+    {
+        "DisplayName": "Custom Arguments",
+        "Category": "Meilisearch:search",
+        "Subcategory": "Server:dns:1",
+        "Description": "Additional [command-line options](https://www.meilisearch.com/docs/learn/self_hosted/configure_meilisearch_at_launch) to pass to Meilisearch, such as --schedule-snapshot=86400",
+        "Keywords": "custom,arguments,args,flags,command line",
+        "FieldName": "CustomArgs",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "--schedule-snapshot=86400",
+        "EnumValues": {}
+    }
+]
