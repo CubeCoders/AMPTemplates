@@ -1,0 +1,97 @@
+[
+    {
+        "UpdateStageName": "Visual C++ Runtime Check",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C if exist %SystemRoot%\\System32\\vcruntime140_1.dll (exit 0) else (echo The Microsoft Visual C++ 2015-2022 Redistributable x64 is required. Install it from https://aka.ms/vs/17/release/vc_redist.x64.exe & exit 1)",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Erlang/OTP Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path '{{$FullBaseDir}}'; $Major = '{{ErlangVersion}}'.Trim(); if ($Major -notmatch '^\\d+$') { Write-Output 'The Erlang/OTP major version must be a number, for example 28'; exit 1 }; $Release = Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/erlang/otp/releases?per_page=60' | ForEach-Object { $_ } | Where-Object { -not $_.prerelease -and $_.tag_name -match ('^OTP-' + $Major + '(\\.|$)') } | Select-Object -First 1; if (-not $Release) { Write-Output ('No Erlang/OTP ' + $Major + ' release found on GitHub'); exit 1 }; $Version = $Release.tag_name -replace '^OTP-',''; if ((Test-Path 'erlang\\bin\\erl.exe') -and (Test-Path 'erlang\\amp-version.txt') -and ((Get-Content -Path 'erlang\\amp-version.txt' -Raw).Trim() -eq $Version)) { Write-Output ('Erlang/OTP ' + $Version + ' already installed. Skipping'); exit 0 }; $Asset = $Release.assets | Where-Object { $_.name -match '^otp_win64_[\\d\\.]+\\.zip$' } | Select-Object -First 1; if (-not $Asset) { Write-Output ('Erlang/OTP ' + $Version + ' has no Windows zip'); exit 1 }; $Here = (Get-Location).Path; Get-Process -Name epmd,erl -ErrorAction SilentlyContinue | Where-Object { $_.Path -like ($Here + '\\erlang\\*') } | Stop-Process -Force -ErrorAction SilentlyContinue; Invoke-WebRequest -UseBasicParsing -Uri $Asset.browser_download_url -OutFile 'erlang.zip'; if (Test-Path 'erlang') { Remove-Item -Path 'erlang' -Recurse -Force }; Expand-Archive -Path 'erlang.zip' -DestinationPath 'erlang' -Force; Remove-Item -Path 'erlang.zip' -Force; if (-not (Test-Path 'erlang\\bin\\erl.exe')) { Write-Output 'Could not extract Erlang/OTP'; exit 1 }; Set-Content -Path 'erlang\\amp-version.txt' -Value $Version; Write-Output ('Installed Erlang/OTP ' + $Version)\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "RabbitMQ Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path '{{$FullBaseDir}}'; $Wanted = '{{RabbitMQVersion}}'.Trim().TrimStart('v'); if ($Wanted -and $Wanted -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output 'The RabbitMQ version must look like 4.4.1, or be empty for the latest release'; exit 1 }; if ($Wanted) { $Uri = 'https://api.github.com/repos/rabbitmq/rabbitmq-server/releases/tags/v' + $Wanted } else { $Uri = 'https://api.github.com/repos/rabbitmq/rabbitmq-server/releases/latest' }; try { $Release = Invoke-RestMethod -UseBasicParsing -Uri $Uri } catch { Write-Output ('RabbitMQ release not found on GitHub: ' + $Uri); exit 1 }; $Version = $Release.tag_name.TrimStart('v'); if ((Test-Path 'server\\sbin\\rabbitmq-server.bat') -and (Test-Path 'server\\amp-version.txt') -and ((Get-Content -Path 'server\\amp-version.txt' -Raw).Trim() -eq $Version)) { Write-Output ('RabbitMQ ' + $Version + ' already installed. Skipping'); exit 0 }; $Asset = $Release.assets | Where-Object { $_.name -match '^rabbitmq-server-windows-[\\d\\.]+\\.zip$' } | Select-Object -First 1; if (-not $Asset) { Write-Output ('RabbitMQ ' + $Version + ' has no Windows zip'); exit 1 }; Invoke-WebRequest -UseBasicParsing -Uri $Asset.browser_download_url -OutFile 'rabbitmq.zip'; if (Test-Path 'rabbitmq-extract') { Remove-Item -Path 'rabbitmq-extract' -Recurse -Force }; Expand-Archive -Path 'rabbitmq.zip' -DestinationPath 'rabbitmq-extract' -Force; Remove-Item -Path 'rabbitmq.zip' -Force; $Inner = Get-ChildItem -Path 'rabbitmq-extract' -Directory | Select-Object -First 1; if (-not $Inner -or -not (Test-Path (Join-Path $Inner.FullName 'sbin\\rabbitmq-server.bat'))) { Write-Output 'Could not extract RabbitMQ'; exit 1 }; if (Test-Path 'server') { Remove-Item -Path 'server' -Recurse -Force }; Move-Item -Path $Inner.FullName -Destination 'server'; Remove-Item -Path 'rabbitmq-extract' -Recurse -Force; Set-Content -Path 'server\\amp-version.txt' -Value $Version; Write-Output ('Installed RabbitMQ ' + $Version)\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Erlang/OTP Check",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"if ! command -v erl >/dev/null 2>&1; then echo 'Erlang/OTP was not found. Use a container, or install Erlang/OTP 27 or newer on the host'; exit 1; fi; v=$(erl -noshell -eval 'io:format(\\\"~s\\\", [erlang:system_info(otp_release)]), halt().'); echo \\\"Found Erlang/OTP $v\\\"; if [ \\\"$v\\\" -lt 27 ] 2>/dev/null; then echo 'RabbitMQ needs Erlang/OTP 27 or newer'; exit 1; fi\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "RabbitMQ Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd '{{$FullBaseDir}}' || exit 1; wanted='{{RabbitMQVersion}}'; wanted=${wanted#v}; if [ -n \\\"$wanted\\\" ] && [[ ! \\\"$wanted\\\" =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo 'The RabbitMQ version must look like 4.4.1, or be empty for the latest release'; exit 1; fi; if [ -n \\\"$wanted\\\" ]; then uri=\\\"https://api.github.com/repos/rabbitmq/rabbitmq-server/releases/tags/v$wanted\\\"; else uri='https://api.github.com/repos/rabbitmq/rabbitmq-server/releases/latest'; fi; json=$(wget -qO- \\\"$uri\\\") || { echo \\\"RabbitMQ release not found on GitHub: $uri\\\"; exit 1; }; version=$(echo \\\"$json\\\" | jq -r '.tag_name' | sed 's/^v//'); if [ -x server/sbin/rabbitmq-server ] && [ \\\"$(cat server/amp-version.txt 2>/dev/null)\\\" = \\\"$version\\\" ]; then echo \\\"RabbitMQ $version already installed. Skipping\\\"; exit 0; fi; url=$(echo \\\"$json\\\" | jq -r '.assets[] | select(.name | test(\\\"^rabbitmq-server-generic-unix-[0-9.]+\\\\.tar\\\\.xz$\\\")) | .browser_download_url' | head -n 1); [ -z \\\"$url\\\" ] && { echo \\\"RabbitMQ $version has no generic Unix build\\\"; exit 1; }; wget -qO rabbitmq.tar.xz \\\"$url\\\" || { echo 'RabbitMQ download failed'; exit 1; }; rm -rf server && mkdir -p server && tar -xJf rabbitmq.tar.xz -C server --strip-components=1 || { echo 'Could not extract RabbitMQ'; rm -f rabbitmq.tar.xz; exit 1; }; rm -f rabbitmq.tar.xz; echo \\\"$version\\\" > server/amp-version.txt; echo \\\"Installed RabbitMQ $version\\\"\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Data Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}data"
+    },
+    {
+        "UpdateStageName": "Log Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}log"
+    },
+    {
+        "UpdateStageName": "Config Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}conf.d"
+    },
+    {
+        "UpdateStageName": "Custom Config File Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "# Extra RabbitMQ settings in rabbitmq.conf format. AMP regenerates 00-amp.conf on every start, but never touches this file.\n# Files in this folder load in name order, so settings here override the AMP ones.\n# See https://www.rabbitmq.com/docs/configure#config-file\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}conf.d/50-custom.conf",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Enabled Plugins File Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "[rabbitmq_management].\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}enabled_plugins",
+        "OverwriteExistingFiles": false
+    },
+    {
+        "UpdateStageName": "Start Script Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "# Generated by AMP. Starts RabbitMQ and passes each console line to rabbitmqctl (for example: status, list_queues, stop).\nSet-Location -LiteralPath $PSScriptRoot\n$env:HOMEDRIVE = Split-Path -Path $PSScriptRoot -Qualifier\n$env:HOMEPATH = Split-Path -Path $PSScriptRoot -NoQualifier\nif (-not (Test-Path -Path 'nodename.txt')) { Set-Content -Path 'nodename.txt' -Value ('rabbit-' + [guid]::NewGuid().ToString('N').Substring(0, 8) + '@localhost') }\n$env:RABBITMQ_NODENAME = (Get-Content -Path 'nodename.txt' -Raw).Trim()\n$Server = Start-Process -FilePath $env:ComSpec -ArgumentList '/D /C call server\\sbin\\rabbitmq-server.bat < NUL' -NoNewWindow -PassThru\n$null = $Server.Handle\n$Stdin = New-Object System.IO.StreamReader([Console]::OpenStandardInput())\n$Read = $Stdin.ReadLineAsync()\nwhile (-not $Server.HasExited) {\n    if ($null -eq $Read) { Start-Sleep -Milliseconds 500; continue }\n    if (-not $Read.Wait(500)) { continue }\n    $Line = $Read.Result\n    if ($null -eq $Line) { $Read = $null; continue }\n    $Arguments = @($Line.Trim() -split '\\s+' | Where-Object { $_ })\n    if ($Arguments.Count -gt 0) { $null | & '.\\server\\sbin\\rabbitmqctl.bat' @Arguments }\n    $Read = $Stdin.ReadLineAsync()\n}\n$Server.WaitForExit()\nexit $Server.ExitCode\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}rabbitmq-start.ps1",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Start Script Creation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "#!/bin/bash\n# Generated by AMP. Starts RabbitMQ and passes each console line to rabbitmqctl (for example: status, list_queues, stop).\ncd \"$(dirname \"$0\")\" || exit 1\n[ -s nodename.txt ] || echo \"rabbit-$(od -An -N4 -tx1 /dev/urandom | tr -d ' \\n')@localhost\" > nodename.txt\nexport RABBITMQ_NODENAME=\"$(tr -d '[:space:]' < nodename.txt)\"\nserver/sbin/rabbitmq-server </dev/null &\npid=$!\ntrap 'server/sbin/rabbitmqctl stop </dev/null; wait \"$pid\"' TERM INT\nwhile kill -0 \"$pid\" 2>/dev/null; do\n    if read -r -t 1 -a args; then\n        [ \"${#args[@]}\" -gt 0 ] && server/sbin/rabbitmqctl \"${args[@]}\" </dev/null\n    elif [ $? -le 128 ]; then\n        sleep 1\n    fi\ndone\nwait \"$pid\"\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}rabbitmq-start.sh",
+        "OverwriteExistingFiles": true
+    }
+]
