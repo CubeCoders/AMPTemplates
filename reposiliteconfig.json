@@ -1,0 +1,80 @@
+[
+    {
+        "DisplayName": "Temporary Manager Token",
+        "Category": "Reposilite",
+        "Subcategory": "Reposilite:dns:2",
+        "Description": "Creates a temporary manager (admin) token in name:secret format, used to log in to the dashboard and create persistent tokens. It is not saved and only exists while this setting is set. Leave empty once you have a persistent token. Persistent tokens can also be created in the console with token-generate <name> m",
+        "Keywords": "token,admin,manager,password,login",
+        "FieldName": "TemporaryToken",
+        "InputType": "password",
+        "IsFlagArgument": false,
+        "ParamFieldName": "token",
+        "IncludeInCommandLine": true,
+        "SkipIfEmpty": true,
+        "DefaultValue": "",
+        "Placeholder": "admin:secret",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Java Version",
+        "Category": "Reposilite",
+        "Subcategory": "Java:settings:1",
+        "Description": "Sets the Eclipse Temurin Java version to install. Reposilite 3.6 needs Java 17 or newer. Update the server after changing this setting",
+        "Keywords": "java,version",
+        "FieldName": "JavaVersion",
+        "InputType": "enum",
+        "ParamFieldName": "JavaVersion",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "21",
+        "EnumValues": {
+            "25": "25 - LTS",
+            "21": "21 - LTS (default)",
+            "17": "17 - LTS"
+        }
+    },
+    {
+        "DisplayName": "Minimum Memory",
+        "Category": "Reposilite",
+        "Subcategory": "Java:settings:1",
+        "Description": "Java's minimum heap size",
+        "Keywords": "minimum,memory,heap",
+        "FieldName": "MinMemory",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "MinMemory",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "32",
+        "Suffix": "MB",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Maximum Memory",
+        "Category": "Reposilite",
+        "Subcategory": "Java:settings:1",
+        "Description": "Java's maximum heap size. Reposilite recommends 32-64 MB for most repositories and 128 MB or more for high traffic",
+        "Keywords": "maximum,memory,heap",
+        "FieldName": "MaxMemory",
+        "InputType": "number",
+        "IsFlagArgument": false,
+        "ParamFieldName": "MaxMemory",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "128",
+        "Suffix": "MB",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Additional Java Startup Parameters",
+        "Category": "Reposilite",
+        "Subcategory": "Java:settings:1",
+        "Description": "Additional Java arguments (not server arguments) as startup parameters that are not otherwise set by AMP. Use with care",
+        "Keywords": "custom,java,arguments,parameters",
+        "FieldName": "CustomJavaArgs",
+        "InputType": "text",
+        "IsFlagArgument": false,
+        "ParamFieldName": "CustomJavaArgs",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "-XX:+UseG1GC",
+        "EnumValues": {}
+    }
+]
