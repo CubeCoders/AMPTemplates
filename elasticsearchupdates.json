@@ -1,0 +1,31 @@
+[
+    {
+        "UpdateStageName": "Elasticsearch Download",
+        "UpdateStageDescription": "Downloads the official Elasticsearch release from elastic.co",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; Set-Location -LiteralPath '{{$FullBaseDir}}'; $v='{{ServerVersion}}'.Trim() -replace '^v',''; if (-not $v) { $v=(Invoke-RestMethod -UseBasicParsing -Uri 'https://api.github.com/repos/elastic/elasticsearch/releases/latest').tag_name -replace '^v','' }; if ($v -notmatch '^\\d+\\.\\d+\\.\\d+$') { Write-Output ('Invalid Elasticsearch version: ' + $v); exit 1 }; New-Item -ItemType Directory -Force -Path data,logs,tmp | Out-Null; if (Test-Path -LiteralPath ('es\\lib\\elasticsearch-' + $v + '.jar')) { Write-Output ('Elasticsearch ' + $v + ' already installed') } else { Write-Output ('Downloading Elasticsearch ' + $v); Invoke-WebRequest -UseBasicParsing -OutFile es.zip -Uri ('https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-' + $v + '-windows-x86_64.zip'); if (Test-Path es) { Remove-Item -Recurse -Force es }; New-Item -ItemType Directory -Path es | Out-Null; tar.exe -xf es.zip -C es --strip-components=1; if ($LASTEXITCODE -ne 0) { Write-Output 'Extraction failed'; exit 1 }; Remove-Item es.zip; Write-Output ('Elasticsearch ' + $v + ' installed') }; if (-not (Test-Path config)) { Copy-Item -Recurse es\\config config }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Elasticsearch Download",
+        "UpdateStageDescription": "Downloads the official Elasticsearch release from elastic.co",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "x86_64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd '{{$FullBaseDir}}' || exit 1; V='{{ServerVersion}}'; V=${V#v}; if [[ -z $V ]]; then V=$(wget -qO- https://api.github.com/repos/elastic/elasticsearch/releases/latest | jq -r .tag_name); V=${V#v}; fi; if [[ ! $V =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Elasticsearch version: $V\\\"; exit 1; fi; mkdir -p data logs tmp; if [[ -f es/lib/elasticsearch-$V.jar ]]; then echo \\\"Elasticsearch $V already installed\\\"; else echo \\\"Downloading Elasticsearch $V\\\"; rm -f es.tar.gz; wget -q -O es.tar.gz \\\"https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$V-linux-x86_64.tar.gz\\\" || { echo 'Download failed'; exit 1; }; rm -rf es && mkdir es && tar -xzf es.tar.gz -C es --strip-components=1 || { echo 'Extraction failed'; exit 1; }; rm -f es.tar.gz; echo \\\"Elasticsearch $V installed\\\"; fi; [[ -d config ]] || cp -r es/config config\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Elasticsearch Download",
+        "UpdateStageDescription": "Downloads the official Elasticsearch release from elastic.co",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSourceArch": "aarch64",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd '{{$FullBaseDir}}' || exit 1; V='{{ServerVersion}}'; V=${V#v}; if [[ -z $V ]]; then V=$(wget -qO- https://api.github.com/repos/elastic/elasticsearch/releases/latest | jq -r .tag_name); V=${V#v}; fi; if [[ ! $V =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$ ]]; then echo \\\"Invalid Elasticsearch version: $V\\\"; exit 1; fi; mkdir -p data logs tmp; if [[ -f es/lib/elasticsearch-$V.jar ]]; then echo \\\"Elasticsearch $V already installed\\\"; else echo \\\"Downloading Elasticsearch $V\\\"; rm -f es.tar.gz; wget -q -O es.tar.gz \\\"https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-$V-linux-aarch64.tar.gz\\\" || { echo 'Download failed'; exit 1; }; rm -rf es && mkdir es && tar -xzf es.tar.gz -C es --strip-components=1 || { echo 'Extraction failed'; exit 1; }; rm -f es.tar.gz; echo \\\"Elasticsearch $V installed\\\"; fi; [[ -d config ]] || cp -r es/config config\"",
+        "SkipOnFailure": false
+    }
+]
