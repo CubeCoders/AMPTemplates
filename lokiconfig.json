@@ -1,0 +1,78 @@
+[
+    {
+        "DisplayName": "Loki Version",
+        "Category": "Loki:receipt_long",
+        "Subcategory": "Server:dns:1",
+        "Description": "Loki release tag to install, such as v3.7.10. Leave empty to install the latest release. Run Update after changing this",
+        "Keywords": "version,release,tag,update",
+        "FieldName": "ServerVersion",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "Latest",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Log Level",
+        "Category": "Loki:receipt_long",
+        "Subcategory": "Server:dns:1",
+        "Description": "How much Loki writes to the console",
+        "Keywords": "log,level,debug,verbosity",
+        "FieldName": "LogLevel",
+        "InputType": "enum",
+        "ParamFieldName": "log.level",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "info",
+        "EnumValues": {
+            "debug": "Debug",
+            "info": "Info",
+            "warn": "Warning",
+            "error": "Error"
+        }
+    },
+    {
+        "DisplayName": "Require Tenant ID",
+        "Category": "Loki:receipt_long",
+        "Subcategory": "Server:dns:1",
+        "Description": "Requires every request to carry an X-Scope-OrgID header, giving each tenant its own logs. This isn't authentication: put a reverse proxy with authentication in front of Loki if the HTTP port is reachable by others",
+        "Keywords": "auth,tenant,multi-tenant,orgid",
+        "FieldName": "AuthEnabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "auth.enabled",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Usage Reporting",
+        "Category": "Loki:receipt_long",
+        "Subcategory": "Server:dns:1",
+        "Description": "Sends anonymous usage statistics to Grafana Labs",
+        "Keywords": "analytics,reporting,telemetry,usage,statistics",
+        "FieldName": "ReportingEnabled",
+        "InputType": "checkbox",
+        "ParamFieldName": "reporting.enabled",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "false",
+        "EnumValues": {
+            "False": "false",
+            "True": "true"
+        }
+    },
+    {
+        "DisplayName": "Custom Arguments",
+        "Category": "Loki:receipt_long",
+        "Subcategory": "Server:dns:1",
+        "Description": "Additional [command-line flags](https://grafana.com/docs/loki/latest/configure/) to pass to Loki. Most settings are easier to change in loki.yaml",
+        "Keywords": "custom,arguments,args,flags,command line",
+        "FieldName": "CustomArgs",
+        "InputType": "text",
+        "IncludeInCommandLine": false,
+        "DefaultValue": "",
+        "Placeholder": "-querier.max-concurrent=4",
+        "EnumValues": {}
+    }
+]
