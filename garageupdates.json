@@ -1,0 +1,20 @@
+[
+    {
+        "UpdateStageName": "Garage Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd '{{$FullBaseDir}}' || exit 1; v='{{GarageVersion}}'; if [ -n \\\"$v\\\" ]; then [[ $v == v* ]] || v=v$v; else v=$(curl -fsSL https://garagehq.deuxfleurs.fr/_releases.json | grep -oE '_releases/v[0-9]+[.][0-9]+[.][0-9]+/x86_64-unknown-linux-musl/garage' | cut -d/ -f2 | sort -uV | tail -n 1); fi; if ! [[ $v =~ ^v[0-9]+[.][0-9]+[.][0-9]+$ ]]; then echo 'Could not determine the Garage version to install'; exit 1; fi; if [ -x garage ] && [ \\\"$(cat version.txt 2>/dev/null)\\\" = $v ]; then echo \\\"Garage $v is already installed. Skipping\\\"; exit 0; fi; echo \\\"Downloading Garage $v\\\"; curl -fsSL -o garage.new https://garagehq.deuxfleurs.fr/_releases/$v/x86_64-unknown-linux-musl/garage || { echo \\\"Could not download Garage $v\\\"; rm -f garage.new; exit 1; }; chmod +x garage.new && mv -f garage.new garage && echo $v > version.txt && echo \\\"Installed Garage $v\\\"\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Secret Generation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd '{{$FullBaseDir}}' || exit 1; mkdir -p secrets meta data && chmod 700 secrets || exit 1; hex() { od -An -vtx1 -N$1 /dev/urandom | tr -d ' \\n'; }; gen() { [ -s secrets/$1 ] || { printf '%s' $2 > secrets/$1 && echo \\\"Generated secrets/$1\\\"; }; chmod 600 secrets/$1; }; gen rpc_secret $(hex 32); gen admin_token $(head -c 32 /dev/urandom | base64 -w0); gen metrics_token $(head -c 32 /dev/urandom | base64 -w0); gen default_access_key GK$(hex 12); gen default_secret_key $(hex 32)\"",
+        "ProcessToolOutput": true,
+        "SkipOnFailure": false
+    }
+]
