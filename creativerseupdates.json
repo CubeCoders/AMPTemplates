@@ -20,7 +20,7 @@
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "Executable",
         "UpdateSourceData": "cmd.exe",
-        "UpdateSourceArgs": "/C mkdir \"%LocalAppData%\\PlayfulCorp\\CreativerseServer\\worlddata\\worlds\\{{worldId}}\" > NUL 2>&1 & mkdir \"{{$FullBaseDir}}PlayfulCorp\" > NUL 2>&1 & rd /S /Q \"{{$FullBaseDir}}PlayfulCorp\\CreativerseServer\" > NUL 2>&1 & mklink /J \"{{$FullBaseDir}}PlayfulCorp\\CreativerseServer\" \"%LocalAppData%\\PlayfulCorp\\CreativerseServer\" > NUL 2>&1",
+        "UpdateSourceArgs": "/C (rmdir \"{{$FullBaseDir}}PlayfulCorp\\CreativerseServer\" > NUL 2>&1 && robocopy \"%LocalAppData%\\PlayfulCorp\\CreativerseServer\\worlddata\\worlds\\{{worldId}}\" \"{{$FullBaseDir}}PlayfulCorp\\CreativerseServer\\worlddata\\worlds\\{{worldId}}\" /E > NUL 2>&1) & mkdir \"{{$FullBaseDir}}PlayfulCorp\\CreativerseServer\\worlddata\\worlds\\{{worldId}}\" > NUL 2>&1 & if exist \"{{$FullBaseDir}}PlayfulCorp\\CreativerseServer\\worlddata\\worlds\\{{worldId}}\\\" (exit /b 0) else (exit /b 1)",
         "SkipOnFailure": false
     },
     {
