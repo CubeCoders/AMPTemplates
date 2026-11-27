@@ -1,0 +1,53 @@
+[
+  {
+    "UpdateStageName": "Source 2007 Dedicated Server Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "SteamCMD",
+    "UpdateSourceData": "310",
+    "UpdateSourceArgs": "310",
+    "ForceDownloadPlatform": "Windows",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Visual C++ 2012 Runtime Check",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "cmd.exe",
+    "UpdateSourceArgs": "/C if exist %SystemRoot%\\SysWOW64\\msvcr110.dll (exit 0) else (echo GE:S needs the Microsoft Visual C++ 2012 Redistributable x86. If the server fails to start, install it from https://www.microsoft.com/en-us/download/details.aspx?id=30679 & exit 0)",
+    "SkipOnFailure": true
+  },
+  {
+    "UpdateStageName": "GE:S Server Files Install",
+    "UpdateSourcePlatform": "Windows",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "powershell.exe",
+    "UpdateSourceArgs": "-NoProfile -ExecutionPolicy Bypass -Command \"$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; $root='{{$FullRootDir}}'; $base='{{$FullBaseDir}}'; $url='{{GESServerURL}}'.Trim(); Set-Location -LiteralPath $root; New-Item -ItemType Directory -Force -Path '7-Zip',(Join-Path $base 'upload') | Out-Null; $mark=Join-Path $root 'ges-server-url.txt'; $old=''; if (Test-Path -LiteralPath $mark) { $old=([IO.File]::ReadAllText($mark)).Trim() }; $have=Test-Path -LiteralPath (Join-Path $base 'gesource\\gameinfo.txt'); $a=Get-ChildItem -LiteralPath (Join-Path $base 'upload') -File | Where-Object { $_.Extension -in '.7z','.zip' } | Sort-Object LastWriteTime -Descending | Select-Object -First 1; if ($a) { $src=$a.FullName; Write-Output ('Installing the GE:S server files from the uploaded ' + $a.Name) } elseif ($url -and (($url -ne $old) -or (-not $have))) { if ($url -notmatch '^https?://') { Write-Output 'GE:S Server Archive URL must start with http:// or https://'; exit 1 }; $src=Join-Path $root 'ges-download.bin'; Write-Output 'Downloading the GE:S server archive from the GE:S Server Archive URL'; curl.exe -fsSL --retry 3 -A 'Mozilla/5.0' -o $src $url; if ($LASTEXITCODE -ne 0) { Remove-Item -LiteralPath $src -Force -ErrorAction SilentlyContinue; Write-Output 'Download failed. GE:S Server Archive URL must be a direct link to the server archive file. Alternatively, upload the archive to the upload folder with the File Manager and click Update again'; exit 1 } } elseif ($have) { Write-Output 'GE:S server files are already installed. Upload a new archive or change GE:S Server Archive URL to replace them'; exit 0 } else { Write-Output 'GE:S server files not found. Set GE:S Server Archive URL to a direct link to the GoldenEye: Source server archive (.7z or .zip, from geshl2.com/server-downloads), or upload the archive to the upload folder with the File Manager, then click Update again'; exit 1 }; $fs=[IO.File]::OpenRead($src); $h=New-Object byte[] 2; [void]$fs.Read($h,0,2); $fs.Close(); $magic=[Text.Encoding]::ASCII.GetString($h); if (($magic -ne '7z') -and ($magic -ne 'PK')) { Remove-Item -LiteralPath $src -Force; Write-Output 'The file is not a 7z or zip archive. The URL probably points to a web page rather than the archive itself'; exit 1 }; $tmp=Join-Path $root 'ges-extract'; if (Test-Path -LiteralPath $tmp) { Remove-Item -LiteralPath $tmp -Recurse -Force }; New-Item -ItemType Directory -Force -Path $tmp | Out-Null; if ($magic -eq '7z') { if (-not (Test-Path -LiteralPath '7-Zip\\7zr.exe')) { Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/ip7z/7zip/releases/download/26.00/7zr.exe' -OutFile '7-Zip\\7zr.exe' }; & '7-Zip\\7zr.exe' x -y ('-o' + $tmp) $src | Out-Null } else { tar.exe -xf $src -C $tmp }; if ($LASTEXITCODE -ne 0) { Remove-Item -LiteralPath $tmp -Recurse -Force -ErrorAction SilentlyContinue; Write-Output 'Could not extract the GE:S server archive. Upload or download it again and click Update'; exit 1 }; $g=Get-ChildItem -LiteralPath $tmp -Filter 'gameinfo.txt' -File -Recurse | Where-Object { $_.Directory.Name -eq 'gesource' } | Select-Object -First 1; if (-not $g) { Remove-Item -LiteralPath $tmp -Recurse -Force; Write-Output 'The archive does not contain a gesource folder. Use the GoldenEye: Source server archive'; exit 1 }; New-Item -ItemType Directory -Force -Path (Join-Path $base 'gesource') | Out-Null; Copy-Item -Path (Join-Path $g.DirectoryName '*') -Destination (Join-Path $base 'gesource') -Recurse -Force; Remove-Item -LiteralPath $tmp -Recurse -Force; Remove-Item -LiteralPath $src -Force; [IO.File]::WriteAllText($mark, $url); Write-Output 'GE:S server files installed'\"",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "GE:S Server Files Install",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"cd \\\"{{$FullRootDir}}\\\" || exit 1; base=\\\"{{$FullBaseDir}}\\\"; url='{{GESServerURL}}'; url=\\\"${url//[[:space:]]/}\\\"; mkdir -p \\\"${base}upload\\\" 7-Zip; old=\\\"\\\"; [[ -f ges-server-url.txt ]] && old=\\\"$(cat ges-server-url.txt)\\\"; have=0; [[ -f \\\"${base}gesource/gameinfo.txt\\\" ]] && have=1; a=\\\"$(ls -t \\\"${base}\\\"upload/*.7z \\\"${base}\\\"upload/*.zip 2>/dev/null | head -n1)\\\"; if [[ -n \\\"$a\\\" ]]; then src=\\\"$a\\\"; echo \\\"Installing the GE:S server files from the uploaded $(basename \\\"$a\\\")\\\"; elif [[ -n \\\"$url\\\" && ( \\\"$url\\\" != \\\"$old\\\" || $have -eq 0 ) ]]; then if [[ ! \\\"$url\\\" =~ ^https?:// ]]; then echo \\\"GE:S Server Archive URL must start with http:// or https://\\\"; exit 1; fi; src=\\\"ges-download.bin\\\"; echo \\\"Downloading the GE:S server archive from the GE:S Server Archive URL\\\"; if command -v curl >/dev/null 2>&1; then curl -fsSL --retry 3 -A Mozilla/5.0 -o \\\"$src\\\" \\\"$url\\\"; else wget -q -U Mozilla/5.0 -O \\\"$src\\\" \\\"$url\\\"; fi || { rm -f \\\"$src\\\"; echo \\\"Download failed. GE:S Server Archive URL must be a direct link to the server archive file. Alternatively, upload the archive to the upload folder with the File Manager and click Update again\\\"; exit 1; }; elif [[ $have -eq 1 ]]; then echo \\\"GE:S server files are already installed. Upload a new archive or change GE:S Server Archive URL to replace them\\\"; exit 0; else echo \\\"GE:S server files not found. Set GE:S Server Archive URL to a direct link to the GoldenEye: Source server archive (.7z or .zip, from geshl2.com/server-downloads), or upload the archive to the upload folder with the File Manager, then click Update again\\\"; exit 1; fi; magic=\\\"$(head -c 2 \\\"$src\\\")\\\"; if [[ \\\"$magic\\\" != \\\"7z\\\" && \\\"$magic\\\" != \\\"PK\\\" ]]; then rm -f \\\"$src\\\"; echo \\\"The file is not a 7z or zip archive. The URL probably points to a web page rather than the archive itself\\\"; exit 1; fi; if [[ ! -x 7-Zip/7zzs ]]; then ( cd 7-Zip && if command -v curl >/dev/null 2>&1; then curl -fsSL -o 7z.tar.xz https://github.com/ip7z/7zip/releases/download/26.00/7z2600-linux-x64.tar.xz; else wget -qO 7z.tar.xz https://github.com/ip7z/7zip/releases/download/26.00/7z2600-linux-x64.tar.xz; fi && tar -xf 7z.tar.xz 7zzs && rm -f 7z.tar.xz ) || { echo \\\"Could not install 7-Zip\\\"; exit 1; }; fi; rm -rf ges-extract; mkdir -p ges-extract; if ! 7-Zip/7zzs x -y -oges-extract \\\"$src\\\" >/dev/null; then rm -rf ges-extract; echo \\\"Could not extract the GE:S server archive. Upload or download it again and click Update\\\"; exit 1; fi; g=\\\"$(find ges-extract -type f -path '*/gesource/gameinfo.txt' | head -n1)\\\"; if [[ -z \\\"$g\\\" ]]; then rm -rf ges-extract; echo \\\"The archive does not contain a gesource folder. Use the GoldenEye: Source server archive\\\"; exit 1; fi; mkdir -p \\\"${base}gesource\\\" && cp -a \\\"$(dirname \\\"$g\\\")/.\\\" \\\"${base}gesource/\\\" || { rm -rf ges-extract; echo \\\"Could not copy the GE:S server files\\\"; exit 1; }; rm -rf ges-extract; rm -f \\\"$src\\\"; printf '%s' \\\"$url\\\" > ges-server-url.txt; echo \\\"GE:S server files installed\\\"\"",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Server.cfg Template File Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/goldeneye-sourceserver.cfg",
+    "UpdateSourceArgs": "AMP_server.cfg",
+    "UpdateSourceTarget": "{{$FullRootDir}}",
+    "OverwriteExistingFiles": true,
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Initialise Wine",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"unset DISPLAY WAYLAND_DISPLAY; export WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win32 WINEDEBUG=-all WINEDLLOVERRIDES=\\\"mscoree,mshtml,winemenubuilder.exe=\\\"; if [[ -f \\\"$WINEPREFIX/system.reg\\\" ]]; then echo \\\"Wine prefix already initialised\\\"; exit 0; fi; /usr/bin/wineboot --init && /usr/bin/wineboot --shutdown; echo \\\"Wine prefix initialised\\\"\"",
+    "SkipOnFailure": false
+  }
+]
