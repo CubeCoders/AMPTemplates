@@ -1,0 +1,30 @@
+[
+    {
+        "UpdateStageName": "Check Allied Assault Game Data",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"if ls '{{$FullBaseDir}}main' 2>/dev/null | grep -qi '^pak.*\\.pk3$'; then exit 0; fi; echo 'No game data found in the main folder. Upload the main folder, with its pak .pk3 files, from your own copy of Medal of Honor: Allied Assault into the server folder.'; exit 1\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Check Spearhead Game Data",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"if ls '{{$FullBaseDir}}mainta' 2>/dev/null | grep -qi '^pak.*\\.pk3$'; then exit 0; fi; echo 'No game data found in the mainta folder. Upload the mainta folder, with its pak .pk3 files, from your own copy of Medal of Honor: Allied Assault Spearhead into the server folder.'; exit 1\"",
+        "UpdateSourceConditionSetting": "com_target_game",
+        "UpdateSourceConditionValue": "1",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Check Breakthrough Game Data",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"if ls '{{$FullBaseDir}}maintt' 2>/dev/null | grep -qi '^pak.*\\.pk3$'; then exit 0; fi; echo 'No game data found in the maintt folder. Upload the maintt folder, with its pak .pk3 files, from your own copy of Medal of Honor: Allied Assault Breakthrough into the server folder.'; exit 1\"",
+        "UpdateSourceConditionSetting": "com_target_game",
+        "UpdateSourceConditionValue": "2",
+        "SkipOnFailure": false
+    }
+]

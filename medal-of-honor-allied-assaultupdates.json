@@ -1,0 +1,54 @@
+[
+    {
+        "UpdateStageName": "OpenMoHAA Download",
+        "UpdateStageDescription": "Downloads the latest OpenMoHAA release from GitHub",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURLfromJQ",
+        "UpdateSourceData": "https://api.github.com/repos/openmoh/openmohaa/releases/latest",
+        "UpdateSourceArgs": "$.assets[?(@.name =~ /^openmohaa-.*-linux-amd64\\.zip$/)].browser_download_url",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Set Executable Flag",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}omohaaded",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Game Data Folders",
+        "UpdateStageDescription": "Creates the folders for the game data from your own copy of the game",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}main",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Game Data Folders",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}mainta",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Game Data Folders",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}maintt",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Custom Server Config",
+        "UpdateStageDescription": "Creates an empty server.cfg for extra settings, if it doesn't exist yet",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceData": "// Extra server settings. Runs after the settings AMP manages in amp_server.cfg, so values here override them.\n// Example: bitset dmflags 18\n",
+        "UpdateSourceArgs": "{{$FullBaseDir}}main/server.cfg",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    }
+]
