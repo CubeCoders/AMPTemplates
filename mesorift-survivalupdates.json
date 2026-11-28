@@ -1,0 +1,86 @@
+[
+    {
+        "UpdateStageName": "7-Zip Directory Creation",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullRootDir}}7-Zip",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Set-Location -Path 'mesorift-survival/7-Zip'; if (Test-Path '7z.exe') { exit 0 } else { Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/ip7z/7zip/releases/download/26.00/7z2600-x64.exe' -OutFile '7z-installer.exe' }; if ($?) { Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/ip7z/7zip/releases/download/26.00/7zr.exe' -OutFile '7zr.exe' }; if ($?) { & ./7zr.exe x -y -aoa 7z-installer.exe *> $null 2>&1; Remove-Item -Path '7z-installer.exe' -Force -ErrorAction SilentlyContinue | Out-Null }; if (-not (Test-Path '7z.exe')) { Write-Output '7-Zip installation failed'; exit 1 }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "7-Zip Installation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd mesorift-survival/7-Zip && [[ -x 7zzs ]] && exit 0 || { wget -qO 7z.tar.xz https://github.com/ip7z/7zip/releases/download/26.00/7z2600-linux-x64.tar.xz && tar -xf 7z.tar.xz >/dev/null 2>&1 && rm -f 7z.tar.xz >/dev/null 2>&1; [[ -x 7zzs ]] || { echo '7-Zip installation failed'; exit 1; }; }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Files Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "{{ServerDownloadURL}}",
+        "UpdateSourceTarget": "{{$FullRootDir}}",
+        "UpdateSourceArgs": "MesoriftServer.rar",
+        "UnzipUpdateSource": false,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Files Extraction",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"Set-Location -Path 'mesorift-survival'; & ./7-Zip/7z.exe x -y -aoa MesoriftServer.rar '-xr!*.pdb' '-xr!*.lnk' | Out-Null; $code = $LASTEXITCODE; Remove-Item -Path 'MesoriftServer.rar' -Force -ErrorAction SilentlyContinue | Out-Null; if (($code -ne 0) -or -not (Test-Path 'WindowsServer/MesoRift_Survival/Binaries/Win64/MesoRift_SurvivalServer.exe')) { Write-Output \\\"7-Zip returned exit code $code while extracting the server files\\\"; exit 1 }\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Server Files Extraction",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"cd mesorift-survival && ./7-Zip/7zzs x -y -aoa MesoriftServer.rar '-xr!*.pdb' '-xr!*.lnk' >/dev/null; code=$?; rm -f MesoriftServer.rar >/dev/null 2>&1; if [[ $code -ne 0 || ! -f WindowsServer/MesoRift_Survival/Binaries/Win64/MesoRift_SurvivalServer.exe ]]; then echo \\\"7-Zip returned exit code $code while extracting the server files\\\"; exit 1; fi\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "SteamCMD Component Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "1007",
+        "UpdateSourceTarget": "{{$FullBaseDir}}MesoRift_Survival/Binaries/Win64",
+        "ForceDownloadPlatform": "Windows",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Create Config Directory",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "{{$FullBaseDir}}MesoRift_Survival/Saved/Config/WindowsServer",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "CustomConfig.ini Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://cdn-repo.c7rs.com/AMPTemplates/mesorift-survivalcustomconfig.ini",
+        "UpdateSourceTarget": "{{$FullBaseDir}}MesoRift_Survival/Saved/Config/WindowsServer",
+        "UpdateSourceArgs": "CustomConfig.ini",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"rm -rf \\\"{{$FullRootDir}}.wine\\\" >/dev/null 2>&1; WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all /usr/bin/wineboot --init\"",
+        "SkipOnFailure": false
+    }
+]
